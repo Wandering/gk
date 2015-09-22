@@ -15,8 +15,11 @@
   text-indent: 1cm;
 }
 
-.article-nav-sub li{
-  float: left;
-  padding: 15px 20px;
-  background-color: #f5f5f5;
+.article-nav-sub {
+  overflow: hidden;
+  li {
+    float: left;
+    padding: 15px 20px;
+    background-color: #f5f5f5;
+  }
 }
