@@ -8,7 +8,7 @@ package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.gk.dao.IProductDAO;
-import cn.thinkjoy.ss.domain.Product;
+import cn.thinkjoy.gk.domain.Product;
 import cn.thinkjoy.gk.service.IProductService;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
 import org.springframework.beans.factory.annotation.Autowired;
