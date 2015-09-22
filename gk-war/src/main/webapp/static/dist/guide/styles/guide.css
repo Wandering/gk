@@ -81,14 +81,17 @@ template {
  * Remove the gray background color from active links in IE 10.
  */
 a {
-  background: transparent; }
+  background: transparent;
+  color: #333;
+  text-decoration: none; }
 
 /**
  * Improve readability when focused and also mouse hovered in all browsers.
  */
 a:active,
 a:hover {
-  outline: 0; }
+  outline: 0;
+  color: #e24333; }
 
 /* Text-level semantics
    ========================================================================== */
@@ -479,23 +482,13 @@ input, textarea {
     .content-title .w20 span {
       font-size: 30px; }
 
-.mt20 {
-  margin-top: 20px; }
-
-.sub-article {
-  width: 80%;
-  margin: 0 auto;
-  font-size: 14px;
-  line-height: 1.5;
-  margin-top: 50px;
-  text-indent: 1cm; }
-
-.guide-nav li {
+/*文章中得导航栏*/
+.article-nav li {
   float: left;
   padding: 15px 20px;
   font-size: 16px;
   color: #505050; }
-  .guide-nav li.focus {
+  .article-nav li.focus {
     cursor: pointer;
     color: #e35643; }
 
@@ -512,3 +505,19 @@ input, textarea {
   width: 50px;
   height: 2px;
   background-color: #e35643; }
+
+.mt20 {
+  margin-top: 20px; }
+
+.sub-article {
+  width: 80%;
+  margin: 0 auto;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-top: 50px;
+  text-indent: 1cm; }
+
+.article-nav-sub li {
+  float: left;
+  padding: 15px 20px;
+  background-color: #f5f5f5; }
