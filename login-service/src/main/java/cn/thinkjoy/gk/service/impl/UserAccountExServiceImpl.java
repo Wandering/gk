@@ -6,7 +6,6 @@
  */
 package cn.thinkjoy.gk.service.impl;
 
-import cn.thinkjoy.gk.bean.UserAccountBean;
 import cn.thinkjoy.gk.dao.IUserAccountDAO;
 import cn.thinkjoy.gk.dao.IUserAccountExDAO;
 import cn.thinkjoy.gk.dao.IUserInfoDAO;
@@ -14,8 +13,8 @@ import cn.thinkjoy.gk.dao.IUserVipDAO;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.domain.UserInfo;
 import cn.thinkjoy.gk.domain.UserVip;
+import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IUserAccountExService;
-import com.jlusoft.microschool.core.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,24 +39,24 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
     private IUserVipDAO userVipDAO;
 
     @Override
-    public UserAccountBean findUserAccountBeanByToken(String token) {
+    public UserAccountPojo findUserAccountPojoByToken(String token) {
         Map<String,Object> params = new HashMap<String,Object>();
         params.put("token",token);
-        return userAccountExDAO.findUserAccountBean(params);
+        return userAccountExDAO.findUserAccountPojo(params);
     }
 
     @Override
-    public UserAccountBean findUserAccountBeanById(Long id) {
+    public UserAccountPojo findUserAccountPojoById(Long id) {
         Map<String,Object> params = new HashMap<String,Object>();
         params.put("id",id);
-        return userAccountExDAO.findUserAccountBean(params);
+        return userAccountExDAO.findUserAccountPojo(params);
     }
 
     @Override
-    public UserAccountBean findUserAccountBeanByPhone(String phone) {
+    public UserAccountPojo findUserAccountPojoByPhone(String phone) {
         Map<String,Object> params = new HashMap<String,Object>();
         params.put("phone",phone);
-        return userAccountExDAO.findUserAccountBean(params);
+        return userAccountExDAO.findUserAccountPojo(params);
     }
 
     @Override

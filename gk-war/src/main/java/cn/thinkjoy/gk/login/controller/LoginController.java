@@ -61,7 +61,7 @@ public class LoginController extends BaseController {
 				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入密码!");
 			}
 
-			UserAccountPojo userAccountBean = userAccountExService.findUserAccountBeanByPhone(account);
+			UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
 
 			if (userAccountBean == null) {
 				throw new BizException(ERRORCODE.ACCOUNT_NO_EXIST.getCode(),ERRORCODE.ACCOUNT_NO_EXIST.getMessage());

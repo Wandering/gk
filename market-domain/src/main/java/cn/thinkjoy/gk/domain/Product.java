@@ -7,15 +7,13 @@
 
 
 
-package cn.thinkjoy.ss.domain;
+package cn.thinkjoy.gk.domain;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import cn.thinkjoy.common.domain.BaseDomain;
-
-import java.util.*;
 
 public class Product extends BaseDomain{
     private Integer status;

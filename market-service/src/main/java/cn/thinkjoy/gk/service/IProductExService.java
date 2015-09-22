@@ -11,7 +11,7 @@ package cn.thinkjoy.gk.service;
 
 
 
-import cn.thinkjoy.ss.domain.Product;
+import cn.thinkjoy.gk.domain.Product;
 
 import java.util.List;
 
