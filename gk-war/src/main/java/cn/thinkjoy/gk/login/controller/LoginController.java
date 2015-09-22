@@ -52,28 +52,29 @@ public class LoginController extends BaseController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public String login(@RequestParam(value="account",required=false) String account,@RequestParam(value="password",required=false) String password) throws Exception {
+
 		try {
 			if (StringUtils.isEmpty(account)) {
 				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
 			}
 			if (StringUtils.isEmpty(password)) {
-
+				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入密码!");
 			}
 
 			UserAccountPojo userAccountBean = userAccountExService.findUserAccountBeanByPhone(account);
 
 			if (userAccountBean == null) {
-
+				throw new BizException(ERRORCODE.ACCOUNT_NO_EXIST.getCode(),ERRORCODE.ACCOUNT_NO_EXIST.getMessage());
 			}
 
 			if (!"@@@@".equals(password)) {
 				if (!MD5Util.MD5Encode(password).equals(userAccountBean.getPassword())) {
-
+					throw new BizException(ERRORCODE.LOGIN_PASSWORD_ERROR.getCode(),ERRORCODE.LOGIN_PASSWORD_ERROR.getMessage());
 				}
 			}
 
 			if (userAccountBean.getStatus() != 0) {
-
+				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "用户状态异常，请联系管理员!");
 
 			}
 
