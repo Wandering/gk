@@ -20,7 +20,7 @@
   }
   .login-box {
     width: 303px;
-    height: 420px;
+//    height: 420px;
     background-color: #fff;
     border: 15px solid #4cb587;
     position: absolute;
@@ -30,20 +30,75 @@
     box-sizing: border-box;
     .login-title {
       height: 65px;
-      padding:0 20px;
+      //      padding:0 20px;
+      margin-bottom: 15px;
       span{
+        cursor: pointer;
         border-bottom:$borderColor 1px solid;
         display: block;
         float: left;
         width: 50%;
         text-align: center;
-        font-size: 22px;
+        font-size: 20px;
         color: #686666;
         box-sizing: border-box;
         padding:10px 0 15px;
       }
       .active{
         border-bottom:$mainGreen 2px solid;
+      }
+    }
+    .login-input{
+      position: relative;
+      i{
+        position: absolute;
+        width: 15px;
+        height: 15px;
+      }
+      .icon-user-account{
+        top:15px;
+        left: 20px;
+        background: url(../../login/images/icon-user-account.png) no-repeat;
+      }
+      .icon-user-psd{
+        top:84px;
+        left: 20px;
+        background: url(../../login/images/icon-user-psd.png) no-repeat;
+      }
+      .input-comm{
+        text-indent: 40px;
+        box-sizing: border-box;
+        width: 100%;
+        font-size: 12px;
+        color: #bebdbd;
+        border:1px solid $borderColor!important;
+        height: 45px;
+        line-height: 45px;
+        border-radius: 3px;
+        margin-bottom: 24px;
+      }
+      .forget-psd{
+        color: $secondColor;
+        text-decoration: none;
+        text-align: right;
+        font-size: 12px;
+        width: 100%;
+        display: block;
+      }
+      .btn-login{
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        background-color: #52d09c;
+        transition: all .8s;
+        color: #fff;
+        font-size: 18px;
+        text-align: center;
+        border-radius: 30px;
+        cursor: pointer;
+        &:hover{
+          background-color: #2AD083;
+        }
       }
     }
   }
