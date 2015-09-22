@@ -81,17 +81,14 @@ template {
  * Remove the gray background color from active links in IE 10.
  */
 a {
-  background: transparent;
-  color: #333;
-  text-decoration: none; }
+  background: transparent; }
 
 /**
  * Improve readability when focused and also mouse hovered in all browsers.
  */
 a:active,
 a:hover {
-  outline: 0;
-  color: #e24333; }
+  outline: 0; }
 
 /* Text-level semantics
    ========================================================================== */
@@ -459,8 +456,7 @@ input, textarea {
 /*副标题统一样式*/
 .content-title {
   width: 100%;
-  height: 34px;
-  margin: 50px 0 10px; }
+  height: 34px; }
   .content-title p {
     margin: 0;
     padding: 0; }

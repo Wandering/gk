@@ -1,0 +1,61 @@
+@charset "utf-8";
+@import "../../common";
+.container {
+  height: 650px;
+  width: 100%;
+  background: #26a56c url(../../login/images/login-bg.png) no-repeat;
+}
+
+.main {
+  position: relative;
+  .login-logo {
+    position: absolute;
+    left: 0;
+    top: 30px;
+  }
+  .login-bg-fonts {
+    position: absolute;
+    left: 0;
+    top: 250px;
+  }
+  .login-box {
+    width: 303px;
+    height: 420px;
+    background-color: #fff;
+    border: 15px solid #4cb587;
+    position: absolute;
+    top: 107px;
+    right: 30px;
+    padding: 15px;
+    box-sizing: border-box;
+    .login-title {
+      height: 65px;
+      padding:20px;
+      span{
+        display: inline-block;
+        width: 150px;
+        text-align: center;
+        font-size: 22px;
+        color: #686666;
+      }
+    }
+  }
+}
+
+.footer {
+  height: 250px;
+  background-color: #fff;
+  box-sizing: border-box;
+  width: 100%;
+  .copy {
+    text-align: center;
+    color: #a6a4a4;
+    font-size: 14px;
+    margin: 72px 0 20px;
+  }
+  .bottom-logo {
+    display: block;
+    width: 116px;
+    margin: 0 auto;
+  }
+}
