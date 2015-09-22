@@ -18,6 +18,7 @@ node_modules/
 .editorconfig
 .sass-cache
 
+bower_components/jquery/src
 
 
 # build
