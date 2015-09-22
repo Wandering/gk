@@ -7,7 +7,7 @@
 package cn.thinkjoy.gk.dao;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
-import cn.thinkjoy.ss.domain.Product;
+import cn.thinkjoy.gk.domain.Product;
 
 public interface IProductDAO extends IBaseDAO<Product>{
 	

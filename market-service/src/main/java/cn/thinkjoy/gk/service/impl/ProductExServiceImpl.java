@@ -7,7 +7,7 @@
 package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.gk.dao.IProductExDAO;
-import cn.thinkjoy.ss.domain.Product;
+import cn.thinkjoy.gk.domain.Product;
 import cn.thinkjoy.gk.service.IProductExService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

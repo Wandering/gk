@@ -8,17 +8,17 @@
 package cn.thinkjoy.gk.service;
 
 
-import cn.thinkjoy.gk.bean.UserAccountBean;
 import cn.thinkjoy.gk.domain.UserAccount;
+import cn.thinkjoy.gk.pojo.UserAccountPojo;
 
 
 public interface IUserAccountExService {
 
-    UserAccountBean findUserAccountBeanByToken(String token);
+    UserAccountPojo findUserAccountPojoByToken(String token);
 
-    UserAccountBean findUserAccountBeanById(Long id);
+    UserAccountPojo findUserAccountPojoById(Long id);
 
-    UserAccountBean findUserAccountBeanByPhone(String phone);
+    UserAccountPojo findUserAccountPojoByPhone(String phone);
 
     int findUserAccountCountByPhone(String phone);
 

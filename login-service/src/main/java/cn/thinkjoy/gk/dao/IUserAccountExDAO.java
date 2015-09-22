@@ -7,13 +7,13 @@
 package cn.thinkjoy.gk.dao;
 
 
-import cn.thinkjoy.gk.bean.UserAccountBean;
+import cn.thinkjoy.gk.pojo.UserAccountPojo;
 
 import java.util.Map;
 
 public interface IUserAccountExDAO {
 
-    UserAccountBean findUserAccountBean(Map<String, Object> params);
+    UserAccountPojo findUserAccountPojo(Map<String, Object> params);
 
     int findUserAccountCount(Map<String, Object> params);
 

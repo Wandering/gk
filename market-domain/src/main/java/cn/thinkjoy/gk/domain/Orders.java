@@ -7,7 +7,7 @@
 
 
 
-package cn.thinkjoy.ss.domain;
+package cn.thinkjoy.gk.domain;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -16,7 +16,6 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import cn.thinkjoy.common.domain.BaseDomain;
 
 import java.math.BigDecimal;
-import java.util.*;
 
 public class Orders extends BaseDomain{
     private Integer status;

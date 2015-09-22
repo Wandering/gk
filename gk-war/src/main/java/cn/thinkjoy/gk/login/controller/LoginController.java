@@ -60,7 +60,7 @@ public class LoginController extends BaseController {
 
 			}
 
-			UserAccountPojo userAccountBean = userAccountExService.findUserAccountBeanByPhone(account);
+			UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
 
 			if (userAccountBean == null) {
 

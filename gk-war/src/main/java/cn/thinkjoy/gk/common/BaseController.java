@@ -46,7 +46,7 @@ public class BaseController {
 		UserAccountPojo userAccountBean  = null;
 		RedisUtil.getInstance().del(key);
 		if(!RedisUtil.getInstance().exists(key)){
-			userAccountBean = userAccountExService.findUserAccountBeanById(id);
+			userAccountBean = userAccountExService.findUserAccountPojoById(id);
 			if(null!=userAccountBean){
 				RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 10L, TimeUnit.MINUTES);
 

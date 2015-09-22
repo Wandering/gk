@@ -9,7 +9,7 @@ package cn.thinkjoy.gk.dao;
 
 
 import cn.thinkjoy.common.dao.IBaseDAO;
-import cn.thinkjoy.ss.domain.Product;
+import cn.thinkjoy.gk.domain.Product;
 
 import java.util.List;
 import java.util.Map;
