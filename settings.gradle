@@ -1,4 +1,40 @@
 rootProject.name = 'gk'
 
+include 'common'
+
+include 'after-domain'
+
+include 'after-service'
+
+include 'before-domain'
+
+include 'before-service'
+
+include 'consult-domain'
+
+include 'consult-service'
+
+include 'guide-domain'
+
+include 'guide-service'
+
 include 'login-domain'
+
+include 'login-service'
+
+include 'market-domain'
+
+include 'market-service'
+
+include 'question-domain'
+
+include 'question-service'
+
+include 'user-domain'
+
+include 'user-service'
+
+include 'gk-war'
+
+include 'gk-war'
 
