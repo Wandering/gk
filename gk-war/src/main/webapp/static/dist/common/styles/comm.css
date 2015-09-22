@@ -482,3 +482,7 @@ input, textarea {
       margin-top: 8px; }
     .content-title .w20 span {
       font-size: 30px; }
+
+.content-title-sub {
+  color: #888;
+  font-size: 14px; }
