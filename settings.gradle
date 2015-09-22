@@ -36,5 +36,7 @@ include 'user-service'
 
 include 'gk-war'
 
-include 'gk-war'
+include 'gk-service'
+
+include 'gk-domain'
 

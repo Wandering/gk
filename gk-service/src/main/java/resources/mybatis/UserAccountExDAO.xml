@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.ss.dao.IUserAccountExDAO">
+
+    <select id="findUserAccountBean" resultType="UserAccountBean">
+        SELECT a.id,c.name,c.icon,a.account,a.password,a.status,a.userType,c.cityId,c.sourceType,b.status vipStatus
+        FROM gk_user_account a
+        left join gk_user_vip b on a.id = b.id
+        left join gk_user_info c on a.id = c.id
+        <where>
+            a.userType = 0
+            <if test="token!=null">
+                and c.token = #{token}
+            </if>
+            <if test="id!=null">
+                and a.id = #{id}
+            </if>
+            <if test="phone!=null">
+                and a.phone = #{phone}
+            </if>
+        </where>
+    </select>
+
+</mapper>
+
