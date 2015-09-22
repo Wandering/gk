@@ -18,6 +18,10 @@ node_modules/
 .editorconfig
 .sass-cache
 
+bower_components/jquery/src/
+bower_components/jquery/src/.bower.josn
+bower_components/jquery/src/bower.josn
+
 
 
 # build
