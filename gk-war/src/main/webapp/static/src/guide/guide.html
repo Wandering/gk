@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>个人信息</title>
-    <link rel="stylesheet" href="../dist/common/styles/comm.min.css"/>
-    <style>
-
-    </style>
+    <!--<link rel="stylesheet" href="../../dist/common/styles/comm.css"/>-->
+    <link rel="stylesheet" href="../../dist/guide/styles/guide.css" />
 </head>
 <body>
 <div class="header">
     <div class="w1000">
         <a href="">
-            <img src="../dist/common/images/logo-min.png" alt="高考360" class="logo fl"/>
+            <img src="../../dist/common/images/logo-min.png" alt="高考360" class="logo fl"/>
         </a>
         <ul class="main-menu fl">
             <li><a href="">首页</a></li>
@@ -23,7 +21,7 @@
         </ul>
         <div class="user-info-list fr">
             <div class="user">
-                <img src="../dist/common/images/avatar.png" alt="avatar" class="user-avatar"/>
+                <img src="../../dist/common/images/avatar.png" alt="avatar" class="user-avatar"/>
                 <a href="">韩小寒</a>
             </div>
             <ul class="menu hide">
@@ -34,13 +32,14 @@
         </div>
     </div>
 </div>
+
 <div class="content">
     <div class="wipe">
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="../dist/login/images/personal_banner1.png" alt=""/></div>
-                <div class="swiper-slide"><img src="../dist/login/images/personal_banner1.png" alt=""/></div>
-                <div class="swiper-slide"><img src="../dist/login/images/personal_banner1.png" alt=""/></div>
+                <div class="swiper-slide"><img src="../../dist/before/images/banner1.jpg" alt=""/></div>
+                <div class="swiper-slide"><img src="../../dist/before/images/banner1.jpg" alt=""/></div>
+                <div class="swiper-slide"><img src="../../dist/before/images/banner1.jpg" alt=""/></div>
             </div>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"></div>
@@ -49,10 +48,18 @@
     </div>
     <div class="w1000">
         <div class="content-title">
-            <p></p>
+            <p class="fl w40"></p>
+            <p class="fl w20">
+                <i class="fl arraw"></i>
+                <span>政策解读</span>
+                <i class="fr arraw"></i>
+            </p>
+            <p class="fl w40"></p>
         </div>
+        <h6 class="w1000">专业而通俗地解读陕西省高考招生文件、高考志愿填报和招生的相关政策。</h6>
     </div>
 </div>
+
 <div class="footer">
     <div class="bottom-nav">
         <div class="w1000">
@@ -71,12 +78,27 @@
                 <li><a href="">官方微信</a></li>
                 <li><a href="">新浪微博</a></li>
             </ul>
-            <img src="../dist/common/images/logo.png" alt="logo" class="logo"/>
+            <img src="../../dist/common/images/logo.png" alt="logo" class="logo"/>
         </div>
     </div>
     <div class="copy-right">
         <p class="w1000">联系信息:E-mail:cewfefe@163.com QQ:5454555 备案号:陕ICP备343454135-1号 [站长统计]</p>
     </div>
 </div>
+<link rel="stylesheet" href="../../bower_components/swiper/dist/css/swiper.css"/>
+<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../../bower_components/swiper/dist/js/swiper.jquery.min.js"></script>
+<script>
+    $(function () {
+        //幻灯片
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            loop: true
+        });
+    });
+</script>
 </body>
 </html>
