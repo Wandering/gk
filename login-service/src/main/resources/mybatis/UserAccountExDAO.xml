@@ -3,7 +3,7 @@
 
 <mapper namespace="cn.thinkjoy.ss.dao.IUserAccountExDAO">
 
-    <select id="findUserAccountBean" resultType="UserAccountBean">
+    <select id="findUserAccountBean" resultType="UserAccountPojo">
         SELECT a.id,c.name,c.icon,a.account,a.password,a.status,a.userType,c.cityId,c.sourceType,b.status vipStatus
         FROM gk_user_account a
         left join gk_user_vip b on a.id = b.id
