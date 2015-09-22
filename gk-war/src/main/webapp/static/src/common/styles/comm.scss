@@ -118,6 +118,7 @@
 .content-title {
   width: 100%;
   height: 34px;
+  margin: 50px 0 10px;
   p{
     margin: 0;
     padding: 0;
@@ -146,19 +147,27 @@
     }
   }
 }
+.content-title-sub{
+  color: #888;
+  font-size: 14px;
+}
 /*文章中得导航栏*/
 @mixin focus {
   cursor: pointer;
   color: $mainDR;
 }
-
-.article-nav li{
+ .tabs-list{
+   overflow: hidden;
+   background: url("../../../dist/common/images/tabs-bd-line.png") repeat-x left bottom ;
+ }
+.tabs-list li{
   float: left;
   padding: 15px 20px;
   font-size: 16px;
   color: #505050;
-  &.focus{
+  &.active{
     @include focus;
+    border-bottom: 2px solid $mainDR;
   }
 }
 .clear{

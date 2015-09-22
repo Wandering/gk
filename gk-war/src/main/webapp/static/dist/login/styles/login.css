@@ -459,7 +459,8 @@ input, textarea {
 /*副标题统一样式*/
 .content-title {
   width: 100%;
-  height: 34px; }
+  height: 34px;
+  margin: 50px 0 10px; }
   .content-title p {
     margin: 0;
     padding: 0; }
@@ -482,15 +483,24 @@ input, textarea {
     .content-title .w20 span {
       font-size: 30px; }
 
+.content-title-sub {
+  color: #888;
+  font-size: 14px; }
+
 /*文章中得导航栏*/
-.article-nav li {
+.tabs-list {
+  overflow: hidden;
+  background: url("../../../dist/common/images/tabs-bd-line.png") repeat-x left bottom; }
+
+.tabs-list li {
   float: left;
   padding: 15px 20px;
   font-size: 16px;
   color: #505050; }
-  .article-nav li.focus {
+  .tabs-list li.active {
     cursor: pointer;
-    color: #e35643; }
+    color: #e35643;
+    border-bottom: 2px solid #e35643; }
 
 .clear {
   clear: both; }
