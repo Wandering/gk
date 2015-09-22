@@ -156,14 +156,18 @@
   cursor: pointer;
   color: $mainDR;
 }
-
-.article-nav li{
+ .tabs-list{
+   overflow: hidden;
+   background: url("../../../dist/common/images/tabs-bd-line.png") repeat-x left bottom ;
+ }
+.tabs-list li{
   float: left;
   padding: 15px 20px;
   font-size: 16px;
   color: #505050;
-  &.focus{
+  &.active{
     @include focus;
+    border-bottom: 2px solid $mainDR;
   }
 }
 .clear{

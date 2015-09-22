@@ -81,14 +81,17 @@ template {
  * Remove the gray background color from active links in IE 10.
  */
 a {
-  background: transparent; }
+  background: transparent;
+  color: #333;
+  text-decoration: none; }
 
 /**
  * Improve readability when focused and also mouse hovered in all browsers.
  */
 a:active,
 a:hover {
-  outline: 0; }
+  outline: 0;
+  color: #e24333; }
 
 /* Text-level semantics
    ========================================================================== */
@@ -456,7 +459,8 @@ input, textarea {
 /*副标题统一样式*/
 .content-title {
   width: 100%;
-  height: 34px; }
+  height: 34px;
+  margin: 50px 0 10px; }
   .content-title p {
     margin: 0;
     padding: 0; }
@@ -479,25 +483,24 @@ input, textarea {
     .content-title .w20 span {
       font-size: 30px; }
 
-.mt20 {
-  margin-top: 20px; }
+.content-title-sub {
+  color: #888;
+  font-size: 14px; }
 
-.sub-article {
-  width: 80%;
-  margin: 0 auto;
-  font-size: 14px;
-  line-height: 1.5;
-  margin-top: 50px;
-  text-indent: 1cm; }
+/*文章中得导航栏*/
+.tabs-list {
+  overflow: hidden;
+  background: url("../../../dist/common/images/tabs-bd-line.png") repeat-x left bottom; }
 
-.guide-nav li {
+.tabs-list li {
   float: left;
   padding: 15px 20px;
   font-size: 16px;
   color: #505050; }
-  .guide-nav li.focus {
+  .tabs-list li.active {
     cursor: pointer;
-    color: #e35643; }
+    color: #e35643;
+    border-bottom: 2px solid #e35643; }
 
 .clear {
   clear: both; }
@@ -512,3 +515,14 @@ input, textarea {
   width: 50px;
   height: 2px;
   background-color: #e35643; }
+
+.mt20 {
+  margin-top: 20px; }
+
+.sub-article {
+  width: 80%;
+  margin: 0 auto;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-top: 50px;
+  text-indent: 1cm; }
