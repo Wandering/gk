@@ -8,21 +8,7 @@
                      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
                      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<import resource="classpath:spring-after.xml" />
-
-    <import resource="classpath:spring-before.xml" />
-
-    <import resource="classpath:spring-consult.xml" />
-
-    <import resource="classpath:spring-guide.xml" />
-
-    <import resource="classpath:spring-login.xml" />
-
-    <import resource="classpath:spring-market.xml" />
-
-    <import resource="classpath:spring-question.xml" />
-
-    <import resource="classpath:spring-user.xml" />
+    <import resource="classpath:springme.xml" />
 
     <!--默认的redis配置，启动时会建立连接-->
     <import resource="classpath*:spring-redis.xml" />
