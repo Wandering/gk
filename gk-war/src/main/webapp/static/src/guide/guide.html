@@ -34,6 +34,18 @@
 </div>
 
 <div class="content">
+    <div class="wipe">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="../../dist/before/images/banner1.jpg" alt=""/></div>
+                <div class="swiper-slide"><img src="../../dist/before/images/banner1.jpg" alt=""/></div>
+                <div class="swiper-slide"><img src="../../dist/before/images/banner1.jpg" alt=""/></div>
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>
     <div class="w1000">
         <div class="content-title">
             <p class="fl w40"></p>
@@ -44,7 +56,7 @@
             </p>
             <p class="fl w40"></p>
         </div>
-        <h6 class="w1000"></h6>
+        <h6 class="w1000">专业而通俗地解读陕西省高考招生文件、高考志愿填报和招生的相关政策。</h6>
     </div>
 </div>
 
@@ -73,5 +85,20 @@
         <p class="w1000">联系信息:E-mail:cewfefe@163.com QQ:5454555 备案号:陕ICP备343454135-1号 [站长统计]</p>
     </div>
 </div>
+<link rel="stylesheet" href="../../bower_components/swiper/dist/css/swiper.css"/>
+<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../../bower_components/swiper/dist/js/swiper.jquery.min.js"></script>
+<script>
+    $(function () {
+        //幻灯片
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            loop: true
+        });
+    });
+</script>
 </body>
 </html>

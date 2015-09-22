@@ -242,7 +242,7 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-container-horizontal > .swiper-pagination {
-  //自定义
+/*//自定义*/
 
   bottom: 38px;
   left: 0;
@@ -515,17 +515,17 @@ button.swiper-pagination-bullet {
 
 
 
-//自定义
-.content {
+/*//自定义*/
+  .content {
   //height: 980px;
-  background-color: #fff;
-}
+    background-color: #fff;
+  }
 
-//swipe幻灯片
-.wipe {
-  height: 530px;
-  width: 100%;
-}
+/*//swipe幻灯片*/
+  .wipe {
+    height: 530px;
+    width: 100%;
+  }
 .swiper-slide {
   text-align: center;
   font-size: 18px;
@@ -541,6 +541,6 @@ button.swiper-pagination-bullet {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
-  //自定义
-  background-color: #596b8b;
+//自定义
+background-color: #596b8b;
 }
