@@ -1,7 +1,7 @@
 package cn.thinkjoy.gk.login.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.bean.UserAccountBean;
+import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.constant.ControllerReturnConst;
 import cn.thinkjoy.gk.constant.CookieConst;
@@ -10,7 +10,7 @@ import cn.thinkjoy.gk.constant.RedisConst;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.CookieUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
-import cn.thinkjoy.ss.protocol.common.ERRORCODE;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import com.jlusoft.microschool.core.utils.MD5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +60,7 @@ public class LoginController extends BaseController {
 
 			}
 
-			UserAccountBean userAccountBean = userAccountExService.findUserAccountBeanByPhone(account);
+			UserAccountPojo userAccountBean = userAccountExService.findUserAccountBeanByPhone(account);
 
 			if (userAccountBean == null) {
 
@@ -81,7 +81,7 @@ public class LoginController extends BaseController {
 
 			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
 
-			setUserAccountBean(userAccountBean);
+			setUserAccountPojo(userAccountBean);
 
 		}catch(Exception e){
 			e.printStackTrace();
