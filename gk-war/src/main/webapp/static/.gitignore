@@ -19,10 +19,12 @@ node_modules/
 .sass-cache
 
 bower_components/jquery/src/
-bower_components/jquery/src/.bower.josn
-bower_components/jquery/src/bower.josn
+bower_components/jquery/.bower.josn
+bower_components/jquery/bower.josn
 
 
+
+bower_components/swiper/src
 
 # build
 #dist
