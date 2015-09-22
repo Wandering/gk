@@ -1,0 +1,24 @@
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    compile group: "cn.thinkjoy.gk", name: "gk-web-common", version: "$gkCommonVersion", changing: true
+
+    compile "org.jsoup:jsoup:1.8.1"
+
+    compile 'com.qiniu:qiniu-java-sdk:7.0.+'
+
+    compile "com.squareup.okhttp:okhttp:2.3.0"
+
+    compile ("cn.thinkjoy.ss.protocol:common:$thinkjoySSProtocolCommonVersion"){
+        exclude group: 'cn.thinkjoy.common', module: 'thinkjoy-mu-common'
+    }
+
+    compile ("cn.thinkjoy.ss.protocol:question-dto:0.0.8-SNAPSHOT"){
+        exclude group: 'cn.thinkjoy.ss.protocol', module: 'common'
+    }
+
+    compile ("cn.thinkjoy.ss.protocol:user-dto:0.0.4-SNAPSHOT"){
+        exclude group: 'cn.thinkjoy.ss.protocol', module: 'common'
+    }
+
+}
