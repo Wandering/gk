@@ -8,8 +8,8 @@ package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
-import cn.thinkjoy.ss.dao.IQuestionDAO;
-import cn.thinkjoy.ss.domain.Question;
+import cn.thinkjoy.gk.dao.IQuestionDAO;
+import cn.thinkjoy.gk.domain.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

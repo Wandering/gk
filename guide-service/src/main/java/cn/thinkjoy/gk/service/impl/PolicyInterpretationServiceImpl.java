@@ -9,20 +9,30 @@ package cn.thinkjoy.gk.service.impl;
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
 import cn.thinkjoy.gk.dao.IPolicyInterpretationDAO;
+import cn.thinkjoy.gk.dao.IPolicyInterpretationExDAO;
 import cn.thinkjoy.gk.domain.PolicyInterpretation;
 import cn.thinkjoy.gk.service.IPolicyInterpretationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service("PolicyInterpretationServiceImpl")
 public class PolicyInterpretationServiceImpl extends AbstractPageService<IBaseDAO<PolicyInterpretation>, PolicyInterpretation> implements IPolicyInterpretationService<IBaseDAO<PolicyInterpretation>,PolicyInterpretation> {
     @Autowired
     private IPolicyInterpretationDAO policyInterpretationDAO;
+    @Autowired
+    private IPolicyInterpretationExDAO policyInterpretationExDAO;
 
     @Override
     public IBaseDAO<PolicyInterpretation> getDao() {
         return policyInterpretationDAO;
+    }
+
+    @Override
+    public List<PolicyInterpretation> findPolicyInterpretationCategoryByBatchIdAndProvinceId(long batchId, long provinceId) {
+        return policyInterpretationExDAO.findPolicyInterpretationCategorysByBatchIdAndProvinceId(batchId, provinceId);
     }
 
 //    @Override
