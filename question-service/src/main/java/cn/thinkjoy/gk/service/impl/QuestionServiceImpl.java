@@ -2,26 +2,26 @@
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
  * Project Name: shishuo
- * $Id:  CityServiceImpl.java 2015-09-21 16:58:03 $
+ * $Id:  QuestionServiceImpl.java 2015-07-13 09:45:17 $
  */
 package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
-import cn.thinkjoy.gk.dao.ICityDAO;
-import cn.thinkjoy.gk.domain.City;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
+import cn.thinkjoy.ss.dao.IQuestionDAO;
+import cn.thinkjoy.ss.domain.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-@Service("CityServiceImpl")
-public class CityServiceImpl extends AbstractPageService<IBaseDAO<City>, City> implements cn.thinkjoy.common.service.IBaseService<IBaseDAO<City>, City>, cn.thinkjoy.common.service.IPageService<IBaseDAO<City>, City> {
+@Service("QuestionServiceImpl")
+public class QuestionServiceImpl extends AbstractPageService<IBaseDAO<Question>, Question> implements cn.thinkjoy.common.service.IBaseService<IBaseDAO<Question>, Question>, cn.thinkjoy.common.service.IPageService<IBaseDAO<Question>, Question> {
     @Autowired
-    private ICityDAO cityDAO;
+    private IQuestionDAO questionDAO;
 
     @Override
-    public IBaseDAO<City> getDao() {
-        return cityDAO;
+    public IBaseDAO<Question> getDao() {
+        return questionDAO;
     }
 
 //    @Override
@@ -75,8 +75,8 @@ public class CityServiceImpl extends AbstractPageService<IBaseDAO<City>, City> i
 //    }
 //
 //    @Override
-//    public List<City> findAll() {
-//        return cityDAO.findAll();
+//    public List<Question> findAll() {
+//        return questionDAO.findAll();
 //    }
 //
 //    @Override
@@ -130,8 +130,8 @@ public class CityServiceImpl extends AbstractPageService<IBaseDAO<City>, City> i
 //    }
 //
 //    @Override
-//    protected CityDAO getDao() {
-//        return cityDAO;
+//    protected QuestionDAO getDao() {
+//        return questionDAO;
 //    }
 //
 //    @Override
