@@ -1,15 +1,16 @@
 package cn.thinkjoy.gk.controller.before;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.before.pojo.SubjectPojo;
-import cn.thinkjoy.gk.before.pojo.VideoPojo;
-import cn.thinkjoy.gk.before.service.IEXSubjectService;
+import cn.thinkjoy.gk.pojo.SubjectPojo;
+import cn.thinkjoy.gk.pojo.VideoCoursePojo;
+import cn.thinkjoy.gk.service.IEXSubjectService;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.util.HttpUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -27,10 +28,12 @@ public class VideoController extends BaseController {
      */
     @RequestMapping(value = "getVideoList",method = RequestMethod.GET)
     @ResponseBody
-    public List<VideoPojo> getVideoList(@RequestParam(value="pageNo",required=true) Integer pageNo,
-                                        @RequestParam(value="pageSize",required=true) Integer pageSize,
-                                        @RequestParam(value = "classifyType",required = true )Integer classifyType){
-        if(pageNo == null || pageSize == null || classifyType == null){
+    public List<VideoCoursePojo> getVideoList(){
+        String pageNo = HttpUtil.getParameter(request,"pageNo","0");
+        String pageSize = HttpUtil.getParameter(request,"pageSize","10");
+        String classifyType = request.getParameter("classifyType");
+
+        if(StringUtils.isBlank(classifyType)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
 
