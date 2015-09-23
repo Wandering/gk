@@ -37,7 +37,7 @@ public class AnswerController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/myQuestion", method = RequestMethod.POST)
+    @RequestMapping(value = "/myQuestion", method = RequestMethod.GET)
     @ResponseBody
     public AnswerBean findMyQuestion(PageQuery pageQuery) throws Exception {
 

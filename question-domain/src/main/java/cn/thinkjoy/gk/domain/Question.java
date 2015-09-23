@@ -28,6 +28,7 @@ public class Question extends BaseDomain {
     private Integer freeStatus;
     private String disableExpertId;
     private Integer disableStatus;
+    private Integer sourceType;
 
 	public Question(){
 	}
@@ -119,6 +120,14 @@ public class Question extends BaseDomain {
         this.lastModDate = lastModDate;
     }
 
+    public void setSourceType(Integer value) {
+        this.sourceType = value;
+    }
+
+    public Integer getSourceType() {
+        return this.sourceType;
+    }
+
     public String toString() {
 		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
 			.append("Id", getId())
@@ -134,6 +143,7 @@ public class Question extends BaseDomain {
 			.append("FreeStatus",getFreeStatus())
 			.append("DisableExpertId",getDisableExpertId())
 			.append("DisableStatus",getDisableStatus())
+                .append("SourceType",getSourceType())
 			.toString();
 	}
 	
