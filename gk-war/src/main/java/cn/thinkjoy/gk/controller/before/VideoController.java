@@ -46,16 +46,11 @@ public class VideoController extends BaseController {
         String pageSize = HttpUtil.getParameter(request,"pageSize","10");
         String classifyType = request.getParameter("classifyType");
         String subjectId = request.getParameter("subjectId");
-
-        if(StringUtils.isBlank(classifyType) ||StringUtils.isBlank(subjectId)){
+        String sortType = HttpUtil.getParameter(request,"sortType","1");//默认按照创时间倒序排序
+        if(StringUtils.isBlank(classifyType)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
-        Map<String,Object> queryMap = new HashMap<>();
-        queryMap.put("offset",Integer.valueOf(pageNo)*Integer.valueOf(pageSize));
-        queryMap.put("rows",Integer.valueOf(pageSize));
-        queryMap.put("classifyType",classifyType);
-        queryMap.put("subjectId",Long.valueOf(subjectId));
-        List<VideoCoursePojo> videoCoursePojos = iexVideoCourseService.getVideoListByParams(queryMap);
+        List<VideoCoursePojo> videoCoursePojos = iexVideoCourseService.getVideoListByParams(subjectId == null?null:Long.valueOf(subjectId),Integer.valueOf(classifyType),Integer.parseInt(sortType),Integer.valueOf(pageNo)*Integer.valueOf(pageSize),Integer.valueOf(pageSize));
         if(videoCoursePojos == null || videoCoursePojos.size() == 0){
             throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
         }

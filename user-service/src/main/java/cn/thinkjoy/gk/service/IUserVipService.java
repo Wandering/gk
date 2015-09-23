@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
- * Project Name: shishuo
- * $Id:  UserVipService.java 2015-09-21 16:58:05 $
+ * Project Name: gaokao
+ * $Id:  UserVipService.java 2015-09-23 10:34:37 $
  */
 
 package cn.thinkjoy.gk.service;

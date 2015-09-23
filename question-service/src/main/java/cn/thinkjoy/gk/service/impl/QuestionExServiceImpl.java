@@ -20,7 +20,7 @@ public class QuestionExServiceImpl implements IQuestionExService {
     private IQuestionExDAO questionExDAO;
 
     @Override
-    public List<QuestionPojo> findQuestionPage(Integer freeStatus, Integer isAnswer, Integer startSize, Integer endSize) {
+    public List<QuestionPojo> findQuestionPage(Integer freeStatus, Integer isAnswer,Integer sourceType, Integer startSize, Integer endSize) {
 
         Map<String,Object> params = new HashMap<String, Object>();
         params.put("isAnswer",isAnswer);
@@ -28,16 +28,18 @@ public class QuestionExServiceImpl implements IQuestionExService {
         int pageSize = endSize - startSize;
         params.put("startSize",startSize);
         params.put("endSize",pageSize);
+        params.put("sourceType",sourceType);
         return questionExDAO.findQuestionPage(params);
 
     }
 
     @Override
-    public int findQuestionCount(Integer freeStatus, Integer isOpen, Integer isAnswer) {
+    public int findQuestionCount(Integer freeStatus, Integer isOpen, Integer isAnswer,Integer sourceType) {
         Map<String,Object> params = new HashMap<String, Object>();
         params.put("isAnswer",isAnswer);
         params.put("isOpen",isOpen);
         params.put("freeStatus",freeStatus);
+        params.put("sourceType",sourceType);
         return questionExDAO.findQuestionCount(params);
     }
 

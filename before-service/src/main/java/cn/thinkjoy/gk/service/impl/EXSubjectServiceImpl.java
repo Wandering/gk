@@ -1,9 +1,9 @@
 package cn.thinkjoy.gk.service.impl;
 
+import cn.thinkjoy.gk.dao.ISubjectDAO;
 import cn.thinkjoy.gk.domain.Subject;
 import cn.thinkjoy.gk.pojo.SubjectPojo;
 import cn.thinkjoy.gk.service.IEXSubjectService;
-import cn.thinkjoy.gk.service.ISubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.List;
 @Service("EXSubjectServiceImpl")
 public class EXSubjectServiceImpl implements IEXSubjectService{
     @Autowired
-    private ISubjectService subjectService;
+    private ISubjectDAO subjectDAO;
     /**
      * 查询科目列表
      *
@@ -24,7 +24,7 @@ public class EXSubjectServiceImpl implements IEXSubjectService{
      */
     @Override
     public List<SubjectPojo> getSubjectList() {
-        List<Subject> subjects = subjectService.findAll();
+        List<Subject> subjects = subjectDAO.findAll();
         List<SubjectPojo> subjectPojos = new ArrayList<>();
         if(subjects != null && subjects.size() >0){
             for(Subject subject:subjects){

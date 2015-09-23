@@ -2,39 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.thinkjoy.gk.dao.IUserVipDAO">
-<!--
-insert
-update
-updateNull
-deleteById
-deleteByCondition
-deleteByProperty
-fetch
-findOne
-findList
-findAll
-queryPage
-like
-queryList
-queryOne
-count
-selectMaxId
-updateOrSave
-selectOne
-selectList
--->
+
     <sql id="Base_Column_List">
         id,
         status,
-        validTime
+        creator,
+        createDate,
+        lastModifier,
+        lastModDate,
+        endDate
     </sql>
     <insert id="insert" parameterType="UserVip">
         INSERT INTO gk_user_vip (
         status,
-        validTime
+        creator,
+        createDate,
+        lastModifier,
+        lastModDate,
+        endDate
         ) VALUES (
         #{status},
-        #{validTime}
+        #{creator},
+        #{createDate},
+        #{lastModifier},
+        #{lastModDate},
+        #{endDate}
         )
         <selectKey resultType="java.lang.Long" keyProperty="id">
         SELECT LAST_INSERT_ID() AS ID
@@ -48,8 +40,20 @@ selectList
             <if test="status!=null">
                 status = #{status},
             </if>
-            <if test="validTime!=null">
-                validTime = #{validTime},
+            <if test="creator!=null">
+                creator = #{creator},
+            </if>
+            <if test="createDate!=null">
+                createDate = #{createDate},
+            </if>
+            <if test="lastModifier!=null">
+                lastModifier = #{lastModifier},
+            </if>
+            <if test="lastModDate!=null">
+                lastModDate = #{lastModDate},
+            </if>
+            <if test="endDate!=null">
+                endDate = #{endDate},
             </if>
         </trim>
         WHERE
@@ -62,8 +66,20 @@ selectList
             <if test="map.status!=null">
                 status = #{map.status},
             </if>
-            <if test="map.validTime!=null">
-                validTime = #{map.validTime},
+            <if test="map.creator!=null">
+                creator = #{map.creator},
+            </if>
+            <if test="map.createDate!=null">
+                createDate = #{map.createDate},
+            </if>
+            <if test="map.lastModifier!=null">
+                lastModifier = #{map.lastModifier},
+            </if>
+            <if test="map.lastModDate!=null">
+                lastModDate = #{map.lastModDate},
+            </if>
+            <if test="map.endDate!=null">
+                endDate = #{map.endDate},
             </if>
         </trim>
         WHERE
@@ -76,8 +92,20 @@ selectList
             <if test="update.status!=null">
                 status = #{update.status},
             </if>
-            <if test="update.validTime!=null">
-                validTime = #{update.validTime},
+            <if test="update.creator!=null">
+                creator = #{update.creator},
+            </if>
+            <if test="update.createDate!=null">
+                createDate = #{update.createDate},
+            </if>
+            <if test="update.lastModifier!=null">
+                lastModifier = #{update.lastModifier},
+            </if>
+            <if test="update.lastModDate!=null">
+                lastModDate = #{update.lastModDate},
+            </if>
+            <if test="update.endDate!=null">
+                endDate = #{update.endDate},
             </if>
         </trim>
 
@@ -88,8 +116,20 @@ selectList
             <if test="condition.status!=null">
                 AND status = #{condition.status}
             </if>
-            <if test="condition.validTime!=null">
-                AND validTime = #{condition.validTime}
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.endDate!=null">
+                AND endDate = #{condition.endDate}
             </if>
         </trim>
     </update>
@@ -97,10 +137,18 @@ selectList
     <insert id="insertMap" >
         INSERT INTO gk_user_vip (
                 status,
-                validTime
+                creator,
+                createDate,
+                lastModifier,
+                lastModDate,
+                endDate
         ) VALUES (
                     #{map.status},
-                    #{map.validTime}
+                    #{map.creator},
+                    #{map.createDate},
+                    #{map.lastModifier},
+                    #{map.lastModDate},
+                    #{map.endDate}
         )
     </insert>
 
@@ -109,7 +157,11 @@ selectList
         UPDATE gk_user_vip
         <trim prefix="SET" suffixOverrides=",">
             status = #{status},
-            validTime = #{validTime},
+            creator = #{creator},
+            createDate = #{createDate},
+            lastModifier = #{lastModifier},
+            lastModDate = #{lastModDate},
+            endDate = #{endDate},
         </trim>
         WHERE
         id = #{id} 
@@ -133,8 +185,20 @@ selectList
             <if test="status!=null">
                 AND status = #{status}
             </if>
-            <if test="validTime!=null">
-                AND validTime = #{validTime}
+            <if test="creator!=null">
+                AND creator = #{creator}
+            </if>
+            <if test="createDate!=null">
+                AND createDate = #{createDate}
+            </if>
+            <if test="lastModifier!=null">
+                AND lastModifier = #{lastModifier}
+            </if>
+            <if test="lastModDate!=null">
+                AND lastModDate = #{lastModDate}
+            </if>
+            <if test="endDate!=null">
+                AND endDate = #{endDate}
             </if>
         </trim>
     </delete>
@@ -199,8 +263,20 @@ selectList
             <if test="condition.status!=null">
                 ${condition.groupOp}   status  ${condition.status.op}  #{condition.status.data}
             </if>
-            <if test="condition.validTime!=null">
-                ${condition.groupOp}   validTime  ${condition.validTime.op}  #{condition.validTime.data}
+            <if test="condition.creator!=null">
+                ${condition.groupOp}   creator  ${condition.creator.op}  #{condition.creator.data}
+            </if>
+            <if test="condition.createDate!=null">
+                ${condition.groupOp}   createDate  ${condition.createDate.op}  #{condition.createDate.data}
+            </if>
+            <if test="condition.lastModifier!=null">
+                ${condition.groupOp}   lastModifier  ${condition.lastModifier.op}  #{condition.lastModifier.data}
+            </if>
+            <if test="condition.lastModDate!=null">
+                ${condition.groupOp}   lastModDate  ${condition.lastModDate.op}  #{condition.lastModDate.data}
+            </if>
+            <if test="condition.endDate!=null">
+                ${condition.groupOp}   endDate  ${condition.endDate.op}  #{condition.endDate.data}
             </if>
 
 
@@ -225,8 +301,20 @@ selectList
             <if test="status!=null">
                 AND status like CONCAT('%', #{status} , '%')
             </if>
-            <if test="validTime!=null">
-                AND validTime like CONCAT('%', #{validTime} , '%')
+            <if test="creator!=null">
+                AND creator like CONCAT('%', #{creator} , '%')
+            </if>
+            <if test="createDate!=null">
+                AND createDate like CONCAT('%', #{createDate} , '%')
+            </if>
+            <if test="lastModifier!=null">
+                AND lastModifier like CONCAT('%', #{lastModifier} , '%')
+            </if>
+            <if test="lastModDate!=null">
+                AND lastModDate like CONCAT('%', #{lastModDate} , '%')
+            </if>
+            <if test="endDate!=null">
+                AND endDate like CONCAT('%', #{endDate} , '%')
             </if>
         </trim>
         <if test="orderBy!=null">
@@ -246,8 +334,20 @@ selectList
             <if test="condition.status!=null">
                 AND status = #{condition.status}
             </if>
-            <if test="condition.validTime!=null">
-                AND validTime = #{condition.validTime}
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.endDate!=null">
+                AND endDate = #{condition.endDate}
             </if>
         </trim>
         <if test="orderBy!=null">
@@ -266,8 +366,20 @@ selectList
             <if test="status!=null">
                 AND status = #{status}
             </if>
-            <if test="validTime!=null">
-                AND validTime = #{validTime}
+            <if test="creator!=null">
+                AND creator = #{creator}
+            </if>
+            <if test="createDate!=null">
+                AND createDate = #{createDate}
+            </if>
+            <if test="lastModifier!=null">
+                AND lastModifier = #{lastModifier}
+            </if>
+            <if test="lastModDate!=null">
+                AND lastModDate = #{lastModDate}
+            </if>
+            <if test="endDate!=null">
+                AND endDate = #{endDate}
             </if>
         </trim>
         limit 0,1
@@ -282,8 +394,20 @@ selectList
            <if test="status!=null">
                ${groupOp} status ${status.op}  #{status.data}
            </if>
-           <if test="validTime!=null">
-               ${groupOp} validTime ${validTime.op}  #{validTime.data}
+           <if test="creator!=null">
+               ${groupOp} creator ${creator.op}  #{creator.data}
+           </if>
+           <if test="createDate!=null">
+               ${groupOp} createDate ${createDate.op}  #{createDate.data}
+           </if>
+           <if test="lastModifier!=null">
+               ${groupOp} lastModifier ${lastModifier.op}  #{lastModifier.data}
+           </if>
+           <if test="lastModDate!=null">
+               ${groupOp} lastModDate ${lastModDate.op}  #{lastModDate.data}
+           </if>
+           <if test="endDate!=null">
+               ${groupOp} endDate ${endDate.op}  #{endDate.data}
            </if>
 
        </where>

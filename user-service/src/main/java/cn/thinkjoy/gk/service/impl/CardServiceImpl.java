@@ -1,16 +1,16 @@
 /*
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
- * Project Name: shishuo
- * $Id:  UserVipServiceImpl.java 2015-09-21 16:58:05 $
+ * Project Name: gaokao
+ * $Id:  CardServiceImpl.java 2015-09-23 10:34:36 $
  */
 package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.common.domain.BaseDomain;
 import cn.thinkjoy.common.dao.IBaseDAO;
-import cn.thinkjoy.gk.dao.IUserVipDAO;
-import cn.thinkjoy.gk.domain.UserVip;
-import cn.thinkjoy.gk.service.IUserVipService;
+import cn.thinkjoy.gk.dao.ICardDAO;
+import cn.thinkjoy.gk.domain.Card;
+import cn.thinkjoy.gk.service.ICardService;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,14 +19,14 @@ import java.util.List;
 import java.util.Map;
 
 
-@Service("UserVipServiceImpl")
-public class UserVipServiceImpl extends AbstractPageService<IBaseDAO<UserVip>, UserVip> implements IUserVipService<IBaseDAO<UserVip>,UserVip>{
+@Service("CardServiceImpl")
+public class CardServiceImpl extends AbstractPageService<IBaseDAO<Card>, Card> implements ICardService<IBaseDAO<Card>,Card>{
     @Autowired
-    private IUserVipDAO userVipDAO;
+    private ICardDAO cardDAO;
 
     @Override
-    public IBaseDAO<UserVip> getDao() {
-        return userVipDAO;
+    public IBaseDAO<Card> getDao() {
+        return cardDAO;
     }
 
 //    @Override
@@ -80,8 +80,8 @@ public class UserVipServiceImpl extends AbstractPageService<IBaseDAO<UserVip>, U
 //    }
 //
 //    @Override
-//    public List<UserVip> findAll() {
-//        return userVipDAO.findAll();
+//    public List<CardPojo> findAll() {
+//        return cardDAO.findAll();
 //    }
 //
 //    @Override
@@ -135,8 +135,8 @@ public class UserVipServiceImpl extends AbstractPageService<IBaseDAO<UserVip>, U
 //    }
 //
 //    @Override
-//    protected UserVipDAO getDao() {
-//        return userVipDAO;
+//    protected CardDAO getDao() {
+//        return cardDAO;
 //    }
 //
 //    @Override

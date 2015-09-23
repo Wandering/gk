@@ -24,6 +24,9 @@
             <if test="isAnswer !=null">
                 AND a.isAnswer = #{isAnswer}
             </if>
+            <if test="sourceType !=null">
+                AND a.sourceType = #{sourceType}
+            </if>
         </where>
         ORDER BY a.createDate desc
         <if test="startSize != null">
@@ -50,6 +53,9 @@
             </if>
             <if test="isAnswer !=null">
                 AND a.isAnswer = #{isAnswer}
+            </if>
+            <if test="sourceType !=null">
+                AND a.sourceType = #{sourceType}
             </if>
         </where>
     </select>

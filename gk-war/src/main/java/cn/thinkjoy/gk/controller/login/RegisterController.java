@@ -34,6 +34,14 @@ public class RegisterController extends BaseController {
     private IUserAccountExService userAccountExService;
 
 
+    /**
+     * 注册账号
+     * @param account
+     * @param captcha
+     * @param password
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/account",method = RequestMethod.POST)
     @ResponseBody
     public String registerAccount(@RequestParam(value="account",required = false) String account,
@@ -79,6 +87,14 @@ public class RegisterController extends BaseController {
         return "registerSuccess";
     }
 
+    /**
+     * 找回密码
+     * @param account
+     * @param captcha
+     * @param password
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/retrievePassword" ,method = RequestMethod.POST)
     @ResponseBody
     public String retrievePassword(@RequestParam(value="account",required = false) String account,
@@ -119,7 +135,7 @@ public class RegisterController extends BaseController {
         }finally {
 
         }
-        return "login";
+        return "success";
     }
 
 
