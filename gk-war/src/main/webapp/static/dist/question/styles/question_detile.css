@@ -1232,16 +1232,16 @@ section:last-child {
   float: left;
   border-left: 1px solid #F1F1F1; }
   .ask-list h3 {
-    width: 98%;
+    width: 95%;
+    padding-left: 5%;
     border-bottom: 1px solid #F1F1F1;
     height: 34px;
     line-height: 34px;
-    margin: 30px 0 0 10px;
     color: #333; }
-  .ask-list ul {
-    margin-left: 10px; }
   .ask-list li {
-    width: 98%;
+    width: 95%;
+    padding-left: 5%;
+    list-style: inside disc;
     margin: 15px 0;
     font-size: 12px;
     color: #444; }
