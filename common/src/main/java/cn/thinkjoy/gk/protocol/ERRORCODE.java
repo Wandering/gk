@@ -31,7 +31,9 @@ public enum ERRORCODE {
 	 */
 
 	SEND_SMSCODE_ERROR("0500001", "发送验证码失败"), SEND_SMSCODE_MORE("0500002", "获取验证码太频烦,请稍后再试"),
-	ORDER_VIP_REPEAT("0600001", "重复订购");
+	ORDER_VIP_REPEAT("0600001", "重复订购"),
+	PARAM_ISNULL("0700001","参数不能为空"),
+	NO_RECORD("0800001","无记录");
 
 	/** The code. */
 	private final String code;

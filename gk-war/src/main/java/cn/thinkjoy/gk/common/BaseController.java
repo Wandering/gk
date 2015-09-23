@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.concurrent.TimeUnit;
 
-public class BaseController {
+public class BaseController{
 
 	protected HttpServletRequest request;
 	protected HttpServletResponse response;
