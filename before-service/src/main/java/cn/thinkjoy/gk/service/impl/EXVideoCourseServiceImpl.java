@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by yhwang on 15/9/23.
@@ -22,8 +21,7 @@ public class EXVideoCourseServiceImpl implements IEXVideoCourseService{
      * @return
      */
     @Override
-    public List<VideoCoursePojo> getVideoListByParams(Map<String,Object> queryMap) {
-
-        return iexVideoCourseDAO.getVideoListByParams(queryMap);
+    public List<VideoCoursePojo> getVideoListByParams(Long subjectId,Integer classifyType,Integer sortType,Integer offset,Integer rows) {
+        return iexVideoCourseDAO.getVideoListByParams(subjectId,classifyType,sortType,offset,rows);
     }
 }
