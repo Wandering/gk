@@ -246,8 +246,6 @@ select {
 button,
 html input[type="button"], input[type="reset"],
 input[type="submit"] {
-  -webkit-appearance: button;
-  /* 2 */
   cursor: pointer;
   /* 3 */ }
 
@@ -368,8 +366,7 @@ a, button, input, textarea {
   tap-highlight-color: transparent; }
 
 input, textarea {
-  border: 0;
-  -webkit-appearance: none; }
+  border: 0; }
 
 .w1000 {
   width: 1000px;
