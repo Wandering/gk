@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by clei on 15/7/2.
  */
 public class OrdersQuery implements Serializable{
-
+   
     private String channel;
     private String remoteIp;
     private String products;
