@@ -99,6 +99,7 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         return flag;
     }
 
+    @Override
     public UserAccount findUserAccountById(long id){
         return userAccountDAO.findOne("id",id);
     }
