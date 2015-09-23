@@ -106,7 +106,7 @@ public class QuestionController extends BaseController {
 //            }
 //        }
 
-        List<QuestionPojo> hotQuestionBeans = questionExService.findQuestionPage(freeStatus, 1,startSize, endSize);
+        List<QuestionPojo> hotQuestionBeans = questionExService.findQuestionPage(freeStatus, 1,7,startSize, endSize);
 
         QuestionBean hotQuestionBean = new QuestionBean();
 
@@ -201,7 +201,7 @@ public class QuestionController extends BaseController {
 //            }
 //        }
 
-        List<QuestionPojo> hotQuestionBeans = questionExService.findQuestionPage(freeStatus, 1,startSize, endSize);
+        List<QuestionPojo> hotQuestionBeans = questionExService.findQuestionPage(freeStatus, 1,7,startSize, endSize);
 
         QuestionBean hotQuestionBean = new QuestionBean();
 
