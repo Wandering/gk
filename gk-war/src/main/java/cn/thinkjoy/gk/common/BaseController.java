@@ -58,8 +58,8 @@ public class BaseController {
 	}
 
 	protected void setUserAccountPojo(UserAccountPojo userAccountBean) throws Exception {
-		String key = RedisConst.USER_KEY + userAccountBean.getId();
 		if(null!=userAccountBean){
+			String key = RedisConst.USER_KEY + userAccountBean.getId();
 			RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean));
 		}
 	}
