@@ -6,6 +6,7 @@ import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.service.IUserAccountService;
 import com.jlusoft.microschool.core.utils.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -77,6 +78,49 @@ public class RegisterController extends BaseController {
 
         }
         return "registerSuccess";
+    }
+
+    @RequestMapping(value = "/retrievePassword" ,method = RequestMethod.POST)
+    @ResponseBody
+    public String retrievePassword(@RequestParam(value="account",required = false) String account,
+                                   @RequestParam(value="captcha",required = false) String captcha,
+                                   @RequestParam(value="password",required = false) String password)
+            throws Exception{
+        try{
+            if (StringUtils.isEmpty(account)) {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
+            }
+            if (StringUtils.isEmpty(captcha)) {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入验证码!");
+            }
+            if (StringUtils.isEmpty(password)) {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入密码!");
+            }
+            UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
+            if (userAccountBean==null){
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号尚未注册!");
+            }
+            //TODO 验证验证码
+
+            //根据账号id查询账号
+            UserAccount userAccount = userAccountExService.findUserAccountById(userAccountBean.getId());
+            userAccount.setPassword(MD5Util.MD5Encode(password));
+            userAccount.setLastModDate(System.currentTimeMillis());
+            try{
+                //更新账号密码
+                boolean flag=userAccountExService.updateUserAccount(userAccount);
+                if (!flag){
+                    throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"密码重设失败");
+                }
+            }catch(Exception e){
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"密码重设失败");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+
+        }
+        return "login";
     }
 
 
