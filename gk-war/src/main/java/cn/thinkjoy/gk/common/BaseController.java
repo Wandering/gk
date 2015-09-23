@@ -1,8 +1,8 @@
 package cn.thinkjoy.gk.common;
 
+import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.constant.CookieConst;
-import cn.thinkjoy.gk.constant.RedisConst;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.CookieUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
@@ -42,7 +42,7 @@ public class BaseController{
 
 	protected UserAccountPojo getUserAccountPojo() {
 		Long id = Long.valueOf(getCookieValue());
-		String key = RedisConst.USER_KEY + id;
+		String key = UserRedisConst.USER_KEY + id;
 		UserAccountPojo userAccountBean  = null;
 		RedisUtil.getInstance().del(key);
 		if(!RedisUtil.getInstance().exists(key)){
@@ -58,7 +58,7 @@ public class BaseController{
 	}
 
 	protected void setUserAccountPojo(UserAccountPojo userAccountBean) throws Exception {
-		String key = RedisConst.USER_KEY + userAccountBean.getId();
+		String key = UserRedisConst.USER_KEY + userAccountBean.getId();
 		if(null!=userAccountBean){
 			RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean));
 		}

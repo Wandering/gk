@@ -87,4 +87,21 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         return flag;
     }
 
+    @Override
+    public boolean updateUserAccount(UserAccount userAccount){
+        boolean flag = false;
+        try {
+            userAccountDAO.update(userAccount);
+            flag = true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
+    @Override
+    public UserAccount findUserAccountById(long id){
+        return userAccountDAO.findOne("id",id);
+    }
+
 }
