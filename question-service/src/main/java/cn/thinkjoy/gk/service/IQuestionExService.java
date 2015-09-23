@@ -9,8 +9,17 @@ package cn.thinkjoy.gk.service;
 
 
 
+import cn.thinkjoy.gk.pojo.QuestionDetailPojo;
+import cn.thinkjoy.gk.pojo.QuestionPojo;
+
 import java.util.List;
 
 public interface IQuestionExService {
+
+    List<QuestionPojo> findQuestionPage(Integer freeStatus ,Integer isAnswer,Integer startSize,Integer endSize);
+
+    int findQuestionCount(Integer freeStatus ,Integer isOpen,Integer isAnswer);
+
+    QuestionDetailPojo findQuestionById(Long question);
 
 }

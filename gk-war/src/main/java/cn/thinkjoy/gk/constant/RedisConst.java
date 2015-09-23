@@ -1,11 +1,6 @@
 package cn.thinkjoy.gk.constant;
 
 public class RedisConst {
-	
-	/**
-	 * 用户信息
-	 */
-	public static final String USER_KEY = "user_";
 
 
 	/**
