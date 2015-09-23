@@ -3,21 +3,30 @@
 
 <mapper namespace="cn.thinkjoy.gk.dao.IUserAccountExDAO">
 
-    <select id="findUserAccountBean" resultType="UserAccountPojo">
-        SELECT a.id,c.name,c.icon,a.account,a.password,a.status,a.userType,c.cityId,c.sourceType,b.status vipStatus
-        FROM gk_user_account a
-        left join gk_user_vip b on a.id = b.id
-        left join gk_user_info c on a.id = c.id
+    <select id="findUserAccountPojo" resultType="UserAccountPojo">
+        SELECT
+          acc.id,
+          info.name,
+          info.icon,
+          acc.account,
+          acc.password,
+          acc.status,
+          acc.userType,
+          info.countyId,
+          vip.status as vipStatus
+        FROM gk_user_account acc
+        left join gk_user_vip vip on acc.id = vip.id
+        left join gk_user_info info on acc.id = info.id
         <where>
-            a.userType = 0
+            acc.userType = 0
             <if test="token!=null">
-                and c.token = #{token}
+                and info.token = #{token}
             </if>
             <if test="id!=null">
-                and a.id = #{id}
+                and acc.id = #{id}
             </if>
             <if test="phone!=null">
-                and a.phone = #{phone}
+                and acc.phone = #{phone}
             </if>
         </where>
     </select>
