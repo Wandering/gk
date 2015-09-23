@@ -2,27 +2,27 @@
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
  * Project Name: before
- * $Id:  VideoCourseServiceImpl.java 2015-09-23 10:30:50 $
+ * $Id:  SubjectServiceImpl.java 2015-09-23 10:30:49 $
  */
-package cn.thinkjoy.gk.before.service.impl;
+package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
-import cn.thinkjoy.gk.before.dao.IVideoCourseDAO;
-import cn.thinkjoy.gk.before.domain.VideoCourse;
-import cn.thinkjoy.gk.before.service.IVideoCourseService;
+import cn.thinkjoy.gk.dao.ISubjectDAO;
+import cn.thinkjoy.gk.domain.Subject;
+import cn.thinkjoy.gk.service.ISubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-@Service("VideoCourseServiceImpl")
-public class VideoCourseServiceImpl extends AbstractPageService<IBaseDAO<VideoCourse>, VideoCourse> implements IVideoCourseService<IBaseDAO<VideoCourse>,VideoCourse> {
+@Service("SubjectServiceImpl")
+public class SubjectServiceImpl extends AbstractPageService<IBaseDAO<Subject>, Subject> implements ISubjectService<IBaseDAO<Subject>,Subject> {
     @Autowired
-    private IVideoCourseDAO videoCourseDAO;
+    private ISubjectDAO subjectDAO;
 
     @Override
-    public IBaseDAO<VideoCourse> getDao() {
-        return videoCourseDAO;
+    public IBaseDAO<Subject> getDao() {
+        return subjectDAO;
     }
 
 //    @Override
@@ -76,8 +76,8 @@ public class VideoCourseServiceImpl extends AbstractPageService<IBaseDAO<VideoCo
 //    }
 //
 //    @Override
-//    public List<VideoCourse> findAll() {
-//        return videoCourseDAO.findAll();
+//    public List<Subject> findAll() {
+//        return subjectDAO.findAll();
 //    }
 //
 //    @Override
@@ -131,8 +131,8 @@ public class VideoCourseServiceImpl extends AbstractPageService<IBaseDAO<VideoCo
 //    }
 //
 //    @Override
-//    protected VideoCourseDAO getDao() {
-//        return videoCourseDAO;
+//    protected SubjectDAO getDao() {
+//        return subjectDAO;
 //    }
 //
 //    @Override

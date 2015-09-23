@@ -2,28 +2,27 @@
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
  * Project Name: before
- * $Id:  ExaminationPaperServiceImpl.java 2015-09-23 10:30:48 $
+ * $Id:  VideoClassifyServiceImpl.java 2015-09-23 10:30:49 $
  */
-package cn.thinkjoy.gk.before.service.impl;
-
+package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
-import cn.thinkjoy.gk.before.dao.IExaminationPaperDAO;
-import cn.thinkjoy.gk.before.domain.ExaminationPaper;
-import cn.thinkjoy.gk.before.service.IExaminationPaperService;
+import cn.thinkjoy.gk.dao.IVideoClassifyDAO;
+import cn.thinkjoy.gk.domain.VideoClassify;
+import cn.thinkjoy.gk.service.IVideoClassifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-@Service("ExaminationPaperServiceImpl")
-public class ExaminationPaperServiceImpl extends AbstractPageService<IBaseDAO<ExaminationPaper>, ExaminationPaper> implements IExaminationPaperService<IBaseDAO<ExaminationPaper>,ExaminationPaper> {
+@Service("VideoClassifyServiceImpl")
+public class VideoClassifyServiceImpl extends AbstractPageService<IBaseDAO<VideoClassify>, VideoClassify> implements IVideoClassifyService<IBaseDAO<VideoClassify>,VideoClassify> {
     @Autowired
-    private IExaminationPaperDAO examinationPaperDAO;
+    private IVideoClassifyDAO videoClassifyDAO;
 
     @Override
-    public IBaseDAO<ExaminationPaper> getDao() {
-        return examinationPaperDAO;
+    public IBaseDAO<VideoClassify> getDao() {
+        return videoClassifyDAO;
     }
 
 //    @Override
@@ -77,8 +76,8 @@ public class ExaminationPaperServiceImpl extends AbstractPageService<IBaseDAO<Ex
 //    }
 //
 //    @Override
-//    public List<ExaminationPaper> findAll() {
-//        return examinationPaperDAO.findAll();
+//    public List<VideoClassify> findAll() {
+//        return videoClassifyDAO.findAll();
 //    }
 //
 //    @Override
@@ -132,8 +131,8 @@ public class ExaminationPaperServiceImpl extends AbstractPageService<IBaseDAO<Ex
 //    }
 //
 //    @Override
-//    protected ExaminationPaperDAO getDao() {
-//        return examinationPaperDAO;
+//    protected VideoClassifyDAO getDao() {
+//        return videoClassifyDAO;
 //    }
 //
 //    @Override

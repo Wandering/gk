@@ -2,27 +2,28 @@
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
  * Project Name: before
- * $Id:  SubjectServiceImpl.java 2015-09-23 10:30:49 $
+ * $Id:  ExaminationPaperServiceImpl.java 2015-09-23 10:30:48 $
  */
-package cn.thinkjoy.gk.before.service.impl;
+package cn.thinkjoy.gk.service.impl;
+
 
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
-import cn.thinkjoy.gk.before.dao.ISubjectDAO;
-import cn.thinkjoy.gk.before.domain.Subject;
-import cn.thinkjoy.gk.before.service.ISubjectService;
+import cn.thinkjoy.gk.dao.IExaminationPaperDAO;
+import cn.thinkjoy.gk.domain.ExaminationPaper;
+import cn.thinkjoy.gk.service.IExaminationPaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-@Service("SubjectServiceImpl")
-public class SubjectServiceImpl extends AbstractPageService<IBaseDAO<Subject>, Subject> implements ISubjectService<IBaseDAO<Subject>,Subject> {
+@Service("ExaminationPaperServiceImpl")
+public class ExaminationPaperServiceImpl extends AbstractPageService<IBaseDAO<ExaminationPaper>, ExaminationPaper> implements IExaminationPaperService<IBaseDAO<ExaminationPaper>,ExaminationPaper> {
     @Autowired
-    private ISubjectDAO subjectDAO;
+    private IExaminationPaperDAO examinationPaperDAO;
 
     @Override
-    public IBaseDAO<Subject> getDao() {
-        return subjectDAO;
+    public IBaseDAO<ExaminationPaper> getDao() {
+        return examinationPaperDAO;
     }
 
 //    @Override
@@ -76,8 +77,8 @@ public class SubjectServiceImpl extends AbstractPageService<IBaseDAO<Subject>, S
 //    }
 //
 //    @Override
-//    public List<Subject> findAll() {
-//        return subjectDAO.findAll();
+//    public List<ExaminationPaper> findAll() {
+//        return examinationPaperDAO.findAll();
 //    }
 //
 //    @Override
@@ -131,8 +132,8 @@ public class SubjectServiceImpl extends AbstractPageService<IBaseDAO<Subject>, S
 //    }
 //
 //    @Override
-//    protected SubjectDAO getDao() {
-//        return subjectDAO;
+//    protected ExaminationPaperDAO getDao() {
+//        return examinationPaperDAO;
 //    }
 //
 //    @Override

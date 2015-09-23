@@ -2,27 +2,27 @@
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
  * Project Name: before
- * $Id:  VideoClassifyServiceImpl.java 2015-09-23 10:30:49 $
+ * $Id:  VideoCourseServiceImpl.java 2015-09-23 10:30:50 $
  */
-package cn.thinkjoy.gk.before.service.impl;
+package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
-import cn.thinkjoy.gk.before.dao.IVideoClassifyDAO;
-import cn.thinkjoy.gk.before.domain.VideoClassify;
-import cn.thinkjoy.gk.before.service.IVideoClassifyService;
+import cn.thinkjoy.gk.dao.IVideoCourseDAO;
+import cn.thinkjoy.gk.domain.VideoCourse;
+import cn.thinkjoy.gk.service.IVideoCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-@Service("VideoClassifyServiceImpl")
-public class VideoClassifyServiceImpl extends AbstractPageService<IBaseDAO<VideoClassify>, VideoClassify> implements IVideoClassifyService<IBaseDAO<VideoClassify>,VideoClassify> {
+@Service("VideoCourseServiceImpl")
+public class VideoCourseServiceImpl extends AbstractPageService<IBaseDAO<VideoCourse>, VideoCourse> implements IVideoCourseService<IBaseDAO<VideoCourse>,VideoCourse> {
     @Autowired
-    private IVideoClassifyDAO videoClassifyDAO;
+    private IVideoCourseDAO videoCourseDAO;
 
     @Override
-    public IBaseDAO<VideoClassify> getDao() {
-        return videoClassifyDAO;
+    public IBaseDAO<VideoCourse> getDao() {
+        return videoCourseDAO;
     }
 
 //    @Override
@@ -76,8 +76,8 @@ public class VideoClassifyServiceImpl extends AbstractPageService<IBaseDAO<Video
 //    }
 //
 //    @Override
-//    public List<VideoClassify> findAll() {
-//        return videoClassifyDAO.findAll();
+//    public List<VideoCourse> findAll() {
+//        return videoCourseDAO.findAll();
 //    }
 //
 //    @Override
@@ -131,8 +131,8 @@ public class VideoClassifyServiceImpl extends AbstractPageService<IBaseDAO<Video
 //    }
 //
 //    @Override
-//    protected VideoClassifyDAO getDao() {
-//        return videoClassifyDAO;
+//    protected VideoCourseDAO getDao() {
+//        return videoCourseDAO;
 //    }
 //
 //    @Override

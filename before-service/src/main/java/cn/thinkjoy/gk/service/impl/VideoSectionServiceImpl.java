@@ -4,13 +4,13 @@
  * Project Name: before
  * $Id:  VideoSectionServiceImpl.java 2015-09-23 10:30:50 $
  */
-package cn.thinkjoy.gk.before.service.impl;
+package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
-import cn.thinkjoy.gk.before.dao.IVideoSectionDAO;
-import cn.thinkjoy.gk.before.domain.VideoSection;
-import cn.thinkjoy.gk.before.service.IVideoSectionService;
+import cn.thinkjoy.gk.dao.IVideoSectionDAO;
+import cn.thinkjoy.gk.domain.VideoSection;
+import cn.thinkjoy.gk.service.IVideoSectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

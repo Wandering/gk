@@ -5,7 +5,7 @@
  * $Id:  SubjectService.java 2015-09-23 10:30:49 $
  */
 
-package cn.thinkjoy.gk.before.service;
+package cn.thinkjoy.gk.service;
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.common.domain.BaseDomain;
 import cn.thinkjoy.common.service.IBaseService;

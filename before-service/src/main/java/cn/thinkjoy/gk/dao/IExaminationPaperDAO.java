@@ -4,11 +4,11 @@
  * Project Name: before
  * $Id:  ExaminationPaperDAO.java 2015-09-23 10:30:48 $
  */
-package cn.thinkjoy.gk.before.dao;
+package cn.thinkjoy.gk.dao;
 
 
 import cn.thinkjoy.common.dao.IBaseDAO;
-import cn.thinkjoy.gk.before.domain.ExaminationPaper;
+import cn.thinkjoy.gk.domain.ExaminationPaper;
 
 public interface IExaminationPaperDAO extends IBaseDAO<ExaminationPaper> {
 	

@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.guide.controller;
+package cn.thinkjoy.gk.controller.guide;
 
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.domain.AdmissionBatch;

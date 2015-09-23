@@ -7,15 +7,13 @@
 
 
 
-package cn.thinkjoy.gk.before.domain;
+package cn.thinkjoy.gk.domain;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import cn.thinkjoy.common.domain.CreateBaseDomain;
-
-import java.util.*;
 
 public class ExaminationPaper extends CreateBaseDomain{
     private String years;
