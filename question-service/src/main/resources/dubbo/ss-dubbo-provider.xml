@@ -6,7 +6,7 @@
     <description>gaokao dubbo 服务提供配置 </description>
 
     <!-- 提供方应用信息，用于计算依赖关系 -->
-    <dubbo:application name="gk"/>
+    <dubbo:application name="ss"/>
 
     <dubbo:registry address="${dubbo_zk_url}" file="/tmp/dubbo.cache"/>
 
