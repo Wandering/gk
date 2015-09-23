@@ -1,0 +1,30 @@
+# system
+.DS_Store
+
+# editor
+.idea
+
+# node.js
+npm-debug.log
+node_modules/
+
+
+bower_components/jquery/src/
+bower_components/jquery/.bower.josn
+bower_components/jquery/bower.josn
+
+
+
+bower_components/swiper/src
+bower_components/swiper/.bower.json
+bower_components/swiper/bower.json
+bower_components/swiper/CHANGELOG.md
+bower_components/swiper/component.json
+bower_components/swiper/gulpfile.js
+bower_components/swiper/LICENSE
+bower_components/swiper/README.md
+
+
+
+# build
+#dist

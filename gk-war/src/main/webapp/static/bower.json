@@ -1,0 +1,19 @@
+{
+  "name": "gk",
+  "version": "0.0.0",
+  "authors": [
+    "dsfderek <dsfderek@163.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "~2.1.4",
+    "swiper": "~3.1.2"
+  }
+}
