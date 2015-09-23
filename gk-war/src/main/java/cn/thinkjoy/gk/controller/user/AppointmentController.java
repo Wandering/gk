@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.user.controller;
+package cn.thinkjoy.gk.controller.user;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
