@@ -533,7 +533,6 @@ input, textarea {
     top: 250px; }
   .main .login-box {
     width: 303px;
-    height: 420px;
     background-color: #fff;
     border: 15px solid #4cb587;
     position: absolute;
@@ -543,19 +542,66 @@ input, textarea {
     box-sizing: border-box; }
     .main .login-box .login-title {
       height: 65px;
-      padding: 0 20px; }
+      margin-bottom: 15px; }
       .main .login-box .login-title span {
+        cursor: pointer;
         border-bottom: #e5e5e5 1px solid;
         display: block;
         float: left;
         width: 50%;
         text-align: center;
-        font-size: 22px;
+        font-size: 20px;
         color: #686666;
         box-sizing: border-box;
         padding: 10px 0 15px; }
       .main .login-box .login-title .active {
         border-bottom: #57b62e 2px solid; }
+    .main .login-box .login-input {
+      position: relative; }
+      .main .login-box .login-input i {
+        position: absolute;
+        width: 15px;
+        height: 15px; }
+      .main .login-box .login-input .icon-user-account {
+        top: 15px;
+        left: 20px;
+        background: url(../../login/images/icon-user-account.png) no-repeat; }
+      .main .login-box .login-input .icon-user-psd {
+        top: 84px;
+        left: 20px;
+        background: url(../../login/images/icon-user-psd.png) no-repeat; }
+      .main .login-box .login-input .input-comm {
+        text-indent: 40px;
+        box-sizing: border-box;
+        width: 100%;
+        font-size: 12px;
+        color: #bebdbd;
+        border: 1px solid #e5e5e5 !important;
+        height: 45px;
+        line-height: 45px;
+        border-radius: 3px;
+        margin-bottom: 24px; }
+      .main .login-box .login-input .forget-psd {
+        color: #494848;
+        text-decoration: none;
+        text-align: right;
+        font-size: 12px;
+        width: 100%;
+        display: block; }
+      .main .login-box .login-input .btn-login {
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        background-color: #52d09c;
+        -webkit-transition: all 0.8s;
+                transition: all 0.8s;
+        color: #fff;
+        font-size: 18px;
+        text-align: center;
+        border-radius: 30px;
+        cursor: pointer; }
+        .main .login-box .login-input .btn-login:hover {
+          background-color: #2AD083; }
 
 .footer {
   height: 250px;
