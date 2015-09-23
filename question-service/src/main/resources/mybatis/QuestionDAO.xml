@@ -36,10 +36,12 @@ selectList
         tags,
         freeStatus,
         disableExpertId,
-        disableStatus
+        disableStatus,
+        sourceType
     </sql>
     <insert id="insert" parameterType="Question">
         INSERT INTO shishuo_question (
+        status,
         createDate,
         lastModDate,
         question,
@@ -50,8 +52,10 @@ selectList
         tags,
         freeStatus,
         disableExpertId,
-        disableStatus
+        disableStatus,
+        sourceType
         ) VALUES (
+        #{status},
         #{createDate},
         #{lastModDate},
         #{question},
@@ -62,7 +66,8 @@ selectList
         #{tags},
         #{freeStatus},
         #{disableExpertId},
-        #{disableStatus}
+        #{disableStatus},
+        #{sourceType}
         )
         <selectKey resultType="java.lang.Long" keyProperty="id">
         SELECT LAST_INSERT_ID() AS ID
@@ -109,6 +114,9 @@ selectList
             <if test="disableStatus!=null">
                 disableStatus = #{disableStatus},
             </if>
+            <if test="sourceType!=null">
+                sourceType = #{sourceType},
+            </if>
         </trim>
         WHERE
         id = #{id}
@@ -152,6 +160,9 @@ selectList
             </if>
             <if test="map.disableStatus!=null">
                 disableStatus = #{map.disableStatus},
+            </if>
+            <if test="map.sourceType!=null">
+                sourceType = #{map.sourceType},
             </if>
         </trim>
         WHERE
@@ -197,6 +208,9 @@ selectList
             <if test="update.disableStatus!=null">
                 disableStatus = #{update.disableStatus},
             </if>
+            <if test="update.sourceType!=null">
+                sourceType = #{update.sourceType},
+            </if>
         </trim>
 
         <trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -239,6 +253,9 @@ selectList
             <if test="condition.disableStatus!=null">
                 AND disableStatus = #{condition.disableStatus}
             </if>
+            <if test="condition.sourceType!=null">
+                AND sourceType = #{condition.sourceType}
+            </if>
         </trim>
     </update>
 
@@ -255,7 +272,8 @@ selectList
                 tags,
                 freeStatus,
                 disableExpertId,
-                disableStatus
+                disableStatus,
+                sourceType
         ) VALUES (
                     #{map.status},
                     #{map.createDate},
@@ -268,7 +286,8 @@ selectList
                     #{map.tags},
                     #{map.freeStatus},
                     #{map.disableExpertId},
-                    #{map.disableStatus}
+                    #{map.disableStatus},
+                    #{map.sourceType}
         )
     </insert>
 
@@ -288,6 +307,7 @@ selectList
             freeStatus = #{freeStatus},
             disableExpertId = #{disableExpertId},
             disableStatus = #{disableStatus},
+            sourceType = #{sourceType},
         </trim>
         WHERE
         id = #{id} 
@@ -343,6 +363,9 @@ selectList
             </if>
             <if test="disableStatus!=null">
                 AND disableStatus = #{disableStatus}
+            </if>
+            <if test="sourceType!=null">
+                AND sourceType = #{sourceType}
             </if>
         </trim>
     </delete>
@@ -440,10 +463,16 @@ selectList
             <if test="condition.disableStatus!=null">
                 ${condition.groupOp}   disableStatus  ${condition.disableStatus.op}  #{condition.disableStatus.data}
             </if>
+            <if test="condition.sourceType!=null">
+                ${condition.groupOp}   sourceType  ${condition.sourceType.op}  #{condition.sourceType.data}
+            </if>
 
 
     </where>
-        ORDER BY createDate desc
+
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
         <if test="offset != null">
             limit ${offset}, ${rows}
         </if>
@@ -492,6 +521,9 @@ selectList
             </if>
             <if test="disableStatus!=null">
                 AND disableStatus like CONCAT('%', #{disableStatus} , '%')
+            </if>
+            <if test="sourceType!=null">
+                AND sourceType like CONCAT('%', #{sourceType} , '%')
             </if>
         </trim>
         <if test="orderBy!=null">
@@ -544,6 +576,9 @@ selectList
             <if test="condition.disableStatus!=null">
                 AND disableStatus = #{condition.disableStatus}
             </if>
+            <if test="condition.sourceType!=null">
+                AND sourceType = #{condition.sourceType}
+            </if>
         </trim>
         <if test="orderBy!=null">
         ORDER BY ${orderBy} ${sortBy}
@@ -594,6 +629,9 @@ selectList
             <if test="disableStatus!=null">
                 AND disableStatus = #{disableStatus}
             </if>
+            <if test="sourceType!=null">
+                AND sourceType = #{sourceType}
+            </if>
         </trim>
         limit 0,1
     </select>
@@ -639,6 +677,9 @@ selectList
            </if>
            <if test="disableStatus!=null">
                ${groupOp} disableStatus ${disableStatus.op}  #{disableStatus.data}
+           </if>
+           <if test="sourceType!=null">
+               ${groupOp} sourceType ${sourceType.op}  #{sourceType.data}
            </if>
 
        </where>

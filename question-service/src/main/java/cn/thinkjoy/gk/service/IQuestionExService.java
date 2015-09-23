@@ -16,10 +16,10 @@ import java.util.List;
 
 public interface IQuestionExService {
 
-    List<QuestionPojo> findQuestionPage(Integer freeStatus ,Integer isAnswer,Integer startSize,Integer endSize);
+    List<QuestionPojo> findQuestionPage(Integer freeStatus ,Integer isAnswer,Integer sourceType,Integer startSize,Integer endSize);
 
-    int findQuestionCount(Integer freeStatus ,Integer isOpen,Integer isAnswer);
+    int findQuestionCount(Integer freeStatus ,Integer isOpen,Integer isAnswer,Integer sourceType);
 
-    QuestionDetailPojo findQuestionById(Long question);
+    QuestionDetailPojo findQuestionById(Long questionId);
 
 }
