@@ -1,6 +1,6 @@
-package cn.thinkjoy.gk.before.service;
+package cn.thinkjoy.gk.service;
 
-import cn.thinkjoy.gk.before.pojo.SubjectPojo;
+import cn.thinkjoy.gk.pojo.SubjectPojo;
 
 import java.util.List;
 

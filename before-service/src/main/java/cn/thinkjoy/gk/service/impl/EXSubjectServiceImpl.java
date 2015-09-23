@@ -1,9 +1,9 @@
-package cn.thinkjoy.gk.before.service.impl;
+package cn.thinkjoy.gk.service.impl;
 
-import cn.thinkjoy.gk.before.domain.Subject;
-import cn.thinkjoy.gk.before.pojo.SubjectPojo;
-import cn.thinkjoy.gk.before.service.IEXSubjectService;
-import cn.thinkjoy.gk.before.service.ISubjectService;
+import cn.thinkjoy.gk.domain.Subject;
+import cn.thinkjoy.gk.pojo.SubjectPojo;
+import cn.thinkjoy.gk.service.IEXSubjectService;
+import cn.thinkjoy.gk.service.ISubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
