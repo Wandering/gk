@@ -1,7 +1,5 @@
 rootProject.name = 'gk'
 
-include 'common'
-
 include 'after-domain'
 
 include 'after-service'
@@ -41,4 +39,8 @@ include 'gk-service'
 include 'gk-domain'
 
 include 'question-war'
+
+include 'web-common'
+
+include 'protocol-common'
 

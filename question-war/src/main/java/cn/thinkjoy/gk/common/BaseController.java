@@ -1,19 +1,16 @@
 package cn.thinkjoy.gk.common;
 
+import cn.thinkjoy.gk.constant.CookieConst;
 import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
-import cn.thinkjoy.gk.constant.CookieConst;
-import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.CookieUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import com.alibaba.fastjson.JSON;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.concurrent.TimeUnit;
 
 public class BaseController {
 
@@ -24,9 +21,6 @@ public class BaseController {
 //	protected HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
 
 //	protected HttpServletResponse response =  ((ServletWebRequest)RequestContextHolder.getRequestAttributes()).getResponse();
-
-	@Autowired
-	private IUserAccountExService userAccountExService;
 
 	@ModelAttribute
 	public void setReqAndRes(HttpServletRequest request,
@@ -46,11 +40,7 @@ public class BaseController {
 		UserAccountPojo userAccountBean  = null;
 		RedisUtil.getInstance().del(key);
 		if(!RedisUtil.getInstance().exists(key)){
-			userAccountBean = userAccountExService.findUserAccountPojoById(id);
-			if(null!=userAccountBean){
-				RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 10L, TimeUnit.MINUTES);
-
-			}
+			return null;
 		} else{
 			userAccountBean = JSON.parseObject(RedisUtil.getInstance().get(key).toString(),UserAccountPojo.class);
 		}

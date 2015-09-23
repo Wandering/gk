@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.login.controller;
+package cn.thinkjoy.gk.controller.login;
 
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;

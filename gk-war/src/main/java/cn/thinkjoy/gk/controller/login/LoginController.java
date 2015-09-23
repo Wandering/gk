@@ -1,12 +1,9 @@
-package cn.thinkjoy.gk.login.controller;
+package cn.thinkjoy.gk.controller.login;
 
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.constant.*;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.constant.ControllerReturnConst;
-import cn.thinkjoy.gk.constant.CookieConst;
-import cn.thinkjoy.gk.constant.CookieTimeConst;
-import cn.thinkjoy.gk.constant.RedisConst;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.CookieUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
@@ -38,7 +35,7 @@ public class LoginController extends BaseController {
 		String value = getCookieValue();
 		if(!StringUtils.isEmpty(value)){
 			Long id = Long.valueOf(value);
-			if(RedisUtil.getInstance().exists(RedisConst.USER_KEY + id)){
+			if(RedisUtil.getInstance().exists(UserRedisConst.USER_KEY + id)){
 				return ControllerReturnConst.REDIRECT+"/index.do";
 			}
 		}
@@ -100,7 +97,7 @@ public class LoginController extends BaseController {
 	public String logout() throws Exception {
 //		boolean status = true;
 		try {
-			RedisUtil.getInstance().del(RedisConst.USER_KEY + getCookieValue());
+			RedisUtil.getInstance().del(UserRedisConst.USER_KEY + getCookieValue());
 			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, null, CookieTimeConst.CLEAN_COOKIE));
 		}catch(Exception e){
 //			status = false;

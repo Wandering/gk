@@ -3,7 +3,7 @@ dependencies {
 
     compile group: "cn.thinkjoy.common", name: "thinkjoy-web-common", version: "$thinkjoyCommonVersion", changing: true
 
-    compile project(':common')
+    compile project(':web-common')
 
     compile project(':question-service')
 

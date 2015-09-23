@@ -8,9 +8,15 @@ package cn.thinkjoy.gk.dao;
 
 
 
+import cn.thinkjoy.gk.pojo.AnswerPojo;
+
 import java.util.List;
 import java.util.Map;
 
 public interface IAnswerExDAO {
+
+    public List<AnswerPojo> findAnswerPage(Map<String, Object> params);
+
+    public Integer findAnswerCount(Map<String, Object> params);
 
 }

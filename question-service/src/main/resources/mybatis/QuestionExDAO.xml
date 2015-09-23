@@ -3,7 +3,7 @@
 
 <mapper namespace="cn.thinkjoy.gk.dao.IQuestionExDAO">
 
-    <select id="findQuestionPage" resultType="QuestionBean">
+    <select id="findQuestionPage" resultType="QuestionPojo">
         SELECT
         a.id,a.userId,a.question,a.createDate,a.disableExpertId,a.isAnswer,a.isOpen,a.freeStatus,
         b.name userName,b.icon userIcon
@@ -54,7 +54,7 @@
         </where>
     </select>
 
-    <select id="findQuestionById" resultType="QuestionDetailBean">
+    <select id="findQuestionById" resultType="QuestionDetailPojo">
         select a.id questionId,d.id userId,d.name userName,d.icon userIcon,a.question,a.createDate createTime,a.isAnswer,b.answer,b.createDate answerTime,a.disableStatus,
         c.id expertUserId,c.name expertUserName,c.icon expertUserIcon
         from shishuo_question a
@@ -65,75 +65,6 @@
             1=1
             <if test="questionId !=null">
                 AND a.id = #{questionId}
-            </if>
-        </where>
-    </select>
-
-    <select id="findExpertQuestionPage" resultType="ExpertQuestionBean">
-        SELECT
-        a.id,a.userId askId,a.question,a.createDate,a.disableExpertId,a.isAnswer,a.isOpen,
-        b.answer,b.createDate answerTime,a.freeStatus,b.answerHtml,
-        c.name userName,c.icon userIcon
-        FROM
-        shishuo_question a
-        left join shishuo_answer b on a.id = b.questionId
-        left join shishuo_user_info c on c.id = a.userId
-        <where>
-            a.status = 0
-            <if test="userId !=null">
-                AND b.userId = #{userId}
-            </if>
-            <if test="freeStatus !=null">
-                AND a.freeStatus = #{freeStatus}
-            </if>
-            <if test="expertId !=null">
-                AND b.expertId = #{expertId}
-            </if>
-            <if test="isOpen !=null">
-                AND a.isOpen = #{isOpen}
-            </if>
-            <if test="isAnswer !=null">
-                AND a.isAnswer = #{isAnswer}
-            </if>
-        </where>
-        ORDER BY b.createDate desc
-        <if test="startSize != null">
-            limit #{startSize}, #{endSize}
-        </if>
-    </select>
-
-    <select id="findExpertQuestionCount" resultType="int">
-        SELECT
-        COUNT(a.ID)
-        FROM
-        shishuo_question a
-        left join shishuo_answer b on a.id = b.questionId
-        left join shishuo_user_info c on c.id = a.userId
-        <where>
-            a.status = 0
-            <if test="userId !=null">
-                AND b.userId = #{userId}
-            </if>
-            <if test="freeStatus !=null">
-                AND a.freeStatus = #{freeStatus}
-            </if>
-            <if test="expertId !=null">
-                AND b.expertId = #{expertId}
-            </if>
-            <if test="isOpen !=null">
-                AND a.isOpen = #{isOpen}
-            </if>
-            <if test="isAnswer !=null">
-                AND a.isAnswer = #{isAnswer}
-            </if>
-        </where>
-    </select>
-
-    <select id="findQuestionDisableExpertIdByQuestionId" resultType="string">
-        SELECT disableExpertId FROM shishuo_question
-        <where>
-            <if test="id !=null">
-                AND id = #{id}
             </if>
         </where>
     </select>

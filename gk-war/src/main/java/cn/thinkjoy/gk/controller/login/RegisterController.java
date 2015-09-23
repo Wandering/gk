@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.login.controller;
+package cn.thinkjoy.gk.controller.login;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
@@ -6,7 +6,6 @@ import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.service.IUserAccountService;
 import com.jlusoft.microschool.core.utils.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
