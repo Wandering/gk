@@ -530,7 +530,7 @@ input, textarea {
   .main .login-bg-fonts {
     position: absolute;
     left: 0;
-    top: 250px; }
+    top: 210px; }
   .main .login-box {
     width: 303px;
     background-color: #fff;
@@ -541,8 +541,7 @@ input, textarea {
     padding: 15px;
     box-sizing: border-box; }
     .main .login-box .login-title {
-      height: 65px;
-      margin-bottom: 15px; }
+      height: 55px; }
       .main .login-box .login-title span {
         cursor: pointer;
         border-bottom: #e5e5e5 1px solid;
@@ -556,6 +555,10 @@ input, textarea {
         padding: 10px 0 15px; }
       .main .login-box .login-title .active {
         border-bottom: #57b62e 2px solid; }
+      .main .login-box .login-title .find-psd {
+        width: 100%; }
+    .main .login-box .find-psd-h40 {
+      height: 40px; }
     .main .login-box .login-input {
       position: relative; }
       .main .login-box .login-input i {
@@ -563,32 +566,42 @@ input, textarea {
         width: 15px;
         height: 15px; }
       .main .login-box .login-input .icon-user-account {
-        top: 15px;
+        top: 41px;
         left: 20px;
         background: url(../../login/images/icon-user-account.png) no-repeat; }
       .main .login-box .login-input .icon-user-psd {
-        top: 84px;
+        top: 111px;
         left: 20px;
         background: url(../../login/images/icon-user-psd.png) no-repeat; }
       .main .login-box .login-input .input-comm {
-        text-indent: 40px;
+        padding-left: 40px;
+        padding-right: 10px;
         box-sizing: border-box;
         width: 100%;
-        font-size: 12px;
+        font-size: 13px;
         color: #bebdbd;
         border: 1px solid #e5e5e5 !important;
         height: 45px;
         line-height: 45px;
-        border-radius: 3px;
-        margin-bottom: 24px; }
+        border-radius: 3px; }
       .main .login-box .login-input .forget-psd {
-        color: #494848;
+        color: #52d09c;
         text-decoration: none;
         text-align: right;
         font-size: 12px;
         width: 100%;
-        display: block; }
+        display: block;
+        height: 30px;
+        line-height: 30px; }
+      .main .login-box .login-input .error-tips {
+        font-size: 12px;
+        color: #e24d39;
+        display: block;
+        height: 25px;
+        line-height: 25px;
+        text-align: right; }
       .main .login-box .login-input .btn-login {
+        margin: 10px 0;
         width: 100%;
         height: 40px;
         line-height: 40px;
@@ -602,9 +615,78 @@ input, textarea {
         cursor: pointer; }
         .main .login-box .login-input .btn-login:hover {
           background-color: #2AD083; }
+    .main .login-box .pdr100 {
+      padding-right: 100px !important; }
+    .main .login-box .register-input {
+      position: relative; }
+      .main .login-box .register-input i {
+        position: absolute;
+        width: 15px;
+        height: 15px; }
+      .main .login-box .register-input .icon-user-account {
+        top: 41px;
+        left: 20px;
+        background: url(../../login/images/icon-user-account.png) no-repeat; }
+      .main .login-box .register-input .icon-user-code {
+        top: 96px;
+        left: 20px;
+        background: url(../../login/images/icon-user-code.png) no-repeat; }
+      .main .login-box .register-input .icon-user-psd {
+        top: 155px;
+        left: 20px;
+        background: url(../../login/images/icon-user-psd.png) no-repeat; }
+      .main .login-box .register-input .icon-conform-psd {
+        top: 212px;
+        left: 20px;
+        background: url(../../login/images/icon-user-psd.png) no-repeat; }
+      .main .login-box .register-input .input-comm {
+        padding-left: 40px;
+        padding-right: 10px;
+        box-sizing: border-box;
+        width: 100%;
+        font-size: 13px;
+        color: #bebdbd;
+        border: 1px solid #e5e5e5 !important;
+        height: 45px;
+        line-height: 45px;
+        border-radius: 3px;
+        margin-bottom: 12px; }
+      .main .login-box .register-input .error-tips {
+        font-size: 12px;
+        color: #e24d39;
+        display: block;
+        height: 25px;
+        line-height: 25px;
+        text-align: right; }
+      .main .login-box .register-input .btn-login {
+        margin: 10px 0;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        background-color: #52d09c;
+        -webkit-transition: all 0.8s;
+                transition: all 0.8s;
+        color: #fff;
+        font-size: 18px;
+        text-align: center;
+        border-radius: 30px;
+        cursor: pointer; }
+        .main .login-box .register-input .btn-login:hover {
+          background-color: #2AD083; }
+      .main .login-box .register-input .code-text {
+        background-color: #52d09c;
+        display: block;
+        position: absolute;
+        color: #fff;
+        text-align: center;
+        padding: 8px 10px;
+        top: 90px;
+        font-size: 12px;
+        border-radius: 3px;
+        right: 10px;
+        cursor: pointer; }
 
 .footer {
-  height: 250px;
   background-color: #fff;
   box-sizing: border-box;
   width: 100%; }
