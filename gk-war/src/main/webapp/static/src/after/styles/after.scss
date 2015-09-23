@@ -167,3 +167,60 @@
     width: 150px;
   }
 }
+
+
+
+.section-article {
+  }
+
+.search-content span {
+  display: inline-block;
+  overflow: hidden; }
+
+.search-content input {
+  height: 40px;
+  line-height: 40px;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  float: left; }
+
+.search-content button {
+  width: 128px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 5px;
+  border: 1px solid #f0ad4e;
+  background: url("../../common/images/ask-icon.png") no-repeat 15px center;
+  float: left;
+  margin: 0;
+  padding: 0;
+  margin-left: 10px;
+  color: #e24d39;
+  font-size: 16px;
+  padding-left: 16px; }
+
+.search-content input[type="text"] {
+  width: 233px;
+  border: 1px solid #f0ad4e;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  height: 38px;
+  padding-left: 10px; }
+
+.search-content input[type="button"] {
+  width: 100px;
+  background: #f0ad4e ;
+  border: 1px solid #f0ad4e;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  color: #fff;
+}
+
+.volunteer-flow3-table{
+      .tips{
+        width: 306px;
+        margin: 20px auto;
+      }
+}
