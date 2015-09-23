@@ -1,7 +1,54 @@
 package cn.thinkjoy.gk.controller.before;
 
+import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.before.pojo.SubjectPojo;
+import cn.thinkjoy.gk.before.pojo.VideoPojo;
+import cn.thinkjoy.gk.before.service.IEXSubjectService;
+import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
 /**
  * Created by yhwang on 15/9/23.
  */
-public class VideoController {
+@Controller
+@RequestMapping("/before/video")
+public class VideoController extends BaseController {
+    private IEXSubjectService iexSubjectService;
+    /**
+     * 根据分类获取视频课程列表
+     * @return
+     */
+    @RequestMapping(value = "getVideoList",method = RequestMethod.GET)
+    @ResponseBody
+    public List<VideoPojo> getVideoList(@RequestParam(value="pageNo",required=true) Integer pageNo,
+                                        @RequestParam(value="pageSize",required=true) Integer pageSize,
+                                        @RequestParam(value = "classifyType",required = true )Integer classifyType){
+        if(pageNo == null || pageSize == null || classifyType == null){
+            throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
+        }
+
+        return null;
+    }
+
+    /**
+     * 获取科目列表
+     * @return
+     */
+    @RequestMapping(value = "getSubjectList",method = RequestMethod.GET)
+    @ResponseBody
+    public List<SubjectPojo> getSubjectList(){
+        List<SubjectPojo> subjectPojos = iexSubjectService.getSubjectList();
+        if(subjectPojos == null || subjectPojos.size() == 0){
+            throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
+        }
+        return subjectPojos;
+    }
+
 }

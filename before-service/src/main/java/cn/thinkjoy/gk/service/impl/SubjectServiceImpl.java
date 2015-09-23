@@ -1,38 +1,28 @@
 /*
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
- * Project Name: jx-market
- * $Id:  PolicyInterpretationServiceImpl.java 2015-09-22 19:03:03 $
+ * Project Name: before
+ * $Id:  SubjectServiceImpl.java 2015-09-23 10:30:49 $
  */
 package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
-import cn.thinkjoy.gk.dao.IPolicyInterpretationDAO;
-import cn.thinkjoy.gk.dao.IPolicyInterpretationExDAO;
-import cn.thinkjoy.gk.domain.PolicyInterpretation;
-import cn.thinkjoy.gk.service.IPolicyInterpretationService;
+import cn.thinkjoy.gk.dao.ISubjectDAO;
+import cn.thinkjoy.gk.domain.Subject;
+import cn.thinkjoy.gk.service.ISubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
-
-@Service("PolicyInterpretationServiceImpl")
-public class PolicyInterpretationServiceImpl extends AbstractPageService<IBaseDAO<PolicyInterpretation>, PolicyInterpretation> implements IPolicyInterpretationService<IBaseDAO<PolicyInterpretation>,PolicyInterpretation> {
+@Service("SubjectServiceImpl")
+public class SubjectServiceImpl extends AbstractPageService<IBaseDAO<Subject>, Subject> implements ISubjectService<IBaseDAO<Subject>,Subject> {
     @Autowired
-    private IPolicyInterpretationDAO policyInterpretationDAO;
-    @Autowired
-    private IPolicyInterpretationExDAO policyInterpretationExDAO;
+    private ISubjectDAO subjectDAO;
 
     @Override
-    public IBaseDAO<PolicyInterpretation> getDao() {
-        return policyInterpretationDAO;
-    }
-
-    @Override
-    public List<PolicyInterpretation> findPolicyInterpretationCategoryByBatchIdAndProvinceId(long batchId, long provinceId) {
-        return policyInterpretationExDAO.findPolicyInterpretationCategorysByBatchIdAndProvinceId(batchId, provinceId);
+    public IBaseDAO<Subject> getDao() {
+        return subjectDAO;
     }
 
 //    @Override
@@ -86,8 +76,8 @@ public class PolicyInterpretationServiceImpl extends AbstractPageService<IBaseDA
 //    }
 //
 //    @Override
-//    public List<PolicyInterpretation> findAll() {
-//        return policyInterpretationDAO.findAll();
+//    public List<Subject> findAll() {
+//        return subjectDAO.findAll();
 //    }
 //
 //    @Override
@@ -141,8 +131,8 @@ public class PolicyInterpretationServiceImpl extends AbstractPageService<IBaseDA
 //    }
 //
 //    @Override
-//    protected PolicyInterpretationDAO getDao() {
-//        return policyInterpretationDAO;
+//    protected SubjectDAO getDao() {
+//        return subjectDAO;
 //    }
 //
 //    @Override

@@ -24,4 +24,8 @@ public interface IUserAccountExService {
 
     boolean insertUserAccount(UserAccount userAccount);
 
+    boolean updateUserAccount(UserAccount userAccount);
+
+    UserAccount findUserAccountById(long id);
+
 }

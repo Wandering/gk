@@ -1,9 +1,11 @@
 /*
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
- * Project Name: shishuo
- * $Id:  UserInfo.java 2015-09-21 16:58:04 $
+ * Project Name: gk
+ * $Id:  UserInfo.java 2015-09-22 20:31:45 $
  */
+
+
 
 
 
@@ -18,18 +20,29 @@ import cn.thinkjoy.common.domain.BaseDomain;
 import java.util.*;
 
 public class UserInfo extends BaseDomain{
+    /** 预留 */
     private String token;
+    /** 用户名 */
     private String name;
+    /** 头像 */
     private String icon;
+    /** 区域Id */
     private Long countyId;
-    private Integer schoolName;
+    /** 学校名称 */
+    private String schoolName;
+    /** 生日 */
+    private Long birthdayDate;
+    /** 性别 */
     private Integer sex;
+    /** 科类 */
     private Integer subjectType;
+    /** 邮箱 */
     private String mail;
+    /** QQ号 */
     private String qq;
 
-	public UserInfo(){
-	}
+    public UserInfo(){
+    }
     public void setToken(String value) {
         this.token = value;
     }
@@ -58,12 +71,19 @@ public class UserInfo extends BaseDomain{
     public Long getCountyId() {
         return this.countyId;
     }
-    public void setSchoolName(Integer value) {
+    public void setSchoolName(String value) {
         this.schoolName = value;
     }
 
-    public Integer getSchoolName() {
+    public String getSchoolName() {
         return this.schoolName;
+    }
+    public void setBirthdayDate(Long value) {
+        this.birthdayDate = value;
+    }
+
+    public Long getBirthdayDate() {
+        return this.birthdayDate;
     }
     public void setSex(Integer value) {
         this.sex = value;
@@ -94,34 +114,35 @@ public class UserInfo extends BaseDomain{
         return this.qq;
     }
 
-	public String toString() {
-		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-			.append("Id",getId())
-			.append("Token",getToken())
-			.append("Name",getName())
-			.append("Icon",getIcon())
-			.append("CountyId",getCountyId())
-			.append("SchoolName",getSchoolName())
-			.append("Sex",getSex())
-			.append("SubjectType",getSubjectType())
-			.append("Mail",getMail())
-			.append("Qq",getQq())
-			.toString();
-	}
-	
-	public int hashCode() {
-		return new HashCodeBuilder()
-			.append(getId())
-			.toHashCode();
-	}
-	
-	public boolean equals(Object obj) {
-		if(obj instanceof UserInfo == false) return false;
-		if(this == obj) return true;
-		UserInfo other = (UserInfo)obj;
-		return new EqualsBuilder()
-			.append(getId(),other.getId())
-			.isEquals();
-	}
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+                .append("Id",getId())
+                .append("Token", getToken())
+                .append("Name",getName())
+                .append("Icon",getIcon())
+                .append("CountyId",getCountyId())
+                .append("SchoolName",getSchoolName())
+                .append("BirthdayDate",getBirthdayDate())
+                .append("Sex",getSex())
+                .append("SubjectType",getSubjectType())
+                .append("Mail",getMail())
+                .append("Qq",getQq())
+                .toString();
+    }
+
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getId())
+                .toHashCode();
+    }
+
+    public boolean equals(Object obj) {
+        if(obj instanceof UserInfo == false) return false;
+        if(this == obj) return true;
+        UserInfo other = (UserInfo)obj;
+        return new EqualsBuilder()
+                .append(getId(), other.getId())
+                .isEquals();
+    }
 }
 
