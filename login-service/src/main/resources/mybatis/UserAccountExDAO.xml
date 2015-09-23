@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.thinkjoy.ss.dao.IUserAccountExDAO">
+<mapper namespace="cn.thinkjoy.gk.dao.IUserAccountExDAO">
 
     <select id="findUserAccountBean" resultType="UserAccountPojo">
         SELECT a.id,c.name,c.icon,a.account,a.password,a.status,a.userType,c.cityId,c.sourceType,b.status vipStatus

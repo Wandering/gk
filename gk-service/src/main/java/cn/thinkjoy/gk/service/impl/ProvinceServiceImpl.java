@@ -6,21 +6,16 @@
  */
 package cn.thinkjoy.gk.service.impl;
 
-import cn.thinkjoy.common.domain.BaseDomain;
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.gk.dao.IProvinceDAO;
 import cn.thinkjoy.gk.domain.Province;
-import cn.thinkjoy.gk.service.IProvinceService;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-
 
 @Service("ProvinceServiceImpl")
-public class ProvinceServiceImpl extends AbstractPageService<IBaseDAO<Province>, Province> implements IProvinceService<IBaseDAO<Province>,Province>{
+public class ProvinceServiceImpl extends AbstractPageService<IBaseDAO<Province>, Province> implements cn.thinkjoy.common.service.IBaseService<IBaseDAO<Province>, Province>, cn.thinkjoy.common.service.IPageService<IBaseDAO<Province>, Province> {
     @Autowired
     private IProvinceDAO provinceDAO;
 
