@@ -1,7 +1,5 @@
 rootProject.name = 'gk'
 
-include 'common'
-
 include 'after-domain'
 
 include 'after-service'
