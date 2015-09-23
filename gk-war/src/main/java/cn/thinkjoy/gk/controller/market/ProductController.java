@@ -43,7 +43,7 @@ public class ProductController {
      * 获取商品
      * @return
      */
-    @RequestMapping(value = "findProductPage", method = RequestMethod.POST)
+    @RequestMapping(value = "findProductPage", method = RequestMethod.GET)
     @ResponseBody
     public List<Product> findProductPage(ProductQuery productQuery,HttpServletResponse response) {
 
@@ -73,7 +73,7 @@ public class ProductController {
      * 获取商品详情
      * @return
      */
-    @RequestMapping(value = "findProduct", method = RequestMethod.POST)
+    @RequestMapping(value = "findProduct", method = RequestMethod.GET)
     @ResponseBody
     public Product findProduct(@RequestParam(value="code",required=false) Integer code) {
 

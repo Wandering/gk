@@ -53,7 +53,7 @@ public class QuestionController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/newQuestion", method = RequestMethod.POST)
+    @RequestMapping(value = "/newQuestion", method = RequestMethod.GET)
     @ResponseBody
     public QuestionBean newQuestion(PageQuery pageQuery) {
 
@@ -148,7 +148,7 @@ public class QuestionController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/hotQuestion", method = RequestMethod.POST)
+    @RequestMapping(value = "/hotQuestion", method = RequestMethod.GET)
     @ResponseBody
     public QuestionBean hotQuestion(PageQuery pageQuery) {
 
@@ -244,7 +244,7 @@ public class QuestionController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/questionDetail", method = RequestMethod.POST)
+    @RequestMapping(value = "/questionDetail", method = RequestMethod.GET)
     @ResponseBody
     public QuestionDetailBean questionDetail(@RequestParam(value="id",required=false) Long questionId) {
 
