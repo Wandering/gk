@@ -1,7 +1,7 @@
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
-    compile group: "org.springframework", name: "spring-webmvc", version: "4.0.5.RELEASE", changing: true
+    compile group: "cn.thinkjoy.common", name: "thinkjoy-web-common", version: "$thinkjoyCommonVersion", changing: true
 
     compile "org.mortbay.jetty:servlet-api:2.5-20081211"
 

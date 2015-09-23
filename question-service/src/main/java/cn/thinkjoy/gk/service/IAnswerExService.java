@@ -8,7 +8,13 @@
 package cn.thinkjoy.gk.service;
 
 
+import cn.thinkjoy.gk.pojo.AnswerPojo;
+import java.util.List;
 
 public interface IAnswerExService {
+
+    List<AnswerPojo> findAnswerPage(Long userId, Integer startSize, Integer endSize);
+
+    Integer findAnswerCount(Long userId);
 
 }
