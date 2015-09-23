@@ -1,8 +1,9 @@
 package cn.thinkjoy.gk.dao.ex;
 
 import cn.thinkjoy.gk.pojo.VideoCoursePojo;
-import com.sun.tools.javac.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * Created by yhwang on 15/9/23.
