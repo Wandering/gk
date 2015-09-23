@@ -6,21 +6,16 @@
  */
 package cn.thinkjoy.gk.service.impl;
 
-import cn.thinkjoy.common.domain.BaseDomain;
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.gk.dao.ICountyDAO;
 import cn.thinkjoy.gk.domain.County;
-import cn.thinkjoy.gk.service.ICountyService;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-
 
 @Service("CountyServiceImpl")
-public class CountyServiceImpl extends AbstractPageService<IBaseDAO<County>, County> implements ICountyService<IBaseDAO<County>,County>{
+public class CountyServiceImpl extends AbstractPageService<IBaseDAO<County>, County> implements cn.thinkjoy.common.service.IBaseService<IBaseDAO<County>, County>, cn.thinkjoy.common.service.IPageService<IBaseDAO<County>, County> {
     @Autowired
     private ICountyDAO countyDAO;
 

@@ -62,8 +62,6 @@ dependencies {
 
     compile project(':market-service')
 
-    compile project(':question-service')
-
     compile project(':user-service')
 
 }
