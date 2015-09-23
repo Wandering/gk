@@ -1,13 +1,12 @@
-package cn.thinkjoy.gk.before.pojo;
+package cn.thinkjoy.gk.pojo;
 
 import java.io.Serializable;
 
 /**
  * Created by yhwang on 15/9/23.
  */
-public class VideoPojo implements Serializable{
-    private Long id;//ID
-    private Long classifyId;//分类ID
+public class VideoCoursePojo implements Serializable{
+    private Long courseId;//ID
     private String classifyName;//分类名称
     private String teacherName;//教师名字
     private String subjectName;//所属科目
@@ -20,20 +19,12 @@ public class VideoPojo implements Serializable{
     private String courseSort;//课程排名
     private String frontcover1;//封面二
 
-    public Long getId() {
-        return id;
+    public Long getCourseId() {
+        return courseId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getClassifyId() {
-        return classifyId;
-    }
-
-    public void setClassifyId(Long classifyId) {
-        this.classifyId = classifyId;
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
     public String getClassifyName() {
