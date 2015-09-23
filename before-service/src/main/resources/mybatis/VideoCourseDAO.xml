@@ -1,0 +1,950 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IVideoCourseDAO">
+<!--
+insert
+update
+updateNull
+deleteById
+deleteByCondition
+deleteByProperty
+fetch
+findOne
+findList
+findAll
+queryPage
+like
+queryList
+queryOne
+count
+selectMaxId
+updateOrSave
+selectOne
+selectList
+-->
+    <sql id="Base_Column_List">
+        id,
+        classifyId,
+        teacherId,
+        subjectId,
+        managerId,
+        teacher,
+        title,
+        content,
+        frontCover,
+        subcontent,
+        hit,
+        years,
+        beikaochongci_type,
+        courseSort,
+        frontcover1,
+        isAccept,
+        createDate,
+        status,
+        creator,
+        lastModDate,
+        lastModifier
+    </sql>
+    <insert id="insert" parameterType="VideoCourse">
+        INSERT INTO gk_video_course (
+        classifyId,
+        teacherId,
+        subjectId,
+        managerId,
+        teacher,
+        title,
+        content,
+        frontCover,
+        subcontent,
+        hit,
+        years,
+        beikaochongci_type,
+        courseSort,
+        frontcover1,
+        isAccept,
+        createDate,
+        status,
+        creator,
+        lastModDate,
+        lastModifier
+        ) VALUES (
+        #{classifyId},
+        #{teacherId},
+        #{subjectId},
+        #{managerId},
+        #{teacher},
+        #{title},
+        #{content},
+        #{frontCover},
+        #{subcontent},
+        #{hit},
+        #{years},
+        #{beikaochongciType},
+        #{courseSort},
+        #{frontcover1},
+        #{isAccept},
+        #{createDate},
+        #{status},
+        #{creator},
+        #{lastModDate},
+        #{lastModifier}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+        SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="VideoCourse">
+        UPDATE gk_video_course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="classifyId!=null">
+                classifyId = #{classifyId},
+            </if>
+            <if test="teacherId!=null">
+                teacherId = #{teacherId},
+            </if>
+            <if test="subjectId!=null">
+                subjectId = #{subjectId},
+            </if>
+            <if test="managerId!=null">
+                managerId = #{managerId},
+            </if>
+            <if test="teacher!=null">
+                teacher = #{teacher},
+            </if>
+            <if test="title!=null">
+                title = #{title},
+            </if>
+            <if test="content!=null">
+                content = #{content},
+            </if>
+            <if test="frontCover!=null">
+                frontCover = #{frontCover},
+            </if>
+            <if test="subcontent!=null">
+                subcontent = #{subcontent},
+            </if>
+            <if test="hit!=null">
+                hit = #{hit},
+            </if>
+            <if test="years!=null">
+                years = #{years},
+            </if>
+            <if test="beikaochongciType!=null">
+                beikaochongci_type = #{beikaochongciType},
+            </if>
+            <if test="courseSort!=null">
+                courseSort = #{courseSort},
+            </if>
+            <if test="frontcover1!=null">
+                frontcover1 = #{frontcover1},
+            </if>
+            <if test="isAccept!=null">
+                isAccept = #{isAccept},
+            </if>
+            <if test="createDate!=null">
+                createDate = #{createDate},
+            </if>
+            <if test="status!=null">
+                status = #{status},
+            </if>
+            <if test="creator!=null">
+                creator = #{creator},
+            </if>
+            <if test="lastModDate!=null">
+                lastModDate = #{lastModDate},
+            </if>
+            <if test="lastModifier!=null">
+                lastModifier = #{lastModifier},
+            </if>
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateMap">
+        UPDATE gk_video_course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.classifyId!=null">
+                classifyId = #{map.classifyId},
+            </if>
+            <if test="map.teacherId!=null">
+                teacherId = #{map.teacherId},
+            </if>
+            <if test="map.subjectId!=null">
+                subjectId = #{map.subjectId},
+            </if>
+            <if test="map.managerId!=null">
+                managerId = #{map.managerId},
+            </if>
+            <if test="map.teacher!=null">
+                teacher = #{map.teacher},
+            </if>
+            <if test="map.title!=null">
+                title = #{map.title},
+            </if>
+            <if test="map.content!=null">
+                content = #{map.content},
+            </if>
+            <if test="map.frontCover!=null">
+                frontCover = #{map.frontCover},
+            </if>
+            <if test="map.subcontent!=null">
+                subcontent = #{map.subcontent},
+            </if>
+            <if test="map.hit!=null">
+                hit = #{map.hit},
+            </if>
+            <if test="map.years!=null">
+                years = #{map.years},
+            </if>
+            <if test="map.beikaochongciType!=null">
+                beikaochongci_type = #{map.beikaochongciType},
+            </if>
+            <if test="map.courseSort!=null">
+                courseSort = #{map.courseSort},
+            </if>
+            <if test="map.frontcover1!=null">
+                frontcover1 = #{map.frontcover1},
+            </if>
+            <if test="map.isAccept!=null">
+                isAccept = #{map.isAccept},
+            </if>
+            <if test="map.createDate!=null">
+                createDate = #{map.createDate},
+            </if>
+            <if test="map.status!=null">
+                status = #{map.status},
+            </if>
+            <if test="map.creator!=null">
+                creator = #{map.creator},
+            </if>
+            <if test="map.lastModDate!=null">
+                lastModDate = #{map.lastModDate},
+            </if>
+            <if test="map.lastModifier!=null">
+                lastModifier = #{map.lastModifier},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE gk_video_course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.classifyId!=null">
+                classifyId = #{update.classifyId},
+            </if>
+            <if test="update.teacherId!=null">
+                teacherId = #{update.teacherId},
+            </if>
+            <if test="update.subjectId!=null">
+                subjectId = #{update.subjectId},
+            </if>
+            <if test="update.managerId!=null">
+                managerId = #{update.managerId},
+            </if>
+            <if test="update.teacher!=null">
+                teacher = #{update.teacher},
+            </if>
+            <if test="update.title!=null">
+                title = #{update.title},
+            </if>
+            <if test="update.content!=null">
+                content = #{update.content},
+            </if>
+            <if test="update.frontCover!=null">
+                frontCover = #{update.frontCover},
+            </if>
+            <if test="update.subcontent!=null">
+                subcontent = #{update.subcontent},
+            </if>
+            <if test="update.hit!=null">
+                hit = #{update.hit},
+            </if>
+            <if test="update.years!=null">
+                years = #{update.years},
+            </if>
+            <if test="update.beikaochongciType!=null">
+                beikaochongci_type = #{update.beikaochongciType},
+            </if>
+            <if test="update.courseSort!=null">
+                courseSort = #{update.courseSort},
+            </if>
+            <if test="update.frontcover1!=null">
+                frontcover1 = #{update.frontcover1},
+            </if>
+            <if test="update.isAccept!=null">
+                isAccept = #{update.isAccept},
+            </if>
+            <if test="update.createDate!=null">
+                createDate = #{update.createDate},
+            </if>
+            <if test="update.status!=null">
+                status = #{update.status},
+            </if>
+            <if test="update.creator!=null">
+                creator = #{update.creator},
+            </if>
+            <if test="update.lastModDate!=null">
+                lastModDate = #{update.lastModDate},
+            </if>
+            <if test="update.lastModifier!=null">
+                lastModifier = #{update.lastModifier},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.classifyId!=null">
+                AND classifyId = #{condition.classifyId}
+            </if>
+            <if test="condition.teacherId!=null">
+                AND teacherId = #{condition.teacherId}
+            </if>
+            <if test="condition.subjectId!=null">
+                AND subjectId = #{condition.subjectId}
+            </if>
+            <if test="condition.managerId!=null">
+                AND managerId = #{condition.managerId}
+            </if>
+            <if test="condition.teacher!=null">
+                AND teacher = #{condition.teacher}
+            </if>
+            <if test="condition.title!=null">
+                AND title = #{condition.title}
+            </if>
+            <if test="condition.content!=null">
+                AND content = #{condition.content}
+            </if>
+            <if test="condition.frontCover!=null">
+                AND frontCover = #{condition.frontCover}
+            </if>
+            <if test="condition.subcontent!=null">
+                AND subcontent = #{condition.subcontent}
+            </if>
+            <if test="condition.hit!=null">
+                AND hit = #{condition.hit}
+            </if>
+            <if test="condition.years!=null">
+                AND years = #{condition.years}
+            </if>
+            <if test="condition.beikaochongciType!=null">
+                AND beikaochongci_type = #{condition.beikaochongciType}
+            </if>
+            <if test="condition.courseSort!=null">
+                AND courseSort = #{condition.courseSort}
+            </if>
+            <if test="condition.frontcover1!=null">
+                AND frontcover1 = #{condition.frontcover1}
+            </if>
+            <if test="condition.isAccept!=null">
+                AND isAccept = #{condition.isAccept}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+        </trim>
+    </update>
+
+    <insert id="insertMap" >
+        INSERT INTO gk_video_course (
+                classifyId,
+                teacherId,
+                subjectId,
+                managerId,
+                teacher,
+                title,
+                content,
+                frontCover,
+                subcontent,
+                hit,
+                years,
+                beikaochongci_type,
+                courseSort,
+                frontcover1,
+                isAccept,
+                createDate,
+                status,
+                creator,
+                lastModDate,
+                lastModifier
+        ) VALUES (
+                    #{map.classifyId},
+                    #{map.teacherId},
+                    #{map.subjectId},
+                    #{map.managerId},
+                    #{map.teacher},
+                    #{map.title},
+                    #{map.content},
+                    #{map.frontCover},
+                    #{map.subcontent},
+                    #{map.hit},
+                    #{map.years},
+                    #{map.beikaochongciType},
+                    #{map.courseSort},
+                    #{map.frontcover1},
+                    #{map.isAccept},
+                    #{map.createDate},
+                    #{map.status},
+                    #{map.creator},
+                    #{map.lastModDate},
+                    #{map.lastModifier}
+        )
+    </insert>
+
+
+    <update id="updateNull" parameterType="VideoCourse">
+        UPDATE gk_video_course
+        <trim prefix="SET" suffixOverrides=",">
+            classifyId = #{classifyId},
+            teacherId = #{teacherId},
+            subjectId = #{subjectId},
+            managerId = #{managerId},
+            teacher = #{teacher},
+            title = #{title},
+            content = #{content},
+            frontCover = #{frontCover},
+            subcontent = #{subcontent},
+            hit = #{hit},
+            years = #{years},
+            beikaochongci_type = #{beikaochongciType},
+            courseSort = #{courseSort},
+            frontcover1 = #{frontcover1},
+            isAccept = #{isAccept},
+            createDate = #{createDate},
+            status = #{status},
+            creator = #{creator},
+            lastModDate = #{lastModDate},
+            lastModifier = #{lastModifier},
+        </trim>
+        WHERE
+        id = #{id} 
+    </update>
+
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        DELETE FROM gk_video_course
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </delete>
+
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM gk_video_course
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="classifyId!=null">
+                AND classifyId = #{classifyId}
+            </if>
+            <if test="teacherId!=null">
+                AND teacherId = #{teacherId}
+            </if>
+            <if test="subjectId!=null">
+                AND subjectId = #{subjectId}
+            </if>
+            <if test="managerId!=null">
+                AND managerId = #{managerId}
+            </if>
+            <if test="teacher!=null">
+                AND teacher = #{teacher}
+            </if>
+            <if test="title!=null">
+                AND title = #{title}
+            </if>
+            <if test="content!=null">
+                AND content = #{content}
+            </if>
+            <if test="frontCover!=null">
+                AND frontCover = #{frontCover}
+            </if>
+            <if test="subcontent!=null">
+                AND subcontent = #{subcontent}
+            </if>
+            <if test="hit!=null">
+                AND hit = #{hit}
+            </if>
+            <if test="years!=null">
+                AND years = #{years}
+            </if>
+            <if test="beikaochongciType!=null">
+                AND beikaochongci_type = #{beikaochongciType}
+            </if>
+            <if test="courseSort!=null">
+                AND courseSort = #{courseSort}
+            </if>
+            <if test="frontcover1!=null">
+                AND frontcover1 = #{frontcover1}
+            </if>
+            <if test="isAccept!=null">
+                AND isAccept = #{isAccept}
+            </if>
+            <if test="createDate!=null">
+                AND createDate = #{createDate}
+            </if>
+            <if test="status!=null">
+                AND status = #{status}
+            </if>
+            <if test="creator!=null">
+                AND creator = #{creator}
+            </if>
+            <if test="lastModDate!=null">
+                AND lastModDate = #{lastModDate}
+            </if>
+            <if test="lastModifier!=null">
+                AND lastModifier = #{lastModifier}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM gk_video_course WHERE
+        ${property} = #{value}
+    </delete>
+
+    <select id="fetch" parameterType="java.lang.Integer" resultType="VideoCourse">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_video_course
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="VideoCourse">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_video_course WHERE
+        ${property} = #{value}
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="VideoCourse">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_video_course WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="VideoCourse">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_video_course
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="VideoCourse">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_video_course
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.id!=null">
+                ${condition.groupOp}   id  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.classifyId!=null">
+                ${condition.groupOp}   classifyId  ${condition.classifyId.op}  #{condition.classifyId.data}
+            </if>
+            <if test="condition.teacherId!=null">
+                ${condition.groupOp}   teacherId  ${condition.teacherId.op}  #{condition.teacherId.data}
+            </if>
+            <if test="condition.subjectId!=null">
+                ${condition.groupOp}   subjectId  ${condition.subjectId.op}  #{condition.subjectId.data}
+            </if>
+            <if test="condition.managerId!=null">
+                ${condition.groupOp}   managerId  ${condition.managerId.op}  #{condition.managerId.data}
+            </if>
+            <if test="condition.teacher!=null">
+                ${condition.groupOp}   teacher  ${condition.teacher.op}  #{condition.teacher.data}
+            </if>
+            <if test="condition.title!=null">
+                ${condition.groupOp}   title  ${condition.title.op}  #{condition.title.data}
+            </if>
+            <if test="condition.content!=null">
+                ${condition.groupOp}   content  ${condition.content.op}  #{condition.content.data}
+            </if>
+            <if test="condition.frontCover!=null">
+                ${condition.groupOp}   frontCover  ${condition.frontCover.op}  #{condition.frontCover.data}
+            </if>
+            <if test="condition.subcontent!=null">
+                ${condition.groupOp}   subcontent  ${condition.subcontent.op}  #{condition.subcontent.data}
+            </if>
+            <if test="condition.hit!=null">
+                ${condition.groupOp}   hit  ${condition.hit.op}  #{condition.hit.data}
+            </if>
+            <if test="condition.years!=null">
+                ${condition.groupOp}   years  ${condition.years.op}  #{condition.years.data}
+            </if>
+            <if test="condition.beikaochongciType!=null">
+                ${condition.groupOp}   beikaochongci_type  ${condition.beikaochongci_type.op}  #{condition.beikaochongci_type.data}
+            </if>
+            <if test="condition.courseSort!=null">
+                ${condition.groupOp}   courseSort  ${condition.courseSort.op}  #{condition.courseSort.data}
+            </if>
+            <if test="condition.frontcover1!=null">
+                ${condition.groupOp}   frontcover1  ${condition.frontcover1.op}  #{condition.frontcover1.data}
+            </if>
+            <if test="condition.isAccept!=null">
+                ${condition.groupOp}   isAccept  ${condition.isAccept.op}  #{condition.isAccept.data}
+            </if>
+            <if test="condition.createDate!=null">
+                ${condition.groupOp}   createDate  ${condition.createDate.op}  #{condition.createDate.data}
+            </if>
+            <if test="condition.status!=null">
+                ${condition.groupOp}   status  ${condition.status.op}  #{condition.status.data}
+            </if>
+            <if test="condition.creator!=null">
+                ${condition.groupOp}   creator  ${condition.creator.op}  #{condition.creator.data}
+            </if>
+            <if test="condition.lastModDate!=null">
+                ${condition.groupOp}   lastModDate  ${condition.lastModDate.op}  #{condition.lastModDate.data}
+            </if>
+            <if test="condition.lastModifier!=null">
+                ${condition.groupOp}   lastModifier  ${condition.lastModifier.op}  #{condition.lastModifier.data}
+            </if>
+
+
+    </where>
+
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="VideoCourse">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_video_course
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id like CONCAT('%', #{id} , '%')
+            </if>
+            <if test="classifyId!=null">
+                AND classifyId like CONCAT('%', #{classifyId} , '%')
+            </if>
+            <if test="teacherId!=null">
+                AND teacherId like CONCAT('%', #{teacherId} , '%')
+            </if>
+            <if test="subjectId!=null">
+                AND subjectId like CONCAT('%', #{subjectId} , '%')
+            </if>
+            <if test="managerId!=null">
+                AND managerId like CONCAT('%', #{managerId} , '%')
+            </if>
+            <if test="teacher!=null">
+                AND teacher like CONCAT('%', #{teacher} , '%')
+            </if>
+            <if test="title!=null">
+                AND title like CONCAT('%', #{title} , '%')
+            </if>
+            <if test="content!=null">
+                AND content like CONCAT('%', #{content} , '%')
+            </if>
+            <if test="frontCover!=null">
+                AND frontCover like CONCAT('%', #{frontCover} , '%')
+            </if>
+            <if test="subcontent!=null">
+                AND subcontent like CONCAT('%', #{subcontent} , '%')
+            </if>
+            <if test="hit!=null">
+                AND hit like CONCAT('%', #{hit} , '%')
+            </if>
+            <if test="years!=null">
+                AND years like CONCAT('%', #{years} , '%')
+            </if>
+            <if test="beikaochongciType!=null">
+                AND beikaochongci_type like CONCAT('%', #{beikaochongciType} , '%')
+            </if>
+            <if test="courseSort!=null">
+                AND courseSort like CONCAT('%', #{courseSort} , '%')
+            </if>
+            <if test="frontcover1!=null">
+                AND frontcover1 like CONCAT('%', #{frontcover1} , '%')
+            </if>
+            <if test="isAccept!=null">
+                AND isAccept like CONCAT('%', #{isAccept} , '%')
+            </if>
+            <if test="createDate!=null">
+                AND createDate like CONCAT('%', #{createDate} , '%')
+            </if>
+            <if test="status!=null">
+                AND status like CONCAT('%', #{status} , '%')
+            </if>
+            <if test="creator!=null">
+                AND creator like CONCAT('%', #{creator} , '%')
+            </if>
+            <if test="lastModDate!=null">
+                AND lastModDate like CONCAT('%', #{lastModDate} , '%')
+            </if>
+            <if test="lastModifier!=null">
+                AND lastModifier like CONCAT('%', #{lastModifier} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="VideoCourse">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_video_course
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.classifyId!=null">
+                AND classifyId = #{condition.classifyId}
+            </if>
+            <if test="condition.teacherId!=null">
+                AND teacherId = #{condition.teacherId}
+            </if>
+            <if test="condition.subjectId!=null">
+                AND subjectId = #{condition.subjectId}
+            </if>
+            <if test="condition.managerId!=null">
+                AND managerId = #{condition.managerId}
+            </if>
+            <if test="condition.teacher!=null">
+                AND teacher = #{condition.teacher}
+            </if>
+            <if test="condition.title!=null">
+                AND title = #{condition.title}
+            </if>
+            <if test="condition.content!=null">
+                AND content = #{condition.content}
+            </if>
+            <if test="condition.frontCover!=null">
+                AND frontCover = #{condition.frontCover}
+            </if>
+            <if test="condition.subcontent!=null">
+                AND subcontent = #{condition.subcontent}
+            </if>
+            <if test="condition.hit!=null">
+                AND hit = #{condition.hit}
+            </if>
+            <if test="condition.years!=null">
+                AND years = #{condition.years}
+            </if>
+            <if test="condition.beikaochongciType!=null">
+                AND beikaochongci_type = #{condition.beikaochongciType}
+            </if>
+            <if test="condition.courseSort!=null">
+                AND courseSort = #{condition.courseSort}
+            </if>
+            <if test="condition.frontcover1!=null">
+                AND frontcover1 = #{condition.frontcover1}
+            </if>
+            <if test="condition.isAccept!=null">
+                AND isAccept = #{condition.isAccept}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="VideoCourse">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_video_course
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.classifyId!=null">
+                AND classifyId = #{condition.classifyId}
+            </if>
+            <if test="condition.teacherId!=null">
+                AND teacherId = #{condition.teacherId}
+            </if>
+            <if test="condition.subjectId!=null">
+                AND subjectId = #{condition.subjectId}
+            </if>
+            <if test="condition.managerId!=null">
+                AND managerId = #{condition.managerId}
+            </if>
+            <if test="condition.teacher!=null">
+                AND teacher = #{condition.teacher}
+            </if>
+            <if test="condition.title!=null">
+                AND title = #{condition.title}
+            </if>
+            <if test="condition.content!=null">
+                AND content = #{condition.content}
+            </if>
+            <if test="condition.frontCover!=null">
+                AND frontCover = #{condition.frontCover}
+            </if>
+            <if test="condition.subcontent!=null">
+                AND subcontent = #{condition.subcontent}
+            </if>
+            <if test="condition.hit!=null">
+                AND hit = #{condition.hit}
+            </if>
+            <if test="condition.years!=null">
+                AND years = #{condition.years}
+            </if>
+            <if test="condition.beikaochongciType!=null">
+                AND beikaochongci_type = #{condition.beikaochongciType}
+            </if>
+            <if test="condition.courseSort!=null">
+                AND courseSort = #{condition.courseSort}
+            </if>
+            <if test="condition.frontcover1!=null">
+                AND frontcover1 = #{condition.frontcover1}
+            </if>
+            <if test="condition.isAccept!=null">
+                AND isAccept = #{condition.isAccept}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+        </trim>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(id) FROM gk_video_course
+       <where>
+           <if test="id!=null">
+               ${groupOp} id ${id.op}  #{id.data}
+           </if>
+           <if test="classifyId!=null">
+               ${groupOp} classifyId ${classifyId.op}  #{classifyId.data}
+           </if>
+           <if test="teacherId!=null">
+               ${groupOp} teacherId ${teacherId.op}  #{teacherId.data}
+           </if>
+           <if test="subjectId!=null">
+               ${groupOp} subjectId ${subjectId.op}  #{subjectId.data}
+           </if>
+           <if test="managerId!=null">
+               ${groupOp} managerId ${managerId.op}  #{managerId.data}
+           </if>
+           <if test="teacher!=null">
+               ${groupOp} teacher ${teacher.op}  #{teacher.data}
+           </if>
+           <if test="title!=null">
+               ${groupOp} title ${title.op}  #{title.data}
+           </if>
+           <if test="content!=null">
+               ${groupOp} content ${content.op}  #{content.data}
+           </if>
+           <if test="frontCover!=null">
+               ${groupOp} frontCover ${frontCover.op}  #{frontCover.data}
+           </if>
+           <if test="subcontent!=null">
+               ${groupOp} subcontent ${subcontent.op}  #{subcontent.data}
+           </if>
+           <if test="hit!=null">
+               ${groupOp} hit ${hit.op}  #{hit.data}
+           </if>
+           <if test="years!=null">
+               ${groupOp} years ${years.op}  #{years.data}
+           </if>
+           <if test="beikaochongciType!=null">
+               ${groupOp} beikaochongci_type ${beikaochongci_type.op}  #{beikaochongci_type.data}
+           </if>
+           <if test="courseSort!=null">
+               ${groupOp} courseSort ${courseSort.op}  #{courseSort.data}
+           </if>
+           <if test="frontcover1!=null">
+               ${groupOp} frontcover1 ${frontcover1.op}  #{frontcover1.data}
+           </if>
+           <if test="isAccept!=null">
+               ${groupOp} isAccept ${isAccept.op}  #{isAccept.data}
+           </if>
+           <if test="createDate!=null">
+               ${groupOp} createDate ${createDate.op}  #{createDate.data}
+           </if>
+           <if test="status!=null">
+               ${groupOp} status ${status.op}  #{status.data}
+           </if>
+           <if test="creator!=null">
+               ${groupOp} creator ${creator.op}  #{creator.data}
+           </if>
+           <if test="lastModDate!=null">
+               ${groupOp} lastModDate ${lastModDate.op}  #{lastModDate.data}
+           </if>
+           <if test="lastModifier!=null">
+               ${groupOp} lastModifier ${lastModifier.op}  #{lastModifier.data}
+           </if>
+
+       </where>
+    <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+    </if>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Integer">
+        SELECT
+        MAX(id)
+        FROM gk_video_course
+    </select>
+
+</mapper>
+
