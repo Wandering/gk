@@ -7,7 +7,6 @@ import java.io.Serializable;
  */
 public class VideoCoursePojo implements Serializable{
     private Long courseId;//ID
-    private Long classifyId;//分类ID
     private String classifyName;//分类名称
     private String teacherName;//教师名字
     private String subjectName;//所属科目
@@ -26,14 +25,6 @@ public class VideoCoursePojo implements Serializable{
 
     public void setCourseId(Long courseId) {
         this.courseId = courseId;
-    }
-
-    public Long getClassifyId() {
-        return classifyId;
-    }
-
-    public void setClassifyId(Long classifyId) {
-        this.classifyId = classifyId;
     }
 
     public String getClassifyName() {
