@@ -42,3 +42,7 @@ include 'gk-domain'
 
 include 'question-war'
 
+include 'web-common'
+
+include 'protocol-common'
+
