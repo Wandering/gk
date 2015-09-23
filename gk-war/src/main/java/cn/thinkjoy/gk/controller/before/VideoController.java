@@ -5,7 +5,6 @@ import cn.thinkjoy.gk.before.pojo.SubjectPojo;
 import cn.thinkjoy.gk.before.pojo.VideoPojo;
 import cn.thinkjoy.gk.before.service.IEXSubjectService;
 import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.protocol.ERRORCODE;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
