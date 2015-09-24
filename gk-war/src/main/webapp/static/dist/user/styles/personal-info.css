@@ -532,7 +532,6 @@ a.next-btn:hover {
   text-decoration: underline; }
 
 .personal-tab {
-  border-bottom: 2px solid #e5e5e5 !important;
   position: relative;
   margin-top: 20px;
   top: 1px; }
