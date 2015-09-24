@@ -15,7 +15,7 @@
       <li><a href="">首页</a></li>
       <li><a href="">报考指南</a></li>
       <li><a href="">报考咨询</a></li>
-      <li><a href="">考前备考</a></li>
+      <li><a href="/before/before.jsp">考前备考</a></li>
       <li><a href="">考后报考</a></li>
     </ul>
     <div class="user-info-list fr">
