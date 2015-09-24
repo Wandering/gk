@@ -107,7 +107,7 @@
 
 <div class="w1000 main-video">
     <div class="tabs">
-        <ul class="tabs-list mt20 subjectList"></ul>
+        <ul class="tabs-list mt20 subjectList" classifyType="1"></ul>
         <div class="into-search">
             <a href="" class="into-btn">进入名师讲堂</a>
             <form action="">
@@ -305,7 +305,7 @@
 <h6 class="w1000 ta content-title-sub">分数不理想也没有关系，专家告诉您如何调整，以最好的状态应对高考，没什么了不起的。</h6>
 <div class="w1000 main-video">
     <div class="tabs">
-        <ul class="tabs-list mt20 subjectList"></ul>
+        <ul class="tabs-list mt20 subjectList" classifyType="2"></ul>
         <div class="into-search">
             <a href="" class="into-btn">进入名师讲堂</a>
             <form action="">
