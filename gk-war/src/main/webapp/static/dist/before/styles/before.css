@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .into-search {
   margin: 31px 0;
   overflow: hidden; }
@@ -206,6 +207,141 @@ ul.main-video-list {
     float: left;
     margin-right: 10px; }
 
+.main-volunteer {
+  overflow: hidden;
+  margin: 15px auto 40px; }
+  .main-volunteer .fl {
+    float: left;
+    width: 312px;
+    border-right: 1px solid #f1f1f1; }
+    .main-volunteer .fl .img {
+      margin-top: 15px; }
+      .main-volunteer .fl .img img {
+        margin: 0 auto;
+        width: 215px;
+        height: 215px;
+        display: block; }
+    .main-volunteer .fl strong {
+      width: 100%;
+      display: block;
+      text-align: center;
+      margin: 23px 0; }
+    .main-volunteer .fl p {
+      color: #777;
+      font-size: 14px;
+      text-align: center; }
+  .main-volunteer .fr {
+    width: 590px;
+    float: left;
+    padding: 0 0 0 92px; }
+    .main-volunteer .fr .zd-form .form-control {
+      margin-top: 13px;
+      height: 47px;
+      width: 336px;
+      border: 1px solid #f1f1f1;
+      border-radius: 3px;
+      line-height: 47px; }
+      .main-volunteer .fr .zd-form .form-control label {
+        width: 95px;
+        height: 25px;
+        border-right: 1px solid #f1f1f1;
+        line-height: 25px;
+        display: inline-block;
+        text-align: center;
+        color: #777; }
+      .main-volunteer .fr .zd-form .form-control .input {
+        width: 215px;
+        padding: 0 10px; }
+      .main-volunteer .fr .zd-form .form-control .input.yzm {
+        width: 99px; }
+    .main-volunteer .fr .zd-form .yzm-control {
+      width: 220px;
+      position: relative; }
+      .main-volunteer .fr .zd-form .yzm-control img {
+        position: absolute;
+        top: 0;
+        right: -116px; }
+
+.form-control-btn {
+  clear: both;
+  margin: 20px 0; }
+  .form-control-btn .btn {
+    float: left;
+    width: 336px;
+    height: 45px;
+    background: url("../../../dist/after/images/next-btn.png");
+    color: #fff; }
+  .form-control-btn .btn:hover {
+    text-decoration: underline; }
+
+/*弹层*/
+.tansLayer {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  opacity: .3;
+  filter: alpha(opacity=30);
+  _height: expression((this.parentElement.clientHeight -100)+'px');
+  background: #000; }
+
+* html.tansLayer {
+  position: fixed;
+  left: expression(documentElement.scrollLeft + documentElement.clientWidth - this.offsetWidth);
+  top: expression(documentElement.scrollTop + documentElement.clientHeight - this.offsetHeight); }
+
+.volunteer-flow3-layer {
+  left: 50%;
+  position: fixed;
+  top: 50%;
+  width: 1000px;
+  height: 590px;
+  margin: -295px 0 0 -500px;
+  z-index: 10;
+  background: #fff;
+  border-radius: 3px; }
+  .volunteer-flow3-layer .top-close {
+    height: 20px;
+    margin-top: 10px;
+    overflow: hidden; }
+    .volunteer-flow3-layer .top-close .close-btn {
+      float: right;
+      margin: 0 20px 0 0;
+      width: 14px;
+      height: 13px;
+      background: url("../../common/images/close-btn.png") no-repeat;
+      font-size: 0;
+      line-height: 0; }
+  .volunteer-flow3-layer .tips {
+    margin: 0 30px; }
+  .volunteer-flow3-layer .volunteer-flow3-body {
+    padding: 0 30px;
+    overflow: hidden; }
+    .volunteer-flow3-layer .volunteer-flow3-body .search-box {
+      height: 60px;
+      line-height: 60px;
+      border: 1px solid #ccc;
+      margin-top: 11px;
+      padding: 0 20px;
+      font-size: 14px; }
+      .volunteer-flow3-layer .volunteer-flow3-body .search-box .search-input {
+        border: 1px solid #f1f1f1;
+        width: 136px;
+        padding: 0 10px;
+        height: 23px;
+        margin-right: 10px; }
+      .volunteer-flow3-layer .volunteer-flow3-body .search-box .search-btn {
+        width: 57px;
+        height: 29px;
+        background: #f0ad4e;
+        border-radius: 3px;
+        color: #fff;
+        text-align: center;
+        line-height: 29px;
+        margin: 0 10px; }
+
 .tip {
   width: 100%;
   height: 48px;
@@ -226,7 +362,6 @@ ul.main-video-list {
   margin-top: 20px; }
 
 .school-eval {
-  width: 100%;
   overflow: hidden;
   margin-bottom: 50px; }
   .school-eval .eval-left {

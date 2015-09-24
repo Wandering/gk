@@ -7,23 +7,51 @@
 package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
+import cn.thinkjoy.common.domain.view.BizData4Page;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
 import cn.thinkjoy.gk.dao.IVolunteerSchoolDAO;
+import cn.thinkjoy.gk.dao.IVolunteerSchoolExDAO;
 import cn.thinkjoy.gk.domain.VolunteerSchool;
 import cn.thinkjoy.gk.service.IVolunteerSchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 
 @Service("VolunteerSchoolServiceImpl")
 public class VolunteerSchoolServiceImpl extends AbstractPageService<IBaseDAO<VolunteerSchool>, VolunteerSchool> implements IVolunteerSchoolService<IBaseDAO<VolunteerSchool>,VolunteerSchool> {
     @Autowired
     private IVolunteerSchoolDAO volunteerSchoolDAO;
+    @Autowired
+    private IVolunteerSchoolExDAO volunteerSchoolExDAO;
 
     @Override
     public IBaseDAO<VolunteerSchool> getDao() {
         return volunteerSchoolDAO;
     }
+
+
+    @Override
+    public BizData4Page queryPageByDataPerm(String resUri, Map conditions, int curPage, int offset, int rows) {
+        List mainData = volunteerSchoolExDAO.queryPage(conditions, offset, rows, "sort", "asc");
+        int records = this.getDao().count(conditions);
+        BizData4Page bizData4Page = new BizData4Page();
+        bizData4Page.setRows(mainData);
+        bizData4Page.setPage(curPage);
+        bizData4Page.setRecords(records);
+        int total = records / rows;
+        int mod = records % rows;
+        if(mod > 0) {
+            ++total;
+        }
+
+        bizData4Page.setTotal(total);
+
+        return bizData4Page;
+    }
+
 
 //    @Override
 //    public void insert(BaseDomain entity) {
@@ -135,10 +163,7 @@ public class VolunteerSchoolServiceImpl extends AbstractPageService<IBaseDAO<Vol
 //        return volunteerSchoolDAO;
 //    }
 //
-//    @Override
-//    public BizData4Page queryPageByDataPerm(String resUri, Map conditions, int curPage, int offset, int rows) {
-//        return super.doQueryPageByDataPerm(resUri, conditions, curPage, offset, rows);
-//    }
+
 
 
 }
