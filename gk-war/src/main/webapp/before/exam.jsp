@@ -4,7 +4,6 @@
 <head>
     <title>真题密卷</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/common/styles/comm.css"/>
     <link rel="stylesheet" href="/static/dist/before/styles/before.css"/>
 </head>
 <body>
@@ -192,22 +191,9 @@
         </div>
     </div>
 </div>
-
 <%@ include file="/common/footer.jsp"%>
-<link rel="stylesheet" href="/static/bower_components/swiper/dist/css/swiper.css"/>
-<script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="/static/bower_components/swiper/dist/js/swiper.jquery.min.js"></script>
 <script>
-    $(function () {
-        //幻灯片
-        var swiper = new Swiper('.swiper-container', {
-            pagination: '.swiper-pagination',
-            paginationClickable: true,
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
-            loop: true
-        });
-    });
+    seajs.use("/static/src/before/scripts/exam");
 </script>
 </body>
 </html>

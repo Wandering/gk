@@ -125,7 +125,7 @@
 
 <%@include file="/common/footer.jsp"%>
 <script>
-    seajs.use("${ctx}/static/src/user/scripts/vip-service");
+    seajs.use("/static/src/user/scripts/vip-service");
 </script>
 
 </body>

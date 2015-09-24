@@ -215,7 +215,7 @@
 <%@ include file="common/footer.jsp"%>
 
 <script>
-    seajs.use("${ctx}/static/src/index/scripts/index");
+    seajs.use("/static/src/index/scripts/index");
 </script>
 </body>
 </html>

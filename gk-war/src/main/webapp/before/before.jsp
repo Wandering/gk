@@ -72,19 +72,19 @@
         </li>
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a href="" class="name">名师讲堂</a>
+            <a href="" class="name">真题密卷</a>
             <span class="num">2</span>
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a href="" class="name">名师讲堂</a>
+            <a href="" class="name">高考心理</a>
             <span class="num">3</span>
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a href="" class="name">名师讲堂</a>
+            <a href="" class="name">院校推荐</a>
             <span class="num">4</span>
             <p class="txt">根据分数快速定位院校及推荐院校</p>
         </li>
@@ -581,7 +581,7 @@
     </div>
 </div>
 <script>
-    seajs.use("${ctx}/static/src/user/scripts/vip-service");
+    seajs.use("/static/src/before/scripts/before");
 </script>
 </body>
 </html>
