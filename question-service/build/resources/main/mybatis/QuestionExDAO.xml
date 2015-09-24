@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IQuestionExDAO">
+
+    <select id="findQuestionPage" resultType="QuestionPojo">
+        SELECT
+        a.id,a.userId,a.question,a.createDate,a.disableExpertId,a.isAnswer,a.isOpen,a.freeStatus,
+        b.name userName,b.icon userIcon
+        FROM
+        shishuo_question a
+        left join shishuo_user_info b on a.userId = b.id
+        <where>
+            a.status = 0
+            <if test="freeStatus !=null">
+                AND a.freeStatus = #{freeStatus}
+            </if>
+            <if test="expertId !=null">
+                AND a.expertId = #{expertId}
+            </if>
+            <if test="isOpen !=null">
+                AND a.isOpen = #{isOpen}
+            </if>
+            <if test="isAnswer !=null">
+                AND a.isAnswer = #{isAnswer}
+            </if>
+            <if test="sourceType !=null">
+                AND a.sourceType = #{sourceType}
+            </if>
+        </where>
+        ORDER BY a.createDate desc
+        <if test="startSize != null">
+            limit #{startSize}, #{endSize}
+        </if>
+    </select>
+
+    <select id="findQuestionCount" resultType="int">
+        SELECT
+        COUNT(a.ID)
+        FROM
+        shishuo_question a
+        left join shishuo_user_info b on a.userId = b.id
+        <where>
+            a.status = 0
+            <if test="freeStatus !=null">
+                AND a.freeStatus = #{freeStatus}
+            </if>
+            <if test="expertId !=null">
+                AND a.expertId = #{expertId}
+            </if>
+            <if test="isOpen !=null">
+                AND a.isOpen = #{isOpen}
+            </if>
+            <if test="isAnswer !=null">
+                AND a.isAnswer = #{isAnswer}
+            </if>
+            <if test="sourceType !=null">
+                AND a.sourceType = #{sourceType}
+            </if>
+        </where>
+    </select>
+
+    <select id="findQuestionById" resultType="QuestionDetailPojo">
+        select a.id questionId,d.id userId,d.name userName,d.icon userIcon,a.question,a.createDate createTime,a.isAnswer,b.answer,b.createDate answerTime,a.disableStatus,
+        c.id expertUserId,c.name expertUserName,c.icon expertUserIcon
+        from shishuo_question a
+        left join shishuo_answer b on a.id = b.questionId
+        left join shishuo_user_expert c on b.expertId = c.id
+        left join shishuo_user_info d on a.userId = d.id
+        <where>
+            1=1
+            <if test="questionId !=null">
+                AND a.id = #{questionId}
+            </if>
+        </where>
+    </select>
+
+</mapper>
+

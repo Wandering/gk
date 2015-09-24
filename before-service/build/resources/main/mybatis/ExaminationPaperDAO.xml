@@ -1,0 +1,950 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IExaminationPaperDAO">
+<!--
+insert
+update
+updateNull
+deleteById
+deleteByCondition
+deleteByProperty
+fetch
+findOne
+findList
+findAll
+queryPage
+like
+queryList
+queryOne
+count
+selectMaxId
+updateOrSave
+selectOne
+selectList
+-->
+    <sql id="Base_Column_List">
+        id,
+        years,
+        sort,
+        m_beikaochongci_type_id,
+        m_beikaochongci_type,
+        subjectId,
+        paperName,
+        frontCover,
+        subContent,
+        price,
+        isAccept,
+        resources,
+        resourcesExt,
+        resourcesFilesize,
+        downloadsAutomatic,
+        downloadsManual,
+        createDate,
+        status,
+        creator,
+        lastModDate,
+        lastModifier
+    </sql>
+    <insert id="insert" parameterType="ExaminationPaper">
+        INSERT INTO gk_examination_paper (
+        years,
+        sort,
+        m_beikaochongci_type_id,
+        m_beikaochongci_type,
+        subjectId,
+        paperName,
+        frontCover,
+        subContent,
+        price,
+        isAccept,
+        resources,
+        resourcesExt,
+        resourcesFilesize,
+        downloadsAutomatic,
+        downloadsManual,
+        createDate,
+        status,
+        creator,
+        lastModDate,
+        lastModifier
+        ) VALUES (
+        #{years},
+        #{sort},
+        #{mbeikaochongciTypeId},
+        #{mbeikaochongciType},
+        #{subjectId},
+        #{paperName},
+        #{frontCover},
+        #{subContent},
+        #{price},
+        #{isAccept},
+        #{resources},
+        #{resourcesExt},
+        #{resourcesFilesize},
+        #{downloadsAutomatic},
+        #{downloadsManual},
+        #{createDate},
+        #{status},
+        #{creator},
+        #{lastModDate},
+        #{lastModifier}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+        SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="ExaminationPaper">
+        UPDATE gk_examination_paper
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="years!=null">
+                years = #{years},
+            </if>
+            <if test="sort!=null">
+                sort = #{sort},
+            </if>
+            <if test="mbeikaochongciTypeId!=null">
+                m_beikaochongci_type_id = #{mbeikaochongciTypeId},
+            </if>
+            <if test="mbeikaochongciType!=null">
+                m_beikaochongci_type = #{mbeikaochongciType},
+            </if>
+            <if test="subjectId!=null">
+                subjectId = #{subjectId},
+            </if>
+            <if test="paperName!=null">
+                paperName = #{paperName},
+            </if>
+            <if test="frontCover!=null">
+                frontCover = #{frontCover},
+            </if>
+            <if test="subContent!=null">
+                subContent = #{subContent},
+            </if>
+            <if test="price!=null">
+                price = #{price},
+            </if>
+            <if test="isAccept!=null">
+                isAccept = #{isAccept},
+            </if>
+            <if test="resources!=null">
+                resources = #{resources},
+            </if>
+            <if test="resourcesExt!=null">
+                resourcesExt = #{resourcesExt},
+            </if>
+            <if test="resourcesFilesize!=null">
+                resourcesFilesize = #{resourcesFilesize},
+            </if>
+            <if test="downloadsAutomatic!=null">
+                downloadsAutomatic = #{downloadsAutomatic},
+            </if>
+            <if test="downloadsManual!=null">
+                downloadsManual = #{downloadsManual},
+            </if>
+            <if test="createDate!=null">
+                createDate = #{createDate},
+            </if>
+            <if test="status!=null">
+                status = #{status},
+            </if>
+            <if test="creator!=null">
+                creator = #{creator},
+            </if>
+            <if test="lastModDate!=null">
+                lastModDate = #{lastModDate},
+            </if>
+            <if test="lastModifier!=null">
+                lastModifier = #{lastModifier},
+            </if>
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateMap">
+        UPDATE gk_examination_paper
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.years!=null">
+                years = #{map.years},
+            </if>
+            <if test="map.sort!=null">
+                sort = #{map.sort},
+            </if>
+            <if test="map.mbeikaochongciTypeId!=null">
+                m_beikaochongci_type_id = #{map.mbeikaochongciTypeId},
+            </if>
+            <if test="map.mbeikaochongciType!=null">
+                m_beikaochongci_type = #{map.mbeikaochongciType},
+            </if>
+            <if test="map.subjectId!=null">
+                subjectId = #{map.subjectId},
+            </if>
+            <if test="map.paperName!=null">
+                paperName = #{map.paperName},
+            </if>
+            <if test="map.frontCover!=null">
+                frontCover = #{map.frontCover},
+            </if>
+            <if test="map.subContent!=null">
+                subContent = #{map.subContent},
+            </if>
+            <if test="map.price!=null">
+                price = #{map.price},
+            </if>
+            <if test="map.isAccept!=null">
+                isAccept = #{map.isAccept},
+            </if>
+            <if test="map.resources!=null">
+                resources = #{map.resources},
+            </if>
+            <if test="map.resourcesExt!=null">
+                resourcesExt = #{map.resourcesExt},
+            </if>
+            <if test="map.resourcesFilesize!=null">
+                resourcesFilesize = #{map.resourcesFilesize},
+            </if>
+            <if test="map.downloadsAutomatic!=null">
+                downloadsAutomatic = #{map.downloadsAutomatic},
+            </if>
+            <if test="map.downloadsManual!=null">
+                downloadsManual = #{map.downloadsManual},
+            </if>
+            <if test="map.createDate!=null">
+                createDate = #{map.createDate},
+            </if>
+            <if test="map.status!=null">
+                status = #{map.status},
+            </if>
+            <if test="map.creator!=null">
+                creator = #{map.creator},
+            </if>
+            <if test="map.lastModDate!=null">
+                lastModDate = #{map.lastModDate},
+            </if>
+            <if test="map.lastModifier!=null">
+                lastModifier = #{map.lastModifier},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE gk_examination_paper
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.years!=null">
+                years = #{update.years},
+            </if>
+            <if test="update.sort!=null">
+                sort = #{update.sort},
+            </if>
+            <if test="update.mbeikaochongciTypeId!=null">
+                m_beikaochongci_type_id = #{update.mbeikaochongciTypeId},
+            </if>
+            <if test="update.mbeikaochongciType!=null">
+                m_beikaochongci_type = #{update.mbeikaochongciType},
+            </if>
+            <if test="update.subjectId!=null">
+                subjectId = #{update.subjectId},
+            </if>
+            <if test="update.paperName!=null">
+                paperName = #{update.paperName},
+            </if>
+            <if test="update.frontCover!=null">
+                frontCover = #{update.frontCover},
+            </if>
+            <if test="update.subContent!=null">
+                subContent = #{update.subContent},
+            </if>
+            <if test="update.price!=null">
+                price = #{update.price},
+            </if>
+            <if test="update.isAccept!=null">
+                isAccept = #{update.isAccept},
+            </if>
+            <if test="update.resources!=null">
+                resources = #{update.resources},
+            </if>
+            <if test="update.resourcesExt!=null">
+                resourcesExt = #{update.resourcesExt},
+            </if>
+            <if test="update.resourcesFilesize!=null">
+                resourcesFilesize = #{update.resourcesFilesize},
+            </if>
+            <if test="update.downloadsAutomatic!=null">
+                downloadsAutomatic = #{update.downloadsAutomatic},
+            </if>
+            <if test="update.downloadsManual!=null">
+                downloadsManual = #{update.downloadsManual},
+            </if>
+            <if test="update.createDate!=null">
+                createDate = #{update.createDate},
+            </if>
+            <if test="update.status!=null">
+                status = #{update.status},
+            </if>
+            <if test="update.creator!=null">
+                creator = #{update.creator},
+            </if>
+            <if test="update.lastModDate!=null">
+                lastModDate = #{update.lastModDate},
+            </if>
+            <if test="update.lastModifier!=null">
+                lastModifier = #{update.lastModifier},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.years!=null">
+                AND years = #{condition.years}
+            </if>
+            <if test="condition.sort!=null">
+                AND sort = #{condition.sort}
+            </if>
+            <if test="condition.mbeikaochongciTypeId!=null">
+                AND m_beikaochongci_type_id = #{condition.mbeikaochongciTypeId}
+            </if>
+            <if test="condition.mbeikaochongciType!=null">
+                AND m_beikaochongci_type = #{condition.mbeikaochongciType}
+            </if>
+            <if test="condition.subjectId!=null">
+                AND subjectId = #{condition.subjectId}
+            </if>
+            <if test="condition.paperName!=null">
+                AND paperName = #{condition.paperName}
+            </if>
+            <if test="condition.frontCover!=null">
+                AND frontCover = #{condition.frontCover}
+            </if>
+            <if test="condition.subContent!=null">
+                AND subContent = #{condition.subContent}
+            </if>
+            <if test="condition.price!=null">
+                AND price = #{condition.price}
+            </if>
+            <if test="condition.isAccept!=null">
+                AND isAccept = #{condition.isAccept}
+            </if>
+            <if test="condition.resources!=null">
+                AND resources = #{condition.resources}
+            </if>
+            <if test="condition.resourcesExt!=null">
+                AND resourcesExt = #{condition.resourcesExt}
+            </if>
+            <if test="condition.resourcesFilesize!=null">
+                AND resourcesFilesize = #{condition.resourcesFilesize}
+            </if>
+            <if test="condition.downloadsAutomatic!=null">
+                AND downloadsAutomatic = #{condition.downloadsAutomatic}
+            </if>
+            <if test="condition.downloadsManual!=null">
+                AND downloadsManual = #{condition.downloadsManual}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+        </trim>
+    </update>
+
+    <insert id="insertMap" >
+        INSERT INTO gk_examination_paper (
+                years,
+                sort,
+                m_beikaochongci_type_id,
+                m_beikaochongci_type,
+                subjectId,
+                paperName,
+                frontCover,
+                subContent,
+                price,
+                isAccept,
+                resources,
+                resourcesExt,
+                resourcesFilesize,
+                downloadsAutomatic,
+                downloadsManual,
+                createDate,
+                status,
+                creator,
+                lastModDate,
+                lastModifier
+        ) VALUES (
+                    #{map.years},
+                    #{map.sort},
+                    #{map.mbeikaochongciTypeId},
+                    #{map.mbeikaochongciType},
+                    #{map.subjectId},
+                    #{map.paperName},
+                    #{map.frontCover},
+                    #{map.subContent},
+                    #{map.price},
+                    #{map.isAccept},
+                    #{map.resources},
+                    #{map.resourcesExt},
+                    #{map.resourcesFilesize},
+                    #{map.downloadsAutomatic},
+                    #{map.downloadsManual},
+                    #{map.createDate},
+                    #{map.status},
+                    #{map.creator},
+                    #{map.lastModDate},
+                    #{map.lastModifier}
+        )
+    </insert>
+
+
+    <update id="updateNull" parameterType="ExaminationPaper">
+        UPDATE gk_examination_paper
+        <trim prefix="SET" suffixOverrides=",">
+            years = #{years},
+            sort = #{sort},
+            m_beikaochongci_type_id = #{mbeikaochongciTypeId},
+            m_beikaochongci_type = #{mbeikaochongciType},
+            subjectId = #{subjectId},
+            paperName = #{paperName},
+            frontCover = #{frontCover},
+            subContent = #{subContent},
+            price = #{price},
+            isAccept = #{isAccept},
+            resources = #{resources},
+            resourcesExt = #{resourcesExt},
+            resourcesFilesize = #{resourcesFilesize},
+            downloadsAutomatic = #{downloadsAutomatic},
+            downloadsManual = #{downloadsManual},
+            createDate = #{createDate},
+            status = #{status},
+            creator = #{creator},
+            lastModDate = #{lastModDate},
+            lastModifier = #{lastModifier},
+        </trim>
+        WHERE
+        id = #{id} 
+    </update>
+
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM gk_examination_paper
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </delete>
+
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM gk_examination_paper
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="years!=null">
+                AND years = #{years}
+            </if>
+            <if test="sort!=null">
+                AND sort = #{sort}
+            </if>
+            <if test="mbeikaochongciTypeId!=null">
+                AND m_beikaochongci_type_id = #{mbeikaochongciTypeId}
+            </if>
+            <if test="mbeikaochongciType!=null">
+                AND m_beikaochongci_type = #{mbeikaochongciType}
+            </if>
+            <if test="subjectId!=null">
+                AND subjectId = #{subjectId}
+            </if>
+            <if test="paperName!=null">
+                AND paperName = #{paperName}
+            </if>
+            <if test="frontCover!=null">
+                AND frontCover = #{frontCover}
+            </if>
+            <if test="subContent!=null">
+                AND subContent = #{subContent}
+            </if>
+            <if test="price!=null">
+                AND price = #{price}
+            </if>
+            <if test="isAccept!=null">
+                AND isAccept = #{isAccept}
+            </if>
+            <if test="resources!=null">
+                AND resources = #{resources}
+            </if>
+            <if test="resourcesExt!=null">
+                AND resourcesExt = #{resourcesExt}
+            </if>
+            <if test="resourcesFilesize!=null">
+                AND resourcesFilesize = #{resourcesFilesize}
+            </if>
+            <if test="downloadsAutomatic!=null">
+                AND downloadsAutomatic = #{downloadsAutomatic}
+            </if>
+            <if test="downloadsManual!=null">
+                AND downloadsManual = #{downloadsManual}
+            </if>
+            <if test="createDate!=null">
+                AND createDate = #{createDate}
+            </if>
+            <if test="status!=null">
+                AND status = #{status}
+            </if>
+            <if test="creator!=null">
+                AND creator = #{creator}
+            </if>
+            <if test="lastModDate!=null">
+                AND lastModDate = #{lastModDate}
+            </if>
+            <if test="lastModifier!=null">
+                AND lastModifier = #{lastModifier}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM gk_examination_paper WHERE
+        ${property} = #{value}
+    </delete>
+
+    <select id="fetch" parameterType="java.lang.Long" resultType="ExaminationPaper">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_examination_paper
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="ExaminationPaper">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_examination_paper WHERE
+        ${property} = #{value}
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="ExaminationPaper">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_examination_paper WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="ExaminationPaper">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_examination_paper
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="ExaminationPaper">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_examination_paper
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.id!=null">
+                ${condition.groupOp}   id  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.years!=null">
+                ${condition.groupOp}   years  ${condition.years.op}  #{condition.years.data}
+            </if>
+            <if test="condition.sort!=null">
+                ${condition.groupOp}   sort  ${condition.sort.op}  #{condition.sort.data}
+            </if>
+            <if test="condition.mbeikaochongciTypeId!=null">
+                ${condition.groupOp}   m_beikaochongci_type_id  ${condition.m_beikaochongci_type_id.op}  #{condition.m_beikaochongci_type_id.data}
+            </if>
+            <if test="condition.mbeikaochongciType!=null">
+                ${condition.groupOp}   m_beikaochongci_type  ${condition.m_beikaochongci_type.op}  #{condition.m_beikaochongci_type.data}
+            </if>
+            <if test="condition.subjectId!=null">
+                ${condition.groupOp}   subjectId  ${condition.subjectId.op}  #{condition.subjectId.data}
+            </if>
+            <if test="condition.paperName!=null">
+                ${condition.groupOp}   paperName  ${condition.paperName.op}  #{condition.paperName.data}
+            </if>
+            <if test="condition.frontCover!=null">
+                ${condition.groupOp}   frontCover  ${condition.frontCover.op}  #{condition.frontCover.data}
+            </if>
+            <if test="condition.subContent!=null">
+                ${condition.groupOp}   subContent  ${condition.subContent.op}  #{condition.subContent.data}
+            </if>
+            <if test="condition.price!=null">
+                ${condition.groupOp}   price  ${condition.price.op}  #{condition.price.data}
+            </if>
+            <if test="condition.isAccept!=null">
+                ${condition.groupOp}   isAccept  ${condition.isAccept.op}  #{condition.isAccept.data}
+            </if>
+            <if test="condition.resources!=null">
+                ${condition.groupOp}   resources  ${condition.resources.op}  #{condition.resources.data}
+            </if>
+            <if test="condition.resourcesExt!=null">
+                ${condition.groupOp}   resourcesExt  ${condition.resourcesExt.op}  #{condition.resourcesExt.data}
+            </if>
+            <if test="condition.resourcesFilesize!=null">
+                ${condition.groupOp}   resourcesFilesize  ${condition.resourcesFilesize.op}  #{condition.resourcesFilesize.data}
+            </if>
+            <if test="condition.downloadsAutomatic!=null">
+                ${condition.groupOp}   downloadsAutomatic  ${condition.downloadsAutomatic.op}  #{condition.downloadsAutomatic.data}
+            </if>
+            <if test="condition.downloadsManual!=null">
+                ${condition.groupOp}   downloadsManual  ${condition.downloadsManual.op}  #{condition.downloadsManual.data}
+            </if>
+            <if test="condition.createDate!=null">
+                ${condition.groupOp}   createDate  ${condition.createDate.op}  #{condition.createDate.data}
+            </if>
+            <if test="condition.status!=null">
+                ${condition.groupOp}   status  ${condition.status.op}  #{condition.status.data}
+            </if>
+            <if test="condition.creator!=null">
+                ${condition.groupOp}   creator  ${condition.creator.op}  #{condition.creator.data}
+            </if>
+            <if test="condition.lastModDate!=null">
+                ${condition.groupOp}   lastModDate  ${condition.lastModDate.op}  #{condition.lastModDate.data}
+            </if>
+            <if test="condition.lastModifier!=null">
+                ${condition.groupOp}   lastModifier  ${condition.lastModifier.op}  #{condition.lastModifier.data}
+            </if>
+
+
+    </where>
+
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="ExaminationPaper">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_examination_paper
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id like CONCAT('%', #{id} , '%')
+            </if>
+            <if test="years!=null">
+                AND years like CONCAT('%', #{years} , '%')
+            </if>
+            <if test="sort!=null">
+                AND sort like CONCAT('%', #{sort} , '%')
+            </if>
+            <if test="mbeikaochongciTypeId!=null">
+                AND m_beikaochongci_type_id like CONCAT('%', #{mbeikaochongciTypeId} , '%')
+            </if>
+            <if test="mbeikaochongciType!=null">
+                AND m_beikaochongci_type like CONCAT('%', #{mbeikaochongciType} , '%')
+            </if>
+            <if test="subjectId!=null">
+                AND subjectId like CONCAT('%', #{subjectId} , '%')
+            </if>
+            <if test="paperName!=null">
+                AND paperName like CONCAT('%', #{paperName} , '%')
+            </if>
+            <if test="frontCover!=null">
+                AND frontCover like CONCAT('%', #{frontCover} , '%')
+            </if>
+            <if test="subContent!=null">
+                AND subContent like CONCAT('%', #{subContent} , '%')
+            </if>
+            <if test="price!=null">
+                AND price like CONCAT('%', #{price} , '%')
+            </if>
+            <if test="isAccept!=null">
+                AND isAccept like CONCAT('%', #{isAccept} , '%')
+            </if>
+            <if test="resources!=null">
+                AND resources like CONCAT('%', #{resources} , '%')
+            </if>
+            <if test="resourcesExt!=null">
+                AND resourcesExt like CONCAT('%', #{resourcesExt} , '%')
+            </if>
+            <if test="resourcesFilesize!=null">
+                AND resourcesFilesize like CONCAT('%', #{resourcesFilesize} , '%')
+            </if>
+            <if test="downloadsAutomatic!=null">
+                AND downloadsAutomatic like CONCAT('%', #{downloadsAutomatic} , '%')
+            </if>
+            <if test="downloadsManual!=null">
+                AND downloadsManual like CONCAT('%', #{downloadsManual} , '%')
+            </if>
+            <if test="createDate!=null">
+                AND createDate like CONCAT('%', #{createDate} , '%')
+            </if>
+            <if test="status!=null">
+                AND status like CONCAT('%', #{status} , '%')
+            </if>
+            <if test="creator!=null">
+                AND creator like CONCAT('%', #{creator} , '%')
+            </if>
+            <if test="lastModDate!=null">
+                AND lastModDate like CONCAT('%', #{lastModDate} , '%')
+            </if>
+            <if test="lastModifier!=null">
+                AND lastModifier like CONCAT('%', #{lastModifier} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="ExaminationPaper">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_examination_paper
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.years!=null">
+                AND years = #{condition.years}
+            </if>
+            <if test="condition.sort!=null">
+                AND sort = #{condition.sort}
+            </if>
+            <if test="condition.mbeikaochongciTypeId!=null">
+                AND m_beikaochongci_type_id = #{condition.mbeikaochongciTypeId}
+            </if>
+            <if test="condition.mbeikaochongciType!=null">
+                AND m_beikaochongci_type = #{condition.mbeikaochongciType}
+            </if>
+            <if test="condition.subjectId!=null">
+                AND subjectId = #{condition.subjectId}
+            </if>
+            <if test="condition.paperName!=null">
+                AND paperName = #{condition.paperName}
+            </if>
+            <if test="condition.frontCover!=null">
+                AND frontCover = #{condition.frontCover}
+            </if>
+            <if test="condition.subContent!=null">
+                AND subContent = #{condition.subContent}
+            </if>
+            <if test="condition.price!=null">
+                AND price = #{condition.price}
+            </if>
+            <if test="condition.isAccept!=null">
+                AND isAccept = #{condition.isAccept}
+            </if>
+            <if test="condition.resources!=null">
+                AND resources = #{condition.resources}
+            </if>
+            <if test="condition.resourcesExt!=null">
+                AND resourcesExt = #{condition.resourcesExt}
+            </if>
+            <if test="condition.resourcesFilesize!=null">
+                AND resourcesFilesize = #{condition.resourcesFilesize}
+            </if>
+            <if test="condition.downloadsAutomatic!=null">
+                AND downloadsAutomatic = #{condition.downloadsAutomatic}
+            </if>
+            <if test="condition.downloadsManual!=null">
+                AND downloadsManual = #{condition.downloadsManual}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="ExaminationPaper">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_examination_paper
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.years!=null">
+                AND years = #{condition.years}
+            </if>
+            <if test="condition.sort!=null">
+                AND sort = #{condition.sort}
+            </if>
+            <if test="condition.mbeikaochongciTypeId!=null">
+                AND m_beikaochongci_type_id = #{condition.mbeikaochongciTypeId}
+            </if>
+            <if test="condition.mbeikaochongciType!=null">
+                AND m_beikaochongci_type = #{condition.mbeikaochongciType}
+            </if>
+            <if test="condition.subjectId!=null">
+                AND subjectId = #{condition.subjectId}
+            </if>
+            <if test="condition.paperName!=null">
+                AND paperName = #{condition.paperName}
+            </if>
+            <if test="condition.frontCover!=null">
+                AND frontCover = #{condition.frontCover}
+            </if>
+            <if test="condition.subContent!=null">
+                AND subContent = #{condition.subContent}
+            </if>
+            <if test="condition.price!=null">
+                AND price = #{condition.price}
+            </if>
+            <if test="condition.isAccept!=null">
+                AND isAccept = #{condition.isAccept}
+            </if>
+            <if test="condition.resources!=null">
+                AND resources = #{condition.resources}
+            </if>
+            <if test="condition.resourcesExt!=null">
+                AND resourcesExt = #{condition.resourcesExt}
+            </if>
+            <if test="condition.resourcesFilesize!=null">
+                AND resourcesFilesize = #{condition.resourcesFilesize}
+            </if>
+            <if test="condition.downloadsAutomatic!=null">
+                AND downloadsAutomatic = #{condition.downloadsAutomatic}
+            </if>
+            <if test="condition.downloadsManual!=null">
+                AND downloadsManual = #{condition.downloadsManual}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+        </trim>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(id) FROM gk_examination_paper
+       <where>
+           <if test="id!=null">
+               ${groupOp} id ${id.op}  #{id.data}
+           </if>
+           <if test="years!=null">
+               ${groupOp} years ${years.op}  #{years.data}
+           </if>
+           <if test="sort!=null">
+               ${groupOp} sort ${sort.op}  #{sort.data}
+           </if>
+           <if test="mbeikaochongciTypeId!=null">
+               ${groupOp} m_beikaochongci_type_id ${m_beikaochongci_type_id.op}  #{m_beikaochongci_type_id.data}
+           </if>
+           <if test="mbeikaochongciType!=null">
+               ${groupOp} m_beikaochongci_type ${m_beikaochongci_type.op}  #{m_beikaochongci_type.data}
+           </if>
+           <if test="subjectId!=null">
+               ${groupOp} subjectId ${subjectId.op}  #{subjectId.data}
+           </if>
+           <if test="paperName!=null">
+               ${groupOp} paperName ${paperName.op}  #{paperName.data}
+           </if>
+           <if test="frontCover!=null">
+               ${groupOp} frontCover ${frontCover.op}  #{frontCover.data}
+           </if>
+           <if test="subContent!=null">
+               ${groupOp} subContent ${subContent.op}  #{subContent.data}
+           </if>
+           <if test="price!=null">
+               ${groupOp} price ${price.op}  #{price.data}
+           </if>
+           <if test="isAccept!=null">
+               ${groupOp} isAccept ${isAccept.op}  #{isAccept.data}
+           </if>
+           <if test="resources!=null">
+               ${groupOp} resources ${resources.op}  #{resources.data}
+           </if>
+           <if test="resourcesExt!=null">
+               ${groupOp} resourcesExt ${resourcesExt.op}  #{resourcesExt.data}
+           </if>
+           <if test="resourcesFilesize!=null">
+               ${groupOp} resourcesFilesize ${resourcesFilesize.op}  #{resourcesFilesize.data}
+           </if>
+           <if test="downloadsAutomatic!=null">
+               ${groupOp} downloadsAutomatic ${downloadsAutomatic.op}  #{downloadsAutomatic.data}
+           </if>
+           <if test="downloadsManual!=null">
+               ${groupOp} downloadsManual ${downloadsManual.op}  #{downloadsManual.data}
+           </if>
+           <if test="createDate!=null">
+               ${groupOp} createDate ${createDate.op}  #{createDate.data}
+           </if>
+           <if test="status!=null">
+               ${groupOp} status ${status.op}  #{status.data}
+           </if>
+           <if test="creator!=null">
+               ${groupOp} creator ${creator.op}  #{creator.data}
+           </if>
+           <if test="lastModDate!=null">
+               ${groupOp} lastModDate ${lastModDate.op}  #{lastModDate.data}
+           </if>
+           <if test="lastModifier!=null">
+               ${groupOp} lastModifier ${lastModifier.op}  #{lastModifier.data}
+           </if>
+
+       </where>
+    <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+    </if>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Long">
+        SELECT
+        MAX(id)
+        FROM gk_examination_paper
+    </select>
+
+</mapper>
+
