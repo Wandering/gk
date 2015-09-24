@@ -8,9 +8,7 @@ import java.io.Serializable;
 public class OrdersQuery implements Serializable{
    
     private String channel;
-    private String remoteIp;
     private String products;
-    private String userId;
     private String extra;
 
     public String getChannel() {
@@ -21,28 +19,12 @@ public class OrdersQuery implements Serializable{
         this.channel = channel;
     }
 
-    public String getRemoteIp() {
-        return remoteIp;
-    }
-
-    public void setRemoteIp(String remoteIp) {
-        this.remoteIp = remoteIp;
-    }
-
     public String getProducts() {
         return products;
     }
 
     public void setProducts(String products) {
         this.products = products;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getExtra() {

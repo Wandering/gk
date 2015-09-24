@@ -6,10 +6,7 @@
  */
 package cn.thinkjoy.gk.service.impl;
 
-import cn.thinkjoy.gk.dao.IUserAccountDAO;
-import cn.thinkjoy.gk.dao.IUserAccountExDAO;
-import cn.thinkjoy.gk.dao.IUserInfoDAO;
-import cn.thinkjoy.gk.dao.IUserVipDAO;
+import cn.thinkjoy.gk.dao.*;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.domain.UserInfo;
 import cn.thinkjoy.gk.domain.UserVip;
@@ -36,6 +33,9 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
     private IUserInfoDAO userInfoDAO;
 
     @Autowired
+    private IUserInfoExDAO userInfoExDAO;
+
+    @Autowired
     private IUserVipDAO userVipDAO;
 
     @Override
@@ -53,9 +53,9 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
     }
 
     @Override
-    public UserAccountPojo findUserAccountPojoByPhone(String phone) {
+    public UserAccountPojo findUserAccountPojoByPhone(String account) {
         Map<String,Object> params = new HashMap<String,Object>();
-        params.put("phone",phone);
+        params.put("account",account);
         return userAccountExDAO.findUserAccountPojo(params);
     }
 
@@ -75,10 +75,11 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
             userInfo.setId(userAccount.getId());
             userInfo.setCountyId(Long.valueOf(0));
             userInfo.setToken(UUID.randomUUID().toString());
-            userInfoDAO.insert(userInfo);
+            userInfoExDAO.insertUserInfo(userInfo);
             UserVip userVip = new UserVip();
             userVip.setId(userAccount.getId());
             userVip.setStatus(0);
+            //TODO 需要重写
             userVipDAO.insert(userVip);
             flag = true;
         }catch(Exception e){
@@ -101,7 +102,7 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
 
     @Override
     public UserAccount findUserAccountById(long id){
-        return userAccountDAO.findOne("id",id);
+        return userAccountDAO.fetch(id);
     }
 
 

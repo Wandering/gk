@@ -51,7 +51,7 @@ public class VideoController extends BaseController {
         if(StringUtils.isBlank(classifyType)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
-        List<VideoCoursePojo> videoCoursePojos = iexVideoCourseService.getVideoListByParams(subjectId == null?null:Long.valueOf(subjectId),Integer.valueOf(classifyType),Integer.parseInt(sortType),Integer.valueOf(pageNo)*Integer.valueOf(pageSize),Integer.valueOf(pageSize));
+        List<VideoCoursePojo> videoCoursePojos = iexVideoCourseService.getVideoListByParams(subjectId == null ? null : Long.valueOf(subjectId), Integer.valueOf(classifyType), Integer.parseInt(sortType), Integer.valueOf(pageNo) * Integer.valueOf(pageSize), Integer.valueOf(pageSize));
         if(videoCoursePojos == null || videoCoursePojos.size() == 0){
             throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
         }
@@ -85,7 +85,7 @@ public class VideoController extends BaseController {
         }
         Map<String,Object> queryMap = new HashMap<>();
         queryMap.put("courseId",courseId);
-        List<VideoSection> videoSections = videoSectionService.queryList(queryMap,"sectionSort","ASC");
+        List<VideoSection> videoSections = videoSectionService.queryList(queryMap, "sectionSort", "ASC");
         if(videoSections == null  || videoSections.size() == 0){
             throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
         }
@@ -97,7 +97,7 @@ public class VideoController extends BaseController {
      * 根据课时ID获取课时详情
      * @return
      */
-    @RequestMapping(value = "getVideoSection",method = RequestMethod.GET)
+    @RequestMapping(value = "getVideoSectionDetail",method = RequestMethod.GET)
     @ResponseBody
     public VideoSection getVideoSectionDetail(){
         String videoSectionId = request.getParameter("videoSectionId");
@@ -108,7 +108,7 @@ public class VideoController extends BaseController {
         if(videoSection == null){
             throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
         }
-        VideoCourse videoCourse = new VideoCourse();
+        VideoCourse videoCourse =(VideoCourse) videoCourseService.findOne("id",videoSection.getCourseId());
         videoCourse.setId(videoSection.getCourseId());
         videoCourse.setHit(videoCourse.getHit() + 1);
         videoCourseService.update(videoCourse);
