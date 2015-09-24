@@ -8,3 +8,7 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<script src="static/bower_components/seajs/dist/sea.js"></script>
+<script src="static/bower_components/seajs-preload/dist/seajs-preload.js"></script>
+<script src="static/seajs-config.js"></script>

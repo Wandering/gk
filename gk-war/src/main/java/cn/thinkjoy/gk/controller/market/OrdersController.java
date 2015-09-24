@@ -8,7 +8,7 @@ import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.domain.Orders;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.query.market.OrdersQuery;
+import cn.thinkjoy.gk.controller.market.query.OrdersQuery;
 import cn.thinkjoy.gk.service.IOrdersService;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
 import com.alibaba.fastjson.JSON;
