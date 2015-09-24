@@ -13,4 +13,5 @@ import cn.thinkjoy.common.service.IPageService;
 
 public interface IVolunteerSchoolService<D extends IBaseDAO<T>, T extends BaseDomain> extends IBaseService<D, T>,IPageService<D, T>{
 
+
 }

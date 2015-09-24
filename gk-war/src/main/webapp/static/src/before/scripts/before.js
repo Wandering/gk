@@ -4,7 +4,7 @@ define(function (require) {
 
 
     // 切换tab
-    $('.tabs-list li').on('click', function () {
+    $('.tabs-list').on('click','li',function () {
         $(this).addClass('active').siblings().removeClass('active');
         var n = $(this).index();
         $(this).parents('.tabs').next('.tabs-content').find('.tabs-content-list').hide();
@@ -28,23 +28,31 @@ define(function (require) {
         });
 
     // 获取名师讲堂
-    $.getJSON(
-        '/before/video/getVideoList.do',
-        {
-            pageNo: 1,
-            pageSize: 3,
-            classifyType:1,
-            sortType:1,
-            subjectId:1
-        },
-        function (result) {
-            console.log(result);
-            if (result.rtnCode == "0000000") {
-                var dataJson = result.bizData;
-                for (var i = 0; i < dataJson.messages.length; i++) {
-                    var listMsgHtml = ''
+
+
+    function getList(subjectId,classifyType){
+        $.getJSON(
+            '/before/video/getVideoList.do',
+            {
+                pageNo: 0,
+                pageSize: 3,
+                classifyType:classifyType,
+                sortType:1,
+                subjectId:subjectId
+            },
+            function (result) {
+                console.log(result);
+                if (result.rtnCode == "0000000") {
+                    var dataJson = result.bizData;
+                    for (var i = 0; i < dataJson.messages.length; i++) {
+                        var listMsgHtml = ''
+                    }
                 }
-            }
-        });
+            });
+    }
+
+
+
+
 
 });
