@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <title>登陆</title>
-    <link rel="stylesheet" href="../../dist/login/styles/login.min.css"/>
+    <link rel="stylesheet" href="/static/dist/login/styles/login.min.css"/>
 </head>
 <body>
 
 
 <div class="container">
     <div class="main w1000">
-        <!--<img src="../../dist/common/images/logo-min.png" class="login-logo"/>-->
-        <img src="../../dist/login/images/login-font.png" class="login-bg-fonts"/>
+        <!--<img src="/static/dist/common/images/logo-min.png" class="login-logo"/>-->
+        <img src="/static/dist/login/images/login-font.png" class="login-bg-fonts"/>
 
         <div class="login-box">
             <div class="login-title">

@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>个人信息</title>
-    <link rel="stylesheet" href="../../dist/common/styles/comm.css"/>
+    <link rel="stylesheet" href="/static/dist/common/styles/comm.css"/>
 </head>
 <body>
 <div class="header">
     <div class="w1000">
         <a href="">
-            <img src="../../dist/common/images/logo-min.png" alt="高考360" class="logo fl"/>
+            <img src="/static/dist/common/images/logo-min.png" alt="高考360" class="logo fl"/>
         </a>
         <ul class="main-menu fl">
             <li><a href="">首页</a></li>
@@ -21,7 +21,7 @@
         </ul>
         <div class="user-info-list fr">
             <div class="user">
-                <img src="../../dist/common/images/avatar.png" alt="avatar" class="user-avatar"/>
+                <img src="/static/dist/common/images/avatar.png" alt="avatar" class="user-avatar"/>
                 <a href="">韩小寒</a>
             </div>
             <ul class="menu hide">
@@ -36,9 +36,9 @@
     <div class="wipe">
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="../../dist/before/images/banner1.jpg" alt=""/></div>
-                <div class="swiper-slide"><img src="../../dist/before/images/banner1.jpg" alt=""/></div>
-                <div class="swiper-slide"><img src="../../dist/before/images/banner1.jpg" alt=""/></div>
+                <div class="swiper-slide"><img src="/static/dist/before/images/banner1.jpg" alt=""/></div>
+                <div class="swiper-slide"><img src="/static/dist/before/images/banner1.jpg" alt=""/></div>
+                <div class="swiper-slide"><img src="/static/dist/before/images/banner1.jpg" alt=""/></div>
             </div>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"></div>
@@ -62,25 +62,25 @@
 <div class="w1000 flow-main">
     <ul>
         <li>
-            <img src="../../dist/before/images/flow-img1.png" alt=""/>
+            <img src="/static/dist/before/images/flow-img1.png" alt=""/>
             <a href="">名师讲堂</a>
             <span>1</span>
             <p>名师精品课程，全面剖析高考知识点以及提分技巧。</p>
         </li>
         <li>
-            <img src="../../dist/before/images/flow-img2.png" alt=""/>
+            <img src="/static/dist/before/images/flow-img2.png" alt=""/>
             <a href="">真题密卷</a>
             <span>2</span>
             <p>著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
         <li>
-            <img src="../../dist/before/images/flow-img3.png" alt=""/>
+            <img src="/static/dist/before/images/flow-img3.png" alt=""/>
             <a href="">高考心理</a>
             <span>3</span>
             <p>专家告诉您如何调整，以最好的状态应对高考况是什么</p>
         </li>
         <li>
-            <img src="../../dist/before/images/flow-img4.png" alt=""/>
+            <img src="/static/dist/before/images/flow-img4.png" alt=""/>
             <a href="">院校推荐</a>
             <span>4</span>
             <p>根据分数快速定位院校及推荐院校</p>
@@ -171,7 +171,7 @@
                 <li><a href="">官方微信</a></li>
                 <li><a href="">新浪微博</a></li>
             </ul>
-            <img src="../../dist/common/images/logo.png" alt="logo" class="logo"/>
+            <img src="/static/dist/common/images/logo.png" alt="logo" class="logo"/>
         </div>
     </div>
     <div class="copy-right">

@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>高考热点</title>
-    <link rel="stylesheet" href="../../dist/consult/styles/gk_hot.css" />
+    <link rel="stylesheet" href="/static/dist/consult/styles/gk_hot.css" />
 </head>
 <body>
 <div class="header">
     <div class="w1000">
         <a href="">
-            <img src="../../dist/common/images/logo-min.png" alt="高考360" class="logo fl"/>
+            <img src="/static/dist/common/images/logo-min.png" alt="高考360" class="logo fl"/>
         </a>
         <ul class="main-menu fl">
             <li><a href="">首页</a></li>
@@ -22,7 +22,7 @@
         </ul>
         <div class="user-info-list fr">
             <div class="user">
-                <img src="../../dist/common/images/avatar.png" alt="avatar" class="user-avatar"/>
+                <img src="/static/dist/common/images/avatar.png" alt="avatar" class="user-avatar"/>
                 <a href="">韩小寒</a>
             </div>
             <ul class="menu hide">
@@ -38,9 +38,9 @@
     <div class="wipe">
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="../../dist/before/images/banner1.jpg" alt=""/></div>
-                <div class="swiper-slide"><img src="../../dist/before/images/banner1.jpg" alt=""/></div>
-                <div class="swiper-slide"><img src="../../dist/before/images/banner1.jpg" alt=""/></div>
+                <div class="swiper-slide"><img src="/static/dist/before/images/banner1.jpg" alt=""/></div>
+                <div class="swiper-slide"><img src="/static/dist/before/images/banner1.jpg" alt=""/></div>
+                <div class="swiper-slide"><img src="/static/dist/before/images/banner1.jpg" alt=""/></div>
             </div>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"></div>
@@ -130,7 +130,7 @@
                 <li><a href="">官方微信</a></li>
                 <li><a href="">新浪微博</a></li>
             </ul>
-            <img src="../../dist/common/images/logo.png" alt="logo" class="logo"/>
+            <img src="/static/dist/common/images/logo.png" alt="logo" class="logo"/>
         </div>
     </div>
     <div class="copy-right">
