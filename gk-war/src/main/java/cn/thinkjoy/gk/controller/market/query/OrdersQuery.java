@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.query.market;
+package cn.thinkjoy.gk.controller.market.query;
 
 import java.io.Serializable;
 
