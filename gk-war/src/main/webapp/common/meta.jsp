@@ -12,3 +12,4 @@
 <script src="static/bower_components/seajs/dist/sea.js"></script>
 <script src="static/bower_components/seajs-preload/dist/seajs-preload.js"></script>
 <script src="static/seajs-config.js"></script>
+<link rel="stylesheet" href="static/bower_components/swiper/dist/css/swiper.css"/>
