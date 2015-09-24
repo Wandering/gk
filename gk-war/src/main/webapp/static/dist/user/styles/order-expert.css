@@ -540,53 +540,98 @@ a.next-btn:hover {
     color: #e24d39 !important; }
 
 .content {
-  margin: 100px 120px;
-  overflow: hidden; }
-  .content .avatar-box {
-    margin-top: 100px; }
-    .content .avatar-box .avatar-img {
-      height: 125px;
-      width: 125px;
-      border-radius: 3px; }
-    .content .avatar-box .btn-upload-img {
-      margin: 20px 25px;
-      background-color: #e24d39;
-      width: 70px;
+  position: relative; }
+  .content .search-content {
+    top: -90px;
+    right: 0;
+    position: absolute;
+    margin-top: 20px;
+    text-align: right; }
+    .content .search-content span {
+      display: inline-block;
+      overflow: hidden; }
+    .content .search-content input {
+      height: 40px;
+      line-height: 38px;
+      margin: 0;
+      padding: 0;
+      outline: none;
+      float: left;
+      font-size: 14px; }
+    .content .search-content button {
+      width: 128px;
+      height: 40px;
       text-align: center;
-      line-height: 22px;
-      height: 22px;
-      cursor: pointer;
+      line-height: 34px;
+      border-radius: 5px;
+      border: 1px solid #e24333;
+      background: url("../../common/images/ask-icon.png") no-repeat 15px center;
+      float: left;
+      margin-left: 10px;
+      color: #e24d39;
+      font-size: 16px;
+      padding-left: 16px; }
+    .content .search-content input[type="text"] {
+      width: 245px;
+      border: 1px solid #e24333;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      height: 38px;
+      padding-left: 10px; }
+    .content .search-content input[type="button"] {
+      width: 90px;
+      background: #e24333 url("../../common/images/search-icon.png") no-repeat 15px center;
+      border: 1px solid #e24333;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
       color: #fff;
+      padding-left: 10px; }
+  .content .input-item-comm {
+    margin: 15px 0; }
+    .content .input-item-comm .w-title {
+      width: 100px;
+      text-align: right;
+      display: inline-block;
+      margin-right: 25px; }
+    .content .input-item-comm .error-tips {
+      color: #e24d39;
+      font-size: 14px;
+      display: inline-block;
+      margin-left: 20px; }
+    .content .input-item-comm .error-bd {
+      border: 1px solid #e24d39; }
+    .content .input-item-comm .des-text {
+      font-size: 16px;
+      display: inline-block;
+      margin-left: 20px;
+      color: #999; }
+    .content .input-item-comm .ke-container {
+      margin-left: 130px !important;
+      height: 390px;
+      width: auto !important;
+      margin-top: -15px; }
+    .content .input-item-comm .ke-edit {
+      height: 350px !important; }
+  .content .comm-input {
+    height: 35px;
+    width: 842px;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    padding: 0 10px; }
+  .content .data-start, .content .data-end {
+    width: 220px; }
+  .content .btn-box {
+    width: 320px;
+    margin: 0 auto; }
+    .content .btn-box .btn-submit {
+      margin: 50px 0 60px 25px;
+      color: #fff;
+      background-color: #e24d39;
+      width: 120px;
+      height: 35px;
+      line-height: 35px;
+      text-align: center;
       border-radius: 3px;
-      font-size: 12px; }
-  .content .user-item {
-    width: 500px;
-    color: #222222;
-    font-size: 14px; }
-    .content .user-item .account {
-      height: 35px; }
-      .content .user-item .account .account-tel {
-        margin-right: 35px; }
-      .content .user-item .account .modify-psd {
-        color: #e24d39;
-        margin-left: 165px; }
-    .content .user-item .group-comm .user-input-comm {
-      margin: 8px 0 8px 35px;
-      width: 315px;
-      height: 40px;
-      line-height: 40px;
-      padding: 0 15px;
-      box-sizing: border-box;
-      border: 1px solid #e5e5e5;
-      border-radius: 3px; }
-    .content .user-item .group-comm .ml35 {
-      margin-left: 35px !important; }
-    .content .user-item .group-comm .user-select-comm {
-      width: 102px;
-      margin: 8px 0 8px 0;
-      height: 40px;
-      line-height: 40px;
-      padding: 0 15px;
-      box-sizing: border-box;
-      border: 1px solid #e5e5e5;
-      border-radius: 3px; }
+      font-size: 16px;
+      cursor: pointer;
+      display: inline-block; }

@@ -540,53 +540,21 @@ a.next-btn:hover {
     color: #e24d39 !important; }
 
 .content {
-  margin: 100px 120px;
-  overflow: hidden; }
-  .content .avatar-box {
-    margin-top: 100px; }
-    .content .avatar-box .avatar-img {
-      height: 125px;
-      width: 125px;
-      border-radius: 3px; }
-    .content .avatar-box .btn-upload-img {
-      margin: 20px 25px;
-      background-color: #e24d39;
-      width: 70px;
-      text-align: center;
-      line-height: 22px;
-      height: 22px;
-      cursor: pointer;
-      color: #fff;
-      border-radius: 3px;
-      font-size: 12px; }
-  .content .user-item {
-    width: 500px;
-    color: #222222;
-    font-size: 14px; }
-    .content .user-item .account {
-      height: 35px; }
-      .content .user-item .account .account-tel {
-        margin-right: 35px; }
-      .content .user-item .account .modify-psd {
-        color: #e24d39;
-        margin-left: 165px; }
-    .content .user-item .group-comm .user-input-comm {
-      margin: 8px 0 8px 35px;
-      width: 315px;
-      height: 40px;
-      line-height: 40px;
-      padding: 0 15px;
-      box-sizing: border-box;
-      border: 1px solid #e5e5e5;
-      border-radius: 3px; }
-    .content .user-item .group-comm .ml35 {
-      margin-left: 35px !important; }
-    .content .user-item .group-comm .user-select-comm {
-      width: 102px;
-      margin: 8px 0 8px 0;
-      height: 40px;
-      line-height: 40px;
-      padding: 0 15px;
-      box-sizing: border-box;
-      border: 1px solid #e5e5e5;
-      border-radius: 3px; }
+  margin: 30px 0;
+  height: 660px;
+  border: 1px solid #e5e5e5;
+  border-right: none;
+  border-bottom: none; }
+  .content .row .col-3 {
+    cursor: pointer;
+    padding-top: 70px;
+    text-align: center;
+    float: left;
+    width: 33.333%;
+    height: 330px;
+    box-sizing: border-box;
+    border-right: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5; }
+    .content .row .col-3 .app-icon {
+      font-size: 20px;
+      color: #333333; }
