@@ -6,5 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" pageEncoding="UTF-8" %>
+<meta charset="UTF-8">
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<link rel="stylesheet" href="/static/bower_components/swiper/dist/css/swiper.css"/>
