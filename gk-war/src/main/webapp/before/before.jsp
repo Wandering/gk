@@ -2,9 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>个人信息</title>
-    <link rel="stylesheet" href="/static/dist/common/styles/comm.css"/>
+    <title>考前备考</title>
+    <%@ include file="/common/meta.jsp"%>
     <link rel="stylesheet" href="/static/dist/before/styles/before.css"/>
 </head>
 <body>
@@ -73,19 +72,19 @@
         </li>
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a href="" class="name">名师讲堂</a>
+            <a href="" class="name">真题密卷</a>
             <span class="num">2</span>
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a href="" class="name">名师讲堂</a>
+            <a href="" class="name">高考心理</a>
             <span class="num">3</span>
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a href="" class="name">名师讲堂</a>
+            <a href="" class="name">院校推荐</a>
             <span class="num">4</span>
             <p class="txt">根据分数快速定位院校及推荐院校</p>
         </li>
@@ -108,14 +107,7 @@
 
 <div class="w1000 main-video">
     <div class="tabs">
-        <ul class="tabs-list mt20">
-            <li class="active">全部</li>
-            <li>语文</li>
-            <li>数学</li>
-            <li>英语</li>
-            <li>三批本科</li>
-            <li>高职专科</li>
-        </ul>
+        <ul class="tabs-list mt20 subjectList"></ul>
         <div class="into-search">
             <a href="" class="into-btn">进入名师讲堂</a>
             <form action="">
@@ -134,7 +126,7 @@
         <div class="tabs-content-list">
             <ul class="main-video-list">
                 <li class="item">
-                    <div class="img"><img src="images/pic01.png" alt=""/></div>
+                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
                     <div class="info">
                         <span class="fl">学科名称:语文</span>
                         <span class="fr">主讲专家:徐老师</span>
@@ -150,7 +142,7 @@
                     </div>
                 </li>
                 <li class="item">
-                    <div class="img"><img src="images/pic01.png" alt=""/></div>
+                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
                     <div class="info">
                         <span class="fl">学科名称:语文</span>
                         <span class="fr">主讲专家:徐老师</span>
@@ -166,7 +158,7 @@
                     </div>
                 </li>
                 <li class="item">
-                    <div class="img"><img src="images/pic01.png" alt=""/></div>
+                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
                     <div class="info">
                         <span class="fl">学科名称:语文</span>
                         <span class="fr">主讲专家:徐老师</span>
@@ -182,7 +174,7 @@
                     </div>
                 </li>
                 <li class="item">
-                    <div class="img"><img src="images/pic01.png" alt=""/></div>
+                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
                     <div class="info">
                         <span class="fl">学科名称:语文</span>
                         <span class="fr">主讲专家:徐老师</span>
@@ -218,14 +210,7 @@
 
 <div class="w1000 main-video">
     <div class="tabs">
-        <ul class="tabs-list mt20">
-            <li class="active">全部</li>
-            <li>语文</li>
-            <li>数学</li>
-            <li>英语</li>
-            <li>三批本科</li>
-            <li>高职专科</li>
-        </ul>
+        <ul class="tabs-list mt20 subjectList"></ul>
         <div class="into-search">
             <a href="" class="into-btn">进入名师讲堂</a>
             <form action="">
@@ -320,14 +305,7 @@
 <h6 class="w1000 ta content-title-sub">分数不理想也没有关系，专家告诉您如何调整，以最好的状态应对高考，没什么了不起的。</h6>
 <div class="w1000 main-video">
     <div class="tabs">
-        <ul class="tabs-list mt20">
-            <li class="active">全部</li>
-            <li>语文</li>
-            <li>数学</li>
-            <li>英语</li>
-            <li>三批本科</li>
-            <li>高职专科</li>
-        </ul>
+        <ul class="tabs-list mt20 subjectList"></ul>
         <div class="into-search">
             <a href="" class="into-btn">进入名师讲堂</a>
             <form action="">
@@ -346,7 +324,7 @@
         <div class="tabs-content-list">
             <ul class="main-video-list">
                 <li class="item">
-                    <div class="img"><img src="images/pic01.png" alt=""/></div>
+                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
                     <div class="info">
                         <span class="fl">学科名称:语文</span>
                         <span class="fr">主讲专家:徐老师</span>
@@ -362,7 +340,7 @@
                     </div>
                 </li>
                 <li class="item">
-                    <div class="img"><img src="images/pic01.png" alt=""/></div>
+                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
                     <div class="info">
                         <span class="fl">学科名称:语文</span>
                         <span class="fr">主讲专家:徐老师</span>
@@ -378,7 +356,7 @@
                     </div>
                 </li>
                 <li class="item">
-                    <div class="img"><img src="images/pic01.png" alt=""/></div>
+                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
                     <div class="info">
                         <span class="fl">学科名称:语文</span>
                         <span class="fr">主讲专家:徐老师</span>
@@ -394,7 +372,7 @@
                     </div>
                 </li>
                 <li class="item">
-                    <div class="img"><img src="images/pic01.png" alt=""/></div>
+                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
                     <div class="info">
                         <span class="fl">学科名称:语文</span>
                         <span class="fr">主讲专家:徐老师</span>
@@ -438,9 +416,9 @@
         <p>院校评测使用的分数，位次数据，招生计划为往年数据，结果仅供参考，且系统推荐学校有限制，若要使用最新，更全面，更多推荐学校，请升级为VIP。</p>
     </div>
 </div>
-    <div class="school-eval">
+    <div class="school-eval w1000">
         <div class="eval-left">
-            <img src="images/bottom-banner.jpg" />
+            <img src="/static/dist/before/images/bottom-banner.jpg" />
             <h3>为我推荐院校</h3>
             <h6>直接系统告诉我可以报的院校名称，容我考虑考虑</h6>
         </div>
@@ -470,7 +448,7 @@
                     <input type="text" placeholder="请输入分数"/>
                 </span>
                 <a>
-                    <img src="images/bottom-banner.jpg" />
+                    <img src="/static/dist/before/images/bottom-banner.jpg" />
                 </a>
             </div>
 
@@ -484,7 +462,7 @@
 <div class="w1000 main-volunteer">
     <div class="fl">
         <div class="img">
-            <img src="images/zd-pic.png" alt=""/>
+            <img src="/static/dist/before/images/zd-pic.png" alt=""/>
             <strong>院校推荐、志愿指导</strong>
             <p>依据总分、位次获取推荐院校及志愿指导</p>
         </div>
@@ -506,7 +484,7 @@
             <div class="form-control yzm-control">
                 <label>验证码</label>
                 <input type="text" class="input yzm" name="" placeholder="请填写验证码" id=""/>
-                <img src="images/yzm.png" alt=""/>
+                <img src="/static/dist/before/images/yzm.png" alt=""/>
             </div>
             <div class="form-control-btn">
                 <input type="button" class="btn" value="下一步"/>
@@ -524,8 +502,8 @@
 
 
 
-<div class="tansLayer"></div>
-<div class="volunteer-flow3-layer">
+<div class="tansLayer" style="display: none;"></div>
+<div class="volunteer-flow3-layer" style="display: none;">
     <div class="top-close">
         <a href="" class="close-btn">x</a>
     </div>
@@ -581,20 +559,8 @@
         <p class="w1000">联系信息:E-mail:cewfefe@163.com QQ:5454555 备案号:陕ICP备343454135-1号 [站长统计]</p>
     </div>
 </div>
-<link rel="stylesheet" href="../../bower_components/swiper/dist/css/swiper.css"/>
-<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
-<script src="../../bower_components/swiper/dist/js/swiper.jquery.min.js"></script>
 <script>
-    $(function () {
-        //幻灯片
-        var swiper = new Swiper('.swiper-container', {
-            pagination: '.swiper-pagination',
-            paginationClickable: true,
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
-            loop: true
-        });
-    });
+    seajs.use("/static/src/before/scripts/before");
 </script>
 </body>
 </html>

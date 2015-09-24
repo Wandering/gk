@@ -25,8 +25,8 @@
             <if test="id!=null">
                 and acc.id = #{id}
             </if>
-            <if test="phone!=null">
-                and acc.phone = #{phone}
+            <if test="account!=null">
+                and acc.account = #{account}
             </if>
         </where>
     </select>
