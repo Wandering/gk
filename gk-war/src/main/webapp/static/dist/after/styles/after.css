@@ -126,7 +126,7 @@
     background: #f5f5f5;
     color: #444; }
   .volunteer-flow3-table .item1 {
-    height: 240px;
+    min-height: 240px;
     line-height: 240px;
     text-align: center;
     width: 89px; }
@@ -136,6 +136,11 @@
     width: 391px; }
   .volunteer-flow3-table .item4 {
     width: 150px; }
+  .volunteer-flow3-table .result-info-details {
+    padding: 0 20px;
+    overflow: hidden;
+    line-height: 22px;
+    color: #666; }
 
 .search-content span {
   display: inline-block;
@@ -355,7 +360,39 @@
       line-height: 20px; }
     .volunteer-flow3-layer .volunteer-flow3-body .school-list {
       padding: 20px; }
-      .volunteer-flow3-layer .volunteer-flow3-body .school-list h3 {
+      .volunteer-flow3-layer .volunteer-flow3-body .school-list div {
         margin: 0;
         line-height: 28px;
         font-size: 14px; }
+      .volunteer-flow3-layer .volunteer-flow3-body .school-list .school-name {
+        float: left; }
+      .volunteer-flow3-layer .volunteer-flow3-body .school-list .school-sel {
+        float: right;
+        color: #e24d39; }
+
+.section-article {
+  margin-top: 20px; }
+
+.specialty {
+  padding: 10px; }
+  .specialty li {
+    overflow: hidden;
+    clear: both;
+    display: block;
+    line-height: 25px;
+    margin-top: 15px; }
+    .specialty li .num {
+      float: left;
+      line-height: 26px; }
+    .specialty li .input {
+      float: left;
+      text-align: left;
+      margin: 0 0 0 10px; }
+      .specialty li .input input {
+        width: 250px;
+        border: 1px solid #ccc;
+        height: 23px;
+        background: #f1f1f1;
+        padding: 3px 8px; }
+    .specialty li .sel-num {
+      float: right; }
