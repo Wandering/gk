@@ -26,5 +26,26 @@ bower_components/swiper/README.md
 
 
 
+bower_components/seajs/.bower.json
+bower_components/seajs/bower.json
+bower_components/seajs/LICENSE.md
+bower_components/seajs/dist/runtime.js
+bower_components/seajs/dist/runtime-debug.js
+bower_components/seajs/dist/sea-debug.js
+bower_components/seajs/dist/standalone.js
+bower_components/seajs/dist/standalone-debug.js
+
+
+
+bower_components/seajs-preload/src
+bower_components/seajs-preload/test
+bower_components/seajs-preload/.bower.json
+bower_components/seajs-preload/LICENSE
+bower_components/seajs-preload/package.json
+bower_components/seajs-preload/README.md
+bower_components/seajs-preload/Makefile
+
+
+
 # build
 #dist

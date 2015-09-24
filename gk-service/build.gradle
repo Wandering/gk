@@ -48,6 +48,10 @@ dependencies {
         exclude group: 'net.sf.json-lib'
     }
 
+    compile "cn.thinkjoy.ss:ss-api:0.0.3-SNAPSHOT"
+
+    compile "cn.thinkjoy.ss:ss-domain:0.0.3-SNAPSHOT"
+
     compile project(':gk-domain')
 
     compile project(':after-service')
