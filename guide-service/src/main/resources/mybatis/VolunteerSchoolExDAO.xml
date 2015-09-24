@@ -69,6 +69,12 @@
             <if test="condition.lastModDate!=null">
                 ${condition.groupOp}   lastModDate  ${condition.lastModDate.op}  #{condition.lastModDate.data}
             </if>
+            <if test="condition.keyword!=null">
+                ${condition.groupOp}  ( title like CONCAT('%', #{condition.keyword} , '%')
+                    OR summary LIKE CONCAT('%', #{condition.keyword} , '%')
+                    OR content LIKE CONCAT('%', #{condition.keyword} , '%')
+                )
+            </if>
 
     </where>
         <if test="orderBy!=null">
