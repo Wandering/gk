@@ -71,6 +71,8 @@ public class RegisterController extends BaseController {
             userAccount.setPassword(MD5Util.MD5Encode(password));
             userAccount.setCreateDate(System.currentTimeMillis());
             userAccount.setLastModDate(System.currentTimeMillis());
+            userAccount.setUserType(0);
+            userAccount.setStatus(0);
             try{
                 boolean flag=userAccountExService.insertUserAccount(userAccount);
                 if (!flag){

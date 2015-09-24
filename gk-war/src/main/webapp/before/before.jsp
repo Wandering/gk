@@ -72,19 +72,19 @@
         </li>
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a href="" class="name">名师讲堂</a>
+            <a href="" class="name">真题密卷</a>
             <span class="num">2</span>
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a href="" class="name">名师讲堂</a>
+            <a href="" class="name">高考心理</a>
             <span class="num">3</span>
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a href="" class="name">名师讲堂</a>
+            <a href="" class="name">院校推荐</a>
             <span class="num">4</span>
             <p class="txt">根据分数快速定位院校及推荐院校</p>
         </li>
@@ -107,14 +107,7 @@
 
 <div class="w1000 main-video">
     <div class="tabs">
-        <ul class="tabs-list mt20">
-            <li class="active">全部</li>
-            <li>语文</li>
-            <li>数学</li>
-            <li>英语</li>
-            <li>三批本科</li>
-            <li>高职专科</li>
-        </ul>
+        <ul class="tabs-list mt20 subjectList" classifyType="1"></ul>
         <div class="into-search">
             <a href="" class="into-btn">进入名师讲堂</a>
             <form action="">
@@ -217,14 +210,7 @@
 
 <div class="w1000 main-video">
     <div class="tabs">
-        <ul class="tabs-list mt20">
-            <li class="active">全部</li>
-            <li>语文</li>
-            <li>数学</li>
-            <li>英语</li>
-            <li>三批本科</li>
-            <li>高职专科</li>
-        </ul>
+        <ul class="tabs-list mt20 subjectList"></ul>
         <div class="into-search">
             <a href="" class="into-btn">进入名师讲堂</a>
             <form action="">
@@ -319,14 +305,7 @@
 <h6 class="w1000 ta content-title-sub">分数不理想也没有关系，专家告诉您如何调整，以最好的状态应对高考，没什么了不起的。</h6>
 <div class="w1000 main-video">
     <div class="tabs">
-        <ul class="tabs-list mt20">
-            <li class="active">全部</li>
-            <li>语文</li>
-            <li>数学</li>
-            <li>英语</li>
-            <li>三批本科</li>
-            <li>高职专科</li>
-        </ul>
+        <ul class="tabs-list mt20 subjectList" classifyType="2"></ul>
         <div class="into-search">
             <a href="" class="into-btn">进入名师讲堂</a>
             <form action="">
@@ -581,7 +560,7 @@
     </div>
 </div>
 <script>
-    seajs.use("${ctx}/static/src/before/scripts/before");
+    seajs.use("/static/src/before/scripts/before");
 </script>
 </body>
 </html>

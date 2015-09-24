@@ -14,8 +14,6 @@ import java.util.Map;
 
 public interface IUserInfoExDAO {
 
-    UserInfo findUserInfo(Map<String, Object> params);
-
-    int findUserInfoCount(Map<String, Object> params);
+    long insertUserInfo(UserInfo userInfo);
 
 }
