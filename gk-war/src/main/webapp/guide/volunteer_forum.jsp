@@ -38,7 +38,7 @@
 
         <section class="section-article">
         </section>
-        <div><a href="" class="next-btn">下一页</a></div>
+        <div><a href="javascript:void(0)" class="next-btn">加载更多...</a></div>
     </div>
 </div>
 

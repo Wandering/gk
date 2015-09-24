@@ -20,7 +20,7 @@ define(function (require) {
                         clearTimeout(timer);
                         timer = setTimeout(function() {
                             getArticle(id);
-                        }, 500)
+                        }, 300)
                     }
                 });
             }
