@@ -2,27 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.thinkjoy.gk.dao.IOrdersDAO">
-<!--
-insert
-update
-updateNull
-deleteById
-deleteByCondition
-deleteByProperty
-fetch
-findOne
-findList
-findAll
-queryPage
-like
-queryList
-queryOne
-count
-selectMaxId
-updateOrSave
-selectOne
-selectList
--->
+    <!--
+    insert
+    update
+    updateNull
+    deleteById
+    deleteByCondition
+    deleteByProperty
+    fetch
+    findOne
+    findList
+    findAll
+    queryPage
+    like
+    queryList
+    queryOne
+    count
+    selectMaxId
+    updateOrSave
+    selectOne
+    selectList
+    -->
     <sql id="Base_Column_List">
         id,
         status,
@@ -35,13 +35,10 @@ selectList
         userId,
         payStatus,
         description,
-        channel,
-        phoneNum,
-        moduleKey
+        channel
     </sql>
     <insert id="insert" parameterType="Orders">
         INSERT INTO gk_orders (
-        status,
         createDate,
         lastModDate,
         invalidDate,
@@ -51,11 +48,8 @@ selectList
         userId,
         payStatus,
         description,
-        channel,
-        phoneNum,
-        moduleKey
+        channel
         ) VALUES (
-        #{status},
         #{createDate},
         #{lastModDate},
         #{invalidDate},
@@ -65,12 +59,10 @@ selectList
         #{userId},
         #{payStatus},
         #{description},
-        #{channel},
-        #{phoneNum},
-        #{moduleKey}
+        #{channel}
         )
         <selectKey resultType="java.lang.Long" keyProperty="id">
-        SELECT LAST_INSERT_ID() AS ID
+            SELECT LAST_INSERT_ID() AS ID
         </selectKey>
     </insert>
 
@@ -110,12 +102,6 @@ selectList
             </if>
             <if test="channel!=null">
                 channel = #{channel},
-            </if>
-            <if test="phoneNum!=null">
-                phoneNum = #{phoneNum},
-            </if>
-            <if test="moduleKey!=null">
-                moduleKey = #{moduleKey},
             </if>
         </trim>
         WHERE
@@ -158,12 +144,6 @@ selectList
             <if test="map.channel!=null">
                 channel = #{map.channel},
             </if>
-            <if test="map.phoneNum!=null">
-                phoneNum = #{map.phoneNum},
-            </if>
-            <if test="map.moduleKey!=null">
-                moduleKey = #{map.moduleKey},
-            </if>
         </trim>
         WHERE
         id = #{map.id}
@@ -205,12 +185,6 @@ selectList
             <if test="update.channel!=null">
                 channel = #{update.channel},
             </if>
-            <if test="update.phoneNum!=null">
-                phoneNum = #{update.phoneNum},
-            </if>
-            <if test="update.moduleKey!=null">
-                moduleKey = #{update.moduleKey},
-            </if>
         </trim>
 
         <trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -250,44 +224,34 @@ selectList
             <if test="condition.channel!=null">
                 AND channel = #{condition.channel}
             </if>
-            <if test="condition.phoneNum!=null">
-                AND phoneNum = #{condition.phoneNum}
-            </if>
-            <if test="condition.moduleKey!=null">
-                AND moduleKey = #{condition.moduleKey}
-            </if>
         </trim>
     </update>
 
     <insert id="insertMap" >
         INSERT INTO gk_orders (
-                status,
-                createDate,
-                lastModDate,
-                invalidDate,
-                orderNo,
-                amount,
-                detail,
-                userId,
-                payStatus,
-                description,
-                channel,
-                phoneNum,
-                moduleKey
+        status,
+        createDate,
+        lastModDate,
+        invalidDate,
+        orderNo,
+        amount,
+        detail,
+        userId,
+        payStatus,
+        description,
+        channel
         ) VALUES (
-                    #{map.status},
-                    #{map.createDate},
-                    #{map.lastModDate},
-                    #{map.invalidDate},
-                    #{map.orderNo},
-                    #{map.amount},
-                    #{map.detail},
-                    #{map.userId},
-                    #{map.payStatus},
-                    #{map.description},
-                    #{map.channel},
-                    #{map.phoneNum},
-                    #{map.moduleKey}
+        #{map.status},
+        #{map.createDate},
+        #{map.lastModDate},
+        #{map.invalidDate},
+        #{map.orderNo},
+        #{map.amount},
+        #{map.detail},
+        #{map.userId},
+        #{map.payStatus},
+        #{map.description},
+        #{map.channel}
         )
     </insert>
 
@@ -306,11 +270,9 @@ selectList
             payStatus = #{payStatus},
             description = #{description},
             channel = #{channel},
-            phoneNum = #{phoneNum},
-            moduleKey = #{moduleKey},
         </trim>
         WHERE
-        id = #{id} 
+        id = #{id}
     </update>
 
     <!-- 按Id删除 -->
@@ -361,12 +323,6 @@ selectList
             <if test="channel!=null">
                 AND channel = #{channel}
             </if>
-            <if test="phoneNum!=null">
-                AND phoneNum = #{phoneNum}
-            </if>
-            <if test="moduleKey!=null">
-                AND moduleKey = #{moduleKey}
-            </if>
         </trim>
     </delete>
 
@@ -383,7 +339,7 @@ selectList
             AND id = #{id}
         </trim>
         <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
+            ORDER BY ${orderBy} ${sortBy}
         </if>
     </select>
 
@@ -460,18 +416,12 @@ selectList
             <if test="condition.channel!=null">
                 ${condition.groupOp}   channel  ${condition.channel.op}  #{condition.channel.data}
             </if>
-            <if test="condition.phoneNum!=null">
-                ${condition.groupOp}   phoneNum  ${condition.phoneNum.op}  #{condition.phoneNum.data}
-            </if>
-            <if test="condition.moduleKey!=null">
-                ${condition.groupOp}   moduleKey  ${condition.moduleKey.op}  #{condition.moduleKey.data}
-            </if>
 
 
-    </where>
+        </where>
 
         <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
+            ORDER BY ${orderBy} ${sortBy}
         </if>
         <if test="offset != null">
             limit ${offset}, ${rows}
@@ -519,15 +469,9 @@ selectList
             <if test="channel!=null">
                 AND channel like CONCAT('%', #{channel} , '%')
             </if>
-            <if test="phoneNum!=null">
-                AND phoneNum like CONCAT('%', #{phoneNum} , '%')
-            </if>
-            <if test="moduleKey!=null">
-                AND moduleKey like CONCAT('%', #{moduleKey} , '%')
-            </if>
         </trim>
         <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
+            ORDER BY ${orderBy} ${sortBy}
         </if>
     </select>
 
@@ -573,15 +517,9 @@ selectList
             <if test="condition.channel!=null">
                 AND channel = #{condition.channel}
             </if>
-            <if test="condition.phoneNum!=null">
-                AND phoneNum = #{condition.phoneNum}
-            </if>
-            <if test="condition.moduleKey!=null">
-                AND moduleKey = #{condition.moduleKey}
-            </if>
         </trim>
         <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
+            ORDER BY ${orderBy} ${sortBy}
         </if>
     </select>
 
@@ -626,66 +564,54 @@ selectList
             <if test="channel!=null">
                 AND channel = #{channel}
             </if>
-            <if test="phoneNum!=null">
-                AND phoneNum = #{phoneNum}
-            </if>
-            <if test="moduleKey!=null">
-                AND moduleKey = #{moduleKey}
-            </if>
         </trim>
         limit 0,1
     </select>
 
     <select id="count" resultType="java.lang.Integer">
         SELECT count(id) FROM gk_orders
-       <where>
-           <if test="id!=null">
-               ${groupOp} id ${id.op}  #{id.data}
-           </if>
-           <if test="status!=null">
-               ${groupOp} status ${status.op}  #{status.data}
-           </if>
-           <if test="createDate!=null">
-               ${groupOp} createDate ${createDate.op}  #{createDate.data}
-           </if>
-           <if test="lastModDate!=null">
-               ${groupOp} lastModDate ${lastModDate.op}  #{lastModDate.data}
-           </if>
-           <if test="invalidDate!=null">
-               ${groupOp} invalidDate ${invalidDate.op}  #{invalidDate.data}
-           </if>
-           <if test="orderNo!=null">
-               ${groupOp} orderNo ${orderNo.op}  #{orderNo.data}
-           </if>
-           <if test="amount!=null">
-               ${groupOp} amount ${amount.op}  #{amount.data}
-           </if>
-           <if test="detail!=null">
-               ${groupOp} detail ${detail.op}  #{detail.data}
-           </if>
-           <if test="userId!=null">
-               ${groupOp} userId ${userId.op}  #{userId.data}
-           </if>
-           <if test="payStatus!=null">
-               ${groupOp} payStatus ${payStatus.op}  #{payStatus.data}
-           </if>
-           <if test="description!=null">
-               ${groupOp} description ${description.op}  #{description.data}
-           </if>
-           <if test="channel!=null">
-               ${groupOp} channel ${channel.op}  #{channel.data}
-           </if>
-           <if test="phoneNum!=null">
-               ${groupOp} phoneNum ${phoneNum.op}  #{phoneNum.data}
-           </if>
-           <if test="moduleKey!=null">
-               ${groupOp} moduleKey ${moduleKey.op}  #{moduleKey.data}
-           </if>
+        <where>
+            <if test="id!=null">
+                ${groupOp} id ${id.op}  #{id.data}
+            </if>
+            <if test="status!=null">
+                ${groupOp} status ${status.op}  #{status.data}
+            </if>
+            <if test="createDate!=null">
+                ${groupOp} createDate ${createDate.op}  #{createDate.data}
+            </if>
+            <if test="lastModDate!=null">
+                ${groupOp} lastModDate ${lastModDate.op}  #{lastModDate.data}
+            </if>
+            <if test="invalidDate!=null">
+                ${groupOp} invalidDate ${invalidDate.op}  #{invalidDate.data}
+            </if>
+            <if test="orderNo!=null">
+                ${groupOp} orderNo ${orderNo.op}  #{orderNo.data}
+            </if>
+            <if test="amount!=null">
+                ${groupOp} amount ${amount.op}  #{amount.data}
+            </if>
+            <if test="detail!=null">
+                ${groupOp} detail ${detail.op}  #{detail.data}
+            </if>
+            <if test="userId!=null">
+                ${groupOp} userId ${userId.op}  #{userId.data}
+            </if>
+            <if test="payStatus!=null">
+                ${groupOp} payStatus ${payStatus.op}  #{payStatus.data}
+            </if>
+            <if test="description!=null">
+                ${groupOp} description ${description.op}  #{description.data}
+            </if>
+            <if test="channel!=null">
+                ${groupOp} channel ${channel.op}  #{channel.data}
+            </if>
 
-       </where>
-    <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
-    </if>
+        </where>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
     </select>
 
     <select id="selectMaxId" resultType="java.lang.Long">
@@ -695,4 +621,3 @@ selectList
     </select>
 
 </mapper>
-
