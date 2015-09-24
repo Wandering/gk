@@ -5,7 +5,9 @@ define(function (require) {
 
     // 切换tab
     $('.tabs-list li').on('click',function(){
-        $(this).addClass('active').siblings().removeClass()
+        $(this).addClass('active').siblings().removeClass('active');
+        var n = $(this).index();
+
     })
 
 

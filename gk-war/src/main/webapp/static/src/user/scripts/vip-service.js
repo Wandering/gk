@@ -16,7 +16,9 @@ define(function (require) {
             if (result.rtnCode == '0000000') {
                 var price = result.bizData.price,
                     userId = result.bizData.id,
-                    validValue = result.bizData.validValue;
+                    validValue = result.bizData.validValue,
+                    vipCode = result.bizData.code;
+
 
                 //创建订单
                 $('#createOrderBtn').on('click', function () {
@@ -31,18 +33,11 @@ define(function (require) {
                         "userId": userId
                     };
                     pay["products"] = JSON.stringify(products);
-
                     var extra = {};
-                    if (index === 0) {
-                        extra["success_url"] = window.location.hostname + "/success.jsp";
-                        extra["cancel_url"] = window.location.hostname + "/fail.jsp";
-                        pay["channel"] = 'alipay_wap';
-                    } else {
-                        extra["result_url"] = "http://ep.zhiless.com/";
-                        pay["channel"] = 'upacp_wap';
-                    }
-                    pay["remoteIp"] = '127.0.0.1';
+                    extra["result_url"] = "http://ep.zhiless.com/";
+                    pay["channel"] = 'alipay_wap';
                     pay["extra"] = JSON.stringify(extra);
+                    console.log(pay)
                     $.ajax({
                         url: '/orders/createOrders.do',
                         type: 'POST',

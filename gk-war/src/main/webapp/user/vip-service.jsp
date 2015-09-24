@@ -38,7 +38,7 @@
 
                     <p>付款方式：</p><img src="/static/dist/user/images/icon-pay-zfb.png" class="pay-ab"/>
                 </div>
-                <div class="btn-upgrade btn-red">升级</div>
+                <div class="btn-upgrade btn-red" id="createOrderBtn">升级</div>
             </div>
             <div class="box-right">
                 <img src="/static/dist/user/images/online-card-img.png" class="pay-title"/>
