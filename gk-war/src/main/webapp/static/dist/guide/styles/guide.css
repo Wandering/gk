@@ -574,3 +574,6 @@ a.next-btn:hover {
     color: #333333; }
     .section-article p img {
       width: 100%; }
+
+.tabs-list li:hover {
+  cursor: pointer; }
