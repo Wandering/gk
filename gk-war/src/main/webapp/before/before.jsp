@@ -2,9 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>个人信息</title>
-    <link rel="stylesheet" href="/static/dist/common/styles/comm.css"/>
+    <title>考前备考</title>
+    <%@ include file="/common/meta.jsp"%>
     <link rel="stylesheet" href="/static/dist/before/styles/before.css"/>
 </head>
 <body>
@@ -134,7 +133,7 @@
         <div class="tabs-content-list">
             <ul class="main-video-list">
                 <li class="item">
-                    <div class="img"><img src="images/pic01.png" alt=""/></div>
+                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
                     <div class="info">
                         <span class="fl">学科名称:语文</span>
                         <span class="fr">主讲专家:徐老师</span>
@@ -150,7 +149,7 @@
                     </div>
                 </li>
                 <li class="item">
-                    <div class="img"><img src="images/pic01.png" alt=""/></div>
+                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
                     <div class="info">
                         <span class="fl">学科名称:语文</span>
                         <span class="fr">主讲专家:徐老师</span>
@@ -166,7 +165,7 @@
                     </div>
                 </li>
                 <li class="item">
-                    <div class="img"><img src="images/pic01.png" alt=""/></div>
+                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
                     <div class="info">
                         <span class="fl">学科名称:语文</span>
                         <span class="fr">主讲专家:徐老师</span>
@@ -182,7 +181,7 @@
                     </div>
                 </li>
                 <li class="item">
-                    <div class="img"><img src="images/pic01.png" alt=""/></div>
+                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
                     <div class="info">
                         <span class="fl">学科名称:语文</span>
                         <span class="fr">主讲专家:徐老师</span>
@@ -346,7 +345,7 @@
         <div class="tabs-content-list">
             <ul class="main-video-list">
                 <li class="item">
-                    <div class="img"><img src="images/pic01.png" alt=""/></div>
+                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
                     <div class="info">
                         <span class="fl">学科名称:语文</span>
                         <span class="fr">主讲专家:徐老师</span>
@@ -362,7 +361,7 @@
                     </div>
                 </li>
                 <li class="item">
-                    <div class="img"><img src="images/pic01.png" alt=""/></div>
+                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
                     <div class="info">
                         <span class="fl">学科名称:语文</span>
                         <span class="fr">主讲专家:徐老师</span>
@@ -378,7 +377,7 @@
                     </div>
                 </li>
                 <li class="item">
-                    <div class="img"><img src="images/pic01.png" alt=""/></div>
+                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
                     <div class="info">
                         <span class="fl">学科名称:语文</span>
                         <span class="fr">主讲专家:徐老师</span>
@@ -394,7 +393,7 @@
                     </div>
                 </li>
                 <li class="item">
-                    <div class="img"><img src="images/pic01.png" alt=""/></div>
+                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
                     <div class="info">
                         <span class="fl">学科名称:语文</span>
                         <span class="fr">主讲专家:徐老师</span>
@@ -438,9 +437,9 @@
         <p>院校评测使用的分数，位次数据，招生计划为往年数据，结果仅供参考，且系统推荐学校有限制，若要使用最新，更全面，更多推荐学校，请升级为VIP。</p>
     </div>
 </div>
-    <div class="school-eval">
+    <div class="school-eval w1000">
         <div class="eval-left">
-            <img src="images/bottom-banner.jpg" />
+            <img src="/static/dist/before/images/bottom-banner.jpg" />
             <h3>为我推荐院校</h3>
             <h6>直接系统告诉我可以报的院校名称，容我考虑考虑</h6>
         </div>
@@ -470,7 +469,7 @@
                     <input type="text" placeholder="请输入分数"/>
                 </span>
                 <a>
-                    <img src="images/bottom-banner.jpg" />
+                    <img src="/static/dist/before/images/bottom-banner.jpg" />
                 </a>
             </div>
 
@@ -484,7 +483,7 @@
 <div class="w1000 main-volunteer">
     <div class="fl">
         <div class="img">
-            <img src="images/zd-pic.png" alt=""/>
+            <img src="/static/dist/before/images/zd-pic.png" alt=""/>
             <strong>院校推荐、志愿指导</strong>
             <p>依据总分、位次获取推荐院校及志愿指导</p>
         </div>
@@ -506,7 +505,7 @@
             <div class="form-control yzm-control">
                 <label>验证码</label>
                 <input type="text" class="input yzm" name="" placeholder="请填写验证码" id=""/>
-                <img src="images/yzm.png" alt=""/>
+                <img src="/static/dist/before/images/yzm.png" alt=""/>
             </div>
             <div class="form-control-btn">
                 <input type="button" class="btn" value="下一步"/>
@@ -524,8 +523,8 @@
 
 
 
-<div class="tansLayer"></div>
-<div class="volunteer-flow3-layer">
+<div class="tansLayer" style="display: none;"></div>
+<div class="volunteer-flow3-layer" style="display: none;">
     <div class="top-close">
         <a href="" class="close-btn">x</a>
     </div>
@@ -581,20 +580,8 @@
         <p class="w1000">联系信息:E-mail:cewfefe@163.com QQ:5454555 备案号:陕ICP备343454135-1号 [站长统计]</p>
     </div>
 </div>
-<link rel="stylesheet" href="../../bower_components/swiper/dist/css/swiper.css"/>
-<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
-<script src="../../bower_components/swiper/dist/js/swiper.jquery.min.js"></script>
 <script>
-    $(function () {
-        //幻灯片
-        var swiper = new Swiper('.swiper-container', {
-            pagination: '.swiper-pagination',
-            paginationClickable: true,
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
-            loop: true
-        });
-    });
+    seajs.use("${ctx}/static/src/before/scripts/before");
 </script>
 </body>
 </html>
