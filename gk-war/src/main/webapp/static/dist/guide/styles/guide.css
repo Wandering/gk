@@ -546,14 +546,16 @@ a.next-btn:hover {
   text-indent: 1cm; }
 
 .tabs-sub-list {
-  overflow: hidden;
-  border-radius: 5px; }
+  overflow: hidden; }
   .tabs-sub-list li {
     float: left;
     padding: 10px 20px;
     background-color: #f5f5f5;
     font-size: 12px;
     color: #727171; }
+    .tabs-sub-list li.active {
+      background-color: #e24333;
+      color: #fff; }
 
 .section-article {
   margin-top: 50px;
@@ -577,3 +579,7 @@ a.next-btn:hover {
 
 .tabs-list li:hover {
   cursor: pointer; }
+
+.tab-content {
+  margin: 20px 0 50px 0;
+  text-align: center; }
