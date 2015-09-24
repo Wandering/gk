@@ -40,7 +40,7 @@ selectList
         moduleKey
     </sql>
     <insert id="insert" parameterType="Orders">
-        INSERT INTO shishuo_orders (
+        INSERT INTO gk_orders (
         status,
         createDate,
         lastModDate,
@@ -76,7 +76,7 @@ selectList
 
     <!-- 更新 -->
     <update id="update" parameterType="Orders">
-        UPDATE shishuo_orders
+        UPDATE gk_orders
         <trim prefix="SET" suffixOverrides=",">
             <if test="status!=null">
                 status = #{status},
@@ -123,7 +123,7 @@ selectList
     </update>
 
     <update id="updateMap">
-        UPDATE shishuo_orders
+        UPDATE gk_orders
         <trim prefix="SET" suffixOverrides=",">
             <if test="map.status!=null">
                 status = #{map.status},
@@ -170,7 +170,7 @@ selectList
     </update>
 
     <update id="updateByCondition">
-        UPDATE shishuo_orders
+        UPDATE gk_orders
         <trim prefix="SET" suffixOverrides=",">
             <if test="update.status!=null">
                 status = #{update.status},
@@ -260,7 +260,7 @@ selectList
     </update>
 
     <insert id="insertMap" >
-        INSERT INTO shishuo_orders (
+        INSERT INTO gk_orders (
                 status,
                 createDate,
                 lastModDate,
@@ -293,7 +293,7 @@ selectList
 
 
     <update id="updateNull" parameterType="Orders">
-        UPDATE shishuo_orders
+        UPDATE gk_orders
         <trim prefix="SET" suffixOverrides=",">
             status = #{status},
             createDate = #{createDate},
@@ -315,7 +315,7 @@ selectList
 
     <!-- 按Id删除 -->
     <delete id="deleteById" parameterType="java.lang.Long">
-        DELETE FROM shishuo_orders
+        DELETE FROM gk_orders
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -323,7 +323,7 @@ selectList
 
 
     <delete id="deleteByCondition" parameterType="java.util.Map">
-        DELETE FROM shishuo_orders
+        DELETE FROM gk_orders
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id = #{id}
@@ -371,14 +371,14 @@ selectList
     </delete>
 
     <delete id="deleteByProperty" parameterType="java.util.Map">
-        DELETE FROM shishuo_orders WHERE
+        DELETE FROM gk_orders WHERE
         ${property} = #{value}
     </delete>
 
     <select id="fetch" parameterType="java.lang.Long" resultType="Orders">
         SELECT
         <include refid="Base_Column_List" />
-        FROM shishuo_orders
+        FROM gk_orders
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -390,7 +390,7 @@ selectList
     <select id="findOne" parameterType="java.util.Map" resultType="Orders">
         SELECT
         <include refid="Base_Column_List" />
-        FROM shishuo_orders WHERE
+        FROM gk_orders WHERE
         ${property} = #{value}
         LIMIT 0,1
     </select>
@@ -398,7 +398,7 @@ selectList
     <select id="findList" parameterType="java.util.Map" resultType="Orders">
         SELECT
         <include refid="Base_Column_List" />
-        FROM shishuo_orders WHERE
+        FROM gk_orders WHERE
         ${property} = #{value}
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -408,7 +408,7 @@ selectList
     <select id="findAll" resultType="Orders">
         SELECT
         <include refid="Base_Column_List" />
-        FROM shishuo_orders
+        FROM gk_orders
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
         </if>
@@ -417,7 +417,7 @@ selectList
     <select id="queryPage" resultType="Orders">
         SELECT
         <include refid="Base_Column_List" />
-        FROM shishuo_orders
+        FROM gk_orders
         <where>
 
             <if test="condition.whereSql != null">
@@ -481,7 +481,7 @@ selectList
     <select id="like" parameterType="java.util.Map" resultType="Orders">
         SELECT
         <include refid="Base_Column_List" />
-        FROM shishuo_orders
+        FROM gk_orders
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id like CONCAT('%', #{id} , '%')
@@ -535,7 +535,7 @@ selectList
     <select id="queryList" parameterType="java.util.Map" resultType="Orders">
         SELECT
         <include refid="Base_Column_List" />
-        FROM shishuo_orders
+        FROM gk_orders
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="condition.id!=null">
                 AND id = #{condition.id}
@@ -588,7 +588,7 @@ selectList
     <select id="queryOne" parameterType="java.util.Map" resultType="Orders">
         SELECT
         <include refid="Base_Column_List" />
-        FROM shishuo_orders
+        FROM gk_orders
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id = #{id}
@@ -637,7 +637,7 @@ selectList
     </select>
 
     <select id="count" resultType="java.lang.Integer">
-        SELECT count(id) FROM shishuo_orders
+        SELECT count(id) FROM gk_orders
        <where>
            <if test="id!=null">
                ${groupOp} id ${id.op}  #{id.data}
@@ -691,7 +691,7 @@ selectList
     <select id="selectMaxId" resultType="java.lang.Long">
         SELECT
         MAX(id)
-        FROM shishuo_orders
+        FROM gk_orders
     </select>
 
 </mapper>

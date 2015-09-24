@@ -21,7 +21,7 @@
     </sql>
 
     <select id="findPage" resultType="Product">
-        SELECT <include refid="Base_Column_List" /> from shishuo_product
+        SELECT <include refid="Base_Column_List" /> from gk_product
         <where>
             1=1
             <if test="type!=null">
