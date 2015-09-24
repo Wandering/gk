@@ -3,9 +3,12 @@ package cn.thinkjoy.gk.controller.guide;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.domain.AdmissionBatch;
 import cn.thinkjoy.gk.domain.PolicyInterpretation;
+import cn.thinkjoy.gk.dto.PolicyInterpretationCategory;
 import cn.thinkjoy.gk.service.IAdmissionBatchService;
 import cn.thinkjoy.gk.service.IPolicyInterpretationService;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +43,28 @@ public class PolicyInterpretationController extends BaseController {
                                                                       @RequestParam("provinceId") long provinceId) {
         return policyInterpretationService
                 .findPolicyInterpretationCategoryByBatchIdAndProvinceId(batchId, provinceId);
+    }
+
+    @RequestMapping(value = "/allCategories")
+    @ResponseBody
+    public List<PolicyInterpretationCategory> getAllPolicyInterpretationCategory(@RequestParam("provinceId") long provinceId) {
+        List<PolicyInterpretationCategory> allCategory = Lists.newArrayList();
+        Map<String, Object> conditions = Maps.newHashMap();
+        conditions.put("status", 1);
+        List<AdmissionBatch> admissionBatchList = admissionBatchService.queryList(conditions, null, null);
+        if (admissionBatchList != null) {
+            for (AdmissionBatch batch: admissionBatchList) {
+                PolicyInterpretationCategory category = new PolicyInterpretationCategory();
+                category.setId(batch.getId());
+                category.setName(batch.getName());
+                List<PolicyInterpretation> policyInterpretations = policyInterpretationService
+                        .findPolicyInterpretationCategoryByBatchIdAndProvinceId(batch.getId(), provinceId);
+                category.setCategory(policyInterpretations);
+                allCategory.add(category);
+            }
+        }
+
+        return allCategory;
     }
 
     @RequestMapping(value = "/detail")
