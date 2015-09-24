@@ -1,2 +1,78 @@
 @charset "utf-8";
 @import "../../common/styles/comm";
+
+.personal-tab {
+  position: relative;
+  margin-top: 20px;
+  top: 1px;
+  .active {
+    a {
+      color: $mainRed !important;
+    }
+  }
+}
+
+.content {
+  margin: 100px 120px;
+  overflow: hidden;
+  .avatar-box {
+    margin-top: 100px;
+    .avatar-img {
+      height: 125px;
+      width: 125px;
+      border-radius: 3px;
+    }
+    .btn-upload-img {
+      margin: 20px 25px;
+      background-color: $mainRed;
+      width: 70px;
+      text-align: center;
+      line-height: 22px;
+      height: 22px;
+      cursor: pointer;
+      color: #fff;
+      border-radius: 3px;
+      font-size: 12px;
+    }
+  }
+  .user-item {
+    width: 500px;
+    color: #222222;
+    font-size: 14px;
+    .account{
+      height: 35px;
+      .account-tel{
+        margin-right: 35px;
+      }
+      .modify-psd {
+        color: $mainRed;
+        margin-left: 165px;
+      }
+    }
+    .group-comm {
+      .user-input-comm {
+        margin: 8px 0 8px 35px;
+        width: 315px;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 15px;
+        box-sizing: border-box;
+        border: 1px solid $borderColor;
+        border-radius: 3px;
+      }
+      .ml35{
+        margin-left: 35px!important;
+      }
+      .user-select-comm{
+        width: 102px;
+        margin: 8px 0 8px 0;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 15px;
+        box-sizing: border-box;
+        border: 1px solid $borderColor;
+        border-radius: 3px;
+      }
+    }
+  }
+}

@@ -8,7 +8,7 @@ package cn.thinkjoy.gk.controller.market;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.domain.Product;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.query.market.ProductQuery;
+import cn.thinkjoy.gk.controller.market.query.ProductQuery;
 import cn.thinkjoy.gk.service.IProductExService;
 import cn.thinkjoy.gk.service.IProductService;
 import org.slf4j.Logger;

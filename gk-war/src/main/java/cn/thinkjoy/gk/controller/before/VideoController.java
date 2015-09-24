@@ -2,15 +2,12 @@ package cn.thinkjoy.gk.controller.before;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.domain.ExaminationPaper;
-import cn.thinkjoy.gk.pojo.PaperPojo;
+import cn.thinkjoy.gk.domain.VideoCourse;
+import cn.thinkjoy.gk.domain.VideoSection;
 import cn.thinkjoy.gk.pojo.SubjectPojo;
 import cn.thinkjoy.gk.pojo.VideoCoursePojo;
-import cn.thinkjoy.gk.pojo.VideoSectionPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.service.IEXSubjectService;
-import cn.thinkjoy.gk.service.IEXVideoCourseService;
-import cn.thinkjoy.gk.service.IExaminationPaperService;
+import cn.thinkjoy.gk.service.*;
 import cn.thinkjoy.gk.util.HttpUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +30,12 @@ public class VideoController extends BaseController {
     private IEXSubjectService iexSubjectService;
     @Autowired
     private IEXVideoCourseService iexVideoCourseService;
+
     @Autowired
-    private IExaminationPaperService iExaminationPaperService;
+    private IVideoSectionService videoSectionService;
+    @Autowired
+    private IVideoCourseService videoCourseService;
+
     /**
      * 根据分类获取视频课程列表
      * @return
@@ -50,7 +51,7 @@ public class VideoController extends BaseController {
         if(StringUtils.isBlank(classifyType)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
-        List<VideoCoursePojo> videoCoursePojos = iexVideoCourseService.getVideoListByParams(subjectId == null?null:Long.valueOf(subjectId),Integer.valueOf(classifyType),Integer.parseInt(sortType),Integer.valueOf(pageNo)*Integer.valueOf(pageSize),Integer.valueOf(pageSize));
+        List<VideoCoursePojo> videoCoursePojos = iexVideoCourseService.getVideoListByParams(subjectId == null ? null : Long.valueOf(subjectId), Integer.valueOf(classifyType), Integer.parseInt(sortType), Integer.valueOf(pageNo) * Integer.valueOf(pageSize), Integer.valueOf(pageSize));
         if(videoCoursePojos == null || videoCoursePojos.size() == 0){
             throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
         }
@@ -77,45 +78,42 @@ public class VideoController extends BaseController {
      */
     @RequestMapping(value = "getVideoSectionList",method = RequestMethod.GET)
     @ResponseBody
-    public List<VideoSectionPojo> getVideoSectionList(){
+    public List<VideoSection> getVideoSectionList(){
         String courseId = request.getParameter("courseId");
         if(StringUtils.isBlank(courseId)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
-        return null;
+        Map<String,Object> queryMap = new HashMap<>();
+        queryMap.put("courseId",courseId);
+        List<VideoSection> videoSections = videoSectionService.queryList(queryMap, "sectionSort", "ASC");
+        if(videoSections == null  || videoSections.size() == 0){
+            throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
+        }
+
+        return videoSections;
     }
 
     /**
      * 根据课时ID获取课时详情
      * @return
      */
-    @RequestMapping(value = "getVideoSection",method = RequestMethod.GET)
+    @RequestMapping(value = "getVideoSectionDetail",method = RequestMethod.GET)
     @ResponseBody
-    public VideoSectionPojo getVideoSectionDetail(){
-        return null;
-    }
-    /**
-     * 获取试卷列表
-     * @return
-     */
-    @RequestMapping(value = "getPaperList",method = RequestMethod.GET)
-    @ResponseBody
-    public List<PaperPojo> getPaperList(){
-        Map<String,Object> queryMap = new HashMap<>();
-        return null;
+    public VideoSection getVideoSectionDetail(){
+        String videoSectionId = request.getParameter("videoSectionId");
+        if(StringUtils.isBlank(videoSectionId)){
+            throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
+        }
+        VideoSection videoSection = (VideoSection)videoSectionService.findOne("id",Long.valueOf(videoSectionId));
+        if(videoSection == null){
+            throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
+        }
+        VideoCourse videoCourse =(VideoCourse) videoCourseService.findOne("id",videoSection.getCourseId());
+        videoCourse.setId(videoSection.getCourseId());
+        videoCourse.setHit(videoCourse.getHit() + 1);
+        videoCourseService.update(videoCourse);
+        return videoSection;
     }
 
-    /**
-     * 获取试卷详情
-     * @return
-     */
-    @RequestMapping(value = "getPaper",method = RequestMethod.GET)
-    @ResponseBody
-    public ExaminationPaper getPaperDetail(){
-        String paperId = request.getParameter("paperId");
-        if(StringUtils.isBlank(paperId)){
-        }
-      return null;
-    }
 
 }

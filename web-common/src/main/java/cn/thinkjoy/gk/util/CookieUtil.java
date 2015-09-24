@@ -1,5 +1,7 @@
 package cn.thinkjoy.gk.util;
 
+import org.apache.commons.lang.StringUtils;
+
 import javax.servlet.http.Cookie;
 
 
@@ -12,14 +14,19 @@ public class CookieUtil {
 	 * @param expiry cookie的有效期
 	 * @return
 	 */
-	public static final Cookie addCookie(String name, String value, int expiry){
+	public static final Cookie addCookie(String name, String value, int expiry ,String path){
 		Cookie cookie = new Cookie(name, value);
 //		cookie.setDomain("*");
-//		cookie.setPath("/");
+		if (StringUtils.isNotBlank(path)) {
+			cookie.setPath(path);
+		}
 		cookie.setMaxAge(expiry);
 		return cookie;
 	}
-	
+	public static final Cookie addCookie(String name, String value, int expiry){
+		return addCookie(name,value,expiry,null);
+	}
+
 	/**
 	 * 获取用户cookie信息
 	 * 

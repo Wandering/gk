@@ -1,0 +1,48 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>详情页</title>
+    <%@ include file="/common/meta.jsp"%>
+    <link rel="stylesheet" href="/static/dist/consult/styles/gk_hot_detile.css" />
+</head>
+<body>
+<%@ include file="/common/header.jsp"%>
+
+<div class="content">
+    <%@ include file="/common/banner-wipe.jsp"%>
+    <div class="w1000">
+
+        <div class="search-content ta mt20">
+                 <span>
+                     <input type="text" placeholder="请输入搜索关键字"/>
+                     <input type="button" value="搜索"/>
+                     <button>我要提问</button>
+                </span>
+        </div>
+
+        <div class="main-body">
+            <section class="section-article" id="section_article">
+            </section>
+
+            <section class="ask-list">
+                <h3>高考热点</h3>
+                <ul>
+                    <li>综合评价生是统招生吗？</li>
+                    <li>综合评价生是统招生吗？</li>
+                    <li>综合评价生是统招生吗？</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+</div>
+
+<%@ include file="/common/footer.jsp"%>
+<script type="text/javascript" src="/static/bower_components/utils/getTime.js"></script>
+<script type="text/javascript">
+    seajs.use("${ctx}/static/src/consult/scripts/gk_hot_detile");
+</script>
+</body>
+</html>
+
+

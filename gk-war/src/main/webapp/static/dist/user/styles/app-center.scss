@@ -1,0 +1,37 @@
+@charset "utf-8";
+@import "../../common/styles/comm";
+
+.personal-tab {
+  position: relative;
+  margin-top: 20px;
+  top: 1px;
+  .active {
+    a {
+      color: $mainRed !important;
+    }
+  }
+}
+.content{
+  margin: 30px 0;
+  height: 660px;
+  border:1px solid $borderColor;
+  border-right: none;
+  border-bottom: none;
+  .row{
+    .col-3{
+      cursor: pointer;
+      padding-top:70px;
+      text-align: center;
+      float: left;
+      width: 33.333%;
+      height: 330px;
+      box-sizing: border-box;
+      border-right: 1px solid $borderColor;
+      border-bottom: 1px solid $borderColor;
+      .app-icon{
+        font-size: 20px;
+        color: #333333;
+      }
+    }
+  }
+}

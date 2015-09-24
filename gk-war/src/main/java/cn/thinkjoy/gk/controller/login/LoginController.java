@@ -50,7 +50,8 @@ public class LoginController extends BaseController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public String login(@RequestParam(value="account",required=false) String account,@RequestParam(value="password",required=false) String password) throws Exception {
+	public String login(@RequestParam(value="account",required=false) String account,
+						@RequestParam(value="password",required=false) String password) throws Exception {
 
 		try {
 			if (StringUtils.isEmpty(account)) {
@@ -63,7 +64,7 @@ public class LoginController extends BaseController {
 			UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
 
 			if (userAccountBean == null) {
-				throw new BizException(ERRORCODE.ACCOUNT_NO_EXIST.getCode(),ERRORCODE.ACCOUNT_NO_EXIST.getMessage());
+				throw new BizException(ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getCode(),ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getMessage());
 			}
 
 			if (!"@@@@".equals(password)) {
@@ -79,7 +80,7 @@ public class LoginController extends BaseController {
 
 			long id = userAccountBean.getId();
 
-			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
+			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE,"/"));
 
 			setUserAccountPojo(userAccountBean);
 
@@ -100,7 +101,7 @@ public class LoginController extends BaseController {
 //		boolean status = true;
 		try {
 			RedisUtil.getInstance().del(UserRedisConst.USER_KEY + getCookieValue());
-			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, null, CookieTimeConst.CLEAN_COOKIE));
+			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, null, CookieTimeConst.CLEAN_COOKIE,"/"));
 		}catch(Exception e){
 //			status = false;
 			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());

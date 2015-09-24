@@ -6,11 +6,13 @@ package cn.thinkjoy.gk.controller.market;
 
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.domain.Orders;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.query.market.OrdersQuery;
+import cn.thinkjoy.gk.controller.market.query.OrdersQuery;
 import cn.thinkjoy.gk.service.IOrdersService;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
+import cn.thinkjoy.gk.util.IPUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -34,7 +36,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value="/orders")
-public class OrdersController {
+public class OrdersController extends BaseController{
 
     private static final Logger LOGGER= LoggerFactory.getLogger(OrdersController.class);
 
@@ -54,7 +56,9 @@ public class OrdersController {
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
         }
 
-        String orderNo = String.valueOf(System.currentTimeMillis())+ordersQuery.getUserId();
+        String userId = getCookieValue();
+
+        String orderNo = String.valueOf(System.currentTimeMillis())+userId;
 
         String products = ordersQuery.getProducts();
 
@@ -88,7 +92,8 @@ public class OrdersController {
 //        }
 
         Orders order = new Orders();
-        order.setUserId(Long.valueOf(ordersQuery.getUserId()));
+        order.setUserId(Long.valueOf(1));
+//        order.setUserId(Long.valueOf(userId));
         order.setOrderNo(orderNo);
         order.setDetail(products);
         order.setAmount(amount);
@@ -116,7 +121,6 @@ public class OrdersController {
         }catch (Exception e){
             LOGGER.info("====pay /orders/createOrder catch: "+e.getMessage());
             throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
-
         }
     }
 
@@ -129,7 +133,7 @@ public class OrdersController {
         chargeParams.put("amount", String.valueOf(order.getAmount()));
         chargeParams.put("channel",  orderQuery.getChannel());
         chargeParams.put("currency", "cny");
-        chargeParams.put("remoteIp", orderQuery.getRemoteIp());
+        chargeParams.put("remoteIp", IPUtil.getRemortIP(request));
         chargeParams.put("extra",orderQuery.getExtra());
 
         JSONArray jsonArray = JSON.parseArray(order.getDetail());

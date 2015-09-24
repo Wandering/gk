@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.thinkjoy.gk.dao.ex.IEXVideoCourseDAO">
-    <select id="getVideoListByParams" resultType="VideoCoursePojo" parameterType="map">
+    <select id="getVideoListByParams" resultType="VideoCoursePojo">
         SELECT
         a.id AS courseId,
         b.classifyName AS classifyName,
@@ -21,13 +21,13 @@
     WHERE
         b.id = #{classifyType}
         <if test="subjectId != null">
-            AND b.id = #{subjectId}
+            AND a.subjectId = #{subjectId}
         </if>
         <if test="sortType == 1">
           ORDER BY a.createDate DESC
         </if>
         <if test="sortType == 2">
-            ORDER BY a.courseSort ASC
+            ORDER BY a.hit DESC
         </if>
         limit ${offset}, ${rows}
     </select>
