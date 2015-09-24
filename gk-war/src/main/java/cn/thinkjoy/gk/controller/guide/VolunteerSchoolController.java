@@ -40,8 +40,8 @@ public class VolunteerSchoolController {
     /** 志愿学堂文章列表 */
     @RequestMapping(value = "/articles", method = RequestMethod.GET)
     @ResponseBody
-    public BizData4Page<VolunteerSchool> getArticles(HttpServletRequest request, @RequestParam("pn") int pn,
-                                                     @RequestParam("ps") int ps, @RequestParam("lastId") long lastId) {
+    public BizData4Page<VolunteerSchool> getArticles(HttpServletRequest request,
+                                                     @RequestParam("pn") int pn,@RequestParam("ps") int ps) {
         long cateId = ServletRequestUtils.getLongParameter(request, "cateId", 0);
         String keyword = request.getParameter("kw");
         if (pn == 0) pn = 1;
@@ -55,20 +55,14 @@ public class VolunteerSchoolController {
             category.setField("categoryId");
             category.setOp("=");
             category.setData(cateId + "");
-
             conditions.put(category.getField(), category);
         }
         SearchField status = new SearchField();
         status.setField("status");
         status.setOp("=");
         status.setData("1");
-        SearchField beginId = new SearchField();
-        beginId.setField("id");
-        beginId.setOp(">");
-        beginId.setData(lastId + "");
-
         conditions.put(status.getField(), status);
-        conditions.put(beginId.getField(), beginId);
+
         conditions.put("groupOp", "and");
         return volunteerSchoolService.queryPageByDataPerm(null, conditions, pn, (pn-1) * ps, ps);
     }
