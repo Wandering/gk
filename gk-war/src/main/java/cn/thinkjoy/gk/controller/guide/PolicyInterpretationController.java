@@ -25,7 +25,7 @@ public class PolicyInterpretationController extends BaseController {
     @Autowired
     private IPolicyInterpretationService policyInterpretationService;
 
-    @RequestMapping(value = "/getAdmissionBatchs", method = RequestMethod.GET)
+    @RequestMapping(value = "/admissionBatchs", method = RequestMethod.GET)
     @ResponseBody
     public List<AdmissionBatch> getAdmissionBatchs() {
         Map<String, Object> conditions = Maps.newHashMap();
@@ -34,7 +34,7 @@ public class PolicyInterpretationController extends BaseController {
         return admissionBatchList;
     }
 
-    @RequestMapping(value = "/getPolicyInterpretationCategory")
+    @RequestMapping(value = "/categorys")
     @ResponseBody
     public List<PolicyInterpretation> getPolicyInterpretationCategory(@RequestParam("batchId") long batchId,
                                                                       @RequestParam("provinceId") long provinceId) {
@@ -42,7 +42,7 @@ public class PolicyInterpretationController extends BaseController {
                 .findPolicyInterpretationCategoryByBatchIdAndProvinceId(batchId, provinceId);
     }
 
-    @RequestMapping(value = "/getPolicyInterpretationCategory/{id}")
+    @RequestMapping(value = "/detail/{id}")
     @ResponseBody
     public PolicyInterpretation getPolicyInterpretationDetail(@PathVariable long id) {
         return (PolicyInterpretation) policyInterpretationService.fetch(id);

@@ -7,7 +7,7 @@
     <select id="findPolicyInterpretationCategorysByBatchIdAndProvinceId" resultType="PolicyInterpretation">
         SELECT
         id,
-        categoryName,
+        categoryName
         FROM gk_policy_interpretation WHERE
         admissionBatchId = #{batchId}
         AND
