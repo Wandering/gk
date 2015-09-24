@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
-@Scope("prototype")
-@RequestMapping("/")
+//@Scope("prototype")
+@RequestMapping("/login")
 public class LoginController extends BaseController {
 
 	private static final Logger LOGGER= LoggerFactory.getLogger(LoginController.class);

@@ -1,13 +1,11 @@
 @charset "utf-8";
 @import "reset";
 @import "variables";
-
 //共用工具
 .w1000 {
   width: 1000px;
   margin: 0 auto;
 }
-
 .fr {
   float: right;
 }
@@ -15,7 +13,8 @@
 .fl {
   float: left;
 }
-.ta{
+
+.ta {
   text-align: center;
 }
 
@@ -47,6 +46,9 @@
       &:hover {
         color: #fff;
       }
+    }
+    a.active{
+      color: #fff;
     }
   }
   .user-info-list {
@@ -84,22 +86,22 @@
     height: 286px;
     background-color: $secondColor;
     box-sizing: border-box;
-    ul{
+    ul {
       display: inline-block;
       text-align: left;
-      margin:0 33px 60px;
-      a{
+      margin: 0 33px 60px;
+      a {
         color: #c4c1c1;
         text-decoration: none;
         font-size: 12px;
       }
-      .nav-title{
+      .nav-title {
         font-size: 16px;
         color: #fff;
         line-height: 30px;
       }
     }
-    .logo{
+    .logo {
       display: block;
       width: 178px;
       margin: 0 auto;
@@ -114,12 +116,13 @@
     background-color: $mainColor;
   }
 }
+
 /*副标题统一样式*/
 .content-title {
   width: 100%;
   height: 34px;
   margin: 50px 0 10px;
-  p{
+  p {
     margin: 0;
     padding: 0;
   }
@@ -135,52 +138,77 @@
     height: 34px;
     line-height: 34px;
     text-align: center;
-    .arraw{
+    .arraw {
       background: url("../../../dist/common/images/title-icon.png") left top no-repeat;
       display: inline-block;
       width: 25px;
       height: 18px;
       margin-top: 8px;
     }
-    span{
+    span {
       font-size: 30px;
     }
   }
 }
-.content-title-sub{
+
+.content-title-sub {
   color: #888;
   font-size: 14px;
+  margin-bottom: 40px;
 }
+
 /*文章中得导航栏*/
 @mixin focus {
   cursor: pointer;
   color: $mainDR;
 }
- .tabs-list{
-   overflow: hidden;
-   background: url("../../../dist/common/images/tabs-bd-line.png") repeat-x left bottom ;
- }
-.tabs-list li{
+
+.tabs-list {
+  overflow: hidden;
+  background: url("../../../dist/common/images/tabs-bd-line.png") repeat-x left bottom;
+}
+
+.tabs-list li {
   float: left;
   padding: 15px 20px;
   font-size: 16px;
   color: #505050;
-  &.active{
+  &.active {
     @include focus;
     border-bottom: 2px solid $mainDR;
   }
 }
-.clear{
+
+.clear {
   clear: both;
 }
-.line{
+
+.line {
   width: 100%;
   height: 2px;
   position: relative;
   background-color: #f1f1f1;
 }
-.line-focus{
+
+.line-focus {
   width: 50px;
   height: 2px;
   background-color: $mainDR;
+}
+
+a.next-btn {
+  width: 133px;
+  height: 38px;
+  display: block;
+  background: url('../../common/images/into-btn-bg.png') no-repeat;
+  text-align: center;
+  line-height: 38px;
+  font-size: 14px;
+  color: #fff;
+  margin: 20px auto 40px;
+}
+
+a.next-btn:hover {
+  color: #fff;
+  text-decoration: underline;
 }

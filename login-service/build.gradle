@@ -5,4 +5,6 @@ dependencies {
 
     compile project(':login-domain')
 
+    compile project(':user-service')
+
 }

@@ -1,0 +1,283 @@
+@charset "utf-8";
+
+@import "../../common/styles/comm.scss";
+
+.content-title{
+  margin-top: 20px;
+}
+
+@mixin arrow-up-center {
+  content: '';
+  width:0;
+  height:0;
+  border-left:20px solid transparent;
+  border-right:20px solid transparent;
+  border-bottom:20px solid #f9f9f9;
+  position: relative;
+  top: -35px;
+  left: 50%;
+  margin-left: -30px;
+}
+
+.page-body{
+
+  width: 100%;
+
+  &.about-platform{
+    height: 592px;
+    background: #f3f3f1 url("../images/about_platform_bg.jpg") no-repeat left center;
+  }
+
+  &.hot-news-head{
+    section {
+      padding: 20px 0;
+    }
+  }
+
+  &.hot-news-body{
+    background-color: #f9f9f9;
+    &:before{
+      @include arrow-up-center;
+    }
+    section {
+      padding: 0;
+    }
+  }
+  section {
+    width: 1000px;
+    padding: 40px 0;
+    margin: 0 auto;
+
+    h1{
+      font-size: 30px;
+      color: #333;
+      text-align: center;
+      line-height: 2;
+    }
+  }
+}
+
+/*关于平台*/
+.mt20{
+  margin-top: 20px;
+}
+.mt40{
+  margin-top: 40px;
+}
+.mt60{
+  margin-top: 60px;
+}
+.about-platform {
+  ul{
+    width: 100%;
+    overflow: hidden;
+
+    li {
+      float: left;
+      height: 382px;
+      width: 31.26%;
+      background-color: #fff;
+      position: relative;
+      &.ml{
+        margin-left: 3.11%;
+      }
+
+      .info-content{
+        width: 90%;
+        height: 90%;
+        margin: 5%;
+
+        h2{
+          font-size: 20px;
+          color: #454545;
+          text-align: center;
+          line-height: 40px;
+        }
+
+        p{
+          font-size: 12px;
+          color: #7e7d7d;
+          line-height: 1.8;
+          margin: 0;
+        }
+        
+        .info {
+          height: 115px;
+          width: 100%;
+
+          span{
+            color: #fff;
+            font-size: 23px;
+            position: relative;
+            top: 45px;
+            left: 120px;
+          }
+        }
+
+        .bgR {
+          background: #e24d39 url('../images/one-iocn.png') no-repeat 70px center;
+        }
+
+        .bgB {
+          background: #52abd0 url('../images/two-iocn.png') no-repeat 70px center;
+        }
+
+        .bgG {
+          background: #52d09c url('../images/three-iocn.png') no-repeat 70px center;
+        }
+      }
+    }
+  }
+}
+
+/*在线互动*/
+.search-content {
+  span{
+    display: inline-block;
+    overflow: hidden;
+  }
+  input {
+    height: 40px;
+    line-height: 40px;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    float: left;
+  }
+  button {
+    width: 128px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 5px;
+    border:1px solid #cc0001;
+    background: url('../../common/images/ask-icon.png') no-repeat 15px center;
+    float: left;
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+    color: #e24d39;
+    font-size: 16px;
+    padding-left: 16px;
+  }
+  input[type="text"] {
+    width: 265px;
+    border:1px solid #cc0001;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    height: 38px;
+    padding-left: 10px;
+  }
+  input[type="button"] {
+    width: 90px;
+    background: #cc0001 url('../../common/images/search-icon.png') no-repeat 15px center;
+    border:1px solid #cc0001;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: #fff;
+    padding-left: 10px;
+  }
+}
+
+@mixin arrow-up {
+  content: '';
+  width:0;
+  height:0;
+  border-left:20px solid transparent;
+  border-right:20px solid transparent;
+  border-bottom:20px solid #f6f6f6;
+  position: relative;
+  top: -56px;
+}
+
+.detile-content{
+  padding-left: 20px;
+}
+.detile-header{
+  height: 20px;
+  font-size: 16px;
+}
+.order-number{
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  border-radius: 10px;
+  background-color: #626161;
+  color: #dedede;
+}
+.detile-title{
+  color: #626161;
+}
+.detile-info{
+  background-color: #f6f6f6;
+  padding: 20px;
+  border: 1px solid #edecec;
+  line-height: 1.8;
+  &:before{
+    @include arrow-up;
+  }
+}
+
+/*热门资讯*/
+.hot-list{
+  width:96%;
+  margin-left: 2%;
+  overflow: hidden;
+  padding-bottom: 40px;
+  li{
+    float: left;
+    width: 44%;
+    height: 48px;
+    margin: 15px 0;
+    &.ml{
+      margin-left: 8%;
+    }
+
+    .title-info{
+      h3{
+        font-size: 16px;
+        color: #333;
+        margin: 10px 0;
+      }
+      h6{
+        font-size: 12px;
+        color: #817f7f;
+        margin: 5px;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        overflow:hidden;
+      }
+    }
+
+    .icon{
+      width: 48px;
+      height: 48px;
+      background: #e24d39 url('../images/time-icon.png') no-repeat center 8px;
+      float: left;
+      margin-right: 5px;
+
+      span{
+        font-size: 10px;
+        color: #fff;
+        position: relative;
+        top: 28px;
+      }
+    }
+  }
+}
+
+.tabs-list li.more{
+  float: right;
+  color: #999;
+  font-size: 12px;
+  cursor: pointer;
+}
+/*高考日程*/
+.calendar{
+  width: 100%;
+  img{
+    width: 100%;
+  }
+}
