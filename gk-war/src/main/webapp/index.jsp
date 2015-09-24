@@ -4,7 +4,6 @@
 <head>
     <title>首页</title>
     <%@ include file="common/meta.jsp"%>
-
     <link rel="stylesheet" href="/static/dist/index/styles/index.css" />
 </head>
 <body>
@@ -13,9 +12,43 @@
     <%@ include file="common/banner-wipe.jsp"%>
     <!--指导流程-->
     <div class="section page-body">
-        <section></section>
+        <section>
+    <div class="w1000 flow-main">
+        <ul class="flow-main-list">
+            <li class="item">
+                <img src="/static/dist/index/images/flow-img1.png" alt=""/>
+                <a href="" class="name">政策解读</a>
+                <span class="num">1</span>
+                <p class="txt">名师精品课程，全面剖析高考知识点以及提分技巧。</p>
+            </li>
+            <li class="item">
+                <img src="/static/dist/index/images/flow-img2.png" alt=""/>
+                <a href="" class="name">志愿讲堂</a>
+                <span class="num">2</span>
+                <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
+            </li>
+            <li class="item">
+                <img src="/static/dist/index/images/flow-img3.png" alt=""/>
+                <a href="" class="name">院校信息</a>
+                <span class="num">3</span>
+                <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
+            </li>
+            <li class="item">
+                <img src="/static/dist/index/images/flow-img4.png" alt=""/>
+                <a href="" class="name">专业选择</a>
+                <span class="num">4</span>
+                <p class="txt">根据分数快速定位院校及推荐院校</p>
+            </li>
+            <li class="item">
+                <img src="/static/dist/index/images/flow-img5.png" alt=""/>
+                <a href="" class="name">志愿指导</a>
+                <span class="num">5</span>
+                <p class="txt">根据分数快速定位院校及推荐院校</p>
+            </li>
+        </ul>
     </div>
-
+        </section>
+    </div>
     <!--关于平台-->
     <div class="section page-body about-platform">
         <section>

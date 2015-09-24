@@ -11,9 +11,11 @@ define(function(require, exports, module) {
         contentId:null,
         childrenTabId:null,
         getArticleHandle:null,
+        parentHandle:null,
         init: function(options) {
             this.data = options.data;
             this.contentId = options.contentId;
+            this.parentHandle = options.parentHandle || null;
             this.getArticleHandle = options.getArticleHandle;
             this.renderParent();
         },
@@ -21,13 +23,18 @@ define(function(require, exports, module) {
             var parentHtml = [];
             parentHtml.push('<ul class="tabs-list mt60">');
             for (var i = 0, len = this.data.length; i < len; i++) {
-                parentHtml.push('<li>' + this.data[i].name + '</li>');
+                parentHtml.push('<li data-id="' + this.data[i].id + '">' + this.data[i].name + '</li>');
             }
             parentHtml.push('</ul>');
             $('#' + this.contentId).html(parentHtml.join(''));
             $('.tabs-list li').first().addClass('active');
-            this.renderChildren(this.data[0].category);
             this.parentEventHandle();
+            if (this.parentHandle && typeof this.parentHandle === 'function') {
+                this.parentHandle(this.data[0]);
+            }
+            if (this.data[0].category && this.data[0].category.length > 0) {
+                this.renderChildren(this.data[0].category);
+            }
         },
         parentEventHandle:function() {
             var that = this;
@@ -36,7 +43,12 @@ define(function(require, exports, module) {
                 if (!flag) {
                     that.removeChildren();
                     $(this).addClass('active').siblings().removeClass('active');
-                    that.renderChildren(that.data[$(this).index()].category);
+                    if (that.parentHandle && typeof that.parentHandle === 'function') {
+                        that.parentHandle(that.data[$(this).index()]);
+                    }
+                    if (that.data[$(this).index()].category && that.data[$(this).index()].category.length > 0) {
+                        that.renderChildren(that.data[$(this).index()].category);
+                    }
                 }
             });
         },
