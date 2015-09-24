@@ -34,7 +34,7 @@ public class PolicyInterpretationController extends BaseController {
         return admissionBatchList;
     }
 
-    @RequestMapping(value = "/categorys")
+    @RequestMapping(value = "/categories")
     @ResponseBody
     public List<PolicyInterpretation> getPolicyInterpretationCategory(@RequestParam("batchId") long batchId,
                                                                       @RequestParam("provinceId") long provinceId) {
@@ -42,9 +42,9 @@ public class PolicyInterpretationController extends BaseController {
                 .findPolicyInterpretationCategoryByBatchIdAndProvinceId(batchId, provinceId);
     }
 
-    @RequestMapping(value = "/detail/{id}")
+    @RequestMapping(value = "/detail")
     @ResponseBody
-    public PolicyInterpretation getPolicyInterpretationDetail(@PathVariable long id) {
+    public PolicyInterpretation getPolicyInterpretationDetail(@RequestParam("id") long id) {
         return (PolicyInterpretation) policyInterpretationService.fetch(id);
     }
 }
