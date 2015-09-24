@@ -3,6 +3,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <title>登陆</title>
     <link rel="stylesheet" href="/static/dist/login/styles/login.min.css"/>
 </head>
@@ -27,7 +29,7 @@
                 <span class="error-tips hide"></span>
                 <i class="icon-user-psd"></i>
                 <input type="password" class="input-comm" placeholder="密码"/>
-                <a href="forget-psd.html" class="forget-psd">忘记密码？</a>
+                <a href="/forget-psd.html" class="forget-psd">忘记密码？</a>
                 <div class="btn-login">登陆</div>
             </div>
             <!--注册-->
@@ -49,7 +51,7 @@
 </div>
 <div class="footer">
     <p class="copy">Copyright © 2015.Thinkjoy All rights reserved</p>
-    <img src="../login/images/login-logo.png" alt="logo360" class="bottom-logo"/>
+    <img src="/static/dist/common/images/login-logo.png" alt="logo360" class="bottom-logo"/>
 </div>
 
 
