@@ -27,7 +27,7 @@ public class VolunteerSchoolController {
     private IVolunteerSchoolService volunteerSchoolService;
 
     /** 志愿学堂分类 */
-    @RequestMapping(value = "/categorys")
+    @RequestMapping(value = "/categories")
     @ResponseBody
     public List<VolunteerSchoolCategory> getCategorys() {
         Map<String, Object> conditions = Maps.newHashMap();
@@ -61,9 +61,9 @@ public class VolunteerSchoolController {
         return volunteerSchoolService.queryPageByDataPerm(null, conditions, pn, (pn-1) * ps, ps);
     }
 
-    @RequestMapping(value = "/article/{id}")
+    @RequestMapping(value = "/article")
     @ResponseBody
-    public VolunteerSchool getArticleDetial(@PathVariable long id) {
+    public VolunteerSchool getArticleDetial(@RequestParam("id") long id) {
         return (VolunteerSchool) volunteerSchoolService.fetch(id);
     }
 
