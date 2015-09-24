@@ -213,7 +213,6 @@
     </div>
 </div>
 <%@ include file="common/footer.jsp"%>
-
 <script>
     seajs.use("/static/src/index/scripts/index");
 </script>

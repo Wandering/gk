@@ -56,8 +56,8 @@ define(function (require) {
                 type: 'post',
                 dataType: 'json',
                 data: {
-                   account:tel,  //zou
-                   password:pwd  //
+                   account:tel,  //18717817817
+                   password:pwd  //123123
                 },
                 success: function (res) {
                     console.log(res);
