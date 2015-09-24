@@ -2,16 +2,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <title>vip服务</title>
+    <%@ include file="/common/meta.jsp"%>
     <link rel="stylesheet" href="/static/dist/user/styles/vip-service.css"/>
 </head>
 <body>
 <%@include file="/common/header.jsp"%>
-
-
 <div class="section w1000">
     <ul class="tabs-list personal-tab">
         <li><a href="personal-info.jsp">个人信息</a></li>
@@ -112,7 +108,6 @@
             </div>
             <div class="col-3">
                 <p class="area-name">陕西省延安市</p>
-
                 <p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"/><span class="tel">4008-005-0001</span> 陕西省延安市
                 </p>
             </div>
@@ -129,5 +124,9 @@
 
 
 <%@include file="/common/footer.jsp"%>
+<script>
+    seajs.use("${ctx}/static/src/user/scripts/vip-service");
+</script>
+
 </body>
 </html>

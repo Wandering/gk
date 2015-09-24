@@ -581,7 +581,7 @@
     </div>
 </div>
 <script>
-    seajs.use("${ctx}/static/src/before/scripts/before");
+    seajs.use("${ctx}/static/src/user/scripts/vip-service");
 </script>
 </body>
 </html>
