@@ -21,7 +21,7 @@
     WHERE
         b.id = #{classifyType}
         <if test="subjectId != null">
-            AND b.id = #{subjectId}
+            AND a.subjectId = #{subjectId}
         </if>
         <if test="sortType == 1">
           ORDER BY a.createDate DESC
