@@ -205,3 +205,106 @@ ul.main-video-list {
   .filtrate .sel-item {
     float: left;
     margin-right: 10px; }
+
+.tip {
+  width: 100%;
+  height: 48px;
+  background: #fdfce9;
+  border: 1px solid #faedd0;
+  border-radius: 4px;
+  line-height: 48px;
+  color: #8a6d45;
+  font-size: 14px;
+  margin: 20px 0; }
+  .tip p {
+    margin: 0 0 0 5px; }
+
+.mt10 {
+  margin-top: 10px; }
+
+.mt20 {
+  margin-top: 20px; }
+
+.school-eval {
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 50px; }
+  .school-eval .eval-left {
+    width: 454px;
+    float: left;
+    margin-left: 40px;
+    border: 1px solid #e7e7e7; }
+    .school-eval .eval-left img {
+      width: 100%; }
+    .school-eval .eval-left h3, .school-eval .eval-left h6 {
+      font-size: 14px;
+      color: #333;
+      text-align: center;
+      margin: 5px 0; }
+  .school-eval .eval-right {
+    width: 358px;
+    float: right;
+    margin-right: 50px; }
+    .school-eval .eval-right .score {
+      width: 355px;
+      height: 46px;
+      background: url("../images/school-eval-input.png") no-repeat left top; }
+      .school-eval .eval-right .score label {
+        line-height: 46px;
+        text-align: center;
+        padding: 0 20px; }
+      .school-eval .eval-right .score input {
+        width: 230px;
+        height: 44px;
+        margin-left: 40px;
+        line-height: 44px;
+        background: transparent; }
+    .school-eval .eval-right .indent .ident-code {
+      display: inline-block;
+      width: 231px;
+      height: 46px;
+      background: url("../images/school-yzm-input.png") no-repeat left top; }
+      .school-eval .eval-right .indent .ident-code label {
+        line-height: 46px;
+        text-align: center;
+        padding: 0 20px; }
+      .school-eval .eval-right .indent .ident-code input {
+        width: 120px;
+        height: 44px;
+        line-height: 44px;
+        margin-left: 15px;
+        background: transparent; }
+    .school-eval .eval-right .indent a {
+      float: right; }
+      .school-eval .eval-right .indent a img {
+        width: 120px;
+        height: 46px; }
+    .school-eval .eval-right .category {
+      width: 100%; }
+      .school-eval .eval-right .category label {
+        line-height: 80px;
+        text-align: center;
+        float: left; }
+      .school-eval .eval-right .category .group-radio {
+        overflow: hidden; }
+        .school-eval .eval-right .category .group-radio li {
+          float: left;
+          width: 50%; }
+          .school-eval .eval-right .category .group-radio li.tar {
+            text-align: right; }
+        .school-eval .eval-right .category .group-radio span {
+          display: inline-block;
+          width: 100px;
+          line-height: 40px;
+          text-align: left; }
+        .school-eval .eval-right .category .group-radio input[type="radio"] {
+          width: 20px;
+          height: 20px;
+          position: relative;
+          top: 5px; }
+    .school-eval .eval-right .submit input {
+      width: 100%;
+      line-height: 46px;
+      color: #fff;
+      background-color: #e24333;
+      border-radius: 4px; }
