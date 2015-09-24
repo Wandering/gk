@@ -48,7 +48,7 @@ public class PaperController extends BaseController {
      * 获取试卷详情
      * @return
      */
-    @RequestMapping(value = "getPaper",method = RequestMethod.GET)
+    @RequestMapping(value = "getPaperDetail",method = RequestMethod.GET)
     @ResponseBody
     public ExaminationPaper getPaperDetail(){
         String paperId = request.getParameter("paperId");
