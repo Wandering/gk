@@ -19,7 +19,7 @@ public class Information extends BaseDomain{
     @Override
     public void setId(Long id) {this.id = id; }
 
-    public Long getCreateDate() {return createDate; }
+    public Long getCreateDate() {return createDate;}
 
     public void setCreateDate(Long createDate) {this.createDate = createDate;}
 

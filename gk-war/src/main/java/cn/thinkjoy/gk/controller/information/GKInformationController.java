@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,8 +45,8 @@ public class GKInformationController extends BaseController{
         }
         List<Information> information = informationService.getAllInformation(Integer.valueOf(pn) * Integer.valueOf(ps), Integer.valueOf(ps));
         return information;
-    }
 
+    }
     /**
      *
      * 根据关键字查询热点信息
@@ -54,6 +55,7 @@ public class GKInformationController extends BaseController{
     @RequestMapping(value = "getInformationByKey",method = RequestMethod.GET)
     @ResponseBody
     public List<Information> getInformationByKey(HttpServletRequest request){
+        String key = request.getParameter("key");                  //获取关键字
         String pn = request.getParameter("pageNo"); //页码
         if (pn == null||pn.length() < 0) {
             pn = "0";   //如果没有设置页码，默认第一页
@@ -62,7 +64,6 @@ public class GKInformationController extends BaseController{
         if (ps == null||ps.length() < 0){
             ps="4";  //如果没有设定，默认显示4条数据
         }
-        String key = request.getParameter("key");                                       //获取关键字
         List<Information> information = informationService.getInformationByKey(key, Integer.valueOf(pn)*Integer.valueOf(ps),Integer.valueOf(ps));
         return information;
     }
