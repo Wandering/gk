@@ -578,7 +578,8 @@ a.next-btn:hover {
   .page-body.hot-news-head section {
     padding: 20px 0; }
   .page-body.hot-news-body {
-    background-color: #f9f9f9; }
+    background-color: #f9f9f9;
+    padding-bottom: 40px; }
     .page-body.hot-news-body:before {
       content: '';
       width: 0;
@@ -742,7 +743,7 @@ a.next-btn:hover {
   padding-bottom: 40px; }
   .hot-list li {
     float: left;
-    width: 44%;
+    width: 50%;
     height: 48px;
     margin: 15px 0; }
     .hot-list li.ml {
