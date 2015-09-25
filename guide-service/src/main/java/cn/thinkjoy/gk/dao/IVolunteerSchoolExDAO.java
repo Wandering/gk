@@ -19,4 +19,6 @@ public interface IVolunteerSchoolExDAO {
     List<VolunteerSchool> queryPage(@Param("condition") Map<String, Object> condition,
                                     @Param("offset") int offset, @Param("rows") int rows,
                                     @Param("orderBy") String orderBy, @Param("sortBy") String sortBy);
+    /** 增加点击量 */
+    void addHits(@Param("id") long id, @Param("hits") int hits);
 }
