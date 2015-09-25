@@ -15,17 +15,16 @@ import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath*:springme.xml")
-public class PolicyInterpretationDaoTest {
+public class PolicyInterpretationServiceTest {
 
     @Autowired
-    private IAdmissionBatchDAO admissionBatchDAO;
+    private IAdmissionBatchService admissionBatchService;
 
     @Test
     public void findTest(){
         Map<String, Object> conditions = Maps.newHashMap();
         conditions.put("status", 1);
-//        List<AdmissionBatch> admissionBatchList = admissionBatchDAO.queryList(conditions, null, null);
-        List<AdmissionBatch> admissionBatchList = admissionBatchDAO.findAll();
+        List<AdmissionBatch> admissionBatchList = admissionBatchService.queryList(conditions, null, null);
 
         System.out.println(admissionBatchList);
     }

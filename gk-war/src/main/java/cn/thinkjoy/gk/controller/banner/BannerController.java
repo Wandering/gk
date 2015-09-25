@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 /**
@@ -32,13 +33,13 @@ public class BannerController extends BaseController{
      */
     @RequestMapping(value = "getUrlByType",method = RequestMethod.GET)
     @ResponseBody
-    public Banner getUrlByType(HttpServletRequest request){
+    public List<Banner> getUrlByType(HttpServletRequest request){
         String type = request.getParameter("type");
         Integer ty = 0;
         if(StringUtils.isNotBlank(type)){
             ty = Integer.parseInt(type);
         }
-        Banner linkUrl = bannerService.getBannerByType(ty);
+        List<Banner> linkUrl = bannerService.getBannerByType(ty);
         return linkUrl;
     }
 
