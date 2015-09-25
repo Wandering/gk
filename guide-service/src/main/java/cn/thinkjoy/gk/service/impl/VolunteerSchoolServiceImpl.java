@@ -52,6 +52,11 @@ public class VolunteerSchoolServiceImpl extends AbstractPageService<IBaseDAO<Vol
         return bizData4Page;
     }
 
+    @Override
+    public void addHits(long id, int hits) {
+        volunteerSchoolExDAO.addHits(id, hits);
+    }
+
 
 //    @Override
 //    public void insert(BaseDomain entity) {
