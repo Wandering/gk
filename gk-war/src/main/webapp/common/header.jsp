@@ -23,8 +23,12 @@
         <img src="/static/dist/common/images/avatar.png" alt="avatar" class="user-avatar"/>
         <a href="">韩小寒</a>
       </div>
-      <ul class="menu hide">
+      <ul class="menu ">
         <li><a href="/user/personal-info.jsp">个人信息</a></li>
+        <li><a href="/user/modify-psd.jsp">VIP服务</a></li>
+        <li><a href="/user/app-center.jsp">应用中心</a></li>
+        <li><a href="/user/online-answer.jsp">在线答疑</a></li>
+        <li><a href="/expert-service.jsp">专家服务</a></li>
         <li><a href="/user/modify-psd.jsp">修改密码</a></li>
         <li><a href="/login/logout.do">退出</a></li>
       </ul>

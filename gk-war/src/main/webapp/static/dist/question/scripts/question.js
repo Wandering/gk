@@ -73,10 +73,11 @@ define(function (require) {
     }
 
     $(document).ready(function() {
+        Question.getNew(0, 10);
         $('.tabs-list li').on('mouseover', function(e) {
             if (!$(this).hasClass('active')) {
                 $(this).addClass('active').siblings().removeClass('active');
-                Question[$(this).attr('data-method')]();
+                Question[$(this).attr('data-method')](0, 10);
             }
         });
     });
