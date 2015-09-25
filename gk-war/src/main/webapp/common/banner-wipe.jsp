@@ -9,9 +9,10 @@
 <div class="wipe">
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide"><img src="/static/dist/before/images/banner1.jpg" alt=""/></div>
-      <div class="swiper-slide"><img src="/static/dist/before/images/banner1.jpg" alt=""/></div>
-      <div class="swiper-slide"><img src="/static/dist/before/images/banner1.jpg" alt=""/></div>
+      <div class="swiper-slide slide-1"><img src="/static/dist/before/images/banner1.jpg" alt=""/></div>
+      <div class="swiper-slide slide-2"><img src="/static/dist/before/images/banner1.jpg" alt=""/></div>
+      <div class="swiper-slide slide-3"><img src="/static/dist/before/images/banner1.jpg" alt=""/></div>
+      <div class="swiper-slide slide-3"><img src="/static/dist/before/images/banner1.jpg" alt="" class="banner-toggle"/></div>
     </div>
     <div class="swiper-pagination"></div>
     <div class="swiper-button-prev"></div>

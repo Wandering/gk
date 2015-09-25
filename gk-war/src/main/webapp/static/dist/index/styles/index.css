@@ -770,11 +770,40 @@ a.next-btn:hover {
         position: relative;
         top: 28px; }
 
-.tabs-list li.more {
+.tel-content-box {
+  margin-top: 30px;
+  height: 255px;
+  border: 1px solid #e5e5e5;
+  border-right: none;
+  border-bottom: none; }
+  .tel-content-box .row .col-3 {
+    height: 85px;
+    border-right: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    padding-left: 50px;
+    box-sizing: border-box;
+    width: 33.333333%;
+    float: left;
+    font-size: 14px;
+    margin: 0 auto; }
+    .tel-content-box .row .col-3 .area-name {
+      color: #353535;
+      margin-top: 20px; }
+    .tel-content-box .row .col-3 .tel-num {
+      color: #a6a5a5; }
+      .tel-content-box .row .col-3 .tel-num .tel {
+        margin-left: 5px;
+        margin-right: 30px; }
+
+.tabs-list li {
+  cursor: pointer; }
+
+.tabs-list span.more {
   float: right;
   color: #999;
   font-size: 12px;
-  cursor: pointer; }
+  cursor: pointer;
+  line-height: 48px; }
 
 /*高考日程*/
 .calendar {
