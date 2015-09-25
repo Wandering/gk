@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface IInformationService {
     public List<Information> getAllInformation(Integer offset,Integer rows);
-    public List<Information> getInformationByKey(String key);
+    public List<Information> getInformationByKey(String key,Integer offset,Integer rows);
 }
