@@ -8,6 +8,8 @@ define(function (require) {
 
     var Tab = require('/static/src/guide/scripts/tab');
 
+    var timer = null;
+
     function getTab() {
         $.get('/policyInterpretation/allCategories.do?provinceId=1', function(data) {
             if ('0000000' === data.rtnCode) {
@@ -15,7 +17,10 @@ define(function (require) {
                     data:data.bizData,
                     contentId:'tab_title_content',
                     getArticleHandle:function(id) {
-                        getArticle(id);
+                        clearTimeout(timer);
+                        timer = setTimeout(function() {
+                            getArticle(id);
+                        }, 300)
                     }
                 });
             }

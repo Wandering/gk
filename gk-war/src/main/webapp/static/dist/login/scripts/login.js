@@ -52,14 +52,19 @@ define(function (require) {
                 Dom.errorTip1.text('');
             }
             $.ajax({
-                url: '',
+                url: '/login/login.do',
                 type: 'post',
                 dataType: 'json',
-                data: {},
+                data: {
+                   account:tel,  //18717817817
+                   password:pwd  //123123
+                },
                 success: function (res) {
                     console.log(res);
                     if (res.rtnCode == '0000000') {
-                        //window.location.href
+                        window.location.assign('http://'+window.location.host+'/index.jsp');
+                    }else{
+                        Dom.errorTip1.text(res.bizData);
                     }
                 }
             })
