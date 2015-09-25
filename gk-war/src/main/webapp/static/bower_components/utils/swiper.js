@@ -1,5 +1,4 @@
 define(function (require) {
-
     var $ = require('$');
     require('swiper-jquery');
     //幻灯片
@@ -10,29 +9,24 @@ define(function (require) {
         prevButton: '.swiper-button-prev',
         loop: true
     });
-
-    //$.ajax({
-    //    url: '/banner/getUrlByType.do',
-    //    type: 'get',
-    //    dataType: 'json',
-    //    data: {
-    //        type:1
-    //    },
-    //    success: function (res) {
-    //        console.log(res);
-    //        if (res.rtnCode == '0000000') {
-    //            //window.location.href
-    //        }
-    //    }
-    //});
-
-    $.getJSON('/banner/getUrlByType.do',{
-        type:1
-    },function(res){
-        console.log(res);
-    })
-
-
+    $.ajax({
+        url: '/banner/getUrlByType.do',
+        type: 'get',
+        dataType: 'json',
+        data: {
+            type: 1
+        },
+        success: function (res) {
+            console.log(res);
+            if (res.rtnCode == '0000000') {
+                var dataJson = res.bizData;
+                $.each(dataJson, function (i, v) {
+                    console.log(v.imageUrl)
+                    //$('.banner-toggle').attr('src',v);
+                })
+            }
+        }
+    });
 
 
 });
