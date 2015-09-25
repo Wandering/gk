@@ -192,8 +192,8 @@ KindEditor.plugin('image', function(K) {
 			width: 60,
 			afterUpload : function(data) {
 				dialog.hideLoading();
-				if (data.error === 0) {
-					var url = data.url;
+				if (data.msg == 0 || data.state == 0) {
+					var url = data.url+"!400";
 					if (formatUploadUrl) {
 						url = K.formatUrl(url, 'absolute');
 					}
@@ -201,14 +201,14 @@ KindEditor.plugin('image', function(K) {
 						self.afterUpload.call(self, url, data, name);
 					}
 					if (!fillDescAfterUploadImage) {
-						clickFn.call(self, url, data.title, data.width, data.height, data.border, data.align);
+						clickFn.call(self, url, data.title, "", "", data.border, data.align);
 					} else {
 						K(".ke-dialog-row #remoteUrl", div).val(url);
 						K(".ke-tabs-li", div)[0].click();
 						K(".ke-refresh-btn", div).click();
 					}
 				} else {
-					alert(data.message);
+					alert("上传图片失败");
 				}
 			},
 			afterError : function(html) {

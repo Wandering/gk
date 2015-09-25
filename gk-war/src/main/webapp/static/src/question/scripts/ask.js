@@ -51,4 +51,30 @@ define(function (require) {
         });
     });
 
+    function submitQuestion() {
+        var title = $('#title').val();
+        var content = $('#content').val();
+        if (!title) {
+            $('#error').show().html('标题不能为空！');
+            setTimeout(function() {
+                $('#error').hide();
+            }, 2000)
+            return;
+        }
+
+        if (!content) {
+            $('#error').show().html('内容不能为空！');
+            setTimeout(function() {
+                $('#error').hide();
+            }, 2000)
+            return;
+        }
+    }
+
+    $(document).ready(function() {
+        $('#submit_question').on('click', function(e) {
+            submitQuestion();
+        });
+    })
+
 });

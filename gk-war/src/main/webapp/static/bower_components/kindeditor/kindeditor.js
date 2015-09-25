@@ -4147,7 +4147,6 @@ _extend(KUploadButton, {
 			cls = button[0].className || '',
 			target = options.target || 'kindeditor_upload_iframe_' + new Date().getTime();
 		options.afterError = options.afterError || function(str) {
-			//alert('-----' + str);
 		};
 		var hiddenElements = [];
 		for(var k in extraParams){
@@ -5667,7 +5666,6 @@ _plugin('core', function(K) {
 			try {
 				self.exec(name, null);
 			} catch(e) {
-				alert(self.lang(name + 'Error'));
 			}
 		});
 	});

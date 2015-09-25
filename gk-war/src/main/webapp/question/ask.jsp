@@ -17,7 +17,7 @@
         <section class="section-article">
             <div class="search-content ta">
                  <span>
-                     <input type="text" placeholder="请输入专业名称进行搜索"/>
+                     <input type="text" placeholder=""/>
                      <input type="button" value="搜索"/>
                      <button>我要提问</button>
                 </span>
@@ -26,11 +26,12 @@
 
         <h1 class="search-result-num">提问</h1>
         <div class="ask-title">
-            <input type="text" placeholder="请填写标题">
+            <p style="display: none;color: #f00;margin: 20px 0" id="error"></p>
+            <input type="text" placeholder="请填写标题" id="title">
             <div class="mt20">
-                <textarea name="content"></textarea>
+                <textarea name="content" id="content"></textarea>
             </div>
-            <button>提交</button>
+            <button id="submit_question">提交</button>
         </div>
     </div>
 </div>
