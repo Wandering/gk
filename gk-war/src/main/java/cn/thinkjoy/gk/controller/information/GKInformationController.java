@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 
@@ -54,8 +55,9 @@ public class GKInformationController extends BaseController{
      */
     @RequestMapping(value = "getInformationByKey",method = RequestMethod.GET)
     @ResponseBody
-    public List<Information> getInformationByKey(HttpServletRequest request){
+    public List<Information> getInformationByKey(HttpServletRequest request) throws UnsupportedEncodingException {
         String key = request.getParameter("key");                  //获取关键字
+        String keyString = new String(key.getBytes("ISO-8859-1"),"UTF-8");
         String pn = request.getParameter("pageNo"); //页码
         if (pn == null||pn.length() < 0) {
             pn = "0";   //如果没有设置页码，默认第一页
@@ -64,7 +66,7 @@ public class GKInformationController extends BaseController{
         if (ps == null||ps.length() < 0){
             ps="4";  //如果没有设定，默认显示4条数据
         }
-        List<Information> information = informationService.getInformationByKey(key, Integer.valueOf(pn)*Integer.valueOf(ps),Integer.valueOf(ps));
+        List<Information> information = informationService.getInformationByKey(keyString, Integer.valueOf(pn)*Integer.valueOf(ps),Integer.valueOf(ps));
         return information;
     }
 
