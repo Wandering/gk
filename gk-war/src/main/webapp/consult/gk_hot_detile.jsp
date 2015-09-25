@@ -25,13 +25,7 @@
             <section class="section-article" id="section_article">
             </section>
 
-            <section class="ask-list">
-                <h3>高考热点</h3>
-                <ul>
-                    <li>综合评价生是统招生吗？</li>
-                    <li>综合评价生是统招生吗？</li>
-                    <li>综合评价生是统招生吗？</li>
-                </ul>
+            <section class="ask-list" id="ask_list">
             </section>
         </div>
     </div>
