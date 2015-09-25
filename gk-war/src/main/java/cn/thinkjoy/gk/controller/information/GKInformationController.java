@@ -33,10 +33,16 @@ public class GKInformationController extends BaseController{
      */
     @RequestMapping(value = "getAllInformation",method = RequestMethod.GET)
     @ResponseBody
-    public List<Information> getAllInformation(){
-        String pageNo = HttpUtil.getParameter(request, "pageNo", "0");                 //页数
-        String pageSize = HttpUtil.getParameter(request, "pageSize", "4");            //每页显示4条信息
-        List<Information> information = informationService.getAllInformation( Integer.valueOf(pageNo)*Integer.valueOf(pageSize),Integer.valueOf(pageSize));
+    public List<Information> getAllInformation(HttpServletRequest request,String pageNo,String pageSize){
+        String pn = request.getParameter("pageNo"); //页码
+        if (pn == null||pn.length() < 0) {
+            pn = "0";   //如果没有设置页码，默认第一页
+        }
+        String ps = request.getParameter("pageSize");            //每页显示几条信息
+        if (ps == null||ps.length() < 0){
+            ps="4";  //如果没有设定，默认显示4条数据
+        }
+        List<Information> information = informationService.getAllInformation(Integer.valueOf(pn) * Integer.valueOf(ps), Integer.valueOf(ps));
         return information;
     }
 
@@ -47,9 +53,17 @@ public class GKInformationController extends BaseController{
      */
     @RequestMapping(value = "getInformationByKey",method = RequestMethod.GET)
     @ResponseBody
-    public List<Information> getInformationByKey(HttpServletRequest request){
-        String key = request.getParameter("key");
-        List<Information> information = informationService.getInformationByKey(key);
+    public List<Information> getInformationByKey(){
+        String pn = request.getParameter("pageNo"); //页码
+        if (pn == null||pn.length() < 0) {
+            pn = "0";   //如果没有设置页码，默认第一页
+        }
+        String ps = request.getParameter("pageSize");            //每页显示几条信息
+        if (ps == null||ps.length() < 0){
+            ps="4";  //如果没有设定，默认显示4条数据
+        }
+        String key = request.getParameter("key");                                       //获取关键字
+        List<Information> information = informationService.getInformationByKey(key, Integer.valueOf(pn)*Integer.valueOf(ps),Integer.valueOf(ps));
         return information;
     }
 
