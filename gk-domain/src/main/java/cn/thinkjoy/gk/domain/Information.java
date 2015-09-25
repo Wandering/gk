@@ -7,6 +7,8 @@ import cn.thinkjoy.common.domain.BaseDomain;
  */
 public class Information extends BaseDomain{
     private Long id;
+    /* 创建时间*/
+    private Long createDate;
     /*高考热点标题*/
     private String hotInformation;
     /*高考热点标题内容*/
@@ -16,6 +18,10 @@ public class Information extends BaseDomain{
     public Long getId() {return id;}
     @Override
     public void setId(Long id) {this.id = id; }
+
+    public Long getCreateDate() {return createDate; }
+
+    public void setCreateDate(Long createDate) {this.createDate = createDate;}
 
     public String getHotInformation() {
         return hotInformation;

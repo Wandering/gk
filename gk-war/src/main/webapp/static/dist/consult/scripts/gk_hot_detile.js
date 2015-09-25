@@ -2,10 +2,6 @@
  * Created by kepeng on 15/9/24.
  */
 
-/**
- * Created by kepeng on 15/9/24.
- */
-
 define(function (require) {
     var $ = require('$');
     require('swiper');
