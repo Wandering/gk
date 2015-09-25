@@ -13,5 +13,6 @@ import cn.thinkjoy.common.service.IPageService;
 
 public interface IVolunteerSchoolService<D extends IBaseDAO<T>, T extends BaseDomain> extends IBaseService<D, T>,IPageService<D, T>{
 
-
+    /** 增加点击量 */
+    void addHits(long id, int hits);
 }

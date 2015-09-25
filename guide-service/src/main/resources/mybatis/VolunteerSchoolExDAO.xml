@@ -14,7 +14,8 @@
         creator,
         createDate,
         lastModifier,
-        lastModDate
+        lastModDate,
+        hits
     </sql>
 
     <select id="queryPage" resultType="VolunteerSchool">
@@ -28,7 +29,8 @@
         creator,
         createDate,
         lastModifier,
-        lastModDate
+        lastModDate,
+        hits
         FROM gk_volunteer_school
         <where>
 
@@ -69,6 +71,9 @@
             <if test="condition.lastModDate!=null">
                 ${condition.groupOp}   lastModDate  ${condition.lastModDate.op}  #{condition.lastModDate.data}
             </if>
+            <if test="condition.hits!=null">
+                ${condition.groupOp}   hits  ${condition.hits.op}  #{condition.hits.data}
+            </if>
             <if test="condition.keyword!=null">
                 ${condition.groupOp}  ( title like CONCAT('%', #{condition.keyword} , '%')
                     OR summary LIKE CONCAT('%', #{condition.keyword} , '%')
@@ -85,6 +90,9 @@
         </if>
     </select>
 
+    <update id="addHits">
+        UPDATE gk_volunteer_school SET hits=hits+#{hits} WHERE id=#{id}
+    </update>
 
 </mapper>
 

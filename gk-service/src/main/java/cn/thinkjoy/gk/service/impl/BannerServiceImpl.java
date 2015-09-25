@@ -6,6 +6,8 @@ import cn.thinkjoy.gk.service.IBannerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by ZL on 2015/9/23.
  */
@@ -15,8 +17,8 @@ public class BannerServiceImpl implements IBannerService {
     private IBannerDAO bannerDAO;
 
     @Override
-    public Banner getBannerByType(Integer type) {
-        Banner linkUrl = bannerDAO.getBannerByType(type);
+    public List<Banner> getBannerByType(Integer type) {
+        List<Banner> linkUrl = bannerDAO.getBannerByType(type);
         return linkUrl;
     }
 }
