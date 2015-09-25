@@ -57,7 +57,7 @@ define(function (require) {
         },
         getSearch: function(pageNO, keyWords) {
             var that = this;
-            $.get('/gkinformation/getInformationByKey.do?pageNO=' + pageNO + '&keyWords=' + keyWords, function(data) {
+            $.get('/gkinformation/getInformationByKey.do?pageNO=' + pageNO + '&key=' + keyWords, function(data) {
                 if ('0000000' === data.rtnCode)  {
                     if (data.bizData.length <= 0 && pageNO == 1) {
                         that.nextBtn.hide();
