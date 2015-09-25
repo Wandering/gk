@@ -101,7 +101,9 @@ public class VolunteerSchoolController extends BaseController {
 
     @RequestMapping(value = "/ranks", method = RequestMethod.GET)
     @ResponseBody
-    public List<VolunteerSchool> articleRanks(@RequestParam("cateId") long cateId) {
+    public List<VolunteerSchool> articleRanks(HttpServletRequest request) {
+        long cateId = ServletRequestUtils.getLongParameter(request, "cateId", 0);
+        int ps = ServletRequestUtils.getIntParameter(request, "ps", 3);
         Map<String, Object> conditions = Maps.newHashMap();
         SearchField category = new SearchField();
         category.setField("categoryId");
@@ -117,7 +119,7 @@ public class VolunteerSchoolController extends BaseController {
 
         conditions.put("groupOp", "and");
 
-        BizData4Page<VolunteerSchool> page = volunteerSchoolService.queryPageByDataPerm("", conditions, 1, 0, 3, "hits", "desc");
+        BizData4Page<VolunteerSchool> page = volunteerSchoolService.queryPageByDataPerm("", conditions, 1, 0, ps, "hits", "desc");
 
         return page.getRows();
     }
