@@ -33,7 +33,7 @@ public class GKInformationController extends BaseController{
      */
     @RequestMapping(value = "getAllInformation",method = RequestMethod.GET)
     @ResponseBody
-    public List<Information> getAllInformation(HttpServletRequest request,String pageNo,String pageSize){
+    public List<Information> getAllInformation(HttpServletRequest request){
         String pn = request.getParameter("pageNo"); //页码
         if (pn == null||pn.length() < 0) {
             pn = "0";   //如果没有设置页码，默认第一页
@@ -53,7 +53,7 @@ public class GKInformationController extends BaseController{
      */
     @RequestMapping(value = "getInformationByKey",method = RequestMethod.GET)
     @ResponseBody
-    public List<Information> getInformationByKey(){
+    public List<Information> getInformationByKey(HttpServletRequest request){
         String pn = request.getParameter("pageNo"); //页码
         if (pn == null||pn.length() < 0) {
             pn = "0";   //如果没有设置页码，默认第一页
