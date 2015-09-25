@@ -6,7 +6,9 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <title>登陆</title>
+    <%@include file="/common/meta.jsp"%>
     <link rel="stylesheet" href="/static/dist/login/styles/login.min.css"/>
+
 </head>
 <body>
 
@@ -18,33 +20,33 @@
 
         <div class="login-box">
             <div class="login-title">
-                <span class="active">登录</span>
-                <span>注册</span>
+                <span class="active tab-login">登录</span>
+                <span class="tab-register">注册</span>
             </div>
             <!--登陆-->
-            <div class="login-input ">
-                <span class="error-tips hide"></span>
+            <div class="login-input">
+                <span class="error-tip1"></span>
                 <i class="icon-user-account"></i>
-                <input type="text" class="input-comm" placeholder="账号"/>
-                <span class="error-tips hide"></span>
+                <input type="text" class="input-comm login-account" placeholder="账号"/>
+                <div style="height: 25px;"></div>
                 <i class="icon-user-psd"></i>
-                <input type="password" class="input-comm" placeholder="密码"/>
-                <a href="/forget-psd.html" class="forget-psd">忘记密码？</a>
+                <input type="password" class="input-comm login-password" placeholder="密码"/>
+                <a href="/login/forget-psd.jsp" class="forget-psd">忘记密码？</a>
                 <div class="btn-login">登陆</div>
             </div>
             <!--注册-->
             <div class="register-input hide">
-                <span class="error-tips hide"></span>
+                <span class="error-tip2 "></span>
                 <i class="icon-user-account"></i>
-                <input type="tel" class="input-comm" placeholder="手机号"/>
+                <input type="tel" class="input-comm tel-number" placeholder="手机号"/>
                 <i class="icon-user-code"></i>
-                <input type="text" class="input-comm pdr100" placeholder="验证码"/>
+                <input type="text" class="input-comm pdr100 captcha-code" placeholder="验证码"/>
                 <span class="code-text">获取验证码</span>
                 <i class="icon-user-psd"></i>
-                <input type="password" class="input-comm" placeholder="密码"/>
+                <input type="password" class="input-comm reg-password" placeholder="密码"/>
                 <i class="icon-conform-psd"></i>
-                <input type="password" class="input-comm" placeholder="确认密码"/>
-                <div class="btn-login">登陆</div>
+                <input type="password" class="input-comm reg-password-confirm" placeholder="确认密码"/>
+                <div class="btn-login-register">注册</div>
             </div>
         </div>
     </div>
@@ -53,7 +55,8 @@
     <p class="copy">Copyright © 2015.Thinkjoy All rights reserved</p>
     <img src="/static/dist/common/images/login-logo.png" alt="logo360" class="bottom-logo"/>
 </div>
-
-
+<script>
+    seajs.use("${ctx}/static/src/login/scripts/login");
+</script>
 </body>
 </html>

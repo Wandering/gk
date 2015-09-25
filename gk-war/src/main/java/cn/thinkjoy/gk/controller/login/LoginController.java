@@ -50,9 +50,9 @@ public class LoginController extends BaseController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public String login(@RequestParam(value="account",required=false) String account,
+	public long login(@RequestParam(value="account",required=false) String account,
 						@RequestParam(value="password",required=false) String password) throws Exception {
-
+		long id = 0l;
 		try {
 			if (StringUtils.isEmpty(account)) {
 				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
@@ -78,9 +78,9 @@ public class LoginController extends BaseController {
 
 			}
 
-			long id = userAccountBean.getId();
+			id = userAccountBean.getId();
 
-			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
+			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE,"/"));
 
 			setUserAccountPojo(userAccountBean);
 
@@ -89,7 +89,7 @@ public class LoginController extends BaseController {
 		}finally{
 
 		}
-		return "success";
+		return id;
 	}
 
 	/**
@@ -101,12 +101,12 @@ public class LoginController extends BaseController {
 //		boolean status = true;
 		try {
 			RedisUtil.getInstance().del(UserRedisConst.USER_KEY + getCookieValue());
-			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, null, CookieTimeConst.CLEAN_COOKIE));
+			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, null, CookieTimeConst.CLEAN_COOKIE,"/"));
 		}catch(Exception e){
 //			status = false;
 			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
 		}
-		return ControllerReturnConst.REDIRECT+"/index.do";
+		return "/index";
 	}
 
 }

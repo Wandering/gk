@@ -533,7 +533,6 @@ a.next-btn:hover {
 
 .personal-tab {
   position: relative;
-  border-bottom: 2px solid #e5e5e5 !important;
   margin-top: 20px;
   top: 1px; }
   .personal-tab .active a {

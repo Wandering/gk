@@ -71,19 +71,19 @@
             <p class="txt">名师精品课程，全面剖析高考知识点以及提分技巧。</p>
         </li>
         <li class="item">
-            <img src="/static/dist/before/images/flow-img1.png" alt=""/>
+            <img src="/static/dist/before/images/flow-img2.png" alt=""/>
             <a href="" class="name">真题密卷</a>
             <span class="num">2</span>
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
         <li class="item">
-            <img src="/static/dist/before/images/flow-img1.png" alt=""/>
+            <img src="/static/dist/before/images/flow-img3.png" alt=""/>
             <a href="" class="name">高考心理</a>
             <span class="num">3</span>
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
         <li class="item">
-            <img src="/static/dist/before/images/flow-img1.png" alt=""/>
+            <img src="/static/dist/before/images/flow-img4.png" alt=""/>
             <a href="" class="name">院校推荐</a>
             <span class="num">4</span>
             <p class="txt">根据分数快速定位院校及推荐院校</p>

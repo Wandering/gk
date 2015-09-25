@@ -534,6 +534,42 @@ a.next-btn:hover {
 .content-title {
   margin-top: 20px; }
 
+.flow-main-list {
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+  margin-top: 40px; }
+  .flow-main-list li.item {
+    width: 200px;
+    float: left;
+    text-align: center; }
+    .flow-main-list li.item img,
+    .flow-main-list li.item a.name,
+    .flow-main-list li.item span.num,
+    .flow-main-list li.item p.txt {
+      margin: 0 auto;
+      display: block; }
+    .flow-main-list li.item p.txt {
+      color: #878787;
+      font-size: 12px;
+      text-align: left;
+      line-height: 24px;
+      width: 160px;
+      margin: 16px auto; }
+    .flow-main-list li.item a.name {
+      font-size: 16px;
+      margin: 20px 0;
+      display: block; }
+    .flow-main-list li.item span.num {
+      display: block;
+      background: #ccc;
+      width: 30px;
+      height: 30px;
+      border-radius: 20px;
+      line-height: 30px;
+      font-weight: bold;
+      color: #fff; }
+
 .page-body {
   width: 100%; }
   .page-body.about-platform {

@@ -5,7 +5,47 @@
 .content-title{
   margin-top: 20px;
 }
-
+.flow-main-list{
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+  margin-top: 40px;
+  li.item{
+    width: 200px;
+    float: left;
+    text-align: center;
+    img,
+    a.name,
+    span.num,
+    p.txt{
+      margin: 0 auto;
+      display: block;
+    }
+    p.txt{
+      color: #878787;
+      font-size: 12px;
+      text-align: left;
+      line-height: 24px;
+      width: 160px;
+      margin: 16px auto;
+    }
+    a.name{
+      font-size: 16px;
+      margin: 20px 0;
+      display: block;
+    }
+    span.num{
+      display: block;
+      background: #ccc;
+      width: 30px;
+      height: 30px;
+      border-radius: 20px;
+      line-height: 30px;
+      font-weight: bold;
+      color: #fff;
+    }
+  }
+}
 @mixin arrow-up-center {
   content: '';
   width:0;
@@ -100,7 +140,7 @@
           line-height: 1.8;
           margin: 0;
         }
-        
+
         .info {
           height: 115px;
           width: 100%;

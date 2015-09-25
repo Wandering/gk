@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <%@include file="/common/meta.jsp"%>
     <title>个人信息</title>
     <link rel="stylesheet" href="/static/dist/user/styles/personal-info.min.css"/>
 </head>
@@ -71,9 +72,11 @@
 
 <%@include file="/common/footer.jsp"%>
 
-<script src="/static/dist/user/scripts/jq-address.js"></script>
-<script type="text/javascript">
-    addressInit('cmbProvince', 'cmbCity', 'cmbArea', '陕西', '西安市', '高新区');
+<%--<script src="/static/dist/user/scripts/jq-address.js"></script>--%>
+
+
+<script>
+    seajs.use("${ctx}/static/src/login/scripts/personal-info");
 </script>
 </body>
 </html>

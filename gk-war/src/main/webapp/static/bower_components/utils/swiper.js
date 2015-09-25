@@ -1,4 +1,6 @@
 define(function (require) {
+
+    var $ = require('$');
     require('swiper-jquery');
     //幻灯片
     var swiper = new Swiper('.swiper-container', {
@@ -8,4 +10,29 @@ define(function (require) {
         prevButton: '.swiper-button-prev',
         loop: true
     });
+
+    //$.ajax({
+    //    url: '/banner/getUrlByType.do',
+    //    type: 'get',
+    //    dataType: 'json',
+    //    data: {
+    //        type:1
+    //    },
+    //    success: function (res) {
+    //        console.log(res);
+    //        if (res.rtnCode == '0000000') {
+    //            //window.location.href
+    //        }
+    //    }
+    //});
+
+    $.getJSON('/banner/getUrlByType.do',{
+        type:1
+    },function(res){
+        console.log(res);
+    })
+
+
+
+
 });
