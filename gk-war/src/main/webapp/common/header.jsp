@@ -16,7 +16,7 @@
       <li><a href="/guide/guide.jsp">高考政策</a></li>
       <li><a href="/consult/gk_hot.jsp">高考资讯</a></li>
       <li><a href="/before/before.jsp">考前备考</a></li>
-      <li><a href="/after/before.jsp">考后报考</a></li>
+      <li><a href="/after/after.jsp">考后报考</a></li>
     </ul>
     <div class="log-reg hide">
       <a href="/login/login.jsp">登陆/注册</a>
