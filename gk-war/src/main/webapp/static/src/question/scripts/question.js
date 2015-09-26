@@ -6,7 +6,15 @@ define(function (require) {
     var $ = require('$');
     require('swiper');
 
+    function getUrLinKey(name) {
+        var reg = new RegExp("(^|\\?|&)" + name + "=([^&]*)(\\s|&|$)", "i");
+        if (reg.test(window.location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
+        return "";
+    }
+
     var Question = {
+        startSize:0,
+        endSize:0,
         renderAsk: function(data) {
             var html = [];
             for (var i = 0, len = data.length; i < len; i++) {
@@ -53,7 +61,7 @@ define(function (require) {
             var text = [];
             for (var i = 0, len = answers.length; i < len; i++) {
                 text.push('<p>' + answers[i].text + '</p>');
-                text.push('<p><img src="' + answers[i].img + '" /></p>');
+                text.push('<p class="ta"><img src="' + answers[i].img + '" /></p>');
             }
             html.push('<div class="right">' + text.join('') + '</div>');
             html.push('</li></ul>');
@@ -73,17 +81,30 @@ define(function (require) {
                     that.renderAsk(data.bizData);
                 }
             });
+        },
+        getSearch: function() {
+            var that = this;
+            $.get('', function(data) {
+
+            })
         }
     }
 
     $(document).ready(function() {
-        Question.getNew(0, 10);
-        $('.tabs-list li').on('mouseover', function(e) {
-            if (!$(this).hasClass('active')) {
-                $(this).addClass('active').siblings().removeClass('active');
-                Question[$(this).attr('data-method')](0, 10);
-            }
-        });
+
+        var keywords = getUrLinKey('keywords');
+        if (keywords) {
+            $('#tabs_list').hide();
+        } else {
+            $('#tabs_list').show();
+            Question.getNew(0, 10);
+            $('.tabs-list li').on('mouseover', function(e) {
+                if (!$(this).hasClass('active')) {
+                    $(this).addClass('active').siblings().removeClass('active');
+                    Question[$(this).attr('data-method')](0, 10);
+                }
+            });
+        }
     });
 });
 
