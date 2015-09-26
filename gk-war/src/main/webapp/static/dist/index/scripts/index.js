@@ -29,30 +29,6 @@ define(function (require) {
         more.click(function () {
             window.location.assign(url + '/question/question.jsp')
         });
-        //$.ajax({
-        //    url:'/gkinformation/getInformationByKey.do',
-        //    dataType:'json',
-        //    type:'get',
-        //    data:{
-        //    },
-        //    success:function(res){
-        //        var dataJson =res.bizData;
-        //        console.log(res);
-        //        var template = '';
-        //        $.each(dataJson,function(i,v){
-        //            template += '<li>' +
-        //            '<div class="icon ta"> ' +
-        //            '<span>4月25日</span> ' +
-        //            '</div> ' +
-        //            '<div class="title-info"> ' +
-        //            '<h3>'+v.hotInformation+'</h3> ' +
-        //            '<h6>'+v.informationContent+'</h6> ' +
-        //            '</div> ' +
-        //            '</li>'
-        //        });
-        //        $('.hot-list').html(template);
-        //    }
-        //})
 
         //热门资讯
         $('#tabs-hosts').find('li').click(function () {
