@@ -39,6 +39,7 @@
             </ul>
 
             <div id="question_content"></div>
+            <div><a href="javascript:void(0)" class="next-btn">加载更多...</a></div>
         </section>
 
     </div>
