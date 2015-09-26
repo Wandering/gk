@@ -158,7 +158,7 @@ public class InfoController extends BaseController {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"密码重设失败");
             }
         }catch (Exception e){
-            e.printStackTrace();
+            throw e;
         }finally {
 
         }

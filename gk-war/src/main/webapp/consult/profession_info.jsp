@@ -26,7 +26,7 @@
         <div class="search-content ta mt60">
             <span>
                  <input type="text" placeholder="请输入专业名称进行搜索" id="search"/>
-                 <input type="button" value="搜索"/>
+                 <input type="button" value="搜索" id="search_button"/>
             </span>
         </div>
 
