@@ -118,9 +118,11 @@ define(function(require) {
                 success: function(data) {
                     if ('0000000' === data.rtnCode) {
                         var schoolList = data.bizData.schoolList;
-                        that.renderSchool(schoolList);
-                        if (pageNo == 1) {
-                            that.renderPage(1, data.bizData.schoolCount);
+                        if (schoolList && schoolList.length) {
+                            that.renderSchool(schoolList);
+                            if (pageNo == 1) {
+                                that.renderPage(1, data.bizData.schoolCount);
+                            }
                         }
                     }
                 },
