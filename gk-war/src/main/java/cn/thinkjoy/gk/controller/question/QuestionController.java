@@ -85,9 +85,9 @@ public class QuestionController extends BaseController {
 
         Integer freeStatus = 0;
 
-        if(userAccountBean.getVipStatus()!=null&&userAccountBean.getVipStatus()==1){
-            freeStatus = 1;
-        }
+//        if(userAccountBean.getVipStatus()!=null&&userAccountBean.getVipStatus()==1){
+//            freeStatus = 1;
+//        }
 
 //        if(userCredentials.getUserType()==1){
 //            LOGGER.info("当前用户:"+userId+"为教师");
