@@ -78,7 +78,7 @@ define(function (require) {
                 url: '/question/insert.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
-                    questions:content
+                    question:content
                     //expertId:questionId,
                     //questionId:questionId,
                     //disableExpertId:disableExpertId
@@ -87,7 +87,8 @@ define(function (require) {
                 success: function(data) {
                     flag = false;
                     if ('0000000' === data.rtnCode) {
-                        $('#content').val('');
+                        editor.html('');
+                        $('#custom_body').html('<p class="error-contnet">提交成功！</p>');
                         $('#custom_model').show(500);
                         $('#custom_model').off('click');
                         $('#custom_model').on('click', function(e) {

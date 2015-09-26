@@ -73,7 +73,14 @@ define(function(require) {
             var that = this;
             $.get('/question/newQuestion.do?startSize=' + startSize + '&endSize=' + endSize, function(data) {
                 if ('0000000' === data.rtnCode) {
-                    that.renderAsk(data.bizData);
+                    if (data.bizData.length > 0) {
+                        $('#more_loading').hide();
+                        that.renderAsk(data.bizData);
+                    } else {
+                        $('#more_loading').hide();
+                        $('#question_content').html('<p style="padding: 20px 0;text-align: center">暂无相关信息！</p>');
+                    }
+
                 }
             });
         },

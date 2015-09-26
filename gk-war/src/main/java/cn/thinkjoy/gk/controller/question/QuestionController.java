@@ -422,17 +422,15 @@ public class QuestionController extends BaseController {
 
         long currentTime = System.currentTimeMillis();
 
+        Integer freeStatus = null;
+//
+//        LOGGER.info("vip状态:"+vipStatus);
+//        if (vipStatus==1) {
+//            LOGGER.info("当前用户:"+userId+"为VIP");
+//            freeStatus = 1;
+//        }
 
-
-        Integer freeStatus = 0;
-
-        LOGGER.info("vip状态:"+vipStatus);
-        if (vipStatus==1) {
-            LOGGER.info("当前用户:"+userId+"为VIP");
-            freeStatus = 1;
-        }
-
-        String questionHtml = sendQuestionQuery.getQuestionHtml();
+        String questionHtml = sendQuestionQuery.getQuestion();
 
         Question expertQuestion = new Question();
 
@@ -459,6 +457,7 @@ public class QuestionController extends BaseController {
         expertQuestion.setIsAnswer(0);
         expertQuestion.setTags("其他");
         expertQuestion.setFreeStatus(freeStatus);
+        expertQuestion.setSourceType(7);
 
         int id = questionService.insert(expertQuestion);
 

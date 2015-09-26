@@ -3,17 +3,18 @@
  */
 define(function (require) {
     var $ = require('$');
+    //获取用户信息
     $.ajax({
-        url: '/register/account.do',
+        url: '/info/getUserInfo.do',
         dataType: 'json',
-        type: 'post',
-        data: {
-            account: '18710842703',
-            captcha: '543553',
-            password: '123123'
-        },
+        type: 'get',
+        data: {},
         success: function (res) {
-            console.log(res);
+            if(res.rtnCode == '0000000'){
+                var userData = res.bizData;
+                console.log(userData.name);
+                console.log(userData.icon);
+            }
         }
     })
 });

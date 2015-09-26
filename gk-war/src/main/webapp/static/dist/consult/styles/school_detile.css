@@ -588,23 +588,24 @@ h1 {
           width: 90%;
           margin: 20px 0 10px 20px; }
 
-.tabs-list li.fr {
-  float: right; }
-
-.tabs-list li button {
-  width: 64px;
-  height: 30px;
-  text-align: center;
-  line-height: 30px;
-  color: #fff;
-  background-color: #d9534f;
-  margin: 0;
-  padding: 0;
-  border: none;
-  outline: none;
-  border-radius: 5px; }
-  .tabs-list li button.active {
-    background-color: #f0ad4e; }
+#category {
+  text-align: right;
+  margin-top: 10px; }
+  #category button {
+    width: 64px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    color: #fff;
+    background-color: #d9534f;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    margin-right: 10px; }
+    #category button.active {
+      background-color: #f0ad4e; }
 
 .school-table {
   margin-bottom: 20px; }

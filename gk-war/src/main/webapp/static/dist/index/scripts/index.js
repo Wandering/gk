@@ -1,7 +1,7 @@
 define(function (require) {
     var $ = require('$');
     require('swiper');
-    var atime = require('data_times');
+    require('header-user');
     //幻灯片
     var swiper = new Swiper('.swiper-container', {
         pagination: '.swiper-pagination',
