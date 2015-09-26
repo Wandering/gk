@@ -47,6 +47,16 @@ public class InfoController extends BaseController {
     }
 
     /**
+     * 查询账号信息
+     * @return
+     */
+    @RequestMapping(value = "getUserAccount",method = RequestMethod.GET)
+    @ResponseBody
+    public UserAccountPojo getUserAccount() {
+        return getUserAccountPojo();
+    }
+
+    /**
      * 更改个人信息
      * TODO 头像未处理
      * @return
@@ -63,8 +73,8 @@ public class InfoController extends BaseController {
                                  @RequestParam(value="qq",required = true) String qq
                                  ){
         try {
-            UserAccountPojo userAccountPojo=getUserAccountPojo();
-            UserInfo userInfo=userInfoExService.findUserInfoById(userAccountPojo.getId());
+            String id=getCookieValue();
+            UserInfo userInfo=userInfoExService.findUserInfoById(Long.valueOf(id));
             userInfo.setName(name);
             userInfo.setCountyId(countyId);
             userInfo.setSchoolName(schoolName);

@@ -51,15 +51,15 @@ define(function (require) {
     });
 
     function submitQuestion() {
-        var title = $('#title').val();
+        //var title = $('#title').val();
         var content = $('#content').val();
-        if (!title) {
-            $('#error').show().html('标题不能为空！');
-            setTimeout(function() {
-                $('#error').hide();
-            }, 2000)
-            return;
-        }
+        //if (!title) {
+        //    $('#error').show().html('标题不能为空！');
+        //    setTimeout(function() {
+        //        $('#error').hide();
+        //    }, 2000)
+        //    return;
+        //}
 
         if (!content) {
             $('#error').show().html('内容不能为空！');
@@ -69,10 +69,7 @@ define(function (require) {
             return;
         }
 
-        var questions = [{
-            text:title,
-            img:content
-        }];
+        console.log(content);
         var flag = false;
         if (!flag) {
             flag = true
@@ -81,16 +78,27 @@ define(function (require) {
                 url: '/question/insert.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
-                    questions:questions,
-                    expertId:questionId,
-                    questionId:questionId,
-                    disableExpertId:disableExpertId
+                    questions:content
+                    //expertId:questionId,
+                    //questionId:questionId,
+                    //disableExpertId:disableExpertId
                 },
                 dataType: 'json',
                 success: function(data) {
                     flag = false;
                     if ('0000000' === data.rtnCode) {
+                        $('#content').val('');
+                        $('#custom_model').show(500);
+                        $('#custom_model').off('click');
+                        $('#custom_model').on('click', function(e) {
+                            e.stopPropagation();
+                        });
+                        $('#model_button').off('click');
+                        $('#model_button').on('click', function(e) {
+                            $('#custom_model').hide(500);
+                        });
                     } else {
+                        $('#error').show().html(data.msg);
                     }
                 },
                 error: function(data) {
