@@ -1,5 +1,7 @@
 // 转化时间戳
+define(function (require, exports, module) {
     Date.prototype.Format = function (fmt) { //author: meizz
+        console.log(fmt);
         var o = {
             "M+": this.getMonth() + 1, //月份
             "d+": this.getDate(), //日
@@ -17,6 +19,11 @@
         return fmt;
     };
     function getTime(timestamp, str) {
+        console.log(timestamp);
+        console.log(new Date(timestamp));
         return new Date(timestamp).Format(str || 'yyyy-MM-dd');  //yyyy-MM-dd
     }
-
+    module.exports = function(timestamp, str) {
+        getTime(timestamp, str);
+    };
+});

@@ -1,6 +1,7 @@
 define(function (require) {
     var $ = require('$');
     require('swiper');
+    require('header-user');
     //幻灯片
     var swiper = new Swiper('.swiper-container', {
         pagination: '.swiper-pagination',
@@ -65,7 +66,7 @@ define(function (require) {
             },
             success:function(res){
                 var dataJson =res.bizData;
-                console.log(res);
+                //console.log(res);
                 var template = '';
                 $.each(dataJson,function(i,v){
                     template += '<li>' +

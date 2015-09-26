@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 @Controller
 @Scope("prototype")
-@RequestMapping("/")
+@RequestMapping("/captcha")
 public class CaptchaController extends BaseController {
 
 	private static final Logger LOGGER= LoggerFactory.getLogger(CaptchaController.class);
@@ -54,6 +54,7 @@ public class CaptchaController extends BaseController {
 
 			int count = userAccountExService.findUserAccountCountByPhone(account);
 
+			//type=0为注册，type=1找回密码
 			if(type==0) {
 				if (count > 0) {
 					throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "手机号已存在!");
@@ -87,7 +88,7 @@ public class CaptchaController extends BaseController {
 					RedisUtil.getInstance().set(userCaptchaKey,randomString);
 					RedisUtil.getInstance().expire(timeKey, 7200, TimeUnit.SECONDS);
 					RedisUtil.getInstance().set(timeKey, String.valueOf(System.currentTimeMillis()));
-					RedisUtil.getInstance().expire(timeKey, 120, TimeUnit.SECONDS);
+					RedisUtil.getInstance().expire(timeKey, 60, TimeUnit.SECONDS);
 				}
 			}else{
 				time = time - ((System.currentTimeMillis() - Long.valueOf(RedisUtil.getInstance().get(timeKey).toString()))/1000);
