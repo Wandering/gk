@@ -669,14 +669,26 @@ button {
     .custom-model .custom-content .custom-head {
       width: 100%;
       height: 65px;
+      line-height: 65px;
+      font-size: 24px;
+      text-align: center;
       background-color: #f5f5f5;
       border-bottom: 1px solid #d9d9d9; }
     .custom-model .custom-content .custom-body {
       width: 100%;
-      height: 160px; }
+      height: 160px;
+      text-align: center; }
+      .custom-model .custom-content .custom-body .error-contnet {
+        padding: 10px 0;
+        text-align: center;
+        font-size: 18px;
+        margin-top: 20px; }
     .custom-model .custom-content .custom-footer {
       width: 100%;
-      height: 60px; }
+      height: 60px;
+      position: absolute;
+      left: 0;
+      bottom: 30px; }
       .custom-model .custom-content .custom-footer button {
         width: 122px;
         height: 40px;

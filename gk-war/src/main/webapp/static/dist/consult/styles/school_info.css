@@ -664,10 +664,11 @@ a.next-btn:hover {
   .page a {
     border: 1px solid #e5e5e5;
     padding: 8px 15px;
+    margin: 0 2px;
     color: #000;
     font-size: 14px;
     cursor: pointer; }
     .page a.active {
       color: #fff;
       background-color: #e24333;
-      border: none; }
+      border: 1px solid #e24333; }

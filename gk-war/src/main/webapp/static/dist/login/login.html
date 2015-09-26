@@ -57,13 +57,46 @@
             alert(2);
             $.ajax({
 
-                //账号信息
-                url:'/info/getUserInfo.do',
+                //修改密码
+                url:'/info/confirmPassword.do',
                 dataType:'json',
-                type:'get',
+                type:'post',
                 data:{
-
+                    oldPassword:'321321',
+                    password:'123123'
                 },
+
+//                //修改密码前验证密码
+//                url:'/info/confirmPassword.do',
+//                dataType:'json',
+//                type:'post',
+//                data:{
+//                    oldPassword:'321321'
+//                },
+
+//                //更改个人信息
+//                url:'/info/updateUserInfo.do',
+//                dataType:'json',
+//                type:'post',
+//                data:{
+//                    name:'zuo',
+//                    countyId:'2',
+//                    schoolName:'苏州中学',
+//                    sex:'1',
+//                    birthdayDate:'1443001519852',
+//                    subjectType:'1',
+//                    mail:'12345678@qq.com',
+//                    icon:'touxiang',
+//                    qq:'123456'
+//                },
+
+//                //账号信息
+//                url:'/info/getUserInfo.do',
+//                dataType:'json',
+//                type:'get',
+//                data:{
+//
+//                },
 
 //                //找回密码获取验证码
 //                url:'/captcha/captcha.do',

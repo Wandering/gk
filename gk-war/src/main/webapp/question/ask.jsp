@@ -40,10 +40,10 @@
 
 <div class="custom-model" style="display: none" id="custom_model">
     <div class="custom-content">
-        <div class="custom-head">提交成功</div>
-        <div class="custom-body">您的提问正在审核，审核后会出现在最新提问栏目中</div>
+        <div class="custom-head">温馨提示</div>
+        <div class="custom-body" id="custom_body"></div>
         <div class="custom-footer ta">
-            <button id="model_button">提交</button>
+            <button id="model_button">确认</button>
         </div>
     </div>
 </div>
