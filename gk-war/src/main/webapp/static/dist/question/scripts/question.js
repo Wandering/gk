@@ -28,7 +28,9 @@ define(function(require) {
                     html.push('<img src="' + (question.userIcon || '') + '" />');
                     html.push('</div>');
                     html.push('<div class="head-info">');
-                    html.push('<h6>来自 ' + question.userName || '匿名专家' + new Date(question.answerTime).Format('yyyy-MM-dd hh-mm') + '</h6>');
+                    var createTime = new Date(question.createTime).Format('yyyy-MM-dd hh:mm');
+                    console.log(createTime);
+                    html.push('<h6>来自 ' + question.userName || '匿名专家  ' + createTime + '</h6>');
                     var questions = question.questions;
                     var text = [];
                     for (var j = 0, jlen = questions.length; j < jlen; j++) {
@@ -122,8 +124,8 @@ define(function(require) {
             $('#tabs_list').hide();
         } else {
             $('#tabs_list').show();
-            Question.renderAsk(testData);
-            return;
+            //Question.renderAsk(testData);
+            //return;
             Question.getNew(0, 10);
             $('.tabs-list li').on('mouseover', function(e) {
                 if (!$(this).hasClass('active')) {

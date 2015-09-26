@@ -406,6 +406,13 @@ input, textarea {
       color: #fff; }
   .header .main-menu a.active {
     color: #fff; }
+  .header .log-reg a {
+    color: #b1b0b0 !important;
+    text-decoration: none;
+    font-size: 14px !important;
+    margin-left: 70px !important; }
+    .header .log-reg a:hover {
+      color: #fff !important; }
   .header .user-info-list {
     position: relative;
     font-size: 12px;
@@ -1021,6 +1028,13 @@ input, textarea {
       color: #fff; }
   .header .main-menu a.active {
     color: #fff; }
+  .header .log-reg a {
+    color: #b1b0b0 !important;
+    text-decoration: none;
+    font-size: 14px !important;
+    margin-left: 70px !important; }
+    .header .log-reg a:hover {
+      color: #fff !important; }
   .header .user-info-list {
     position: relative;
     font-size: 12px;
