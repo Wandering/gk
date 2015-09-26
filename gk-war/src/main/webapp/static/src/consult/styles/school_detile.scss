@@ -2,31 +2,32 @@
 
 @import "../../common/styles/comm.scss";
 
-.mt20{
+.mt20 {
   margin-top: 20px;
 }
-.mt60{
+
+.mt60 {
   margin-top: 60px;
 }
 
-h1{
+h1 {
   font-size: 30px;
   color: #333;
   margin-top: 40px;
 }
 
-.info-content{
+.info-content {
   height: 232px;
-  img{
+  img {
     width: 338px;
     height: 100%;
   }
 
-  .info{
+  .info {
     height: 100%;
     ul {
       overflow: hidden;
-      li{
+      li {
         float: left;
         width: 45%;
         height: 30px;
@@ -34,11 +35,11 @@ h1{
         margin: 10px 0 0 20px;
         font-size: 16px;
         color: #636363;
-        span{
+        span {
           font-size: 28px;
           color: #eea236;
         }
-        &.school-name{
+        &.school-name {
           font-size: 30px;
           color: #444;
           width: 90%;
@@ -49,29 +50,25 @@ h1{
   }
 }
 
-.tabs-list {
-  li {
+#category {
+  text-align: right;
+  margin-top: 10px;
+  button {
+    width: 64px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    color: #fff;
+    background-color: #d9534f;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    margin-right: 10px;
 
-    &.fr{
-      float: right;
-    }
-
-    button {
-      width: 64px;
-      height: 30px;
-      text-align: center;
-      line-height: 30px;
-      color: #fff;
-      background-color: #d9534f;
-      margin: 0;
-      padding: 0;
-      border: none;
-      outline: none;
-      border-radius: 5px;
-
-      &.active{
-        background-color: #f0ad4e;
-      }
+    &.active {
+      background-color: #f0ad4e;
     }
   }
 }
@@ -79,11 +76,11 @@ h1{
 .school-table {
   margin-bottom: 20px;
   table {
-    border-collapse:collapse;
+    border-collapse: collapse;
     width: 100%;
   }
 
-  tr{
+  tr {
     height: 40px;
     line-height: 40px;
   }
@@ -102,24 +99,24 @@ h1{
     }
   }
 
-  td,th{
+  td, th {
     border: 1px solid #f1f1f1;
     text-align: center;
-    a{
+    a {
       color: #e24333;
       cursor: pointer;
     }
-    &.name{
+    &.name {
       text-align: left;
       padding-left: 10px;
     }
   }
 
-  td{
+  td {
     color: #555;
   }
 
-  th{
+  th {
     color: #444;
   }
 }

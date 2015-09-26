@@ -20,7 +20,7 @@
 
         <div class="other-info">
             <h1>往年招生情况</h1>
-            <ul class="tabs-list-last mt20">
+            <ul class="tabs-list mt20" id="tabs_list_last">
             </ul>
 
             <div id="last_content">
@@ -28,10 +28,15 @@
             </div>
 
 
-            <ul class="tabs-list-enroll mt20">
+            <ul class="tabs-list mt20" id="tabs_list_enroll">
             </ul>
 
-            <div id="enroll_content">
+            <div>
+                <div id="category">
+                    <button data-id="1">文科</button>
+                    <button data-id="2">理科</button>
+                </div>
+                <div id="enroll_content"></div>
             </div>
         </div>
     </div>

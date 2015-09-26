@@ -24,7 +24,7 @@ define(function (require) {
                                             + '<li>学历层次：' + obj.educatLevel + '</li>'
                                             + '<li>院校特征：' + obj.property + '</li>'
                                             + '<li>院校类型：' + obj.universityType + '</li>'
-                                            + '<li>院校网址：<a href="' + + '">' + + '</a></li>'
+                                            + '<li>院校网址：<a href="' + obj.url + '">' + obj.url + '</a></li>'
                                             + '<li>院校地址：' + obj.address + '</li>'
                                             + '<li>联系电话：<span>' + obj.contactPhone + '</span></li>'
                                         + '</ul>'
@@ -59,7 +59,7 @@ define(function (require) {
                                         + '</tr>'
                                     + '</thead>'
                                     + '<tbody>');
-                for (var j = 0, infolen = infos.length; i < infolen; i++) {
+                for (var j = 0, infolen = infos.length; j < infolen; j++) {
                     tabContent.push('<tr>'
                                     + '<td>' + infos[j].subjectName + '</td>'
                                     + '<td>' + infos[j].planNumber + '</td>'
@@ -77,16 +77,19 @@ define(function (require) {
                     + '</div>');
             }
 
-            $('.tabs-list-last').html(tab.join(''));
+            $('#tabs_list_last').html(tab.join(''));
             $('#last_content').html(tabContent.join(''));
+            $('#tabs_list_last li').first().addClass('active');
+            var text = $('#tabs_list_last li.active').text();
+            this.setCategory(text);
             $('#school_table_0').show();
             this.addSchoolEventHandle();
         },
         addSchoolEventHandle: function() {
-            $('.tabs-list-last li').on('mouseover', function() {
+            $('#tabs_list_last li').on('mouseover', function() {
                 if (!$(this).hasClass('active')) {
                     $(this).addClass('active').siblings().removeClass('active');
-                    $('#school_table_' + ($(this).index() - 1)).show().siblings().hide();
+                    $('#school_table_' + $(this).index()).show().siblings().hide();
                 }
             });
         },
@@ -117,7 +120,7 @@ define(function (require) {
                     + '</tr>'
                     + '</thead>'
                     + '<tbody>');
-                for (var j = 0, infolen = infos.length; i < infolen; i++) {
+                for (var j = 0, infolen = infos.length; j < infolen; j++) {
                     tabContent.push('<tr>'
                         + '<td>' + infos[j].majoredName + '</td>'
                         + '<td>' + infos[j].batch + '</td>'
@@ -133,30 +136,158 @@ define(function (require) {
             }
 
             tab.push('<li>招生章程</li>');
-            tabContent.push('<div class="school-table mt20" id="enroll_table_' + i + '">' + ret.entroIntro + '</div>');
+            tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + i + '">' + ret.entroIntro + '</div>');
             i++;
             tab.push('<li>院校简介</li>');
-            tabContent.push('<div class="school-table mt20" id="enroll_table_' + i + '">' + ret.universityIntro + '</div>');
-            tab.push('<li class="fr">'
-                        + '<button class="active">文科</button>'
-                        + '<button>理科</button>'
-                    + '</li>');
+            tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + i + '">' + ret.universityIntro + '</div>');
 
-            $('.tabs-list-enroll').html(tab.join(''));
+            $('#tabs_list_enroll').html(tab.join(''));
             $('#enroll_content').html(tabContent.join(''));
+            $('#tabs_list_enroll li').first().addClass('active');
             $('#enroll_table_0').show();
             this.addEnrollEventHandle();
         },
         addEnrollEventHandle: function() {
-            $('.tabs-list-enroll li').on('mouseover', function() {
+            var that = this;
+            $('#tabs_list_enroll li').on('mouseover', function() {
                 if ($(this).hasClass('fr')) {
                     return;
                 }
                 if (!$(this).hasClass('active')) {
                     $(this).addClass('active').siblings().removeClass('active');
-                    $('#enroll_table_' + ($(this).index() - 1)).show().siblings().hide();
+                    var text = $(this).text();
+                    var index = $(this).index();
+                    that.setCategory(text);
+                    $('#enroll_table_' + index).show().siblings().hide();
                 }
             });
+        },
+        setCategory: function(text) {
+            if ('招生章程' === text || '院校简介' === text) {
+                $('#category').hide();
+            } else {
+                $('#category').show();
+            }
+        },
+        categoryHandle: function() {
+            $('#category button').on('click', function(e) {
+                $(this).addClass('active').siblings().removeClass('active');
+            });
+        },
+        filterEnroll: function(categoryId) {
+
         }
-    }
+    };
+
+    var BasicInfoForTest = {
+        "code": 0012,
+        "name": "北京大学",
+        "subjection": "教育部直属",
+        "educatLevel": "本科",
+        "universityType": "综合",
+        "property": "985,211,研",
+        "address": "北京市海淀区颐和园路5号",
+        "contactPhone": "010-62751407",
+        "universityImage": "http://himg.bdimg.com/sys/portrait/item/c68b4a737048696265726e6174655374d718.jpg",
+        "provinceName": "北京",
+        "url": "http://www.baidu.com"
+    };
+
+    var getEnrollInfo = {
+        "enrollInfo": [
+            {
+                "title": "2014年招生情况",
+                "infos": [
+                    {
+                        "subjectName": "文科",
+                        "planNumber": 20,//计划人数
+                        "enrollNumber": 10,//录取数
+                        "highestScore": 666,//最高分
+                        "highestRank": 1,//最高位次
+                        "lowestScore": 500,//最低分
+                        "lowestRank": 26,///最低位次
+                        "averageScore": 580,//平均分
+                        "averageRank": 12//平均分位次
+                    },
+                    {
+                        "subjectName": "理科",
+                        "planNumber": 15,//计划人数
+                        "enrollNumber": 8,//录取数
+                        "highestScore": 616,//最高分
+                        "highestRank": 1,//最高位次
+                        "lowestScore": 520,//最低分
+                        "lowestRank": 16,///最低位次
+                        "averageScore": 560,//平均分
+                        "averageRank": 10//平均分位次
+                    }
+                ]
+            }, {
+                "title": "2013年招生情况",
+                "infos": [
+                    {
+                        "subjectName": "文科",
+                        "planNumber": 20,//计划人数
+                        "enrollNumber": 20,//录取数
+                        "highestScore": 566,//最高分
+                        "highestRank": 1,//最高位次
+                        "lowestScore": 600,//最低分
+                        "lowestRank": 26,///最低位次
+                        "averageScore": 680,//平均分
+                        "averageRank": 14//平均分位次
+                    },
+                    {
+                        "subjectName": "理科",
+                        "planNumber": 15,//计划人数
+                        "enrollNumber": 10,//录取数
+                        "highestScore": 616,//最高分
+                        "highestRank": 1,//最高位次
+                        "lowestScore": 520,//最低分
+                        "lowestRank": 16,///最低位次
+                        "averageScore": 560,//平均分
+                        "averageRank": 10//平均分位次
+                    }
+                ]
+            }
+        ]
+    };
+
+    var getEnrollPlan = {
+        "enrollPlan": [
+            {
+                "title": "2015招生计划",
+                "planInfos": [
+                    {
+                        "majoredName": "材料类",
+                        "batch": "一批本科",
+                        "subject": "理科",
+                        "planNumber": 20,//计划人数
+                        "schoolLength": "四年",//学制
+                        "feeStandard": "12000/年"//收费标准
+                    }
+                ]
+            },
+            {
+                "title": "2014招生计划",
+                "planInfos": [
+                    {
+                        "majoredName": "材料类",
+                        "batch": "一批本科",
+                        "subject": "理科",
+                        "planNumber": 10,//计划人数
+                        "schoolLength": "四年",//学制
+                        "feeStandard": "10000/年"//收费标准
+                    }
+                ]
+            },
+
+        ],
+        "entroIntro": "<p> 北京大学招生简介</p>",//招生简介，一段html代码
+        "universityIntro": "<p> 北京大学介绍</p>"//院校简介，一段html代码
+    };
+
+    $(document).ready(function() {
+        Info.renderInfo(BasicInfoForTest);
+        Info.renderSchool(getEnrollInfo.enrollInfo);
+        Info.renderEnroll(getEnrollPlan);
+    });
 });
