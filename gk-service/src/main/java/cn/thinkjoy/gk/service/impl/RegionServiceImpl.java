@@ -36,7 +36,6 @@ public class RegionServiceImpl implements IRegionService {
         List<ProvincePojo> provincePojos=new ArrayList<>();
         List<Province> provinces=provinceService.findAll();
         List<City> cities=cityService.findAll();
-
         Map<Long,List<CityPojo>> cityPojoMap=new HashMap<>();
         for(City city:cities){
             CityPojo cityPojo=new CityPojo();
