@@ -6,7 +6,6 @@ import cn.thinkjoy.gk.controller.question.bean.QuestionAnswerBean;
 import cn.thinkjoy.gk.controller.question.dto.AnswerDetailDto;
 import cn.thinkjoy.gk.controller.question.dto.QuestionContentDto;
 import cn.thinkjoy.gk.controller.question.dto.QuestionDetailDto;
-import cn.thinkjoy.gk.controller.question.dto.QuestionDto;
 import cn.thinkjoy.gk.controller.question.query.SendQuestionQuery;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
@@ -17,6 +16,10 @@ import cn.thinkjoy.ss.domain.Question;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -46,7 +49,7 @@ public class QuestionController extends BaseController {
      */
     @RequestMapping(value = "/newQuestion", method = RequestMethod.GET)
     @ResponseBody
-    public List<QuestionAnswerBean> newQuestion(PageQuery pageQuery) {
+    public List<QuestionAnswerBean> newQuestion(@RequestParam(value="keyword",required=false) String keyword,PageQuery pageQuery) {
 
 //        LOGGER.info("用户［" + userId + "］获取热门问题列表");
 //        if (null == userId || userId == 0) {
@@ -97,9 +100,7 @@ public class QuestionController extends BaseController {
 //            }
 //        }
 
-        List<QuestionDetailBean> questionDetailBeans = questionService.findQuestionAnswerByPage(freeStatus, 1, null, 7, startSize, endSize);
-
-
+        List<QuestionDetailBean> questionDetailBeans = questionService.findQuestionAnswerPage(keyword,freeStatus, 1, null, 7, startSize, endSize);
 
         List<QuestionAnswerBean> questionAnswerBeans = new ArrayList<QuestionAnswerBean>();
 
@@ -235,7 +236,7 @@ public class QuestionController extends BaseController {
 //            }
 //        }
 
-        List<QuestionDetailBean> questionDetailBeans = questionService.findQuestionAnswerByPage(freeStatus, 1, null, 7, startSize, endSize);
+        List<QuestionDetailBean> questionDetailBeans = questionService.findHotQuestionAnswerPage(freeStatus, 1, null, 7, startSize, endSize);
 
         List<QuestionAnswerBean> questionAnswerBeans = new ArrayList<QuestionAnswerBean>();
 
@@ -407,34 +408,16 @@ public class QuestionController extends BaseController {
     @ResponseBody
     public Integer question(SendQuestionQuery sendQuestionQuery) throws Exception {
 
-//        SendQuestionQuery sendQuestionQuery = requestT.getData();
-
         if(sendQuestionQuery==null){
             LOGGER.info("====notice question PARAM_ERROR ");
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
         }
-
-//        Long expertId = sendQuestionQuery.getExpertId();
 
         UserAccountPojo account = getUserAccountPojo();
 
         Integer vipStatus = account.getVipStatus();
 
         Long userId = account.getId();
-
-//        if(vipStatus==0){
-//            LOGGER.info("当前用户:{"+userId+"}不是会员");
-//            int count = answerExService.findAswerQuestionCount(userId);
-//
-//            if(count>0){
-//                LOGGER.info("====notice question COMMIT_ERROR ");
-//                throw new BizException("1000011", "您的免费提问机会已用完,开通会员,享受专家无限一对一服务");
-//            }
-//
-//        }else{
-//            LOGGER.info("当前用户:{"+userId+"}是会员");
-//        }
-
 
 
         long currentTime = System.currentTimeMillis();
@@ -449,116 +432,23 @@ public class QuestionController extends BaseController {
             freeStatus = 1;
         }
 
-//        Long questionId = sendQuestionQuery.getQuestionId();
-//
-//        if(questionId!=null){
-//
-//            cn.thinkjoy.ss.bean.QuestionDetailBean qdb = questionService.findQuestionById(questionId);
-//
-//            Question expertQuestion = new Question();
-//
-//            String disableExpertId = qdb.getDisableExpertId();
-//
-//            if(!StringUtils.isEmpty(disableExpertId)&&disableExpertId.indexOf(",")>-1&&disableExpertId.split(",").length>=3){
-//                throw new BizException("9999999", "同一问题,最多可重复换三次!");
-//            }
-//
-//            List<String> disableExpertIds = new ArrayList<String>();
-//            if(!StringUtils.isEmpty(sendQuestionQuery.getDisableExpertId())) {
-//                disableExpertIds.add(sendQuestionQuery.getDisableExpertId()+"");
-//            }
-//            if(!StringUtils.isEmpty(disableExpertId)){
-//                disableExpertIds.add(disableExpertId);
-//            }
-//            if(null!=disableExpertIds&&disableExpertIds.size()>0){
-//                StringBuffer id = new StringBuffer("");
-//                for(String deId :disableExpertIds){
-//                    id.append(deId+",");
-//                }
-//                expertQuestion.setDisableExpertId(id.substring(0,id.length()-1));
-//            }
-//
-//            expertQuestion.setQuestion(qdb.getQuestion());
-//            expertQuestion.setCreateDate(currentTime);
-//            expertQuestion.setLastModDate(currentTime);
-//            expertQuestion.setIsOpen(0);
-////            expertQuestion.setQuestionId(idBuilderService.getIdByBusinessCode(IdType.QUESTIONID, idBuilderService.getCountAsInt()));
-//            expertQuestion.setUserId(Long.valueOf(userId));
-//            expertQuestion.setStatus(2);
-//            expertQuestion.setExpertId(Long.valueOf(0));
-////            if(StringUtils.isEmpty(sendQuestionQuery.getExpertId())){
-////                expertQuestion.setExpertId(0L);
-////            }else{
-////                expertQuestion.setIsOpen(1);
-////                expertQuestion.setExpertId(sendQuestionQuery.getExpertId());
-////            }
-//            expertQuestion.setIsAnswer(0);
-//            expertQuestion.setTags("其他");
-//            expertQuestion.setFreeStatus(freeStatus);
-//
-//            expertQuestion.setDisableStatus(0);
-//
-//            expertQuestion.setIsAnswer(0);
-//
-////            expertQuestionExService.updateQuestionByQuestionId(expertQuestion);
-//
-//            int id = questionService.insert(expertQuestion);
-//
-////            Question expertQuestionUpdate = new Question();
-////
-////            expertQuestionUpdate.setId(questionId);
-////
-////            expertQuestionUpdate.setDisableStatus(1);
-//
-//            Map<String,Object> params = new HashMap<String,Object>();
-//
-//            params.put("id",questionId);
-//
-//            params.put("disableStatus",1);
-//
-//            questionService.updateMap(params);
-//
-//            return id;
-//        }
+        String questionHtml = sendQuestionQuery.getQuestionHtml();
 
         Question expertQuestion = new Question();
 
-        List<QuestionContentDto> questionContentDtos = sendQuestionQuery.getQuestions();
 
-//        StringBuffer question = new StringBuffer("<root>");
-//        for(QuestionContentDto questionContentDto:questionContentDtos){
-//            question.append("<object>");
-//            question.append("<text>"+questionContentDto.getText()+"</text>");
-//            question.append("<img>"+questionContentDto.getImg()+"</img>");
-//            question.append("</object>");
-//        }
-//        question.append("</root>");
+//        String question = JSON.toJSONString(questionContentDtos);
 
-        String question = JSON.toJSONString(questionContentDtos);
+//        question = removeFourChar(question);
 
-//        Pattern pattern = Pattern.compile("/[\\u4E00-\\u9FB0]{2}/");
+        expertQuestion.setQuestion(htmlToJSON(questionHtml));
 
-//        Pattern emoji = Pattern.compile("[\\ud83c\\udc00-\\ud83c\\udfff]|[\\ud83d\\udc00-\\ud83d\\udfff]|[\\u2600-\\u27ff]",
-//                Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE) ;
+        expertQuestion.setQuestionHtml(questionHtml);
 
-//        Matcher matcher = pattern.matcher(question);
-
-        question = removeFourChar(question);
-//        if(matcher.matches()){
-//            throw new BizException("9999998", "不支持表情符!");
-//        }
-
-
-//        if(EmojiUtil.containsEmoji(question)){
-//            throw new BizException("9999998", "不支持表情符!");
-//        }
-        expertQuestion.setQuestion(question);
         expertQuestion.setCreateDate(currentTime);
         expertQuestion.setLastModDate(currentTime);
         expertQuestion.setIsOpen(0);
-//        expertQuestion.setQuestionId(idBuilderService.getIdByBusinessCode(IdType.QUESTIONID, idBuilderService.getCountAsInt()));
         expertQuestion.setUserId(Long.valueOf(userId));
-//        expertQuestion.setStatus(2);
         expertQuestion.setDisableStatus(0);
         if(StringUtils.isEmpty(sendQuestionQuery.getExpertId())){
             expertQuestion.setExpertId(0L);
@@ -569,14 +459,8 @@ public class QuestionController extends BaseController {
         expertQuestion.setIsAnswer(0);
         expertQuestion.setTags("其他");
         expertQuestion.setFreeStatus(freeStatus);
-//        expertQuestion.setFreeStatus(0);
-//        if(vipStatus){
-//            expertQuestion.setFreeStatus(1);
-//        }
 
         int id = questionService.insert(expertQuestion);
-
-//        request.setAttribute("questionId",id);
 
         return id;
     }
@@ -631,6 +515,57 @@ public class QuestionController extends BaseController {
             throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
         }
         return flag;
+    }
+
+    private String htmlToJSON(String html){
+
+        Document doc = Jsoup.parse(html);
+
+        Elements imgs = doc.getElementsByTag("img");
+
+        for(Element element : imgs){
+            element.replaceWith(Jsoup.parse("[img]"+element.attributes().get("src")+"[href][img]"));
+        }
+
+        String[] contents = doc.text().split("\\[img]");
+
+        List<QuestionContentDto> questionContentDtos = new ArrayList<QuestionContentDto>();
+
+        QuestionContentDto questionContentDto = null;
+
+        boolean createFlag = true;
+        boolean imgFlag = false;
+        boolean textFlag = false;
+        int i =1;
+        for(String content:contents){
+            if(org.apache.commons.lang3.StringUtils.isEmpty(content)){
+                i++;
+                continue;
+            }
+            if(createFlag){
+                questionContentDto = new QuestionContentDto();
+                createFlag = false;
+            }
+            if(content.indexOf("[href]")>-1){
+                questionContentDto.setImg(content.replace("[href]", ""));
+                imgFlag = true;
+            }else{
+                questionContentDto.setText(content);
+                textFlag = true;
+            }
+            if((imgFlag&&textFlag)||i==contents.length){
+                createFlag = true;
+                imgFlag = false;
+                textFlag = false;
+                questionContentDtos.add(questionContentDto);
+            }
+            i++;
+        }
+
+        if(questionContentDtos.size()>0) {
+            return JSON.toJSONString(questionContentDtos);
+        }
+        return null;
     }
 }
 
