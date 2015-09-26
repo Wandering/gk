@@ -4,12 +4,15 @@ package cn.thinkjoy.gk.controller.university;
  * Created by wpliu on 15/9/25.
  */
 
+import cn.thinkjoy.gk.IUniversityService;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.dto.EntrollPlanDto;
 import cn.thinkjoy.gk.dto.UniversityDto;
+import cn.thinkjoy.gk.dto.UniversityResponseDto;
 import cn.thinkjoy.gk.query.UniversityQuery;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +35,8 @@ public class UniversityController extends BaseController {
 
     public static final Logger LOGGER= LoggerFactory.getLogger(UniversityController.class);
 
+    @Autowired
+    private IUniversityService iUniversityService;
     /**
      * 获取初始化信息
      * @return
@@ -40,10 +45,14 @@ public class UniversityController extends BaseController {
     @ResponseBody
     public Map<String,Object> getInitInfo(){
        Map<String,Object> responseMap=new HashMap<String, Object>();
-        responseMap.put("provinces","");
-        responseMap.put("universityType","");
-        responseMap.put("universityBatch","");
-        responseMap.put("universityFeature", "");
+        List<Map>  provinces=iUniversityService.getProvinces();
+        List<Map>  universityType=iUniversityService.getUniversityType();
+        List<Map>  universityBatch=iUniversityService.getUniversiyBatch();
+        List<Map>  universityFeature=iUniversityService.getuniversityFeature();
+        responseMap.put("provinces",provinces);
+        responseMap.put("universityType",universityType);
+        responseMap.put("universityBatch",universityBatch);
+        responseMap.put("universityFeature", universityFeature);
         return  responseMap;
     }
 
@@ -54,10 +63,15 @@ public class UniversityController extends BaseController {
      */
     @RequestMapping(value = "/getUniversityList",method = RequestMethod.POST)
     @ResponseBody
-    public List<UniversityDto> getUniversityList(UniversityQuery universityQuery){
+    public UniversityResponseDto getUniversityList(UniversityQuery universityQuery){
+        UniversityResponseDto universityResponseDto=new UniversityResponseDto();
         List<UniversityDto> universityDtos=new ArrayList<UniversityDto>();
-
-        return  universityDtos;
+        universityDtos=iUniversityService.getUniversityList(universityQuery);
+        Integer universityCount=iUniversityService.getUniversityCount(universityQuery);
+        universityResponseDto.setSchoolList(universityDtos);
+        universityResponseDto.setCurrentPage(universityQuery.getPageNo()+1);
+        universityResponseDto.setSchoolCount(universityCount);
+        return  universityResponseDto;
     }
 
     /**
@@ -68,7 +82,8 @@ public class UniversityController extends BaseController {
     @ResponseBody
     public UniversityDto getUniversityDetail(){
         UniversityDto universityDto=new UniversityDto();
-          String schoolCode=request.getParameter("code");
+        String schoolCode=request.getParameter("code");
+        universityDto=iUniversityService.getUniversityDetail(schoolCode);
         return universityDto;
     }
 
@@ -81,6 +96,7 @@ public class UniversityController extends BaseController {
     public Map<String,Object> getEnrollInfo(){
         String schoolCode=request.getParameter("code");
         Map<String,Object> map=new HashMap<String, Object>();
+
         map.put("enrollInfo","");
         return map;
     }
