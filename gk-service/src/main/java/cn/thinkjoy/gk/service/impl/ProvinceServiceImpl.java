@@ -75,7 +75,7 @@ public class ProvinceServiceImpl extends AbstractPageService<IBaseDAO<Province>,
 //    }
 //
 //    @Override
-//    public List<Province> findAll() {
+//    public List<ProvincePojo> findAll() {
 //        return provinceDAO.findAll();
 //    }
 //

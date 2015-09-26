@@ -75,7 +75,7 @@ public class CityServiceImpl extends AbstractPageService<IBaseDAO<City>, City> i
 //    }
 //
 //    @Override
-//    public List<City> findAll() {
+//    public List<CityPojo> findAll() {
 //        return cityDAO.findAll();
 //    }
 //

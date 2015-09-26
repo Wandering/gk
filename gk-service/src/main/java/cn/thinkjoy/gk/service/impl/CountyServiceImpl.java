@@ -75,7 +75,7 @@ public class CountyServiceImpl extends AbstractPageService<IBaseDAO<County>, Cou
 //    }
 //
 //    @Override
-//    public List<County> findAll() {
+//    public List<CountyPojo> findAll() {
 //        return countyDAO.findAll();
 //    }
 //
