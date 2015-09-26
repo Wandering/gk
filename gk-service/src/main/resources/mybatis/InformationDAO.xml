@@ -3,13 +3,15 @@
 
 <mapper namespace="cn.thinkjoy.gk.dao.IInformationDAO">
      <select id="getAllInformation" resultType="Information">
-         SELECT id,hotInformation,informationContent FROM gk_gkinformation_gkhot
+         SELECT id,createDate,hotInformation,informationContent FROM gk_gkinformation_gkhot
          WHERE  status<![CDATA[<>]]>  -1 ORDER BY createDate ASC
          limit ${offset}, ${rows}
      </select>
+
     <select id="getInformationByKey" parameterType="java.lang.String" resultType="Information">
-        select id,hotInformation,informationContent FROM gk_gkinformation_gkhot
-        where hotInformation like CONCAT('%', #{key} , '%') and status <![CDATA[<>]]> -1
+        SELECT id,createDate,hotInformation,informationContent FROM gk_gkinformation_gkhot
+        WHERE status = 0 AND hotInformation LIKE CONCAT('%', #{key} , '%')  ORDER BY createDate ASC
+        limit ${offset}, ${rows}
     </select>
 
 </mapper>

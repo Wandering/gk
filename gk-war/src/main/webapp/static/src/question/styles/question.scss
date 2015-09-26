@@ -72,7 +72,7 @@
       }
 
       .right {
-        height: 128px;
+        height: auto;
         background-color: #f9f9f9;
         margin-left: 100px;
         border: 1px solid #f9f9f9;
@@ -80,6 +80,9 @@
         line-height: 30px;
         font-size: 14px;
         color: #8c8c8c;
+        img{
+          max-width: 50%;
+        }
       }
     }
   }

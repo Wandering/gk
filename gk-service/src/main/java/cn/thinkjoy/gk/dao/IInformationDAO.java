@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface IInformationDAO {
     public List<Information> getAllInformation(@Param("offset")Integer offset,@Param("rows")Integer rows);
-    public List<Information> getInformationByKey(@Param("key") String key);
+    public List<Information> getInformationByKey(@Param("key") String key,@Param("offset")Integer offset,@Param("rows")Integer rows);
 }

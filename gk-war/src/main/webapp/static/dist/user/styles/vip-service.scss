@@ -123,15 +123,20 @@
     font-size: 18px;
   }
   .tel-content-box {
-    margin-bottom: 30px;
-    height: 255px;
-    border: 1px solid $borderColor;
-    border-right: none;
-    border-bottom: none;
+//    margin-bottom: 30px;
+//    height: 255px;
+//    border: 1px solid $borderColor;
+//    border-right: none;
+//    border-bottom: none;
   }
 }
 
 .tel-content-box {
+  margin-bottom: 30px;
+  height: 255px;
+  border: 1px solid $borderColor;
+  border-right: none;
+  border-bottom: none;
   .row {
     .col-3 {
       height: 85px;

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,13 +35,19 @@ public class GKInformationController extends BaseController{
      */
     @RequestMapping(value = "getAllInformation",method = RequestMethod.GET)
     @ResponseBody
-    public List<Information> getAllInformation(){
-        String pageNo = HttpUtil.getParameter(request, "pageNo", "0");                 //页数
-        String pageSize = HttpUtil.getParameter(request, "pageSize", "4");            //每页显示4条信息
-        List<Information> information = informationService.getAllInformation( Integer.valueOf(pageNo)*Integer.valueOf(pageSize),Integer.valueOf(pageSize));
+    public List<Information> getAllInformation(HttpServletRequest request){
+        String pn = request.getParameter("pageNo"); //页码
+        if (pn == null||pn.length() < 0) {
+            pn = "0";   //如果没有设置页码，默认第一页
+        }
+        String ps = request.getParameter("pageSize");            //每页显示几条信息
+        if (ps == null||ps.length() < 0){
+            ps="4";  //如果没有设定，默认显示4条数据
+        }
+        List<Information> information = informationService.getAllInformation(Integer.valueOf(pn) * Integer.valueOf(ps), Integer.valueOf(ps));
         return information;
-    }
 
+    }
     /**
      *
      * 根据关键字查询热点信息
@@ -47,9 +55,18 @@ public class GKInformationController extends BaseController{
      */
     @RequestMapping(value = "getInformationByKey",method = RequestMethod.GET)
     @ResponseBody
-    public List<Information> getInformationByKey(HttpServletRequest request){
-        String key = request.getParameter("key");
-        List<Information> information = informationService.getInformationByKey(key);
+    public List<Information> getInformationByKey(HttpServletRequest request) throws UnsupportedEncodingException {
+        String key = request.getParameter("key");                  //获取关键字
+        String keyString = new String(key.getBytes("ISO-8859-1"),"UTF-8");
+        String pn = request.getParameter("pageNo"); //页码
+        if (pn == null||pn.length() < 0) {
+            pn = "0";   //如果没有设置页码，默认第一页
+        }
+        String ps = request.getParameter("pageSize");            //每页显示几条信息
+        if (ps == null||ps.length() < 0){
+            ps="4";  //如果没有设定，默认显示4条数据
+        }
+        List<Information> information = informationService.getInformationByKey(keyString, Integer.valueOf(pn)*Integer.valueOf(ps),Integer.valueOf(ps));
         return information;
     }
 

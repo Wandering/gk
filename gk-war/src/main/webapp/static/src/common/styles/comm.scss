@@ -1,11 +1,13 @@
 @charset "utf-8";
 @import "reset";
 @import "variables";
+
 //共用工具
 .w1000 {
   width: 1000px;
   margin: 0 auto;
 }
+
 .fr {
   float: right;
 }
@@ -47,11 +49,15 @@
         color: #fff;
       }
     }
-    a.active{
+    a.active {
       color: #fff;
     }
   }
   .user-info-list {
+    position: relative;
+    &:hover .menu {
+      display: block;
+    }
     .user {
       a {
         color: #b1b0b0;
@@ -70,6 +76,24 @@
       -webkit-border-radius: 50%;
     }
     .menu {
+      display: none;
+      z-index: 9;
+      position: absolute;
+      background-color: #353535;
+      top: 50px;
+      right: -18px;
+      li {
+        text-align: center;
+        line-height: 37px;
+        display: block;
+        width: 135px;
+        border-bottom: 1px solid #3e3e3e;
+        font-size: 16px;
+        cursor: pointer;
+        &:hover {
+          background-color: #202020;
+        }
+      }
       a {
         color: #b1b0b0;
         text-decoration: none;

@@ -51,8 +51,8 @@
             <div class="group-comm">
                 性别选择
                 <input type="text" class="user-input-comm" />
-                <!--<label><input name="sex" type="radio" value="" />男 </label>-->
-                <!--<label><input name="sex" type="radio" value="" />女 </label>-->
+                <label><input name="sex" type="radio" value="" />男 </label>
+                <label><input name="sex" type="radio" value="" />女 </label>
             </div>
             <div class="group-comm">
                 科目选择<input type="text" class="user-input-comm" />
@@ -68,13 +68,7 @@
     </div>
 
 </div>
-
-
 <%@include file="/common/footer.jsp"%>
-
-<%--<script src="/static/dist/user/scripts/jq-address.js"></script>--%>
-
-
 <script>
     seajs.use("${ctx}/static/src/login/scripts/personal-info");
 </script>
