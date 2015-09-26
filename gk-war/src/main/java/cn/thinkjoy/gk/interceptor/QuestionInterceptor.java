@@ -40,7 +40,7 @@ public class QuestionInterceptor extends HandlerInterceptorAdapter {
 
 			String value = CookieUtil.getCookieValue(request.getCookies(), CookieConst.USER_COOKIE_NAME);
 
-			UserAccountBean userAccountBean = userAccountService.findUserAccountBeanByToken(value);
+			UserAccountBean userAccountBean = userAccountService.findUserAccountBeanByToken(value,7);
 
 			if(userAccountBean==null){
 

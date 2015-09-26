@@ -8,7 +8,6 @@ import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.RedisUtil;
-import cn.thinkjoy.push.service.sms.SMSService;
 import com.jlusoft.microschool.core.utils.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -86,7 +85,7 @@ public class RegisterController extends BaseController {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"账户注册失败");
             }
         }catch (Exception e){
-            e.printStackTrace();
+            throw e;
         }finally {
 
         }
@@ -139,7 +138,7 @@ public class RegisterController extends BaseController {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"密码重设失败");
             }
         }catch (Exception e){
-            e.printStackTrace();
+            throw e;
         }finally {
 
         }
@@ -163,7 +162,7 @@ public class RegisterController extends BaseController {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号已经注册!");
             }
         }catch (Exception e){
-            e.printStackTrace();
+            throw e;
         }
         return "success";
     }

@@ -53,6 +53,17 @@
       color: #fff;
     }
   }
+  .log-reg{
+    a{
+      color: #b1b0b0!important;
+      text-decoration: none;
+      font-size: 14px!important;
+      margin-left: 70px!important;
+      &:hover{
+        color: #fff!important;
+      }
+    }
+  }
   .user-info-list {
     position: relative;
     &:hover .menu {

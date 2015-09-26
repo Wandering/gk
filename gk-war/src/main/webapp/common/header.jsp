@@ -18,10 +18,13 @@
       <li><a href="/before/before.jsp">考前备考</a></li>
       <li><a href="/after/before.jsp">考后报考</a></li>
     </ul>
-    <div class="user-info-list fr">
+    <div class="log-reg hide">
+      <a href="/login/login.jsp">登陆/注册</a>
+    </div>
+    <div class="user-info-list fr hide">
       <div class="user">
-        <img src="/static/dist/common/images/avatar.png" alt="avatar" class="user-avatar"/>
-        <a href="">韩小寒</a>
+        <img src="" alt="avatar" class="user-avatar"/>
+        <a href="" class="username"></a>
       </div>
       <ul class="menu">
         <li><a href="/user/personal-info.jsp">个人信息</a></li>
