@@ -105,7 +105,7 @@ public class UniversityController extends BaseController {
         enrollResponseDtoList.add(enrollResponseDto);
         enrollResponseDtoList.add(lastEnrollResponseDto);
         map.put("enrollInfo",enrollResponseDtoList);
-        return null;
+        return map;
     }
 
     /**
