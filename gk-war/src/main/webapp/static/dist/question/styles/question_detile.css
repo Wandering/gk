@@ -421,7 +421,7 @@ input, textarea {
       border-radius: 50%;
       -webkit-border-radius: 50%; }
     .header .user-info-list .menu {
-      z-index: 999;
+      position: absolute;
       background-color: #353535; }
       .header .user-info-list .menu li {
         text-align: center; }
@@ -1021,7 +1021,7 @@ input, textarea {
       border-radius: 50%;
       -webkit-border-radius: 50%; }
     .header .user-info-list .menu {
-      z-index: 999;
+      position: absolute;
       background-color: #353535; }
       .header .user-info-list .menu li {
         text-align: center; }
