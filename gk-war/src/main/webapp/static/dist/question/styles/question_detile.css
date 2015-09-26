@@ -565,7 +565,8 @@ section:last-child {
   outline: none;
   float: left; }
 
-.search-content button {
+.search-content a {
+  display: inline-block;
   width: 128px;
   height: 40px;
   text-align: center;
@@ -1164,7 +1165,8 @@ section:last-child {
   outline: none;
   float: left; }
 
-.search-content button {
+.search-content a {
+  display: inline-block;
   width: 128px;
   height: 40px;
   text-align: center;

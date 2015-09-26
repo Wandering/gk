@@ -1,14 +1,15 @@
 /*
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
- * Project Name: shishuo
- * $Id:  City.java 2015-09-21 16:58:03 $
+ * Project Name: gaokao
+ * $Id:  City.java 2015-09-26 09:20:33 $
  */
 
 
 
 package cn.thinkjoy.gk.domain;
 
+import cn.thinkjoy.common.domain.CreateBaseDomain;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -17,10 +18,10 @@ import cn.thinkjoy.common.domain.BaseDomain;
 
 import java.util.*;
 
-public class City extends BaseDomain{
-	private Integer status;
+public class City extends BaseDomain {
     private Long provinceId;
     private String name;
+	private Integer status;
 
 	public City(){
 	}
@@ -38,7 +39,6 @@ public class City extends BaseDomain{
     public String getName() {
         return this.name;
     }
-
 	public Integer getStatus() {
 		return status;
 	}

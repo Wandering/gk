@@ -18,13 +18,14 @@ define(function (require) {
         });
         $('.go-search').click(function () {
             var searchText = $('.search-val').val();
-            window.location.assign(url + '/question/question_search_result.jsp?val=' + searchText);
+            window.location.assign(url + '/question/question.jsp?val=' + searchText);
         });
         $('#tabs-online').find('li').click(function () {
             var n = $(this).index();
             $(this).addClass('active').siblings().removeClass('active');
-            $('.tab').fadeOut();
-            $('.tab').eq(n).fadeIn();
+            //$('.tab').fadeOut();
+            $('.tab').hide();
+            $('.tab').eq(n).fadeIn(500);
         });
         more.click(function () {
             window.location.assign(url + '/question/question.jsp')
@@ -35,8 +36,9 @@ define(function (require) {
             var n = $(this).index();
             var m = $('.more');
             $(this).addClass('active').siblings().removeClass('active');
-            $('.tab-info').fadeOut();
-            $('.tab-info').eq(n).fadeIn();
+            //$('.tab-info').fadeOut();
+            $('.tab-info').hide();
+            $('.tab-info').eq(n).fadeIn(500);
             (n == 1) ? (m.fadeOut()) : (m.fadeIn());
         });
         $('#hot-info').click(function(){
