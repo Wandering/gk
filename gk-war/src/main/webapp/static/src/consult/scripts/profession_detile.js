@@ -15,12 +15,22 @@ define(function (require) {
     var Info = {
         getProfessionInfo: function(code) {
             var that = this;
-            //$.get('', function(data) {
-            //    if ('0000000' === data.rtnCode) {
-            //
-            //    }
-            //});
-            that.renderInfo(getInitInfo);
+            $.ajax({
+                type: 'post',
+                url: '/majored/getMajoredInfo.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    code:code
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if ('0000000' === data.rtnCode) {
+                        that.renderInfo(data.bizData);
+                    }
+                },
+                error: function(data) {
+                }
+            });
         },
         renderInfo: function(obj) {
             $('#info_content').html('<img class="fl" src="' + obj.universityImage + '" />'
@@ -36,14 +46,24 @@ define(function (require) {
         },
         getReationInfo: function(code) {
             var that = this;
-            //$.get('', function(data) {
-            //    if ('0000000' === data.rtnCode) {
-            //
-            //    }
-            //});
-            that.renderReation(testData);
-            $('#tab_0').show()
-            that.addEventHandleTab();
+            $.ajax({
+                type: 'post',
+                url: '/majored/getMajoredDetail.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    code:code
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if ('0000000' === data.rtnCode) {
+                        that.renderReation(data.bizData);
+                        $('#tab_0').show()
+                        that.addEventHandleTab();
+                    }
+                },
+                error: function(data) {
+                }
+            });
         },
         addEventHandleTab: function() {
             $('.tabs-list li').on('mouseover', function(e) {

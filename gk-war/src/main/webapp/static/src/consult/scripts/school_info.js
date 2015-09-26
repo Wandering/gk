@@ -25,18 +25,14 @@ define(function(require) {
         },
         getData: function() {
             var that = this;
-            //$.get('', function(data) {
-            //    if ('0000000' === data.rtnCode) {
-            //        $.each(['provinces', 'universityType', 'universityBatch', 'universityFeature'], function(i, value) {
-            //            that.show(value, data.bizData[value]);
-            //        })
-            //    }
-            //});
-
-            $.each(['provinces', 'universityType', 'universityBatch', 'universityFeature'], function(i, value) {
-                that.show(value, testData[value]);
+            $.get('/university/getInitInfo.do', function(data) {
+                if ('0000000' === data.rtnCode) {
+                    $.each(['provinces', 'universityType', 'universityBatch', 'universityFeature'], function(i, value) {
+                        that.show(value, data.bizData[value]);
+                    });
+                    that.getSchoolList(1);
+                }
             });
-            this.getSchoolList(1);
         },
         addEventForOption: function() {
             var that = this;
@@ -99,27 +95,38 @@ define(function(require) {
                 universityFeatureText = '';
             }
             var search = $('#school_serach').val();
-            var URL= '';
-            var url = URL + '?provinces=' + provinces + '&provincesText=' + provincesText + '&universityType=' + universityType + '&universityTypeText=' + universityTypeText + '&universityBatch=' + universityBatch + '&universityBatchText=' + universityBatchText + '&universityFeature=' + universityFeature + '&universityFeatureText=' + universityFeatureText + '&pageSize=10&pageNo=' + pageNo + '&searchName=' + search;
             var that = this;
-            //$.get(url, function(data) {
-            //    if ('0000000' === data.rtnCode) {
-            //        var schoolList = data.bizData.schoolList;
-            //        that.renderSchool(schoolList);
-            //        if (pageNo == 1) {
-            //            that.renderPage(1, data.bizData.schoolCount);
-            //            var startNum = (pageNo - 1) * 10 + 1;
-            //            $('.startNum').text(startNum);
-            //
-            //        }
-            //    }
-            //});
 
-            var schoolList = schooldata.schoolList;
-            that.renderSchool(schoolList);
-            if (pageNo == 1) {
-                that.renderPage(1, schooldata.schoolCount);
-            }
+            $.ajax({
+                type: 'post',
+                url: '/university/getUniversityList.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    provinceId:provinces,
+                    provinceName:provincesText,
+                    universityTypeId:universityType,
+                    universityTypeName:universityTypeText,
+                    universityBatchId:universityBatch,
+                    universityBatchName:universityBatchText,
+                    universityFeatureId:universityFeature,
+                    universityFeatureName:universityFeatureText,
+                    pageSize:10,
+                    pageNo:pageNo,
+                    searchName:search
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if ('0000000' === data.rtnCode) {
+                        var schoolList = data.bizData.schoolList;
+                        that.renderSchool(schoolList);
+                        if (pageNo == 1) {
+                            that.renderPage(1, data.bizData.schoolCount);
+                        }
+                    }
+                },
+                error: function(data) {
+                }
+            });
         },
         renderPage: function(curPage, totals) {
             this.totalPage = Math.ceil(totals / 10);

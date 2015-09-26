@@ -15,12 +15,22 @@ define(function (require) {
     var Info = {
         getBasicInfo: function(code) {
             var that = this;
-            //$.get('', function(data) {
-            //    if ('0000000' === data.rtnCode) {
-            //
-            //    }
-            //});
-            that.renderInfo(BasicInfoForTest);
+            $.ajax({
+                type: 'post',
+                url: '/university/getUniversityDetail.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    code:code
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if ('0000000' === data.rtnCode) {
+                        that.renderInfo(data.bizData);
+                    }
+                },
+                error: function(data) {
+                }
+            });
         },
         renderInfo: function(obj) {
             $('#info_content').html('<img class="fl" src="' + obj.universityImage + '" />'
@@ -40,12 +50,22 @@ define(function (require) {
         },
         getSchoolInfo: function(code) {
             var that = this;
-            //$.get('', function(data) {
-            //    if ('0000000' === data.rtnCode) {
-            //
-            //    }
-            //});
-            that.renderSchool(getEnrollInfo.enrollInfo);
+            $.ajax({
+                type: 'post',
+                url: '/university/getEnrollInfo.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    code:code
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if ('0000000' === data.rtnCode) {
+                        that.renderSchool(data.bizData.enrollInfo);
+                    }
+                },
+                error: function(data) {
+                }
+            });
         },
         renderSchool: function(data) {
             var tab = [];
@@ -103,12 +123,22 @@ define(function (require) {
         },
         getEnroll: function(code) {
             var that = this;
-            //$.get('', function(data) {
-            //    if ('0000000' === data.rtnCode) {
-            //
-            //    }
-            //});
-            that.renderEnrollTable(getEnrollPlan);
+            $.ajax({
+                type: 'post',
+                url: '/university/getEnrollPlan.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    code:code
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if ('0000000' === data.rtnCode) {
+                        that.renderEnrollTable(data.bizData);
+                    }
+                },
+                error: function(data) {
+                }
+            });
         },
         renderEnrollTable: function(infos) {
             var tabContent = [];
