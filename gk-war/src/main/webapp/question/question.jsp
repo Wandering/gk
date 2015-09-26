@@ -27,13 +27,13 @@
         <section class="section-article">
             <div class="search-content ta">
                  <span>
-                     <input type="text" placeholder="请输入专业名称进行搜索"/>
+                     <input type="text" placeholder="请输入你要提问的问题关键字"/>
                      <input type="button" value="搜索"/>
-                     <button>我要提问</button>
+                     <a target="_blank" href="/question/ask.jsp">我要提问</a>
                 </span>
             </div>
 
-            <ul class="tabs-list mt60">
+            <ul class="tabs-list mt60" id="tabs_list">
                 <li class="active" data-method="getNew">最新问题</li>
                 <li data-method="getHot">热门问题</li>
             </ul>
