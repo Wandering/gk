@@ -18,7 +18,7 @@ define(function (require) {
         });
         $('.go-search').click(function () {
             var searchText = $('.search-val').val();
-            window.location.assign(url + '/question/question_search_result.jsp?val=' + searchText);
+            window.location.assign(url + '/question/question.jsp?val=' + searchText);
         });
         $('#tabs-online').find('li').click(function () {
             var n = $(this).index();
