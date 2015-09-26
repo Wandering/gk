@@ -410,7 +410,9 @@ input, textarea {
     color: #b1b0b0 !important;
     text-decoration: none;
     font-size: 14px !important;
-    margin-left: 70px !important; }
+    margin-left: 70px !important;
+    -webkit-transition: all 0.5s;
+            transition: all 0.5s; }
     .header .log-reg a:hover {
       color: #fff !important; }
   .header .user-info-list {
@@ -1032,7 +1034,9 @@ input, textarea {
     color: #b1b0b0 !important;
     text-decoration: none;
     font-size: 14px !important;
-    margin-left: 70px !important; }
+    margin-left: 70px !important;
+    -webkit-transition: all 0.5s;
+            transition: all 0.5s; }
     .header .log-reg a:hover {
       color: #fff !important; }
   .header .user-info-list {

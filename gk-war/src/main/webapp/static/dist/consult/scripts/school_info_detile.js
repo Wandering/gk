@@ -168,6 +168,14 @@ define(function (require) {
             } else {
                 $('#category').show();
             }
+        },
+        categoryHandle: function() {
+            $('#category button').on('click', function(e) {
+                $(this).addClass('active').siblings().removeClass('active');
+            });
+        },
+        filterEnroll: function(categoryId) {
+
         }
     };
 
