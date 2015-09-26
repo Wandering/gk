@@ -17,11 +17,11 @@ define(function (require) {
             type: 1
         },
         success: function (res) {
-            console.log(res);
+            //console.log(res);
             if (res.rtnCode == '0000000') {
                 var dataJson = res.bizData;
                 $.each(dataJson, function (i, v) {
-                    console.log(v.imageUrl)
+                    //console.log(v.imageUrl);
                     //$('.banner-toggle').attr('src',v);
                 })
             }
