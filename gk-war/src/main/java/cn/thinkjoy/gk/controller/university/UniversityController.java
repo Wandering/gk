@@ -4,7 +4,7 @@ package cn.thinkjoy.gk.controller.university;
  * Created by wpliu on 15/9/25.
  */
 
-import cn.thinkjoy.gk.IUniversityService;
+import cn.thinkjoy.gk.IExUniversityService;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.dto.*;
 import cn.thinkjoy.gk.query.UniversityQuery;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +33,7 @@ public class UniversityController extends BaseController {
     public static final Logger LOGGER= LoggerFactory.getLogger(UniversityController.class);
 
     @Autowired
-    private IUniversityService iUniversityService;
+    private IExUniversityService iUniversityService;
     /**
      * 获取初始化信息
      * @return

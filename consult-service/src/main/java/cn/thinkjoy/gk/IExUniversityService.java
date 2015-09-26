@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by wpliu on 15/9/25.
  */
-public interface IUniversityService {
+public interface IExUniversityService {
 
     List<Map> getProvinces();
 
