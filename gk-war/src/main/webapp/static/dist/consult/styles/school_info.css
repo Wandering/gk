@@ -613,7 +613,8 @@ a.next-btn:hover {
       padding: 5px 15px;
       display: inline-block;
       margin-bottom: 5px;
-      color: #444444; }
+      color: #444444;
+      cursor: pointer; }
       .select-option li a.active {
         background-color: #e24333;
         border-radius: 5px;
