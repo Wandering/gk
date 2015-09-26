@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/static/dist/consult/styles/consult.css" />
 </head>
 <body>
-<%@ include file="/common/banner-wipe.jsp"%>
+<%@ include file="/common/header.jsp"%>
 
 <div class="content">
     <%@ include file="/common/banner-wipe.jsp"%>
@@ -41,7 +41,7 @@
             </div>
             <p>专业升学测评是一项专门为中国在校中学生升学择业而设计的专业测评软件，在中学生进行专业抉择的关键时刻给予专业的指导及合理的建议。</p>
             <div class="into-evalution ta">
-                <input type="button" value="进入测评" />
+                <a>进入测评</a>
             </div>
         </section>
 
@@ -50,6 +50,9 @@
 </div>
 
 <%@ include file="/common/footer.jsp"%>
+<script type="text/javascript">
+    seajs.use("${ctx}/static/src/consult/scripts/consult");
+</script>
 </body>
 </html>
 
