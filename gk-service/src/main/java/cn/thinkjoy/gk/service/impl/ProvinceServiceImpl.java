@@ -1,21 +1,26 @@
 /*
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
- * Project Name: shishuo
- * $Id:  ProvinceServiceImpl.java 2015-09-21 16:58:04 $
+ * Project Name: gaokao
+ * $Id:  ProvinceServiceImpl.java 2015-09-26 09:20:33 $
  */
 package cn.thinkjoy.gk.service.impl;
 
+import cn.thinkjoy.common.domain.BaseDomain;
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.gk.dao.IProvinceDAO;
 import cn.thinkjoy.gk.domain.Province;
+import cn.thinkjoy.gk.service.IProvinceService;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 
 @Service("ProvinceServiceImpl")
-public class ProvinceServiceImpl extends AbstractPageService<IBaseDAO<Province>, Province> implements cn.thinkjoy.common.service.IBaseService<IBaseDAO<Province>, Province>, cn.thinkjoy.common.service.IPageService<IBaseDAO<Province>, Province> {
+public class ProvinceServiceImpl extends AbstractPageService<IBaseDAO<Province>, Province> implements IProvinceService<IBaseDAO<Province>,Province>{
     @Autowired
     private IProvinceDAO provinceDAO;
 

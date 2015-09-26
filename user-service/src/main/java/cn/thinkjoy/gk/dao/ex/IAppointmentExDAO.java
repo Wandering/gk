@@ -11,9 +11,12 @@ import cn.thinkjoy.gk.domain.Appointment;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IAppointmentExDAO {
-   List<Appointment> queryListByTitleKey(@Param("titleKey") String titleKey) ;
-	
+  // List<Appointment> queryListByTitleKey(@Param("titleKey") String titleKey) ;
+   List<Appointment> like(@Param("map") Map<String,Object> map, @Param("orderBy") String orderBy,@Param("sortBy") String sortBy, @Param("offset") Integer offset,  @Param("rows") Integer rows);
+
+
 
 }
