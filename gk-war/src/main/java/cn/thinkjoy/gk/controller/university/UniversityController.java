@@ -4,7 +4,7 @@ package cn.thinkjoy.gk.controller.university;
  * Created by wpliu on 15/9/25.
  */
 
-import cn.thinkjoy.gk.IExUniversityService;
+import cn.thinkjoy.gk.service.IExUniversityService;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.dto.*;
 import cn.thinkjoy.gk.query.UniversityQuery;

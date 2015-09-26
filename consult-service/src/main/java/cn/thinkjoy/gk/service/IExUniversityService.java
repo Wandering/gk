@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk;
+package cn.thinkjoy.gk.service;
 
 import cn.thinkjoy.gk.dto.EnrollInfo;
 import cn.thinkjoy.gk.dto.PlanInfo;
