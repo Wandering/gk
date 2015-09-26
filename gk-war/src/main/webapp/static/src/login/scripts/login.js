@@ -62,9 +62,9 @@ define(function (require) {
                 success: function (res) {
                     console.log(res);
                     if (res.rtnCode == '0000000') {
-                        //window.location.assign('http://'+window.location.host+'/index.jsp');
+                        window.location.assign('http://'+window.location.host+'/index.jsp');
                     }else{
-                        Dom.errorTip1.text(res.bizData);
+                        Dom.errorTip1.text(res.msg);
                     }
                 }
             })
