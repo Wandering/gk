@@ -7,6 +7,8 @@ define(function (require) {
     require('swiper');
 
     var School = {
+        curPage:1,
+        totalPage:0,
         render: function(ele, data) {
             var html = [];
             var i = 0,len = data.length;
@@ -20,10 +22,22 @@ define(function (require) {
             this.render($('#' + eleId), data);
         },
         getData: function() {
+            var that = this;
             $.get('', function(data) {
-                $.each(['provinces','universityType', 'universityBatch', 'universityFeature'], function(i, value) {
-
-                })
+                if ('0000000' === data.rtnCode) {
+                    $.each(['provinces','universityType', 'universityBatch', 'universityFeature'], function(i, value) {
+                        that.show(value, data.bizData[value]);
+                    })
+                }
+            });
+        },
+        addEventForOption: function() {
+            var that = this;
+            $('.options a').on('click', function(e) {
+                if (!$(this).hasClass('active')) {
+                    $(this).addClass('active').siblings().removeClass('active');
+                    that.getSchoolList(1);
+                }
             });
         },
         renderSchool: function(data) {
@@ -59,9 +73,80 @@ define(function (require) {
         },
         getSchoolList: function(pageNo) {
             var provinces = $('#provinces a.active').attr('id');
+            var provincesText = $('#provinces a.active').text();
+            if ('全部' === provincesText) {
+                provincesText = '';
+            }
             var universityType = $('#universityType a.active').attr('id');
+            var universityTypeText = $('#universityType a.active').text();
+            if ('全部' === universityTypeText) {
+                universityTypeText = '';
+            }
             var universityBatch = $('#universityBatch a.active').attr('id');
+            var universityBatchText = $('#universityBatch a.active').text();
+            if ('全部' === universityBatchText) {
+                universityBatchText = '';
+            }
             var universityFeature = $('#universityFeature a.active').attr('id');
+            var universityFeatureText = $('#universityFeature a.active').text();
+            if ('全部' === universityFeatureText) {
+                universityFeatureText = '';
+            }
+            var search = $('#school_serach').val();
+            var url = url + '?provinces=' + provinces + '&provincesText=' + provincesText
+                            + '&universityType=' + universityType + '&universityTypeText=' + universityTypeText
+                            + '&universityBatch=' + universityBatch + '&universityBatchText=' + universityBatchText
+                            + '&universityFeature=' + universityFeature + '&universityFeatureText=' + universityFeatureText
+                            + '&pageSize=10&pageNo=' + pageNo + '&searchName=' + search;
+            var that = this;
+            $.get(url, function(data) {
+                if ('0000000' === data.rtnCode) {
+                    var schoolList = data.bizData.schoolList;
+                    that.renderSchool(schoolList);
+                    if (pageNo == 1) {
+                        that.renderPage(1, data.bizData.schoolCount);
+                        var startNum = (pageNo - 1) * 10 + 1;
+                        $('.startNum').text(startNum);
+
+                    }
+                }
+            });
+        },
+        renderPage: function(curPage, totals) {
+            this.totalPage = Math.ceil(totals / 10);
+            var pageHtml = [];
+            var startNum = (curPage - 1) * 10 + 1;
+            pageHtml.push('<span class="record">共' + totals + '条记录 <span class="startNum">' + startNum + '</span>/' + totals + '</span>');
+            pageHtml.push('<a class="previous-page">上一页</a>');
+            for (var i = 0; i < this.totalPage; i++) {
+                var page = i + 1;
+                if (curPage == page) {
+                    pageHtml.push('<a class="active">' + page + '</a>');
+                } else {
+                    pageHtml.push('<a>' + page + '</a>');
+                }
+            }
+            pageHtml.push('<a class="next-page">下一页</a>');
+            $('#page').html(pageHtml.join(''));
+        },
+        pageEventHandle: function() {
+            var that = this;
+            $('#page a').on('click', function(e) {
+                if (!$(this).hasClass('active')) {
+                    $(this).addClass('active').siblings().removeClass('active');
+                    if ($(this).hasClass('previous-page')) {
+                        that.curPage--;
+                    } else if ($(this).hasClass('next-page')) {
+                        that.curPage++;
+                    } else {
+                        that.curPage = parseInt($(this).text());
+                    }
+
+                    if (that.curPage > 0 && that.curPage <= this.totalPage) {
+                        that.getSchoolList(that.curPage);
+                    }
+                }
+            });
         }
     }
 

@@ -2,10 +2,6 @@
  * Created by kepeng on 15/9/24.
  */
 
-/**
- * Created by kepeng on 15/9/24.
- */
-
 define(function (require) {
     var $ = require('$');
     require('swiper');
@@ -17,7 +13,7 @@ define(function (require) {
                 var question = data[i].question;
                 if (question) {
                     html.push('<section class="ask-answer mt20">');
-                    html.push('<div class="ask mt20">');
+                    html.push('<a target="_blank" href="/question/question_detile.jsp?id=' + question.userId + '"><div class="ask mt20">');
                     html.push('<div class="head-img">');
                     html.push('<img src="' + question.userIcon || '' + '" />');
                     html.push('</div>');
@@ -29,7 +25,7 @@ define(function (require) {
                         text.push(questions[i].text);
                     }
                     html.push('<h3>' + text.join('') + '</h3>');
-                    html.push('</div></div>');
+                    html.push('</div></div></a>');
                 }
 
                 var answer = data[i].answer;
@@ -39,6 +35,8 @@ define(function (require) {
                 }
                 html.push('</section>');
             }
+
+            $('#question_content').html(html.join(''));
         },
         renderAnswer: function(answer) {
             var html = [];
@@ -61,22 +59,29 @@ define(function (require) {
             html.push('</li></ul>');
         },
         getNew: function(startSize, endSize) {
+            var that = this;
             $.get('/question/newQuestion.do?startSize=' + startSize + '&endSize=' + endSize, function(data) {
-
+                if ('0000000' === data.rtnCode) {
+                    that.renderAsk(data.bizData);
+                }
             });
         },
         getHot: function(startSize, endSize) {
+            var that = this;
             $.get('/question/hotQuestion.do?startSize=' + startSize + '&endSize=' + endSize, function(data) {
-
+                if ('0000000' === data.rtnCode) {
+                    that.renderAsk(data.bizData);
+                }
             });
         }
     }
 
     $(document).ready(function() {
+        Question.getNew(0, 10);
         $('.tabs-list li').on('mouseover', function(e) {
             if (!$(this).hasClass('active')) {
                 $(this).addClass('active').siblings().removeClass('active');
-                Question[$(this).attr('data-method')]();
+                Question[$(this).attr('data-method')](0, 10);
             }
         });
     });

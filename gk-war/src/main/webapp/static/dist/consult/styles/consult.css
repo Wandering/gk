@@ -581,11 +581,14 @@ section:last-child {
     color: #fff;
     padding-left: 10px; }
 
-.into-evalution input[type="button"] {
+.into-evalution a {
   width: 278px;
   height: 45px;
+  line-height: 45px;
   border: 1px solid #cc0001;
   border-radius: 5px;
   background: url("../../common/images/into-icon.png") no-repeat 90px center;
   padding-left: 40px;
-  color: #cc0001; }
+  color: #cc0001;
+  display: inline-block;
+  cursor: pointer; }
