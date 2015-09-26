@@ -21,7 +21,7 @@
     <div class="log-reg hide">
       <a href="/login/login.jsp">登陆/注册</a>
     </div>
-    <div class="user-info-list fr">
+    <div class="user-info-list fr hide">
       <div class="user">
         <img src="" alt="avatar" class="user-avatar"/>
         <a href="" class="username"></a>
