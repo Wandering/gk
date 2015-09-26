@@ -4,11 +4,9 @@ package cn.thinkjoy.gk.controller.university;
  * Created by wpliu on 15/9/25.
  */
 
-import cn.thinkjoy.gk.IUniversityService;
+import cn.thinkjoy.gk.service.IExUniversityService;
 import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.dto.EntrollPlanDto;
-import cn.thinkjoy.gk.dto.UniversityDto;
-import cn.thinkjoy.gk.dto.UniversityResponseDto;
+import cn.thinkjoy.gk.dto.*;
 import cn.thinkjoy.gk.query.UniversityQuery;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +33,7 @@ public class UniversityController extends BaseController {
     public static final Logger LOGGER= LoggerFactory.getLogger(UniversityController.class);
 
     @Autowired
-    private IUniversityService iUniversityService;
+    private IExUniversityService iUniversityService;
     /**
      * 获取初始化信息
      * @return
@@ -96,8 +93,18 @@ public class UniversityController extends BaseController {
     public Map<String,Object> getEnrollInfo(){
         String schoolCode=request.getParameter("code");
         Map<String,Object> map=new HashMap<String, Object>();
-
-        map.put("enrollInfo","");
+        List<EnrollResponseDto>  enrollResponseDtoList=new ArrayList<EnrollResponseDto>();
+        List<EnrollInfo>  lastenrollInfos=iUniversityService.getEnrollInfoByYear(2014);
+        List<EnrollInfo>  enrollInfos=iUniversityService.getEnrollInfoByYear(2013);
+        EnrollResponseDto lastEnrollResponseDto=new EnrollResponseDto();
+        lastEnrollResponseDto.setTitle("2013招生情况");
+        lastEnrollResponseDto.setInfos(lastenrollInfos);
+        EnrollResponseDto enrollResponseDto=new EnrollResponseDto();
+        enrollResponseDto.setTitle("2014招生情况");
+        enrollResponseDto.setInfos(enrollInfos);
+        enrollResponseDtoList.add(enrollResponseDto);
+        enrollResponseDtoList.add(lastEnrollResponseDto);
+        map.put("enrollInfo",enrollResponseDtoList);
         return map;
     }
 
@@ -110,6 +117,29 @@ public class UniversityController extends BaseController {
     public EntrollPlanDto getEnrollPlan(){
         String schoolCode=request.getParameter("code");
         EntrollPlanDto entrollPlanDto=new EntrollPlanDto();
+        List<EntrollPlan> entrollPlans=new ArrayList<EntrollPlan>();
+
+        EntrollPlan entrollPlan=new EntrollPlan();
+        EntrollPlan lastEntrollPlan=new EntrollPlan();
+        List<PlanInfo> planInfos=iUniversityService.getPlanInfosByYear(2015);
+        List<PlanInfo> lastPlanInfos=iUniversityService.getPlanInfosByYear(2014);
+        entrollPlan.setTitle("2015年招生计划");
+        entrollPlan.setPlanInfos(planInfos);
+        lastEntrollPlan.setTitle("2014年招生计划");
+        lastEntrollPlan.setPlanInfos(lastPlanInfos);
+        /**
+         * 招生简介
+         */
+        String entroIntro=iUniversityService.getUniversityEnrollIntro(schoolCode);
+        /**
+         * 大学介绍
+         */
+        String  universityIntro=iUniversityService.getUniversityEnrollIntro(schoolCode);
+
+        entrollPlanDto.setEntroIntro(entroIntro);
+        entrollPlanDto.setUniversityIntro(universityIntro);
+        entrollPlanDto.setEnrollPlan(entrollPlans);
+
         return  entrollPlanDto;
     }
 }
