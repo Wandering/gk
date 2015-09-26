@@ -6,9 +6,7 @@ package cn.thinkjoy.gk.controller.university;
 
 import cn.thinkjoy.gk.IUniversityService;
 import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.dto.EntrollPlanDto;
-import cn.thinkjoy.gk.dto.UniversityDto;
-import cn.thinkjoy.gk.dto.UniversityResponseDto;
+import cn.thinkjoy.gk.dto.*;
 import cn.thinkjoy.gk.query.UniversityQuery;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
@@ -94,11 +92,18 @@ public class UniversityController extends BaseController {
     @RequestMapping(value = "/getEnrollInfo",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> getEnrollInfo(){
-        String schoolCode=request.getParameter("code");
-        Map<String,Object> map=new HashMap<String, Object>();
-
-        map.put("enrollInfo","");
-        return map;
+//        String schoolCode=request.getParameter("code");
+//        Map<String,Object> map=new HashMap<String, Object>();
+//        List<EnrollResponseDto>  enrollResponseDtoList=new ArrayList<EnrollResponseDto>();
+//        EnrollResponseDto lastEnrollResponseDto=new EnrollResponseDto();
+//        lastEnrollResponseDto.setTitle("2015招生情况");
+//        EnrollResponseDto lastLastEnrollResponseDto=new EnrollResponseDto();
+//        enrollResponseDto.setTitle("2015");
+//        List<EnrollInfo>  lastenrollInfos=iUniversityService.getEnrollInfoByYear(2014);
+//        List<EnrollInfo>  enrollInfos=iUniversityService.getEnrollInfoByYear(2015);
+//        EnrollResponseDto enrollResponseDto=new EnrollResponseDto();
+//        map.put("enrollInfo","");
+        return null;
     }
 
     /**
