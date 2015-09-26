@@ -122,7 +122,7 @@
 
             <div class="search-content ta mt40">
                  <span>
-                     <input type="text" placeholder="请输入专业名称进行搜索" class="search-val"/>
+                     <input type="text" placeholder="请输入你要提问的问题关键字" class="search-val"/>
                      <input type="button" value="搜索" class="go-search"/>
                      <button class="ask-question">我要提问</button>
                 </span>

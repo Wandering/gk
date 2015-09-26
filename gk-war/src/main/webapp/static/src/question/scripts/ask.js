@@ -11,7 +11,6 @@ define(function (require) {
         var location = window.location;
         var redirectPath = location.protocol + '//' + location.host + '/question/proxy.html';
         editor = K.create('textarea[name="content"]', {
-            width : '100%',
             resizeType : 1,
             allowImageRemote : false,
             formatUploadUrl:false,
@@ -69,6 +68,37 @@ define(function (require) {
             }, 2000)
             return;
         }
+
+        var questions = [{
+            text:title,
+            img:content
+        }];
+        var flag = false;
+        if (!flag) {
+            flag = true
+            $.ajax({
+                type: 'post',
+                url: '/question/insert.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    questions:questions,
+                    expertId:questionId,
+                    questionId:questionId,
+                    disableExpertId:disableExpertId
+                },
+                dataType: 'json',
+                success: function(data) {
+                    flag = false;
+                    if ('0000000' === data.rtnCode) {
+                    } else {
+                    }
+                },
+                error: function(data) {
+                    flag = false;
+                }
+            });
+        }
+
     }
 
     $(document).ready(function() {
