@@ -6,11 +6,29 @@ define(function (require) {
     var $ = require('$');
     require('swiper');
 
-    var Info = {
-        getBasicInfo: function() {
-            $.get('', function(data) {
-                if ('0000000' === data.rtnCode) {
+    function getUrLinKey(name) {
+        var reg = new RegExp("(^|\\?|&)" + name + "=([^&]*)(\\s|&|$)", "i");
+        if (reg.test(window.location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
+        return "";
+    }
 
+    var Info = {
+        getBasicInfo: function(code) {
+            var that = this;
+            $.ajax({
+                type: 'post',
+                url: '/university/getUniversityDetail.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    code:code
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if ('0000000' === data.rtnCode) {
+                        that.renderInfo(data.bizData);
+                    }
+                },
+                error: function(data) {
                 }
             });
         },
@@ -30,10 +48,22 @@ define(function (require) {
                                         + '</ul>'
                                     + '</div>');
         },
-        getSchoolInfo: function() {
-            $.get('', function(data) {
-                if ('0000000' === data.rtnCode) {
-
+        getSchoolInfo: function(code) {
+            var that = this;
+            $.ajax({
+                type: 'post',
+                url: '/university/getEnrollInfo.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    code:code
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if ('0000000' === data.rtnCode) {
+                        that.renderSchool(data.bizData.enrollInfo);
+                    }
+                },
+                error: function(data) {
                 }
             });
         },
@@ -91,10 +121,22 @@ define(function (require) {
                 }
             });
         },
-        getEnroll: function() {
-            $.get('', function(data) {
-                if ('0000000' === data.rtnCode) {
-
+        getEnroll: function(code) {
+            var that = this;
+            $.ajax({
+                type: 'post',
+                url: '/university/getEnrollPlan.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    code:code
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if ('0000000' === data.rtnCode) {
+                        that.renderEnrollTable(data.bizData);
+                    }
+                },
+                error: function(data) {
                 }
             });
         },
@@ -316,8 +358,9 @@ define(function (require) {
     };
 
     $(document).ready(function() {
-        Info.renderInfo(BasicInfoForTest);
-        Info.renderSchool(getEnrollInfo.enrollInfo);
-        Info.renderEnroll(getEnrollPlan);
+        var code = getUrLinKey('id');
+        Info.getBasicInfo(code);
+        Info.getSchoolInfo(code);
+        Info.getEnroll(code);
     });
 });

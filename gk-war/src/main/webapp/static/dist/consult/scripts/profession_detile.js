@@ -6,11 +6,29 @@ define(function (require) {
     var $ = require('$');
     require('swiper');
 
-    var Info = {
-        getProfessionInfo: function() {
-            $.get('', function(data) {
-                if ('0000000' === data.rtnCode) {
+    function getUrLinKey(name) {
+        var reg = new RegExp("(^|\\?|&)" + name + "=([^&]*)(\\s|&|$)", "i");
+        if (reg.test(window.location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
+        return "";
+    }
 
+    var Info = {
+        getProfessionInfo: function(code) {
+            var that = this;
+            $.ajax({
+                type: 'post',
+                url: '/majored/getMajoredInfo.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    code:code
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if ('0000000' === data.rtnCode) {
+                        that.renderInfo(data.bizData);
+                    }
+                },
+                error: function(data) {
                 }
             });
         },
@@ -26,15 +44,26 @@ define(function (require) {
                                         + '</ul>'
                                     + '</div>');
         },
-        getReationInfo: function() {
-            //$.get('', function(data) {
-            //    if ('0000000' === data.rtnCode) {
-            //
-            //    }
-            //});
-            this.renderReation(testData);
-            $('#tab_0').show()
-            this.addEventHandleTab();
+        getReationInfo: function(code) {
+            var that = this;
+            $.ajax({
+                type: 'post',
+                url: '/majored/getMajoredDetail.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    code:code
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if ('0000000' === data.rtnCode) {
+                        that.renderReation(data.bizData);
+                        $('#tab_0').show()
+                        that.addEventHandleTab();
+                    }
+                },
+                error: function(data) {
+                }
+            });
         },
         addEventHandleTab: function() {
             $('.tabs-list li').on('mouseover', function(e) {
@@ -105,7 +134,8 @@ define(function (require) {
     }
 
     $(document).ready(function() {
-        Info.renderInfo(getInitInfo);
-        Info.getReationInfo();
+        var code = getUrLinKey('id');
+        Info.getProfessionInfo(code);
+        Info.getReationInfo(code);
     });
 });
