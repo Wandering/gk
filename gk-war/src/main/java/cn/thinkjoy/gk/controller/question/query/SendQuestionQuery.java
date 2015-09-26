@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class SendQuestionQuery implements Serializable {
 
-	private String questionHtml;
+	private String question;
 
 	private Long expertId;
 
@@ -19,12 +19,12 @@ public class SendQuestionQuery implements Serializable {
 
 	private Long disableExpertId;
 
-	public String getQuestionHtml() {
-		return questionHtml;
+	public String getQuestion() {
+		return question;
 	}
 
-	public void setQuestionHtml(String questionHtml) {
-		this.questionHtml = questionHtml;
+	public void setQuestion(String question) {
+		this.question = question;
 	}
 
 	public Long getExpertId() {

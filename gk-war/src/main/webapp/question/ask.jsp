@@ -27,7 +27,7 @@
         <h1 class="search-result-num">提问</h1>
         <div class="ask-title">
             <p style="display: none;color: #f00;margin: 20px 0" id="error"></p>
-            <input type="text" placeholder="请填写标题" id="title">
+            <%--<input type="text" placeholder="请填写标题" id="title">--%>
             <div class="mt20">
                 <textarea name="content" id="content"></textarea>
             </div>
@@ -38,12 +38,12 @@
 
 <%@ include file="/common/footer.jsp"%>
 
-<div class="custom-model" style="display: none">
+<div class="custom-model" style="display: none" id="custom_model">
     <div class="custom-content">
-        <div class="custom-head"></div>
-        <div class="custom-body"></div>
+        <div class="custom-head">提交成功</div>
+        <div class="custom-body">您的提问正在审核，审核后会出现在最新提问栏目中</div>
         <div class="custom-footer ta">
-            <button>提交</button>
+            <button id="model_button">提交</button>
         </div>
     </div>
 </div>
