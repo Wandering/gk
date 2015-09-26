@@ -645,7 +645,7 @@ section:last-child {
           position: relative;
           top: 10px; }
       .ask-answer .answer-list li .right {
-        height: 128px;
+        height: auto;
         background-color: #f9f9f9;
         margin-left: 100px;
         border: 1px solid #f9f9f9;
@@ -653,3 +653,5 @@ section:last-child {
         line-height: 30px;
         font-size: 14px;
         color: #8c8c8c; }
+        .ask-answer .answer-list li .right img {
+          max-width: 50%; }

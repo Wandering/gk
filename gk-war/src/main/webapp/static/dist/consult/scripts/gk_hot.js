@@ -16,8 +16,8 @@ define(function (require) {
                 var num = i + 1 + 4 * (pageNO - 1);
                 html.push('<span class="order-number">' + num + '</span>');
                 html.push('<span class="detile-title">' + data[i].hotInformation + '</span>');
-                //var date = new Date(data[i].date).Format('yyyy-MM-dd hh:mm');
-                html.push('<span class="fr">上传时间：2015-05-15 09:52</span>');
+                var date = new Date(data[i].createDate).Format('yyyy-MM-dd hh:mm');
+                html.push('<span class="fr">上传时间：' + date + '</span>');
                 html.push('</div>');
                 html.push('<div class="detile-info mt20">');
                 html.push(data[i].informationContent);
