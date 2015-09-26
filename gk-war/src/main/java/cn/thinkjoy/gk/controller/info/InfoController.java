@@ -7,6 +7,7 @@ import cn.thinkjoy.gk.domain.UserInfo;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IUserAccountExService;
+import cn.thinkjoy.gk.service.IUserAccountService;
 import cn.thinkjoy.gk.service.IUserInfoExService;
 import com.jlusoft.microschool.core.utils.MD5Util;
 import org.apache.commons.lang3.StringUtils;
@@ -33,6 +34,9 @@ public class InfoController extends BaseController {
 
     @Autowired
     private IUserAccountExService userAccountExService;
+
+    @Autowired
+    private IUserAccountService userAccountService;
 
     /**
      * 查询显示个人信息
@@ -67,6 +71,7 @@ public class InfoController extends BaseController {
                                  @RequestParam(value="countyId",required = true) long countyId,
                                  @RequestParam(value="schoolName",required = true) String schoolName,
                                  @RequestParam(value="sex",required = true) int sex,
+                                 @RequestParam(value="birthdayDate",required = true) long birthdayDate,
                                  @RequestParam(value="subjectType",required = true) int subjectType,
                                  @RequestParam(value="mail",required = true) String mail,
                                  @RequestParam(value="icon",required = true) String icon,
@@ -79,6 +84,7 @@ public class InfoController extends BaseController {
             userInfo.setCountyId(countyId);
             userInfo.setSchoolName(schoolName);
             userInfo.setSex(sex);
+            userInfo.setBirthdayDate(birthdayDate);
             userInfo.setSubjectType(subjectType);
             userInfo.setMail(mail);
             userInfo.setQq(qq);
@@ -92,19 +98,18 @@ public class InfoController extends BaseController {
 
     /**
      * 修改密码时验证旧密码
-     * @param account
      * @param oldPassword
      * @return
      */
     @RequestMapping(value = "confirmPassword",method = RequestMethod.POST)
     @ResponseBody
-    public String confirmPassword(@RequestParam(value="account",required = true) String account,
-                                  @RequestParam(value = "oldPassword",required = true)String oldPassword){
-        UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
-        if (userAccountBean==null){
+    public String confirmPassword(@RequestParam(value = "oldPassword",required = true)String oldPassword){
+        String id=getCookieValue();
+        UserAccount userAccount = userAccountExService.findUserAccountById(Long.valueOf(id));
+        if (userAccount==null){
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号信息有误!");
         }
-        if (!MD5Util.MD5Encode(userAccountBean.getPassword()).equals(MD5Util.MD5Encode(oldPassword))){
+        if (!userAccount.getPassword().equals(MD5Util.MD5Encode(oldPassword))){
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "当前密码有误，请重试!");
         }
         return "success";
@@ -112,33 +117,35 @@ public class InfoController extends BaseController {
 
     /**
      * 保存新密码
-     * @param account
      * @param oldPassword
      * @param password
      * @return
      */
     @RequestMapping(value = "modifyPassword",method = RequestMethod.POST)
     @ResponseBody
-    public String modifyPassword(@RequestParam(value="account",required = false) String account,
-                                 @RequestParam(value = "oldPassword",required = true)String oldPassword,
+    public String modifyPassword(@RequestParam(value = "oldPassword",required = true)String oldPassword,
                                  @RequestParam(value="password",required = false) String password){
         try{
-            if (StringUtils.isEmpty(account)) {
-                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
-            }
+
             if (StringUtils.isEmpty(password)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入密码!");
             }
-            UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
-            if (userAccountBean==null){
-                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号信息有误!");
-            }
-            if (!MD5Util.MD5Encode(userAccountBean.getPassword()).equals(MD5Util.MD5Encode(oldPassword))){
-                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "当前密码有误，请重试!");
+            if (StringUtils.isEmpty(oldPassword)) {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入密码!");
             }
 
             //根据账号id查询账号
-            UserAccount userAccount = userAccountExService.findUserAccountById(userAccountBean.getId());
+            String id=getCookieValue();
+            UserAccount userAccount = userAccountExService.findUserAccountById(Long.valueOf(id));
+            if (userAccount==null){
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号信息有误!");
+            }
+            if (!userAccount.getPassword().equals(MD5Util.MD5Encode(oldPassword))){
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "当前密码有误，请重试!");
+            }
+            if (userAccount.getPassword().equals(MD5Util.MD5Encode(password))){
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "新密码不能与旧密码相同!");
+            }
             userAccount.setPassword(MD5Util.MD5Encode(password));
             userAccount.setLastModDate(System.currentTimeMillis());
             try{
@@ -151,7 +158,7 @@ public class InfoController extends BaseController {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"密码重设失败");
             }
         }catch (Exception e){
-            e.printStackTrace();
+            throw e;
         }finally {
 
         }

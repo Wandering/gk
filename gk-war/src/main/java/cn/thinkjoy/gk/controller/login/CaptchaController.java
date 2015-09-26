@@ -45,11 +45,11 @@ public class CaptchaController extends BaseController {
 		JSONObject result = new JSONObject();
 		try{
 			if(StringUtils.isEmpty(account)){
-
+				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "账号不能为空!");
 			}
 
 			if(type==null){
-
+				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "类型不能为空!");
 			}
 
 			int count = userAccountExService.findUserAccountCountByPhone(account);
