@@ -420,9 +420,14 @@ input, textarea {
       height: 32px;
       border-radius: 50%;
       -webkit-border-radius: 50%; }
-    .header .user-info-list .menu a {
-      color: #b1b0b0;
-      text-decoration: none; }
+    .header .user-info-list .menu {
+      position: absolute;
+      background-color: #353535; }
+      .header .user-info-list .menu li {
+        text-align: center; }
+      .header .user-info-list .menu a {
+        color: #b1b0b0;
+        text-decoration: none; }
 
 .footer .bottom-nav {
   padding-top: 50px;
@@ -560,7 +565,8 @@ section:last-child {
   outline: none;
   float: left; }
 
-.search-content button {
+.search-content a {
+  display: inline-block;
   width: 128px;
   height: 40px;
   text-align: center;
@@ -603,12 +609,11 @@ button {
 .ask-title {
   margin-bottom: 50px; }
   .ask-title input {
-    width: 100%;
-    height: 38px;
-    line-height: 38px;
-    border: 1px solid #e7e7e7; }
+    width: 980px;
+    border: 1px solid #e7e7e7;
+    padding: 10px; }
   .ask-title textarea {
-    width: 100%;
+    width: 1000px;
     height: 200px;
     visibility: hidden; }
   .ask-title button {

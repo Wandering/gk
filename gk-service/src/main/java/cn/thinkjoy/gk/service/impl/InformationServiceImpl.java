@@ -24,8 +24,8 @@ public class InformationServiceImpl implements IInformationService {
         return list;
     }
     @Override
-    public List<Information> getInformationByKey(String key) {
-        List<Information> list = informationDAO.getInformationByKey(key);
+    public List<Information> getInformationByKey(String key,Integer offset,Integer rows) {
+        List<Information> list = informationDAO.getInformationByKey(key,offset,rows);
         return list;
     }
 }

@@ -1,0 +1,156 @@
+/**
+ * Created by kepeng on 15/9/25.
+ */
+
+define(function (require) {
+    var $ = require('$');
+    require('swiper');
+
+    var School = {
+        curPage:1,
+        totalPage:0,
+        render: function(ele, data) {
+            var html = [];
+            var i = 0,len = data.length;
+            html.push('<a class="active" id="0">全部</a>');
+            for (; i < len; i++) {
+                html.push('<a id="' + data[i].id + '">' + data[i].name + '</a>');
+            }
+            ele.html(html.join(''));
+        },
+        show: function(eleId, data) {
+            this.render($('#' + eleId), data);
+        },
+        getData: function() {
+            var that = this;
+            $.get('', function(data) {
+                if ('0000000' === data.rtnCode) {
+                    $.each(['provinces','universityType', 'universityBatch', 'universityFeature'], function(i, value) {
+                        that.show(value, data.bizData[value]);
+                    })
+                }
+            });
+        },
+        addEventForOption: function() {
+            var that = this;
+            $('.options a').on('click', function(e) {
+                if (!$(this).hasClass('active')) {
+                    $(this).addClass('active').siblings().removeClass('active');
+                    that.getSchoolList(1);
+                }
+            });
+        },
+        renderSchool: function(data) {
+            var html = [], i = 0, len = data.length;
+            html.push('<table border="0" cellpadding="0" cellspacing="0">'
+                        + '<thead>'
+                            + '<tr>'
+                                + '<th class="name">院校名称</th>'
+                                + '<th>所在地区</th>'
+                                + '<th>院校类型</th>'
+                                + '<th>院校隶属</th>'
+                                + '<th>院校特征</th>'
+                                + '<th>院校信息</th>'
+                            + '</tr>'
+                        + '</thead>'
+                        + '<tbody>');
+            for (; i < len; i++) {
+                var trClass = i % 2 == 0 ? 'active' : '';
+                html.push('<tr class="' + trClass + '">'
+                                + '<td class="name">' + data[i].name + '</td>'
+                                + '<td>' + data[i].provinceName + '</td>'
+                                + '<td>' + data[i].universityType + '</td>'
+                                + '<td>' + data[i].subjection + '</td>'
+                                + '<td>' + data[i].property+ '</td>'
+                                + '<td>'
+                                    + '<a href="/consult/school_detile.jsp?id=' + data[i].id + '">查看详情</a>'
+                                + '</td>'
+                            + '</tr>');
+            }
+            html.push('</tbody>'
+                + '</table>');
+            $('#school_list').html(html.join(''));
+        },
+        getSchoolList: function(pageNo) {
+            var provinces = $('#provinces a.active').attr('id');
+            var provincesText = $('#provinces a.active').text();
+            if ('全部' === provincesText) {
+                provincesText = '';
+            }
+            var universityType = $('#universityType a.active').attr('id');
+            var universityTypeText = $('#universityType a.active').text();
+            if ('全部' === universityTypeText) {
+                universityTypeText = '';
+            }
+            var universityBatch = $('#universityBatch a.active').attr('id');
+            var universityBatchText = $('#universityBatch a.active').text();
+            if ('全部' === universityBatchText) {
+                universityBatchText = '';
+            }
+            var universityFeature = $('#universityFeature a.active').attr('id');
+            var universityFeatureText = $('#universityFeature a.active').text();
+            if ('全部' === universityFeatureText) {
+                universityFeatureText = '';
+            }
+            var search = $('#school_serach').val();
+            var url = url + '?provinces=' + provinces + '&provincesText=' + provincesText
+                            + '&universityType=' + universityType + '&universityTypeText=' + universityTypeText
+                            + '&universityBatch=' + universityBatch + '&universityBatchText=' + universityBatchText
+                            + '&universityFeature=' + universityFeature + '&universityFeatureText=' + universityFeatureText
+                            + '&pageSize=10&pageNo=' + pageNo + '&searchName=' + search;
+            var that = this;
+            $.get(url, function(data) {
+                if ('0000000' === data.rtnCode) {
+                    var schoolList = data.bizData.schoolList;
+                    that.renderSchool(schoolList);
+                    if (pageNo == 1) {
+                        that.renderPage(1, data.bizData.schoolCount);
+                        var startNum = (pageNo - 1) * 10 + 1;
+                        $('.startNum').text(startNum);
+
+                    }
+                }
+            });
+        },
+        renderPage: function(curPage, totals) {
+            this.totalPage = Math.ceil(totals / 10);
+            var pageHtml = [];
+            var startNum = (curPage - 1) * 10 + 1;
+            pageHtml.push('<span class="record">共' + totals + '条记录 <span class="startNum">' + startNum + '</span>/' + totals + '</span>');
+            pageHtml.push('<a class="previous-page">上一页</a>');
+            for (var i = 0; i < this.totalPage; i++) {
+                var page = i + 1;
+                if (curPage == page) {
+                    pageHtml.push('<a class="active">' + page + '</a>');
+                } else {
+                    pageHtml.push('<a>' + page + '</a>');
+                }
+            }
+            pageHtml.push('<a class="next-page">下一页</a>');
+            $('#page').html(pageHtml.join(''));
+        },
+        pageEventHandle: function() {
+            var that = this;
+            $('#page a').on('click', function(e) {
+                if (!$(this).hasClass('active')) {
+                    $(this).addClass('active').siblings().removeClass('active');
+                    if ($(this).hasClass('previous-page')) {
+                        that.curPage--;
+                    } else if ($(this).hasClass('next-page')) {
+                        that.curPage++;
+                    } else {
+                        that.curPage = parseInt($(this).text());
+                    }
+
+                    if (that.curPage > 0 && that.curPage <= this.totalPage) {
+                        that.getSchoolList(that.curPage);
+                    }
+                }
+            });
+        }
+    }
+
+    $(document).ready(function() {
+
+    });
+});

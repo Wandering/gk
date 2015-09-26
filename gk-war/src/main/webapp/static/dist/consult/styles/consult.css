@@ -420,9 +420,14 @@ input, textarea {
       height: 32px;
       border-radius: 50%;
       -webkit-border-radius: 50%; }
-    .header .user-info-list .menu a {
-      color: #b1b0b0;
-      text-decoration: none; }
+    .header .user-info-list .menu {
+      position: absolute;
+      background-color: #353535; }
+      .header .user-info-list .menu li {
+        text-align: center; }
+      .header .user-info-list .menu a {
+        color: #b1b0b0;
+        text-decoration: none; }
 
 .footer .bottom-nav {
   padding-top: 50px;
@@ -581,11 +586,14 @@ section:last-child {
     color: #fff;
     padding-left: 10px; }
 
-.into-evalution input[type="button"] {
+.into-evalution a {
   width: 278px;
   height: 45px;
+  line-height: 45px;
   border: 1px solid #cc0001;
   border-radius: 5px;
   background: url("../../common/images/into-icon.png") no-repeat 90px center;
   padding-left: 40px;
-  color: #cc0001; }
+  color: #cc0001;
+  display: inline-block;
+  cursor: pointer; }

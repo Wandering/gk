@@ -420,9 +420,14 @@ input, textarea {
       height: 32px;
       border-radius: 50%;
       -webkit-border-radius: 50%; }
-    .header .user-info-list .menu a {
-      color: #b1b0b0;
-      text-decoration: none; }
+    .header .user-info-list .menu {
+      position: absolute;
+      background-color: #353535; }
+      .header .user-info-list .menu li {
+        text-align: center; }
+      .header .user-info-list .menu a {
+        color: #b1b0b0;
+        text-decoration: none; }
 
 .footer .bottom-nav {
   padding-top: 50px;
@@ -626,3 +631,20 @@ a.next-btn:hover {
     color: #555; }
   .school-table th {
     color: #444; }
+
+.page {
+  margin: 10px 0;
+  text-align: center;
+  height: 40px; }
+  .page .record {
+    float: left; }
+  .page a {
+    border: 1px solid #e5e5e5;
+    padding: 8px 15px;
+    color: #000;
+    font-size: 14px;
+    cursor: pointer; }
+    .page a.active {
+      color: #fff;
+      background-color: #e24333;
+      border: none; }

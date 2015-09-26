@@ -2,10 +2,6 @@
  * Created by kepeng on 15/9/24.
  */
 
-/**
- * Created by kepeng on 15/9/24.
- */
-
 define(function (require) {
     var $ = require('$');
     require('swiper');
@@ -34,10 +30,32 @@ define(function (require) {
         })
     }
 
+    function getRightInfo() {
+        var code = getUrLinKey('code');
+        if (code) {
+            $.get('/volunteerSchool/ranks.do?cateId=' + code, function(data) {
+                if ('0000000' === data.rtnCode) {
+                    var biz = data.bizData;
+                    if (biz.length > 0) {
+                        var html = [];
+                        html.push('<h3>高考热点</h3>');
+                        html.push('<ul>');
+                        for (var i = 0, len = biz.length; i < len; i++) {
+                            html.push('<li><a target="_blank" href="/consult/gk_hot_detile.jsp?id=' + biz[i].id + '">' + biz[i].title + '</a></li>');
+                        }
+                        html.push('</ul>');
+                        $('#ask_list').html(html.join(''));
+                    }
+                }
+            });
+        }
+    }
+
 
     $(document).ready(function() {
         var id = getUrLinKey('id');
         getArticleDetile(id);
+        getRightInfo();
     });
 });
 

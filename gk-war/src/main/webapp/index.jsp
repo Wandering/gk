@@ -122,13 +122,13 @@
 
             <div class="search-content ta mt40">
                  <span>
-                     <input type="text" placeholder="请输入专业名称进行搜索" class="search-val"/>
+                     <input type="text" placeholder="请输入你要提问的问题关键字" class="search-val"/>
                      <input type="button" value="搜索" class="go-search"/>
                      <button class="ask-question">我要提问</button>
                 </span>
             </div>
 
-            <ul class="tabs-list mt20">
+            <ul class="tabs-list mt20" id="tabs-online">
                 <li class="active">最新解答</li>
                 <li>热门问题</li>
                 <span class="more">MORE</span>
@@ -189,67 +189,23 @@
 
         <div class="page-body hot-news-body">
             <section>
-                <ul class="tabs-list">
-                    <li class=" active">最新解答</li>
-                    <li class="">各地招办联系方式</li>
+                <ul class="tabs-list" id="tabs-hosts">
+                    <li class="active">高考热点</li>
+                    <li>各地招办联系方式</li>
+                    <span class="more" id="hot-info">MORE</span>
                 </ul>
-                <ul class="hot-list mt20">
-                    <li>
-                        <div class="icon ta">
-                            <span>4月25日</span>
-                        </div>
-                        <div class="title-info">
-                            <h3>2016年贵州高考：千万别错过了这些时间点！</h3>
-                            <h6>虽然离高考还有九个多月，不过，想要在明年6月的高考中想要在明年6月的高考中</h6>
-                        </div>
-                    </li>
-                    <li class="ml">
-                        <div class="icon ta">
-                            <span>4月25日</span>
-                        </div>
-                        <div class="title-info">
-                            <h3>2016年贵州高考：千万别错过了这些时间点！</h3>
-                            <h6>虽然离高考还有九个多月，不过，想要在明年6月的高考中想要在明年6月的高考中</h6>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="icon ta">
-                            <span>4月25日</span>
-                        </div>
-                        <div class="title-info">
-                            <h3>2016年贵州高考：千万别错过了这些时间点！</h3>
-                            <h6>虽然离高考还有九个多月，不过，想要在明年6月的高考中想要在明年6月的高考中</h6>
-                        </div>
-                    </li>
-                    <li class="ml">
-                        <div class="icon ta">
-                            <span>4月25日</span>
-                        </div>
-                        <div class="title-info">
-                            <h3>2016年贵州高考：千万别错过了这些时间点！</h3>
-                            <h6>虽然离高考还有九个多月，不过，想要在明年6月的高考中想要在明年6月的高考中</h6>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="icon ta">
-                            <span>4月25日</span>
-                        </div>
-                        <div class="title-info">
-                            <h3>2016年贵州高考：千万别错过了这些时间点！</h3>
-                            <h6>虽然离高考还有九个多月，不过，想要在明年6月的高考中想要在明年6月的高考中</h6>
-                        </div>
-                    </li>
-                    <li class="ml">
-                        <div class="icon ta">
-                            <span>4月25日</span>
-                        </div>
-                        <div class="title-info">
-                            <h3>2016年贵州高考：千万别错过了这些时间点！</h3>
-                            <h6>虽然离高考还有九个多月，不过，想要在明年6月的高考中想要在明年6月的高考中</h6>
-                        </div>
-                    </li>
+                <ul class="tab-info hot-list mt20">
+                    <%--<li>--%>
+                        <%--<div class="icon ta">--%>
+                            <%--<span>4月25日</span>--%>
+                        <%--</div>--%>
+                        <%--<div class="title-info">--%>
+                            <%--<h3>2016年贵州高考：千万别错过了这些时间点！</h3>--%>
+                            <%--<h6>虽然离高考还有九个多月，不过，想要在明年6月的高考中想要在明年6月的高考中</h6>--%>
+                        <%--</div>--%>
+                    <%--</li>--%>
                 </ul>
-                <ul>
+                <ul class="tab-info hide">
                     <div class="tel-content-box">
                         <div class="row">
                             <div class="col-3">
