@@ -432,7 +432,7 @@ public class QuestionController extends BaseController {
             freeStatus = 1;
         }
 
-        String questionHtml = sendQuestionQuery.getQuestionHtml();
+        String questionHtml = sendQuestionQuery.getQuestion();
 
         Question expertQuestion = new Question();
 
