@@ -60,9 +60,9 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
     }
 
     @Override
-    public int findUserAccountCountByPhone(String phone) {
+    public int findUserAccountCountByPhone(String account) {
         Map<String,Object> params = new HashMap<String,Object>();
-        params.put("phone",phone);
+        params.put("account",account);
         return userAccountExDAO.findUserAccountCount(params);
     }
 
@@ -79,6 +79,8 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
             UserVip userVip = new UserVip();
             userVip.setId(userAccount.getId());
             userVip.setStatus(0);
+            userVip.setCreateDate(System.currentTimeMillis());
+            userVip.setEndDate(System.currentTimeMillis());
             //TODO 需要重写
             userVipDAO.insert(userVip);
             flag = true;
