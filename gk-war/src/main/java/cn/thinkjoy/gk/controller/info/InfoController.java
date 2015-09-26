@@ -41,21 +41,38 @@ public class InfoController extends BaseController {
     @RequestMapping(value = "getUserInfo",method = RequestMethod.GET)
     @ResponseBody
     public UserInfo getUserInfo() {
-        UserAccountPojo userAccountPojo=getUserAccountPojo();
-        UserInfo userInfo=userInfoExService.findUserInfoById(userAccountPojo.getId());
+        String id=getCookieValue();
+        UserInfo userInfo=userInfoExService.findUserInfoById(Long.valueOf(id));
         return userInfo;
     }
 
     /**
      * 更改个人信息
      * TODO 头像未处理
-     * @param userInfo
      * @return
      */
     @RequestMapping(value = "updateUserInfo",method = RequestMethod.POST)
     @ResponseBody
-    public String updateUserInfo(UserInfo userInfo){
+    public String updateUserInfo(@RequestParam(value="name",required = true) String name,
+                                 @RequestParam(value="countyId",required = true) long countyId,
+                                 @RequestParam(value="schoolName",required = true) String schoolName,
+                                 @RequestParam(value="sex",required = true) int sex,
+                                 @RequestParam(value="subjectType",required = true) int subjectType,
+                                 @RequestParam(value="mail",required = true) String mail,
+                                 @RequestParam(value="icon",required = true) String icon,
+                                 @RequestParam(value="qq",required = true) String qq
+                                 ){
         try {
+            UserAccountPojo userAccountPojo=getUserAccountPojo();
+            UserInfo userInfo=userInfoExService.findUserInfoById(userAccountPojo.getId());
+            userInfo.setName(name);
+            userInfo.setCountyId(countyId);
+            userInfo.setSchoolName(schoolName);
+            userInfo.setSex(sex);
+            userInfo.setSubjectType(subjectType);
+            userInfo.setMail(mail);
+            userInfo.setQq(qq);
+            userInfo.setIcon(icon);
             userInfoExService.updateUserInfoById(userInfo);
         }catch (Exception e){
             e.printStackTrace();

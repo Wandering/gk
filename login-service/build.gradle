@@ -7,4 +7,6 @@ dependencies {
 
     compile project(':user-service')
 
+    compile "cn.thinkjoy.notify:notify-service:jx0.0.1-SNAPSHOT"
+
 }

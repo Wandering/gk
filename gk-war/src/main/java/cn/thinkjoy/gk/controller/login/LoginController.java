@@ -109,4 +109,15 @@ public class LoginController extends BaseController {
 		return "/index";
 	}
 
+	/**
+	 * 测试getUserAccountPojo是否可以取到
+	 * @return
+	 */
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public String test() throws Exception {
+		UserAccountPojo userAccountPojo=getUserAccountPojo();
+		System.out.println(userAccountPojo);
+		return "/index";
+	}
+
 }
