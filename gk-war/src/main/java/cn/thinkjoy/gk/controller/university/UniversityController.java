@@ -4,12 +4,19 @@ package cn.thinkjoy.gk.controller.university;
  * Created by wpliu on 15/9/25.
  */
 
+import cn.thinkjoy.gk.domain.Province;
+import cn.thinkjoy.gk.domain.UniversityDict;
+import cn.thinkjoy.gk.pojo.CityPojo;
+import cn.thinkjoy.gk.pojo.ProvincePojo;
 import cn.thinkjoy.gk.service.IExUniversityService;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.dto.*;
 import cn.thinkjoy.gk.query.UniversityQuery;
+import cn.thinkjoy.gk.service.IProvinceService;
+import cn.thinkjoy.gk.service.IUniversityDictService;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +41,11 @@ public class UniversityController extends BaseController {
 
     @Autowired
     private IExUniversityService iUniversityService;
+    @Autowired
+    private IUniversityDictService universityDictService ;
+
+    @Autowired
+    private IProvinceService provinceService;
     /**
      * 获取初始化信息
      * @return
@@ -41,12 +53,45 @@ public class UniversityController extends BaseController {
     @RequestMapping(value = "/getInitInfo",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> getInitInfo(){
-       Map<String,Object> responseMap=new HashMap<String, Object>();
-        List<Map>  provinces=iUniversityService.getProvinces();
-        List<Map>  universityType=iUniversityService.getUniversityType();
-        List<Map>  universityBatch=iUniversityService.getUniversiyBatch();
-        List<Map>  universityFeature=iUniversityService.getuniversityFeature();
-        responseMap.put("provinces",provinces);
+        Map<String,Object> responseMap=new HashMap<String, Object>();
+        List<ProvincePojo> provincePojos=new ArrayList<>();
+        List<Map<String,Object>> universityType=new ArrayList<>();
+        List<Map<String,Object>>  universityBatch=new ArrayList<>();
+        List<Map<String,Object>>  universityFeature=new ArrayList<>();
+
+        List<Province> provinces=provinceService.findAll();
+        for(Province province:provinces){
+            ProvincePojo provincePojo=new ProvincePojo();
+            provincePojo.setId(province.getId());
+            provincePojo.setName(province.getName());
+            provincePojos.add(provincePojo);
+        }
+        Map<String,Object> map=new HashMap<>();//院校类型
+        map.put("type","PROPERTY");//院校类型
+        List<UniversityDict> universityTypeList=universityDictService.queryList(map,"id","asc");
+        for(UniversityDict universityDict:universityTypeList){
+            Map<String,Object> inMap=new HashMap<>();
+            inMap.put("name",universityDict.getName());
+            inMap.put("dictId",universityDict.getDictId());
+            universityType.add(inMap);
+        }
+        map.put("type","BATCHTYPE");//批次类型
+        List<UniversityDict> universityBatchList=universityDictService.queryList(map,"id","asc");
+        for(UniversityDict universityDict:universityBatchList){
+            Map<String,Object> inMap=new HashMap<>();
+            inMap.put("name",universityDict.getName());
+            inMap.put("dictId",universityDict.getDictId());
+            universityBatch.add(inMap);
+        }
+        map.put("type","FEATURE");//院校特征
+        List<UniversityDict> universityFeatureList=universityDictService.queryList(map,"id","asc");
+        for(UniversityDict universityDict:universityFeatureList){
+            Map<String,Object> inMap=new HashMap<>();
+            inMap.put("name",universityDict.getName());
+            inMap.put("dictId",universityDict.getDictId());
+            universityFeature.add(inMap);
+        }
+        responseMap.put("provinces",provincePojos);
         responseMap.put("universityType",universityType);
         responseMap.put("universityBatch",universityBatch);
         responseMap.put("universityFeature", universityFeature);
@@ -61,6 +106,49 @@ public class UniversityController extends BaseController {
     @RequestMapping(value = "/getUniversityList",method = RequestMethod.POST)
     @ResponseBody
     public UniversityResponseDto getUniversityList(UniversityQuery universityQuery){
+
+
+
+        Map<String,Object> map=new HashMap<>();
+
+        //构造院校批次参数
+        Integer universityBatchId=universityQuery.getUniversityBatchId();
+        List<Integer> universityBatchParam=new ArrayList<>();//构造出来的参数
+        if(null==universityBatchId ||universityBatchId.intValue()==0){
+            universityBatchParam=null;
+        }else{
+            map.put("type","PROPERTY");//批次类型
+            List<UniversityDict> universityBatchList=universityDictService.queryList(map,"id","asc");
+            for(UniversityDict universityDict:universityBatchList){
+                if((universityBatchId.intValue() & universityDict.getDictId().intValue()) !=0){
+                    universityBatchParam.add(universityDict.getDictId());
+                }
+            }
+        }
+
+        //构造院校特征参数
+        List<Integer> universityFeatureParam=new ArrayList<>();//构造出来的参数
+        String universityFeature=universityQuery.getUniversityFeatureId();
+        String[] strArray=universityFeature.split(",");
+        if("0".equals(universityFeature)||null==strArray ){
+            universityBatchParam=null;
+        }else{
+            Integer universityFeatureId=0;
+            for(String inString:strArray){
+                universityFeatureId= universityFeatureId+Integer.parseInt(inString);
+            }
+            map.put("type","FEATURE");//批次类型
+            List<UniversityDict> universityFeatureList=universityDictService.queryList(map,"id","asc");
+            for(UniversityDict universityDict:universityFeatureList){
+                if((universityBatchId.intValue() & universityDict.getDictId().intValue()) !=0){
+                    universityFeatureParam.add(universityDict.getDictId());
+                }
+            }
+        }
+
+        ///////////
+
+
         UniversityResponseDto universityResponseDto=new UniversityResponseDto();
         List<UniversityDto> universityDtos=new ArrayList<UniversityDto>();
         universityDtos=iUniversityService.getUniversityList(universityQuery);
