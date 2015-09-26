@@ -80,8 +80,6 @@ define(function (require) {
             $('#tabs_list_last').html(tab.join(''));
             $('#last_content').html(tabContent.join(''));
             $('#tabs_list_last li').first().addClass('active');
-            var text = $('#tabs_list_last li.active').text();
-            this.setCategory(text);
             $('#school_table_0').show();
             this.addSchoolEventHandle();
         },
@@ -100,39 +98,46 @@ define(function (require) {
                 }
             });
         },
+        renderEnrollTable: function(infos) {
+            var tabContent = [];
+            tabContent.push('<table border="0" cellpadding="0" cellspacing="0">'
+                + '<thead>'
+                + '<tr>'
+                + '<th>专业名称</th>'
+                + '<th>批次</th>'
+                + '<th>科类</th>'
+                + '<th>计划人数</th>'
+                + '<th>学制</th>'
+                + '<th>收费标准</th>'
+                + '</tr>'
+                + '</thead>'
+                + '<tbody>');
+            for (var j = 0, infolen = infos.length; j < infolen; j++) {
+                tabContent.push('<tr>'
+                    + '<td>' + infos[j].majoredName + '</td>'
+                    + '<td>' + infos[j].batch + '</td>'
+                    + '<td>' + infos[j].subject + '</td>'
+                    + '<td>' + infos[j].planNumber + '</td>'
+                    + '<td>' + infos[j].schoolLength + '</td>'
+                    + '<td>' + infos[j].feeStandard + '</td>'
+                    + '</tr>');
+            }
+            tabContent.push('</tbody>'
+                + '</table>');
+            return tabContent.join('');
+        },
         renderEnroll: function(ret) {
             var data = ret.enrollPlan;
             var tab = [];
             var tabContent = [];
             for (var i = 0, len = data.length; i < len; i++) {
-                tab.push('<li>' + data[i].title + '</li>');
+                var paramName = 'enrollData' + i;
+                tab.push('<li data-saveData="' + paramName + '">' + data[i].title + '</li>');
                 var infos = data[i].planInfos;
-                tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + i + '">'
-                    + '<table border="0" cellpadding="0" cellspacing="0">'
-                    + '<thead>'
-                    + '<tr>'
-                    + '<th>专业名称</th>'
-                    + '<th>批次</th>'
-                    + '<th>科类</th>'
-                    + '<th>计划人数</th>'
-                    + '<th>学制</th>'
-                    + '<th>收费标准</th>'
-                    + '</tr>'
-                    + '</thead>'
-                    + '<tbody>');
-                for (var j = 0, infolen = infos.length; j < infolen; j++) {
-                    tabContent.push('<tr>'
-                        + '<td>' + infos[j].majoredName + '</td>'
-                        + '<td>' + infos[j].batch + '</td>'
-                        + '<td>' + infos[j].subject + '</td>'
-                        + '<td>' + infos[j].planNumber + '</td>'
-                        + '<td>' + infos[j].schoolLength + '</td>'
-                        + '<td>' + infos[j].feeStandard + '</td>'
-                        + '</tr>');
-                }
-                tabContent.push('</tbody>'
-                    + '</table>'
-                    + '</div>');
+                this[paramName] = infos;
+                tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + i + '">');
+                tabContent.push(this.renderEnrollTable(infos));
+                tabContent.push('</div>');
             }
 
             tab.push('<li>招生章程</li>');
@@ -144,8 +149,11 @@ define(function (require) {
             $('#tabs_list_enroll').html(tab.join(''));
             $('#enroll_content').html(tabContent.join(''));
             $('#tabs_list_enroll li').first().addClass('active');
+            var text = $('#tabs_list_enroll li.active').text();
+            this.setCategory(text);
             $('#enroll_table_0').show();
             this.addEnrollEventHandle();
+            this.categoryHandle();
         },
         addEnrollEventHandle: function() {
             var that = this;
@@ -157,16 +165,46 @@ define(function (require) {
                     $(this).addClass('active').siblings().removeClass('active');
                     var text = $(this).text();
                     var index = $(this).index();
-                    that.setCategory(text);
+                    that.setCategory(text, $(this));
                     $('#enroll_table_' + index).show().siblings().hide();
                 }
             });
         },
-        setCategory: function(text) {
+        setCategory: function(text, activeDom) {
             if ('招生章程' === text || '院校简介' === text) {
                 $('#category').hide();
             } else {
+                $('#category button').removeClass('active');
+                if (activeDom) {
+                    var categoryId = activeDom.attr('data-categoryId');
+                    if (categoryId) {
+                        $('#category button[data-id="' + categoryId + '"]').addClass('active');
+                    }
+                }
                 $('#category').show();
+            }
+        },
+        categoryHandle: function() {
+            var that = this;
+            $('#category button').on('click', function(e) {
+                $(this).addClass('active').siblings().removeClass('active');
+                $('#tabs_list_enroll li.active').attr('data-categoryId', $(this).attr('data-id'));
+                var categoryText = $(this).text();
+                that.filterEnroll(categoryText, $('#tabs_list_enroll li.active').index());
+            });
+        },
+        filterEnroll: function(categoryText, menuId) {
+            var data = this['enrollData' + menuId];
+            var NewData = [];
+            for (var i = 0; i < data.length; i++) {
+                if (categoryText === data[i].subject) {
+                    NewData.push(data[i]);
+                }
+            }
+            if (NewData.length > 0) {
+                $('#enroll_table_' + menuId).html(this.renderEnrollTable(NewData));
+            } else {
+                $('#enroll_table_' + menuId).html('<p style="padding: 20px 0; text-align: center">没有符合相关的信息！</p>');
             }
         }
     };

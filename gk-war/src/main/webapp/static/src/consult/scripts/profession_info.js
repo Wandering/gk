@@ -212,6 +212,10 @@ define(function (require) {
                     }
                 }
             });
+        },
+        getSearch: function() {
+            this.curPage = 1;
+            this.getProfession(1);
         }
     };
 
@@ -287,5 +291,11 @@ define(function (require) {
 
     $(document).ready(function() {
         Profession.getOptions();
+        $('#search_button').on('click', function() {
+            var search = $('#search').val();
+            if (search) {
+                Profession.getSearch();
+            }
+        });
     });
 });

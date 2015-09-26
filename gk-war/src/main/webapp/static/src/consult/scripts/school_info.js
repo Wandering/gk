@@ -159,6 +159,10 @@ define(function(require) {
                     }
                 }
             });
+        },
+        getSearch: function() {
+            this.curPage = 1;
+            this.getSchoolList(1);
         }
     }
 
@@ -238,5 +242,11 @@ define(function(require) {
 
     $(document).ready(function() {
         School.getData();
+        $('#search_button').on('click', function(e) {
+            var search = $('#school_serach').val();
+            if (search) {
+                School.getSearch();
+            }
+        })
     });
 });
