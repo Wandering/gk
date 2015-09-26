@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk;
 
 import cn.thinkjoy.gk.dto.EnrollInfo;
+import cn.thinkjoy.gk.dto.PlanInfo;
 import cn.thinkjoy.gk.dto.UniversityDto;
 import cn.thinkjoy.gk.query.UniversityQuery;
 
@@ -27,4 +28,8 @@ public interface IUniversityService {
     UniversityDto getUniversityDetail(String schoolCode);
 
     List<EnrollInfo> getEnrollInfoByYear(int i);
+
+    String getUniversityEnrollIntro(String schoolCode);
+
+    List<PlanInfo> getPlanInfosByYear(int i);
 }

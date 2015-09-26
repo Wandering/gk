@@ -92,17 +92,20 @@ public class UniversityController extends BaseController {
     @RequestMapping(value = "/getEnrollInfo",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> getEnrollInfo(){
-//        String schoolCode=request.getParameter("code");
-//        Map<String,Object> map=new HashMap<String, Object>();
-//        List<EnrollResponseDto>  enrollResponseDtoList=new ArrayList<EnrollResponseDto>();
-//        EnrollResponseDto lastEnrollResponseDto=new EnrollResponseDto();
-//        lastEnrollResponseDto.setTitle("2015招生情况");
-//        EnrollResponseDto lastLastEnrollResponseDto=new EnrollResponseDto();
-//        enrollResponseDto.setTitle("2015");
-//        List<EnrollInfo>  lastenrollInfos=iUniversityService.getEnrollInfoByYear(2014);
-//        List<EnrollInfo>  enrollInfos=iUniversityService.getEnrollInfoByYear(2015);
-//        EnrollResponseDto enrollResponseDto=new EnrollResponseDto();
-//        map.put("enrollInfo","");
+        String schoolCode=request.getParameter("code");
+        Map<String,Object> map=new HashMap<String, Object>();
+        List<EnrollResponseDto>  enrollResponseDtoList=new ArrayList<EnrollResponseDto>();
+        List<EnrollInfo>  lastenrollInfos=iUniversityService.getEnrollInfoByYear(2014);
+        List<EnrollInfo>  enrollInfos=iUniversityService.getEnrollInfoByYear(2013);
+        EnrollResponseDto lastEnrollResponseDto=new EnrollResponseDto();
+        lastEnrollResponseDto.setTitle("2013招生情况");
+        lastEnrollResponseDto.setInfos(lastenrollInfos);
+        EnrollResponseDto enrollResponseDto=new EnrollResponseDto();
+        enrollResponseDto.setTitle("2014招生情况");
+        enrollResponseDto.setInfos(enrollInfos);
+        enrollResponseDtoList.add(enrollResponseDto);
+        enrollResponseDtoList.add(lastEnrollResponseDto);
+        map.put("enrollInfo",enrollResponseDtoList);
         return null;
     }
 
@@ -115,6 +118,29 @@ public class UniversityController extends BaseController {
     public EntrollPlanDto getEnrollPlan(){
         String schoolCode=request.getParameter("code");
         EntrollPlanDto entrollPlanDto=new EntrollPlanDto();
+        List<EntrollPlan> entrollPlans=new ArrayList<EntrollPlan>();
+
+        EntrollPlan entrollPlan=new EntrollPlan();
+        EntrollPlan lastEntrollPlan=new EntrollPlan();
+        List<PlanInfo> planInfos=iUniversityService.getPlanInfosByYear(2015);
+        List<PlanInfo> lastPlanInfos=iUniversityService.getPlanInfosByYear(2014);
+        entrollPlan.setTitle("2015年招生计划");
+        entrollPlan.setPlanInfos(planInfos);
+        lastEntrollPlan.setTitle("2014年招生计划");
+        lastEntrollPlan.setPlanInfos(lastPlanInfos);
+        /**
+         * 招生简介
+         */
+        String entroIntro=iUniversityService.getUniversityEnrollIntro(schoolCode);
+        /**
+         * 大学介绍
+         */
+        String  universityIntro=iUniversityService.getUniversityEnrollIntro(schoolCode);
+
+        entrollPlanDto.setEntroIntro(entroIntro);
+        entrollPlanDto.setUniversityIntro(universityIntro);
+        entrollPlanDto.setEnrollPlan(entrollPlans);
+
         return  entrollPlanDto;
     }
 }
