@@ -75,7 +75,6 @@ public class LoginController extends BaseController {
 
 			if (userAccountBean.getStatus() != 0) {
 				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "用户状态异常，请联系管理员!");
-
 			}
 
 			id = userAccountBean.getId();
@@ -85,7 +84,7 @@ public class LoginController extends BaseController {
 			setUserAccountPojo(userAccountBean);
 
 		}catch(Exception e){
-			e.printStackTrace();
+			throw e;
 		}finally{
 
 		}

@@ -57,6 +57,14 @@
             alert(2);
             $.ajax({
 
+                //账号信息
+                url:'/info/getUserInfo.do',
+                dataType:'json',
+                type:'get',
+                data:{
+
+                },
+
 //                //找回密码获取验证码
 //                url:'/captcha/captcha.do',
 //                dataType:'json',
@@ -66,15 +74,15 @@
 //                    type:'1'
 //                },
 //
-                //找回密码
-                url:'/register/retrievePassword.do',
-                dataType:'json',
-                type:'post',
-                data:{
-                    account:'18710842703',
-                    captcha:'534283',
-                    password:'321321'
-                },
+//                //找回密码
+//                url:'/register/retrievePassword.do',
+//                dataType:'json',
+//                type:'post',
+//                data:{
+//                    account:'18710842703',
+//                    captcha:'534283',
+//                    password:'321321'
+//                },
 
 //                //注册
 //                url:'/register/account.do',
