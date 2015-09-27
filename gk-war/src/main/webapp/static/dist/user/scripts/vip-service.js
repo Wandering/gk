@@ -1,6 +1,6 @@
 define(function (require) {
     var $ = require('$');
-
+    require('header-user');
 
 
     // 获取商品信息
@@ -56,4 +56,30 @@ define(function (require) {
 
 
 
+
+
+    //高考志愿卡升级
+    $.ajax({
+        url:'/vip/getAccount.do',
+        type: 'GET',
+        dataType: 'JSON',
+        success: function (result) {
+            if(result.rtnCode=="0000000"){
+                var cardNumber = result.bizData.account;
+                var password = result.bizData.password;
+                $.ajax({
+                    url:'/vip/upgradeVipByCard.do',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data:{
+                        "cardNumber": cardNumber,
+                        "password": password
+                    },
+                    success: function (res) {
+                        console.log(res)
+                    }
+                });
+            }
+        }
+    });
 });

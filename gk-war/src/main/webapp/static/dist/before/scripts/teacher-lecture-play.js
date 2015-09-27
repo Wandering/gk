@@ -2,19 +2,19 @@ define(function (require) {
     var $ = require('$');
 
     var detailsUrl = window.location.search;
-    var classifyType = detailsUrl.substr(14,1);
+    var classifyType = detailsUrl.substr(14, 1);
     var num = detailsUrl.indexOf("&");
-    var courseId = detailsUrl.substr(num+10);
+    var courseId = detailsUrl.substr(num + 10);
+    (classifyType == 1)?(window.document.title = "名师学堂详情"):(window.document.title = "高考心理详情");
 
     // 获取章节列表
-    function getList(){
+    function getList() {
         $.getJSON(
             '/before/video/getVideoSectionList.do',
             {
                 courseId: courseId
             },
             function (result) {
-                  console.log(result)
                 if (result.rtnCode == "0800001") {
                     $(obj).append('<p class="noContent">' + result.msg + '</p>');
                 }
@@ -25,18 +25,21 @@ define(function (require) {
                             fileUrl = dataJson[i].fileUrl,
                             isAccept = dataJson[i].isAccept,
                             sectionName = dataJson[i].sectionName;
-                        var listMsgHtml = '<a href="javascript:;" courseId="'+ courseId +'" fileUrl="'+ fileUrl +'">'+ sectionName  +'</a>';
+                        var listMsgHtml = '<a href="javascript:;" courseId="' + courseId + '" fileUrl="' + fileUrl + '">' + sectionName + '</a>';
                         $('#episode-num').append(listMsgHtml);
                     }
-                    $('#episode-num').find('a:eq(0)').click()
+                    $('#episode-num').find('a:eq(0)').click();
                 }
             });
     }
-    getList();
 
-    $('#episode-num').on('click','a',function () {
+    getList();
+    $('#episode-num').on('click', 'a', function () {
         $(this).addClass('active').siblings().removeClass('active');
-        var this
+        var fileurl = $(this).attr('fileurl');
+        $('#play-video').find('[name="FlashVars"]').attr('value',fileurl);
+        $('#play-video').find('embed').attr('flashvars',fileurl);
     });
+
 
 });

@@ -72,11 +72,16 @@ define(function (require) {
                     }
 
                     for (var i = 0; i < dataJson.length; i++) {
-                        var frontCover = dataJson[i].frontCover,
-                            subjectName = dataJson[i].subjectName,
+                        var subjectName = dataJson[i].subjectName,
                             teacherName = dataJson[i].teacherName,
                             hit = dataJson[i].hit,
                             subcontent = dataJson[i].subcontent;
+                        var videoUrl='';
+                        if (dataJson[i].frontCover == null || dataJson[i].frontCover == "") {
+                            videoUrl = '/static/dist/common/images/video-default.png';
+                        } else {
+                            videoUrl = dataJson[i].frontCover;
+                        }
                         var listMsgHtml = ''
                             +'<li class="item">'
                             +'<div class="img"><img src="'+ frontCover +'" alt=""/></div>'

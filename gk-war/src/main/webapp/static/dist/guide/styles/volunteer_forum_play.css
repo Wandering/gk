@@ -633,3 +633,10 @@ a.next-btn:hover {
     cursor: pointer; }
     .episode-num a.active {
       background-color: #e24333; }
+
+.play-video {
+  width: 760px;
+  height: 428px;
+  margin: 0 auto;
+  position: relative;
+  top: 29px; }

@@ -7,31 +7,8 @@
     <link rel="stylesheet" href="/static/dist/before/styles/before.css"/>
 </head>
 <body>
-<div class="header">
-    <div class="w1000">
-        <a href="">
-            <img src="/static/dist/common/images/logo-min.png" alt="高考360" class="logo fl"/>
-        </a>
-        <ul class="main-menu fl">
-            <li><a href="">首页</a></li>
-            <li><a href="">报考指南</a></li>
-            <li><a href="">报考咨询</a></li>
-            <li><a href="">考前备考</a></li>
-            <li><a href="">考后报考</a></li>
-        </ul>
-        <div class="user-info-list fr">
-            <div class="user">
-                <img src="/static/dist/common/images/avatar.png" alt="avatar" class="user-avatar"/>
-                <a href="">韩小寒</a>
-            </div>
-            <ul class="menu hide">
-                <li><a href="">个人信息</a></li>
-                <li><a href="">修改密码</a></li>
-                <li><a href="">退出</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
+<%@ include file="/common/header.jsp"%>
+
 <div class="content">
     <div class="wipe">
         <div class="swiper-container">
@@ -66,25 +43,25 @@
     <ul class="flow-main-list">
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a href="/before/teacher-lecture.jsp" class="name">名师讲堂</a>
+            <a target="_blank" href="/before/teacher-lecture.jsp?classifyType=1" class="name">名师讲堂</a>
             <span class="num">1</span>
             <p class="txt">名师精品课程，全面剖析高考知识点以及提分技巧。</p>
         </li>
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a href="/before/exam.jsp" class="name">真题密卷</a>
+            <a target="_blank" href="/before/exam.jsp?classifyType=3" class="name">真题密卷</a>
             <span class="num">2</span>
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a href="/before/mentality.jsp" class="name">高考心理</a>
+            <a target="_blank" href="/before/mentality.jsp?classifyType=2" class="name">高考心理</a>
             <span class="num">3</span>
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a href="#yxtj" class="name" id="volunteer-flow">院校推荐</a>
+            <a href="javascript:;" class="name" id="volunteer-flow">院校推荐</a>
             <span class="num">4</span>
             <p class="txt">根据分数快速定位院校及推荐院校</p>
         </li>
@@ -109,7 +86,7 @@
     <div class="tabs">
         <ul class="tabs-list mt20 subjectList" classifyType="1"></ul>
         <div class="into-search">
-            <a href="/before/teacher-lecture.jsp" target="_blank" class="into-btn">进入名师讲堂</a>
+            <a href="/before/teacher-lecture.jsp?classifyType=1" target="_blank" class="into-btn">进入名师讲堂</a>
             <form action="">
                 <section class="section-article">
                     <div class="search-content ta">
@@ -123,8 +100,8 @@
         </div>
     </div>
     <div class="tabs-content">
-        <div class="tabs-content-list">
-            <ul class="main-video-list main-video-list-box" id="teacher-lecture-main">
+        <div class="tabs-content-list main-video-list-box">
+            <ul class="main-video-list" id="teacher-lecture-main">
 
             </ul>
         </div>
@@ -149,7 +126,7 @@
     <div class="tabs">
         <ul class="tabs-list mt20 subjectList" classifyType="3"></ul>
         <div class="into-search">
-            <a href="/before/exam.jsp" target="_blank" class="into-btn">真题密卷</a>
+            <a href="/before/exam.jsp?classifyType=3" target="_blank" class="into-btn">真题密卷</a>
             <form action="">
                 <section class="section-article">
                     <div class="search-content ta">
@@ -187,7 +164,7 @@
     <div class="tabs">
         <ul class="tabs-list mt20 subjectList" classifyType="2"></ul>
         <div class="into-search">
-            <a href="/before/mentality.jsp" target="_blank" class="into-btn">进入高考心理</a>
+            <a href="/before/mentality.jsp?classifyType=2" target="_blank" class="into-btn">进入高考心理</a>
             <form action="">
                 <section class="section-article">
                     <div class="search-content ta">
@@ -201,12 +178,12 @@
         </div>
     </div>
     <div class="tabs-content">
-        <div class="tabs-content-list">
-            <ul class="main-video-list main-video-list-box" id="mentality-main"></ul>
+        <div class="tabs-content-list main-video-list-box">
+            <ul class="main-video-list " id="mentality-main"></ul>
         </div>
     </div>
 </div>
-<a name="yxtj"></a>
+<div id="main-volunteer-box"></div>
 <div class="w1000">
     <div class="content-title">
         <p class="fl w40"></p>
@@ -220,6 +197,7 @@
         <p class="fl w40"></p>
     </div>
 </div>
+<div id="main-volunteer-box"></div>
 <h6 class="w1000 ta content-title-sub">几次测试的分数出来了，这分数在去年可以报考什么学校，我能报我喜欢的学校吗？</h6>
 <div class="w1000">
     <div class="tabs">
@@ -276,6 +254,7 @@
         </div>
     </div>
 </div>
+
 
 <div class="main-volunteer-box" style="display: none;">
     <div class="w1000 main-volunteer">
@@ -380,34 +359,7 @@
 
 
 
-
-
-
-<div class="footer">
-    <div class="bottom-nav">
-        <div class="w1000">
-            <ul>
-                <li><a href="" class="nav-title">关于高考360</a></li>
-                <li><a href="">联系我们</a></li>
-                <li><a href="">使用协议</a></li>
-            </ul>
-            <ul>
-                <li><a href="" class="nav-title">帮助中心</a></li>
-                <li><a href="">常见问题</a></li>
-                <li><a href="">意见反馈</a></li>
-            </ul>
-            <ul>
-                <li><a href="" class="nav-title">关注我们</a></li>
-                <li><a href="">官方微信</a></li>
-                <li><a href="">新浪微博</a></li>
-            </ul>
-            <img src="/static/dist/common/images/logo.png" alt="logo" class="logo"/>
-        </div>
-    </div>
-    <div class="copy-right">
-        <p class="w1000">联系信息:E-mail:cewfefe@163.com QQ:5454555 备案号:陕ICP备343454135-1号 [站长统计]</p>
-    </div>
-</div>
+<%@ include file="/common/footer.jsp"%>
 <script>
     seajs.use("/static/src/before/scripts/before");
 </script>

@@ -7,40 +7,21 @@
     <link rel="stylesheet" href="/static/dist/guide/styles/volunteer_forum_play.css" />
 </head>
 <body>
-<div class="header">
-    <div class="w1000">
-        <a href="">
-            <img src="../static/dist/common/images/logo-min.png" alt="高考360" class="logo fl"/>
-        </a>
-        <ul class="main-menu fl">
-            <li><a href="">首页</a></li>
-            <li><a href="">报考指南</a></li>
-            <li><a href="">报考咨询</a></li>
-            <li><a href="">考前备考</a></li>
-            <li><a href="">考后报考</a></li>
-        </ul>
-        <div class="user-info-list fr">
-            <div class="user">
-                <img src="../static/dist/common/images/avatar.png" alt="avatar" class="user-avatar"/>
-                <a href="">韩小寒</a>
-            </div>
-            <ul class="menu hide">
-                <li><a href="">个人信息</a></li>
-                <li><a href="">修改密码</a></li>
-                <li><a href="">退出</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
-
+<%@ include file="/before/header-before.jsp"%>
 <div class="content">
     <div class="banner">
-        <video id="home_video" controls="" preload="none" poster="http://www.videojs.com/img/poster.jpg" class="video-js vjs-default-skin">
-            <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
-            <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm">
-            <track kind="captions" src="/vtt/captions.vtt" srclang="en" label="English">
-            </track>
-        </video>
+            <div class="play-video" id="play-video">
+                <object class id="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="760" height="428">
+                    <param name="movie" value="/static/src/before/scripts/flvplayer.swf">
+                    <param name="quality" value="high">
+                    <param name="allowFullScreen" value="true">
+                    <param name="IsAutoPlay" value="0" />
+                    <param name="BufferTime" value="3" />
+                    <param name="IsShowTime" value="1" />
+                    <param name="FlashVars" value="">
+                    <embed src="/static/src/before/scripts/flvplayer.swf" allowfullscreen="true" flashvars="" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="760" height="428"></embed>
+                </object>
+            </div>
     </div>
     <div class="mian-body w1000">
         <h1>徐老师<span>语文</span></h1>
@@ -50,32 +31,7 @@
         <div class="episode-num mt20" id="episode-num"></div>
     </div>
 </div>
-
-<div class="footer">
-    <div class="bottom-nav">
-        <div class="w1000">
-            <ul>
-                <li><a href="" class="nav-title">关于高考360</a></li>
-                <li><a href="">联系我们</a></li>
-                <li><a href="">使用协议</a></li>
-            </ul>
-            <ul>
-                <li><a href="" class="nav-title">帮助中心</a></li>
-                <li><a href="">常见问题</a></li>
-                <li><a href="">意见反馈</a></li>
-            </ul>
-            <ul>
-                <li><a href="" class="nav-title">关注我们</a></li>
-                <li><a href="">官方微信</a></li>
-                <li><a href="">新浪微博</a></li>
-            </ul>
-            <img src="../static/dist/common/images/logo.png" alt="logo" class="logo"/>
-        </div>
-    </div>
-    <div class="copy-right">
-        <p class="w1000">联系信息:E-mail:cewfefe@163.com QQ:5454555 备案号:陕ICP备343454135-1号 [站长统计]</p>
-    </div>
-</div>
+<%@ include file="/common/footer.jsp"%>
 <script>
     seajs.use("/static/src/before/scripts/teacher-lecture-play");
 </script>

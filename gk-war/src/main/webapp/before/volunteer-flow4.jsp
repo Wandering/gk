@@ -175,26 +175,6 @@
 
 
 
-
-
-
-
-
-
-<link rel="stylesheet" href="../../bower_components/swiper/dist/css/swiper.css"/>
-<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
-<script src="../../bower_components/swiper/dist/js/swiper.jquery.min.js"></script>
-<script>
-    $(function () {
-        //幻灯片
-        var swiper = new Swiper('.swiper-container', {
-            pagination: '.swiper-pagination',
-            paginationClickable: true,
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
-            loop: true
-        });
-    });
-</script>
+<%@ include file="/common/footer.jsp"%>
 </body>
 </html>

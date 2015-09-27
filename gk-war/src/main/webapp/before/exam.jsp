@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/static/dist/before/styles/before.css"/>
 </head>
 <body>
-<%@ include file="/common/header.jsp"%>
+<%@ include file="/before/header-before.jsp"%>
 <div class="content">
     <%@ include file="/common/banner-wipe.jsp"%>
 </div>
@@ -58,7 +58,7 @@
     <div class="tabs-content">
         <div class="tabs-content-list">
             <ul class="main-exam-list" id="list-msg-item" pageNo="0"></ul>
-            <a href="javascript:;" class="next-btn" id="nextPage">下一页</a>
+            <a href="javascript:;" class="next-btn" id="nextPage">加载更多...</a>
         </div>
     </div>
 </div>

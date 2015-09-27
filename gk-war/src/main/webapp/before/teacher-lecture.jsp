@@ -53,7 +53,7 @@
     <div class="tabs-content">
         <div class="tabs-content-list">
             <ul class="main-video-list" id="list-msg-item" pageNo="0"></ul>
-            <a href="javascript:;" class="next-btn" id="nextPage">下一页</a>
+            <a href="javascript:;" class="next-btn" id="nextPage">加载更多...</a>
         </div>
     </div>
 </div>
