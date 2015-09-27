@@ -5,7 +5,9 @@ seajs.config({
     alias: {
         "$": "bower_components/jquery/dist/jquery.js",
         "swiper-jquery": "bower_components/swiper/dist/js/swiper.jquery.min.js",
-        "swiper": "bower_components/utils/swiper.js"
+        "swiper": "bower_components/utils/swiper.js",
+        "getTime": "bower_components/utils/getTime",
+        "backToTop": "bower_components/utils/backToTop"
     },
     preload: ['$'],
     //map,批量更新时间戳
