@@ -6,15 +6,18 @@ define(function(require) {
     var $ = require('$');
     require('swiper');
 
-    function getUrLinKey(name) {
-        var reg = new RegExp("(^|\\?|&)" + name + "=([^&]*)(\\s|&|$)", "i");
-        if (reg.test(window.location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
+    var getQueryStr = function(_url, _param) {
+        var rs = new RegExp("(^|)" + _param + "=([^\&]*)(\&|$)", "g").exec(_url),
+            tmp;
+        if (tmp = rs) {
+            return tmp[2];
+        }
         return "";
-    }
+    };
 
     var Question = {
         startSize: 0,
-        endSize: 0,
+        endSize:10,
         renderAsk: function(data) {
             var html = [];
             var i = 0,
@@ -46,7 +49,13 @@ define(function(require) {
                 }
                 html.push('</section>');
             }
-            $('#question_content').html(html.join(''));
+
+            if (this.startSize == 0) {
+                $('#question_content').html(html.join(''));
+            } else {
+                $('#question_content').append(html.join(''));
+            }
+
         },
         renderAnswer: function(answer) {
             var html = [];
@@ -69,9 +78,17 @@ define(function(require) {
             html.push('</li></ul>');
             return html.join('');
         },
-        getNew: function(startSize, endSize) {
+        getNew: function() {
+            var url = '/question/newQuestion.do?';
+            this.getData(url);
+        },
+        getHot: function() {
+            var url = '/question/hotQuestion.do?';
+            this.getData(url);
+        },
+        getData: function(url) {
             var that = this;
-            $.get('/question/newQuestion.do?startSize=' + startSize + '&endSize=' + endSize, function(data) {
+            $.get(url + 'startSize=' + that.startSize + '&endSize=' + that.endSize, function(data) {
                 if ('0000000' === data.rtnCode) {
                     if (data.bizData.length > 0) {
                         $('#more_loading').hide();
@@ -84,19 +101,19 @@ define(function(require) {
                 }
             });
         },
-        getHot: function(startSize, endSize) {
-            var that = this;
-            $.get('/question/hotQuestion.do?startSize=' + startSize + '&endSize=' + endSize, function(data) {
-                if ('0000000' === data.rtnCode) {
-                    that.renderAsk(data.bizData);
-                }
-            });
-        },
         getSearch: function() {
-            var that = this;
-            $.get('', function(data) {
-
-            })
+            var keyword = $('#keywords').val();
+            if (keyword) {
+                this.startSize = 0;
+                this.endSize = 10;
+                var url = '/question/newQuestion.do?keyword=' + keyword + '&';
+                this.getData(url);
+            }
+        },
+        addEventForMore: function() {
+            this.startSize += 10;
+            this.endSize += 10;
+            Question[$('.tabs-list li.active').attr('data-method')]();
         }
     }
 
@@ -126,20 +143,28 @@ define(function(require) {
 
     $(document).ready(function() {
 
-        var keywords = getUrLinKey('keywords');
+        var keywords = decodeURIComponent(getQueryStr(window.location.href, 'val'));
         if (keywords) {
             $('#tabs_list').hide();
+            $('#keywords').val(keywords);
+            Question.getSearch();
         } else {
             $('#tabs_list').show();
             //Question.renderAsk(testData);
             //return;
-            Question.getNew(0, 10);
+            Question.getNew();
             $('.tabs-list li').on('mouseover', function(e) {
                 if (!$(this).hasClass('active')) {
                     $(this).addClass('active').siblings().removeClass('active');
-                    Question[$(this).attr('data-method')](0, 10);
+                    Question.startSize = 0;
+                    Question.endSize = 10;
+                    Question[$(this).attr('data-method')]();
                 }
             });
         }
+
+        $('#search').on('click', function(e) {
+            Question.getSearch();
+        });
     });
 });
