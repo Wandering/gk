@@ -21,15 +21,15 @@ public interface IExUniversityService {
 
     List<Map> getuniversityFeature();
 
-    List<UniversityDto> getUniversityList(UniversityQuery universityQuery);
+    List<UniversityDto> getUniversityList(Map<String,Object> universityQuery);
 
-    Integer getUniversityCount(UniversityQuery universityQuery);
+    Integer getUniversityCount(Map<String,Object> universityQuery);
 
     UniversityDto getUniversityDetail(String schoolCode);
 
-    List<EnrollInfo> getEnrollInfoByYear(int i);
+    List<EnrollInfo> getEnrollInfoByYear(int i,String schoolCode);
 
     String getUniversityEnrollIntro(String schoolCode);
 
-    List<PlanInfo> getPlanInfosByYear(int i);
+    List<PlanInfo> getPlanInfosByYear(int i,String schoolCode);
 }

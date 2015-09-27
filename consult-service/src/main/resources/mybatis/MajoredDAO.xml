@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IMajoredDAO">
+
+    <select id="getMajoreByParentId" parameterType="java.lang.Integer" resultType="java.util.Map">
+        select  id,name from gk_majored_category where 1=1
+        and parentId=#{parentId}
+    </select>
+
+    <select id="searchMajored" parameterType="java.util.Map" resultType="Subject">
+        select majoredId as code,majoredName as name,enrollNumber as planNumber,
+         schoolLength,foreginLanguage,feeStandard,universityCode,universityName
+
+         from gk_enroll_plan where 1=1 and year='2015'
+        <if test="condition.subjectTypeName!=null and condition.subjectTypeName!=''">
+
+             and majoredName like CONCAT('%',#{condition.subjectTypeName},'%')
+
+        </if>
+
+        <if test="condition.majoredTypeName!=null and condition.majoredTypeName!=''">
+            and majoredName like CONCAT('%',#{condition.majoredTypeName},'%')
+        </if>
+
+        <if test="condition.searchName!=null and condition.searchName!=''">
+            and majoredName like CONCAT('%',#{condition.searchName},'%')
+        </if>
+        <if test="condition.batchTypeName!=null and condition.batchTypeName!=''">
+             and batch=#{condition.batchTypeName}
+        </if>
+         limit #{start},#{end}
+    </select>
+
+
+
+    <select id="searchMajoredCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(*)
+        from gk_enroll_plan where 1=1 and year='2015'
+        <if test="condition.subjectTypeName!=null and condition.subjectTypeName!=''">
+
+            and majoredName like CONCAT('%',#{condition.subjectTypeName},'%')
+
+        </if>
+
+        <if test="condition.majoredTypeName!=null and condition.majoredTypeName!=''">
+            and majoredName like CONCAT('%',#{condition.majoredTypeName},'%')
+        </if>
+
+        <if test="condition.searchName!=null and condition.searchName!=''">
+            and majoredName like CONCAT('%',#{condition.searchName},'%')
+        </if>
+        <if test="condition.batchTypeName!=null and condition.batchTypeName!=''">
+            and batch=#{condition.batchTypeName}
+        </if>
+    </select>
+
+    <select id="getMajoredByCode" parameterType="java.lang.String" resultType="MajoredDto">
+        select  name,educationLevel,subjectType,majoredType,degree,similarMajor,mainCourse,workGuide
+         from gk_majored where 1=1 and id=#{code}
+    </select>
+
+
+    <select id="getUniversityByCode" parameterType="java.lang.String" resultType="java.util.Map">
+        select  code,name
+        from gk_enroll_plan where 1=1 and batch=#{batchName} and majoredId=#{code}
+    </select>
+
+
+
+</mapper>
+

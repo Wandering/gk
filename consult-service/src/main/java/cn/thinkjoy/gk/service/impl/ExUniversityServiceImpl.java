@@ -1,10 +1,12 @@
 package cn.thinkjoy.gk.service.impl;
 
+import cn.thinkjoy.gk.dao.IUniversityDAO;
 import cn.thinkjoy.gk.dto.EnrollInfo;
 import cn.thinkjoy.gk.dto.PlanInfo;
 import cn.thinkjoy.gk.dto.UniversityDto;
 import cn.thinkjoy.gk.query.UniversityQuery;
 import cn.thinkjoy.gk.service.IExUniversityService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +17,9 @@ import java.util.Map;
  */
 @Service("ExUniversityServiceImpl")
 public class ExUniversityServiceImpl implements IExUniversityService {
+    @Autowired
+    private IUniversityDAO iUniversityDAO;
+
     @Override
     public List<Map> getProvinces() {
         return null;
@@ -36,23 +41,26 @@ public class ExUniversityServiceImpl implements IExUniversityService {
     }
 
     @Override
-    public List<UniversityDto> getUniversityList(UniversityQuery universityQuery) {
-        return null;
+    public List<UniversityDto> getUniversityList(Map<String, Object> universityQuery) {
+        return iUniversityDAO.getUniversityList(universityQuery);
     }
 
     @Override
-    public Integer getUniversityCount(UniversityQuery universityQuery) {
-        return null;
+    public Integer getUniversityCount(Map<String, Object> universityQuery) {
+        return iUniversityDAO.getUniversityCount(universityQuery);
     }
+
 
     @Override
     public UniversityDto getUniversityDetail(String schoolCode) {
-        return null;
+        return iUniversityDAO.getUniversityDetail(schoolCode);
     }
 
     @Override
-    public List<EnrollInfo> getEnrollInfoByYear(int i) {
-        return null;
+    public List<EnrollInfo> getEnrollInfoByYear(int i,String schoolCode) {
+
+
+        return iUniversityDAO.getEnrollInfoByYear(i,schoolCode);
     }
 
     @Override
@@ -61,7 +69,7 @@ public class ExUniversityServiceImpl implements IExUniversityService {
     }
 
     @Override
-    public List<PlanInfo> getPlanInfosByYear(int i) {
-        return null;
+    public List<PlanInfo> getPlanInfosByYear(int i,String schoolCode) {
+        return iUniversityDAO.getPlanInfosByYear(i,schoolCode);
     }
 }

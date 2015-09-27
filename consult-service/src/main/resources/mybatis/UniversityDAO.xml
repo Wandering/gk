@@ -1054,5 +1054,92 @@ selectList
         FROM gk_university
     </select>
 
+
+
+    <select id="getUniversityList" parameterType="java.util.Map" resultType="UniversityDto">
+          select code,name,subjection,educatLevel,type as universityType,property,address,contactPhone,
+       '' as universityImage,provinceName,url from gk_university where 1=1
+            <if test="universityQuery.province!=null and universityQuery!='' ">
+                and provinceName = #{universityQuery.province}
+            </if>
+
+            <if test="universityQuery.universtiyType!=null">
+                and type=#{universityQuery.universtiyType}
+            </if>
+
+            <if test="universityQuery.batch!=null">
+                and batchType in
+                <foreach collection="universityQuery.batch" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+             </if>
+
+            <if test="universityQuery.feature!=null">
+                and property in
+
+                <foreach collection="universityQuery.feature" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+
+          limit #{start},#{end}
+      </select>
+
+
+    <select id="getUniversityCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(*) from gk_university where 1=1
+        <if test="universityQuery.province!=null and universityQuery!='' ">
+            and provinceName = #{universityQuery.province}
+        </if>
+
+        <if test="universityQuery.universtiyType!=null">
+            and type=#{universityQuery.universtiyType}
+        </if>
+
+        <if test="universityQuery.batch!=null">
+            and batchType in
+            <foreach collection="universityQuery.batch" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+
+        <if test="universityQuery.feature!=null">
+            and property in
+
+            <foreach collection="universityQuery.feature" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+
+
+    <select id="getUniversityDetail" parameterType="java.lang.String" resultType="UniversityDto">
+        select code,name,subjection,educatLevel,type as universityType,property,address,contactPhone,
+       '' as universityImage,provinceName,url from gk_university where 1=1 and code=#{code}
+    </select>
+
+
+    <select id="getEnrollInfoByYear" parameterType="java.lang.String" resultType="EnrollInfo">
+        select '文科' as subjectName, wsPlanNumber as planNumber,wsEnrollNumber as enrollNumber,wsHighestScore as highestScore,
+        wsHighestRank as highestRank,wsLowestScore as lowestScore,wsLowestRank as lowestRank,wsAverageScore as averageScore,
+          wsAverageRank as averageRank
+         from gk_enroll_report where universityCode=#{code} and year=#{year}
+
+        union on
+        select '理工' as subjectName, lgPlanNumber as planNumber,lgEnrollNumber as enrollNumber,lgHighestScore as highestScore,
+        lgHighestRank as highestRank,lgLowestScore as lowestScore,lgLowestRank as lowestRank,lgAverageScore as averageScore,
+          lgAverageRank as averageRank
+         from gk_enroll_report where universityCode=#{code} and year=#{year}
+
+    </select>
+
+
+    <select id="getPlanInfosByYear" parameterType="java.lang.String" resultType="PlanInfo">
+        select majoredName,batch,subject,enrollNumber,schoolLength,feeStandard  from gk_enroll_plan where 1=1
+         and universityCode=#{code} and year=#{year}
+    </select>
+
+
 </mapper>
 

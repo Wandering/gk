@@ -1,13 +1,14 @@
 package cn.thinkjoy.gk.dto;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wpliu on 15/9/25.
  */
 public class OpenUniversity {
     private String universityType;
-    private List<UniversityDto> universityLs;
+    private List<Map<String,Object>> universityLs;
 
     public String getUniversityType() {
         return universityType;
@@ -17,11 +18,11 @@ public class OpenUniversity {
         this.universityType = universityType;
     }
 
-    public List<UniversityDto> getUniversityLs() {
+    public List<Map<String, Object>> getUniversityLs() {
         return universityLs;
     }
 
-    public void setUniversityLs(List<UniversityDto> universityLs) {
+    public void setUniversityLs(List<Map<String, Object>> universityLs) {
         this.universityLs = universityLs;
     }
 }

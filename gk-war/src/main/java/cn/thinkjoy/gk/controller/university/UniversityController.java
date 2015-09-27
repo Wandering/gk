@@ -7,6 +7,7 @@ package cn.thinkjoy.gk.controller.university;
 import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.domain.UniversityDict;
 import cn.thinkjoy.gk.pojo.CityPojo;
+import cn.thinkjoy.gk.pojo.Page;
 import cn.thinkjoy.gk.pojo.ProvincePojo;
 import cn.thinkjoy.gk.service.IExUniversityService;
 import cn.thinkjoy.gk.common.BaseController;
@@ -105,10 +106,8 @@ public class UniversityController extends BaseController {
      */
     @RequestMapping(value = "/getUniversityList",method = RequestMethod.POST)
     @ResponseBody
-    public UniversityResponseDto getUniversityList(UniversityQuery universityQuery){
-
-
-
+    public Page<UniversityDto> getUniversityList(UniversityQuery universityQuery){
+        Page<UniversityDto> page=new Page<>();
         Map<String,Object> map=new HashMap<>();
 
         //构造院校批次参数
@@ -117,7 +116,7 @@ public class UniversityController extends BaseController {
         if(null==universityBatchId ||universityBatchId.intValue()==0){
             universityBatchParam=null;
         }else{
-            map.put("type","PROPERTY");//批次类型
+            map.put("type","BATCHTYPE");//批次类型
             List<UniversityDict> universityBatchList=universityDictService.queryList(map,"id","asc");
             for(UniversityDict universityDict:universityBatchList){
                 if((universityBatchId.intValue() & universityDict.getDictId().intValue()) !=0){
@@ -137,7 +136,7 @@ public class UniversityController extends BaseController {
             for(String inString:strArray){
                 universityFeatureId= universityFeatureId+Integer.parseInt(inString);
             }
-            map.put("type","FEATURE");//批次类型
+            map.put("type","FEATURE");//院校特征类型
             List<UniversityDict> universityFeatureList=universityDictService.queryList(map,"id","asc");
             for(UniversityDict universityDict:universityFeatureList){
                 if((universityBatchId.intValue() & universityDict.getDictId().intValue()) !=0){
@@ -146,17 +145,36 @@ public class UniversityController extends BaseController {
             }
         }
 
-        ///////////
 
 
+        //院校类型
+//        Integer universityTypeId=universityQuery.getUniversityTypeId();
+//        List<Integer> universitytTypeParam=new ArrayList<>();//构造出来的参数
+//        if(null==universityTypeId ||universityTypeId.intValue()==0){
+//            universitytTypeParam=null;
+//        }else{
+//            map.put("type","PROPERTY");//院校类型
+//            List<UniversityDict> universityBatchList=universityDictService.queryList(map,"id","asc");
+//            for(UniversityDict universityDict:universityBatchList){
+//                if((universityTypeId.intValue() & universityDict.getDictId().intValue()) !=0){
+//                    universitytTypeParam.add(universityDict.getDictId());
+//                }
+//            }
+//        }
+        Map<String,Object> queryParams=new HashMap<>();
+        queryParams.put("province",universityQuery.getProvinceName());
+        queryParams.put("universtiyType",universityQuery.getUniversityTypeName());
+        queryParams.put("batch",universityBatchParam);
+        queryParams.put("feature",universityFeatureParam);
+        queryParams.put("start",universityQuery.getPageNo()*universityQuery.getPageSize());
+        queryParams.put("end",universityQuery.getPageSize());
         UniversityResponseDto universityResponseDto=new UniversityResponseDto();
         List<UniversityDto> universityDtos=new ArrayList<UniversityDto>();
-        universityDtos=iUniversityService.getUniversityList(universityQuery);
-        Integer universityCount=iUniversityService.getUniversityCount(universityQuery);
-        universityResponseDto.setSchoolList(universityDtos);
-        universityResponseDto.setCurrentPage(universityQuery.getPageNo()+1);
-        universityResponseDto.setSchoolCount(universityCount);
-        return  universityResponseDto;
+        universityDtos=iUniversityService.getUniversityList(queryParams);
+        Integer universityCount=iUniversityService.getUniversityCount(queryParams);
+        page.setList(universityDtos);
+        page.setCount(universityCount);
+        return  page;
     }
 
     /**
@@ -182,8 +200,8 @@ public class UniversityController extends BaseController {
         String schoolCode=request.getParameter("code");
         Map<String,Object> map=new HashMap<String, Object>();
         List<EnrollResponseDto>  enrollResponseDtoList=new ArrayList<EnrollResponseDto>();
-        List<EnrollInfo>  lastenrollInfos=iUniversityService.getEnrollInfoByYear(2014);
-        List<EnrollInfo>  enrollInfos=iUniversityService.getEnrollInfoByYear(2013);
+        List<EnrollInfo>  lastenrollInfos=iUniversityService.getEnrollInfoByYear(2014,schoolCode);
+        List<EnrollInfo>  enrollInfos=iUniversityService.getEnrollInfoByYear(2013,schoolCode);
         EnrollResponseDto lastEnrollResponseDto=new EnrollResponseDto();
         lastEnrollResponseDto.setTitle("2013招生情况");
         lastEnrollResponseDto.setInfos(lastenrollInfos);
@@ -209,8 +227,8 @@ public class UniversityController extends BaseController {
 
         EntrollPlan entrollPlan=new EntrollPlan();
         EntrollPlan lastEntrollPlan=new EntrollPlan();
-        List<PlanInfo> planInfos=iUniversityService.getPlanInfosByYear(2015);
-        List<PlanInfo> lastPlanInfos=iUniversityService.getPlanInfosByYear(2014);
+        List<PlanInfo> planInfos=iUniversityService.getPlanInfosByYear(2015,schoolCode);
+        List<PlanInfo> lastPlanInfos=iUniversityService.getPlanInfosByYear(2014,schoolCode);
         entrollPlan.setTitle("2015年招生计划");
         entrollPlan.setPlanInfos(planInfos);
         lastEntrollPlan.setTitle("2014年招生计划");

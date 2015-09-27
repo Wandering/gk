@@ -10,6 +10,33 @@ public class MajoredDto {
     private String subjectType;
     private String majoredType;
     private String degree;
+    private String similarMajor;
+    private String mainCourse;
+    private String workGuide;
+
+    public String getWorkGuide() {
+        return workGuide;
+    }
+
+    public void setWorkGuide(String workGuide) {
+        this.workGuide = workGuide;
+    }
+
+    public String getSimilarMajor() {
+        return similarMajor;
+    }
+
+    public void setSimilarMajor(String similarMajor) {
+        this.similarMajor = similarMajor;
+    }
+
+    public String getMainCourse() {
+        return mainCourse;
+    }
+
+    public void setMainCourse(String mainCourse) {
+        this.mainCourse = mainCourse;
+    }
 
     public String getName() {
         return name;
