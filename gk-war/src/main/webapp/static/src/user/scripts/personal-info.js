@@ -174,14 +174,14 @@ define(function (require) {
             dataType: 'json',
             type: 'post',
             data: {
-                name: 'zuo',
+                name: '韩小寒',
                 countyId: '2',
                 schoolName: '苏州中学',
                 sex: '1',
                 birthdayDate: '1443001519852',
                 subjectType: '1',
                 mail: '12345678@qq.com',
-                icon: 'touxiang',
+                icon: 'http://img1.2345.com/duoteimg/qqTxImg/2013/12/ka_3/04-054658_103.jpg',
                 qq: '123456'
             }
         })

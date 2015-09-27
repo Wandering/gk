@@ -582,7 +582,8 @@ a.next-btn:hover {
       padding: 0;
       outline: none;
       float: left; }
-    .content .search-content button {
+    .content .search-content a {
+      text-decoration: none;
       width: 128px;
       height: 40px;
       text-align: center;

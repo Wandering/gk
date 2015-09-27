@@ -567,7 +567,7 @@ a.next-btn:hover {
     color: #e24d39 !important; }
 
 .content {
-  height: 700px; }
+  min-height: 300px; }
   .content .search-content {
     margin-top: 20px;
     margin-bottom: 20px;
