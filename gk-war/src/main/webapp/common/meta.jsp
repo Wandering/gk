@@ -15,6 +15,10 @@
 <script src="/static/bower_components/seajs-preload/dist/seajs-preload.js"></script>
 <script src="/static/seajs-config.js"></script>
 <link rel="stylesheet" href="/static/bower_components/swiper/dist/css/swiper.css"/>
+<!--[if lt IE 9]>
+<script src="/static/bower_components/lib/html5shiv.js"></script>
+<script src="/static/bower_components/lib/respond.min.js"></script>
+<![endif]-->
 
 
 
