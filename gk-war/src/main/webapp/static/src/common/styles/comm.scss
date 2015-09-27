@@ -159,7 +159,6 @@
 
 /*文章中得导航栏*/
 @mixin focus {
-  cursor: pointer;
   color: $mainDR;
 }
 
@@ -173,6 +172,7 @@
   padding: 15px 20px;
   font-size: 16px;
   color: #505050;
+  cursor: pointer;
   &.active {
     @include focus;
     border-bottom: 2px solid $mainDR;
@@ -211,4 +211,10 @@ a.next-btn {
 a.next-btn:hover {
   color: #fff;
   text-decoration: underline;
+}
+
+.noContent{
+  text-align: center;
+  padding: 100px 0 0;
+  width: 1000px;
 }
