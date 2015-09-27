@@ -406,9 +406,21 @@ input, textarea {
       color: #fff; }
   .header .main-menu a.active {
     color: #fff; }
+  .header .log-reg a {
+    color: #b1b0b0 !important;
+    text-decoration: none;
+    font-size: 14px !important;
+    margin-left: 150px !important;
+    -webkit-transition: all 0.5s;
+            transition: all 0.5s; }
+    .header .log-reg a:hover {
+      color: #fff !important; }
   .header .user-info-list {
+    position: relative;
     font-size: 12px;
     color: #b1b0b0; }
+    .header .user-info-list:hover .menu {
+      display: block; }
     .header .user-info-list .user a {
       color: #b1b0b0;
       text-decoration: none; }
@@ -420,9 +432,26 @@ input, textarea {
       height: 32px;
       border-radius: 50%;
       -webkit-border-radius: 50%; }
-    .header .user-info-list .menu a {
-      color: #b1b0b0;
-      text-decoration: none; }
+    .header .user-info-list .menu {
+      display: none;
+      z-index: 9;
+      position: absolute;
+      background-color: #353535;
+      top: 50px;
+      right: -18px; }
+      .header .user-info-list .menu li a {
+        text-align: center;
+        line-height: 37px;
+        display: block;
+        width: 135px;
+        border-bottom: 1px solid #3e3e3e;
+        font-size: 16px;
+        cursor: pointer;
+        color: #b1b0b0;
+        text-decoration: none; }
+        .header .user-info-list .menu li a:hover {
+          color: #fff;
+          background-color: #202020; }
 
 .footer .bottom-nav {
   padding-top: 50px;
@@ -537,7 +566,6 @@ a.next-btn:hover {
   width: 1000px; }
 
 .personal-tab {
-  border-bottom: 2px solid #e5e5e5 !important;
   position: relative;
   margin-top: 20px;
   top: 1px; }
@@ -559,7 +587,8 @@ a.next-btn:hover {
       padding: 0;
       outline: none;
       float: left; }
-    .content .search-content button {
+    .content .search-content a {
+      text-decoration: none;
       width: 128px;
       height: 40px;
       text-align: center;

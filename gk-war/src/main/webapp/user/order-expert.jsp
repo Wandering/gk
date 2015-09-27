@@ -2,15 +2,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <%@include file="/common/meta.jsp" %>
     <title>我要预约</title>
     <link rel="stylesheet" href="/static/dist/user/styles/order-expert.min.css"/>
+    <link rel="stylesheet" href="/static/bower_components/laydate/need/laydate.css"/>
+    <link rel="stylesheet" href="/static/bower_components/laydate/skins/dahong/laydate.css"/>
     <link rel="stylesheet" href="/static/bower_components/kindeditor/themes/default/default.css"/>
 </head>
 <body>
-<%@include file="/common/header.jsp"%>
+<%@include file="/common/header.jsp" %>
 
 
 <div class="section w1000">
@@ -32,29 +32,47 @@
         </div>
         <div class="input-item-comm">
             <span class="w-title">预约主题</span>
-            <input type="text" class="comm-input ">
+            <input type="text" class="comm-input order-theme">
         </div>
         <div class="input-item-comm">
             <span class="w-title">预约日期</span>
-            <input type="date" class="comm-input data-start">&nbsp;至
-            <input type="date" class="comm-input data-end">
+    <input onclick="laydate({
+                format: 'YYYY/MM/DD',
+                min: laydate.now(), //设定最小日期为当前日期
+                max: '2099-06-16', //最大日期
+                istime: true,
+                istoday: false,
+                choose: function(datas){
+                     end.min = datas; //开始日选好后，重置结束日的最小日期
+                     end.start = datas //将结束日的初始值设定为开始日
+                }})" class="comm-input data-start laydate-icon">
+            &nbsp;至
+    <input onclick="laydate({
+                format: 'YYYY/MM/DD',
+                min: laydate.now(),
+                max: '2099-06-16',
+                istime: true,
+                istoday: false,
+                choose: function(datas){
+                    start.max = datas; //结束日选好后，重置开始日的最大日期
+    }})" class="comm-input data-end laydate-icon">
             <span class="des-text">请告诉我们您期望与专家见面沟通的日期</span>
         </div>
         <div class="input-item-comm">
             <span class="w-title">您的需求</span>
-            <textarea name="content"></textarea>
+            <textarea name="content" id="content"></textarea>
         </div>
         <div class="input-item-comm">
             <span class="w-title">您的姓名</span>
-            <input type="text" class="comm-input ">
+            <input type="text" class="comm-input name">
         </div>
         <div class="input-item-comm">
             <span class="w-title">联系电话</span>
-            <input type="text" class="comm-input ">
+            <input type="text" class="comm-input mobile">
         </div>
         <div class="input-item-comm">
             <span class="w-title">QQ号码</span>
-            <input type="text" class="comm-input ">
+            <input type="text" class="comm-input qq">
         </div>
         <div class="btn-box">
             <div class="btn btn-submit">提交</div>
@@ -64,25 +82,14 @@
 </div>
 
 
-<%@include file="/common/footer.jsp"%>
+<%@include file="/common/footer.jsp" %>
 
-<script src="../static/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="../static/bower_components/kindeditor/kindeditor-min.js"></script>
-<script src="../static/bower_components/kindeditor/lang/zh-CN.js"></script>
+<script src="/static/bower_components/kindeditor/kindeditor.js"></script>
+<script src="/static/bower_components/kindeditor/lang/zh-CN.js"></script>
+
 <script>
-    //编辑框
-    var editor;
-    KindEditor.ready(function (K) {
-        editor = K.create('textarea[name="content"]', {
-            resizeType: 1,
-            allowPreviewEmoticons: false,
-            allowImageUpload: false,
-            items: [
-                'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
-                'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-                'insertunorderedlist', '|', 'emoticons', 'image', 'link']
-        });
-    });
+    seajs.use("/static/src/user/scripts/order-expert");
 </script>
+
 </body>
 </html>

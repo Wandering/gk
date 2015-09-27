@@ -2,10 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <title>专家/s服务详情</title>
+    <%@include file="/common/meta.jsp"%>
+    <title>专家/服务详情</title>
     <link rel="stylesheet" href="/static/dist/user/styles/expert-service-detail.min.css"/>
 </head>
 <body>
@@ -62,5 +60,8 @@
 
 <%@include file="/common/footer.jsp"%>
 
+<script>
+    seajs.use("/static/src/user/scripts/expert-service-detail");
+</script>
 </body>
 </html>

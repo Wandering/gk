@@ -2,20 +2,22 @@ package cn.thinkjoy.gk.controller.question;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.controller.question.bean.AnswerBean;
+import cn.thinkjoy.gk.controller.question.bean.QuestionAnswerBean;
+import cn.thinkjoy.gk.controller.question.dto.AnswerDetailDto;
 import cn.thinkjoy.gk.controller.question.dto.QuestionContentDto;
-import cn.thinkjoy.gk.controller.question.dto.QuestionDto;
+import cn.thinkjoy.gk.controller.question.dto.QuestionDetailDto;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.protocol.PageQuery;
 import cn.thinkjoy.ss.api.IAnswerService;
-import cn.thinkjoy.ss.bean.AnswerQuestionBean;
+import cn.thinkjoy.ss.bean.QuestionDetailBean;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,8 +43,7 @@ public class AnswerController extends BaseController {
      */
     @RequestMapping(value = "/myQuestion", method = RequestMethod.GET)
     @ResponseBody
-    public AnswerBean findMyQuestion(PageQuery pageQuery) throws Exception {
-
+    public List<QuestionAnswerBean> findMyQuestion(PageQuery pageQuery) throws Exception {
         Integer startSize = pageQuery.getStartSize();
 
         if(startSize==null){
@@ -64,40 +65,82 @@ public class AnswerController extends BaseController {
 
         Long userId = account.getId();
 
-        List<AnswerQuestionBean> aswerQuestionBeans = answerService.findAnswerPage(userId, startSize, endSize);
+        List<QuestionDetailBean> questionDetailBeans = answerService.findAnswerPage(userId, startSize, endSize);
 
-        List<QuestionDto> hotQuestionDtos = new ArrayList<QuestionDto>();
+        List<QuestionAnswerBean> questionAnswerBeans = new ArrayList<QuestionAnswerBean>();
 
-        QuestionDto hotQuestionDto = null;
-        for(AnswerQuestionBean aswerQuestionBean:aswerQuestionBeans){
-            hotQuestionDto = new QuestionDto();
-            hotQuestionDto.setUserId(aswerQuestionBean.getUserId());
-            hotQuestionDto.setUserIcon(aswerQuestionBean.getUserIcon());
-            hotQuestionDto.setFreeStatus(aswerQuestionBean.getFreeStatus());
-            hotQuestionDto.setUserName(aswerQuestionBean.getUserName());
-            hotQuestionDto.setAnswerTime(aswerQuestionBean.getAnswerTime());
-            hotQuestionDto.setCreateTime(aswerQuestionBean.getCreateTime());
-            hotQuestionDto.setIsAnswer(aswerQuestionBean.getIsAnswer());
-            hotQuestionDto.setQuestionId(aswerQuestionBean.getId());
-            hotQuestionDto.setDisableStatus(aswerQuestionBean.getDisableStatus());
-            hotQuestionDto.setIsOpen(aswerQuestionBean.getIsOpen());
-            try{
-                hotQuestionDto.setQuestions(JSON.parseArray(aswerQuestionBean.getQuestion(), QuestionContentDto.class));
-            }catch(Exception e){
-                List<QuestionContentDto> questions = new ArrayList<QuestionContentDto>();
-                QuestionContentDto questionContentDto = new QuestionContentDto();
-                questionContentDto.setText(aswerQuestionBean.getQuestion());
-                questions.add(questionContentDto);
-                hotQuestionDto.setQuestions(questions);
+        if(null!=questionDetailBeans&&questionDetailBeans.size()>0) {
+
+            QuestionAnswerBean questionAnswerBean = null;
+
+            for(QuestionDetailBean questionDetail:questionDetailBeans) {
+
+                questionAnswerBean = new QuestionAnswerBean();
+
+                AnswerDetailDto answerDetailDto = new AnswerDetailDto();
+
+                answerDetailDto.setAnswerTime(questionDetail.getAnswerTime());
+                if (!StringUtils.isEmpty(questionDetail.getAnswer())) {
+                    try {
+                        answerDetailDto.setAnswers(JSON.parseArray(questionDetail.getAnswer(), QuestionContentDto.class));
+                    } catch (Exception e) {
+                        List<QuestionContentDto> questions = new ArrayList<QuestionContentDto>();
+                        QuestionContentDto questionContentDto = new QuestionContentDto();
+                        questionContentDto.setText(questionDetail.getAnswer());
+                        questions.add(questionContentDto);
+                        answerDetailDto.setAnswers(questions);
+                    }
+                } else {
+                    answerDetailDto.setAnswers(null);
+                }
+
+                answerDetailDto.setUserName(questionDetail.getExpertUserName());
+                answerDetailDto.setUserIcon(questionDetail.getExpertUserIcon());
+                answerDetailDto.setUserId(questionDetail.getExpertUserId());
+
+                questionAnswerBean.setAnswer(answerDetailDto);
+
+
+                QuestionDetailDto questionDetailDto = new QuestionDetailDto();
+
+                questionDetailDto.setUserId(questionDetail.getUserId());
+
+                questionDetailDto.setUserIcon(questionDetail.getUserIcon());
+
+                questionDetailDto.setUserName(questionDetail.getUserName());
+
+                questionDetailDto.setCreateTime(questionDetail.getCreateTime());
+
+                try {
+                    questionDetailDto.setQuestions(JSON.parseArray(questionDetail.getQuestion(), QuestionContentDto.class));
+                } catch (Exception e) {
+                    List<QuestionContentDto> questions = new ArrayList<QuestionContentDto>();
+                    QuestionContentDto questionContentDto = new QuestionContentDto();
+                    questionContentDto.setText(questionDetail.getQuestion());
+                    questions.add(questionContentDto);
+                    questionDetailDto.setQuestions(questions);
+                }
+                int disableNum = 0;
+
+                String disableExpertId = questionDetail.getDisableExpertId();
+
+                if (!StringUtils.isEmpty(disableExpertId)) {
+                    if (disableExpertId.indexOf(",") > -1) {
+                        disableNum = disableExpertId.split(",").length;
+                    } else {
+                        disableNum++;
+                    }
+                }
+                questionDetailDto.setDisableNum(disableNum);
+                questionDetailDto.setDisableStatus(questionDetail.getDisableStatus());
+                questionDetailDto.setCreateTime(questionDetail.getCreateTime());
+                questionAnswerBean.setQuestion(questionDetailDto);
+
+                questionAnswerBeans.add(questionAnswerBean);
             }
-            hotQuestionDtos.add(hotQuestionDto);
+
         }
-
-        AnswerBean answerBean = new AnswerBean();
-
-        answerBean.setAnswers(hotQuestionDtos);
-
-        return answerBean;
+        return questionAnswerBeans;
     }
 
 }

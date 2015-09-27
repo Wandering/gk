@@ -2,7 +2,7 @@
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
  * Project Name: jx-market
- * $Id:  VolunteerSchool.java 2015-09-22 19:07:37 $
+ * $Id:  VolunteerSchool.java 2015-09-25 09:54:53 $
  */
 
 
@@ -28,6 +28,8 @@ public class VolunteerSchool extends CreateBaseDomain{
     private String content;
     /** 排序 */
     private Integer sort;
+    /** 点击量 */
+    private Integer hits;
 
 	public VolunteerSchool(){
 	}
@@ -66,6 +68,13 @@ public class VolunteerSchool extends CreateBaseDomain{
     public Integer getSort() {
         return this.sort;
     }
+    public void setHits(Integer value) {
+        this.hits = value;
+    }
+
+    public Integer getHits() {
+        return this.hits;
+    }
 
 	public String toString() {
 		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -80,6 +89,7 @@ public class VolunteerSchool extends CreateBaseDomain{
 			.append("CreateDate",getCreateDate())
 			.append("LastModifier",getLastModifier())
 			.append("LastModDate",getLastModDate())
+			.append("Hits",getHits())
 			.toString();
 	}
 	

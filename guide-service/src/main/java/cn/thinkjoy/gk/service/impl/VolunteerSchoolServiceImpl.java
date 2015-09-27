@@ -35,7 +35,12 @@ public class VolunteerSchoolServiceImpl extends AbstractPageService<IBaseDAO<Vol
 
     @Override
     public BizData4Page queryPageByDataPerm(String resUri, Map conditions, int curPage, int offset, int rows) {
-        List mainData = volunteerSchoolExDAO.queryPage(conditions, offset, rows, "sort", "asc");
+        return queryPageByDataPerm(resUri,conditions, curPage, offset,rows, "sort", "asc");
+    }
+
+    @Override
+    public BizData4Page queryPageByDataPerm(String resUri, Map conditions, int curPage, int offset, int rows, String orderBy, String sortBy) {
+        List mainData = volunteerSchoolExDAO.queryPage(conditions, offset, rows, orderBy, sortBy);
         int records = this.getDao().count(conditions);
         BizData4Page bizData4Page = new BizData4Page();
         bizData4Page.setRows(mainData);
@@ -52,6 +57,15 @@ public class VolunteerSchoolServiceImpl extends AbstractPageService<IBaseDAO<Vol
         return bizData4Page;
     }
 
+    @Override
+    public void addHits(long id, int hits) {
+        volunteerSchoolExDAO.addHits(id, hits);
+    }
+
+//    @Override
+//    public List<VolunteerSchool> queryList(Map<String, Object> condition, String orderBy, String sortBy) {
+//        return null;
+//    }
 
 //    @Override
 //    public void insert(BaseDomain entity) {
@@ -148,10 +162,6 @@ public class VolunteerSchoolServiceImpl extends AbstractPageService<IBaseDAO<Vol
 //        return null;
 //    }
 //
-//    @Override
-//    public List queryList(@Param("condition") Map condition, @Param("orderBy") String orderBy, @Param("sortBy") String sortBy) {
-//        return null;
-//    }
 //
 //    @Override
 //    public List queryPage(@Param("condition") Map condition, @Param("offset") int offset, @Param("rows") int rows) {

@@ -10,12 +10,12 @@
 <%@include file="/common/header.jsp"%>
 <div class="section w1000">
     <ul class="tabs-list personal-tab">
-        <li><a href="personal-info.jsp">个人信息</a></li>
-        <li class="active"><a href="vip-service.jsp">VIP服务</a></li>
-        <li><a href="modify-psd.jsp">修改密码</a></li>
-        <li><a href="">应用中心</a></li>
-        <li><a href="">在线答疑</a></li>
-        <li><a href="">专家服务</a></li>
+        <li><a href="/user/personal-info.jsp">个人信息</a></li>
+        <li class="active"><a href="/user/vip-service.jsp">VIP服务</a></li>
+        <li><a href="/user/modify-psd.jsp">修改密码</a></li>
+        <li><a href="/user/app-center.jsp">应用中心</a></li>
+        <li><a href="/user/online-answer.jsp">在线答疑</a></li>
+        <li><a href="/user/expert-service.jsp">专家服务</a></li>
     </ul>
     <div class="content">
         <div class="banner-box">

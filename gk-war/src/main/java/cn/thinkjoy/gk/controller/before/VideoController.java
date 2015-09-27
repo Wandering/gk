@@ -108,7 +108,7 @@ public class VideoController extends BaseController {
         if(videoSection == null){
             throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
         }
-        VideoCourse videoCourse = new VideoCourse();
+        VideoCourse videoCourse =(VideoCourse) videoCourseService.findOne("id",videoSection.getCourseId());
         videoCourse.setId(videoSection.getCourseId());
         videoCourse.setHit(videoCourse.getHit() + 1);
         videoCourseService.update(videoCourse);

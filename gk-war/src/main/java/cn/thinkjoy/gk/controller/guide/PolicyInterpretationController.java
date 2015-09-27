@@ -8,7 +8,6 @@ import cn.thinkjoy.gk.service.IAdmissionBatchService;
 import cn.thinkjoy.gk.service.IPolicyInterpretationService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +36,7 @@ public class PolicyInterpretationController extends BaseController {
         return admissionBatchList;
     }
 
-    @RequestMapping(value = "/categories")
+    @RequestMapping(value = "/categories", method = RequestMethod.GET)
     @ResponseBody
     public List<PolicyInterpretation> getPolicyInterpretationCategory(@RequestParam("batchId") long batchId,
                                                                       @RequestParam("provinceId") long provinceId) {
@@ -45,7 +44,7 @@ public class PolicyInterpretationController extends BaseController {
                 .findPolicyInterpretationCategoryByBatchIdAndProvinceId(batchId, provinceId);
     }
 
-    @RequestMapping(value = "/allCategories")
+    @RequestMapping(value = "/allCategories", method = RequestMethod.GET)
     @ResponseBody
     public List<PolicyInterpretationCategory> getAllPolicyInterpretationCategory(@RequestParam("provinceId") long provinceId) {
         List<PolicyInterpretationCategory> allCategory = Lists.newArrayList();
@@ -67,7 +66,7 @@ public class PolicyInterpretationController extends BaseController {
         return allCategory;
     }
 
-    @RequestMapping(value = "/detail")
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
     @ResponseBody
     public PolicyInterpretation getPolicyInterpretationDetail(@RequestParam("id") long id) {
         return (PolicyInterpretation) policyInterpretationService.fetch(id);

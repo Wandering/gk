@@ -50,9 +50,9 @@ public class LoginController extends BaseController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public String login(@RequestParam(value="account",required=false) String account,
+	public long login(@RequestParam(value="account",required=false) String account,
 						@RequestParam(value="password",required=false) String password) throws Exception {
-
+		long id = 0l;
 		try {
 			if (StringUtils.isEmpty(account)) {
 				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
@@ -75,21 +75,20 @@ public class LoginController extends BaseController {
 
 			if (userAccountBean.getStatus() != 0) {
 				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "用户状态异常，请联系管理员!");
-
 			}
 
-			long id = userAccountBean.getId();
+			id = userAccountBean.getId();
 
-			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
+			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE,"/"));
 
 			setUserAccountPojo(userAccountBean);
 
 		}catch(Exception e){
-			e.printStackTrace();
+			throw e;
 		}finally{
 
 		}
-		return "success";
+		return id;
 	}
 
 	/**
@@ -97,16 +96,28 @@ public class LoginController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	@ResponseBody
 	public String logout() throws Exception {
 //		boolean status = true;
 		try {
 			RedisUtil.getInstance().del(UserRedisConst.USER_KEY + getCookieValue());
-			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, null, CookieTimeConst.CLEAN_COOKIE));
+			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, null, CookieTimeConst.CLEAN_COOKIE,"/"));
 		}catch(Exception e){
 //			status = false;
 			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
 		}
-		return ControllerReturnConst.REDIRECT+"/index.do";
+		return "success";
+	}
+
+	/**
+	 * 测试getUserAccountPojo是否可以取到
+	 * @return
+	 */
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public String test() throws Exception {
+		UserAccountPojo userAccountPojo=getUserAccountPojo();
+		System.out.println(userAccountPojo);
+		return "/index";
 	}
 
 }

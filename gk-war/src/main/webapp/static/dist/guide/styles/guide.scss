@@ -20,13 +20,16 @@
 
 .tabs-sub-list {
   overflow: hidden;
-  border-radius: 5px;
   li {
     float: left;
     padding: 10px 20px;
     background-color: #f5f5f5;
     font-size: 12px;
     color: #727171;
+    &.active{
+      background-color: #e24333;
+      color: #fff;
+    }
   }
 }
 
@@ -57,4 +60,8 @@
 
 .tabs-list li:hover {
   cursor: pointer;
+}
+
+.tab-content{
+  margin: 20px 0 50px 0;
 }

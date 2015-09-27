@@ -406,9 +406,21 @@ input, textarea {
       color: #fff; }
   .header .main-menu a.active {
     color: #fff; }
+  .header .log-reg a {
+    color: #b1b0b0 !important;
+    text-decoration: none;
+    font-size: 14px !important;
+    margin-left: 150px !important;
+    -webkit-transition: all 0.5s;
+            transition: all 0.5s; }
+    .header .log-reg a:hover {
+      color: #fff !important; }
   .header .user-info-list {
+    position: relative;
     font-size: 12px;
     color: #b1b0b0; }
+    .header .user-info-list:hover .menu {
+      display: block; }
     .header .user-info-list .user a {
       color: #b1b0b0;
       text-decoration: none; }
@@ -420,9 +432,26 @@ input, textarea {
       height: 32px;
       border-radius: 50%;
       -webkit-border-radius: 50%; }
-    .header .user-info-list .menu a {
-      color: #b1b0b0;
-      text-decoration: none; }
+    .header .user-info-list .menu {
+      display: none;
+      z-index: 9;
+      position: absolute;
+      background-color: #353535;
+      top: 50px;
+      right: -18px; }
+      .header .user-info-list .menu li a {
+        text-align: center;
+        line-height: 37px;
+        display: block;
+        width: 135px;
+        border-bottom: 1px solid #3e3e3e;
+        font-size: 16px;
+        cursor: pointer;
+        color: #b1b0b0;
+        text-decoration: none; }
+        .header .user-info-list .menu li a:hover {
+          color: #fff;
+          background-color: #202020; }
 
 .footer .bottom-nav {
   padding-top: 50px;
@@ -565,7 +594,8 @@ section:last-child {
   outline: none;
   float: left; }
 
-.search-content button {
+.search-content a {
+  display: inline-block;
   width: 128px;
   height: 40px;
   text-align: center;
@@ -1005,9 +1035,21 @@ input, textarea {
       color: #fff; }
   .header .main-menu a.active {
     color: #fff; }
+  .header .log-reg a {
+    color: #b1b0b0 !important;
+    text-decoration: none;
+    font-size: 14px !important;
+    margin-left: 150px !important;
+    -webkit-transition: all 0.5s;
+            transition: all 0.5s; }
+    .header .log-reg a:hover {
+      color: #fff !important; }
   .header .user-info-list {
+    position: relative;
     font-size: 12px;
     color: #b1b0b0; }
+    .header .user-info-list:hover .menu {
+      display: block; }
     .header .user-info-list .user a {
       color: #b1b0b0;
       text-decoration: none; }
@@ -1019,9 +1061,26 @@ input, textarea {
       height: 32px;
       border-radius: 50%;
       -webkit-border-radius: 50%; }
-    .header .user-info-list .menu a {
-      color: #b1b0b0;
-      text-decoration: none; }
+    .header .user-info-list .menu {
+      display: none;
+      z-index: 9;
+      position: absolute;
+      background-color: #353535;
+      top: 50px;
+      right: -18px; }
+      .header .user-info-list .menu li a {
+        text-align: center;
+        line-height: 37px;
+        display: block;
+        width: 135px;
+        border-bottom: 1px solid #3e3e3e;
+        font-size: 16px;
+        cursor: pointer;
+        color: #b1b0b0;
+        text-decoration: none; }
+        .header .user-info-list .menu li a:hover {
+          color: #fff;
+          background-color: #202020; }
 
 .footer .bottom-nav {
   padding-top: 50px;
@@ -1164,7 +1223,8 @@ section:last-child {
   outline: none;
   float: left; }
 
-.search-content button {
+.search-content a {
+  display: inline-block;
   width: 128px;
   height: 40px;
   text-align: center;
@@ -1248,7 +1308,7 @@ section:last-child {
           position: relative;
           top: 10px; }
       .ask-answer .answer-list li .right {
-        height: 128px;
+        height: auto;
         background-color: #f9f9f9;
         margin-left: 100px;
         border: 1px solid #f9f9f9;
@@ -1256,6 +1316,8 @@ section:last-child {
         line-height: 30px;
         font-size: 14px;
         color: #8c8c8c; }
+        .ask-answer .answer-list li .right img {
+          max-width: 50%; }
 
 .main-body {
   margin-top: 50px;

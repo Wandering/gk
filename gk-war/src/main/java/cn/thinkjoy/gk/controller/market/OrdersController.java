@@ -92,7 +92,8 @@ public class OrdersController extends BaseController{
 //        }
 
         Orders order = new Orders();
-        order.setUserId(Long.valueOf(userId));
+        order.setUserId(Long.valueOf(1));
+//        order.setUserId(Long.valueOf(userId));
         order.setOrderNo(orderNo);
         order.setDetail(products);
         order.setAmount(amount);

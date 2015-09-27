@@ -32,6 +32,7 @@ public class VipController extends BaseController {
 	@Autowired
 	private ICardService cardService;
 	@RequestMapping(value = "/upgradeVipByCard",method = RequestMethod.POST)
+
 	public String upgradeVipByCard(CardPojo cardPojo) {
 		UserAccountPojo userAccountPojo=super.getUserAccountPojo();
 		if(null==userAccountPojo ||  null==userAccountPojo.getId()){
@@ -60,15 +61,15 @@ public class VipController extends BaseController {
 	 *
 	 * @return
 	 */
-	@RequestMapping(value = "/getAgent",method = RequestMethod.GET)
+	@RequestMapping(value = "/getAccount",method = RequestMethod.GET)
 	@ResponseBody
-	public String chargeAccount() {
+	public UserAccountPojo getChargeAccount() {
 
 		UserAccountPojo userAccountPojo=super.getUserAccountPojo();
 		if(null==userAccountPojo ||  null==userAccountPojo.getId()){
 			throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
 		}
-		return  userAccountPojo.getAccount();
+		return  userAccountPojo;
 	}
 
 }
