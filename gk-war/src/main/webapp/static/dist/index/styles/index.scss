@@ -1,27 +1,27 @@
 @charset "utf-8";
-
 @import "../../common/styles/comm.scss";
 
-.content-title{
+.content-title {
   margin-top: 20px;
 }
-.flow-main-list{
+
+.flow-main-list {
   position: relative;
   z-index: 10;
   overflow: hidden;
   margin-top: 40px;
-  li.item{
+  li.item {
     width: 200px;
     float: left;
     text-align: center;
     img,
     a.name,
     span.num,
-    p.txt{
+    p.txt {
       margin: 0 auto;
       display: block;
     }
-    p.txt{
+    p.txt {
       color: #878787;
       font-size: 12px;
       text-align: left;
@@ -29,12 +29,12 @@
       width: 160px;
       margin: 16px auto;
     }
-    a.name{
+    a.name {
       font-size: 16px;
       margin: 20px 0;
       display: block;
     }
-    span.num{
+    span.num {
       display: block;
       background: #ccc;
       width: 30px;
@@ -46,38 +46,39 @@
     }
   }
 }
+
 @mixin arrow-up-center {
   content: '';
-  width:0;
-  height:0;
-  border-left:20px solid transparent;
-  border-right:20px solid transparent;
-  border-bottom:20px solid #f9f9f9;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid #f9f9f9;
   position: relative;
   top: -35px;
   left: 50%;
   margin-left: -30px;
 }
 
-.page-body{
+.page-body {
 
   width: 100%;
 
-  &.about-platform{
+  &.about-platform {
     height: 592px;
     background: #f3f3f1 url("../images/about_platform_bg.jpg") no-repeat left center;
   }
 
-  &.hot-news-head{
+  &.hot-news-head {
     section {
       padding: 20px 0;
     }
   }
 
-  &.hot-news-body{
+  &.hot-news-body {
     background-color: #f9f9f9;
     padding-bottom: 40px;
-    &:before{
+    &:before {
       @include arrow-up-center;
     }
     section {
@@ -89,7 +90,7 @@
     padding: 40px 0;
     margin: 0 auto;
 
-    h1{
+    h1 {
       font-size: 30px;
       color: #333;
       text-align: center;
@@ -99,17 +100,20 @@
 }
 
 /*关于平台*/
-.mt20{
+.mt20 {
   margin-top: 20px;
 }
-.mt40{
+
+.mt40 {
   margin-top: 40px;
 }
-.mt60{
+
+.mt60 {
   margin-top: 60px;
 }
+
 .about-platform {
-  ul{
+  ul {
     width: 100%;
     overflow: hidden;
 
@@ -119,23 +123,23 @@
       width: 31.26%;
       background-color: #fff;
       position: relative;
-      &.ml{
+      &.ml {
         margin-left: 3.11%;
       }
 
-      .info-content{
+      .info-content {
         width: 90%;
         height: 90%;
         margin: 5%;
 
-        h2{
+        h2 {
           font-size: 20px;
           color: #454545;
           text-align: center;
           line-height: 40px;
         }
 
-        p{
+        p {
           font-size: 12px;
           color: #7e7d7d;
           line-height: 1.8;
@@ -146,7 +150,7 @@
           height: 115px;
           width: 100%;
 
-          span{
+          span {
             color: #fff;
             font-size: 23px;
             position: relative;
@@ -173,7 +177,7 @@
 
 /*在线互动*/
 .search-content {
-  span{
+  span {
     display: inline-block;
     overflow: hidden;
   }
@@ -191,7 +195,7 @@
     text-align: center;
     line-height: 40px;
     border-radius: 5px;
-    border:1px solid #cc0001;
+    border: 1px solid #cc0001;
     background: url('../../common/images/ask-icon.png') no-repeat 15px center;
     float: left;
     margin: 0;
@@ -203,7 +207,7 @@
   }
   input[type="text"] {
     width: 265px;
-    border:1px solid #cc0001;
+    border: 1px solid #cc0001;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     height: 38px;
@@ -212,7 +216,7 @@
   input[type="button"] {
     width: 90px;
     background: #cc0001 url('../../common/images/search-icon.png') no-repeat 15px center;
-    border:1px solid #cc0001;
+    border: 1px solid #cc0001;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     color: #fff;
@@ -222,23 +226,25 @@
 
 @mixin arrow-up {
   content: '';
-  width:0;
-  height:0;
-  border-left:20px solid transparent;
-  border-right:20px solid transparent;
-  border-bottom:20px solid #f6f6f6;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid #f6f6f6;
   position: relative;
   top: -56px;
 }
 
-.detile-content{
+.detile-content {
   padding-left: 20px;
 }
-.detile-header{
+
+.detile-header {
   height: 20px;
   font-size: 16px;
 }
-.order-number{
+
+.order-number {
   display: inline-block;
   width: 20px;
   height: 20px;
@@ -248,58 +254,60 @@
   background-color: #626161;
   color: #dedede;
 }
-.detile-title{
+
+.detile-title {
   color: #626161;
 }
-.detile-info{
+
+.detile-info {
   background-color: #f6f6f6;
   padding: 20px;
   border: 1px solid #edecec;
   line-height: 1.8;
-  &:before{
+  &:before {
     @include arrow-up;
   }
 }
 
 /*热门资讯*/
-.hot-list{
-  width:96%;
+.hot-list {
+  width: 96%;
   margin-left: 2%;
   overflow: hidden;
   padding-bottom: 40px;
-  li{
+  li {
     float: left;
     width: 50%;
     height: 48px;
     margin: 15px 0;
-    &.ml{
+    &.ml {
       margin-left: 8%;
     }
 
-    .title-info{
-      h3{
+    .title-info {
+      h3 {
         font-size: 16px;
         color: #333;
         margin: 10px 0;
       }
-      h6{
+      h6 {
         font-size: 12px;
         color: #817f7f;
         margin: 5px;
-        text-overflow:ellipsis;
-        white-space:nowrap;
-        overflow:hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
     }
 
-    .icon{
+    .icon {
       width: 48px;
       height: 48px;
       background: #e24d39 url('../images/time-icon.png') no-repeat center 8px;
       float: left;
       margin-right: 5px;
 
-      span{
+      span {
         font-size: 10px;
         color: #fff;
         position: relative;
@@ -342,20 +350,22 @@
   }
 }
 
-.tabs-list li{
+.tabs-list li {
   cursor: pointer;
 }
-.tabs-list span.more{
+
+.tabs-list span.more {
   float: right;
   color: #999;
   font-size: 12px;
   cursor: pointer;
-  line-height:48px;
+  line-height: 48px;
 }
+
 /*高考日程*/
-.calendar{
+.calendar {
   width: 100%;
-  img{
+  img {
     width: 100%;
   }
 }

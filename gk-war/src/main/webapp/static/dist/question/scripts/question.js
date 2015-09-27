@@ -2,41 +2,60 @@
  * Created by kepeng on 15/9/24.
  */
 
-define(function (require) {
+define(function(require) {
     var $ = require('$');
     require('swiper');
 
+    var getQueryStr = function(_url, _param) {
+        var rs = new RegExp("(^|)" + _param + "=([^\&]*)(\&|$)", "g").exec(_url),
+            tmp;
+        if (tmp = rs) {
+            return tmp[2];
+        }
+        return "";
+    };
+
     var Question = {
+        startSize: 0,
+        endSize:10,
         renderAsk: function(data) {
             var html = [];
-            for (var i = 0, len = data.length; i < len; i++) {
+            var i = 0,
+                len = data.length
+            for (; i < len; i++) {
                 var question = data[i].question;
                 if (question) {
                     html.push('<section class="ask-answer mt20">');
-                    html.push('<a target="_blank" href="/question/question_detile.jsp?id=' + question.userId + '"><div class="ask mt20">');
+                    html.push('<div class="ask mt20">');
                     html.push('<div class="head-img">');
-                    html.push('<img src="' + question.userIcon || '' + '" />');
+                    html.push('<img src="' + (question.userIcon || '') + '" />');
                     html.push('</div>');
                     html.push('<div class="head-info">');
-                    html.push('<h6>来自 ' + question.userName || '匿名专家' + new Date(question.answerTime).Format('yyyy-MM-dd hh-mm') + '</h6>');
+                    var createTime = new Date(question.createTime).Format('yyyy-MM-dd hh:mm');
+                    console.log(createTime);
+                    html.push('<h6>来自 ' + question.userName || '匿名专家  ' + createTime + '</h6>');
                     var questions = question.questions;
                     var text = [];
-                    for (var i = 0, len = questions.length; i < len; i++) {
-                        text.push(questions[i].text);
+                    for (var j = 0, jlen = questions.length; j < jlen; j++) {
+                        text.push(questions[j].text);
                     }
                     html.push('<h3>' + text.join('') + '</h3>');
-                    html.push('</div></div></a>');
+                    html.push('</div></div>');
                 }
 
                 var answer = data[i].answer;
-
                 if (answer) {
                     html.push(this.renderAnswer(answer));
                 }
                 html.push('</section>');
             }
 
-            $('#question_content').html(html.join(''));
+            if (this.startSize == 0) {
+                $('#question_content').html(html.join(''));
+            } else {
+                $('#question_content').append(html.join(''));
+            }
+
         },
         renderAnswer: function(answer) {
             var html = [];
@@ -51,40 +70,101 @@ define(function (require) {
             html.push('</div>');
             var answers = answer.answers;
             var text = [];
-            for (var i = 0, len = answers.length; i < len; i++) {
-                text.push('<p>' + answers[i].text + '</p>');
-                text.push('<p><img src="' + answers[i].img + '" /></p>');
+            for (var n = 0, nlen = answers.length; n < nlen; n++) {
+                text.push('<p>' + answers[n].text + '</p>');
+                text.push('<p class="ta"><img src="' + answers[n].img + '" /></p>');
             }
             html.push('<div class="right">' + text.join('') + '</div>');
             html.push('</li></ul>');
+            return html.join('');
         },
-        getNew: function(startSize, endSize) {
+        getNew: function() {
+            var url = '/question/newQuestion.do?';
+            this.getData(url);
+        },
+        getHot: function() {
+            var url = '/question/hotQuestion.do?';
+            this.getData(url);
+        },
+        getData: function(url) {
             var that = this;
-            $.get('/question/newQuestion.do?startSize=' + startSize + '&endSize=' + endSize, function(data) {
+            $.get(url + 'startSize=' + that.startSize + '&endSize=' + that.endSize, function(data) {
                 if ('0000000' === data.rtnCode) {
-                    that.renderAsk(data.bizData);
+                    if (data.bizData.length > 0) {
+                        $('#more_loading').hide();
+                        that.renderAsk(data.bizData);
+                    } else {
+                        $('#more_loading').hide();
+                        $('#question_content').html('<p style="padding: 20px 0;text-align: center">暂无相关信息！</p>');
+                    }
+
                 }
             });
         },
-        getHot: function(startSize, endSize) {
-            var that = this;
-            $.get('/question/hotQuestion.do?startSize=' + startSize + '&endSize=' + endSize, function(data) {
-                if ('0000000' === data.rtnCode) {
-                    that.renderAsk(data.bizData);
-                }
-            });
+        getSearch: function() {
+            var keyword = $('#keywords').val();
+            if (keyword) {
+                this.startSize = 0;
+                this.endSize = 10;
+                var url = '/question/newQuestion.do?keyword=' + keyword + '&';
+                this.getData(url);
+            }
+        },
+        addEventForMore: function() {
+            this.startSize += 10;
+            this.endSize += 10;
+            Question[$('.tabs-list li.active').attr('data-method')]();
         }
     }
 
+    var testData = [{
+        question: {
+            "questions": [{
+                "text": "综合评价招生是统招生吗？",
+                "img": ""
+            }], //问题描述
+            "createTime": 1443240600798, //创建时间
+            "userId": 1, //专家ID
+            "userName": "张三", //专家名称
+            "userIcon": "http://himg.bdimg.com/sys/portrait/item/c68b4a737048696265726e6174655374d718.jpg", //专家头像
+            "disableNum": 0, //禁用次数  3次以上不能再换人问
+        },
+        answer: {
+            "answers": [{
+                "text": "陕西省招办每年公布的《陕西省普通高等院校招生工作实施办法》，是陕西省高考招生的纲领性文件，家长及考生都应深入了解。2015年陕西省招生政策会陆续公布，请随时关注本平台各批次招生政策，在此我们会对此“办法”进行专业通俗的解读。以便于家长和考生正确把握。",
+                "img": "https://ss1.baidu.com/-4o3dSag_xI4khGko9WTAnF6hhy/super/pic/item/023b5bb5c9ea15ce5a2233bfb0003af33b87b2bc.jpg"
+            }], //答案描述
+            "answerTime": 1443240600798, //回答时间
+            "userId": 1, //专家ID
+            "userName": "张三", //专家名称
+            "userIcon": "http://himg.bdimg.com/sys/portrait/item/c68b4a737048696265726e6174655374d718.jpg", //专家头像
+        }
+    }];
+
     $(document).ready(function() {
-        Question.getNew(0, 10);
-        $('.tabs-list li').on('mouseover', function(e) {
-            if (!$(this).hasClass('active')) {
-                $(this).addClass('active').siblings().removeClass('active');
-                Question[$(this).attr('data-method')](0, 10);
-            }
+
+        var keywords = decodeURIComponent(getQueryStr(window.location.href, 'val'));
+        if (keywords) {
+            $('#tabs_list').hide();
+            $('#keywords').val(keywords);
+            Question.getSearch();
+        } else {
+            $('#tabs_list').show();
+            //Question.renderAsk(testData);
+            //return;
+            Question.getNew();
+            $('.tabs-list li').on('mouseover', function(e) {
+                if (!$(this).hasClass('active')) {
+                    $(this).addClass('active').siblings().removeClass('active');
+                    Question.startSize = 0;
+                    Question.endSize = 10;
+                    Question[$(this).attr('data-method')]();
+                }
+            });
+        }
+
+        $('#search').on('click', function(e) {
+            Question.getSearch();
         });
     });
 });
-
-

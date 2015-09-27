@@ -2,10 +2,12 @@ package cn.thinkjoy.gk.controller.login;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.constant.RedisConst;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.util.RedisUtil;
 import com.jlusoft.microschool.core.utils.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -32,7 +34,6 @@ public class RegisterController extends BaseController {
 
     @Autowired
     private IUserAccountExService userAccountExService;
-
 
     /**
      * 注册账号
@@ -63,7 +64,9 @@ public class RegisterController extends BaseController {
             if (userAccountBean!=null){
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号已被注册!");
             }
-            //TODO 验证验证码
+            if (!checkCaptcha(account,captcha)){
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "验证码有误!");
+            }
 
             //保存用户
             UserAccount userAccount = new UserAccount();
@@ -82,7 +85,7 @@ public class RegisterController extends BaseController {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"账户注册失败");
             }
         }catch (Exception e){
-            e.printStackTrace();
+            throw e;
         }finally {
 
         }
@@ -117,7 +120,9 @@ public class RegisterController extends BaseController {
             if (userAccountBean==null){
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号尚未注册!");
             }
-            //TODO 验证验证码
+            if (!checkCaptcha(account,captcha)){
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "验证码有误!");
+            }
 
             //根据账号id查询账号
             UserAccount userAccount = userAccountExService.findUserAccountById(userAccountBean.getId());
@@ -133,11 +138,50 @@ public class RegisterController extends BaseController {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"密码重设失败");
             }
         }catch (Exception e){
-            e.printStackTrace();
+            throw e;
         }finally {
 
         }
         return "success";
+    }
+
+    /**
+     * 注册是验证账号是否已经存在
+     * @param account
+     * @return
+     */
+    @RequestMapping(value = "/confirmAccount",method = RequestMethod.POST)
+    @ResponseBody
+    public String confirmAccount(@RequestParam(value = "account",required = false) String account){
+        try {
+            if (StringUtils.isEmpty(account)) {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
+            }
+            UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
+            if (userAccountBean!=null){
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号已经注册!");
+            }
+        }catch (Exception e){
+            throw e;
+        }
+        return "success";
+    }
+
+    /**
+     * 判断验证码是否正确
+     * @param account
+     * @param captcha
+     * @return
+     */
+    private boolean checkCaptcha(String account,String captcha){
+        boolean equals=false;
+        String userCaptchaKey = RedisConst.USER_CAPTCHA_KEY+account;
+        String cap=RedisUtil.getInstance().get(userCaptchaKey).toString();
+        if (captcha.equals(cap)){
+            RedisUtil.getInstance().del(userCaptchaKey);
+            equals=true;
+        }
+        return equals;
     }
 
 

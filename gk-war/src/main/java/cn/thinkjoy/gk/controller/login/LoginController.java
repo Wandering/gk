@@ -75,7 +75,6 @@ public class LoginController extends BaseController {
 
 			if (userAccountBean.getStatus() != 0) {
 				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "用户状态异常，请联系管理员!");
-
 			}
 
 			id = userAccountBean.getId();
@@ -85,7 +84,7 @@ public class LoginController extends BaseController {
 			setUserAccountPojo(userAccountBean);
 
 		}catch(Exception e){
-			e.printStackTrace();
+			throw e;
 		}finally{
 
 		}
@@ -97,6 +96,7 @@ public class LoginController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	@ResponseBody
 	public String logout() throws Exception {
 //		boolean status = true;
 		try {
@@ -106,6 +106,17 @@ public class LoginController extends BaseController {
 //			status = false;
 			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
 		}
+		return "success";
+	}
+
+	/**
+	 * 测试getUserAccountPojo是否可以取到
+	 * @return
+	 */
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public String test() throws Exception {
+		UserAccountPojo userAccountPojo=getUserAccountPojo();
+		System.out.println(userAccountPojo);
 		return "/index";
 	}
 

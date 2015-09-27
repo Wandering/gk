@@ -2,16 +2,17 @@
  * Created by kepeng on 15/9/25.
  */
 
-define(function (require) {
+define(function(require) {
     var $ = require('$');
     require('swiper');
 
     var School = {
-        curPage:1,
-        totalPage:0,
+        curPage: 1,
+        totalPage: 0,
         render: function(ele, data) {
             var html = [];
-            var i = 0,len = data.length;
+            var i = 0,
+                len = data.length;
             html.push('<a class="active" id="0">全部</a>');
             for (; i < len; i++) {
                 html.push('<a id="' + data[i].id + '">' + data[i].name + '</a>');
@@ -20,14 +21,16 @@ define(function (require) {
         },
         show: function(eleId, data) {
             this.render($('#' + eleId), data);
+            this.addEventForOption();
         },
         getData: function() {
             var that = this;
-            $.get('', function(data) {
+            $.get('/university/getInitInfo.do', function(data) {
                 if ('0000000' === data.rtnCode) {
-                    $.each(['provinces','universityType', 'universityBatch', 'universityFeature'], function(i, value) {
+                    $.each(['provinces', 'universityType', 'universityBatch', 'universityFeature'], function(i, value) {
                         that.show(value, data.bizData[value]);
-                    })
+                    });
+                    that.getSchoolList(1);
                 }
             });
         },
@@ -41,7 +44,9 @@ define(function (require) {
             });
         },
         renderSchool: function(data) {
-            var html = [], i = 0, len = data.length;
+            var html = [],
+                i = 0,
+                len = data.length;
             html.push('<table border="0" cellpadding="0" cellspacing="0">'
                         + '<thead>'
                             + '<tr>'
@@ -53,22 +58,19 @@ define(function (require) {
                                 + '<th>院校信息</th>'
                             + '</tr>'
                         + '</thead>'
-                        + '<tbody>');
+                    + '<tbody>');
             for (; i < len; i++) {
-                var trClass = i % 2 == 0 ? 'active' : '';
+                var trClass = i % 2 != 0 ? 'active' : '';
                 html.push('<tr class="' + trClass + '">'
                                 + '<td class="name">' + data[i].name + '</td>'
                                 + '<td>' + data[i].provinceName + '</td>'
                                 + '<td>' + data[i].universityType + '</td>'
                                 + '<td>' + data[i].subjection + '</td>'
-                                + '<td>' + data[i].property+ '</td>'
-                                + '<td>'
-                                    + '<a href="/consult/school_detile.jsp?id=' + data[i].id + '">查看详情</a>'
-                                + '</td>'
+                                + '<td>' + data[i].property + '</td>'
+                                + '<td>' + '<a href="/consult/school_detile.jsp?id=' + data[i].code + '">查看详情</a>' + '</td>'
                             + '</tr>');
             }
-            html.push('</tbody>'
-                + '</table>');
+            html.push('</tbody>' + '</table>');
             $('#school_list').html(html.join(''));
         },
         getSchoolList: function(pageNo) {
@@ -93,22 +95,38 @@ define(function (require) {
                 universityFeatureText = '';
             }
             var search = $('#school_serach').val();
-            var url = url + '?provinces=' + provinces + '&provincesText=' + provincesText
-                            + '&universityType=' + universityType + '&universityTypeText=' + universityTypeText
-                            + '&universityBatch=' + universityBatch + '&universityBatchText=' + universityBatchText
-                            + '&universityFeature=' + universityFeature + '&universityFeatureText=' + universityFeatureText
-                            + '&pageSize=10&pageNo=' + pageNo + '&searchName=' + search;
             var that = this;
-            $.get(url, function(data) {
-                if ('0000000' === data.rtnCode) {
-                    var schoolList = data.bizData.schoolList;
-                    that.renderSchool(schoolList);
-                    if (pageNo == 1) {
-                        that.renderPage(1, data.bizData.schoolCount);
-                        var startNum = (pageNo - 1) * 10 + 1;
-                        $('.startNum').text(startNum);
 
+            $.ajax({
+                type: 'post',
+                url: '/university/getUniversityList.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    provinceId:provinces,
+                    provinceName:provincesText,
+                    universityTypeId:universityType,
+                    universityTypeName:universityTypeText,
+                    universityBatchId:universityBatch,
+                    universityBatchName:universityBatchText,
+                    universityFeatureId:universityFeature,
+                    universityFeatureName:universityFeatureText,
+                    pageSize:10,
+                    pageNo:pageNo,
+                    searchName:search
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if ('0000000' === data.rtnCode) {
+                        var schoolList = data.bizData.schoolList;
+                        if (schoolList && schoolList.length) {
+                            that.renderSchool(schoolList);
+                            if (pageNo == 1) {
+                                that.renderPage(1, data.bizData.schoolCount);
+                            }
+                        }
                     }
+                },
+                error: function(data) {
                 }
             });
         },
@@ -128,6 +146,7 @@ define(function (require) {
             }
             pageHtml.push('<a class="next-page">下一页</a>');
             $('#page').html(pageHtml.join(''));
+            this.pageEventHandle();
         },
         pageEventHandle: function() {
             var that = this;
@@ -142,15 +161,101 @@ define(function (require) {
                         that.curPage = parseInt($(this).text());
                     }
 
-                    if (that.curPage > 0 && that.curPage <= this.totalPage) {
+                    if (that.curPage > 0 && that.curPage <= that.totalPage) {
+                        var startNum = (that.curPage - 1) * 10 + 1;
+                        $('.startNum').text(startNum);
                         that.getSchoolList(that.curPage);
                     }
                 }
             });
+        },
+        getSearch: function() {
+            this.curPage = 1;
+            this.getSchoolList(1);
         }
     }
 
-    $(document).ready(function() {
+    var testData = {
+        "provinces": [{
+            "id": 1,
+            "name": "北京市"
+        }, {
+            "id": 2,
+            "name": "天津市"
+        }],
+        //院校类型
+        "universityType": [{
+            "id": 1,
+            "name": "综合"
+        }, {
+            "id": 2,
+            "name": "工科"
+        }],
+        //院校批次
+        "universityBatch": [{
+            "id": 1,
+            "name": "一批本科"
+        }, {
+            "id": 2,
+            "name": "二批本科"
+        }],
+        //院校特征
+        "universityFeature": [{
+            "id": 1,
+            "name": "985"
+        }, {
+            "id": 2,
+            "name": "211"
+        }, {
+            "id": 3,
+            "name": "研"
+        }]
+    };
 
+    var schooldata = {
+        "schoolCount":20,
+        "currentPage":1,
+        "schoolList": [
+            {
+                "id": 1,
+                "code": 0012,
+                "name": "北京大学1",
+                "provinceName": "北京",
+                "universityType": "综合",
+                "subjection": "地方政府所属",
+                "property": "985,211",
+                "url":"http://www.baidu.com"
+            },
+            {
+                "id": 2,
+                "code": 0013,
+                "name": "北京大学2",
+                "provinceName": "北京",
+                "universityType": "综合",
+                "subjection": "地方政府所属",
+                "property": "985,211",
+                "url":"http://www.baidu.com"
+            },
+            {
+                "id": 3,
+                "code": 0014,
+                "name": "北京大学3",
+                "provinceName": "北京",
+                "universityType": "综合",
+                "subjection": "地方政府所属",
+                "property": "985,211",
+                "url":"http://www.baidu.com"
+            }
+    ]
+}
+
+    $(document).ready(function() {
+        School.getData();
+        $('#search_button').on('click', function(e) {
+            var search = $('#school_serach').val();
+            if (search) {
+                School.getSearch();
+            }
+        })
     });
 });

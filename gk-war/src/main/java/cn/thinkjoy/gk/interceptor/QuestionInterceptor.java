@@ -36,49 +36,30 @@ public class QuestionInterceptor extends HandlerInterceptorAdapter {
     @Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		String url = request.getServletPath();
-		if(url.indexOf("/question/")<=-1||url.indexOf("/answer/")<=-1){
-			return true;
-		}
-////		System.out.println("===========HandlerInterceptor1 preHandle");
-//
-//		LOGGER.info("url:"+url);
-//
-		String value = CookieUtil.getCookieValue(request.getCookies(), CookieConst.USER_COOKIE_NAME);
-//
-//		LOGGER.info("cookie:"+value);
-//		RedisUtil.getInstance().del(key);
-//		String key = UserRedisConst.USER_KEY+value;
-//
-//		boolean redisFlag = RedisUtil.getInstance().exists(key);
-////
-//		LOGGER.info("redis is exists:"+ redisFlag);
-////
-//		if (StringUtils.isEmpty(value)||!redisFlag) {
-////			request.getRequestDispatcher().forward(request, response);
-//			response.sendRedirect("/doLogin.do");
-//			return false;
-//		}
+		if(url.indexOf("/question/")>-1||url.indexOf("/answer/")>-1){
 
+			String value = CookieUtil.getCookieValue(request.getCookies(), CookieConst.USER_COOKIE_NAME);
 
-		UserAccountBean userAccountBean = userAccountService.findUserAccountBeanByToken(value);
+			UserAccountBean userAccountBean = userAccountService.findUserAccountBeanByToken(value,7);
 
-		if(userAccountBean==null){
+			if(userAccountBean==null){
 
-			UserAccountPojo userAccountPojo = userAccountExService.findUserAccountPojoById(Long.valueOf(value));
+				UserAccountPojo userAccountPojo = userAccountExService.findUserAccountPojoById(Long.valueOf(value));
 
-			UserInfoBean userInfoBean = new UserInfoBean();
+				UserInfoBean userInfoBean = new UserInfoBean();
 
-			userInfoBean.setToken(value);
+				userInfoBean.setToken(value);
 
-			userInfoBean.setName(userAccountPojo.getName());
+				userInfoBean.setName(userAccountPojo.getName());
 
-			userInfoBean.setIcon(userAccountPojo.getIcon());
+				userInfoBean.setIcon(userAccountPojo.getIcon());
 
-			userInfoBean.setPhone(userAccountPojo.getAccount());
+				userInfoBean.setPhone(userAccountPojo.getAccount());
 
-			userInfoBean.setSourceType(7);
+				userInfoBean.setSourceType(7);
 
-			userInfoService.insertUserInfo(userInfoBean);
+				userInfoService.insertUserInfo(userInfoBean);
+			}
 		}
 
 		return true;

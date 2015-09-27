@@ -8,7 +8,7 @@ allprojects {
 
     thinkjoyUCMVersion = "1.0.0-SNAPSHOT"
 
-    thinkjoyIMVersion = "0.0.21-SNAPSHOT"
+    thinkjoySSVersion = "0.0.8-SNAPSHOT"
 
     freemarkerVersion = "2.3.20"
 

@@ -17,7 +17,7 @@
                  <span>
                      <input type="text" placeholder="请输入搜索关键字"/>
                      <input type="button" value="搜索"/>
-                     <button>我要提问</button>
+                     <a target="_blank" href="/question/ask.jsp">我要提问</a>
                 </span>
         </div>
 

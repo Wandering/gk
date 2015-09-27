@@ -2,17 +2,14 @@ package cn.thinkjoy.gk.controller.question.query;
 
 
 
-import cn.thinkjoy.gk.controller.question.dto.QuestionContentDto;
-
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by clei on 15/1/9.
  */
 public class SendQuestionQuery implements Serializable {
 
-	private List<QuestionContentDto> questions;
+	private String question;
 
 	private Long expertId;
 
@@ -22,12 +19,12 @@ public class SendQuestionQuery implements Serializable {
 
 	private Long disableExpertId;
 
-	public List<QuestionContentDto> getQuestions() {
-		return questions;
+	public String getQuestion() {
+		return question;
 	}
 
-	public void setQuestions(List<QuestionContentDto> questions) {
-		this.questions = questions;
+	public void setQuestion(String question) {
+		this.question = question;
 	}
 
 	public Long getExpertId() {

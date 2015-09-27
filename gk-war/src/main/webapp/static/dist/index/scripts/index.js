@@ -1,6 +1,7 @@
 define(function (require) {
     var $ = require('$');
     require('swiper');
+    require('header-user');
     //幻灯片
     var swiper = new Swiper('.swiper-container', {
         pagination: '.swiper-pagination',
@@ -18,7 +19,7 @@ define(function (require) {
         });
         $('.go-search').click(function () {
             var searchText = $('.search-val').val();
-            window.location.assign(url + '/question/question_search_result.jsp?val=' + searchText);
+            window.location.assign(url + '/question/question.jsp?val=' + searchText);
         });
         $('#tabs-online').find('li').click(function () {
             var n = $(this).index();
@@ -30,30 +31,6 @@ define(function (require) {
         more.click(function () {
             window.location.assign(url + '/question/question.jsp')
         });
-        $.ajax({
-            url:'/gkinformation/getInformationByKey.do',
-            dataType:'json',
-            type:'get',
-            data:{
-            },
-            success:function(res){
-                var dataJson =res.bizData;
-                console.log(res);
-                var template = '';
-                $.each(dataJson,function(i,v){
-                    template += '<li>' +
-                    '<div class="icon ta"> ' +
-                    '<span>4月25日</span> ' +
-                    '</div> ' +
-                    '<div class="title-info"> ' +
-                    '<h3>'+v.hotInformation+'</h3> ' +
-                    '<h6>'+v.informationContent+'</h6> ' +
-                    '</div> ' +
-                    '</li>'
-                });
-                $('.hot-list').html(template);
-            }
-        })
 
         //热门资讯
         $('#tabs-hosts').find('li').click(function () {
@@ -89,7 +66,7 @@ define(function (require) {
             },
             success:function(res){
                 var dataJson =res.bizData;
-                console.log(res);
+                //console.log(res);
                 var template = '';
                 $.each(dataJson,function(i,v){
                     template += '<li>' +
