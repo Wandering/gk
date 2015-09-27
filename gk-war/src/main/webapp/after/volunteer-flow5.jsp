@@ -46,8 +46,8 @@
                         <section class="section-article">
                             <div class="search-content ta">
                                  <span>
-                                     <input type="text" value="华东理工大学" placeholder="请输入院校名称"/>
-                                     <input type="button" value="选择院校"/>
+                                     <input type="text" onclick="window.location.href='/after/volunteer-flow4.jsp'" value="华东理工大学" placeholder="请输入院校名称"/>
+                                     <input type="button" onclick="window.location.href='/after/volunteer-flow4.jsp'" value="选择院校"/>
                                 </span>
                             </div>
                         </section>
@@ -114,8 +114,8 @@
                         <section class="section-article">
                             <div class="search-content ta">
                                  <span>
-                                     <input type="text" placeholder="请输入院校名称"/>
-                                     <input type="button" value="选择院校"/>
+                                     <input type="text" onclick="window.location.href='/after/volunteer-flow4.jsp'" placeholder="请输入院校名称"/>
+                                     <input type="button" onclick="window.location.href='/after/volunteer-flow4.jsp'" value="选择院校"/>
                                 </span>
                             </div>
                         </section>
@@ -145,8 +145,8 @@
                         <section class="section-article">
                             <div class="search-content ta">
                                  <span>
-                                     <input type="text" placeholder="请输入院校名称"/>
-                                     <input type="button" value="选择院校"/>
+                                     <input type="text" onclick="window.location.href='/after/volunteer-flow4.jsp'" placeholder="请输入院校名称"/>
+                                     <input type="button" onclick="window.location.href='/after/volunteer-flow4.jsp'" value="选择院校"/>
                                 </span>
                             </div>
                         </section>
@@ -176,8 +176,8 @@
                         <section class="section-article">
                             <div class="search-content ta">
                                  <span>
-                                     <input type="text" placeholder="请输入院校名称"/>
-                                     <input type="button" value="选择院校"/>
+                                     <input type="text" onclick="window.location.href='/after/volunteer-flow4.jsp'" placeholder="请输入院校名称"/>
+                                     <input type="button" onclick="window.location.href='/after/volunteer-flow4.jsp'" value="选择院校"/>
                                 </span>
                             </div>
                         </section>

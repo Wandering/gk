@@ -565,6 +565,33 @@ a.next-btn:hover {
   padding: 100px 0 0;
   width: 1000px; }
 
+.toTop {
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  z-index: 999;
+  display: none;
+  font-size: 16px;
+  cursor: pointer;
+  overflow: hidden;
+  visibility: visible;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  color: #9c9c9c;
+  font-size: 16px;
+  width: 38px;
+  height: 38px;
+  line-height: 38px;
+  text-align: center;
+  text-decoration: none;
+  _position: absolute;
+  _top: expression(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight); }
+
+.toTop:hover {
+  color: #fff;
+  text-decoration: none;
+  background-color: #999; }
+
 .personal-tab {
   position: relative;
   margin-top: 20px;

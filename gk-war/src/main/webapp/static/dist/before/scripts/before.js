@@ -2,8 +2,9 @@ define(function (require) {
     var $ = require('$');
     require('swiper');
     require('getTime');
-    // 切换tab
+    require('backToTop');
 
+    // 切换tab
     $('.tabs-list').on('click', 'li', function () {
         $(this).addClass('active').siblings().removeClass('active');
         var subjectId = $(this).attr('id');

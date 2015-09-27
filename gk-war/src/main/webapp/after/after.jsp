@@ -58,7 +58,7 @@
                 <img src="/static/dist/after/images/yzm.png" alt=""/>
             </div>
             <div class="form-control-btn">
-                <input type="button" class="btn" value="下一步"/>
+                <input type="button" class="btn" id="volunteer-flow1-btn" onclick="window.location.href='/after/volunteer-flow2.jsp'" value="下一步"/>
             </div>
 
         </form>
@@ -66,5 +66,6 @@
 </div>
 
 <%@ include file="/common/footer.jsp"%>
+
 </body>
 </html>

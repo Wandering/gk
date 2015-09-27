@@ -46,8 +46,8 @@
                 2015年控制线：<strog>文科 467分</strog>，<strong>理科440分</strong>
             </div>
             <div class="form-control-btn">
-                <input type="button" class="btn" value="开始"/>
-                <input type="button" class="prev-btn" value="返回上一步"/>
+                <input type="button" class="btn" onclick="window.location.href='/after/volunteer-flow3.jsp'" value="开始"/>
+                <input type="button" class="prev-btn" onclick="window.location.href='/after/after.jsp'" value="返回上一步"/>
             </div>
         </div>
     </div>

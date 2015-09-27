@@ -46,8 +46,101 @@
                         <section class="section-article">
                             <div class="search-content ta">
                                  <span>
-                                     <input type="text" placeholder="请输入院校名称"/>
-                                     <input type="button" value="选择院校"/>
+                                     <input type="text" onclick="window.location.href='/after/volunteer-flow4.jsp'" placeholder="请输入院校名称"/>
+                                     <input type="button" onclick="window.location.href='/after/volunteer-flow4.jsp'" value="选择院校"/>
+                                </span>
+                            </div>
+                        </section>
+                        <div class="tips">
+                            <strong>温馨提示：</strong>
+                            <p>请准确无误的填写考号、分数及位次；所录入的信息一旦提交将不可更改。</p>
+                        </div>
+                    </div>
+                </td>
+                <td class="item3"></td>
+                <td class="item4">
+                    <div class="">
+                        <label>
+                            <input type="radio" name="isFun" id=""/> 是
+                        </label>
+                        <p>（建议服从）</p>
+                        <label>
+                            <input type="radio" name="isFun" id=""/> 否
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="item1">B志愿</td>
+                <td class="item2">
+                    <div class="">
+                        <section class="section-article">
+                            <div class="search-content ta">
+                                 <span>
+                                     <input type="text" onclick="window.location.href='/after/volunteer-flow4.jsp'" placeholder="请输入院校名称"/>
+                                     <input type="button" onclick="window.location.href='/after/volunteer-flow4.jsp'" value="选择院校"/>
+                                </span>
+                            </div>
+                        </section>
+                        <div class="tips">
+                            <strong>温馨提示：</strong>
+                            <p>请准确无误的填写考号、分数及位次；所录入的信息一旦提交将不可更改。</p>
+                        </div>
+                    </div>
+                </td>
+                <td class="item3"></td>
+                <td class="item4">
+                    <div class="">
+                        <label>
+                            <input type="radio" name="isFun" id=""/> 是
+                        </label>
+                        <p>（建议服从）</p>
+                        <label>
+                            <input type="radio" name="isFun" id=""/> 否
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="item1">C志愿</td>
+                <td class="item2">
+                    <div class="">
+                        <section class="section-article">
+                            <div class="search-content ta">
+                                 <span>
+                                     <input type="text" onclick="window.location.href='/after/volunteer-flow4.jsp'" placeholder="请输入院校名称"/>
+                                     <input type="button" onclick="window.location.href='/after/volunteer-flow4.jsp'" value="选择院校"/>
+                                </span>
+                            </div>
+                        </section>
+                        <div class="tips">
+                            <strong>温馨提示：</strong>
+                            <p>请准确无误的填写考号、分数及位次；所录入的信息一旦提交将不可更改。</p>
+                        </div>
+                    </div>
+                </td>
+                <td class="item3"></td>
+                <td class="item4">
+                    <div class="">
+                        <label>
+                            <input type="radio" name="isFun" id=""/> 是
+                        </label>
+                        <p>（建议服从）</p>
+                        <label>
+                            <input type="radio" name="isFun" id=""/> 否
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="item1">D志愿</td>
+                <td class="item2">
+                    <div class="">
+                        <section class="section-article">
+                            <div class="search-content ta">
+                                 <span>
+                                     <input type="text" onclick="window.location.href='/after/volunteer-flow4.jsp'" placeholder="请输入院校名称"/>
+                                     <input type="button" onclick="window.location.href='/after/volunteer-flow4.jsp'" value="选择院校"/>
                                 </span>
                             </div>
                         </section>
@@ -81,7 +174,7 @@
 <div class="tansLayer"></div>
 <div class="volunteer-flow3-layer">
     <div class="top-close">
-        <a href="" class="close-btn">x</a>
+        <a href="javascript:;" class="close-btn"  onclick="window.location.href='/after/volunteer-flow3.jsp'">x</a>
     </div>
     <div class="tips">
         <strong>温馨提示：</strong>
@@ -119,7 +212,7 @@
         <div class="info-result">
             <ul>
                 <li class="starA">
-                    <div class="title">
+                    <div class="title"  onclick="window.location.href='/after/volunteer-flow5.jsp'">
                         <span class="">A档（冲）</span>
                         <p>录取指数: <i class="starA-icon"></i></p>
                     </div>
