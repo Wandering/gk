@@ -496,9 +496,9 @@ input, textarea {
   float: left;
   padding: 15px 20px;
   font-size: 16px;
-  color: #505050; }
+  color: #505050;
+  cursor: pointer; }
   .tabs-list li.active {
-    cursor: pointer;
     color: #e35643;
     border-bottom: 2px solid #e35643; }
 
@@ -530,6 +530,11 @@ a.next-btn {
 a.next-btn:hover {
   color: #fff;
   text-decoration: underline; }
+
+.noContent {
+  text-align: center;
+  padding: 100px 0 0;
+  width: 1000px; }
 
 .content-title {
   margin-top: 20px; }
