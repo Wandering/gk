@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <title>专家/s服务详情</title>
+    <title>专家/服务详情</title>
     <link rel="stylesheet" href="/static/dist/user/styles/expert-service-detail.min.css"/>
 </head>
 <body>

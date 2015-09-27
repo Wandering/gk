@@ -410,7 +410,7 @@ input, textarea {
     color: #b1b0b0 !important;
     text-decoration: none;
     font-size: 14px !important;
-    margin-left: 70px !important;
+    margin-left: 150px !important;
     -webkit-transition: all 0.5s;
             transition: all 0.5s; }
     .header .log-reg a:hover {
@@ -439,19 +439,19 @@ input, textarea {
       background-color: #353535;
       top: 50px;
       right: -18px; }
-      .header .user-info-list .menu li {
+      .header .user-info-list .menu li a {
         text-align: center;
         line-height: 37px;
         display: block;
         width: 135px;
         border-bottom: 1px solid #3e3e3e;
         font-size: 16px;
-        cursor: pointer; }
-        .header .user-info-list .menu li:hover {
-          background-color: #202020; }
-      .header .user-info-list .menu a {
+        cursor: pointer;
         color: #b1b0b0;
         text-decoration: none; }
+        .header .user-info-list .menu li a:hover {
+          color: #fff;
+          background-color: #202020; }
 
 .footer .bottom-nav {
   padding-top: 50px;
@@ -607,6 +607,14 @@ a.next-btn:hover {
       box-sizing: border-box;
       border: 1px solid #e5e5e5;
       border-radius: 3px; }
+    .content .user-item .group-comm .radius-comm {
+      display: inline-block;
+      width: 60px;
+      height: 40px;
+      line-height: 40px;
+      margin-left: 35px; }
+      .content .user-item .group-comm .radius-comm input[type=radio] {
+        margin-right: 6px; }
     .content .user-item .group-comm .ml35 {
       margin-left: 35px !important; }
     .content .user-item .group-comm .user-select-comm {

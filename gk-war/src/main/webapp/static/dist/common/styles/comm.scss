@@ -58,7 +58,7 @@
       color: #b1b0b0 !important;
       text-decoration: none;
       font-size: 14px !important;
-      margin-left: 70px !important;
+      margin-left: 150px !important;
       transition: all .5s;
       &:hover {
         color: #fff !important;
@@ -95,20 +95,21 @@
       top: 50px;
       right: -18px;
       li {
-        text-align: center;
-        line-height: 37px;
-        display: block;
-        width: 135px;
-        border-bottom: 1px solid #3e3e3e;
-        font-size: 16px;
-        cursor: pointer;
-        &:hover {
-          background-color: #202020;
+        a {
+          text-align: center;
+          line-height: 37px;
+          display: block;
+          width: 135px;
+          border-bottom: 1px solid #3e3e3e;
+          font-size: 16px;
+          cursor: pointer;
+          color: #b1b0b0;
+          text-decoration: none;
+          &:hover {
+            color: #fff;
+            background-color: #202020;
+          }
         }
-      }
-      a {
-        color: #b1b0b0;
-        text-decoration: none;
       }
     }
   }

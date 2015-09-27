@@ -60,6 +60,16 @@
         border: 1px solid $borderColor;
         border-radius: 3px;
       }
+      .radius-comm{
+        display: inline-block;
+        width: 60px;
+        height: 40px;
+        line-height: 40px;
+        margin-left: 35px;
+        input[type=radio]{
+          margin-right: 6px;
+        }
+      }
       .ml35{
         margin-left: 35px!important;
       }

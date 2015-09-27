@@ -16,8 +16,9 @@
     </div>
     <div class="user-info-list fr hide">
       <div class="user">
-        <img src="" alt="avatar" class="user-avatar"/>
+        <img src="" alt="avatar" class="user-avatar hide"/>
         <a href="" class="username"></a>
+        <span class="account hide"></span>
       </div>
       <ul class="menu hide">
         <li><a href="/user/personal-info.jsp">个人信息</a></li>

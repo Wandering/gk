@@ -1,6 +1,6 @@
 define(function (require) {
     var $ = require('$');
-
+    require('header-user');
 
 
     // 获取商品信息
