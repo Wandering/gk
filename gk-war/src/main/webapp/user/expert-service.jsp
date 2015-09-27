@@ -22,8 +22,8 @@
     <div class="content">
         <div class="search-content">
              <span>
-                 <input type="text" placeholder="请输入专业名称进行搜索">
-                 <input type="button" value="搜索">
+                 <input type="text" id="search" placeholder="请输入专业名称进行搜索">
+                 <input type="button" value="搜索" id="btn-search">
                  <!--<button>我要预约</button>-->
                  <a href="/user/order-expert.jsp">我要预约</a>
             </span>
@@ -34,9 +34,9 @@
                 <div class="col-1">时间</div>
             </div>
             <div class="data-list">
-                <a class="row" href="expert-service-detail.jsp">
-                    <div class="col-3 ">我需要一名专家当面给我讲授一些志愿填报方面的知识！</div>
-                    <div class="col-1">2015-05-15 09:52</div>
+                <a class="row" href="javascript:void(0);" id="go-detail">
+                    <div class="col-3" id="title" data-id=""></div>
+                    <div class="col-1" id="createTime"></div>
                 </a>
             </div>
         </div>

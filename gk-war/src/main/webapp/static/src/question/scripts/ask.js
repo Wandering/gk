@@ -4,6 +4,7 @@
 
 define(function (require) {
     var $ = require('$');
+    require('header-user');
     require('swiper');
     //编辑框
     var editor;
