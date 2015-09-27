@@ -29,6 +29,8 @@ public class UniversityDictServiceImpl extends AbstractPageService<IBaseDAO<Univ
         return universityDictDAO;
     }
 
+
+
 //    @Override
 //    public void insert(BaseDomain entity) {
 //
