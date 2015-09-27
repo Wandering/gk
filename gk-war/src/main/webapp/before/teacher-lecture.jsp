@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>个人信息</title>
+    <title>名师讲堂</title>
     <%@ include file="/common/meta.jsp"%>
     <link rel="stylesheet" href="/static/dist/common/styles/comm.css"/>
     <link rel="stylesheet" href="/static/dist/before/styles/before.css"/>
 </head>
 <body>
-<%@ include file="/common/header.jsp"%>
+<%@ include file="/before/header-before.jsp"%>
 <div class="content">
     <%@ include file="/common/banner-wipe.jsp"%>
 </div>
@@ -42,8 +42,8 @@
                 <section class="section-article">
                     <div class="search-content ta">
                  <span>
-                     <input type="text" placeholder="请输入搜索内容"/>
-                     <input type="button" value="搜索"/>
+                     <input type="text" id="searchVal" placeholder="请输入搜索内容"/>
+                     <input type="button" id="search-btn" value="搜索"/>
                 </span>
                     </div>
                 </section>
@@ -52,156 +52,15 @@
     </div>
     <div class="tabs-content">
         <div class="tabs-content-list">
-            <ul class="main-video-list">
-                <li class="item">
-                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
-                    <div class="info">
-                        <span class="fl">学科名称:语文</span>
-                        <span class="fr">主讲专家:徐老师</span>
-                    </div>
-                    <div class="num">
-                        <span class="fl">点击量:9999</span>
-                    </div>
-                    <p class="txt">
-                        徐老师，正高级教师，任教于西北工业大学附属中学，高中语文教研组长。西安市教育学会特聘研究员。陕西省教学能手，陕西省首批学科带头人。陕西省中语会理事。陕西师范大学硕士合作指导教师。先后有15年参加陕西省高考语文评卷工作，曾担任题小组长、题组长.</p>
-
-                    <div class="funs">
-                        <a href="" class="btn">点击播放</a>
-                    </div>
-                </li>
-                <li class="item">
-                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
-                    <div class="info">
-                        <span class="fl">学科名称:语文</span>
-                        <span class="fr">主讲专家:徐老师</span>
-                    </div>
-                    <div class="num">
-                        <span class="fl">点击量:9999</span>
-                    </div>
-                    <p class="txt">
-                        徐老师，正高级教师，任教于西北工业大学附属中学，高中语文教研组长。西安市教育学会特聘研究员。陕西省教学能手，陕西省首批学科带头人。陕西省中语会理事。陕西师范大学硕士合作指导教师。先后有15年参加陕西省高考语文评卷工作，曾担任题小组长、题组长.</p>
-
-                    <div class="funs">
-                        <a href="" class="btn">点击播放</a>
-                    </div>
-                </li>
-                <li class="item">
-                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
-                    <div class="info">
-                        <span class="fl">学科名称:语文</span>
-                        <span class="fr">主讲专家:徐老师</span>
-                    </div>
-                    <div class="num">
-                        <span class="fl">点击量:9999</span>
-                    </div>
-                    <p class="txt">
-                        徐老师，正高级教师，任教于西北工业大学附属中学，高中语文教研组长。西安市教育学会特聘研究员。陕西省教学能手，陕西省首批学科带头人。陕西省中语会理事。陕西师范大学硕士合作指导教师。先后有15年参加陕西省高考语文评卷工作，曾担任题小组长、题组长.</p>
-
-                    <div class="funs">
-                        <a href="" class="btn">点击播放</a>
-                    </div>
-                </li>
-                <li class="item">
-                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
-                    <div class="info">
-                        <span class="fl">学科名称:语文</span>
-                        <span class="fr">主讲专家:徐老师</span>
-                    </div>
-                    <div class="num">
-                        <span class="fl">点击量:9999</span>
-                    </div>
-                    <p class="txt">
-                        徐老师，正高级教师，任教于西北工业大学附属中学，高中语文教研组长。西安市教育学会特聘研究员。陕西省教学能手，陕西省首批学科带头人。陕西省中语会理事。陕西师范大学硕士合作指导教师。先后有15年参加陕西省高考语文评卷工作，曾担任题小组长、题组长.</p>
-
-                    <div class="funs">
-                        <a href="" class="btn">点击播放</a>
-                    </div>
-                </li>
-                <li class="item">
-                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
-                    <div class="info">
-                        <span class="fl">学科名称:语文</span>
-                        <span class="fr">主讲专家:徐老师</span>
-                    </div>
-                    <div class="num">
-                        <span class="fl">点击量:9999</span>
-                    </div>
-                    <p class="txt">
-                        徐老师，正高级教师，任教于西北工业大学附属中学，高中语文教研组长。西安市教育学会特聘研究员。陕西省教学能手，陕西省首批学科带头人。陕西省中语会理事。陕西师范大学硕士合作指导教师。先后有15年参加陕西省高考语文评卷工作，曾担任题小组长、题组长.</p>
-
-                    <div class="funs">
-                        <a href="" class="btn">点击播放</a>
-                    </div>
-                </li>
-                <li class="item">
-                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
-                    <div class="info">
-                        <span class="fl">学科名称:语文</span>
-                        <span class="fr">主讲专家:徐老师</span>
-                    </div>
-                    <div class="num">
-                        <span class="fl">点击量:9999</span>
-                    </div>
-                    <p class="txt">
-                        徐老师，正高级教师，任教于西北工业大学附属中学，高中语文教研组长。西安市教育学会特聘研究员。陕西省教学能手，陕西省首批学科带头人。陕西省中语会理事。陕西师范大学硕士合作指导教师。先后有15年参加陕西省高考语文评卷工作，曾担任题小组长、题组长.</p>
-
-                    <div class="funs">
-                        <a href="" class="btn">点击播放</a>
-                    </div>
-                </li>
-                <li class="item">
-                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
-                    <div class="info">
-                        <span class="fl">学科名称:语文</span>
-                        <span class="fr">主讲专家:徐老师</span>
-                    </div>
-                    <div class="num">
-                        <span class="fl">点击量:9999</span>
-                    </div>
-                    <p class="txt">
-                        徐老师，正高级教师，任教于西北工业大学附属中学，高中语文教研组长。西安市教育学会特聘研究员。陕西省教学能手，陕西省首批学科带头人。陕西省中语会理事。陕西师范大学硕士合作指导教师。先后有15年参加陕西省高考语文评卷工作，曾担任题小组长、题组长.</p>
-
-                    <div class="funs">
-                        <a href="" class="btn">点击播放</a>
-                    </div>
-                </li>
-                <li class="item">
-                    <div class="img"><img src="/static/dist/before/images/pic01.png" alt=""/></div>
-                    <div class="info">
-                        <span class="fl">学科名称:语文</span>
-                        <span class="fr">主讲专家:徐老师</span>
-                    </div>
-                    <div class="num">
-                        <span class="fl">点击量:9999</span>
-                    </div>
-                    <p class="txt">
-                        徐老师，正高级教师，任教于西北工业大学附属中学，高中语文教研组长。西安市教育学会特聘研究员。陕西省教学能手，陕西省首批学科带头人。陕西省中语会理事。陕西师范大学硕士合作指导教师。先后有15年参加陕西省高考语文评卷工作，曾担任题小组长、题组长.</p>
-
-                    <div class="funs">
-                        <a href="" class="btn">点击播放</a>
-                    </div>
-                </li>
-            </ul>
-            <a href="" class="next-btn">下一页</a>
+            <ul class="main-video-list" id="list-msg-item" pageNo="0"></ul>
+            <a href="javascript:;" class="next-btn" id="nextPage">下一页</a>
         </div>
     </div>
 </div>
 
 <%@ include file="/common/footer.jsp"%>
-<link rel="stylesheet" href="/static/bower_components/swiper/dist/css/swiper.css"/>
-<script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="/static/bower_components/swiper/dist/js/swiper.jquery.min.js"></script>
 <script>
-    $(function () {
-        //幻灯片
-        var swiper = new Swiper('.swiper-container', {
-            pagination: '.swiper-pagination',
-            paginationClickable: true,
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
-            loop: true
-        });
-    });
+    seajs.use("/static/src/before/scripts/teacher-lecture");
 </script>
 </body>
 </html>
