@@ -5,20 +5,26 @@ define(function (require) {
     require('getTime');
 
 
+
     var UI = {
         $listMsgItem: $('#list-msg-item'),
         $nextPage: $('#nextPage')
     };
-
+    var pageSize = 8;
     var searchValUrl = window.location.search;
     var num = searchValUrl.indexOf("?");
-    var searchVal = searchValUrl.substr(num+16);
+    var searchVal = searchValUrl.substr(num+19);
     $('#searchVal').val(searchVal);
+
+
 
     // 搜索
     $('#search-btn').on('click',function(){
-       window.location.href='/before/exam.jsp?examSearchName='+ $('#searchVal').val()
+        window.location.href='/before/teacher-lecture.jsp?teacherSearchName='+ $('#searchVal').val()
     });
+
+
+
 
 
 
@@ -40,21 +46,18 @@ define(function (require) {
     }
     getSubjectList();
 
-    // 分页数据
-    var pageSize = 8;
     var searchVals = $('#searchVal').val();
-    console.log(searchVals)
     function getList(pageNo, pageSize,searchVals) {
-        // 获取首页列表
+
         $.getJSON(
-            "/before/paper/getPaperList.do",
+            "/before/video/getVideoList.do",
             {
-                pageNo: pageNo,
-                pageSize: pageSize,
-                sortType :1 ,
-                years:'2014',
-                subjectId:"",
-                searchName:searchVals
+                pageNo: 0,
+                pageSize: 4,
+                classifyType:1,
+                sortType:1,
+                subjectId:'',
+                teacherSearchName:searchVals
             },
             function (result) {
                 console.log(result);
@@ -69,36 +72,26 @@ define(function (require) {
                     }
 
                     for (var i = 0; i < dataJson.length; i++) {
-                        var paperName = dataJson[i].paperName,
-                            createDate = dataJson[i].createDate,
-                            subjectType = dataJson[i].subjectId,
-                            resources = dataJson[i].resources;
-                        var  subjectTypeTxt = '';
-                        switch (subjectType){
-                            case 1:
-                                subjectTypeTxt='语文';
-                                break;
-                            case 3:
-                                subjectTypeTxt='英语';
-                                break;
-                            case 10:
-                                subjectTypeTxt='理综';
-                                break;
-                            case 11:
-                                subjectTypeTxt='文综';
-                                break;
-                            default :
-                                subjectTypeTxt='其他';
-                        }
+                        var frontCover = dataJson[i].frontCover,
+                            subjectName = dataJson[i].subjectName,
+                            teacherName = dataJson[i].teacherName,
+                            hit = dataJson[i].hit,
+                            subcontent = dataJson[i].subcontent;
                         var listMsgHtml = ''
                             +'<li class="item">'
-                            +'<a href="'+ resources +'">'
-                            +'<span class="subject-n"><strong>'+ subjectTypeTxt +'</strong></span>'
-                            +'<span class="subject-t">'+ paperName +'</span>'
-                            +'<span class="subject-d">上传时间：'+ getTime(createDate) +'</span>'
-                            +'</a>'
+                            +'<div class="img"><img src="'+ frontCover +'" alt=""/></div>'
+                            +'<div class="info">'
+                            +'<span class="fl">学科名称:'+ subjectName +'</span>'
+                            +'<span class="fr">主讲专家:'+ teacherName +'</span>'
+                            +'</div>'
+                            +'<div class="num">'
+                            +'<span class="fl">点击量:'+ hit +'</span>'
+                            +'</div>'
+                            +'<p class="txt">'+ subcontent +'</p>'
+                            +'<div class="funs">'
+                            +'<a href="" class="btn">点击播放</a>'
+                            +'</div>'
                             +'</li>';
-
                         UI.$listMsgItem.append(listMsgHtml);
                     }
                     pageNo++;
@@ -109,11 +102,13 @@ define(function (require) {
                 }
             });
     }
-    // 初始化数据
+
     UI.$nextPage.on('click', function () {
         var pageNo = UI.$listMsgItem.attr('pageNo');
-        getList(pageNo, pageSize,searchVals);
+        getList(pageNo, pageSize,searchVal);
     }).click();
+
+
 
 
 
