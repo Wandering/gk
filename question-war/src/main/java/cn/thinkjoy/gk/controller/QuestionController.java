@@ -1,7 +1,6 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.bean.AnswerBean;
 import cn.thinkjoy.gk.bean.QuestionBean;
 import cn.thinkjoy.gk.bean.QuestionDetailBean;
 import cn.thinkjoy.gk.common.BaseController;
@@ -10,14 +9,12 @@ import cn.thinkjoy.gk.dto.AnswerDetailDto;
 import cn.thinkjoy.gk.dto.QuestionContentDto;
 import cn.thinkjoy.gk.dto.QuestionDetailDto;
 import cn.thinkjoy.gk.dto.QuestionDto;
-import cn.thinkjoy.gk.pojo.AnswerPojo;
 import cn.thinkjoy.gk.pojo.QuestionDetailPojo;
 import cn.thinkjoy.gk.pojo.QuestionPojo;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.protocol.PageQuery;
 import cn.thinkjoy.gk.query.SendQuestionQuery;
-import cn.thinkjoy.gk.service.IAnswerExService;
 import cn.thinkjoy.gk.service.IQuestionExService;
 import cn.thinkjoy.gk.service.IQuestionService;
 import com.alibaba.fastjson.JSON;

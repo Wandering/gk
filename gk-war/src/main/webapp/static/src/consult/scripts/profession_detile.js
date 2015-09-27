@@ -33,7 +33,7 @@ define(function (require) {
             });
         },
         renderInfo: function(obj) {
-            $('#info_content').html('<img class="fl" src="' + obj.universityImage + '" />'
+            $('#info_content').html('<img class="fl" src="' + (obj.universityImage || '') + '" />'
                                     + '<div class="info">'
                                         + '<ul>'
                                             + '<li class="school-name">' + obj.name + '</li>'

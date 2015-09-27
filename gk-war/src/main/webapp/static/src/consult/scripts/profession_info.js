@@ -87,7 +87,9 @@ define(function (require) {
             var that = this;
             $.get('/majored/getInitInfo.do', function(data) {
                 if ('0000000' === data.rtnCode) {
-                    that.render(data.bizData.batchType);
+                    if (data.bizData.batchType) {
+                        that.render(data.bizData.batchType);
+                    }
                 }
             });
         },

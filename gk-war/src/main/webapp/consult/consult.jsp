@@ -32,12 +32,7 @@
                 </span>
             </div>
             <div class="video">
-                <video id="home_video" controls="" preload="none" poster="/img/poster.jpg" class="video-js vjs-default-skin">
-                    <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
-                    <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm">
-                    <track kind="captions" src="/vtt/captions.vtt" srclang="en" label="English">
-                    </track>
-                </video>
+                <video src="http://vjs.zencdn.net/v/oceans.mp4" autoplay controls preload></video>
             </div>
             <p>专业升学测评是一项专门为中国在校中学生升学择业而设计的专业测评软件，在中学生进行专业抉择的关键时刻给予专业的指导及合理的建议。</p>
             <div class="into-evalution ta">
@@ -50,6 +45,7 @@
 </div>
 
 <%@ include file="/common/footer.jsp"%>
+<script type="text/javascript" src="/static/bower_components/lib/html5media.min.js"></script>
 <script type="text/javascript">
     seajs.use("${ctx}/static/src/consult/scripts/consult");
 </script>
