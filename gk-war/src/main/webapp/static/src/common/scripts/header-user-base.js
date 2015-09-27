@@ -1,14 +1,13 @@
 /**
  * Created by pdeng on 15/9/26.
  */
-define(function (require) {
+define(function (require, exports, modules) {
     var $ = require('$');
 
     function GetCookie(sMainName, sSubName) {
         var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
         return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
     }
-
     $(function () {
         //判断当前用户cookie是否存在
         if (!GetCookie("gkuser") || GetCookie("gkuser") == '""') {
@@ -24,8 +23,8 @@ define(function (require) {
                 data: {},
                 success: function (res) {
                     if (res.rtnCode == '0000000') {
-                        console.log(res);
                         var userData = res.bizData;
+                        $('.account').text(userData.account);
                         var name = userData.name;
                         if (name == null || name == '') {
                             name == userData.account;
@@ -37,7 +36,7 @@ define(function (require) {
                         } else {
                             userImg = userData.icon
                         }
-                        $('.user-avatar').attr('src', userImg);
+                        $('.user-avatar').attr('src', userImg).fadeIn();
                     }
                 }
             });
@@ -60,7 +59,5 @@ define(function (require) {
                 }
             });
         });
-    });
-
-
+    })
 });

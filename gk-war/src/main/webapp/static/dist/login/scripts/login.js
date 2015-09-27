@@ -56,14 +56,14 @@ define(function (require) {
                 type: 'post',
                 dataType: 'json',
                 data: {
-                   account:tel,  //18717817817
-                   password:pwd  //123123
+                    account: tel,  //18717817817
+                    password: pwd  //123123
                 },
                 success: function (res) {
                     console.log(res);
                     if (res.rtnCode == '0000000') {
-                        window.location.assign('http://'+window.location.host+'/index.jsp');
-                    }else{
+                        window.location.assign('http://' + window.location.host + '/index.jsp');
+                    } else {
                         Dom.errorTip1.text(res.msg);
                     }
                 }
@@ -75,22 +75,78 @@ define(function (require) {
             Dom.registerInput.fadeIn();
             Dom.loginInput.hide();
         });
-        Dom.btnLoginRegister.click(function () {
-            var reg_tel = Dom.telNumber.val();
-            var reg_code = Dom.captchaCode.val();
-            var reg_pwd = Dom.regPassword.val();
-            var reg_conform_pwd = Dom.regPasswordConfirm.val();
+        Dom.codeText.click(function () {
+            Dom.errorTip2.text('');
+            var reg_tel = Dom.telNumber.val().trim();
             var isPhone = /^0?1[3578]\d{9}$/;
             if (reg_tel.trim() == '') {
                 Dom.errorTip2.text('手机号不能为空').fadeIn();
                 return
             }
             if (!isPhone.test(reg_tel.trim())) {
-                Dom.errorTip2.text('账号输入有误').fadeIn();
+                Dom.errorTip2.text('手机号输入有误').fadeIn();
+                return
+            }
+            $.ajax({
+                url: '/register/confirmAccount.do',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    account: reg_tel
+                },
+                success: function (res) {
+                    if (res.rtnCode !== '0000000') {
+                        Dom.errorTip2.text(res.msg).fadeIn();
+                    } else {
+                        //获取验证码
+                        $.ajax({
+                            url: '/captcha/captcha.do',
+                            type: 'post',
+                            dataType: 'json',
+                            data: {
+                                account: reg_tel,//用户账号
+                                type: 0 //注册为时type=0，找回密码时type=1
+                            },
+                            success: function (res) {
+                                if (res.rtnCode == '0000000') {
+                                    Dom.codeText.unbind('click').css('background-color', '#ccc');
+                                    var s = (JSON.parse(res.bizData)).time;
+                                    var timer = setInterval(function () {
+                                        s--;
+                                        Dom.codeText.text(s + '秒后可重新获取');
+                                        if (s <= 0) {
+                                            clearInterval(timer);
+                                            Dom.codeText.text('重新获取').css('background-color', '#52d09c');
+                                        }
+                                    }, 1000);
+                                    Dom.codeText.bind('click');
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        });
+        Dom.btnLoginRegister.click(function () {
+            var reg_code = Dom.captchaCode.val().trim();
+            var reg_pwd = Dom.regPassword.val().trim();
+            var reg_conform_pwd = Dom.regPasswordConfirm.val().trim();
+            var reg_tel = Dom.telNumber.val().trim();
+            var isPhone = /^0?1[3578]\d{9}$/;
+            if (reg_tel.trim() == '') {
+                Dom.errorTip2.text('手机号不能为空').fadeIn();
+                return
+            }
+            if (!isPhone.test(reg_tel.trim())) {
+                Dom.errorTip2.text('手机号输入有误').fadeIn();
                 return
             }
             if (reg_code.trim() == '') {
                 Dom.errorTip2.text('验证码不能为空').fadeIn();
+                return
+            }
+            if (reg_code.trim().length > 6) {
+                Dom.errorTip2.text('验证码输入有误').fadeIn();
                 return
             }
             if (reg_pwd.trim() == '' || reg_conform_pwd.trim() == '') {
@@ -104,14 +160,21 @@ define(function (require) {
                 Dom.errorTip2.text('');
             }
             $.ajax({
-                url: '',
+                url: '/register/account.do',
                 type: 'post',
                 dataType: 'json',
-                data: {},
+                data: {
+                    account: reg_tel,//用户账号
+                    captcha: reg_code,//验证码
+                    password: reg_pwd//密码
+                },
                 success: function (res) {
                     console.log(res);
                     if (res.rtnCode == '0000000') {
-                        //window.location.href
+                        //有服务端跳转
+                        //window.location.href = 'http://'+window.location.host+'/index.jsp';
+                    }else{
+                        Dom.errorTip2(res.msg);
                     }
                 }
             })

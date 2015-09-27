@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <%@include file="/common/meta.jsp"%>
     <title>我要预约</title>
     <link rel="stylesheet" href="/static/dist/user/styles/order-expert.min.css"/>
+    <link rel="stylesheet" href="/static/bower_components/laydate/need/laydate.css"/>
+    <link rel="stylesheet" href="/static/bower_components/laydate/skins/dahong/laydate.css"/>
     <link rel="stylesheet" href="/static/bower_components/kindeditor/themes/default/default.css"/>
 </head>
 <body>
@@ -36,8 +36,8 @@
         </div>
         <div class="input-item-comm">
             <span class="w-title">预约日期</span>
-            <input type="date" class="comm-input data-start">&nbsp;至
-            <input type="date" class="comm-input data-end">
+            <input onclick="laydate()" class="comm-input data-start laydate-icon">&nbsp;至
+            <input onclick="laydate()" class="comm-input data-end laydate-icon">
             <span class="des-text">请告诉我们您期望与专家见面沟通的日期</span>
         </div>
         <div class="input-item-comm">
@@ -65,7 +65,9 @@
 
 
 <%@include file="/common/footer.jsp"%>
-
+<script>
+    seajs.use("/static/src/user/scripts/order-expert");
+</script>
 <script src="../static/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="../static/bower_components/kindeditor/kindeditor-min.js"></script>
 <script src="../static/bower_components/kindeditor/lang/zh-CN.js"></script>

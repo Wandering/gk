@@ -23,15 +23,23 @@
     <div class="content">
         <div class="input-item-comm">
             <span class="w-title">登陆账号</span>
-            <span>18710921677</span>
+            <span id="tel"></span>
         </div>
         <div class="input-item-comm">
             <span class="w-title">当前密码</span>
-            &nbsp;<input type="password" class="comm-psd error-bd"/>
-            <span class="error-tips">当前密码错误，请重试</span>
+            &nbsp;<input type="password" class="comm-psd" id="current-psd"/>
+            <span class="error-tips"></span>
         </div>
-        <div class="input-item-comm"><span class="w-title">新密码</span> <input type="password" class="comm-psd"/></div>
-        <div class="input-item-comm"><span class="w-title">确认密码</span> <input type="password" class="comm-psd"/></div>
+        <div class="input-item-comm">
+            <span class="w-title">新密码</span>
+            <input type="password" class="comm-psd"  id="new-psd"/>
+            <span class="error-tips"></span>
+        </div>
+        <div class="input-item-comm">
+            <span class="w-title">确认密码</span>
+            <input type="password" class="comm-psd" id="confirm-psd"/>
+            <span class="error-tips"></span>
+        </div>
         <div class="btn btn-submit">提交</div>
     </div>
 
