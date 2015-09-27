@@ -8,9 +8,8 @@ seajs.config({
         "swiper": "bower_components/utils/swiper.js",
         "laydate": "bower_components/laydate/laydate.js",
         "uploadify": "bower_components/uploadify/jquery.uploadify.min.js",
-        "header-user":'src/common/scripts/header-user-base.js'
+        "header-user":'src/common/scripts/header-user-base.js',
         //"data_times": "bower_components/utils/getTimes.js"
-        "swiper": "bower_components/utils/swiper.js",
         "getTime": "bower_components/utils/getTime",
         "backToTop": "bower_components/utils/backToTop"
     },
