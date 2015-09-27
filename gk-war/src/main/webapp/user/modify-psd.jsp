@@ -5,13 +5,12 @@
     <meta charset="UTF-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <%@include file="/common/meta.jsp"%>
     <title>修改密码</title>
     <link rel="stylesheet" href="/static/dist/user/styles/modify-psd.min.css"/>
 </head>
 <body>
 <%@include file="/common/header.jsp"%>
-
-
 <div class="section w1000">
     <ul class="tabs-list personal-tab">
         <li><a href="personal-info.jsp">个人信息</a></li>
@@ -37,8 +36,9 @@
     </div>
 
 </div>
-
 <%@include file="/common/footer.jsp"%>
-
+<script>
+    seajs.use("/static/src/user/scripts/modify-psd");
+</script>
 </body>
 </html>

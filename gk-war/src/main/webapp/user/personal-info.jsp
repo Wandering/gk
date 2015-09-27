@@ -24,14 +24,14 @@
     </ul>
     <div class="content">
         <div class="avatar-box fl">
-            <img src="/static/dist/common/images/avatar.png" class="avatar-img"/>
+            <img src="/static/dist/common/images/icon_default.png" class="avatar-img"/>
             <div class="btn-upload-img">上传头像</div>
         </div>
         <div class="user-item fr">
             <div class="group-comm account">
                 <span class="account-tel">登陆账号</span>
                 <span class="account"></span>
-                <a href="" class="modify-psd">修改密码</a>
+                <a href="/user/modify-psd.jsp" class="modify-psd">修改密码</a>
             </div>
             <div class="group-comm">
                 真实姓名<input type="text" class="user-input-comm name" value=""/>
@@ -63,7 +63,7 @@
             <div class="group-comm">
                 &nbsp;QQ号码<input type="text" class="user-input-comm qq" />
             </div>
-
+            <div class="btn btn-submit">提交</div>
         </div>
     </div>
 

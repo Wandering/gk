@@ -618,3 +618,14 @@ a.next-btn:hover {
       box-sizing: border-box;
       border: 1px solid #e5e5e5;
       border-radius: 3px; }
+    .content .user-item .btn-submit {
+      margin: 60px 0 0 -120px;
+      background-color: #e24d39;
+      font-size: 14px;
+      color: #fff;
+      width: 300px;
+      height: 36px;
+      line-height: 36px;
+      text-align: center;
+      border-radius: 3px;
+      cursor: pointer; }
