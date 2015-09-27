@@ -10,6 +10,10 @@ import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.common.domain.BaseDomain;
 import cn.thinkjoy.common.service.IBaseService;
 import cn.thinkjoy.common.service.IPageService;
+import cn.thinkjoy.gk.domain.UniversityDict;
+
+import java.util.List;
+import java.util.Map;
 
 public interface IUniversityDictService<D extends IBaseDAO<T>, T extends BaseDomain> extends IBaseService<D, T>,IPageService<D, T>{
 

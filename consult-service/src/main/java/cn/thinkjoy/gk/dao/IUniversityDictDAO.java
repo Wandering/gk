@@ -8,8 +8,12 @@ package cn.thinkjoy.gk.dao;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.gk.domain.UniversityDict;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 public interface IUniversityDictDAO extends IBaseDAO<UniversityDict>{
-	
+
 
 }

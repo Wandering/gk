@@ -7,6 +7,7 @@ package cn.thinkjoy.gk.controller.university;
 import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.domain.UniversityDict;
 import cn.thinkjoy.gk.pojo.*;
+import cn.thinkjoy.gk.service.IDataDictService;
 import cn.thinkjoy.gk.service.IExUniversityService;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.query.UniversityQuery;
@@ -43,6 +44,10 @@ public class UniversityController extends BaseController {
 
     @Autowired
     private IProvinceService provinceService;
+    @Autowired
+    private IDataDictService dataDictService;
+
+
     /**
      * 获取初始化信息
      * @return
@@ -52,7 +57,7 @@ public class UniversityController extends BaseController {
     public Map<String,Object> getInitInfo(){
         Map<String,Object> responseMap=new HashMap<String, Object>();
         List<ProvincePojo> provincePojos=new ArrayList<>();
-        List<Map<String,Object>> universityType=new ArrayList<>();
+        List<Map<String, Object>> universityType=new ArrayList<>();
         List<Map<String,Object>>  universityBatch=new ArrayList<>();
         List<Map<String,Object>>  universityFeature=new ArrayList<>();
 
@@ -65,29 +70,29 @@ public class UniversityController extends BaseController {
         }
         Map<String,Object> map=new HashMap<>();//院校类型
         map.put("type","PROPERTY");//院校类型
-        List<UniversityDict> universityTypeList=universityDictService.queryList(map,"id","asc");
-        for(UniversityDict universityDict:universityTypeList){
-            Map<String,Object> inMap=new HashMap<>();
-            inMap.put("name",universityDict.getName());
-            inMap.put("dictId",universityDict.getDictId());
-            universityType.add(inMap);
-        }
+        universityType=dataDictService.queryDictList(map);
+//        for(UniversityDict universityDict:universityTypeList){
+//            Map<String,Object> inMap=new HashMap<>();
+//            inMap.put("name",universityDict.getName());
+//            inMap.put("id",universityDict.getDictId());
+//            universityType.add(inMap);
+//        }
         map.put("type","BATCHTYPE");//批次类型
-        List<UniversityDict> universityBatchList=universityDictService.queryList(map,"id","asc");
-        for(UniversityDict universityDict:universityBatchList){
-            Map<String,Object> inMap=new HashMap<>();
-            inMap.put("name",universityDict.getName());
-            inMap.put("dictId",universityDict.getDictId());
-            universityBatch.add(inMap);
-        }
+        universityBatch=dataDictService.queryDictList(map);
+//        for(UniversityDict universityDict:universityBatchList){
+//            Map<String,Object> inMap=new HashMap<>();
+//            inMap.put("name",universityDict.getName());
+//            inMap.put("id",universityDict.getDictId());
+//            universityBatch.add(inMap);
+//        }
         map.put("type","FEATURE");//院校特征
-        List<UniversityDict> universityFeatureList=universityDictService.queryList(map,"id","asc");
-        for(UniversityDict universityDict:universityFeatureList){
-            Map<String,Object> inMap=new HashMap<>();
-            inMap.put("name",universityDict.getName());
-            inMap.put("dictId",universityDict.getDictId());
-            universityFeature.add(inMap);
-        }
+        universityFeature=dataDictService.queryDictList(map);
+//        for(UniversityDict universityDict:universityFeatureList){
+//            Map<String,Object> inMap=new HashMap<>();
+//            inMap.put("name",universityDict.getName());
+//            inMap.put("id",universityDict.getDictId());
+//            universityFeature.add(inMap);
+//        }
         responseMap.put("provinces",provincePojos);
         responseMap.put("universityType",universityType);
         responseMap.put("universityBatch",universityBatch);
