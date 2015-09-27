@@ -8,9 +8,9 @@ package cn.thinkjoy.gk.dao;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.gk.domain.University;
-import cn.thinkjoy.gk.dto.EnrollInfo;
-import cn.thinkjoy.gk.dto.PlanInfo;
-import cn.thinkjoy.gk.dto.UniversityDto;
+import cn.thinkjoy.gk.pojo.EnrollInfo;
+import cn.thinkjoy.gk.pojo.PlanInfo;
+import cn.thinkjoy.gk.pojo.UniversityDto;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

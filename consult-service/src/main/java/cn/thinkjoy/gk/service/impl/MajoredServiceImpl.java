@@ -1,8 +1,8 @@
 package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.gk.dao.IMajoredDAO;
-import cn.thinkjoy.gk.dto.MajoredDto;
-import cn.thinkjoy.gk.dto.Subject;
+import cn.thinkjoy.gk.pojo.MajoredDto;
+import cn.thinkjoy.gk.pojo.SubjectDto;
 import cn.thinkjoy.gk.query.MajoredQuery;
 import cn.thinkjoy.gk.service.IMajoredService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class MajoredServiceImpl implements IMajoredService {
     }
 
     @Override
-    public List<Subject> searchMajored(MajoredQuery query) {
+    public List<SubjectDto> searchMajored(MajoredQuery query) {
         return majoredDAO.searchMajored(query);
     }
 

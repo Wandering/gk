@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.dto;
+package cn.thinkjoy.gk.pojo;
 
 /**
  * Created by wpliu on 15/9/26.

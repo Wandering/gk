@@ -8,7 +8,7 @@
         and parentId=#{parentId}
     </select>
 
-    <select id="searchMajored" parameterType="java.util.Map" resultType="Subject">
+    <select id="searchMajored" parameterType="java.util.Map" resultType="SubjectDto">
         select majoredId as code,majoredName as name,enrollNumber as planNumber,
          schoolLength,foreginLanguage,feeStandard,universityCode,universityName
 

@@ -1,7 +1,7 @@
 package cn.thinkjoy.gk.dao;
 
-import cn.thinkjoy.gk.dto.MajoredDto;
-import cn.thinkjoy.gk.dto.Subject;
+import cn.thinkjoy.gk.pojo.MajoredDto;
+import cn.thinkjoy.gk.pojo.SubjectDto;
 import cn.thinkjoy.gk.query.MajoredQuery;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,7 +15,7 @@ public interface IMajoredDAO {
 
     List<Map<String,Object>> getMajoreByParentId(@Param("parentId")int i);
 
-    List<Subject> searchMajored(@Param("condition")MajoredQuery query);
+    List<SubjectDto> searchMajored(@Param("condition")MajoredQuery query);
 
     Integer searchMajoredCount(@Param("condition")MajoredQuery query);
 

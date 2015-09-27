@@ -1,9 +1,9 @@
-package cn.thinkjoy.gk.dto;
+package cn.thinkjoy.gk.pojo;
 
 /**
  * Created by wpliu on 15/9/25.
  */
-public class Subject {
+public class SubjectDto {
     private String code;
     private String name;
     private Integer planNumber;

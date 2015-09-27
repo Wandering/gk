@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.dto;
+package cn.thinkjoy.gk.pojo;
 
 import java.util.List;
 import java.util.Map;

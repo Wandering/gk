@@ -1,7 +1,7 @@
 package cn.thinkjoy.gk.service;
 
-import cn.thinkjoy.gk.dto.MajoredDto;
-import cn.thinkjoy.gk.dto.Subject;
+import cn.thinkjoy.gk.pojo.MajoredDto;
+import cn.thinkjoy.gk.pojo.SubjectDto;
 import cn.thinkjoy.gk.query.MajoredQuery;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public interface IMajoredService {
 
     List<Map<String,Object>> getMajoreByParentId(int i);
 
-    List<Subject> searchMajored(MajoredQuery query);
+    List<SubjectDto> searchMajored(MajoredQuery query);
 
     Integer searchMajoredCount(MajoredQuery query);
 

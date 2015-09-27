@@ -1,10 +1,8 @@
 package cn.thinkjoy.gk.controller.university;
 
 import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.domain.University;
 import cn.thinkjoy.gk.domain.UniversityDict;
-import cn.thinkjoy.gk.dto.*;
-import cn.thinkjoy.gk.pojo.Page;
+import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.query.MajoredQuery;
 import cn.thinkjoy.gk.service.IMajoredService;
 import cn.thinkjoy.gk.service.IUniversityDictService;
@@ -95,9 +93,9 @@ public class MajoredController extends BaseController {
      */
     @RequestMapping(value = "/searchMajored",method = RequestMethod.POST)
     @ResponseBody
-    public Page<Subject> searchMajored(MajoredQuery query){
-        Page<Subject> page=new Page<>();
-         List<Subject> majoredDtos= iMajoredService.searchMajored(query);
+    public Page<SubjectDto> searchMajored(MajoredQuery query){
+        Page<SubjectDto> page=new Page<>();
+         List<SubjectDto> majoredDtos= iMajoredService.searchMajored(query);
         Integer count=iMajoredService.searchMajoredCount(query);
         page.setCount(count);
         page.setList(majoredDtos);

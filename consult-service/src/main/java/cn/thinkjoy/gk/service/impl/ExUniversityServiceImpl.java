@@ -1,10 +1,9 @@
 package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.gk.dao.IUniversityDAO;
-import cn.thinkjoy.gk.dto.EnrollInfo;
-import cn.thinkjoy.gk.dto.PlanInfo;
-import cn.thinkjoy.gk.dto.UniversityDto;
-import cn.thinkjoy.gk.query.UniversityQuery;
+import cn.thinkjoy.gk.pojo.EnrollInfo;
+import cn.thinkjoy.gk.pojo.PlanInfo;
+import cn.thinkjoy.gk.pojo.UniversityDto;
 import cn.thinkjoy.gk.service.IExUniversityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
