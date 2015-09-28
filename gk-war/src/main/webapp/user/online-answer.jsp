@@ -19,10 +19,10 @@
         <li><a href="/user/expert-service.jsp">专家服务</a></li>
     </ul>
     <div class="content">
-        <%--<div class="toggle-nav">--%>
-            <%--<div class="btn btn-selected">已解答</div>--%>
-            <%--<div class="btn btn-unselected">未解答</div>--%>
-        <%--</div>--%>
+        <div class="toggle-nav">
+            <div class="btn btn-selected">已解答</div>
+            <div class="btn">未解答</div>
+        </div>
         <div class="search-content">
              <span>
                  <input type="text" placeholder="请输入关键词进行搜索" id="keywords">
@@ -30,7 +30,10 @@
                  <a target="_blank" href="/question/ask.jsp">我要提问</a>
             </span>
         </div>
-        <div id="detail_content_question"></div>
+        <div id="detail_content_question">
+            <div id="tab_1"></div>
+            <div id="tab_0"></div>
+        </div>
         <div><a href="javascript:void(0)" class="next-btn hide">加载更多...</a></div>
         <%--<div class="detail-content">--%>
             <%--<div class="detail-header">--%>

@@ -33,18 +33,18 @@ define(function (require) {
             });
         },
         renderInfo: function(obj) {
-            $('#info_content').html('<img class="fl" src="' + obj.universityImage + '" />'
+            $('#info_content').html('<img class="fl" src="' + (obj.universityImage || '/static/src/common/images/kqbk_banner_default.png') + '" />'
                                     + '<div class="info">'
                                         + '<ul>'
-                                            + '<li class="school-name">' + obj.name + '</li>'
-                                            + '<li>所在省份：' + obj.provinceName + '</li>'
-                                            + '<li>院校隶属：' + obj.subjection + '</li>'
-                                            + '<li>学历层次：' + obj.educatLevel + '</li>'
-                                            + '<li>院校特征：' + obj.property + '</li>'
-                                            + '<li>院校类型：' + obj.universityType + '</li>'
-                                            + '<li>院校网址：<a href="' + obj.url + '">' + obj.url + '</a></li>'
-                                            + '<li>院校地址：' + obj.address + '</li>'
-                                            + '<li>联系电话：<span>' + obj.contactPhone + '</span></li>'
+                                            + '<li class="school-name">' + (obj.name || '') + '</li>'
+                                            + '<li>所在省份：' + (obj.provinceName || '') + '</li>'
+                                            + '<li>院校隶属：' + (obj.subjection || '') + '</li>'
+                                            + '<li>学历层次：' + (obj.educatLevel || '') + '</li>'
+                                            + '<li>院校特征：' + (obj.property || '') + '</li>'
+                                            + '<li>院校类型：' + (obj.universityType || '') + '</li>'
+                                            + '<li>院校网址：<a href="' + obj.url + '">' + (obj.url || '') + '</a></li>'
+                                            + '<li>院校地址：' + (obj.address || '') + '</li>'
+                                            + '<li>联系电话：<span>' + (obj.contactPhone || '') + '</span></li>'
                                         + '</ul>'
                                     + '</div>');
         },
@@ -91,15 +91,15 @@ define(function (require) {
                                     + '<tbody>');
                 for (var j = 0, infolen = infos.length; j < infolen; j++) {
                     tabContent.push('<tr>'
-                                    + '<td>' + infos[j].subjectName + '</td>'
-                                    + '<td>' + infos[j].planNumber + '</td>'
-                                    + '<td>' + infos[j].enrollNumber + '</td>'
-                                    + '<td>' + infos[j].highestScore + '</td>'
-                                    + '<td>' + infos[j].highestRank + '</td>'
-                                    + '<td>' + infos[j].lowestScore + '</td>'
-                                    + '<td>' + infos[j].lowestRank + '</td>'
-                                    + '<td>' + infos[j].averageScore + '</td>'
-                                    + '<td>' + infos[j].averageRank + '</td>'
+                                    + '<td>' + (infos[j].subjectName || '') + '</td>'
+                                    + '<td>' + (infos[j].planNumber || '') + '</td>'
+                                    + '<td>' + (infos[j].enrollNumber || '') + '</td>'
+                                    + '<td>' + (infos[j].highestScore || '') + '</td>'
+                                    + '<td>' + (infos[j].highestRank || '') + '</td>'
+                                    + '<td>' + (infos[j].lowestScore || '') + '</td>'
+                                    + '<td>' + (infos[j].lowestRank || '') + '</td>'
+                                    + '<td>' + (infos[j].averageScore || '') + '</td>'
+                                    + '<td>' + (infos[j].averageRank || '') + '</td>'
                                 + '</tr>');
                 }
                 tabContent.push('</tbody>'
@@ -183,10 +183,10 @@ define(function (require) {
             }
 
             tab.push('<li>招生章程</li>');
-            tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + i + '">' + ret.entroIntro + '</div>');
+            tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + i + '">' + (ret.entroIntro || '') + '</div>');
             i++;
             tab.push('<li>院校简介</li>');
-            tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + i + '">' + ret.universityIntro + '</div>');
+            tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + i + '">' + (ret.universityIntro || '') + '</div>');
 
             $('#tabs_list_enroll').html(tab.join(''));
             $('#enroll_content').html(tabContent.join(''));

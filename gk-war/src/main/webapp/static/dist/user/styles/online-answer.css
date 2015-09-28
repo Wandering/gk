@@ -686,19 +686,12 @@ a.next-btn:hover {
       line-height: 35px;
       border-radius: 3px;
       -webkit-transition: all 0.5s;
-              transition: all 0.5s; }
+              transition: all 0.5s;
+      color: #e24d39;
+      background-color: #fff; }
     .content .toggle-nav .btn-selected {
       background-color: #e24d39;
       color: #fff; }
-      .content .toggle-nav .btn-selected:hover {
-        background-color: #fff;
-        color: #e24d39; }
-    .content .toggle-nav .btn-unselected {
-      color: #e24d39;
-      background-color: #fff; }
-      .content .toggle-nav .btn-unselected:hover {
-        background-color: #e24d39;
-        color: #fff; }
   .content .detail-info {
     background-color: #f6f6f6;
     padding: 15px;

@@ -54,13 +54,13 @@ define(function (require) {
             }
             return html.join('');
         },
-        getMyQuestion: function(contentId) {
+        getMyQuestion: function(contentId, isAnswer) {
             var url = ' /answer/myQuestion.do?';
-            this.getData(url, contentId);
+            this.getData(url, contentId, isAnswer);
         },
-        getData: function(url, contentId) {
+        getData: function(url, contentId, isAnswer) {
             var that = this;
-            $.get(url + 'startSize=' + this.startSize + '&endSize=' + this.endSize, function(data) {
+            $.get(url + 'startSize=' + this.startSize + '&endSize=' + this.endSize + '&isAnswer=' + isAnswer, function(data) {
                 if ('0000000' === data.rtnCode) {
                     if (data.bizData.length > 0) {
                         that.next.show();
@@ -85,12 +85,12 @@ define(function (require) {
         addNextPageHandle: function() {
             this.startSize += 5;
             this.endSize += 5;
-            this.getMyQuestion('detail_content_question');
+            this.getMyQuestion('tab_1', 1);
         }
     };
 
     $(document).ready(function() {
-        Question.getMyQuestion('detail_content_question');
+        Question.getMyQuestion('tab_1', 1);
         Question.next.on('click', function(e) {
             Question.addNextPageHandle();
         });
@@ -98,6 +98,13 @@ define(function (require) {
         $('#search').on('click', function(e) {
             var val = $('#keywords').val();
             window.location.href = '/question/question.jsp?val=' + val;
+        });
+
+        $('.toggle-nav div.btn').on('click', function() {
+            if (!$(this).hasClass('btn-selected')) {
+                $(this).removeClass('btn-unselected').addClass('btn-selected');
+                $(this).siblings().removeClass('btn-selected').addClass('btn-unselected');
+            }
         });
     });
 
