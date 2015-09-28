@@ -3,7 +3,6 @@ package cn.thinkjoy.gk.controller.before;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.pojo.JsonPojo;
-import cn.thinkjoy.gk.pojo.ResultDataPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
 import com.jlusoft.microschool.core.utils.JsonMapper;
@@ -22,7 +21,7 @@ public class CollegeRecController extends BaseController{
 
     @RequestMapping(value = "getCollegeList",method = RequestMethod.GET)
     @ResponseBody
-    public ResultDataPojo GetCollegeList(){
+    public JsonPojo GetCollegeList(){
         String m_aggregateScore = request.getParameter("m_aggregateScore");
         String m_batch = request.getParameter("m_batch");
         String m_kelei = request.getParameter("m_kelei");
@@ -50,7 +49,7 @@ public class CollegeRecController extends BaseController{
                 throw new BizException(ERRORCODE.RESTFUL_INTERFACE_ISERROR.getCode(),ERRORCODE.RESTFUL_INTERFACE_ISERROR.getMessage());
 
         }
-        return jsonPojo.getResult();
+        return jsonPojo;
     }
 
 }
