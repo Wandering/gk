@@ -66,16 +66,20 @@ define(function (require) {
         }
     });
 
-    $.ajax({
-        url:'/vip/upgradeVipByCard.do',
-        type: 'POST',
-        dataType: 'JSON',
-        data:{
-            "cardNumber": 777777,
-            "password": 888888
-        },
-        success: function (res) {
-            console.log(res)
-        }
+    $('#accountBtn').on('click',function(){
+
+        $.ajax({
+            url:'/vip/upgradeVipByCard.do',
+            type: 'POST',
+            dataType: 'JSON',
+            data:{
+                "cardNumber": 111111,
+                "password": 222222
+            },
+            success: function (res) {
+                console.log(res)
+            }
+        });
     });
+
 });

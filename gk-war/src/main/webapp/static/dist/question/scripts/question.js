@@ -33,7 +33,7 @@ define(function(require) {
                     html.push('<div class="head-info">');
                     var createTime = new Date(question.createTime).Format('yyyy-MM-dd hh:mm');
                     console.log(createTime);
-                    html.push('<h6>来自 ' + question.userName || '匿名专家  ' + createTime + '</h6>');
+                    html.push('<h6>来自 ' + (question.userName || '匿名专家  ') + createTime + '</h6>');
                     var questions = question.questions;
                     var text = [];
                     for (var j = 0, jlen = questions.length; j < jlen; j++) {
@@ -63,16 +63,18 @@ define(function(require) {
             html.push('<li>');
             html.push('<div class="left">');
             html.push('<div class="head-img">');
-            html.push('<img src="' + answer.userIcon + '" />');
+            html.push('<img src="' + (answer.userIcon || '') + '" />');
             html.push('<i class="star"></i>');
             html.push('</div>');
-            html.push('<span>' + answer.userName + '</span>');
+            html.push('<span>' + (answer.userName || '匿名') + '</span>');
             html.push('</div>');
             var answers = answer.answers;
             var text = [];
             for (var n = 0, nlen = answers.length; n < nlen; n++) {
                 text.push('<p>' + answers[n].text + '</p>');
-                text.push('<p class="ta"><img src="' + answers[n].img + '" /></p>');
+                if (answers[n].img) {
+                    text.push('<p class="ta"><img src="' + answers[n].img + '" /></p>');
+                }
             }
             html.push('<div class="right">' + text.join('') + '</div>');
             html.push('</li></ul>');
@@ -87,15 +89,25 @@ define(function(require) {
             this.getData(url);
         },
         getData: function(url) {
+            if (this.startSize == 0) {
+                $('.next-btn').removeClass('none');
+                $('.next-btn').text('加载更多...');
+            }
             var that = this;
             $.get(url + 'startSize=' + that.startSize + '&endSize=' + that.endSize, function(data) {
                 if ('0000000' === data.rtnCode) {
                     if (data.bizData.length > 0) {
-                        $('#more_loading').hide();
+                        $('#more_loading').show();
                         that.renderAsk(data.bizData);
                     } else {
-                        $('#more_loading').hide();
-                        $('#question_content').html('<p style="padding: 20px 0;text-align: center">暂无相关信息！</p>');
+                        if (that.startSize == 0) {
+                            $('#more_loading').hide();
+                            $('#question_content').html('<p style="padding: 20px 0;text-align: center">暂无相关信息！</p>');
+                        } else {
+                            $('.next-btn').text('暂无更多信息！');
+                            $('.next-btn').addClass('none');
+                        }
+
                     }
 
                 }
@@ -104,6 +116,7 @@ define(function(require) {
         getSearch: function() {
             var keyword = $('#keywords').val();
             if (keyword) {
+                $('#tabs_list').hide();
                 this.startSize = 0;
                 this.endSize = 10;
                 var url = '/question/newQuestion.do?keyword=' + keyword + '&';
@@ -113,7 +126,14 @@ define(function(require) {
         addEventForMore: function() {
             this.startSize += 10;
             this.endSize += 10;
-            Question[$('.tabs-list li.active').attr('data-method')]();
+            var keyword = $('#keywords').val();
+            if (keyword) {
+                var url = '/question/newQuestion.do?keyword=' + keyword + '&';
+                this.getData(url);
+            } else {
+                Question[$('.tabs-list li.active').attr('data-method')]();
+            }
+
         }
     }
 
@@ -165,6 +185,12 @@ define(function(require) {
 
         $('#search').on('click', function(e) {
             Question.getSearch();
+        });
+
+        $('.next-btn').on('click', function(e) {
+            if (!$(this).hasClass('none')) {
+                Question.addEventForMore();
+            }
         });
     });
 });

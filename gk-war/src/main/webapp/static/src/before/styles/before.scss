@@ -440,7 +440,7 @@ section:last-child {
   color: #8a6d45;
   font-size: 14px;
   margin: 20px 0;
-
+  padding: 0 20px;
   p{
     margin: 0 0 0 5px;
   }
@@ -478,11 +478,9 @@ section:last-child {
     float: right;
     margin-right: 50px;
 
-    .score{
+    .form-control{
       width: 355px;
       height: 46px;
-      background: url("../images/school-eval-input.png") no-repeat left top;
-
       label{
         line-height: 46px;
         text-align: center;
