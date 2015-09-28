@@ -15,7 +15,7 @@ public class AppraisalBean {
 
     private final String api = "getDirectTestUrl";
 
-    private String testerId;
+    private Long testerId;
 
     private String testerNm;
 
@@ -39,11 +39,11 @@ public class AppraisalBean {
         return api;
     }
 
-    public String getTesterId() {
+    public Long getTesterId() {
         return testerId;
     }
 
-    public void setTesterId(String testerId) {
+    public void setTesterId(Long testerId) {
         this.testerId = testerId;
     }
 
