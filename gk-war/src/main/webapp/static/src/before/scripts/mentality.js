@@ -65,7 +65,7 @@ define(function (require) {
                         }
                         var listMsgHtml = ''
                             +'<li class="item">'
-                            +'<div class="img"><img src="'+ frontCover +'" alt=""/></div>'
+                            +'<div class="img"><img src="'+ videoUrl +'" alt=""/></div>'
                             +'<div class="info">'
                             +'<span class="fl">学科名称:'+ subjectName +'</span>'
                             +'<span class="fr">主讲专家:'+ teacherName +'</span>'

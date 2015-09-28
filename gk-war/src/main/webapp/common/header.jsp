@@ -17,8 +17,7 @@
     <div class="user-info-list fr hide">
       <div class="user">
         <img src="" alt="avatar" class="user-avatar hide"/>
-        <a href="" class="username"></a>
-        <span class="account hide"></span>
+        <a href="javascript:" id="accountNum" class="username"></a>
       </div>
       <ul class="menu hide">
         <li><a href="/user/personal-info.jsp">个人信息</a></li>
@@ -32,5 +31,9 @@
     </div>
   </div>
 </div>
+
+<script>
+  seajs.use("/static/src/common/scripts/header");
+</script>
 
 

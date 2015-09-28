@@ -32,7 +32,7 @@ public class UserInfo extends BaseDomain{
     private String schoolName;
     /** 生日 */
     private Long birthdayDate;
-    /** 性别 */
+    /** 性别，0女，1男 */
     private Integer sex;
     /** 科类 */
     private Integer subjectType;
