@@ -134,7 +134,7 @@
                 <span class="more">MORE</span>
             </ul>
 
-            <div class="tab tab-0">
+            <div class="tab tab-0" id="tab_0">
                 <div class="detile-content mt20">
                     <div class="detile-header">
                         <span class="order-number">1</span>
@@ -155,7 +155,7 @@
                 </div>
             </div>
 
-            <div class="tab tab-1 hide">
+            <div class="tab tab-1 hide" id="tab_1">
                 <div class="detile-content mt20">
                     <div class="detile-header">
                         <span class="order-number">1</span>

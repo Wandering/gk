@@ -116,28 +116,30 @@ define(function (require) {
                         + '</div>');
                 }
             },
-            getNew: function() {
+            getNew: function(contentId) {
                 var url = '/question/newQuestion.do?';
-                this.getData(url);
+                this.getData(url, contentId);
             },
-            getHot: function() {
+            getHot: function(contentId) {
                 var url = '/question/hotQuestion.do?';
-                this.getData(url);
+                this.getData(url, contentId);
             },
-            getData: function(url) {
+            getData: function(url, contentId) {
                 var that = this;
                 $.get(url + 'startSize=0&endSize=6', function(data) {
                     if ('0000000' === data.rtnCode) {
                         if (data.bizData.length > 0) {
+                            $('#' + contentId).html(that.render(data.bizData));
                         } else {
+                            $('#' + contentId).html('<p class="mt20 ta">暂无信息！</p>');
                         }
                     }
                 });
             }
         };
 
-        Question.getNew();
-        Question.getHot();
+        Question.getNew('tab_0');
+        Question.getHot('tab_1');
     })();
 
 });

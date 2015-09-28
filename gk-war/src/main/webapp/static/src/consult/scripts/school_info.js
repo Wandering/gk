@@ -174,8 +174,10 @@ define(function(require) {
         refreshPageShow: function(curPage) {
             var num = curPage + 2;
             num = num > this.totalPage ? this.totalPage : num;
-            num = num < 10 ? 10: num;
+            var minNum = this.totalPage > 10 ? 10 : this.totalPage;
+            num = num < minNum ? minNum : num;
             var oldNum = num;
+            console.log(num);
             var arryPage = [];
             for (var i = 0; i < 10; i++) {
                 arryPage.push(num--);
@@ -213,7 +215,7 @@ define(function(require) {
                 if ($(this).hasClass('previous-page')) {
                     that.curPage--;
                     if (that.curPage > 0) {
-                        if (!$('#page a.' + that.curPage)[0]) {
+                        if (!$('#page a.' + that.curPage)[0] && this.totalPage > 10) {
                             that.refreshPage(that.curPage);
                         }
                         $('#page a.' + that.curPage).addClass('active').siblings().removeClass('active');
@@ -224,7 +226,7 @@ define(function(require) {
                 } else if ($(this).hasClass('next-page')) {
                     that.curPage++;
                     if (that.curPage <= that.totalPage) {
-                        if (!$('#page a.' + that.curPage)[0]) {
+                        if (!$('#page a.' + that.curPage)[0] && this.totalPage > 10) {
                             that.refreshPage(that.curPage);
                         }
                         $('#page a.' + that.curPage).addClass('active').siblings().removeClass('active');
@@ -236,14 +238,17 @@ define(function(require) {
                     if (!$(this).hasClass('active')) {
                         that.curPage = parseInt($(this).text());
                         $(this).addClass('active').siblings().removeClass('active');
-                        var nextPage = that.curPage + 1;
-                        var prePage = that.curPage - 1;
-                        if (nextPage <= that.totalPage || prePage > 0) {
-                            if (!$('#page a.' + nextPage)[0] || !$('#page a.' + prePage)[0]) {
-                                that.refreshPage(that.curPage);
-                                $('#page a.' + that.curPage).addClass('active')
+                        if (this.totalPage > 10) {
+                            var nextPage = that.curPage + 1;
+                            var prePage = that.curPage - 1;
+                            if (nextPage <= that.totalPage && prePage > 0) {
+                                if (!$('#page a.' + nextPage)[0] || !$('#page a.' + prePage)[0]) {
+                                    that.refreshPage(that.curPage);
+                                    $('#page a.' + that.curPage).addClass('active')
+                                }
                             }
                         }
+
                         if (that.curPage > 0 && that.curPage <= that.totalPage) {
                             var startNum = (that.curPage - 1) * 10 + 1;
                             $('.startNum').text(startNum);
