@@ -34,7 +34,7 @@ public class UserInfo extends BaseDomain{
     private Long birthdayDate;
     /** 性别，0女，1男 */
     private Integer sex;
-    /** 科类 */
+    /** 科类，0文科，1理科 */
     private Integer subjectType;
     /** 邮箱 */
     private String mail;
