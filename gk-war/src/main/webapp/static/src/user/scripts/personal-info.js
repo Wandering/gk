@@ -29,10 +29,6 @@ define(function (require) {
         return newDate.Format("yyyy-MM-dd");
     }
 
-    if ($('#accountNum').attr('accountNum') != "") {
-        console.log(22)
-    }
-
     //获取用户信息
     $.get('/vip/getAccount.do', function (res) {
         $('.account-tel').text(res.bizData.account);
@@ -60,7 +56,7 @@ define(function (require) {
             if (personListData.sex == 1) {
                 $('#sex_m').attr('checked', true)
             }
-            if (personListData.subjectType != 1) {
+            if (personListData.subjectType == 1) {
                 $('#subject_l').attr('checked', true)
             }
         } else {
@@ -172,13 +168,14 @@ define(function (require) {
     //    });
     //}, 10);
     var sex, subject;
+    //1男，理科，0女，文科
     if ($('#sex_w').attr('checked')) {
-        sex = 1;
-    } else {
         sex = 0;
+    } else {
+        sex = 1;
     }
     if ($('#subject_w').attr('checked')) {
-        subject = 1;
+        subject = 0;
     } else {
         subject = 1;
     }
@@ -187,9 +184,7 @@ define(function (require) {
         var school = $('.school').val();
         var str = $('.birthdayDate').val();
         var birthdayDate = Date.parse(new Date(str)) / 1000;
-        console.log(birthdayDate);
-        //console.log(str);
-        //console.info(getTime(1036800));
+
 
 
         //var cmbProvince;
@@ -215,31 +210,34 @@ define(function (require) {
         if (!qq_reg.test(qq)) {
             $('.error-tips').text('QQ号码输入有误').fadeIn();
             return false;
-        } else {
-            $.ajax({
-                url: '/info/updateUserInfo.do',
-                dataType: 'json',
-                type: 'post',
-                data: {
-                    name: name,
-                    countyId: '2',
-                    schoolName: school,
-                    sex: sex,
-                    birthdayDate: birthdayDate,
-                    subjectType: subject,
-                    mail: mail,
-                    icon: 'http://img1.2345.com/duoteimg/qqTxImg/2013/12/ka_3/04-054658_103.jpg',
-                    qq: qq
-                },
-                success: function (res) {
-                    if (res.rtnCode == '0000000') {
-                        $('.error-tips').text('信息更新成功').fadeIn(1000).fadeOut(2000);
-                    } else {
-                        $('.content').text(res.msg);
-                    }
-                }
-            })
         }
+
+        $.ajax({
+            url: '/info/updateUserInfo.do',
+            dataType: 'json',
+            type: 'post',
+            data: {
+                name: name,
+                countyId: '2',
+                schoolName: school,
+                sex: sex,
+                birthdayDate: birthdayDate,
+                subjectType: subject,
+                mail: mail,
+                icon: 'http://img1.2345.com/duoteimg/qqTxImg/2013/12/ka_3/04-054658_103.jpg',
+                qq: qq
+            },
+            success: function (res) {
+                if (res.rtnCode == '0000000') {
+                    $('.error-tips').text('信息更新成功').fadeIn(1000).fadeOut(2000);
+                } else {
+                    $('.content').text(res.msg);
+                }
+            }
+        })
+
+
+
     });
 
 });
