@@ -64,11 +64,16 @@ public class ExUniversityServiceImpl implements IExUniversityService {
 
     @Override
     public String getUniversityEnrollIntro(String schoolCode) {
-        return null;
+        return iUniversityDAO.getUniversityEnrollIntro(schoolCode);
     }
 
     @Override
     public List<PlanInfo> getPlanInfosByYear(int i,String schoolCode) {
         return iUniversityDAO.getPlanInfosByYear(i,schoolCode);
+    }
+
+    @Override
+    public String getUniversityIntro(String schoolCode) {
+        return iUniversityDAO.getUniversityIntro(schoolCode);
     }
 }
