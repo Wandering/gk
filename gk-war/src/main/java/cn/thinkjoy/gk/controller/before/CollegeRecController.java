@@ -2,7 +2,7 @@ package cn.thinkjoy.gk.controller.before;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.pojo.JsonPojo;
+import cn.thinkjoy.gk.controller.before.pojo.JsonPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
 import com.jlusoft.microschool.core.utils.JsonMapper;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/before/collegeRecommend")
 public class CollegeRecController extends BaseController{
 
-    @RequestMapping(value = "getCollegeList",method = RequestMethod.GET)
+    @RequestMapping(value = "getCollegeList",method = RequestMethod.POST)
     @ResponseBody
     public JsonPojo GetCollegeList(){
         String m_aggregateScore = request.getParameter("m_aggregateScore");
