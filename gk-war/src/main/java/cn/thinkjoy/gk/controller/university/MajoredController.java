@@ -98,6 +98,7 @@ public class MajoredController extends BaseController {
     @ResponseBody
     public Page<SubjectDto> searchMajored(MajoredQuery query){
         Page<SubjectDto> page=new Page<>();
+        query.setPageNo((query.getPageNo()-1)*query.getPageSize());
          List<SubjectDto> majoredDtos= iMajoredService.searchMajored(query);
         Integer count=iMajoredService.searchMajoredCount(query);
         page.setCount(count);
@@ -130,7 +131,7 @@ public class MajoredController extends BaseController {
         String majoredCode=request.getParameter("code");
         majoredDto=iMajoredService.getMajoredByCode(majoredCode);
         majoredDetailDto.setMainCourse(majoredDto.getMainCourse());
-        majoredDetailDto.setSimilarMajor(majoredDto.getSimilarMajor());
+        majoredDetailDto.setSimilarMajor(majoredDto.getSimilarMajored());
         majoredDetailDto.setWorkGuide(majoredDto.getWorkGuide());
         Map<String,Object> map=new HashMap<>();
         map.put("type","PROPERTY");//院校类型
