@@ -146,20 +146,30 @@ public class RegisterController extends BaseController {
     }
 
     /**
-     * 注册是验证账号是否已经存在
+     * 注册时验证账号是否已经存在，type=0
+     * 找回密码时验证账号是否不存在，type=1
      * @param account
      * @return
      */
     @RequestMapping(value = "/confirmAccount",method = RequestMethod.POST)
     @ResponseBody
-    public String confirmAccount(@RequestParam(value = "account",required = false) String account){
+    public String confirmAccount(@RequestParam(value = "account",required = true) String account,
+                                 @RequestParam(value = "type", required = true) int type){
         try {
             if (StringUtils.isEmpty(account)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
             }
             UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
-            if (userAccountBean!=null){
-                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号已经注册!");
+            if (type==0){
+                if (userAccountBean!=null){
+                    throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号已经注册!");
+                }
+            }else if (type==1){
+                if (userAccountBean==null){
+                    throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号尚未注册!");
+                }
+            }else {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "类型错误!");
             }
         }catch (Exception e){
             throw e;

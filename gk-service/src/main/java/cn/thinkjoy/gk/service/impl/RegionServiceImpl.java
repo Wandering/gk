@@ -10,6 +10,7 @@ import cn.thinkjoy.gk.service.ICityService;
 import cn.thinkjoy.gk.service.ICountyService;
 import cn.thinkjoy.gk.service.IProvinceService;
 import cn.thinkjoy.gk.service.IRegionService;
+import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,14 +68,23 @@ public class RegionServiceImpl implements IRegionService {
         }
 
         for(Province province:provinces){
+            System.out.println("province="+JSON.toJSON(province));
             ProvincePojo provincePojo=new ProvincePojo();
             provincePojo.setId(province.getId());
             provincePojo.setName(province.getName());
-            provincePojo.setCityList(cityPojoMap.get(province.getId()));
-            provincePojos.add(provincePojo);
-            for(CityPojo cityPojo:cityPojoMap.get(province.getId())){
-                cityPojo.setCountyList(countyPojoMap.get(cityPojo.getId()));
+            if(null!=cityPojoMap.get(province.getId())){
+                provincePojo.setCityList(cityPojoMap.get(province.getId()));
+                for(CityPojo cityPojo:cityPojoMap.get(province.getId())){
+                    System.out.println("cityPojo="+JSON.toJSON(cityPojo));
+                    if(null!=countyPojoMap.get(cityPojo.getId())){
+                        System.out.println("countys="+countyPojoMap.get(cityPojo.getId()));
+                        cityPojo.setCountyList(countyPojoMap.get(cityPojo.getId()));
+                    }
+
+                }
             }
+            provincePojos.add(provincePojo);
+
         }
 
         return provincePojos;

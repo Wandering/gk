@@ -32,7 +32,7 @@
                 <img src="/static/dist/user/images/online-pay-img.png" class="pay-title"/>
 
                 <div class="pay-box">
-                    <p class="pay-li">充值账号：<span>1868888123</span></p>
+                    <p class="pay-li">充值账号：<span class="accountNum"></span></p>
 
                     <p>支付金额： <span class="pay-money">498</span> 元</p>
 
@@ -44,7 +44,7 @@
                 <img src="/static/dist/user/images/online-card-img.png" class="pay-title"/>
 
                 <div class="pay-box">
-                    <p>充值账号：<span>1868888123</span></p>
+                    <p>充值账号：<span class="accountNum"></span></p>
                     <div class="input-box">
                         <img src="/static/dist/user/images/icon-card-pay.png" alt=""/>
                         卡号：<input type="text" class="input-pay-comm"/>
