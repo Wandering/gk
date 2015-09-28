@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/before/collegeRecommend")
 public class CollegeRecController extends BaseController{
 
-    @RequestMapping(value = "getCollegeList",method = RequestMethod.GET)
+    @RequestMapping(value = "getCollegeList",method = RequestMethod.POST)
     @ResponseBody
     public JsonPojo GetCollegeList(){
         String m_aggregateScore = request.getParameter("m_aggregateScore");
