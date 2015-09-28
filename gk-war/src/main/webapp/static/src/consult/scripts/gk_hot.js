@@ -5,6 +5,7 @@
 define(function (require) {
     var $ = require('$');
     require('swiper');
+    require('backToTop');
 
     var Hot = {
         nextBtn:$('.next-btn'),

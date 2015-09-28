@@ -58,7 +58,7 @@
                 <img src="/static/dist/after/images/yzm.png" alt=""/>
             </div>
             <div class="form-control-btn">
-                <input type="button" class="btn" value="下一步"/>
+                <input type="button" class="btn" id="volunteer-flow1-btn" onclick="window.location.href='/after/volunteer-flow2.jsp'" value="下一步"/>
             </div>
 
         </form>
@@ -66,20 +66,6 @@
 </div>
 
 <%@ include file="/common/footer.jsp"%>
-<link rel="stylesheet" href="/static/bower_components/swiper/dist/css/swiper.css"/>
-<script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="/static/bower_components/swiper/dist/js/swiper.jquery.min.js"></script>
-<script>
-    $(function () {
-        //幻灯片
-        var swiper = new Swiper('.swiper-container', {
-            pagination: '.swiper-pagination',
-            paginationClickable: true,
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
-            loop: true
-        });
-    });
-</script>
+
 </body>
 </html>

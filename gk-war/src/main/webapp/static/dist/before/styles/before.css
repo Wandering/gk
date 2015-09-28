@@ -16,7 +16,11 @@
     color: #fff;
     text-decoration: underline; }
 
+.main-video-list-box {
+  height: 520px; }
+
 ul.main-video-list {
+  min-height: 520px;
   overflow: hidden;
   width: 1200px; }
   ul.main-video-list li.item {
@@ -117,7 +121,12 @@ ul.main-video-list {
   color: #fff;
   padding-left: 10px; }
 
+.main-exam-list-box {
+  height: 340px; }
+
 .main-exam-list {
+  min-height: 340px;
+  overflow: hidden;
   border-top: 3px solid #f7f7f7; }
   .main-exam-list li {
     border-bottom: 2px solid #f7f7f7;
@@ -443,3 +452,100 @@ ul.main-video-list {
       color: #fff;
       background-color: #e24333;
       border-radius: 4px; }
+
+.evaluating-layer {
+  left: 50%;
+  position: fixed;
+  top: 50%;
+  width: 1000px;
+  height: 430px;
+  margin: -215px 0 0 -500px;
+  z-index: 10;
+  background: #fff;
+  border-radius: 3px; }
+  .evaluating-layer .top-close {
+    height: 20px;
+    margin-top: 10px;
+    overflow: hidden; }
+    .evaluating-layer .top-close .close-btn {
+      float: right;
+      margin: 0 20px 0 0;
+      width: 14px;
+      height: 13px;
+      background: url("../../common/images/close-btn.png") no-repeat;
+      font-size: 0;
+      line-height: 0; }
+  .evaluating-layer .tips {
+    margin: 0 30px; }
+  .evaluating-layer .evaluating-body {
+    padding: 0 30px;
+    overflow: hidden; }
+    .evaluating-layer .evaluating-body .evaluating-result-tips {
+      border: 1px solid #f1f1f1;
+      overflow: hidden;
+      height: 90px;
+      padding: 20px 25px 0; }
+      .evaluating-layer .evaluating-body .evaluating-result-tips p {
+        display: block;
+        clear: both;
+        line-height: 30px;
+        color: #444;
+        font-size: 18px;
+        margin: 0; }
+      .evaluating-layer .evaluating-body .evaluating-result-tips strong {
+        color: #f0ad4e;
+        font-size: 24px; }
+    .evaluating-layer .evaluating-body .evaluating-result {
+      border: 1px solid #f1f1f1;
+      border-top: none;
+      overflow: hidden;
+      height: 177px;
+      padding: 20px 25px 0; }
+      .evaluating-layer .evaluating-body .evaluating-result .tips {
+        font-size: 18px;
+        color: #999;
+        margin: 10px 0 0; }
+      .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num {
+        margin: 30px 0 0; }
+        .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num ul li {
+          float: left;
+          width: 410px;
+          height: 90px;
+          border: 1px solid;
+          line-height: 90px;
+          font-size: 24px;
+          margin-right: 20px; }
+          .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num ul li .t {
+            float: left;
+            width: 214px;
+            text-align: center;
+            color: #fff; }
+          .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num ul li .num {
+            margin-left: 50px; }
+            .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num ul li .num strong {
+              font-size: 49px; }
+        .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num .result1 {
+          border-color: #e24d39; }
+          .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num .result1 .t {
+            background: #e24d39; }
+          .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num .result1 .num {
+            color: #e24d39; }
+        .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num .result2 {
+          border-color: #f0ad4e; }
+          .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num .result2 .t {
+            background: #f0ad4e; }
+          .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num .result2 .num {
+            color: #f0ad4e; }
+  .evaluating-layer .evaluating-result-close {
+    display: block;
+    width: 124px;
+    height: 45px;
+    text-align: center;
+    line-height: 45px;
+    border-radius: 3px;
+    border: 1px solid #e24333;
+    color: #e24333;
+    margin: 16px auto 0; }
+    .evaluating-layer .evaluating-result-close:hover {
+      background: #e24333;
+      color: #fff; }

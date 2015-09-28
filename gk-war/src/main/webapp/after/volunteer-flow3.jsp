@@ -46,8 +46,8 @@
                         <section class="section-article">
                             <div class="search-content ta">
                                  <span>
-                                     <input type="text" placeholder="请输入院校名称"/>
-                                     <input type="button" value="选择院校"/>
+                                     <input type="text" onclick="window.location.href='/after/volunteer-flow4.jsp'" placeholder="请输入院校名称"/>
+                                     <input type="button" onclick="window.location.href='/after/volunteer-flow4.jsp'" value="选择院校"/>
                                 </span>
                             </div>
                         </section>
@@ -77,8 +77,8 @@
                         <section class="section-article">
                             <div class="search-content ta">
                                  <span>
-                                     <input type="text" placeholder="请输入院校名称"/>
-                                     <input type="button" value="选择院校"/>
+                                     <input type="text" onclick="window.location.href='/after/volunteer-flow4.jsp'" placeholder="请输入院校名称"/>
+                                     <input type="button" onclick="window.location.href='/after/volunteer-flow4.jsp'" value="选择院校"/>
                                 </span>
                             </div>
                         </section>
@@ -108,8 +108,8 @@
                         <section class="section-article">
                             <div class="search-content ta">
                                  <span>
-                                     <input type="text" placeholder="请输入院校名称"/>
-                                     <input type="button" value="选择院校"/>
+                                     <input type="text" onclick="window.location.href='/after/volunteer-flow4.jsp'" placeholder="请输入院校名称"/>
+                                     <input type="button" onclick="window.location.href='/after/volunteer-flow4.jsp'" value="选择院校"/>
                                 </span>
                             </div>
                         </section>
@@ -139,8 +139,8 @@
                         <section class="section-article">
                             <div class="search-content ta">
                                  <span>
-                                     <input type="text" placeholder="请输入院校名称"/>
-                                     <input type="button" value="选择院校"/>
+                                     <input type="text" onclick="window.location.href='/after/volunteer-flow4.jsp'" placeholder="请输入院校名称"/>
+                                     <input type="button" onclick="window.location.href='/after/volunteer-flow4.jsp'" value="选择院校"/>
                                 </span>
                             </div>
                         </section>
@@ -267,29 +267,9 @@
 
 </div>
 
+<%@ include file="/common/footer.jsp"%>
 
 
 
-
-
-
-
-
-
-<link rel="stylesheet" href="/static/bower_components/swiper/dist/css/swiper.css"/>
-<script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="/static/bower_components/swiper/dist/js/swiper.jquery.min.js"></script>
-<script>
-    $(function () {
-        //幻灯片
-        var swiper = new Swiper('.swiper-container', {
-            pagination: '.swiper-pagination',
-            paginationClickable: true,
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
-            loop: true
-        });
-    });
-</script>
 </body>
 </html>

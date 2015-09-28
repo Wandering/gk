@@ -21,16 +21,16 @@
     <div class="content">
         <div class="row">
             <div class="col-3">
-                <a href="">
+                <a href="/guide/volunteer_forum.jsp" target="_blank">
                     <img src="/static/dist/user/images/app-center-icon1.png"/>
                 </a>
-                <p class="app-icon">志愿学堂</p>
+                <p class="app-icon"><a href="/guide/volunteer_forum.jsp" target="_blank">志愿学堂</a></p>
             </div>
             <div class="col-3">
-                <a href="">
+                <a href="/consult/school_info.jsp" target="_blank">
                     <img src="/static/dist/user/images/app-center-icon2.png"/>
                 </a>
-                <p class="app-icon">院校信息</p>
+                <p class="app-icon"><a href="/consult/school_info.jsp" target="_blank">院校信息</a></p>
             </div>
             <div class="col-3">
                 <a href="">
