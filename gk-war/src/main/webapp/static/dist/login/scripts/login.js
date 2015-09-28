@@ -92,6 +92,7 @@ define(function (require) {
                 type: 'post',
                 dataType: 'json',
                 data: {
+                    type:0,//0.注册标志
                     account: reg_tel
                 },
                 success: function (res) {
