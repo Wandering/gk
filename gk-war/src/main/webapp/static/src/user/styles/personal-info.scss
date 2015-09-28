@@ -13,6 +13,7 @@
 }
 
 .content {
+  min-height: 530px;
   margin: 100px 120px;
   overflow: hidden;
   .avatar-box {
@@ -39,14 +40,16 @@
     width: 500px;
     color: #222222;
     font-size: 14px;
-    .account{
+    .account-box{
       height: 35px;
       .account-tel{
-        margin-right: 35px;
+        height: 40px;
+        display: inline-block;
+        margin-left: 30px;
       }
       .modify-psd {
         color: $mainRed;
-        margin-left: 165px;
+        margin-left: 170px;
       }
     }
     .group-comm {

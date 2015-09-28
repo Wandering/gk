@@ -21,7 +21,7 @@
         <li><a href="/user/online-answer.jsp">在线答疑</a></li>
         <li><a href="/user/expert-service.jsp">专家服务</a></li>
     </ul>
-    <div class="content">
+    <div class="content hide">
         <div class="avatar-box hide fl">
             <img src="" class="avatar-img "/>
             <div class="btn-upload-img" id="uploadify">上传头像</div>
@@ -72,7 +72,7 @@
 <%--<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>--%>
 <%--<script src="/static/bower_components/uploadify/jquery.uploadify.js"/>--%>
 <script type="text/javascript">
-    alert(1);
+//    alert(1);
 </script>
 <script>
     seajs.use("/static/src/user/scripts/personal-info");

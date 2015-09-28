@@ -623,13 +623,15 @@ a.next-btn:hover {
     width: 500px;
     color: #222222;
     font-size: 14px; }
-    .content .user-item .account {
+    .content .user-item .account-box {
       height: 35px; }
-      .content .user-item .account .account-tel {
-        margin-right: 35px; }
-      .content .user-item .account .modify-psd {
+      .content .user-item .account-box .account-tel {
+        height: 40px;
+        display: inline-block;
+        margin-left: 30px; }
+      .content .user-item .account-box .modify-psd {
         color: #e24d39;
-        margin-left: 165px; }
+        margin-left: 170px; }
     .content .user-item .group-comm .user-input-comm {
       margin: 8px 0 8px 35px;
       width: 315px;

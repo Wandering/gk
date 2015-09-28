@@ -30,6 +30,9 @@ define(function (require) {
     }
 
     //获取用户信息
+    $.get('/vip/getAccount.do',function(res){
+        $('.account-tel').text(res.bizData.account);
+    });
     $.get('/info/getUserInfo.do', function (res) {
         if (res.rtnCode == '0000000') {
             var personListData = res.bizData;
@@ -42,8 +45,7 @@ define(function (require) {
             }
             $('.avatar-img').attr('src', avatar);
             $('.avatar-box').show();
-            $('.account-tel').text(personListData.account);
-            console.log(personListData.account);//暂缺字段
+            //$('.account-tel').text(personListData.account);
             $('.name').attr('value', personListData.name);
             $('.school').attr('value', personListData.schoolName);
             $('.birthdayDate').attr('value', getTime(personListData.birthdayDate));
@@ -71,103 +73,108 @@ define(function (require) {
             console.log(res)
         }
     });
+    $('.content').fadeIn();
     //头像上传
-    $(function () {
-        setTimeout(function () {
-            //初始化文件上传
-            var errorCodes = ["-100", "-110", "-120", "-130"];
-            var errorMsgs = ["文件数量不能超过(5)", "文件超过大小限制(10MB)", "零字节的文件", "无效的文件类型"];
-            $("#uploadify").uploadify({
-                'swf': "/static/bower_components/uploadify/uploadify.swf",
-                'fileObjName': 'file',
-                'uploader': "http://pre.file.xy189.cn/file/upload/savefile.shtml",
-                'auto': true,
-                'removeTimeout': 0,
-                'multi': false,
-                'uploadLimit': 0,
-                'fileSizeLimit': "10MB",
-                'fileTypeDesc': '图片文件(*.jpg;*.png;*.gif;*.jpeg)',
-                'buttonText': '点击上传',
-                'fileTypeExts': "*.jpg;*.png;*.gif;*.jpeg",
-                'progressData': 'percentage',
-                'speed': 'percentage',
-                'queueSizeLimit': 5,
-                'removeCompleted': true,
-                'onSelect': function (file) {
-                    this.queueData.filesErrored = 0;
-                },
-                'onOpen': function (event, ID, fileObj) {
-                },
-                'onSelectError': function (file, errorCode, errorMsg) {
-                    for (var i = 0; i < errorCodes.length; i++) {
-                        if (errorCodes[i] == errorCode) {
-                            this.queueData.errorMsg = errorMsgs[i];
-                        }
+    setTimeout(function () {
+        //初始化文件上传
+        var errorCodes = ["-100", "-110", "-120", "-130"];
+        var errorMsgs = ["文件数量不能超过(5)", "文件超过大小限制(10MB)", "零字节的文件", "无效的文件类型"];
+        $("#uploadify").uploadify({
+            'swf': "/static/bower_components/uploadify/uploadify.swf",
+            'fileObjName': 'file',
+            'uploader': "http://pre.file.xy189.cn/file/upload/savefile.shtml",
+            'auto': true,
+            'removeTimeout': 0,
+            'multi': false,
+            'uploadLimit': 0,
+            'fileSizeLimit': "10MB",
+            'fileTypeDesc': '图片文件(*.jpg;*.png;*.gif;*.jpeg)',
+            'buttonText': '点击上传',
+            'fileTypeExts': "*.jpg;*.png;*.gif;*.jpeg",
+            'progressData': 'percentage',
+            'speed': 'percentage',
+            'queueSizeLimit': 5,
+            'removeCompleted': true,
+            'onSelect': function (file) {
+                this.queueData.filesErrored = 0;
+            },
+            'onOpen': function (event, ID, fileObj) {
+            },
+            'onSelectError': function (file, errorCode, errorMsg) {
+                for (var i = 0; i < errorCodes.length; i++) {
+                    if (errorCodes[i] == errorCode) {
+                        this.queueData.errorMsg = errorMsgs[i];
                     }
-                },
-                'onCancel': function (file) {
-                    //alert(file.name);
-                },
-                'onFallback': function () {
-                    alert("浏览器不能兼容Flash,请下载最新版!");
-                },
-                'onClearQueue': function (queueItemCount) {
-                },
-                'onUploadStart': function (file) {
-                },
-                'onUploadSuccess': function (file, data, response) {
-                    //获取到data处理
-                    console.log(data);
-                    var obj = JSON.parse(data);
-                    var data = {'userIcon': obj.data.url};
-                    $.ajax({
-                        type: "post",
-                        url: "/expert/updateUser.do",
-                        dataType: "json",
-                        data: data,
-                        async: false,
-                        success: function (res) {
-                            if (res.rtnCode !== '0000000') {
-                                alert(res.msg);
-                            } else {
-                                //修改成功
-                                console.log(res);
-                                $('.expert-avatar').find('.tips').html('更新成功').fadeOut(5000);
-                            }
-                        }
-                    });
-
-                    $('.user-icon').attr('src', obj.data.url);
-                    var id = this.wrapper.selector;
-                    $(id).uploadify('settings', 'buttonText', '正在加载');
-                    $("img[data-icon]").each(function () {
-                        $(this).attr("src", obj.data.url + "!100?t=" + new Date().getTime());
-                    });
-                    $(id).uploadify('settings', 'buttonText', '重新上传');
-                },
-                'onUploadError': function (file, errorCode, errorMsg, errorString) {
-                    switch (errorMsg) {
-                        case '400':
-                            $('#' + file.id).find('.data').html(" - 上传失败，文件超过大小限制(2MB)");
-                            break;
-                        case '401':
-                            $('#' + file.id).find('.data').html(" - 上传失败，零字节的文件");
-                            break;
-                        case '402':
-                            $('#' + file.id).find('.data').html(" - 上传失败，无效的文件类型");
-                            break;
-                        case '500':
-                            $('#' + file.id).find('.data').html(" - 上传失败，服务器问题");
-                            break;
-                    }
-                },
-                'onDialogClose': function (queueDat) {
                 }
-            });
-        }, 10);
-    })
+            },
+            'onCancel': function (file) {
+                //alert(file.name);
+            },
+            'onFallback': function () {
+                alert("浏览器不能兼容Flash,请下载最新版!");
+            },
+            'onClearQueue': function (queueItemCount) {
+            },
+            'onUploadStart': function (file) {
+            },
+            'onUploadSuccess': function (file, data, response) {
+                //获取到data处理
+                console.log(data);
+                var obj = JSON.parse(data);
+                var data = {'userIcon': obj.data.url};
+                $.ajax({
+                    type: "post",
+                    url: "/expert/updateUser.do",
+                    dataType: "json",
+                    data: data,
+                    async: false,
+                    success: function (res) {
+                        if (res.rtnCode !== '0000000') {
+                            alert(res.msg);
+                        } else {
+                            //修改成功
+                            console.log(res);
+                            $('.expert-avatar').find('.tips').html('更新成功').fadeOut(5000);
+                        }
+                    }
+                });
+
+                $('.user-icon').attr('src', obj.data.url);
+                var id = this.wrapper.selector;
+                $(id).uploadify('settings', 'buttonText', '正在加载');
+                $("img[data-icon]").each(function () {
+                    $(this).attr("src", obj.data.url + "!100?t=" + new Date().getTime());
+                });
+                $(id).uploadify('settings', 'buttonText', '重新上传');
+            },
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                switch (errorMsg) {
+                    case '400':
+                        $('#' + file.id).find('.data').html(" - 上传失败，文件超过大小限制(2MB)");
+                        break;
+                    case '401':
+                        $('#' + file.id).find('.data').html(" - 上传失败，零字节的文件");
+                        break;
+                    case '402':
+                        $('#' + file.id).find('.data').html(" - 上传失败，无效的文件类型");
+                        break;
+                    case '500':
+                        $('#' + file.id).find('.data').html(" - 上传失败，服务器问题");
+                        break;
+                }
+            },
+            'onDialogClose': function (queueDat) {
+            }
+        });
+    }, 10);
 
     //修改信息
+    var name = $('.name').val();
+    var cmbProvince;
+    var school = $('.school').val();
+    var birthdayDate = $('.birthdayDate').val();
+
+
     $('.btn-submit').click(function () {
         $.ajax({
             url: '/info/updateUserInfo.do',

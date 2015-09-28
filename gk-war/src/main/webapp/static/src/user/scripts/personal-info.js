@@ -30,6 +30,9 @@ define(function (require) {
     }
 
     //获取用户信息
+    $.get('/vip/getAccount.do',function(res){
+        $('.account-tel').text(res.bizData.account);
+    });
     $.get('/info/getUserInfo.do', function (res) {
         if (res.rtnCode == '0000000') {
             var personListData = res.bizData;
@@ -42,8 +45,7 @@ define(function (require) {
             }
             $('.avatar-img').attr('src', avatar);
             $('.avatar-box').show();
-            $('.account-tel').text(personListData.account);
-            console.log(personListData.account);//暂缺字段
+            //$('.account-tel').text(personListData.account);
             $('.name').attr('value', personListData.name);
             $('.school').attr('value', personListData.schoolName);
             $('.birthdayDate').attr('value', getTime(personListData.birthdayDate));
@@ -71,6 +73,7 @@ define(function (require) {
             console.log(res)
         }
     });
+    $('.content').fadeIn();
     //头像上传
     setTimeout(function () {
         //初始化文件上传
