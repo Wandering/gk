@@ -390,6 +390,11 @@ input, textarea {
   line-height: 50px;
   width: 100%;
   background-color: #353535; }
+  .header.fix {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 888; }
   .header .logo {
     height: 40px;
     margin-top: 5px;
@@ -666,7 +671,6 @@ section:last-child {
     font-size: 30px;
     color: #333;
     text-align: center;
-    height: 40px;
     line-height: 1.8;
     padding: 10px 0;
     border-bottom: 1px solid #F1F1F1; }
@@ -677,8 +681,9 @@ section:last-child {
     line-height: 1;
     text-align: center; }
   .section-article article {
-    width: 100%;
-    text-align: center; }
+    width: 100%; }
+    .section-article article div {
+      line-height: 1.8; }
     .section-article article p {
       width: 100%;
       line-height: 1.8;

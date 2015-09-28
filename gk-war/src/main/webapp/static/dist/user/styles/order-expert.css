@@ -390,6 +390,11 @@ input, textarea {
   line-height: 50px;
   width: 100%;
   background-color: #353535; }
+  .header.fix {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 888; }
   .header .logo {
     height: 40px;
     margin-top: 5px;

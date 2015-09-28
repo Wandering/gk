@@ -10,18 +10,7 @@
 <%@ include file="/common/header.jsp"%>
 
 <div class="content">
-    <div class="wipe">
-        <div class="swiper-container">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="/static/dist/before/images/banner1.jpg" alt=""/></div>
-                <div class="swiper-slide"><img src="/static/dist/before/images/banner1.jpg" alt=""/></div>
-                <div class="swiper-slide"><img src="/static/dist/before/images/banner1.jpg" alt=""/></div>
-            </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-        </div>
-    </div>
+    <%@ include file="/common/banner-wipe.jsp" %>
 
 </div>
 
