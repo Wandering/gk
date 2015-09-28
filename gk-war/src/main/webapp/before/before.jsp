@@ -103,9 +103,7 @@
     </div>
     <div class="tabs-content">
         <div class="tabs-content-list main-video-list-box">
-            <ul class="main-video-list" id="teacher-lecture-main">
-
-            </ul>
+            <ul class="main-video-list" id="teacher-lecture-main"></ul>
         </div>
     </div>
 </div>
@@ -126,7 +124,7 @@
 
 <div class="w1000 main-video">
     <div class="tabs">
-        <ul class="tabs-list mt20 subjectList" classifyType="3"></ul>
+        <ul class="tabs-list mt20 subjectList" classifyType="3"><li id="">全部</li></ul>
         <div class="into-search">
             <a href="/before/exam.jsp?classifyType=3" target="_blank" class="into-btn">真题密卷</a>
             <form action="">
@@ -146,7 +144,6 @@
             <ul class="main-exam-list main-exam-list-box" id="exam-main"></ul>
         </div>
     </div>
-
 </div>
 <div class="w1000">
     <div class="content-title">
@@ -164,7 +161,7 @@
 <h6 class="w1000 ta content-title-sub">分数不理想也没有关系，专家告诉您如何调整，以最好的状态应对高考，没什么了不起的。</h6>
 <div class="w1000 main-video">
     <div class="tabs">
-        <ul class="tabs-list mt20 subjectList" classifyType="2"></ul>
+        <ul class="tabs-list mt20 subjectList" classifyType="2"><li id="">全部</li></ul>
         <div class="into-search">
             <a href="/before/mentality.jsp?classifyType=2" target="_blank" class="into-btn">进入高考心理</a>
             <form action="">
@@ -235,6 +232,8 @@
                 <ul class="group-radio">
                     <li>
                         <span><input type="radio" name="category" value="1" />文科</span>
+                    </li>
+                    <li>
                         <span><input type="radio" name="category" value="3" />理科</span>
                     </li>
                 </ul>
@@ -354,20 +353,20 @@
 
 
 
-<div class="tansLayer" style="display: none;"></div>
-<div class="volunteer-flow3-layer" style="display: none;">
-    <div class="top-close">
-        <a href="" class="close-btn">x</a>
-    </div>
-    <div class="tips">
-        <strong>温馨提示：</strong>
-        <p>依据平行志愿规则，系统推荐遵循分数最大化，为您推荐一下A、B、C、D四挡院校；考生可根据个性化需求调整院校顺位；</p>
-    </div>
-    <div class="volunteer-flow3-body">
+<%--<div class="tansLayer" style="display: none;"></div>--%>
+<%--<div class="volunteer-flow3-layer" style="display: none;">--%>
+    <%--<div class="top-close">--%>
+        <%--<a href="" class="close-btn">x</a>--%>
+    <%--</div>--%>
+    <%--<div class="tips">--%>
+        <%--<strong>温馨提示：</strong>--%>
+        <%--<p>依据平行志愿规则，系统推荐遵循分数最大化，为您推荐一下A、B、C、D四挡院校；考生可根据个性化需求调整院校顺位；</p>--%>
+    <%--</div>--%>
+    <%--<div class="volunteer-flow3-body">--%>
 
-    </div>
+    <%--</div>--%>
 
-</div>
+<%--</div>--%>
 
 
 
