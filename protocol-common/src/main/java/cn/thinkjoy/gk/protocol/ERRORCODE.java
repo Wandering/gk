@@ -35,7 +35,9 @@ public enum ERRORCODE {
 	SEND_SMSCODE_ERROR("0500001", "发送验证码失败"), SEND_SMSCODE_MORE("0500002", "获取验证码太频烦,请稍后再试"),
 	ORDER_VIP_REPEAT("0600001", "重复订购"),
 	PARAM_ISNULL("0700001","参数不能为空"),
-	NO_RECORD("0800001","无记录");
+	NO_RECORD("0800001","无记录"),
+	VIP_EXIST("0900001","该用户已经是VIP了，请勿重复申请"),
+	VIP_CARD_NOT_INVALID("0900002","该卡无效");
 
 	/** The code. */
 	private final String code;

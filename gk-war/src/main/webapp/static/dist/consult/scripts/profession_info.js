@@ -140,10 +140,10 @@ define(function (require) {
                 dataType: 'json',
                 success: function(data) {
                     if ('0000000' === data.rtnCode) {
-                        var schoolList = data.bizData.subjectList;
+                        var schoolList = data.bizData.list;
                         that.renderProfessionList(schoolList);
                         if (pageNo == 1) {
-                            that.renderPage(1, data.bizData.pageCount);
+                            that.renderPage(1, data.bizData.count);
                         }
                     }
                 },

@@ -38,15 +38,18 @@ public class VipController extends BaseController {
 		if(null==userAccountPojo ||  null==userAccountPojo.getId()){
 			throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
 		}
+		if(null!=userAccountPojo && null!=userAccountPojo.getVipStatus() && userAccountPojo.getVipStatus().intValue()==1){
+			throw new BizException(ERRORCODE.VIP_EXIST.getCode(), ERRORCODE.VIP_EXIST.getMessage());
 
+		}
 		Map<String,Object> map=new HashMap<String, Object>();
 		map.put("cardNumber",cardPojo.getCardNumber());
 		map.put("password",cardPojo.getPassword());
 		Card card=(Card)cardService.queryOne(map);
 		if(null==card ){
-			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
+			throw new BizException(ERRORCODE.VIP_CARD_NOT_INVALID.getCode(), ERRORCODE.VIP_CARD_NOT_INVALID.getMessage());
 		}else if(0!=card.getUserId()){
-			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
+			throw new BizException(ERRORCODE.VIP_CARD_NOT_INVALID.getCode(), ERRORCODE.VIP_CARD_NOT_INVALID.getMessage());
 		}else{
 			card.setUserId(userAccountPojo.getId());
 			cardService.update(card);

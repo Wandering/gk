@@ -16,7 +16,7 @@ define(function (require) {
     var searchVal = searchValUrl.substr(num+19);
     $('#searchVal').val(searchVal);
 
-
+    var localhosts = 'http://www.gkzy114.com';
 
     // 搜索
     $('#search-btn').on('click',function(){
@@ -80,7 +80,7 @@ define(function (require) {
                         if (dataJson[i].frontCover == null || dataJson[i].frontCover == "") {
                             videoUrl = '/static/dist/common/images/video-default.png';
                         } else {
-                            videoUrl = dataJson[i].frontCover;
+                            videoUrl = localhosts + dataJson[i].frontCover;
                         }
                         var listMsgHtml = ''
                             +'<li class="item">'
