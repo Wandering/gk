@@ -77,7 +77,7 @@ define(function(require) {
                                 + '<td>' + data[i].universityType + '</td>'
                                 + '<td>' + data[i].subjection + '</td>'
                                 + '<td>' + data[i].property + '</td>'
-                                + '<td>' + '<a href="/consult/school_detile.jsp?id=' + data[i].code + '">查看详情</a>' + '</td>'
+                                + '<td>' + '<a target="_blank" href="/consult/school_detile.jsp?id=' + data[i].code + '">查看详情</a>' + '</td>'
                             + '</tr>');
             }
             html.push('</tbody>' + '</table>');

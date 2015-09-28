@@ -78,4 +78,66 @@ define(function (require) {
 
     });
 
+    //在线互动获取数据
+    (function() {
+        var Question = {
+            render: function() {
+                var html = [];
+                for (var i = 0, len = data.length; i < len; i++) {
+                    var question = data[i].question;
+                    var questions = question.questions;
+                    var title = [];
+                    for (var t = 0, tlen = questions.length; t < tlen; t++) {
+                        title.push(questions[t].text);
+                    }
+                    var time = new Date(data[i].createTime).Format('yyyy-MM-dd hh:mm');
+                    var answer = data[i].answer;
+                    var answers = answer.answers;
+                    var content = [];
+                    for (var c = 0, clen = answers.length; c < clen; c++) {
+                        var text = answers[i].text;
+                        if (answers[i].text.length > 200) {
+                            text = text.substring(0, 200);
+                        }
+                        content.push('<p>' + text + '</p>');
+                        if (answers[i].img) {
+                            content.push('<p class="ta"><img src="' + answers[i].img + '" /></p>');
+                        }
+                    }
+                    html.push('<div class="detile-content mt20">'
+                        + '<div class="detile-header">'
+                        + '<span class="order-number">' + (i + 1) + '</span>'
+                        + '<span class="detile-title">' + title.join('') + '</span>'
+                        + '<span class="fr">' + time + '</span>'
+                        + '</div>'
+                        + '<div class="detile-info mt20">'
+                        + content.join('')
+                        + '</div>'
+                        + '</div>');
+                }
+            },
+            getNew: function() {
+                var url = '/question/newQuestion.do?';
+                this.getData(url);
+            },
+            getHot: function() {
+                var url = '/question/hotQuestion.do?';
+                this.getData(url);
+            },
+            getData: function(url) {
+                var that = this;
+                $.get(url + 'startSize=0&endSize=6', function(data) {
+                    if ('0000000' === data.rtnCode) {
+                        if (data.bizData.length > 0) {
+                        } else {
+                        }
+                    }
+                });
+            }
+        };
+
+        Question.getNew();
+        Question.getHot();
+    })();
+
 });
