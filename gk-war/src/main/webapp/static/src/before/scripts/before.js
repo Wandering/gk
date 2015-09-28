@@ -181,4 +181,26 @@ define(function (require) {
         $('html,body').animate({scrollTop: ($('#main-volunteer-box').offset().top)}, 800);
     }
 
+
+
+    // 院校推荐
+    $('#yxtj-sub').on('click',function(){
+        $.ajax({
+            url:'/before/collegeRecommend/getCollegeList.do',
+            type: 'POST',
+            dataType: 'JSON',
+            data:{
+                "m_aggregateScore":500,
+                "m_batch":"二批本科",
+                "m_kelei":"文史"
+            },
+            success: function (res) {
+                console.log(res)
+            }
+        });
+    })
+
+
+
+
 });

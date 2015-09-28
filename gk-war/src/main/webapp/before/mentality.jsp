@@ -31,8 +31,9 @@
             <select class="sel-item subjectList" name="" id="">
                 <option value="">选择科目</option>
             </select>
-            <select class="sel-item" name="" id="">
-                <option value="">按上传顺序</option>
+            <select class="sel-item subject-fun" name="" id="">
+                <option value="1">按上传顺序</option>
+                <option value="0">按播放次数</option>
             </select>
         </div>
         <div class="into-search">

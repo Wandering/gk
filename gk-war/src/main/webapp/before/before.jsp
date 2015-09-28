@@ -297,7 +297,7 @@
                     <input type="text" placeholder="请输入分数"/>
                 </span>
                 <a>
-                    <img src="/static/dist/before/images/bottom-banner.jpg" />
+                    <img src="/static/dist/before/images/yzm.png" />
                 </a>
             </div>
 

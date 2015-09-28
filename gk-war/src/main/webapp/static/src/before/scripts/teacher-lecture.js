@@ -16,6 +16,7 @@ define(function (require) {
     var searchVal = searchValUrl.substr(num+19);
     $('#searchVal').val(searchVal);
 
+
     var localhosts = 'http://www.gkzy114.com';
 
     // 搜索
@@ -46,7 +47,7 @@ define(function (require) {
     }
     getSubjectList();
 
-    var searchVals = $('#searchVal').val();
+
     function getList(pageNo, pageSize,sortType,subjectId,searchVals) {
         $.getJSON(
             "/before/video/getVideoList.do",
@@ -107,9 +108,13 @@ define(function (require) {
             });
     }
 
+
+    var searchV = $('#searchVal').attr('value');
+    console.log(searchV)
+
     UI.$nextPage.on('click', function () {
         var pageNo = UI.$listMsgItem.attr('pageNo');
-        getList(pageNo, pageSize,1,"",searchVal);
+        getList(pageNo, pageSize,1,"",searchV);
     }).click();
 
 
@@ -120,7 +125,7 @@ define(function (require) {
         UI.$listMsgItem.attr('pageNo',0);
         var pageNo = UI.$listMsgItem.attr('pageNo');
         UI.$listMsgItem.html('');
-        getList(pageNo, pageSize,sortType,subjectId,searchVal);
+        getList(pageNo, pageSize,sortType,subjectId,searchV);
     });
 
 
@@ -131,7 +136,7 @@ define(function (require) {
         UI.$listMsgItem.attr('pageNo',0);
         var pageNo = UI.$listMsgItem.attr('pageNo');
         UI.$listMsgItem.html('');
-        getList(pageNo, pageSize,sortType,subjectId,searchVal);
+        getList(pageNo, pageSize,sortType,subjectId,searchV);
     });
 
 

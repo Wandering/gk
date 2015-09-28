@@ -8,6 +8,14 @@ define(function (require) {
         $listMsgItem: $('#list-msg-item'),
         $nextPage: $('#nextPage')
     };
+    var pageSize = 4;
+    var searchValUrl = window.location.search;
+    var num = searchValUrl.indexOf("?");
+    var searchVal = searchValUrl.substr(num+19);
+    $('#searchVal').val(searchVal);
+
+
+    var localhosts = 'http://www.gkzy114.com';
 
     // 获取科目
     function getSubjectList(){
@@ -28,17 +36,17 @@ define(function (require) {
     getSubjectList();
 
     // 分页数据
-    var pageSize = 8;
-    function getList(pageNo, pageSize) {
+    function getList(pageNo, pageSize,sortType,subjectId,searchVals) {
         // 获取首页列表
         $.getJSON(
             "/before/video/getVideoList.do",
             {
-                pageNo: 0,
-                pageSize: 4,
-                classifyType:2,
-                sortType:1,
-                subjectId:'13'
+                pageNo: pageNo,
+                pageSize: pageSize,
+                classifyType:1,
+                sortType:sortType,
+                subjectId:subjectId,
+                teacherSearchName:searchVals
             },
             function (result) {
                 console.log(result);
@@ -53,7 +61,7 @@ define(function (require) {
                     }
 
                     for (var i = 0; i < dataJson.length; i++) {
-                        var subjectName = dataJson[i].subjectName,
+                        var subjectName = dataJson[i].title,
                             teacherName = dataJson[i].teacherName,
                             hit = dataJson[i].hit,
                             subcontent = dataJson[i].subcontent;
@@ -61,13 +69,13 @@ define(function (require) {
                         if (dataJson[i].frontCover == null || dataJson[i].frontCover == "") {
                             videoUrl = '/static/dist/common/images/video-default.png';
                         } else {
-                            videoUrl = dataJson[i].frontCover;
+                            videoUrl = localhosts + dataJson[i].frontCover;
                         }
                         var listMsgHtml = ''
                             +'<li class="item">'
                             +'<div class="img"><img src="'+ videoUrl +'" alt=""/></div>'
                             +'<div class="info">'
-                            +'<span class="fl">学科名称:'+ subjectName +'</span>'
+                            +'<span class="fl">课程名称:'+ subjectName +'</span>'
                             +'<span class="fr">主讲专家:'+ teacherName +'</span>'
                             +'</div>'
                             +'<div class="num">'
@@ -83,7 +91,7 @@ define(function (require) {
                     pageNo++;
                     UI.$listMsgItem.attr('pageNo', pageNo);
                     if (dataJson.length < pageSize) {
-                        UI.$nextPage.removeClass('btn-primary').text("没有更多消息了")
+                        UI.$nextPage.hide();
                     }
                 }
             });
@@ -91,9 +99,30 @@ define(function (require) {
     // 初始化数据
     UI.$nextPage.on('click', function () {
         var pageNo = UI.$listMsgItem.attr('pageNo');
-        getList(pageNo, pageSize);
+        getList(pageNo, pageSize,1,"",searchVal);
     }).click();
 
+
+    // 科目筛选
+    $(".subjectList").change(function(){
+        var subjectId = $(this).find("option:selected").attr('value');
+        var sortType = $('.subject-fun').find("option:selected").attr('value');
+        UI.$listMsgItem.attr('pageNo',0);
+        var pageNo = UI.$listMsgItem.attr('pageNo');
+        UI.$listMsgItem.html('');
+        getList(pageNo, pageSize,sortType,subjectId,searchVal);
+    });
+
+
+    // 播放类型
+    $(".subject-fun").change(function(){
+        var sortType = $(this).find("option:selected").attr('value');
+        var subjectId = $('.subjectList').find("option:selected").attr('value');
+        UI.$listMsgItem.attr('pageNo',0);
+        var pageNo = UI.$listMsgItem.attr('pageNo');
+        UI.$listMsgItem.html('');
+        getList(pageNo, pageSize,sortType,subjectId,searchVal);
+    });
 
 
 });
