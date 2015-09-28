@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public interface IMajoredDAO {
 
-    List<Map<String,Object>> getMajoreByParentId(@Param("parentId")int i);
+    List<Map<String,Object>> getMajoreByParentId(@Param("parentId")Long i);
 
     List<SubjectDto> searchMajored(@Param("condition")MajoredQuery query);
 
