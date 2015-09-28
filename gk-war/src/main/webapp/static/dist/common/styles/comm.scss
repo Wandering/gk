@@ -43,9 +43,12 @@
     margin-top: 5px;
     margin-right: 100px;
   }
+
+
   .main-menu {
     li {
       display: inline-block;
+      position: relative;
     }
     a {
       margin: 0 25px;
@@ -121,6 +124,35 @@
       }
     }
   }
+}
+
+.main-menu li > ul {
+  display: none;
+  position: absolute;
+  top:40px;
+  overflow: hidden;
+  border-bottom: 1px solid #51a9e1;
+  width: auto;
+  height: 40px;
+  z-index: 444;
+  //width: 300px;
+  white-space:nowrap;
+}
+
+.main-menu li:hover > ul{
+  display: block;
+}
+
+.main-menu li > ul li{
+  display: inline-block;
+  color: #fff;
+  padding: 0 10px;
+  white-space:nowrap;
+}
+
+.main-menu li > ul li:hover {
+  border-bottom: 3px solid #fff;
+  cursor: pointer;
 }
 
 //footer

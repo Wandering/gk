@@ -133,7 +133,7 @@ define(function (require) {
                 dataType: 'json',
                 success: function(data) {
                     if ('0000000' === data.rtnCode) {
-                        that.renderEnrollTable(data.bizData);
+                        that.renderEnroll(data.bizData);
                     }
                 },
                 error: function(data) {
@@ -156,12 +156,12 @@ define(function (require) {
                 + '<tbody>');
             for (var j = 0, infolen = infos.length; j < infolen; j++) {
                 tabContent.push('<tr>'
-                    + '<td>' + infos[j].majoredName + '</td>'
-                    + '<td>' + infos[j].batch + '</td>'
-                    + '<td>' + infos[j].subject + '</td>'
-                    + '<td>' + infos[j].planNumber + '</td>'
-                    + '<td>' + infos[j].schoolLength + '</td>'
-                    + '<td>' + infos[j].feeStandard + '</td>'
+                    + '<td>' + (infos[j].majoredName || '') + '</td>'
+                    + '<td>' + (infos[j].batch || '') + '</td>'
+                    + '<td>' + (infos[j].subject || '') + '</td>'
+                    + '<td>' + (infos[j].planNumber || '') + '</td>'
+                    + '<td>' + (infos[j].schoolLength || '') + '</td>'
+                    + '<td>' + (infos[j].feeStandard || '') + '</td>'
                     + '</tr>');
             }
             tabContent.push('</tbody>'
