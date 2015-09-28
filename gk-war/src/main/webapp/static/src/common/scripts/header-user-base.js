@@ -24,7 +24,7 @@ define(function (require, exports, modules) {
                 success: function (res) {
                     if (res.rtnCode == '0000000') {
                         var userData = res.bizData;
-                        $('.account').text(userData.account);
+                        $('#accountNum').attr('accountNum',userData.account);
                         var name = userData.name;
                         if (name == null || name == '') {
                             name == userData.account;

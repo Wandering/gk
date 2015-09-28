@@ -46,8 +46,8 @@
                         <section class="section-article">
                             <div class="search-content ta">
                                  <span>
-                                     <input type="text" onclick="window.location.href='/after/volunteer-flow4.jsp'" placeholder="请输入院校名称"/>
-                                     <input type="button" onclick="window.location.href='/after/volunteer-flow4.jsp'" value="选择院校"/>
+                                     <input type="text" class="open-flow3" placeholder="请输入院校名称"/>
+                                     <input type="button"  class="open-flow3" value="选择院校"/>
                                 </span>
                             </div>
                         </section>
@@ -77,8 +77,8 @@
                         <section class="section-article">
                             <div class="search-content ta">
                                  <span>
-                                     <input type="text" onclick="window.location.href='/after/volunteer-flow4.jsp'" placeholder="请输入院校名称"/>
-                                     <input type="button" onclick="window.location.href='/after/volunteer-flow4.jsp'" value="选择院校"/>
+                                     <input type="text"  class="open-flow3" placeholder="请输入院校名称"/>
+                                     <input type="button"  class="open-flow3" value="选择院校"/>
                                 </span>
                             </div>
                         </section>
@@ -108,8 +108,8 @@
                         <section class="section-article">
                             <div class="search-content ta">
                                  <span>
-                                     <input type="text" onclick="window.location.href='/after/volunteer-flow4.jsp'" placeholder="请输入院校名称"/>
-                                     <input type="button" onclick="window.location.href='/after/volunteer-flow4.jsp'" value="选择院校"/>
+                                     <input type="text"  class="open-flow3" placeholder="请输入院校名称"/>
+                                     <input type="button"  class="open-flow3" value="选择院校"/>
                                 </span>
                             </div>
                         </section>
@@ -139,8 +139,8 @@
                         <section class="section-article">
                             <div class="search-content ta">
                                  <span>
-                                     <input type="text" onclick="window.location.href='/after/volunteer-flow4.jsp'" placeholder="请输入院校名称"/>
-                                     <input type="button" onclick="window.location.href='/after/volunteer-flow4.jsp'" value="选择院校"/>
+                                     <input type="text"  class="open-flow3" placeholder="请输入院校名称"/>
+                                     <input type="button"  class="open-flow3" value="选择院校"/>
                                 </span>
                             </div>
                         </section>
@@ -172,9 +172,9 @@
 
 
 <div class="tansLayer" style="display: none;"></div>
-<div class="volunteer-flow3-layer"  style="display: none;">
+<div class="volunteer-flow3-layer" style="display: none;">
     <div class="top-close">
-        <a href="" class="close-btn">x</a>
+        <a href="javascript:;" class="close-btn close-flow3-layer">x</a>
     </div>
     <div class="tips">
         <strong>温馨提示：</strong>
@@ -212,53 +212,51 @@
         <div class="info-result">
             <ul>
                 <li class="starA">
-                    <div class="title">
+                    <div class="title"  onclick="window.location.href='/after/volunteer-flow5.jsp'">
                         <span class="">A档（冲）</span>
                         <p>录取指数: <i class="starA-icon"></i></p>
                     </div>
                     <div class="school-list">
-                        <h3>西安交通大学</h3>
-                        <h3>西安交通大学</h3>
+                        <div><a href="" class="school-name">西安交通大学</a><a href="" class="school-sel">选择</a></div>
+                        <div><a href="" class="school-name">西安交通大学</a><a href="" class="school-sel">选择</a></div>
                     </div>
                 </li>
                 <li class="starB">
                     <div class="title">
-                    <span>B档（稳）</span>
-                    <p>录取指数: <i class="starB-icon"></i></p>
-                        </div>
+                        <span>B档（稳）</span>
+                        <p>录取指数: <i class="starB-icon"></i></p>
+                    </div>
                     <div class="school-list">
-                        <h3>西安交通大学</h3>
-                        <h3>西安交通大学</h3>
+                        <div><a href="" class="school-name">西安交通大学</a><a href="" class="school-sel">选择</a></div>
+                        <div><a href="" class="school-name">西安交通大学</a><a href="" class="school-sel">选择</a></div>
                     </div>
                 </li>
                 <li class="starC">
                     <div class="title">
-                    <span>B档（稳）</span>
-                    <p>录取指数: <i class="starC-icon"></i></p>
-                        </div>
+                        <span>B档（稳）</span>
+                        <p>录取指数: <i class="starC-icon"></i></p>
+                    </div>
                     <div class="no-school">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
                         <p>② 在真是填报时、可以参开选择其他档中的院校；</p>
                     </div>
                     <div class="school-list">
-                        <h3>西安交通大学</h3>
-                        <h3>西安交通大学</h3>
+                        <div><a href="" class="school-name">西安交通大学</a><a href="" class="school-sel">选择</a></div>
+                        <div><a href="" class="school-name">西安交通大学</a><a href="" class="school-sel">选择</a></div>
                     </div>
                 </li>
                 <li class="starD">
                     <div class="title">
-                    <span>B档（稳）</span>
-                    <p>录取指数: <i class="starD-icon"></i></p>
-                        </div>
+                        <span>B档（稳）</span>
+                        <p>录取指数: <i class="starD-icon"></i></p>
+                    </div>
                     <div class="no-school">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
                         <p>② 在真是填报时、可以参开选择其他档中的院校；</p>
                     </div>
                     <div class="school-list">
-                        <h3>西安交通大学</h3>
-                        <h3>西安交通大学</h3>
-                        <h3>西安交通大学</h3>
-                        <h3>西安交通大学</h3>
+                        <div><a href="" class="school-name">西安交通大学</a><a href="" class="school-sel">选择</a></div>
+                        <div><a href="" class="school-name">西安交通大学</a><a href="" class="school-sel">选择</a></div>
                     </div>
                 </li>
             </ul>
@@ -268,7 +266,9 @@
 </div>
 
 <%@ include file="/common/footer.jsp"%>
-
+<script>
+    seajs.use("/static/src/after/scripts/after");
+</script>
 
 
 </body>

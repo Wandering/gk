@@ -29,6 +29,10 @@ define(function (require) {
         return newDate.Format("yyyy-MM-dd");
     }
 
+    if($('#accountNum').attr('accountNum')!=""){
+        console.log(22)
+    }
+
     //获取用户信息
     $.get('/info/getUserInfo.do', function (res) {
         if (res.rtnCode == '0000000') {
