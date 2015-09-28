@@ -18,6 +18,7 @@ define(function (require) {
                 type: 'post',
                 dataType: 'json',
                 data: {
+                    type:1,//1找回密码标志
                     account: tel
                 },
                 success: function (res) {
@@ -47,7 +48,7 @@ define(function (require) {
                             }
                         });
                     }else{
-                        $('.error-tip2').text('该号码还未注册').fadeIn();
+                        $('.error-tip2').text(res.msg).fadeIn();
                     }
                 }
             });

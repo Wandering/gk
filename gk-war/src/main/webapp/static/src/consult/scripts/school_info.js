@@ -43,6 +43,7 @@ define(function(require) {
                 var parentId = $(this).parent().attr('id');
                 if ('universityFeature' === parentId) {
                     $(this).toggleClass('active');
+                    that.getSchoolList(1);
                 } else {
                     if (!$(this).hasClass('active')) {
                         $(this).addClass('active').siblings().removeClass('active');
@@ -76,7 +77,7 @@ define(function(require) {
                                 + '<td>' + data[i].universityType + '</td>'
                                 + '<td>' + data[i].subjection + '</td>'
                                 + '<td>' + data[i].property + '</td>'
-                                + '<td>' + '<a href="/consult/school_detile.jsp?id=' + data[i].code + '">查看详情</a>' + '</td>'
+                                + '<td>' + '<a target="_blank" href="/consult/school_detile.jsp?id=' + data[i].code + '">查看详情</a>' + '</td>'
                             + '</tr>');
             }
             html.push('</tbody>' + '</table>');
@@ -98,11 +99,17 @@ define(function(require) {
             if ('全部' === universityBatchText) {
                 universityBatchText = '';
             }
-            var universityFeature = $('#universityFeature a.active').attr('id') || 0;
-            var universityFeatureText = $('#universityFeature a.active').text();
-            if ('全部' === universityFeatureText) {
-                universityFeatureText = '';
-            }
+
+            var universityFeatureId = [];
+            $.each($('#universityFeature a.active'), function(i, value) {
+                universityFeatureId.push($(value).attr('id'));
+            });
+            var universityFeature = universityFeatureId.join(',') || 0;
+            var universityFeatureValue = [];
+            $.each($('#universityFeature a.active'), function(i, value) {
+                universityFeatureValue.push($(value).text());
+            });
+            var universityFeatureText = universityFeatureValue.join(',');
             var search = $('#school_serach').val();
             var that = this;
 
@@ -132,6 +139,9 @@ define(function(require) {
                             if (pageNo == 1) {
                                 that.renderPage(1, data.bizData.count);
                             }
+                        } else {
+                            $('#school_list').html('<p style="text-align: center">暂无信息！</p>');
+                            $('#page').html('');
                         }
                     }
                 },
@@ -145,12 +155,54 @@ define(function(require) {
             var startNum = (curPage - 1) * 10 + 1;
             pageHtml.push('<span class="record">共' + totals + '条记录 <span class="startNum">' + startNum + '</span>/' + totals + '</span>');
             pageHtml.push('<a class="previous-page">上一页</a>');
-            for (var i = 0; i < this.totalPage; i++) {
+            var num = this.totalPage > 10 ? 10: this.totalPage;
+            for (var i = 0; i < num; i++) {
                 var page = i + 1;
                 if (curPage == page) {
-                    pageHtml.push('<a class="active">' + page + '</a>');
+                    pageHtml.push('<a class="active ' + page + '">' + page + '</a>');
                 } else {
-                    pageHtml.push('<a>' + page + '</a>');
+                    pageHtml.push('<a class="' + page + '">' + page + '</a>');
+                }
+            }
+            if (num != this.totalPage) {
+                pageHtml.push('<span>...</span>');
+            }
+            pageHtml.push('<a class="next-page">下一页</a>');
+            $('#page').html(pageHtml.join(''));
+            this.pageEventHandle();
+        },
+        refreshPageShow: function(curPage) {
+            var num = curPage + 2;
+            num = num > this.totalPage ? this.totalPage : num;
+            var minNum = this.totalPage > 10 ? 10 : this.totalPage;
+            num = num < minNum ? minNum : num;
+            var oldNum = num;
+            console.log(num);
+            var arryPage = [];
+            for (var i = 0; i < 10; i++) {
+                arryPage.push(num--);
+            }
+            arryPage.reverse();
+
+            if (oldNum > 10) {
+                arryPage[0] = 1;
+                arryPage[1] = 2;
+                arryPage[2] = '...';
+            }
+            if (oldNum <= this.totalPage - 2) {
+                arryPage.push('...');
+            }
+            return arryPage;
+        },
+        refreshPage: function(curPage) {
+            var arryPage = this.refreshPageShow(curPage);
+            var pageHtml = [];
+            pageHtml.push('<a class="previous-page">上一页</a>');
+            for (var i = 0; i < arryPage.length; i++) {
+                if (typeof arryPage[i] === 'string') {
+                    pageHtml.push('<span>...</span>');
+                } else {
+                    pageHtml.push('<a class="' + arryPage[i] + '">' + arryPage[i] + '</a>');
                 }
             }
             pageHtml.push('<a class="next-page">下一页</a>');
@@ -160,20 +212,48 @@ define(function(require) {
         pageEventHandle: function() {
             var that = this;
             $('#page a').on('click', function(e) {
-                if (!$(this).hasClass('active')) {
-                    $(this).addClass('active').siblings().removeClass('active');
-                    if ($(this).hasClass('previous-page')) {
-                        that.curPage--;
-                    } else if ($(this).hasClass('next-page')) {
-                        that.curPage++;
-                    } else {
-                        that.curPage = parseInt($(this).text());
-                    }
-
-                    if (that.curPage > 0 && that.curPage <= that.totalPage) {
+                if ($(this).hasClass('previous-page')) {
+                    that.curPage--;
+                    if (that.curPage > 0) {
+                        if (!$('#page a.' + that.curPage)[0] && this.totalPage > 10) {
+                            that.refreshPage(that.curPage);
+                        }
+                        $('#page a.' + that.curPage).addClass('active').siblings().removeClass('active');
                         var startNum = (that.curPage - 1) * 10 + 1;
                         $('.startNum').text(startNum);
                         that.getSchoolList(that.curPage);
+                    }
+                } else if ($(this).hasClass('next-page')) {
+                    that.curPage++;
+                    if (that.curPage <= that.totalPage) {
+                        if (!$('#page a.' + that.curPage)[0] && this.totalPage > 10) {
+                            that.refreshPage(that.curPage);
+                        }
+                        $('#page a.' + that.curPage).addClass('active').siblings().removeClass('active');
+                        var startNum = (that.curPage - 1) * 10 + 1;
+                        $('.startNum').text(startNum);
+                        that.getSchoolList(that.curPage);
+                    }
+                } else {
+                    if (!$(this).hasClass('active')) {
+                        that.curPage = parseInt($(this).text());
+                        $(this).addClass('active').siblings().removeClass('active');
+                        if (this.totalPage > 10) {
+                            var nextPage = that.curPage + 1;
+                            var prePage = that.curPage - 1;
+                            if (nextPage <= that.totalPage && prePage > 0) {
+                                if (!$('#page a.' + nextPage)[0] || !$('#page a.' + prePage)[0]) {
+                                    that.refreshPage(that.curPage);
+                                    $('#page a.' + that.curPage).addClass('active')
+                                }
+                            }
+                        }
+
+                        if (that.curPage > 0 && that.curPage <= that.totalPage) {
+                            var startNum = (that.curPage - 1) * 10 + 1;
+                            $('.startNum').text(startNum);
+                            that.getSchoolList(that.curPage);
+                        }
                     }
                 }
             });

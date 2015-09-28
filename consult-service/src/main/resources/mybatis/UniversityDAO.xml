@@ -1074,7 +1074,7 @@ selectList
              </if>
 
             <if test="universityQuery.feature!=null and universityQuery.feature!=''">
-                and property
+                and property in
 
                 <foreach collection="universityQuery.feature" item="item" index="index" open="(" separator="," close=")">
                     #{item}

@@ -438,7 +438,8 @@ input, textarea {
       position: absolute;
       background-color: #353535;
       top: 50px;
-      right: -18px; }
+      right: 0;
+      overflow: hidden; }
       .header .user-info-list .menu li a {
         text-align: center;
         line-height: 37px;
@@ -662,6 +663,9 @@ a.next-btn:hover {
         color: #fff; }
   .select-option .lable {
     color: #9b9b9b; }
+
+#universityFeature a {
+  margin: 0 5px; }
 
 .school-table {
   margin-bottom: 20px; }

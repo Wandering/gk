@@ -8,7 +8,7 @@
            AND years = #{years}
         </if>
         <if test="searchName != null">
-            paperName LIKE  CONCAT('%', #{searchName} , '%')
+           AND paperName LIKE  CONCAT('%', #{searchName} , '%')
         </if>
         <if test="sortType == 1">
             ORDER BY createDate DESC

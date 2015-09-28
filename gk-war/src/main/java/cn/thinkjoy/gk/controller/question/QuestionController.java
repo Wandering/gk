@@ -14,7 +14,6 @@ import cn.thinkjoy.ss.api.IQuestionService;
 import cn.thinkjoy.ss.bean.QuestionDetailBean;
 import cn.thinkjoy.ss.domain.Question;
 import com.alibaba.fastjson.JSON;
-import io.netty.util.internal.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.jsoup.Jsoup;

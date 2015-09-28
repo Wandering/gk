@@ -14,7 +14,6 @@ define(function (require) {
         success: function (result) {
             if (result.rtnCode == '0000000') {
                 console.log(result)
-
             }
         }
     });
