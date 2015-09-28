@@ -488,14 +488,21 @@ section:last-child {
         line-height: 46px;
         text-align: center;
         padding: 0 20px;
+        border-right: 1px solid #ccc;
       }
 
       input{
         width: 230px;
         height: 44px;
-        margin-left: 40px;
+        padding-left: 40px;
         line-height: 44px;
         background: transparent;
+      }
+      .score-input{
+        background: url('../images/icon-01.png') no-repeat 12px center;
+      }
+      .school-input{
+        background: url('../images/icon-02.png') no-repeat 12px center;
       }
     }
 
@@ -704,4 +711,26 @@ section:last-child {
 }
 .indent{
   clear: both;
+}
+
+.yztj-fl.eval-left{
+  border: none;
+}
+.yztj-fl.eval-left img{
+  width: 215px;
+  height: 215px;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+}
+.yztj-fl.eval-left strong{
+  width: 100%;
+  text-align: center;
+  display: block;
+  margin: 8px 0;
+}
+.yztj-fl.eval-left p{
+  width: 100%;
+  text-align: center;
+  display: block;
 }

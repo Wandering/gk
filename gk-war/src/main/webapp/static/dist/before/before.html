@@ -437,48 +437,98 @@
         <p>院校评测使用的分数，位次数据，招生计划为往年数据，结果仅供参考，且系统推荐学校有限制，若要使用最新，更全面，更多推荐学校，请升级为VIP。</p>
     </div>
 </div>
-    <div class="school-eval">
+    <!--<div class="school-eval">-->
+        <!--<div class="eval-left">-->
+            <!--<img src="images/bottom-banner.jpg" />-->
+            <!--<h3>为我推荐院校</h3>-->
+            <!--<h6>直接系统告诉我可以报的院校名称，容我考虑考虑</h6>-->
+        <!--</div>-->
+        <!--<div class="eval-right">-->
+            <!--<div class="score">-->
+                <!--<label>分数</label>-->
+                <!--<input type="text" placeholder="请输入分数"/>-->
+            <!--</div>-->
+
+            <!--<div class="category mt10">-->
+                <!--<label>选择文理科：</label>-->
+                <!--<ul class="group-radio">-->
+                    <!--<li>-->
+                        <!--<span><input type="radio" name="category" value="1" />一批本科</span>-->
+                        <!--<span><input type="radio" name="category" value="3" />三批本科</span>-->
+                    <!--</li>-->
+                    <!--<li class="tar">-->
+                        <!--<span><input type="radio" name="category" value="2" />二批本科</span>-->
+                        <!--<span><input type="radio" name="category" value="4" />高职(专科)</span>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
+
+            <!--<div class="indent mt10">-->
+                <!--<span class="ident-code">-->
+                    <!--<label>验证码</label>-->
+                    <!--<input type="text" placeholder="请输入分数"/>-->
+                <!--</span>-->
+                <!--<a>-->
+                    <!--<img src="images/bottom-banner.jpg" />-->
+                <!--</a>-->
+            <!--</div>-->
+
+            <!--<div class="submit mt20">-->
+                <!--<input type="submit" value="提交测评"/>-->
+            <!--</div>-->
+
+        <!--</div>-->
+    <!--</div>-->
+
+<div class="main-volunteer-box">
+    <div class="school-eval w1000">
+        <div class="tip">
+            <p>院校评测使用的分数，位次数据，招生计划为往年数据，结果仅供参考，且系统推荐学校有限制，若要使用最新，更全面，更多推荐学校，请升级为VIP。</p>
+        </div>
         <div class="eval-left">
-            <img src="images/bottom-banner.jpg" />
+            <img src="/static/dist/before/images/bottom-banner.jpg" />
             <h3>为我推荐院校</h3>
             <h6>直接系统告诉我可以报的院校名称，容我考虑考虑</h6>
         </div>
         <div class="eval-right">
-            <div class="score">
+            <div class="form-control">
                 <label>分数</label>
-                <input type="text" placeholder="请输入分数"/>
+                <input type="text" class="score-input" placeholder="请输入分数"/>
             </div>
-
+            <div class="form-control">
+                <label>院校</label>
+                <input type="text" clas="school-input" placeholder="请填写理想院校"/>
+            </div>
             <div class="category mt10">
                 <label>选择文理科：</label>
                 <ul class="group-radio">
                     <li>
-                        <span><input type="radio" name="category" value="1" />一批本科</span>
-                        <span><input type="radio" name="category" value="3" />三批本科</span>
+                        <span><input type="radio" name="category" value="1" />文科</span>
                     </li>
-                    <li class="tar">
-                        <span><input type="radio" name="category" value="2" />二批本科</span>
-                        <span><input type="radio" name="category" value="4" />高职(专科)</span>
+                    <li>
+                        <span><input type="radio" name="category" value="3" />理科</span>
                     </li>
                 </ul>
             </div>
-
             <div class="indent mt10">
                 <span class="ident-code">
                     <label>验证码</label>
                     <input type="text" placeholder="请输入分数"/>
                 </span>
                 <a>
-                    <img src="images/bottom-banner.jpg" />
+                    <img src="/static/dist/before/images/yzm.png" />
                 </a>
             </div>
 
             <div class="submit mt20">
-                <input type="submit" value="提交测评"/>
+                <input type="submit" id="evaluating-sub" value="提交测评"/>
             </div>
 
         </div>
     </div>
+</div>
+
+
 
 <div class="w1000 main-volunteer">
     <div class="fl">
@@ -523,20 +573,20 @@
 
 
 
-<div class="tansLayer"></div>
-<div class="volunteer-flow3-layer">
-    <div class="top-close">
-        <a href="" class="close-btn">x</a>
-    </div>
-    <div class="tips">
-        <strong>温馨提示：</strong>
-        <p>依据平行志愿规则，系统推荐遵循分数最大化，为您推荐一下A、B、C、D四挡院校；考生可根据个性化需求调整院校顺位；</p>
-    </div>
-    <div class="volunteer-flow3-body">
+<!--<div class="tansLayer"></div>-->
+<!--<div class="volunteer-flow3-layer">-->
+    <!--<div class="top-close">-->
+        <!--<a href="" class="close-btn">x</a>-->
+    <!--</div>-->
+    <!--<div class="tips">-->
+        <!--<strong>温馨提示：</strong>-->
+        <!--<p>依据平行志愿规则，系统推荐遵循分数最大化，为您推荐一下A、B、C、D四挡院校；考生可根据个性化需求调整院校顺位；</p>-->
+    <!--</div>-->
+    <!--<div class="volunteer-flow3-body">-->
 
-    </div>
+    <!--</div>-->
 
-</div>
+<!--</div>-->
 
 
 
@@ -580,20 +630,5 @@
         <p class="w1000">联系信息:E-mail:cewfefe@163.com QQ:5454555 备案号:陕ICP备343454135-1号 [站长统计]</p>
     </div>
 </div>
-<link rel="stylesheet" href="../../bower_components/swiper/dist/css/swiper.css"/>
-<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
-<script src="../../bower_components/swiper/dist/js/swiper.jquery.min.js"></script>
-<script>
-    $(function () {
-        //幻灯片
-        var swiper = new Swiper('.swiper-container', {
-            pagination: '.swiper-pagination',
-            paginationClickable: true,
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
-            loop: true
-        });
-    });
-</script>
 </body>
 </html>

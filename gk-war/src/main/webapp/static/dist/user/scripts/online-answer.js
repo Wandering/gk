@@ -2,23 +2,98 @@ define(function (require) {
     var $ = require('$');
     require('header-user');
 
+    var Question = {
+        startSize: 0,
+        endSize: 5,
+        next:$('.next-btn'),
+        render: function(data) {
+            var html = [];
+            for (var i = 0, len = data.length; i < len; i++) {
+                var question = data[i].question;
+                var questions = question.questions;
+                var title = [];
+                for (var t = 0, tlen = questions.length; t < tlen; t++) {
+                    title.push(questions[t].text);
+                }
+                var time = new Date(question.createTime).Format('yyyy-MM-dd hh:mm');
+                var answer = data[i].answer;
+                var answers = answer.answers;
+                var content = [];
+                if (answers) {
+                    for (var c = 0, clen = answers.length; c < clen; c++) {
+                        var text = answers[c].text;
+                        if (answers[c].text.length > 200) {
+                            text = text.substring(0, 200);
+                        }
+                        content.push('<p>' + text + '</p>');
+                        if (answers[c].img) {
+                            content.push('<p class="ta"><img src="' + answers[c].img + '" /></p>');
+                        }
+                    }
+                }
 
+                var ask = title.join('')
 
-    $.ajax({
-        url:'/product/findProduct.do',
-        type: 'GET',
-        dataType: 'JSON',
-        data: {
-            code: 10000001
-        },
-        success: function (result) {
-            if (result.rtnCode == '0000000') {
-                console.log(result)
+                if (ask.length > 50) {
+                    ask = ask.substring(0, 50);
+                }
 
+                html.push('<div class="detail-content">'
+                    + '<div class="detail-header">'
+                    + '<span class="order-number">' + (i + 1 + this.startSize) + '、</span>'
+                    + '<span class="detail-title">' + ask + '</span>'
+                    + '<span class="upload-time">' + time + '</span>'
+                    + '</div>');
+                if (content.length > 0) {
+                   html.push('<div class="detail-info">'
+                       + content.join('')
+                       + '</div>');
+                }
+
+                html.push('</div>');
             }
+            return html.join('');
+        },
+        getMyQuestion: function(contentId) {
+            var url = ' /answer/myQuestion.do?';
+            this.getData(url, contentId);
+        },
+        getData: function(url, contentId) {
+            var that = this;
+            $.get(url + 'startSize=' + this.startSize + '&endSize=' + this.endSize, function(data) {
+                if ('0000000' === data.rtnCode) {
+                    if (data.bizData.length > 0) {
+                        that.next.show();
+                        if (that.startSize == 0) {
+                            $('#' + contentId).html(that.render(data.bizData));
+                        } else {
+                            $('#' + contentId).append(that.render(data.bizData));
+                        }
+
+                    } else {
+                        if (that.startSize == 0) {
+                            $('#' + contentId).html('<p class="mt20 ta">暂无信息！</p>');
+                            that.next.hide();
+                        } else {
+                            that.next.text('暂无更多信息！');
+                            that.next.off('click');
+                        }
+                    }
+                }
+            });
+        },
+        addNextPageHandle: function() {
+            this.startSize += 5;
+            this.endSize += 5;
+            this.getMyQuestion('detail_content_question');
         }
+    };
+
+    $(document).ready(function() {
+        Question.getMyQuestion('detail_content_question');
+        Question.next.on('click', function(e) {
+            Question.addNextPageHandle();
+        });
     });
-
-
 
 });

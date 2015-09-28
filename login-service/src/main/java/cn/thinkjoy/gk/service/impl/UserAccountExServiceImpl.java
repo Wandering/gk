@@ -14,6 +14,7 @@ import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -81,7 +82,6 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
             userVip.setStatus(0);
             userVip.setCreateDate(System.currentTimeMillis());
             userVip.setEndDate(System.currentTimeMillis());
-            //TODO 需要重写
             userVipDAO.insert(userVip);
             flag = true;
         }catch(Exception e){
