@@ -359,7 +359,8 @@ ul.main-video-list {
   line-height: 48px;
   color: #8a6d45;
   font-size: 14px;
-  margin: 20px 0; }
+  margin: 20px 0;
+  padding: 0 20px; }
   .tip p {
     margin: 0 0 0 5px; }
 
@@ -388,15 +389,17 @@ ul.main-video-list {
     width: 358px;
     float: right;
     margin-right: 50px; }
-    .school-eval .eval-right .score {
+    .school-eval .eval-right .form-control {
       width: 355px;
       height: 46px;
-      background: url("../images/school-eval-input.png") no-repeat left top; }
-      .school-eval .eval-right .score label {
+      border: 1px solid #e5e5e5;
+      border-radius: 3px;
+      margin-top: 14px; }
+      .school-eval .eval-right .form-control label {
         line-height: 46px;
         text-align: center;
         padding: 0 20px; }
-      .school-eval .eval-right .score input {
+      .school-eval .eval-right .form-control input {
         width: 230px;
         height: 44px;
         margin-left: 40px;
@@ -425,9 +428,10 @@ ul.main-video-list {
     .school-eval .eval-right .category {
       width: 100%; }
       .school-eval .eval-right .category label {
-        line-height: 80px;
         text-align: center;
-        float: left; }
+        float: left;
+        position: relative;
+        top: 14px; }
       .school-eval .eval-right .category .group-radio {
         overflow: hidden; }
         .school-eval .eval-right .category .group-radio li {
@@ -548,3 +552,9 @@ ul.main-video-list {
     .evaluating-layer .evaluating-result-close:hover {
       background: #e24333;
       color: #fff; }
+
+.group-radio li {
+  float: left; }
+
+.indent {
+  clear: both; }

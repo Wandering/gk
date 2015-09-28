@@ -440,7 +440,7 @@ section:last-child {
   color: #8a6d45;
   font-size: 14px;
   margin: 20px 0;
-
+  padding: 0 20px;
   p{
     margin: 0 0 0 5px;
   }
@@ -478,11 +478,12 @@ section:last-child {
     float: right;
     margin-right: 50px;
 
-    .score{
+    .form-control{
       width: 355px;
       height: 46px;
-      background: url("../images/school-eval-input.png") no-repeat left top;
-
+      border:1px solid #e5e5e5;
+      border-radius: 3px;
+      margin-top: 14px;
       label{
         line-height: 46px;
         text-align: center;
@@ -532,9 +533,10 @@ section:last-child {
       width: 100%;
 
       label{
-        line-height: 80px;
         text-align: center;
         float: left;
+        position: relative;
+        top: 14px;
       }
 
       .group-radio {
@@ -696,3 +698,10 @@ section:last-child {
   }
 }
 
+
+.group-radio li{
+  float: left;
+}
+.indent{
+  clear: both;
+}

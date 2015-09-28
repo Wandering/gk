@@ -3,8 +3,8 @@
 
 <mapper namespace="cn.thinkjoy.gk.dao.IDataDictDAO">
 
-    <select id="getUniversityByCode" parameterType="java.util.Map" resultType="java.util.Map">
-        select  dictId,name
+    <select id="queryDictList" parameterType="java.util.Map" resultType="java.util.Map">
+        select  dictId as id,name
         from gk_data_dict where 1=1 and type=#{condition.type}
     </select>
 

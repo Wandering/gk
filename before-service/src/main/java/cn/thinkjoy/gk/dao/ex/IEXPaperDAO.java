@@ -16,5 +16,5 @@ public interface IEXPaperDAO {
      * @param rows
      * @return
      */
-    List<ExaminationPaper> getPaperPage(@Param("sortType")Integer sortType ,@Param("years")String years,@Param("offSet") Integer offSet, @Param("rows")Integer rows);
+    List<ExaminationPaper> getPaperPage(@Param("sortType")Integer sortType ,@Param("years")String years,@Param("searchName")String searchName,@Param("offSet") Integer offSet, @Param("rows")Integer rows);
 }

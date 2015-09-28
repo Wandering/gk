@@ -12,8 +12,14 @@ define(function (require) {
         return "";
     }
 
+    var method = getUrLinKey('method');
+
     function getArticleDetile(id) {
-        $.get('/volunteerSchool/article.do?id=' + id, function(data) {
+        var url = '/volunteerSchool/article.do';
+        if ('hot' === method) {
+            url = '';
+        }
+        $.get(url + '?id=' + id, function(data) {
             if ('0000000' === data.rtnCode) {
                 if (data.bizData) {
                     var html = [];
@@ -31,6 +37,9 @@ define(function (require) {
     }
 
     function getRightInfo() {
+        if ('hot' === method) {
+            return;
+        }
         var code = getUrLinKey('code');
         if (code) {
             $.get('/volunteerSchool/ranks.do?cateId=' + code, function(data) {
@@ -56,6 +65,11 @@ define(function (require) {
         var id = getUrLinKey('id');
         getArticleDetile(id);
         getRightInfo();
+
+        $('#search').on('click', function(e) {
+            var val = $('#keywords').val();
+            window.location.href = '/consult/gk_hot.jsp?val=' + val;
+        });
     });
 });
 

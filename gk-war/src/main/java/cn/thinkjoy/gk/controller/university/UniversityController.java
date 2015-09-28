@@ -111,7 +111,7 @@ public class UniversityController extends BaseController {
         Page<UniversityDto> page=new Page<>();
         Map<String,Object> map=new HashMap<>();
 
-        //构造院校批次参数
+        //构造院校批次参数 一批本科
         Integer universityBatchId=universityQuery.getUniversityBatchId();
         List<Integer> universityBatchParam=new ArrayList<>();//构造出来的参数
         if(null==universityBatchId ||universityBatchId.intValue()==0){
@@ -126,12 +126,12 @@ public class UniversityController extends BaseController {
             }
         }
 
-        //构造院校特征参数
+        //构造院校特征参数 985,211
         List<Integer> universityFeatureParam=new ArrayList<>();//构造出来的参数
         String universityFeature=universityQuery.getUniversityFeatureId();
         String[] strArray=universityFeature.split(",");
         if("0".equals(universityFeature)||null==strArray ){
-            universityBatchParam=null;
+            universityFeatureParam=null;
         }else{
             Integer universityFeatureId=0;
             for(String inString:strArray){
@@ -140,7 +140,7 @@ public class UniversityController extends BaseController {
             map.put("type","FEATURE");//院校特征类型
             List<UniversityDict> universityFeatureList=universityDictService.queryList(map,"id","asc");
             for(UniversityDict universityDict:universityFeatureList){
-                if((universityBatchId.intValue() & universityDict.getDictId().intValue()) !=0){
+                if((universityFeatureId.intValue() & universityDict.getDictId().intValue()) !=0){
                     universityFeatureParam.add(universityDict.getDictId());
                 }
             }
@@ -167,8 +167,9 @@ public class UniversityController extends BaseController {
         queryParams.put("universtiyType",universityQuery.getUniversityTypeName());
         queryParams.put("batch",universityBatchParam);
         queryParams.put("feature",universityFeatureParam);
-        queryParams.put("start",universityQuery.getPageNo()*universityQuery.getPageSize());
+        queryParams.put("start",(universityQuery.getPageNo()-1)*universityQuery.getPageSize());
         queryParams.put("end",universityQuery.getPageSize());
+        queryParams.put("searchName",universityQuery.getSearchName());
         UniversityResponseDto universityResponseDto=new UniversityResponseDto();
         List<UniversityDto> universityDtos=new ArrayList<UniversityDto>();
         universityDtos=iUniversityService.getUniversityList(queryParams);

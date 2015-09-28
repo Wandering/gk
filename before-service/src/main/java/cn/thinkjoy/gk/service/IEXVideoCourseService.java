@@ -12,6 +12,6 @@ public interface IEXVideoCourseService {
      * 根据类别和科目查询课程
      * @return
      */
-    List<VideoCoursePojo> getVideoListByParams(Long subjectId,Integer classifyType,Integer sortType,Integer offset,Integer rows);
+    List<VideoCoursePojo> getVideoListByParams(Long subjectId,Integer classifyType,Integer sortType,String searchName,Integer offset,Integer rows);
 
 }

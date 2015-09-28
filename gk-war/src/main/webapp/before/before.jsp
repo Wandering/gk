@@ -84,7 +84,9 @@
 
 <div class="w1000 main-video">
     <div class="tabs">
-        <ul class="tabs-list mt20 subjectList" classifyType="1"></ul>
+        <ul class="tabs-list mt20 subjectList" classifyType="1">
+            <li id="">全部</li>
+        </ul>
         <div class="into-search">
             <a href="/before/teacher-lecture.jsp?classifyType=1" target="_blank" class="into-btn">进入名师讲堂</a>
             <form action="">
@@ -101,9 +103,7 @@
     </div>
     <div class="tabs-content">
         <div class="tabs-content-list main-video-list-box">
-            <ul class="main-video-list" id="teacher-lecture-main">
-
-            </ul>
+            <ul class="main-video-list" id="teacher-lecture-main"></ul>
         </div>
     </div>
 </div>
@@ -124,7 +124,7 @@
 
 <div class="w1000 main-video">
     <div class="tabs">
-        <ul class="tabs-list mt20 subjectList" classifyType="3"></ul>
+        <ul class="tabs-list mt20 subjectList" classifyType="3"><li id="">全部</li></ul>
         <div class="into-search">
             <a href="/before/exam.jsp?classifyType=3" target="_blank" class="into-btn">真题密卷</a>
             <form action="">
@@ -144,7 +144,6 @@
             <ul class="main-exam-list main-exam-list-box" id="exam-main"></ul>
         </div>
     </div>
-
 </div>
 <div class="w1000">
     <div class="content-title">
@@ -162,7 +161,7 @@
 <h6 class="w1000 ta content-title-sub">分数不理想也没有关系，专家告诉您如何调整，以最好的状态应对高考，没什么了不起的。</h6>
 <div class="w1000 main-video">
     <div class="tabs">
-        <ul class="tabs-list mt20 subjectList" classifyType="2"></ul>
+        <ul class="tabs-list mt20 subjectList" classifyType="2"><li id="">全部</li></ul>
         <div class="into-search">
             <a href="/before/mentality.jsp?classifyType=2" target="_blank" class="into-btn">进入高考心理</a>
             <form action="">
@@ -207,6 +206,8 @@
         </ul>
     </div>
 </div>
+
+
 <div class="main-volunteer-box">
     <div class="school-eval w1000">
         <div class="tip">
@@ -218,32 +219,32 @@
             <h6>直接系统告诉我可以报的院校名称，容我考虑考虑</h6>
         </div>
         <div class="eval-right">
-            <div class="score">
+            <div class="form-control">
                 <label>分数</label>
                 <input type="text" placeholder="请输入分数"/>
             </div>
-
+            <div class="form-control">
+                <label>院校</label>
+                <input type="text" placeholder="请填写理想院校"/>
+            </div>
             <div class="category mt10">
                 <label>选择文理科：</label>
                 <ul class="group-radio">
                     <li>
-                        <span><input type="radio" name="category" value="1" />一批本科</span>
-                        <span><input type="radio" name="category" value="3" />三批本科</span>
+                        <span><input type="radio" name="category" value="1" />文科</span>
                     </li>
-                    <li class="tar">
-                        <span><input type="radio" name="category" value="2" />二批本科</span>
-                        <span><input type="radio" name="category" value="4" />高职(专科)</span>
+                    <li>
+                        <span><input type="radio" name="category" value="3" />理科</span>
                     </li>
                 </ul>
             </div>
-
             <div class="indent mt10">
                 <span class="ident-code">
                     <label>验证码</label>
                     <input type="text" placeholder="请输入分数"/>
                 </span>
                 <a>
-                    <img src="/static/dist/before/images/bottom-banner.jpg" />
+                    <img src="/static/dist/before/images/yzm.png" />
                 </a>
             </div>
 
@@ -254,6 +255,60 @@
         </div>
     </div>
 </div>
+
+
+
+
+<%--<div class="main-volunteer-box">--%>
+    <%--<div class="school-eval w1000">--%>
+        <%--<div class="tip">--%>
+            <%--<p>院校评测使用的分数，位次数据，招生计划为往年数据，结果仅供参考，且系统推荐学校有限制，若要使用最新，更全面，更多推荐学校，请升级为VIP。</p>--%>
+        <%--</div>--%>
+        <%--<div class="eval-left">--%>
+            <%--<img src="/static/dist/before/images/bottom-banner.jpg" />--%>
+            <%--<h3>为我推荐院校</h3>--%>
+            <%--<h6>直接系统告诉我可以报的院校名称，容我考虑考虑</h6>--%>
+        <%--</div>--%>
+        <%--<div class="eval-right">--%>
+            <%--<div class="score">--%>
+                <%--<label>分数</label>--%>
+                <%--<input type="text" placeholder="请输入分数"/>--%>
+            <%--</div>--%>
+
+            <%--<div class="category mt10">--%>
+                <%--<label>选择文理科：</label>--%>
+                <%--<ul class="group-radio">--%>
+                    <%--<li>--%>
+                        <%--<span><input type="radio" name="category" value="1" />一批本科</span>--%>
+                        <%--<span><input type="radio" name="category" value="3" />三批本科</span>--%>
+                    <%--</li>--%>
+                    <%--<li class="tar">--%>
+                        <%--<span><input type="radio" name="category" value="2" />二批本科</span>--%>
+                        <%--<span><input type="radio" name="category" value="4" />高职(专科)</span>--%>
+                    <%--</li>--%>
+                <%--</ul>--%>
+            <%--</div>--%>
+
+            <%--<div class="indent mt10">--%>
+                <%--<span class="ident-code">--%>
+                    <%--<label>验证码</label>--%>
+                    <%--<input type="text" placeholder="请输入分数"/>--%>
+                <%--</span>--%>
+                <%--<a>--%>
+                    <%--<img src="/static/dist/before/images/bottom-banner.jpg" />--%>
+                <%--</a>--%>
+            <%--</div>--%>
+
+            <%--<div class="submit mt20">--%>
+                <%--<input type="submit" id="evaluating-sub" value="提交测评"/>--%>
+            <%--</div>--%>
+
+        <%--</div>--%>
+    <%--</div>--%>
+<%--</div>--%>
+
+
+
 
 
 <div class="main-volunteer-box" style="display: none;">
@@ -298,20 +353,20 @@
 
 
 
-<div class="tansLayer" style="display: none;"></div>
-<div class="volunteer-flow3-layer" style="display: none;">
-    <div class="top-close">
-        <a href="" class="close-btn">x</a>
-    </div>
-    <div class="tips">
-        <strong>温馨提示：</strong>
-        <p>依据平行志愿规则，系统推荐遵循分数最大化，为您推荐一下A、B、C、D四挡院校；考生可根据个性化需求调整院校顺位；</p>
-    </div>
-    <div class="volunteer-flow3-body">
+<%--<div class="tansLayer" style="display: none;"></div>--%>
+<%--<div class="volunteer-flow3-layer" style="display: none;">--%>
+    <%--<div class="top-close">--%>
+        <%--<a href="" class="close-btn">x</a>--%>
+    <%--</div>--%>
+    <%--<div class="tips">--%>
+        <%--<strong>温馨提示：</strong>--%>
+        <%--<p>依据平行志愿规则，系统推荐遵循分数最大化，为您推荐一下A、B、C、D四挡院校；考生可根据个性化需求调整院校顺位；</p>--%>
+    <%--</div>--%>
+    <%--<div class="volunteer-flow3-body">--%>
 
-    </div>
+    <%--</div>--%>
 
-</div>
+<%--</div>--%>
 
 
 

@@ -73,6 +73,7 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+
 	<servlet-mapping>
 		<servlet-name>springmvc</servlet-name>
 		<url-pattern>*.do</url-pattern>
@@ -84,7 +85,7 @@
 	
 	<context-param>
         <param-name>webAppRootKey</param-name>
-        <param-value>op-war</param-value>
+        <param-value>gk-war</param-value>
     </context-param>
     
 	<welcome-file-list>
