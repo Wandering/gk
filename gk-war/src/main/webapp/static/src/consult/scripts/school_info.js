@@ -98,7 +98,7 @@ define(function(require) {
             if ('全部' === universityBatchText) {
                 universityBatchText = '';
             }
-            var universityFeature = $('#universityFeature a.active').attr('id');
+            var universityFeature = $('#universityFeature a.active').attr('id') || 0;
             var universityFeatureText = $('#universityFeature a.active').text();
             if ('全部' === universityFeatureText) {
                 universityFeatureText = '';
