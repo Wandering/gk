@@ -2,7 +2,7 @@ package cn.thinkjoy.gk.controller.before;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.pojo.JsonPojo;
+import cn.thinkjoy.gk.controller.before.pojo.JsonPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
 import com.jlusoft.microschool.core.utils.JsonMapper;
