@@ -102,8 +102,7 @@ define(function (require) {
 
         $('.toggle-nav div.btn').on('click', function() {
             if (!$(this).hasClass('btn-selected')) {
-                $(this).removeClass('btn-unselected').addClass('btn-selected');
-                $(this).siblings().removeClass('btn-selected').addClass('btn-unselected');
+                $(this).addClass('btn-selected').siblings().removeClass('btn-selected');
             }
         });
     });
