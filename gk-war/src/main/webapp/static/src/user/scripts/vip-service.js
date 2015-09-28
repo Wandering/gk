@@ -67,14 +67,13 @@ define(function (require) {
     });
 
     $('#accountBtn').on('click',function(){
-
         $.ajax({
             url:'/vip/upgradeVipByCard.do',
             type: 'POST',
             dataType: 'JSON',
             data:{
-                "cardNumber": 111111,
-                "password": 222222
+                "cardNumber": 333333,
+                "password": 444444
             },
             success: function (res) {
                 console.log(res)
