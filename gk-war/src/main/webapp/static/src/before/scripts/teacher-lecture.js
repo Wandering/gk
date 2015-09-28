@@ -10,7 +10,7 @@ define(function (require) {
         $listMsgItem: $('#list-msg-item'),
         $nextPage: $('#nextPage')
     };
-    var pageSize = 8;
+    var pageSize = 4;
     var searchValUrl = window.location.search;
     var num = searchValUrl.indexOf("?");
     var searchVal = searchValUrl.substr(num+19);
@@ -47,16 +47,15 @@ define(function (require) {
     getSubjectList();
 
     var searchVals = $('#searchVal').val();
-    function getList(pageNo, pageSize,searchVals) {
-
+    function getList(pageNo, pageSize,sortType,subjectId,searchVals) {
         $.getJSON(
             "/before/video/getVideoList.do",
             {
-                pageNo: 0,
-                pageSize: 4,
+                pageNo: pageNo,
+                pageSize: pageSize,
                 classifyType:1,
-                sortType:1,
-                subjectId:'',
+                sortType:sortType,
+                subjectId:subjectId,
                 teacherSearchName:searchVals
             },
             function (result) {
@@ -72,7 +71,7 @@ define(function (require) {
                     }
 
                     for (var i = 0; i < dataJson.length; i++) {
-                        var subjectName = dataJson[i].subjectName,
+                        var subjectName = dataJson[i].title,
                             teacherName = dataJson[i].teacherName,
                             hit = dataJson[i].hit,
                             subcontent = dataJson[i].subcontent;
@@ -84,9 +83,9 @@ define(function (require) {
                         }
                         var listMsgHtml = ''
                             +'<li class="item">'
-                            +'<div class="img"><img src="'+ frontCover +'" alt=""/></div>'
+                            +'<div class="img"><img src="'+ videoUrl +'" alt=""/></div>'
                             +'<div class="info">'
-                            +'<span class="fl">学科名称:'+ subjectName +'</span>'
+                            +'<span class="fl">课程名称:'+ subjectName +'</span>'
                             +'<span class="fr">主讲专家:'+ teacherName +'</span>'
                             +'</div>'
                             +'<div class="num">'
@@ -102,7 +101,7 @@ define(function (require) {
                     pageNo++;
                     UI.$listMsgItem.attr('pageNo', pageNo);
                     if (dataJson.length < pageSize) {
-                        UI.$nextPage.removeClass('btn-primary').text("没有更多消息了")
+                        UI.$nextPage.hide();
                     }
                 }
             });
@@ -110,8 +109,31 @@ define(function (require) {
 
     UI.$nextPage.on('click', function () {
         var pageNo = UI.$listMsgItem.attr('pageNo');
-        getList(pageNo, pageSize,searchVal);
+        getList(pageNo, pageSize,1,"",searchVal);
     }).click();
+
+
+    // 科目筛选
+    $(".subjectList").change(function(){
+        var subjectId = $(this).find("option:selected").attr('value');
+        var sortType = $('.subject-fun').find("option:selected").attr('value');
+        UI.$listMsgItem.attr('pageNo',0);
+        var pageNo = UI.$listMsgItem.attr('pageNo');
+        UI.$listMsgItem.html('');
+        getList(pageNo, pageSize,sortType,subjectId,searchVal);
+    });
+
+
+    // 播放类型
+    $(".subject-fun").change(function(){
+        var sortType = $(this).find("option:selected").attr('value');
+        var subjectId = $('.subjectList').find("option:selected").attr('value');
+        UI.$listMsgItem.attr('pageNo',0);
+        var pageNo = UI.$listMsgItem.attr('pageNo');
+        UI.$listMsgItem.html('');
+        getList(pageNo, pageSize,sortType,subjectId,searchVal);
+    });
+
 
 
 
