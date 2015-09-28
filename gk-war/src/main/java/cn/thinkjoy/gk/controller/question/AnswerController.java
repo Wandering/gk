@@ -79,7 +79,7 @@ public class AnswerController extends BaseController {
 
         Long userId = account.getId();
 
-        List<QuestionDetailBean> questionDetailBeans = answerService.findAnswerPage(word,userId, startSize, endSize);
+        List<QuestionDetailBean> questionDetailBeans = answerService.findAnswerPage(word,isAnswer,userId, startSize, endSize);
 
         List<QuestionAnswerBean> questionAnswerBeans = new ArrayList<QuestionAnswerBean>();
 
