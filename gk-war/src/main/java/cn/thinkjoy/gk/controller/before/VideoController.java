@@ -5,6 +5,7 @@ import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.domain.VideoCourse;
 import cn.thinkjoy.gk.domain.VideoSection;
 import cn.thinkjoy.gk.pojo.SubjectPojo;
+import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.pojo.VideoCoursePojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.*;
@@ -48,10 +49,11 @@ public class VideoController extends BaseController {
         String classifyType = request.getParameter("classifyType");
         String subjectId = request.getParameter("subjectId");
         String sortType = HttpUtil.getParameter(request,"sortType","1");//默认按照创时间倒序排序
+        String searchName = request.getParameter("searchName");
         if(StringUtils.isBlank(classifyType)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
-        List<VideoCoursePojo> videoCoursePojos = iexVideoCourseService.getVideoListByParams(subjectId == null ? null : Long.valueOf(subjectId), Integer.valueOf(classifyType), Integer.parseInt(sortType), Integer.valueOf(pageNo) * Integer.valueOf(pageSize), Integer.valueOf(pageSize));
+        List<VideoCoursePojo> videoCoursePojos = iexVideoCourseService.getVideoListByParams(subjectId == null ? null : Long.valueOf(subjectId), Integer.valueOf(classifyType), Integer.parseInt(sortType),searchName, Integer.valueOf(pageNo) * Integer.valueOf(pageSize), Integer.valueOf(pageSize));
         if(videoCoursePojos == null || videoCoursePojos.size() == 0){
             throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
         }
@@ -80,6 +82,7 @@ public class VideoController extends BaseController {
     @ResponseBody
     public List<VideoSection> getVideoSectionList(){
         String courseId = request.getParameter("courseId");
+        UserAccountPojo user = getUserAccountPojo();
         if(StringUtils.isBlank(courseId)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
@@ -89,7 +92,15 @@ public class VideoController extends BaseController {
         if(videoSections == null  || videoSections.size() == 0){
             throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
         }
-
+        for(VideoSection videoSection:videoSections){
+            if(user.getVipStatus() == 0){
+                if(videoSection.getSectionSort() == 1){
+                    videoSection.setIsAccept(1);
+                }
+            }else {
+                videoSection.setIsAccept(1);
+            }
+        }
         return videoSections;
     }
 

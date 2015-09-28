@@ -23,6 +23,9 @@
         <if test="subjectId != null">
             AND a.subjectId = #{subjectId}
         </if>
+        <if test="searchName != null">
+            AND a.title LIKE  CONCAT('%', #{searchName} , '%')
+        </if>
         <if test="sortType == 1">
           ORDER BY a.createDate DESC
         </if>

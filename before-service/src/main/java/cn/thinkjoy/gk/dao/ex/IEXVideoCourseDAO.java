@@ -13,6 +13,6 @@ public interface IEXVideoCourseDAO {
      * 根据分类和科目查询课程
      * @return
      */
-    List<VideoCoursePojo> getVideoListByParams(@Param("subjectId")Long subjectId,@Param("classifyType")Integer classifyType,@Param("sortType") Integer sortType,@Param("offset")Integer offset,@Param("rows")Integer rows);
+    List<VideoCoursePojo> getVideoListByParams(@Param("subjectId")Long subjectId,@Param("classifyType")Integer classifyType,@Param("sortType") Integer sortType,@Param("searchName")String searchName,@Param("offset")Integer offset,@Param("rows")Integer rows);
 
 }
