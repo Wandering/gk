@@ -74,16 +74,9 @@ public class QuestionController extends BaseController {
             endSize = 10;
         }
 
+//        UserAccountPojo userAccountBean = getUserAccountPojo();
 
-        UserAccountPojo userAccountBean = null;
-
-        try{
-            userAccountBean = getUserAccountPojo();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-        Integer freeStatus = 0;
+        Integer freeStatus = null;
 
 //        if(userAccountBean.getVipStatus()!=null&&userAccountBean.getVipStatus()==1){
 //            freeStatus = 1;
@@ -100,7 +93,7 @@ public class QuestionController extends BaseController {
 //            }
 //        }
 
-        List<QuestionDetailBean> questionDetailBeans = questionService.findQuestionAnswerPage(keyword,freeStatus, 1, null, 7, startSize, endSize);
+        List<QuestionDetailBean> questionDetailBeans = questionService.findQuestionAnswerPage(keyword,freeStatus, null,1 , 7, startSize, endSize);
 
         List<QuestionAnswerBean> questionAnswerBeans = new ArrayList<QuestionAnswerBean>();
 
@@ -211,19 +204,13 @@ public class QuestionController extends BaseController {
         }
 
 
-        UserAccountPojo userAccountBean = null;
+//        UserAccountPojo userAccountBean = getUserAccountPojo();
 
-        try{
-            userAccountBean = getUserAccountPojo();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        Integer freeStatus = null;
 
-        Integer freeStatus = 0;
-
-        if(userAccountBean.getVipStatus()!=null&&userAccountBean.getVipStatus()==1){
-            freeStatus = 1;
-        }
+//        if(userAccountBean.getVipStatus()!=null&&userAccountBean.getVipStatus()==1){
+//            freeStatus = 1;
+//        }
 
 //        if(userCredentials.getUserType()==1){
 //            LOGGER.info("当前用户:"+userId+"为教师");
@@ -236,7 +223,7 @@ public class QuestionController extends BaseController {
 //            }
 //        }
 
-        List<QuestionDetailBean> questionDetailBeans = questionService.findHotQuestionAnswerPage(freeStatus, 1, null, 7, startSize, endSize);
+        List<QuestionDetailBean> questionDetailBeans = questionService.findHotQuestionAnswerPage(freeStatus, null,1 , 7, startSize, endSize);
 
         List<QuestionAnswerBean> questionAnswerBeans = new ArrayList<QuestionAnswerBean>();
 
@@ -415,22 +402,20 @@ public class QuestionController extends BaseController {
 
         UserAccountPojo account = getUserAccountPojo();
 
-        Integer vipStatus = account.getVipStatus();
+//        Integer vipStatus = account.getVipStatus();
 
         Long userId = account.getId();
 
 
         long currentTime = System.currentTimeMillis();
 
-
-
         Integer freeStatus = 0;
 
-        LOGGER.info("vip状态:"+vipStatus);
-        if (vipStatus==1) {
-            LOGGER.info("当前用户:"+userId+"为VIP");
-            freeStatus = 1;
-        }
+//        LOGGER.info("vip状态:"+vipStatus);
+//        if (vipStatus==1) {
+//            LOGGER.info("当前用户:"+userId+"为VIP");
+//            freeStatus = 1;
+//        }
 
         String questionHtml = sendQuestionQuery.getQuestion();
 
@@ -492,9 +477,9 @@ public class QuestionController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/updateQuestion", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateBrowseNum", method = RequestMethod.POST)
     @ResponseBody
-    public boolean updateQuestion(Question question) {
+    public boolean updateBrowseNum(@RequestParam(value="id",required=false) Long id) {
 
 //        LOGGER.info("用户［" + userId + "］获取热门问题列表");
 //        if (null == userId || userId == 0) {
@@ -509,7 +494,7 @@ public class QuestionController extends BaseController {
 
         boolean flag = false;
         try {
-            questionService.update(question);
+            questionService.updateBrowseNum(id);
             flag = true;
         }catch(Exception e){
             throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
