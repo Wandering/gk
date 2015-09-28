@@ -17,9 +17,9 @@ import java.util.Map;
 @Controller
 @Scope("prototype")
 @RequestMapping(value="/question")
-public class QuestionController extends BaseController {
+public class AppraisalController extends BaseController {
 
-    private static final Logger LOGGER= LoggerFactory.getLogger(QuestionController.class);
+    private static final Logger LOGGER= LoggerFactory.getLogger(AppraisalController.class);
 
     public static void main(String[] args){
 
@@ -29,14 +29,12 @@ public class QuestionController extends BaseController {
 
         appraisalBean.setTesterNm("test");
 
-//        System.out.println();
-
         Map<String,Object> params = new HashMap<>();
 
         params.put("value",JSON.toJSONString(appraisalBean));
 
         try {
-            System.out.println(HttpRequestUtil.doHttpPost("http://openapi.lstest.com/gkzyv11/", params).split("\\"));
+            System.out.println(HttpRequestUtil.doHttpPost("http://openapi.lstest.com/gkzyv11/", params).replace("\\",""));
         } catch (Exception e) {
             e.printStackTrace();
         }
