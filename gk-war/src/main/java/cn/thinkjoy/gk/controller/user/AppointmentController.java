@@ -81,10 +81,10 @@ public class AppointmentController extends BaseController {
 	@RequestMapping(value = "/getAppointmentDetail",method = RequestMethod.GET)
 	@ResponseBody
 	public AppointmentPojo getAppointmentDetail(@RequestParam("id") long id) {
-		UserAccountPojo userAccountPojo=super.getUserAccountPojo();
-		if(null==userAccountPojo ||  null==userAccountPojo.getId()){
-			throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
-		}
+//		UserAccountPojo userAccountPojo=super.getUserAccountPojo();
+//		if(null==userAccountPojo ||  null==userAccountPojo.getId()){
+//			throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
+//		}
 
 		Appointment appointment=(Appointment)appointmentService.findOne("id",id);
 		if(null!=appointment){
