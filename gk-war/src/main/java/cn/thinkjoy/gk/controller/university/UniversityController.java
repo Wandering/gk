@@ -169,6 +169,7 @@ public class UniversityController extends BaseController {
         queryParams.put("feature",universityFeatureParam);
         queryParams.put("start",(universityQuery.getPageNo()-1)*universityQuery.getPageSize());
         queryParams.put("end",universityQuery.getPageSize());
+        queryParams.put("searchName",universityQuery.getSearchName());
         UniversityResponseDto universityResponseDto=new UniversityResponseDto();
         List<UniversityDto> universityDtos=new ArrayList<UniversityDto>();
         universityDtos=iUniversityService.getUniversityList(queryParams);
