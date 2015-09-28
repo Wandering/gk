@@ -56,6 +56,11 @@ define(function (require) {
         var id = getUrLinKey('id');
         getArticleDetile(id);
         getRightInfo();
+
+        $('#search').on('click', function(e) {
+            var val = $('#keywords').val();
+            window.location.href = '/consult/gk_hot.jsp?val=' + val;
+        });
     });
 });
 

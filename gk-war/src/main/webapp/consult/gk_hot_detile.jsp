@@ -15,8 +15,8 @@
 
         <div class="search-content ta mt20">
                  <span>
-                     <input type="text" placeholder="请输入搜索关键字"/>
-                     <input type="button" value="搜索"/>
+                     <input type="text" placeholder="请输入搜索关键字" id="keywords"/>
+                     <input type="button" value="搜索" id="search"/>
                      <a target="_blank" href="/question/ask.jsp">我要提问</a>
                 </span>
         </div>

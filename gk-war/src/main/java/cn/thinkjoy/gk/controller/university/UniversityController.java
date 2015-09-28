@@ -111,7 +111,7 @@ public class UniversityController extends BaseController {
         Page<UniversityDto> page=new Page<>();
         Map<String,Object> map=new HashMap<>();
 
-        //构造院校批次参数
+        //构造院校批次参数 一批本科
         Integer universityBatchId=universityQuery.getUniversityBatchId();
         List<Integer> universityBatchParam=new ArrayList<>();//构造出来的参数
         if(null==universityBatchId ||universityBatchId.intValue()==0){
@@ -126,12 +126,12 @@ public class UniversityController extends BaseController {
             }
         }
 
-        //构造院校特征参数
+        //构造院校特征参数 985,211
         List<Integer> universityFeatureParam=new ArrayList<>();//构造出来的参数
         String universityFeature=universityQuery.getUniversityFeatureId();
         String[] strArray=universityFeature.split(",");
         if("0".equals(universityFeature)||null==strArray ){
-            universityBatchParam=null;
+            universityFeatureParam=null;
         }else{
             Integer universityFeatureId=0;
             for(String inString:strArray){
@@ -167,7 +167,7 @@ public class UniversityController extends BaseController {
         queryParams.put("universtiyType",universityQuery.getUniversityTypeName());
         queryParams.put("batch",universityBatchParam);
         queryParams.put("feature",universityFeatureParam);
-        queryParams.put("start",universityQuery.getPageNo()*universityQuery.getPageSize());
+        queryParams.put("start",(universityQuery.getPageNo()-1)*universityQuery.getPageSize());
         queryParams.put("end",universityQuery.getPageSize());
         UniversityResponseDto universityResponseDto=new UniversityResponseDto();
         List<UniversityDto> universityDtos=new ArrayList<UniversityDto>();
