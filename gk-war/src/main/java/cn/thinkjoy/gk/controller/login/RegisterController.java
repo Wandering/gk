@@ -160,16 +160,14 @@ public class RegisterController extends BaseController {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
             }
             UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
-            if (type==0){
-                if (userAccountBean!=null){
+            if (userAccountBean!=null) {
+                if (type == 0) {
                     throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号已经注册!");
-                }
-            }else if (type==1){
-                if (userAccountBean==null){
+                } else if (type == 1) {
                     throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号尚未注册!");
+                } else {
+                    throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "类型错误!");
                 }
-            }else {
-                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "类型错误!");
             }
         }catch (Exception e){
             throw e;
