@@ -115,13 +115,13 @@ define(function(require) {
         },
         getSearch: function() {
             var keyword = $('#keywords').val();
-            if (keyword) {
+            //if (keyword) {
                 $('#tabs_list').hide();
                 this.startSize = 0;
                 this.endSize = 10;
                 var url = '/question/newQuestion.do?keyword=' + keyword + '&';
                 this.getData(url);
-            }
+            //}
         },
         addEventForMore: function() {
             this.startSize += 10;

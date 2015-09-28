@@ -663,6 +663,9 @@ a.next-btn:hover {
   .select-option .lable {
     color: #9b9b9b; }
 
+#universityFeature a {
+  margin: 0 5px; }
+
 .school-table {
   margin-bottom: 20px; }
   .school-table table {
