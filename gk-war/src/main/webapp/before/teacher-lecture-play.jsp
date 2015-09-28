@@ -17,9 +17,8 @@
                     <param name="allowFullScreen" value="true">
                     <param name="IsAutoPlay" value="0" />
                     <param name="BufferTime" value="3" />
-                    <param name="IsShowTime" value="1" />
-                    <param name="FlashVars" value="">
-                    <embed src="/static/src/before/scripts/flvplayer.swf" allowfullscreen="true" flashvars="" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="760" height="428"></embed>
+                    <param name="FlashVars" value="/static/src/before/images/1234.flv">
+                    <embed src="/static/src/before/scripts/flvplayer.swf" allowfullscreen="true" flashvars="/static/src/before/images/1234.flv" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="760" height="428"></embed>
                 </object>
             </div>
     </div>

@@ -438,7 +438,8 @@ input, textarea {
       position: absolute;
       background-color: #353535;
       top: 50px;
-      right: -18px; }
+      right: 0;
+      overflow: hidden; }
       .header .user-info-list .menu li a {
         text-align: center;
         line-height: 37px;
@@ -1094,7 +1095,8 @@ input, textarea {
       position: absolute;
       background-color: #353535;
       top: 50px;
-      right: -18px; }
+      right: 0;
+      overflow: hidden; }
       .header .user-info-list .menu li a {
         text-align: center;
         line-height: 37px;

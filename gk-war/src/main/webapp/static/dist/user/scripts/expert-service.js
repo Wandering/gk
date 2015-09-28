@@ -47,17 +47,24 @@ define(function (require) {
             }
         })
     }
-    getList(1, 3);
 
+    getList(1, 3);
     //搜索
+    var search = $('#search');
+    search.keydown(function () {
+        var key_search = search.val();
+        if (event.keyCode == 13) {
+            getList(1, 3, key_search);
+        }
+    });
     $('#btn-search').click(function () {
         var key_search = $('#search').val();
         getList(1, 3, key_search);
     });
     //预定详情
-    $('#go-detail').click(function(e){
+    $('#go-detail').click(function (e) {
         e.stopPropagation();
         var id = $('#title').attr('data-id');
-        window.location.href = 'http://'+window.location.host+'/user/expert-service-detail.jsp?id='+id;
+        window.location.href = 'http://' + window.location.host + '/user/expert-service-detail.jsp?id=' + id;
     })
 });
