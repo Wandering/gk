@@ -43,6 +43,7 @@ define(function(require) {
                 var parentId = $(this).parent().attr('id');
                 if ('universityFeature' === parentId) {
                     $(this).toggleClass('active');
+                    that.getSchoolList(1);
                 } else {
                     if (!$(this).hasClass('active')) {
                         $(this).addClass('active').siblings().removeClass('active');
@@ -98,11 +99,17 @@ define(function(require) {
             if ('全部' === universityBatchText) {
                 universityBatchText = '';
             }
-            var universityFeature = $('#universityFeature a.active').attr('id') || 0;
-            var universityFeatureText = $('#universityFeature a.active').text();
-            if ('全部' === universityFeatureText) {
-                universityFeatureText = '';
-            }
+
+            var universityFeatureId = [];
+            $.each($('#universityFeature a.active'), function(i, value) {
+                universityFeatureId.push($(value).attr('id'));
+            });
+            var universityFeature = universityFeatureId.join(',') || 0;
+            var universityFeatureValue = [];
+            $.each($('#universityFeature a.active'), function(i, value) {
+                universityFeatureValue.push($(value).text());
+            });
+            var universityFeatureText = universityFeatureValue.join(',');
             var search = $('#school_serach').val();
             var that = this;
 

@@ -21,7 +21,7 @@ define(function (require) {
         render: function(data, pageNO) {
             var html = [];
             for (var i = 0, len = data.length; i < len; i++) {
-                html.push('<a href="/consult/gk_hot_detile.jsp?id=' + data[i].id + '"><div class="detile-content mt20">');
+                html.push('<a href="/consult/gk_hot_detile.jsp?method=hot&id=' + data[i].id + '"><div class="detile-content mt20">');
                 html.push('<div class="detile-header">');
                 var num = i + 1 + 4 * (pageNO - 1);
                 html.push('<span class="order-number">' + num + '</span>');
