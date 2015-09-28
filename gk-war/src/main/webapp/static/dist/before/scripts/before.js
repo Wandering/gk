@@ -22,6 +22,7 @@ define(function (require) {
     });
 
 
+    var localhosts = 'http://www.gkzy114.com';
 
     // 获取科目
     function getSubjectList() {
@@ -61,6 +62,7 @@ define(function (require) {
                     $(obj).append('<p class="noContent">' + result.msg + '</p>').fadeIn(500);
                 }
                 if (result.rtnCode == "0000000") {
+
                     var dataJson = result.bizData;
                     for (var i = 0; i < dataJson.length; i++) {
                         var subjectName = dataJson[i].subjectName,
@@ -73,7 +75,7 @@ define(function (require) {
                         if (dataJson[i].frontCover == null || dataJson[i].frontCover == "") {
                             videoUrl = '/static/dist/common/images/video-default.png';
                         } else {
-                            videoUrl = dataJson[i].frontCover;
+                            videoUrl = localhosts+dataJson[i].frontCover;
                         }
                         var listMsgHtml = ''
                             + '<li class="item">'
