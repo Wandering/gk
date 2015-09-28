@@ -129,10 +129,11 @@
 .main-menu li > ul {
   display: none;
   position: absolute;
-  top:40px;
-  border-bottom: 1px solid #51a9e1;
+  top:50px;
+  //border-bottom: 1px solid #51a9e1;
   z-index: 444;
   white-space:nowrap;
+  background: $mainColor;
 }
 
 .main-menu li:hover > ul{
@@ -142,12 +143,14 @@
 .main-menu li > ul li{
   display: inline-block;
   color: #fff;
-  padding: 0 10px;
   white-space:nowrap;
+  a{
+    color: #fff;
+  }
 }
 
 .main-menu li > ul li:hover {
-  border-bottom: 3px solid #fff;
+  //border-bottom: 3px solid #fff;
   cursor: pointer;
 }
 

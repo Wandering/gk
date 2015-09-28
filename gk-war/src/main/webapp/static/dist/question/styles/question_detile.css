@@ -463,10 +463,10 @@ input, textarea {
 .main-menu li > ul {
   display: none;
   position: absolute;
-  top: 40px;
-  border-bottom: 1px solid #51a9e1;
+  top: 50px;
   z-index: 444;
-  white-space: nowrap; }
+  white-space: nowrap;
+  background: #353535; }
 
 .main-menu li:hover > ul {
   display: block; }
@@ -474,11 +474,11 @@ input, textarea {
 .main-menu li > ul li {
   display: inline-block;
   color: #fff;
-  padding: 0 10px;
   white-space: nowrap; }
+  .main-menu li > ul li a {
+    color: #fff; }
 
 .main-menu li > ul li:hover {
-  border-bottom: 3px solid #fff;
   cursor: pointer; }
 
 .footer .bottom-nav {
@@ -1147,10 +1147,10 @@ input, textarea {
 .main-menu li > ul {
   display: none;
   position: absolute;
-  top: 40px;
-  border-bottom: 1px solid #51a9e1;
+  top: 50px;
   z-index: 444;
-  white-space: nowrap; }
+  white-space: nowrap;
+  background: #353535; }
 
 .main-menu li:hover > ul {
   display: block; }
@@ -1158,11 +1158,11 @@ input, textarea {
 .main-menu li > ul li {
   display: inline-block;
   color: #fff;
-  padding: 0 10px;
   white-space: nowrap; }
+  .main-menu li > ul li a {
+    color: #fff; }
 
 .main-menu li > ul li:hover {
-  border-bottom: 3px solid #fff;
   cursor: pointer; }
 
 .footer .bottom-nav {
