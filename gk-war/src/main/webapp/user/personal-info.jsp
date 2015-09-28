@@ -69,8 +69,11 @@
 
 </div>
 <%@include file="/common/footer.jsp"%>
-<%--<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>--%>
+<%--<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>--%>
 <%--<script src="/static/bower_components/uploadify/jquery.uploadify.js"/>--%>
+<script type="text/javascript">
+    alert(1);
+</script>
 <script>
     seajs.use("/static/src/user/scripts/personal-info");
 </script>
