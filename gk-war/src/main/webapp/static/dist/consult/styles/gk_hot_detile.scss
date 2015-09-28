@@ -83,7 +83,6 @@ section:last-child {
     font-size: 30px;
     color: #333;
     text-align: center;
-    height: 40px;
     line-height: 1.8;
     padding: 10px 0;
     border-bottom: 1px solid #F1F1F1;
@@ -99,7 +98,10 @@ section:last-child {
 
   article {
     width: 100%;
-    text-align: center;
+
+    div{
+      line-height: 1.8;
+    }
 
     p{
       width: 100%;

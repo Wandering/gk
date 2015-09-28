@@ -12,15 +12,26 @@ define(function (require) {
         return "";
     }
 
+    var method = getUrLinKey('method');
+
     function getArticleDetile(id) {
-        $.get('/volunteerSchool/article.do?id=' + id, function(data) {
+        var url = '/volunteerSchool/article.do';
+        if ('hot' === method) {
+            url = '/gkinformation/getInformationContentById.do';
+        }
+        $.get(url + '?id=' + id, function(data) {
             if ('0000000' === data.rtnCode) {
                 if (data.bizData) {
                     var html = [];
-                    html.push('<h1>' + data.bizData.title + '</h1>');
+                    html.push('<h1>' + (data.bizData.title || data.bizData.hotInformation) + '</h1>');
                     html.push('<h6>' + new Date(data.bizData.lastModDate).Format('yyyy-MM-dd hh:mm:ss') + '</h6>');
-                    html.push('<article>' + data.bizData.content + '</article>');
+                    html.push('<article>' + (data.bizData.content || data.bizData.informationContent) + '</article>');
                     $('#section_article').html(html.join(''));
+                    $.each($('#section_article img'), function(i, value) {
+                        var src = $(value).attr('src');
+                        src = 'http://www.gkzy114.com' + src;
+                        $(value).attr('src', src);
+                    })
                 } else {
                     $('#section_article').html('<h6>暂无信息！</h6>');
                 }
@@ -31,6 +42,9 @@ define(function (require) {
     }
 
     function getRightInfo() {
+        if ('hot' === method) {
+            return;
+        }
         var code = getUrLinKey('code');
         if (code) {
             $.get('/volunteerSchool/ranks.do?cateId=' + code, function(data) {

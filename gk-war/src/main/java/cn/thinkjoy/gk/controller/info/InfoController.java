@@ -84,7 +84,7 @@ public class InfoController extends BaseController {
             userInfo.setCountyId(countyId);
             userInfo.setSchoolName(schoolName);
             userInfo.setSex(sex);
-            userInfo.setBirthdayDate(birthdayDate);
+            userInfo.setBirthdayDate(birthdayDate*1000);
             userInfo.setSubjectType(subjectType);
             userInfo.setMail(mail);
             userInfo.setQq(qq);

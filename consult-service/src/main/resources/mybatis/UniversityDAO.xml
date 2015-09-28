@@ -1057,31 +1057,34 @@ selectList
 
 
     <select id="getUniversityList" parameterType="java.util.Map" resultType="UniversityDto">
-          select code,name,subjection,educationLevel as educatLevel,type as universityType,property,address,contactPhone,provinceName,url from gk_university where 1=1
+          select a.code,a.name,a.subjection,a.educationLevel as educatLevel,a.type as universityType, b.name as property,a.address,a.contactPhone,a.provinceName,a.url from gk_university a
+        left join gk_university_dict  b on b.type='FEATURE' and b.dictId=a.property
+
+        where 1=1
             <if test="universityQuery.province!=null and universityQuery.province!='' ">
-                and provinceName = #{universityQuery.province}
+                and a.provinceName = #{universityQuery.province}
             </if>
 
             <if test="universityQuery.universtiyType!=null and universityQuery.universtiyType!=''">
-                and type=#{universityQuery.universtiyType}
+                and a.type=#{universityQuery.universtiyType}
             </if>
 
             <if test="universityQuery.batch!=null and universityQuery.batch!=''">
-                and batchType in
+                and a.batchType in
                 <foreach collection="universityQuery.batch" item="item" index="index" open="(" separator="," close=")">
                     #{item}
                 </foreach>
              </if>
 
             <if test="universityQuery.feature!=null and universityQuery.feature!=''">
-                and property in
+                and a.property in
 
                 <foreach collection="universityQuery.feature" item="item" index="index" open="(" separator="," close=")">
                     #{item}
                 </foreach>
             </if>
            <if test="universityQuery.searchName!=null and universityQuery.searchName!=''">
-                and name like concat('%',#{universityQuery.searchName},'%')
+                and a.name like concat('%',#{universityQuery.searchName},'%')
            </if>
           limit #{universityQuery.start},#{universityQuery.end}
       </select>
@@ -1119,8 +1122,8 @@ selectList
 
 
     <select id="getUniversityDetail" parameterType="java.lang.String" resultType="UniversityDto">
-        select code,name,subjection,educatLevel,type as universityType,property,address,contactPhone,
-       '' as universityImage,provinceName,url from gk_university where 1=1 and code=#{code}
+        select code,name,subjection,educationLevel as educatLevel,type as universityType,property,address,contactPhone,
+       '' as universityImage,provinceName,url from gk_university where 1=1 and code=#{code} limit 0,1
     </select>
 
 
@@ -1130,7 +1133,7 @@ selectList
           wsAverageRank as averageRank
          from gk_enroll_report where universityCode=#{code} and year=#{year}
 
-        union on
+        union all
         select '理工' as subjectName, lgPlanNumber as planNumber,lgEnrollNumber as enrollNumber,lgHighestScore as highestScore,
         lgHighestRank as highestRank,lgLowestScore as lowestScore,lgLowestRank as lowestRank,lgAverageScore as averageScore,
           lgAverageRank as averageRank
@@ -1145,5 +1148,16 @@ selectList
     </select>
 
 
+
+    <select id="getUniversityEnrollIntro" parameterType="java.lang.String" resultType="java.lang.String">
+        select  entranceIntro from gk_university where 1=1
+        and code=#{code} limit 0,1
+    </select>
+
+
+    <select id="getUniversityIntro" parameterType="java.lang.String" resultType="java.lang.String">
+        select universityIntro from gk_university where 1=1
+        and code=#{code} limit 0,1
+    </select>
 </mapper>
 

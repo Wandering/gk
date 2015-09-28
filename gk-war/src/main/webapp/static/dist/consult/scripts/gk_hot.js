@@ -21,16 +21,16 @@ define(function (require) {
         render: function(data, pageNO) {
             var html = [];
             for (var i = 0, len = data.length; i < len; i++) {
-                html.push('<a href="/consult/gk_hot_detile.jsp?id=' + data[i].id + '"><div class="detile-content mt20">');
+                html.push('<a href="/consult/gk_hot_detile.jsp?method=hot&id=' + data[i].id + '"><div class="detile-content mt20">');
                 html.push('<div class="detile-header">');
                 var num = i + 1 + 4 * (pageNO - 1);
                 html.push('<span class="order-number">' + num + '</span>');
                 html.push('<span class="detile-title">' + data[i].hotInformation + '</span>');
-                var date = new Date(data[i].createDate).Format('yyyy-MM-dd hh:mm');
+                var date = new Date(data[i].lastModDate).Format('yyyy-MM-dd hh:mm');
                 html.push('<span class="fr">上传时间：' + date + '</span>');
                 html.push('</div>');
                 html.push('<div class="detile-info mt20">');
-                html.push(data[i].informationContent);
+                html.push(data[i].informationSubContent);
                 html.push('</div>');
                 html.push('</div></a>');
             }

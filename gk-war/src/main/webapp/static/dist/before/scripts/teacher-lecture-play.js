@@ -7,6 +7,9 @@ define(function (require) {
     var courseId = detailsUrl.substr(num + 10);
     (classifyType == 1)?(window.document.title = "名师学堂详情"):(window.document.title = "高考心理详情");
 
+    var localhosts = 'http://www.gkzy114.com';
+
+
     // 获取章节列表
     function getList() {
         $.getJSON(
@@ -37,8 +40,10 @@ define(function (require) {
     $('#episode-num').on('click', 'a', function () {
         $(this).addClass('active').siblings().removeClass('active');
         var fileurl = $(this).attr('fileurl');
-        $('#play-video').find('[name="FlashVars"]').attr('value',fileurl);
-        $('#play-video').find('embed').attr('flashvars',fileurl);
+        var videoUrl ='vcastr_file='+localhosts+fileurl;
+        console.log(videoUrl)
+        $('#play-video').find('[name="FlashVars"]').attr('value','vcastr_file=/static/src/before/images/01.flv');
+        $('#play-video').find('embed').attr('flashvars','vcastr_file=/static/src/before/images/01.flv');
     });
 
 

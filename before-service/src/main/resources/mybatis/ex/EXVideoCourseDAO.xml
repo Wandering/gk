@@ -27,7 +27,7 @@
             AND a.title LIKE  CONCAT('%', #{searchName} , '%')
         </if>
         <if test="sortType == 1">
-          ORDER BY a.createDate DESC
+            ORDER BY a.createDate DESC
         </if>
         <if test="sortType == 2">
             ORDER BY a.hit DESC

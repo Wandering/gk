@@ -390,6 +390,11 @@ input, textarea {
   line-height: 50px;
   width: 100%;
   background-color: #353535; }
+  .header.fix {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 888; }
   .header .logo {
     height: 40px;
     margin-top: 5px;
@@ -784,18 +789,12 @@ a.next-btn:hover {
 
 .detile-info {
   background-color: #f6f6f6;
-  padding: 20px;
+  padding: 10px;
   border: 1px solid #edecec;
   line-height: 1.8; }
-  .detile-info:before {
-    content: '';
-    width: 0;
-    height: 0;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    border-bottom: 20px solid #f6f6f6;
-    position: relative;
-    top: -56px; }
+  .detile-info p {
+    margin: 0;
+    line-height: 1.5; }
 
 /*热门资讯*/
 .hot-list {
