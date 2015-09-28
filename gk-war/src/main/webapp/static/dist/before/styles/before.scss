@@ -504,7 +504,6 @@ section:last-child {
       .school-input{
         background: url('../images/icon-02.png') no-repeat 12px center;
       }
-
     }
 
     .indent {
@@ -712,4 +711,26 @@ section:last-child {
 }
 .indent{
   clear: both;
+}
+
+.yztj-fl.eval-left{
+  border: none;
+}
+.yztj-fl.eval-left img{
+  width: 215px;
+  height: 215px;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+}
+.yztj-fl.eval-left strong{
+  width: 100%;
+  text-align: center;
+  display: block;
+  margin: 8px 0;
+}
+.yztj-fl.eval-left p{
+  width: 100%;
+  text-align: center;
+  display: block;
 }

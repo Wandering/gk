@@ -260,6 +260,4 @@ public class HttpRequestUtil {
             connection.disconnect();
         }
     }
-
-
 }
