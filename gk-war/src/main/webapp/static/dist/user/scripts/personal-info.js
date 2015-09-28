@@ -49,10 +49,10 @@ define(function (require) {
             }
             $('.avatar-img').attr('src', avatar);
             $('.avatar-box').show();
-            //$('.account-tel').text(personListData.account);
             $('.name').attr('value', personListData.name);
             $('.school').attr('value', personListData.schoolName);
             $('.birthdayDate').attr('value', getTime(personListData.birthdayDate));
+            //console.info(getTime(personListData.birthdayDate));
             $('.sex').attr('value', personListData.sex);
             $('.subject').attr('value', personListData.subjectType);
             $('.mail').attr('value', personListData.mail);
@@ -60,8 +60,8 @@ define(function (require) {
             if (personListData.sex == 1) {
                 $('#sex_m').attr('checked', true)
             }
-            if (personListData.subjectType == 1) {
-                $('#subject_w').attr('checked', true)
+            if (personListData.subjectType != 1) {
+                $('#subject_l').attr('checked', true)
             }
         } else {
             alert(res.msg);
@@ -171,47 +171,75 @@ define(function (require) {
     //        }
     //    });
     //}, 10);
-
+    var sex, subject;
+    if ($('#sex_w').attr('checked')) {
+        sex = 1;
+    } else {
+        sex = 0;
+    }
+    if ($('#subject_w').attr('checked')) {
+        subject = 1;
+    } else {
+        subject = 1;
+    }
     $('.btn-submit').click(function () {
         //修改信息
+        var school = $('.school').val();
+        var str = $('.birthdayDate').val();
+        var birthdayDate = Date.parse(new Date(str)) / 1000;
+        console.log(birthdayDate);
+        //console.log(str);
+        //console.info(getTime(1036800));
+
+
+        //var cmbProvince;
+        //var sexM = $('#sex_m').attr('value');
+        //var sexW = $('#sex_w').attr('value');
+        //var subjectW = $('#subject_w').attr('value');
+        //var subjectL = $('#subject_l').attr('value');
+
+
         var name = $('.name').val().trim();
-        if(name.length >10){
+        if (name.length > 10) {
             $('.error-tips').text('用户名不能大于10个字').fadeIn();
             return false;
-            alert(1);
         }
-        var cmbProvince;
-        var school = $('.school').val();
-        var birthdayDate = $('.birthdayDate').val();
-        var sexM = $('#sex_m').attr('value');
-        var sexW = $('#sex_w').attr('value');
-        var subjectW = $('#subject_w').attr('value');
-        var subjectL = $('#subject_l').attr('value');
-        var mail = $('.mail').val();
-        var qq = $('.qq').val();
-        $.ajax({
-            url: '/info/updateUserInfo.do',
-            dataType: 'json',
-            type: 'post',
-            data: {
-                name: name,
-                countyId: '2',
-                schoolName: school,
-                sex: '1',
-                birthdayDate: 1443420185040,
-                subjectType: '1',
-                mail: mail,
-                icon: 'http://img1.2345.com/duoteimg/qqTxImg/2013/12/ka_3/04-054658_103.jpg',
-                qq: qq
-            },
-            success:function(res){
-                if(res.rtnCode == '0000000'){
-                    window.location.href = 'http://'+window.location.host+'/user/personal-info.jsp';
-                }else{
-                    $('.content').text(res.msg);
+        var mail = $('.mail').val().trim();
+        var mail_reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+        if (!mail_reg.test(mail)) {
+            $('.error-tips').text('邮箱填写有误').fadeIn();
+            return false;
+        }
+        var qq_reg = /^\s*[.0-9]{5,11}\s*$/;
+        var qq = $('.qq').val().trim();
+        if (!qq_reg.test(qq)) {
+            $('.error-tips').text('QQ号码输入有误').fadeIn();
+            return false;
+        } else {
+            $.ajax({
+                url: '/info/updateUserInfo.do',
+                dataType: 'json',
+                type: 'post',
+                data: {
+                    name: name,
+                    countyId: '2',
+                    schoolName: school,
+                    sex: sex,
+                    birthdayDate: birthdayDate,
+                    subjectType: subject,
+                    mail: mail,
+                    icon: 'http://img1.2345.com/duoteimg/qqTxImg/2013/12/ka_3/04-054658_103.jpg',
+                    qq: qq
+                },
+                success: function (res) {
+                    if (res.rtnCode == '0000000') {
+                        $('.error-tips').text('信息更新成功').fadeIn(1000).fadeOut(2000);
+                    } else {
+                        $('.content').text(res.msg);
+                    }
                 }
-            }
-        })
+            })
+        }
     });
 
 });

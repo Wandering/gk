@@ -94,6 +94,11 @@ define(function (require) {
         Question.next.on('click', function(e) {
             Question.addNextPageHandle();
         });
+
+        $('#search').on('click', function(e) {
+            var val = $('#keywords').val();
+            window.location.href = '/question/question.jsp?val=' + val;
+        });
     });
 
 });
