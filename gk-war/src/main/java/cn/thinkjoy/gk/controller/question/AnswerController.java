@@ -20,8 +20,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +45,7 @@ public class AnswerController extends BaseController {
      */
     @RequestMapping(value = "/myQuestion", method = RequestMethod.GET)
     @ResponseBody
-    public List<QuestionAnswerBean> findMyQuestion(PageQuery pageQuery) throws Exception {
+    public List<QuestionAnswerBean> findMyQuestion(@RequestParam(value="keyword",required=false) String keyword,PageQuery pageQuery) throws Exception {
         Integer startSize = pageQuery.getStartSize();
 
         if(startSize==null){
@@ -56,6 +58,15 @@ public class AnswerController extends BaseController {
             endSize = 10;
         }
 
+        String word = null;
+        if(!StringUtils.isEmpty(keyword)){
+            try {
+                word = (new String(keyword.getBytes("ISO-8859-1"),"UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
+            }
+        }
+
         UserAccountPojo account = getUserAccountPojo();
 
         if(pageQuery==null){
@@ -65,7 +76,7 @@ public class AnswerController extends BaseController {
 
         Long userId = account.getId();
 
-        List<QuestionDetailBean> questionDetailBeans = answerService.findAnswerPage(userId, startSize, endSize);
+        List<QuestionDetailBean> questionDetailBeans = answerService.findAnswerPage(word,userId, startSize, endSize);
 
         List<QuestionAnswerBean> questionAnswerBeans = new ArrayList<QuestionAnswerBean>();
 
