@@ -74,16 +74,17 @@ public class RegionServiceImpl implements IRegionService {
             provincePojo.setName(province.getName());
             if(null!=cityPojoMap.get(province.getId())){
                 provincePojo.setCityList(cityPojoMap.get(province.getId()));
+                for(CityPojo cityPojo:cityPojoMap.get(province.getId())){
+                    System.out.println("cityPojo="+JSON.toJSON(cityPojo));
+                    if(null!=countyPojoMap.get(cityPojo.getId())){
+                        System.out.println("countys="+countyPojoMap.get(cityPojo.getId()));
+                        cityPojo.setCountyList(countyPojoMap.get(cityPojo.getId()));
+                    }
+
+                }
             }
             provincePojos.add(provincePojo);
-            for(CityPojo cityPojo:cityPojoMap.get(province.getId())){
-                System.out.println("cityPojo="+JSON.toJSON(cityPojo));
-                if(null!=countyPojoMap.get(cityPojo.getId())){
-                    System.out.println("countys="+countyPojoMap.get(cityPojo.getId()));
-                    cityPojo.setCountyList(countyPojoMap.get(cityPojo.getId()));
-                }
 
-            }
         }
 
         return provincePojos;
