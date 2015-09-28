@@ -53,7 +53,7 @@ public class VideoController extends BaseController {
         if(StringUtils.isBlank(classifyType)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
-        List<VideoCoursePojo> videoCoursePojos = iexVideoCourseService.getVideoListByParams(subjectId == null ? null : Long.valueOf(subjectId), Integer.valueOf(classifyType), Integer.parseInt(sortType),searchName, Integer.valueOf(pageNo) * Integer.valueOf(pageSize), Integer.valueOf(pageSize));
+        List<VideoCoursePojo> videoCoursePojos = iexVideoCourseService.getVideoListByParams(StringUtils.isBlank(subjectId)? null : Long.valueOf(subjectId), Integer.valueOf(classifyType), Integer.parseInt(sortType),searchName, Integer.valueOf(pageNo) * Integer.valueOf(pageSize), Integer.valueOf(pageSize));
         if(videoCoursePojos == null || videoCoursePojos.size() == 0){
             throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
         }
