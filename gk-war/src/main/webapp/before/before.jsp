@@ -84,7 +84,9 @@
 
 <div class="w1000 main-video">
     <div class="tabs">
-        <ul class="tabs-list mt20 subjectList" classifyType="1"></ul>
+        <ul class="tabs-list mt20 subjectList" classifyType="1">
+            <li id="">全部</li>
+        </ul>
         <div class="into-search">
             <a href="/before/teacher-lecture.jsp?classifyType=1" target="_blank" class="into-btn">进入名师讲堂</a>
             <form action="">
