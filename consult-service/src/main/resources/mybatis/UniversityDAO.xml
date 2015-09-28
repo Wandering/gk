@@ -1057,53 +1057,51 @@ selectList
 
 
     <select id="getUniversityList" parameterType="java.util.Map" resultType="UniversityDto">
-          select code,name,subjection,educatLevel,type as universityType,property,address,contactPhone,
-       '' as universityImage,provinceName,url from gk_university where 1=1
-            <if test="universityQuery.province!=null and universityQuery!='' ">
+          select code,name,subjection,educationLevel as educatLevel,type as universityType,property,address,contactPhone,provinceName,url from gk_university where 1=1
+            <if test="universityQuery.province!=null and universityQuery.province!='' ">
                 and provinceName = #{universityQuery.province}
             </if>
 
-            <if test="universityQuery.universtiyType!=null">
+            <if test="universityQuery.universtiyType!=null and universityQuery.universtiyType!=''">
                 and type=#{universityQuery.universtiyType}
             </if>
 
-            <if test="universityQuery.batch!=null">
+            <if test="universityQuery.batch!=null and universityQuery.batch!=''">
                 and batchType in
                 <foreach collection="universityQuery.batch" item="item" index="index" open="(" separator="," close=")">
                     #{item}
                 </foreach>
              </if>
 
-            <if test="universityQuery.feature!=null">
-                and property in
+            <if test="universityQuery.feature!=null and universityQuery.feature!=''">
+                and property
 
                 <foreach collection="universityQuery.feature" item="item" index="index" open="(" separator="," close=")">
                     #{item}
                 </foreach>
             </if>
-
-          limit #{start},#{end}
+          limit #{universityQuery.start},#{universityQuery.end}
       </select>
 
 
     <select id="getUniversityCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         select count(*) from gk_university where 1=1
-        <if test="universityQuery.province!=null and universityQuery!='' ">
+        <if test="universityQuery.province!=null and universityQuery.province!='' ">
             and provinceName = #{universityQuery.province}
         </if>
 
-        <if test="universityQuery.universtiyType!=null">
+        <if test="universityQuery.universtiyType!=null and universityQuery.universtiyType!=''">
             and type=#{universityQuery.universtiyType}
         </if>
 
-        <if test="universityQuery.batch!=null">
+        <if test="universityQuery.batch!=null and universityQuery.batch!=''">
             and batchType in
             <foreach collection="universityQuery.batch" item="item" index="index" open="(" separator="," close=")">
                 #{item}
             </foreach>
         </if>
 
-        <if test="universityQuery.feature!=null">
+        <if test="universityQuery.feature!=null and universityQuery.feature!=''">
             and property in
 
             <foreach collection="universityQuery.feature" item="item" index="index" open="(" separator="," close=")">

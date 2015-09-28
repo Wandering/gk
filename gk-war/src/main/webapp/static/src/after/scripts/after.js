@@ -1,9 +1,12 @@
 define(function (require) {
     var $ = require('$');
 
-    $('#volunteer-flow1-btn').on('click',function(){
-        window.open('/after/volunteer-flow2.jsp')
+    $('.open-flow3').on('click',function(){
+        $('.tansLayer,.volunteer-flow3-layer').show();
     });
 
+    $('.close-flow3-layer').on('click',function(){
+        $('.tansLayer,.volunteer-flow3-layer').hide();
+    })
 
 });
