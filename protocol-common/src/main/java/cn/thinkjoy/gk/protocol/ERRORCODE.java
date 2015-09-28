@@ -37,7 +37,10 @@ public enum ERRORCODE {
 	PARAM_ISNULL("0700001","参数不能为空"),
 	NO_RECORD("0800001","无记录"),
 	VIP_EXIST("0900001","该用户已经是VIP了，请勿重复申请"),
-	VIP_CARD_NOT_INVALID("0900002","该卡无效");
+	VIP_CARD_NOT_INVALID("0900002","该卡无效"),
+	RESTFUL_INTERFACE_ISNULL("1000001","第三方数据接口返回数据为空"),
+	RESTFUL_INTERFACE_ISERROR("1000002","第三方数据接口异常");
+	;
 
 	/** The code. */
 	private final String code;

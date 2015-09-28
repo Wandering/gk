@@ -221,11 +221,11 @@
         <div class="eval-right">
             <div class="form-control">
                 <label>分数</label>
-                <input type="text" placeholder="请输入分数"/>
+                <input type="text" class="score-input" placeholder="请输入分数"/>
             </div>
             <div class="form-control">
                 <label>院校</label>
-                <input type="text" placeholder="请填写理想院校"/>
+                <input type="text" class="school-input" placeholder="请填写理想院校"/>
             </div>
             <div class="category mt10">
                 <label>选择文理科：</label>
@@ -259,94 +259,107 @@
 
 
 
-<%--<div class="main-volunteer-box">--%>
-    <%--<div class="school-eval w1000">--%>
-        <%--<div class="tip">--%>
-            <%--<p>院校评测使用的分数，位次数据，招生计划为往年数据，结果仅供参考，且系统推荐学校有限制，若要使用最新，更全面，更多推荐学校，请升级为VIP。</p>--%>
-        <%--</div>--%>
-        <%--<div class="eval-left">--%>
-            <%--<img src="/static/dist/before/images/bottom-banner.jpg" />--%>
-            <%--<h3>为我推荐院校</h3>--%>
-            <%--<h6>直接系统告诉我可以报的院校名称，容我考虑考虑</h6>--%>
-        <%--</div>--%>
-        <%--<div class="eval-right">--%>
-            <%--<div class="score">--%>
-                <%--<label>分数</label>--%>
-                <%--<input type="text" placeholder="请输入分数"/>--%>
-            <%--</div>--%>
-
-            <%--<div class="category mt10">--%>
-                <%--<label>选择文理科：</label>--%>
-                <%--<ul class="group-radio">--%>
-                    <%--<li>--%>
-                        <%--<span><input type="radio" name="category" value="1" />一批本科</span>--%>
-                        <%--<span><input type="radio" name="category" value="3" />三批本科</span>--%>
-                    <%--</li>--%>
-                    <%--<li class="tar">--%>
-                        <%--<span><input type="radio" name="category" value="2" />二批本科</span>--%>
-                        <%--<span><input type="radio" name="category" value="4" />高职(专科)</span>--%>
-                    <%--</li>--%>
-                <%--</ul>--%>
-            <%--</div>--%>
-
-            <%--<div class="indent mt10">--%>
-                <%--<span class="ident-code">--%>
-                    <%--<label>验证码</label>--%>
-                    <%--<input type="text" placeholder="请输入分数"/>--%>
-                <%--</span>--%>
-                <%--<a>--%>
-                    <%--<img src="/static/dist/before/images/bottom-banner.jpg" />--%>
-                <%--</a>--%>
-            <%--</div>--%>
-
-            <%--<div class="submit mt20">--%>
-                <%--<input type="submit" id="evaluating-sub" value="提交测评"/>--%>
-            <%--</div>--%>
-
-        <%--</div>--%>
-    <%--</div>--%>
-<%--</div>--%>
-
-
-
-
-
 <div class="main-volunteer-box" style="display: none;">
-    <div class="w1000 main-volunteer">
-        <div class="fl">
+    <div class="school-eval w1000">
+        <div class="tip">
+            <p>依据考分估算出我的位次、获得推荐院校信息、以及我的理想院校测评</p>
+        </div>
+        <div class="eval-left yztj-fl">
             <div class="img">
                 <img src="/static/dist/before/images/zd-pic.png" alt=""/>
                 <strong>院校推荐、志愿指导</strong>
                 <p>依据总分、位次获取推荐院校及志愿指导</p>
             </div>
         </div>
-        <div class="fr">
-            <form action="" class="zd-form">
-                <div class="form-control">
-                    <label>您的考号</label>
-                    <input type="text" class="input" name="" placeholder="请输入您的考号" id=""/>
-                </div>
-                <div class="form-control">
-                    <label>您的分数</label>
-                    <input type="text" class="input" name="" placeholder="请输入您的分数" id=""/>
-                </div>
-                <div class="form-control">
-                    <label>您的位次</label>
-                    <input type="text" class="input" name="" placeholder="请输入您的位次" id=""/>
-                </div>
-                <div class="form-control yzm-control">
-                    <label>验证码</label>
-                    <input type="text" class="input yzm" name="" placeholder="请填写验证码" id=""/>
-                    <img src="/static/dist/before/images/yzm.png" alt=""/>
-                </div>
-                <div class="form-control-btn">
-                    <input type="button" class="btn" value="下一步"/>
-                </div>
+        <div class="eval-right">
+            <div class="form-control">
+                <label>分数</label>
+                <input type="text" class="score-input" placeholder="请输入分数"/>
+            </div>
 
-            </form>
+            <div class="category mt10">
+                <label>选择批次：</label>
+                <ul class="group-radio">
+                    <li>
+                        <span><input type="radio" name="category" value="1" />一批本科</span>
+                        <span><input type="radio" name="category" value="3" />三批本科</span>
+                    </li>
+                    <li class="tar">
+                        <span><input type="radio" name="category" value="2" />二批本科</span>
+                        <span><input type="radio" name="category" value="4" />高职(专科)</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="category mt10">
+                <label>选择文理科：</label>
+                <ul class="group-radio">
+                    <li>
+                        <span><input type="radio" name="category" value="1" />文科</span>
+                    </li>
+                    <li>
+                        <span><input type="radio" name="category" value="3" />理科</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="indent mt10">
+                <span class="ident-code">
+                    <label>验证码</label>
+                    <input type="text" placeholder="请输入分数"/>
+                </span>
+                <a>
+                    <img src="/static/dist/before/images/bottom-banner.jpg" />
+                </a>
+            </div>
+
+            <div class="submit mt20">
+                <input type="submit" id="yxtj-sub" value="提交"/>
+            </div>
+
         </div>
     </div>
 </div>
+
+
+
+
+
+<%--<div class="main-volunteer-box">--%>
+    <%--<div class="w1000 main-volunteer">--%>
+        <%--<div class="fl">--%>
+            <%--<div class="img">--%>
+                <%--<img src="/static/dist/before/images/zd-pic.png" alt=""/>--%>
+                <%--<strong>院校推荐、志愿指导</strong>--%>
+                <%--<p>依据总分、位次获取推荐院校及志愿指导</p>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+        <%--<div class="fr">--%>
+            <%--<form action="" class="zd-form">--%>
+                <%--<div class="form-control">--%>
+                    <%--<label>您的考号</label>--%>
+                    <%--<input type="text" class="input" name="" placeholder="请输入您的考号" id=""/>--%>
+                <%--</div>--%>
+                <%--<div class="form-control">--%>
+                    <%--<label>您的分数</label>--%>
+                    <%--<input type="text" class="input" name="" placeholder="请输入您的分数" id=""/>--%>
+                <%--</div>--%>
+                <%--<div class="form-control">--%>
+                    <%--<label>您的位次</label>--%>
+                    <%--<input type="text" class="input" name="" placeholder="请输入您的位次" id=""/>--%>
+                <%--</div>--%>
+                <%--<div class="form-control yzm-control">--%>
+                    <%--<label>验证码</label>--%>
+                    <%--<input type="text" class="input yzm" name="" placeholder="请填写验证码" id=""/>--%>
+                    <%--<img src="/static/dist/before/images/yzm.png" alt=""/>--%>
+                <%--</div>--%>
+                <%--<div class="form-control-btn">--%>
+                    <%--<input type="button" class="btn" value="下一步"/>--%>
+                <%--</div>--%>
+
+            <%--</form>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+<%--</div>--%>
 
 
 
@@ -369,7 +382,7 @@
 <%--</div>--%>
 
 
-
+<div class="tansLayer" style="display: none;"></div>
 <div class="evaluating-layer" style="display: none;">
     <div class="top-close">
         <a href="javascript:;" class="close-btn">x</a>
@@ -397,23 +410,7 @@
         </div>
         <a href="javascript:;" class="evaluating-result-close close-btn">返回上一步</a>
     </div>
-
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <%@ include file="/common/footer.jsp"%>
 <script>
     seajs.use("/static/src/before/scripts/before");

@@ -5,7 +5,7 @@ public class CookieTimeConst {
 	/**
 	 * 清理
 	 */
-	public static final int CLEAN_COOKIE = -1;
+	public static final int CLEAN_COOKIE = 0;
 	
 	/**
 	 * 默认cookie时间4小时 

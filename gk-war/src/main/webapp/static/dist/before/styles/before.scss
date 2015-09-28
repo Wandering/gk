@@ -488,15 +488,23 @@ section:last-child {
         line-height: 46px;
         text-align: center;
         padding: 0 20px;
+        border-right: 1px solid #ccc;
       }
 
       input{
         width: 230px;
         height: 44px;
-        margin-left: 40px;
+        padding-left: 40px;
         line-height: 44px;
         background: transparent;
       }
+      .score-input{
+        background: url('../images/icon-01.png') no-repeat 12px center;
+      }
+      .school-input{
+        background: url('../images/icon-02.png') no-repeat 12px center;
+      }
+
     }
 
     .indent {
