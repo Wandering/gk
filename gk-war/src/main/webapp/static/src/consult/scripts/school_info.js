@@ -9,18 +9,21 @@ define(function(require) {
     var School = {
         curPage: 1,
         totalPage: 0,
-        render: function(ele, data) {
+        render: function(eleId, data) {
             var html = [];
             var i = 0,
                 len = data.length;
-            html.push('<a class="active" id="0">全部</a>');
+            if ('universityFeature' !== eleId) {
+                html.push('<a class="active" id="0">全部</a>');
+            }
+
             for (; i < len; i++) {
                 html.push('<a id="' + data[i].id + '">' + data[i].name + '</a>');
             }
-            ele.html(html.join(''));
+            $('#' + eleId).html(html.join(''));
         },
         show: function(eleId, data) {
-            this.render($('#' + eleId), data);
+            this.render(eleId, data);
             this.addEventForOption();
         },
         getData: function() {
@@ -37,10 +40,16 @@ define(function(require) {
         addEventForOption: function() {
             var that = this;
             $('.options a').on('click', function(e) {
-                if (!$(this).hasClass('active')) {
-                    $(this).addClass('active').siblings().removeClass('active');
-                    that.getSchoolList(1);
+                var parentId = $(this).parent().attr('id');
+                if ('universityFeature' === parentId) {
+                    $(this).toggleClass('active');
+                } else {
+                    if (!$(this).hasClass('active')) {
+                        $(this).addClass('active').siblings().removeClass('active');
+                        that.getSchoolList(1);
+                    }
                 }
+
             });
         },
         renderSchool: function(data) {
@@ -117,11 +126,11 @@ define(function(require) {
                 dataType: 'json',
                 success: function(data) {
                     if ('0000000' === data.rtnCode) {
-                        var schoolList = data.bizData.schoolList;
+                        var schoolList = data.bizData.list;
                         if (schoolList && schoolList.length) {
                             that.renderSchool(schoolList);
                             if (pageNo == 1) {
-                                that.renderPage(1, data.bizData.schoolCount);
+                                that.renderPage(1, data.bizData.count);
                             }
                         }
                     }
