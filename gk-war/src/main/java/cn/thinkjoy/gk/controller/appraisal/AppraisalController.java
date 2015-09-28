@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Controller
 @Scope("prototype")
-@RequestMapping(value="/question")
+@RequestMapping(value="/appraisal")
 public class AppraisalController extends BaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(AppraisalController.class);
