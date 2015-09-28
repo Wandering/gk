@@ -7,6 +7,9 @@
         <if test="years != null">
            AND years = #{years}
         </if>
+        <if test="subjectId != null">
+            AND subjectId = #{subjectId}
+        </if>
         <if test="searchName != null">
            AND paperName LIKE  CONCAT('%', #{searchName} , '%')
         </if>
