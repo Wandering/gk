@@ -8,15 +8,15 @@ import java.util.Map;
  */
 public class SubjectTypeDto {
 
-    private Integer id;
+    private Long id;
     private String name;
     private List<Map<String,Object>> majoredType;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
