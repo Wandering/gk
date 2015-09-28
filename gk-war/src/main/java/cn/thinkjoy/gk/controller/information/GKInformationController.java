@@ -3,19 +3,17 @@ package cn.thinkjoy.gk.controller.information;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.domain.Information;
 import cn.thinkjoy.gk.service.IInformationService;
-import cn.thinkjoy.gk.util.HttpUtil;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -66,7 +64,14 @@ public class GKInformationController extends BaseController{
         if (ps == null||ps.length() < 0){
             ps="4";  //如果没有设定，默认显示4条数据
         }
-        List<Information> information = informationService.getInformationByKey(keyString, Integer.valueOf(pn)*Integer.valueOf(ps),Integer.valueOf(ps));
+        List<Information> information = informationService.getInformationByKey(keyString, Integer.valueOf(pn) * Integer.valueOf(ps), Integer.valueOf(ps));
+        return information;
+    }
+
+    @RequestMapping(value = "getInformationContentById",method = RequestMethod.GET)
+    @ResponseBody
+    public Information getInformationContextById(@RequestParam(value="id",required=false) Integer id) {
+        Information information = informationService.getInformationContentById(id);
         return information;
     }
 
