@@ -5,7 +5,9 @@
       <img src="/static/dist/common/images/logo-min.png" alt="高考360" class="logo fl"/>
     </a>
     <ul class="main-menu fl">
-      <li><a href="/index.jsp">首页</a></li>
+      <li><a href="/index.jsp">首页</a>
+        <div class="a">12324</div>
+      </li>
       <li><a href="/guide/guide.jsp">高考政策</a></li>
       <li><a href="/consult/gk_hot.jsp">高考资讯</a></li>
       <li><a href="/before/before.jsp">考前备考</a></li>
