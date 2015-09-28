@@ -1080,6 +1080,9 @@ selectList
                     #{item}
                 </foreach>
             </if>
+           <if test="universityQuery.searchName!=null and universityQuery.searchName!=''">
+                and name like concat('%',#{universityQuery.searchName},'%')
+           </if>
           limit #{universityQuery.start},#{universityQuery.end}
       </select>
 
@@ -1107,6 +1110,9 @@ selectList
             <foreach collection="universityQuery.feature" item="item" index="index" open="(" separator="," close=")">
                 #{item}
             </foreach>
+        </if>
+        <if test="universityQuery.searchName!=null and universityQuery.searchName!=''">
+            and name like concat('%',#{universityQuery.searchName},'%')
         </if>
     </select>
 
