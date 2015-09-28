@@ -47,7 +47,7 @@ public class VipController extends BaseController {
 		map.put("password",cardPojo.getPassword());
 		Card card=(Card)cardService.queryOne(map);
 		if(null==card ){
-			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
+			throw new BizException(ERRORCODE.VIP_CARD_NOT_INVALID.getCode(), ERRORCODE.VIP_CARD_NOT_INVALID.getMessage());
 		}else if(0!=card.getUserId()){
 			throw new BizException(ERRORCODE.VIP_CARD_NOT_INVALID.getCode(), ERRORCODE.VIP_CARD_NOT_INVALID.getMessage());
 		}else{
