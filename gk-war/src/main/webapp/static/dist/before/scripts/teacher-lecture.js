@@ -4,29 +4,31 @@ define(function (require) {
     require('backToTop');
     require('getTime');
 
-
-
     var UI = {
         $listMsgItem: $('#list-msg-item'),
         $nextPage: $('#nextPage')
     };
-    var pageSize = 8;
-    var searchValUrl = window.location.search;
-    var num = searchValUrl.indexOf("?");
-    var searchVal = searchValUrl.substr(num+19);
-    $('#searchVal').val(searchVal);
+    var pageSize = 4;
+
+
+    var detailsUrl = decodeURIComponent(window.location.search);
+    var classifyType = detailsUrl.substr(14, 1);
+    var num = detailsUrl.indexOf('&');
+    var searchV = detailsUrl.substr(num + 9);
+
+    console.log(classifyType)
+    console.log(searchV)
+
+    $('#searchVal').val(searchV);
+
+
 
     var localhosts = 'http://www.gkzy114.com';
-
+    //
     // 搜索
     $('#search-btn').on('click',function(){
-        window.location.href='/before/teacher-lecture.jsp?teacherSearchName='+ $('#searchVal').val()
+        window.location.href='/before/teacher-lecture.jsp?classifyType=1&searchV='+ encodeURIComponent($('#searchVal').val());
     });
-
-
-
-
-
 
     // 获取科目
     function getSubjectList(){
@@ -38,25 +40,24 @@ define(function (require) {
                     for (var i = 0; i < dataJson.length; i++) {
                         var tabLi = dataJson[i].subjectName,
                             tabId = dataJson[i].subjectId;
-                        var subjectListHtml = '<option value="'+ tabId +'">'+ tabLi +'</option>';
+                        var subjectListHtml = '<option value="'+ tabId +'" data="'+ tabLi +'">'+ tabLi +'</option>';
                         $('.subjectList').append(subjectListHtml);
                     }
                 }
             });
     }
     getSubjectList();
-
-    var searchVals = $('#searchVal').val();
-    function getList(pageNo, pageSize,searchVals) {
-
+    //
+    //
+    function getList(pageNo, pageSize,sortType,subjectId,searchVals) {
         $.getJSON(
             "/before/video/getVideoList.do",
             {
-                pageNo: 0,
-                pageSize: 4,
+                pageNo: pageNo,
+                pageSize: pageSize,
                 classifyType:1,
-                sortType:1,
-                subjectId:'',
+                sortType:sortType,
+                subjectId:subjectId,
                 teacherSearchName:searchVals
             },
             function (result) {
@@ -72,10 +73,12 @@ define(function (require) {
                     }
 
                     for (var i = 0; i < dataJson.length; i++) {
-                        var subjectName = dataJson[i].subjectName,
+                        var subjectName = dataJson[i].title,
                             teacherName = dataJson[i].teacherName,
                             hit = dataJson[i].hit,
-                            subcontent = dataJson[i].subcontent;
+                            subcontent = dataJson[i].subcontent,
+                            courseId = dataJson[i].courseId;
+                        var detailsUrl = '/before/teacher-lecture-play.jsp?classifyType='+ classifyType +'&courseId=' + courseId;
                         var videoUrl='';
                         if (dataJson[i].frontCover == null || dataJson[i].frontCover == "") {
                             videoUrl = '/static/dist/common/images/video-default.png';
@@ -84,9 +87,9 @@ define(function (require) {
                         }
                         var listMsgHtml = ''
                             +'<li class="item">'
-                            +'<div class="img"><img src="'+ frontCover +'" alt=""/></div>'
+                            +'<div class="img"><img src="'+ videoUrl +'" alt=""/></div>'
                             +'<div class="info">'
-                            +'<span class="fl">学科名称:'+ subjectName +'</span>'
+                            +'<span class="fl">课程名称:'+ subjectName +'</span>'
                             +'<span class="fr">主讲专家:'+ teacherName +'</span>'
                             +'</div>'
                             +'<div class="num">'
@@ -94,7 +97,7 @@ define(function (require) {
                             +'</div>'
                             +'<p class="txt">'+ subcontent +'</p>'
                             +'<div class="funs">'
-                            +'<a href="" class="btn">点击播放</a>'
+                            +'<a target="_blank" href="'+ detailsUrl +'" class="btn">点击播放</a>'
                             +'</div>'
                             +'</li>';
                         UI.$listMsgItem.append(listMsgHtml);
@@ -102,16 +105,44 @@ define(function (require) {
                     pageNo++;
                     UI.$listMsgItem.attr('pageNo', pageNo);
                     if (dataJson.length < pageSize) {
-                        UI.$nextPage.removeClass('btn-primary').text("没有更多消息了")
+                        UI.$nextPage.hide();
                     }
                 }
             });
     }
 
+
+    var searchs=$('#searchVal').val();
+
     UI.$nextPage.on('click', function () {
         var pageNo = UI.$listMsgItem.attr('pageNo');
-        getList(pageNo, pageSize,searchVal);
+        getList(pageNo, pageSize,1,"",searchs);
     }).click();
+    //
+    //
+    // 科目筛选
+    $(".subjectList").change(function(){
+        var subjectId = $(this).find("option:selected").attr('value');
+        var sortType = $('.subject-fun').find("option:selected").attr('value');
+        UI.$listMsgItem.attr('pageNo',0);
+        var pageNo = UI.$listMsgItem.attr('pageNo');
+        UI.$listMsgItem.html('');
+        getList(pageNo, pageSize,sortType,subjectId,searchs);
+    });
+    //
+    //
+    // 播放类型
+    $(".subject-fun").change(function(){
+        var sortType = $(this).find("option:selected").attr('value');
+        var subjectId = $('.subjectList').find("option:selected").attr('value');
+        UI.$listMsgItem.attr('pageNo',0);
+        var pageNo = UI.$listMsgItem.attr('pageNo');
+        UI.$listMsgItem.html('');
+        getList(pageNo, pageSize,sortType,subjectId,searchs);
+    });
+    //
+
+
 
 
 

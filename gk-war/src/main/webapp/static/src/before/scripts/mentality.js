@@ -9,13 +9,23 @@ define(function (require) {
         $nextPage: $('#nextPage')
     };
     var pageSize = 4;
-    var searchValUrl = window.location.search;
-    var num = searchValUrl.indexOf("?");
-    var searchVal = searchValUrl.substr(num+19);
-    $('#searchVal').val(searchVal);
+    var detailsUrl = decodeURIComponent(window.location.search);
+    var classifyType = detailsUrl.substr(14, 1);
+    var num = detailsUrl.indexOf('&');
+    var searchV = detailsUrl.substr(num + 9);
+
+    console.log(classifyType)
+    console.log(searchV)
+
+    $('#searchVal').val(searchV);
 
 
     var localhosts = 'http://www.gkzy114.com';
+
+    // 搜索
+    $('#search-btn').on('click',function(){
+        window.location.href='/before/mentality.jsp?classifyType=2&searchV='+ encodeURIComponent($('#searchVal').val());
+    });
 
     // 获取科目
     function getSubjectList(){
@@ -96,10 +106,15 @@ define(function (require) {
                 }
             });
     }
+
+
+
+    var searchs=$('#searchVal').val();
+
     // 初始化数据
     UI.$nextPage.on('click', function () {
         var pageNo = UI.$listMsgItem.attr('pageNo');
-        getList(pageNo, pageSize,1,"",searchVal);
+        getList(pageNo, pageSize,1,"",searchs);
     }).click();
 
 
@@ -110,7 +125,7 @@ define(function (require) {
         UI.$listMsgItem.attr('pageNo',0);
         var pageNo = UI.$listMsgItem.attr('pageNo');
         UI.$listMsgItem.html('');
-        getList(pageNo, pageSize,sortType,subjectId,searchVal);
+        getList(pageNo, pageSize,sortType,subjectId,searchs);
     });
 
 
@@ -121,7 +136,7 @@ define(function (require) {
         UI.$listMsgItem.attr('pageNo',0);
         var pageNo = UI.$listMsgItem.attr('pageNo');
         UI.$listMsgItem.html('');
-        getList(pageNo, pageSize,sortType,subjectId,searchVal);
+        getList(pageNo, pageSize,sortType,subjectId,searchs);
     });
 
 

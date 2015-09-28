@@ -2,8 +2,6 @@ define(function (require) {
     var $ = require('$');
     var detailsUrl = window.location.search;
     var classifyType = detailsUrl.substr(14, 1);
-
-    console.log(classifyType)
     if(classifyType==1){
          $('a[beforeMenuType="1"]').addClass('active');
     }

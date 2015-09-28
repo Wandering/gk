@@ -63,10 +63,10 @@ gulp.task('watch', function () {
     gulp.watch('src/**/*.scss', ['styles']);
 
     // 看守所有.js档
-    gulp.watch('src/**/*.js', ['scripts']);
+    //gulp.watch('src/**/*.js', ['scripts']);
 
     // 看守所有图片档
-    gulp.watch('src/**/*', ['images']);
+    //gulp.watch('src/**/*', ['images']);
 
     // 建立即时重整伺服器
     //var server = livereload();
