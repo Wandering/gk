@@ -76,7 +76,7 @@ define(function (require) {
     $('.btn-submit').click(function () {
         //提交内容信息
         $.ajax({
-            url: 'appointment/addAppointment.do',
+            url: '/appointment/addAppointment.do',
             dataType: 'json',
             type: 'post',
             data: {

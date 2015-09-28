@@ -61,6 +61,7 @@ define(function (require) {
                     $(obj).append('<p class="noContent">' + result.msg + '</p>').fadeIn(500);
                 }
                 if (result.rtnCode == "0000000") {
+
                     var dataJson = result.bizData;
                     for (var i = 0; i < dataJson.length; i++) {
                         var subjectName = dataJson[i].subjectName,

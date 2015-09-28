@@ -53,11 +53,6 @@ define(function (require) {
             }
         }
     });
-
-
-
-
-
     //高考志愿卡升级
     $.ajax({
         url:'/vip/getAccount.do',
@@ -65,21 +60,26 @@ define(function (require) {
         dataType: 'JSON',
         success: function (result) {
             if(result.rtnCode=="0000000"){
-                var cardNumber = result.bizData.account;
-                var password = result.bizData.password;
-                $.ajax({
-                    url:'/vip/upgradeVipByCard.do',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data:{
-                        "cardNumber": cardNumber,
-                        "password": password
-                    },
-                    success: function (res) {
-                        console.log(res)
-                    }
-                });
+                var accountNum = result.bizData.account;
+                $('.accountNum').html(accountNum);
             }
         }
     });
+
+    $('#accountBtn').on('click',function(){
+
+        $.ajax({
+            url:'/vip/upgradeVipByCard.do',
+            type: 'POST',
+            dataType: 'JSON',
+            data:{
+                "cardNumber": 777777,
+                "password": 888888
+            },
+            success: function (res) {
+                console.log(res)
+            }
+        });
+    });
+
 });

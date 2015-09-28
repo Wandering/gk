@@ -1,7 +1,7 @@
 define(function (require) {
     var $ = require('$');
     require('swiper');
-    require('header-user');
+
     var url = 'http://' + window.location.host;
     $(function () {
         //在线互动
