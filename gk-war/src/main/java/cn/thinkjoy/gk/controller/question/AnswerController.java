@@ -45,7 +45,10 @@ public class AnswerController extends BaseController {
      */
     @RequestMapping(value = "/myQuestion", method = RequestMethod.GET)
     @ResponseBody
-    public List<QuestionAnswerBean> findMyQuestion(@RequestParam(value="keyword",required=false) String keyword,PageQuery pageQuery) throws Exception {
+    public List<QuestionAnswerBean> findMyQuestion(@RequestParam(value="keyword",required=false) String keyword,
+                                                   @RequestParam(value="isAnswer",required=false) Integer isAnswer,
+            PageQuery pageQuery) throws Exception {
+
         Integer startSize = pageQuery.getStartSize();
 
         if(startSize==null){
