@@ -78,6 +78,32 @@ public class AppointmentController extends BaseController {
 		return "success";
 	}
 
+	@RequestMapping(value = "/getAppointmentDetail",method = RequestMethod.GET)
+	@ResponseBody
+	public AppointmentPojo getAppointmentDetail(@RequestParam("id") long id) {
+		UserAccountPojo userAccountPojo=super.getUserAccountPojo();
+		if(null==userAccountPojo ||  null==userAccountPojo.getId()){
+			throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
+		}
+
+		Appointment appointment=(Appointment)appointmentService.findOne("id",id);
+		if(null!=appointment){
+			AppointmentPojo appointmentPojo=new AppointmentPojo();
+			appointmentPojo.setId(appointment.getId());
+			appointmentPojo.setTitle(appointment.getTitle());
+			appointmentPojo.setCreateDate(appointment.getCreateDate());
+			appointmentPojo.setStartDate(appointment.getStartDate());
+			appointmentPojo.setEndDate(appointment.getEndDate());
+			appointmentPojo.setContent(appointment.getContent());
+			appointmentPojo.setName(appointment.getName());
+			appointmentPojo.setMobile(appointment.getMobile());
+			appointmentPojo.setQq(appointment.getQq());
+			return appointmentPojo;
+		}
+		return  null;
+
+	}
+
 
 
 }
