@@ -31,4 +31,6 @@ public interface IExUniversityService {
     String getUniversityEnrollIntro(String schoolCode);
 
     List<PlanInfo> getPlanInfosByYear(int i,String schoolCode);
+
+    String getUniversityIntro(String schoolCode);
 }
