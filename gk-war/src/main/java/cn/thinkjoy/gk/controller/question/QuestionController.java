@@ -14,6 +14,7 @@ import cn.thinkjoy.ss.api.IQuestionService;
 import cn.thinkjoy.ss.bean.QuestionDetailBean;
 import cn.thinkjoy.ss.domain.Question;
 import com.alibaba.fastjson.JSON;
+import io.netty.util.internal.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.jsoup.Jsoup;
@@ -28,6 +29,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,12 +59,10 @@ public class QuestionController extends BaseController {
 //            LOGGER.info("====notice send AUTHENTICATION_FAIL ");
 //            throw new BizException(ERRORCODE.AUTHENTICATION_FAIL.getCode(), ERRORCODE.AUTHENTICATION_FAIL.getMessage());
 //        }
-
 //        if(pageQuery==null){
 //            LOGGER.info("====notice hotQuestion PARAM_ERROR ");
 //            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
 //        }
-
         Integer startSize = pageQuery.getStartSize();
 
         if(startSize==null){
@@ -81,7 +82,6 @@ public class QuestionController extends BaseController {
 //        if(userAccountBean.getVipStatus()!=null&&userAccountBean.getVipStatus()==1){
 //            freeStatus = 1;
 //        }
-
 //        if(userCredentials.getUserType()==1){
 //            LOGGER.info("当前用户:"+userId+"为教师");
 //            freeStatus = null;
@@ -92,8 +92,16 @@ public class QuestionController extends BaseController {
 //                freeStatus = null;
 //            }
 //        }
+        String word = null;
+        if(!StringUtils.isEmpty(keyword)){
+            try {
+                word = (new String(keyword.getBytes("ISO-8859-1"),"UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
+            }
+        }
 
-        List<QuestionDetailBean> questionDetailBeans = questionService.findQuestionAnswerPage(keyword,freeStatus, null,1 , 7, startSize, endSize);
+        List<QuestionDetailBean> questionDetailBeans = questionService.findQuestionAnswerPage(word,freeStatus, null,1 , 7, startSize, endSize);
 
         List<QuestionAnswerBean> questionAnswerBeans = new ArrayList<QuestionAnswerBean>();
 
@@ -178,7 +186,7 @@ public class QuestionController extends BaseController {
      */
     @RequestMapping(value = "/hotQuestion", method = RequestMethod.GET)
     @ResponseBody
-    public List<QuestionAnswerBean> hotQuestion(PageQuery pageQuery) {
+    public List<QuestionAnswerBean> hotQuestion(@RequestParam(value="keyword",required=false) String keyword,PageQuery pageQuery) {
 
 //        LOGGER.info("用户［" + userId + "］获取热门问题列表");
 //        if (null == userId || userId == 0) {
@@ -223,7 +231,16 @@ public class QuestionController extends BaseController {
 //            }
 //        }
 
-        List<QuestionDetailBean> questionDetailBeans = questionService.findHotQuestionAnswerPage(freeStatus, null,1 , 7, startSize, endSize);
+        String word = null;
+        if(!StringUtils.isEmpty(keyword)){
+            try {
+                word = (new String(keyword.getBytes("ISO-8859-1"),"UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
+            }
+        }
+
+        List<QuestionDetailBean> questionDetailBeans = questionService.findHotQuestionAnswerPage(word,freeStatus, null,1 , 7, startSize, endSize);
 
         List<QuestionAnswerBean> questionAnswerBeans = new ArrayList<QuestionAnswerBean>();
 
