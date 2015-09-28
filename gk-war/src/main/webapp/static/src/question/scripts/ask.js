@@ -4,6 +4,7 @@
 
 define(function (require) {
     var $ = require('$');
+    require('header-user');
     require('swiper');
     //编辑框
     var editor;
@@ -89,14 +90,14 @@ define(function (require) {
                     if ('0000000' === data.rtnCode) {
                         editor.html('');
                         $('#custom_body').html('<p class="error-contnet">提交成功！</p>');
-                        $('#custom_model').show(500);
+                        $('#custom_model').fadeIn(500);
                         $('#custom_model').off('click');
                         $('#custom_model').on('click', function(e) {
                             e.stopPropagation();
                         });
                         $('#model_button').off('click');
                         $('#model_button').on('click', function(e) {
-                            $('#custom_model').hide(500);
+                            $('#custom_model').fadeOut(500);
                         });
                     } else {
                         $('#error').show().html(data.msg);

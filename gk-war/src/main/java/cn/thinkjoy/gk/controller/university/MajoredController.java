@@ -1,18 +1,22 @@
 package cn.thinkjoy.gk.controller.university;
 
 import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.dto.MajoredDetailDto;
-import cn.thinkjoy.gk.dto.MajoredDto;
-import cn.thinkjoy.gk.dto.MajoredResponseDto;
+import cn.thinkjoy.gk.domain.UniversityDict;
+import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.query.MajoredQuery;
+import cn.thinkjoy.gk.service.IMajoredService;
+import cn.thinkjoy.gk.service.IUniversityDictService;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,6 +28,10 @@ public class MajoredController extends BaseController {
 
     public static  final Logger log= LoggerFactory.getLogger(MajoredController.class);
 
+    @Autowired
+     private IMajoredService  iMajoredService;
+    @Autowired
+    private IUniversityDictService iUniversityDictService;
     /**
      * 获取初始化信息
      * @return
@@ -32,7 +40,49 @@ public class MajoredController extends BaseController {
     @ResponseBody
     public Map<String,Object> getInitInfo(){
         Map<String,Object> responseMap=new HashMap<String, Object>();
+        Map<String,Object> params=new HashMap<>();
+        params.put("type","BATCHTYPE");
+        List<UniversityDict> universityBatchList=iUniversityDictService.queryList(params,"id","asc");
+        /**
+         * 封装学科门类 本科
+         */
+        List<SubjectTypeDto> bkSubjectTypeDtos=new ArrayList<>();
+        List<Map<String,Object>>  bkSubjectTypes =iMajoredService.getMajoreByParentId(1);
+        for(Map<String,Object> map:bkSubjectTypes){
+            SubjectTypeDto subjectTypeDto= new SubjectTypeDto();
+            subjectTypeDto.setId((Integer)map.get("id"));
+            subjectTypeDto.setName(map.get("name").toString());
+            List<Map<String,Object>> majoredMaps=iMajoredService.getMajoreByParentId(subjectTypeDto.getId());
+            subjectTypeDto.setMajoredType(majoredMaps);
+            bkSubjectTypeDtos.add(subjectTypeDto);
+        }
 
+        /**
+         *封装学科门类 专科
+         */
+        List<SubjectTypeDto> zkSubjectTypeDtos=new ArrayList<>();
+        List<Map<String,Object>>  zkSubjectTypes =iMajoredService.getMajoreByParentId(2);
+        for(Map<String,Object> map:zkSubjectTypes){
+            SubjectTypeDto subjectTypeDto= new SubjectTypeDto();
+            subjectTypeDto.setId((Integer)map.get("id"));
+            subjectTypeDto.setName(map.get("name").toString());
+            List<Map<String,Object>> majoredMaps=iMajoredService.getMajoreByParentId(subjectTypeDto.getId());
+            subjectTypeDto.setMajoredType(majoredMaps);
+            zkSubjectTypeDtos.add(subjectTypeDto);
+        }
+        List<BatchTypeDto> batchTypeDtos=new ArrayList<>();
+        for(UniversityDict universityDict:universityBatchList){
+            BatchTypeDto batchTypeDto=new BatchTypeDto();
+            batchTypeDto.setId(universityDict.getDictId());
+            batchTypeDto.setName(universityDict.getName());
+            if(batchTypeDto.getName().contains("本科")){
+                batchTypeDto.setSubjectType(bkSubjectTypeDtos);
+            }else{
+                batchTypeDto.setSubjectType(zkSubjectTypeDtos);
+            }
+            batchTypeDtos.add(batchTypeDto);
+        }
+        responseMap.put("batchType",batchTypeDtos);
         return responseMap;
     }
 
@@ -43,10 +93,13 @@ public class MajoredController extends BaseController {
      */
     @RequestMapping(value = "/searchMajored",method = RequestMethod.POST)
     @ResponseBody
-    public MajoredResponseDto searchMajored(MajoredQuery query){
-        MajoredResponseDto majoredResponseDto=new MajoredResponseDto();
-
-        return  majoredResponseDto;
+    public Page<SubjectDto> searchMajored(MajoredQuery query){
+        Page<SubjectDto> page=new Page<>();
+         List<SubjectDto> majoredDtos= iMajoredService.searchMajored(query);
+        Integer count=iMajoredService.searchMajoredCount(query);
+        page.setCount(count);
+        page.setList(majoredDtos);
+        return  page;
     }
 
     /**
@@ -58,6 +111,7 @@ public class MajoredController extends BaseController {
     public MajoredDto getMajoredInfo(){
         MajoredDto majoredDto=new MajoredDto();
         String majoredCode=request.getParameter("code");
+        majoredDto=iMajoredService.getMajoredByCode(majoredCode);
         return  majoredDto;
     }
 
@@ -69,7 +123,24 @@ public class MajoredController extends BaseController {
     @ResponseBody
     public MajoredDetailDto getMajoredDetail(){
         MajoredDetailDto majoredDetailDto=new MajoredDetailDto();
+        MajoredDto majoredDto=new MajoredDto();
         String majoredCode=request.getParameter("code");
+        majoredDto=iMajoredService.getMajoredByCode(majoredCode);
+        majoredDetailDto.setMainCourse(majoredDto.getMainCourse());
+        majoredDetailDto.setSimilarMajor(majoredDto.getSimilarMajor());
+        majoredDetailDto.setWorkGuide(majoredDto.getWorkGuide());
+        Map<String,Object> map=new HashMap<>();
+        map.put("type","PROPERTY");//院校类型
+        List<UniversityDict> universityTypeList=iUniversityDictService.queryList(map,"id","asc");
+        List<OpenUniversity> openUniversities=new ArrayList<>();
+        for(UniversityDict universityDict:universityTypeList){
+            OpenUniversity openUniversity=new OpenUniversity();
+            openUniversity.setUniversityType(universityDict.getName());
+            List<Map<String,Object>> universityLs=iMajoredService.getUniversityByCode(majoredCode,universityDict.getName());
+            openUniversity.setUniversityLs(universityLs);
+            openUniversities.add(openUniversity);
+        }
+        majoredDetailDto.setOpenUniversity(openUniversities);
         return majoredDetailDto;
     }
 

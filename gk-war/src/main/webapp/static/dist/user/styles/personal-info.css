@@ -410,7 +410,9 @@ input, textarea {
     color: #b1b0b0 !important;
     text-decoration: none;
     font-size: 14px !important;
-    margin-left: 70px !important; }
+    margin-left: 150px !important;
+    -webkit-transition: all 0.5s;
+            transition: all 0.5s; }
     .header .log-reg a:hover {
       color: #fff !important; }
   .header .user-info-list {
@@ -437,19 +439,19 @@ input, textarea {
       background-color: #353535;
       top: 50px;
       right: -18px; }
-      .header .user-info-list .menu li {
+      .header .user-info-list .menu li a {
         text-align: center;
         line-height: 37px;
         display: block;
         width: 135px;
         border-bottom: 1px solid #3e3e3e;
         font-size: 16px;
-        cursor: pointer; }
-        .header .user-info-list .menu li:hover {
-          background-color: #202020; }
-      .header .user-info-list .menu a {
+        cursor: pointer;
         color: #b1b0b0;
         text-decoration: none; }
+        .header .user-info-list .menu li a:hover {
+          color: #fff;
+          background-color: #202020; }
 
 .footer .bottom-nav {
   padding-top: 50px;
@@ -523,9 +525,9 @@ input, textarea {
   float: left;
   padding: 15px 20px;
   font-size: 16px;
-  color: #505050; }
+  color: #505050;
+  cursor: pointer; }
   .tabs-list li.active {
-    cursor: pointer;
     color: #e35643;
     border-bottom: 2px solid #e35643; }
 
@@ -557,6 +559,38 @@ a.next-btn {
 a.next-btn:hover {
   color: #fff;
   text-decoration: underline; }
+
+.noContent {
+  text-align: center;
+  padding: 100px 0 0;
+  width: 1000px; }
+
+.toTop {
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  z-index: 999;
+  display: none;
+  font-size: 16px;
+  cursor: pointer;
+  overflow: hidden;
+  visibility: visible;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  color: #9c9c9c;
+  font-size: 16px;
+  width: 38px;
+  height: 38px;
+  line-height: 38px;
+  text-align: center;
+  text-decoration: none;
+  _position: absolute;
+  _top: expression(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight); }
+
+.toTop:hover {
+  color: #fff;
+  text-decoration: none;
+  background-color: #999; }
 
 .personal-tab {
   position: relative;
@@ -605,6 +639,14 @@ a.next-btn:hover {
       box-sizing: border-box;
       border: 1px solid #e5e5e5;
       border-radius: 3px; }
+    .content .user-item .group-comm .radius-comm {
+      display: inline-block;
+      width: 60px;
+      height: 40px;
+      line-height: 40px;
+      margin-left: 35px; }
+      .content .user-item .group-comm .radius-comm input[type=radio] {
+        margin-right: 6px; }
     .content .user-item .group-comm .ml35 {
       margin-left: 35px !important; }
     .content .user-item .group-comm .user-select-comm {
@@ -616,3 +658,14 @@ a.next-btn:hover {
       box-sizing: border-box;
       border: 1px solid #e5e5e5;
       border-radius: 3px; }
+    .content .user-item .btn-submit {
+      margin: 60px 0 0 -120px;
+      background-color: #e24d39;
+      font-size: 14px;
+      color: #fff;
+      width: 300px;
+      height: 36px;
+      line-height: 36px;
+      text-align: center;
+      border-radius: 3px;
+      cursor: pointer; }

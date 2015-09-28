@@ -26,7 +26,7 @@
         <div class="search-content ta mt60">
             <span>
                  <input type="text" placeholder="请输入学院名称" id="school_serach"/>
-                 <input type="button" value="搜索"/>
+                 <input type="button" value="搜索" id="search_button"/>
             </span>
         </div>
 

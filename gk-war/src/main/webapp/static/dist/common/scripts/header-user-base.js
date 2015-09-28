@@ -1,41 +1,63 @@
 /**
  * Created by pdeng on 15/9/26.
  */
-define(function (require) {
+define(function (require, exports, modules) {
     var $ = require('$');
-    //获取用户信息
-    function getCookie(name) {
-        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-        if (arr = document.cookie.match(reg)) {
-            return unescape(arr[2]);
-        } else {
-            return null;
-        }
+
+    function GetCookie(sMainName, sSubName) {
+        var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
+        return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
     }
-
-    //if (getCookie('gkuser')) {
-    //    $('.log-reg').show();
-    //} else {
-        $.ajax({
-            url: '/info/getUserAccount.do',
-            dataType: 'json',
-            type: 'get',
-            data: {},
-            success: function (res) {
-                if (res.rtnCode == '0000000') {
-                    var userData = res.bizData;
-                    $('.username').text(userData.name);
-                    if (userData.icon == null || userData.icon == '') {
-                        console.log(userData.icon);
-                        var userImg = '/static/dist/common/images/icon_default.png';
+    $(function () {
+        //判断当前用户cookie是否存在
+        if (!GetCookie("gkuser") || GetCookie("gkuser") == '""') {
+            console.log('没有登录');
+            $('.menu').hide();
+            $('.log-reg').show();
+        } else {
+            console.log('登录状态');
+            $.ajax({
+                url: '/info/getUserAccount.do',
+                dataType: 'json',
+                type: 'get',
+                data: {},
+                success: function (res) {
+                    if (res.rtnCode == '0000000') {
+                        var userData = res.bizData;
+                        $('.account').text(userData.account);
+                        var name = userData.name;
+                        if (name == null || name == '') {
+                            name == userData.account;
+                        }
+                        $('.username').text(name);
+                        var userImg;
+                        if (userData.icon == null || userData.icon == '') {
+                            userImg = '/static/dist/common/images/icon_default.png';
+                        } else {
+                            userImg = userData.icon
+                        }
+                        $('.user-avatar').attr('src', userImg).fadeIn();
                     }
-                    $('.user-avatar').attr('src', userImg);
-                    $('.user-info-list').fadeIn();
                 }
-            }
+            });
+            $('.user-info-list').show();
+        }
+        //登出
+        $('.menu li:last-child').click(function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            $.ajax({
+                type: 'get',
+                url: '/login/logout.do',
+                success: function (res) {
+                    console.log(res);
+                    if (res.rtnCode == '0000000') {
+                        window.location.href = '/index.jsp';
+                    } else {
+                        alert(res.msg);
+                    }
+                }
+            });
         });
-
-    //}
-
-
+    })
 });

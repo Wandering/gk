@@ -46,28 +46,13 @@
                 2015年控制线：<strog>文科 467分</strog>，<strong>理科440分</strong>
             </div>
             <div class="form-control-btn">
-                <input type="button" class="btn" value="开始"/>
-                <input type="button" class="prev-btn" value="返回上一步"/>
+                <input type="button" class="btn" onclick="window.location.href='/after/volunteer-flow3.jsp'" value="开始"/>
+                <input type="button" class="prev-btn" onclick="window.location.href='/after/after.jsp'" value="返回上一步"/>
             </div>
         </div>
     </div>
 </div>
 
 <%@ include file="/common/footer.jsp"%>
-<link rel="stylesheet" href="/static/bower_components/swiper/dist/css/swiper.css"/>
-<script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="/static/bower_components/swiper/dist/js/swiper.jquery.min.js"></script>
-<script>
-    $(function () {
-        //幻灯片
-        var swiper = new Swiper('.swiper-container', {
-            pagination: '.swiper-pagination',
-            paginationClickable: true,
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
-            loop: true
-        });
-    });
-</script>
 </body>
 </html>

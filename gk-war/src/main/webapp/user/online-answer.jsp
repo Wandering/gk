@@ -2,9 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <%@include file="/common/meta.jsp" %>
     <title>在线答疑</title>
     <link rel="stylesheet" href="/static/dist/user/styles/online-answer.min.css"/>
 </head>
@@ -13,12 +11,12 @@
 
 <div class="section w1000">
     <ul class="tabs-list personal-tab">
-        <li><a href="personal-info.jsp">个人信息</a></li>
-        <li><a href="vip-service.jsp">VIP服务</a></li>
-        <li><a href="modify-psd.jsp">修改密码</a></li>
-        <li><a href="app-center.jsp">应用中心</a></li>
-        <li class="active"><a href="online-answer.jsp">在线答疑</a></li>
-        <li><a href="expert-service.jsp">专家服务</a></li>
+        <li><a href="/user/personal-info.jsp">个人信息</a></li>
+        <li><a href="/user/vip-service.jsp">VIP服务</a></li>
+        <li><a href="/user/modify-psd.jsp">修改密码</a></li>
+        <li><a href="/user/app-center.jsp">应用中心</a></li>
+        <li class="active"><a href="/user/online-answer.jsp">在线答疑</a></li>
+        <li><a href="/user/expert-service.jsp">专家服务</a></li>
     </ul>
     <div class="content">
         <div class="toggle-nav">
@@ -29,7 +27,7 @@
              <span>
                  <input type="text" placeholder="请输入专业名称进行搜索">
                  <input type="button" value="搜索">
-                 <button>我要提问</button>
+                 <a herf="/question/ask.jsp">我要提问</a>
             </span>
         </div>
         <div class="detail-content">
@@ -61,6 +59,8 @@
 </div>
 
 <%@include file="/common/footer.jsp"%>
-
+<script>
+    seajs.use("/static/src/user/scripts/online-answer");
+</script>
 </body>
 </html>

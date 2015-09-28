@@ -85,12 +85,13 @@ define(function (require) {
         },
         getOptions: function() {
             var that = this;
-            //$.get('', function(data) {
-            //    if ('0000000' === data.rtnCode) {
-            //        that.render(data.bizData.batchType);
-            //    }
-            //});
-            that.render(testData.batchType);
+            $.get('/majored/getInitInfo.do', function(data) {
+                if ('0000000' === data.rtnCode) {
+                    if (data.bizData.batchType) {
+                        that.render(data.bizData.batchType);
+                    }
+                }
+            });
         },
         getProfession: function(pageNo) {
             var batchTypeId = $('#batch a.active').attr('data-id');
@@ -120,28 +121,35 @@ define(function (require) {
 
             var search = $('#search').val();
 
-            var Url = '';
-
-            var url = Url + '?batchTypeId=' + batchTypeId + '&batchTypeName=' + batchTypeName
-                + '&subjectTypeId=' + subjectTypeId + '&subjectTypeName=' + subjectTypeName
-                + '&majoredTypeId=' + majoredTypeId + '&majoredTypeName=' + majoredTypeName
-                + '&pageSize=10&pageNo=' + pageNo + '&search=' + search;
             var that = this;
-            //$.get(url, function(data) {
-            //    if ('0000000' === data.rtnCode) {
-            //        var schoolList = data.bizData.subjectList;
-            //        that.renderProfessionList(schoolList);
-            //        if (pageNo == 1) {
-            //            that.renderPage(1, data.bizData.pageCount);
-            //        }
-            //    }
-            //});
-
-            var schoolList = profession.subjectList;
-            that.renderProfessionList(schoolList);
-            if (pageNo == 1) {
-                that.renderPage(1, profession.pageCount);
-            }
+            $.ajax({
+                type: 'post',
+                url: '/majored/searchMajored.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    batchTypeId:batchTypeId,
+                    batchTypeName:batchTypeName,
+                    subjectTypeId:subjectTypeId,
+                    subjectTypeName:subjectTypeName,
+                    majoredTypeId:majoredTypeId,
+                    majoredTypeName:majoredTypeName,
+                    pageSize:10,
+                    pageNo:pageNo,
+                    searchName:search
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if ('0000000' === data.rtnCode) {
+                        var schoolList = data.bizData.subjectList;
+                        that.renderProfessionList(schoolList);
+                        if (pageNo == 1) {
+                            that.renderPage(1, data.bizData.pageCount);
+                        }
+                    }
+                },
+                error: function(data) {
+                }
+            });
         },
         renderProfessionList: function(data) {
             var html = [], i = 0, len = data.length;
@@ -212,6 +220,10 @@ define(function (require) {
                     }
                 }
             });
+        },
+        getSearch: function() {
+            this.curPage = 1;
+            this.getProfession(1);
         }
     };
 
@@ -287,5 +299,11 @@ define(function (require) {
 
     $(document).ready(function() {
         Profession.getOptions();
+        $('#search_button').on('click', function() {
+            var search = $('#search').val();
+            if (search) {
+                Profession.getSearch();
+            }
+        });
     });
 });
