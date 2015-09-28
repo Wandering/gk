@@ -464,10 +464,7 @@ input, textarea {
   display: none;
   position: absolute;
   top: 40px;
-  overflow: hidden;
   border-bottom: 1px solid #51a9e1;
-  width: auto;
-  height: 40px;
   z-index: 444;
   white-space: nowrap; }
 
