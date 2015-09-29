@@ -1032,6 +1032,8 @@ h1 {
           color: #444;
           width: 90%;
           margin: 20px 0 10px 20px; }
+        .info-content .info ul li.integet-line {
+          width: 90%; }
 
 #category {
   text-align: right;
