@@ -8,6 +8,7 @@ import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.domain.Orders;
+import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.controller.market.query.OrdersQuery;
 import cn.thinkjoy.gk.service.IOrdersService;
@@ -56,7 +57,13 @@ public class OrdersController extends BaseController{
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
         }
 
-        String userId = getCookieValue();
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+
+        Long userId = userAccountPojo.getId();
 
         String orderNo = String.valueOf(System.currentTimeMillis())+userId;
 

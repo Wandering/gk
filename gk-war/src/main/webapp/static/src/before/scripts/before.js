@@ -177,11 +177,14 @@ define(function (require) {
     $('#college-yzm').on('click',function(){
         $('#college-yzm').attr('src','/verifyCode/randomVerifyCode.do?type=1&code=' + Math.random());
     }).attr('src','/verifyCode/randomVerifyCode.do?type=1');
+
+
     // 院校推荐
     $('#yxtj-sub').on('click', function () {
         var scoreV = $('#score-input').val().trim();
         var batchV = $('input[name="batch"]:checked').val();
         var subjectTypeV = $('input[name="subjectType"]:checked').val();
+        var yzmDreamV = $('#college-yzm').val().trim();
         if (scoreV == '') {
             $('.error-tips').text('请输入分数').fadeIn(1000).fadeOut(1000);
             return false;
@@ -194,6 +197,10 @@ define(function (require) {
             $('.error-tips').text('请选择文理科').fadeIn(1000).fadeOut(1000);
             return false;
         }
+        if (yzmDreamV == '') {
+            $('.error-tips').text('请填写验证码').fadeIn(1000).fadeOut(1000);
+            return false;
+        }
         $.ajax({
             url: '/before/collegeRecommend/getCollegeList.do',
             type: 'GET',
@@ -201,16 +208,27 @@ define(function (require) {
             data: {
                 "m_aggregateScore": scoreV,
                 "m_batch": batchV,
-                "m_kelei": subjectTypeV
+                "m_kelei": subjectTypeV,
+                "code": yzmDreamV
             },
             success: function (res) {
                 //console.log(res)
+                if (res.rtnCode == "1000006") {
+                    $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+                    return;
+                }
                 if (res.rtnCode == "0000000") {
                     $('#volunteer-flow3-layer,.tansLayer').show();
                     $('#score-num').text(scoreV+"分");
                     $('#batchV').text(batchV);
                     $('#subjectTypeV').text(subjectTypeV);
                     var dataJson = res.bizData.result.data;
+
+                    if (!dataJson) {
+                        $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+                        return;
+                    }
+
                     for (var i = 0; i < dataJson.length; i++) {
                         if (dataJson[i].status == 0) {
                             $('#no-school' + i).show();
@@ -274,27 +292,38 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
+                if (res.rtnCode == "1000006") {
+                    $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+                    return;
+                }
                 var data = $.parseJSON(res.bizData);
-                console.log(data);
+
+                if (!data) {
+                    $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+                    return;
+                }
+
                 if (res.rtnCode == "0000000") {
+                    $('#dream-list').html('');
                     $('#dream-school-layer,.tansLayer').show();
                     $('#dreamScoreInfo').text(dreamScoreV);
                     $('#dreamSubjectTypeInfo').text(dreamSubjectTypeV);
                     $('#dreamSchoolInfo').text(dreamSchoolV);
-
                     for(var i=0;i<data.data.length;i++){
 
-
+                        var m_averagescores = data.data[i].m_averagescores;
+                        var m_batch = data.data[i].m_batch;
+                        var m_lowestscore = data.data[i].m_lowestscore;
                         var dreamSchoolList = ''
                             +'<ul>'
-                            +'<li class="pc">三批本科</li>'
+                            +'<li class="pc">'+ m_batch +'</li>'
                             +'<li class="result1">'
                             +'<span class="t">所需最低分数</span>'
-                            +'<span class="num"><strong>639</strong>分</span>'
+                            +'<span class="num"><strong>'+ m_averagescores +'</strong>分</span>'
                             +'</li>'
                             +'<li class="result2">'
                             +'<span class="t">所需平均分数</span>'
-                            +'<span class="num"><strong>652</strong>分</span>'
+                            +'<span class="num"><strong>'+ m_lowestscore +'</strong>分</span>'
                             +'</li>'
                             +'</ul>';
                         $('#dream-list').append(dreamSchoolList);
@@ -334,6 +363,10 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
+                if (res.rtnCode == "1000006") {
+                    $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+                    return;
+                }
                 var data = $.parseJSON(res.bizData);
                 if (!data) {
                     $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);

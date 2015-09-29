@@ -292,6 +292,10 @@ define(function (require) {
         var birthdayDate = Date.parse(new Date(str)) / 1000;
         var name = $('.name').val().trim();
 
+        if (name.length ==0) {
+            $('.error-tips').text('用户名不能为空').fadeIn();
+            return false;
+        }
         if (name.length > 10) {
             $('.error-tips').text('用户名不能大于10个字').fadeIn();
             return false;
