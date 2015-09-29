@@ -176,8 +176,9 @@ define(function (require) {
                 success: function (res) {
                     console.log(res);
                     if (res.rtnCode == '0000000') {
-                        window.location.href = 'http://' + window.location.host + '/login/login.jsp';
-                    } else {
+                        window.location.assign('http://' + window.location.host + '/user/personal-info.jsp');
+                        //window.location.href = 'http://'+window.location.host+'/login/login.jsp';
+                    }else{
                         Dom.errorTip2(res.msg);
                     }
                 }
