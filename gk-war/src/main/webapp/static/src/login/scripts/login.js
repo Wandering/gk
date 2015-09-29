@@ -172,7 +172,7 @@ define(function (require) {
                 success: function (res) {
                     console.log(res);
                     if (res.rtnCode == '0000000') {
-                        window.location.href = 'http://'+window.location.host+'/login.jsp';
+                        window.location.href = 'http://'+window.location.host+'/login/login.jsp';
                     }else{
                         Dom.errorTip2(res.msg);
                     }
