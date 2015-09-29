@@ -403,15 +403,18 @@ input, textarea {
     display: inline-block;
     position: relative; }
     .header .main-menu > li a {
-      margin: 0 25px;
+      display: inline-block;
+      height: 50px;
+      line-height: 50px;
+      width: 100px;
+      text-align: center;
       color: #b1b0b0;
-      -webkit-transition: all 0.5s;
-              transition: all 0.5s;
       text-decoration: none; }
       .header .main-menu > li a:hover {
         color: #fff; }
       .header .main-menu > li a.active {
-        color: #fff; }
+        color: #fff;
+        background-color: #e24333; }
   .header .log-reg a {
     color: #b1b0b0 !important;
     text-decoration: none;
@@ -466,7 +469,6 @@ input, textarea {
   max-height: 0;
   position: absolute;
   top: 100%;
-  left: -11px;
   z-index: 0;
   -webkit-perspective: 400px;
   -ms-perspective: 400px;
@@ -484,7 +486,7 @@ input, textarea {
       text-align: center;
       line-height: 37px;
       display: block;
-      width: 135px;
+      width: 100px;
       border-bottom: 1px solid #3e3e3e;
       font-size: 16px;
       cursor: pointer;
@@ -1208,7 +1210,9 @@ a.next-btn:hover {
     .hot-list li .title-info h3 {
       font-size: 16px;
       color: #333;
-      margin: 10px 0; }
+      margin: 10px 0;
+      overflow: hidden;
+      white-space: nowrap; }
     .hot-list li .title-info h6 {
       font-size: 12px;
       color: #817f7f;
