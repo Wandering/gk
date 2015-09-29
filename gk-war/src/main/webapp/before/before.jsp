@@ -197,7 +197,7 @@
 </div>
 
 
-<div class="main-volunteer-box">
+<div class="main-volunteer-box" id="dream-school">
     <div class="school-eval w1000">
         <div class="tip">
             <p>院校评测使用的分数，位次数据，招生计划为往年数据，结果仅供参考，且系统推荐学校有限制，若要使用最新，更全面，更多推荐学校，请升级为VIP。</p>
@@ -208,24 +208,21 @@
             <h6>直接系统告诉我可以报的院校名称，容我考虑考虑</h6>
         </div>
         <div class="eval-right">
+            <div class="error-tips hide"></div>
             <div class="form-control">
                 <label>分数</label>
-                <input type="text" class="score-input" placeholder="请输入分数"/>
+                <input type="text" class="score-input" id="dream-score-input" placeholder="请输入分数"/>
             </div>
             <div class="form-control">
                 <label>院校</label>
-                <input type="text" class="school-input" placeholder="请填写理想院校"/>
+                <input type="text" class="school-input" id="dream-school-input" placeholder="请填写理想院校"/>
             </div>
-            <div class="category mt10">
-                <label>选择文理科：</label>
-                <ul class="group-radio">
-                    <li>
-                        <span><input type="radio" name="category" value="文科" />文科</span>
-                    </li>
-                    <li>
-                        <span><input type="radio" name="category" value="理科" />理科</span>
-                    </li>
-                </ul>
+            <div class="category mt10" style="height: 40px;">
+                <span class="t">选择文理科：</span>
+                <div class="group-radio">
+                        <label><input type="radio" name="dreamSubjectType" value="文史" />文史</label>
+                        <label><input type="radio" name="dreamSubjectType" value="理工" />理工</label>
+                </div>
             </div>
             <div class="indent mt10">
                 <span class="ident-code">

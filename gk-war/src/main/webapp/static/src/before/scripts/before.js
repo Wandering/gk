@@ -159,9 +159,6 @@ define(function (require) {
         $('.main-volunteer-box:eq(' + index + ')').show().siblings('.main-volunteer-box').hide();
     });
     // 院校评测提交
-    $('#evaluating-sub').on('click', function () {
-        $('.tansLayer,.evaluating-layer').show();
-    });
     $('.evaluating-layer').on('click', '.close-btn', function () {
         $('.tansLayer,.evaluating-layer').hide();
     });
@@ -224,6 +221,68 @@ define(function (require) {
                         }
                     }
                 }
+            }
+        });
+    })
+
+    $('#volunteer-flow3-layer').on('click','.close-btn',function(){
+        $('#volunteer-flow3-layer,.tansLayer').hide();
+    })
+
+
+
+
+
+
+
+    // 院校测评
+    $('#evaluating-sub').on('click', function () {
+        var dreamScoreV = $('#dream-score-input').val().trim();
+        var dreamSchoolV = $('#dream-school-input').val().trim();
+        var subjectTypeV = $('input[name="dreamSubjectType"]:checked').val();
+        if (dreamScoreV == '') {
+            $('.error-tips').text('请输入分数').fadeIn(1000).fadeOut(2000);
+            return false;
+        }
+        if (dreamSchoolV == '') {
+            $('.error-tips').text('请输入分数').fadeIn(1000).fadeOut(2000);
+            return false;
+        }
+        if (subjectTypeV == undefined) {
+            $('.error-tips').text('请选择文理科').fadeIn(1000).fadeOut(2000);
+            return false;
+        }
+        $.ajax({
+            url: '/appraisal/schoolTest.do',
+            type: 'GET',
+            dataType: 'JSON',
+            data: {
+                "m_aggregateScore": dreamScoreV,
+                "m_university_name": dreamSchoolV,
+                "m_kelei": subjectTypeV
+            },
+            success: function (res) {
+                console.log(res)
+                //if (res.rtnCode == "0000000") {
+                //    $('#volunteer-flow3-layer,.tansLayer').show();
+                //    $('#score-num').text(scoreV+"分");
+                //    $('#batchV').text(batchV);
+                //    $('#subjectTypeV').text(subjectTypeV);
+                //    var dataJson = res.bizData.result.data;
+                //    for (var i = 0; i < dataJson.length; i++) {
+                //        if (dataJson[i].status == 0) {
+                //            $('#no-school' + i).show();
+                //        } else {
+                //            var schoolData = dataJson[i].data;
+                //            for (var j = 0; j < schoolData.length; j++) {
+                //                var m_university_code = schoolData[j].m_university_code;
+                //                var m_university_name = schoolData[j].m_university_name;
+                //                var schoolList = '<div><a target="_blank" href="/consult/school_detile.jsp?id='+ m_university_code +'">'+ m_university_name +'</a></div>';
+                //                $('#school-list'+i).append(schoolList).show();
+                //            }
+                //        }
+                //    }
+                //}
             }
         });
     })

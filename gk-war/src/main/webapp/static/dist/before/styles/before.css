@@ -729,3 +729,6 @@ ul.main-video-list {
         color: #444; }
       .result-info ul li span {
         color: #f0ad4e; }
+
+.error-tips {
+  margin-bottom: 10px; }
