@@ -1,6 +1,8 @@
 define(function (require) {
     var $ = require('$');
     require('swiper');
+    require('getTime');
+
 
     var url = 'http://' + window.location.host;
     $(function () {
@@ -63,11 +65,11 @@ define(function (require) {
                 $.each(dataJson,function(i,v){
                     template += '<li>' +
                         '<div class="icon ta"> ' +
-                        '<span>4月25日</span> ' +
+                        '<span>'+ getTime1(v.lastModDate) +'</span> ' +
                         '</div> ' +
                         '<div class="title-info"> ' +
                         '<h3>'+v.hotInformation+'</h3> ' +
-                        '<h6>'+v.informationContent+'</h6> ' +
+                        '<h6>'+v.informationSubContent+'</h6> ' +
                         '</div> ' +
                         '</li>'
                 });

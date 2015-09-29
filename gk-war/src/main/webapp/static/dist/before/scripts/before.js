@@ -159,9 +159,6 @@ define(function (require) {
         $('.main-volunteer-box:eq(' + index + ')').show().siblings('.main-volunteer-box').hide();
     });
     // 院校评测提交
-    $('#evaluating-sub').on('click', function () {
-        $('.tansLayer,.evaluating-layer').show();
-    });
     $('.evaluating-layer').on('click', '.close-btn', function () {
         $('.tansLayer,.evaluating-layer').hide();
     });
@@ -176,21 +173,32 @@ define(function (require) {
         $('#main-volunteer-tabs li').eq(1).click();
         $('html,body').animate({scrollTop: ($('#main-volunteer-box').offset().top)}, 800);
     }
+
+    $('#college-yzm').on('click',function(){
+        $('#college-yzm').attr('src','/verifyCode/randomVerifyCode.do?type=1&code=' + Math.random());
+    }).attr('src','/verifyCode/randomVerifyCode.do?type=1');
+
+
     // 院校推荐
     $('#yxtj-sub').on('click', function () {
         var scoreV = $('#score-input').val().trim();
         var batchV = $('input[name="batch"]:checked').val();
         var subjectTypeV = $('input[name="subjectType"]:checked').val();
+        var yzmDreamV = $('#college-yzm').val().trim();
         if (scoreV == '') {
-            $('.error-tips').text('请输入分数').fadeIn(1000).fadeOut(2000);
+            $('.error-tips').text('请输入分数').fadeIn(1000).fadeOut(1000);
             return false;
         }
         if (batchV == undefined) {
-            $('.error-tips').text('请选择批次').fadeIn(1000).fadeOut(2000);
+            $('.error-tips').text('请选择批次').fadeIn(1000).fadeOut(1000);
             return false;
         }
         if (subjectTypeV == undefined) {
-            $('.error-tips').text('请选择文理科').fadeIn(1000).fadeOut(2000);
+            $('.error-tips').text('请选择文理科').fadeIn(1000).fadeOut(1000);
+            return false;
+        }
+        if (yzmDreamV == '') {
+            $('.error-tips').text('请填写验证码').fadeIn(1000).fadeOut(1000);
             return false;
         }
         $.ajax({
@@ -200,16 +208,27 @@ define(function (require) {
             data: {
                 "m_aggregateScore": scoreV,
                 "m_batch": batchV,
-                "m_kelei": subjectTypeV
+                "m_kelei": subjectTypeV,
+                "code": yzmDreamV
             },
             success: function (res) {
                 //console.log(res)
+                if (res.rtnCode == "1000006") {
+                    $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+                    return;
+                }
                 if (res.rtnCode == "0000000") {
                     $('#volunteer-flow3-layer,.tansLayer').show();
                     $('#score-num').text(scoreV+"分");
                     $('#batchV').text(batchV);
                     $('#subjectTypeV').text(subjectTypeV);
                     var dataJson = res.bizData.result.data;
+
+                    if (!dataJson) {
+                        $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+                        return;
+                    }
+
                     for (var i = 0; i < dataJson.length; i++) {
                         if (dataJson[i].status == 0) {
                             $('#no-school' + i).show();
@@ -230,9 +249,154 @@ define(function (require) {
 
     $('#volunteer-flow3-layer').on('click','.close-btn',function(){
         $('#volunteer-flow3-layer,.tansLayer').hide();
+    });
+
+    // 院校评测验证码
+    $('#yzmDreamSchool').on('click',function(){
+        $('#yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=2&code=' + Math.random());
+    }).attr('src','/verifyCode/randomVerifyCode.do?type=2');
+
+
+
+
+    // 院校测评
+    $('#evaluating-sub').on('click', function () {
+        var dreamScoreV = $('#dream-score-input').val().trim();
+        var dreamSchoolV = $('#dream-school-input').val().trim();
+        var dreamSubjectTypeV = $('input[name="dreamSubjectType"]:checked').val();
+        var yzmDreamV = $('#yzmDream').val();
+        if (dreamScoreV == '') {
+            $('.error-tips').text('请输入分数').fadeIn(1000).fadeOut(1000);
+            return false;
+        }
+        if (dreamSchoolV == '') {
+            $('.error-tips').text('请输入院校').fadeIn(1000).fadeOut(1000);
+            return false;
+        }
+        if (dreamSubjectTypeV == undefined) {
+            $('.error-tips').text('请选择文理科').fadeIn(1000).fadeOut(1000);
+            return false;
+        }
+        if (yzmDreamV == '') {
+            $('.error-tips').text('请填写验证码').fadeIn(1000).fadeOut(1000);
+            return false;
+        }
+        $.ajax({
+            url: '/appraisal/schoolTest.do',
+            type: 'GET',
+            dataType: 'JSON',
+            data: {
+                "m_aggregateScore": dreamScoreV,
+                "m_university_name": dreamSchoolV,
+                "m_kelei": dreamSubjectTypeV,
+                "code": yzmDreamV
+            },
+            success: function (res) {
+                if (res.rtnCode == "1000006") {
+                    $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+                    return;
+                }
+                var data = $.parseJSON(res.bizData);
+
+                if (!data) {
+                    $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+                    return;
+                }
+
+                if (res.rtnCode == "0000000") {
+                    $('#dream-list').html('');
+                    $('#dream-school-layer,.tansLayer').show();
+                    $('#dreamScoreInfo').text(dreamScoreV);
+                    $('#dreamSubjectTypeInfo').text(dreamSubjectTypeV);
+                    $('#dreamSchoolInfo').text(dreamSchoolV);
+                    for(var i=0;i<data.data.length;i++){
+
+                        var m_averagescores = data.data[i].m_averagescores;
+                        var m_batch = data.data[i].m_batch;
+                        var m_lowestscore = data.data[i].m_lowestscore;
+                        var dreamSchoolList = ''
+                            +'<ul>'
+                            +'<li class="pc">'+ m_batch +'</li>'
+                            +'<li class="result1">'
+                            +'<span class="t">所需最低分数</span>'
+                            +'<span class="num"><strong>'+ m_averagescores +'</strong>分</span>'
+                            +'</li>'
+                            +'<li class="result2">'
+                            +'<span class="t">所需平均分数</span>'
+                            +'<span class="num"><strong>'+ m_lowestscore +'</strong>分</span>'
+                            +'</li>'
+                            +'</ul>';
+                        $('#dream-list').append(dreamSchoolList);
+                    }
+
+                }
+            }
+        });
+    });
+
+    $('#dream-school-layer').on('click','.close-btn',function(){
+        $('#volunteer-flow3-layer,.tansLayer').hide();
     })
 
+    $('#precedence-yzmDreamSchool').on('click',function(){
+        $('#precedence-yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=3&code=' + Math.random());
+    }).attr('src','/verifyCode/randomVerifyCode.do?type=3');
 
+    //获得位次
+    $('#precedence-sub').on('click', function(e) {
+        var dreamScoreV = $('#precedence-score-input').val().trim();
+        var yzmDreamV = $('#precedence-yzmDream').val();
+        if (dreamScoreV == '') {
+            $('.error-tips').text('请输入分数').fadeIn(1000).fadeOut(1000);
+            return false;
+        }
+        if (yzmDreamV == '') {
+            $('.error-tips').text('请填写验证码').fadeIn(1000).fadeOut(1000);
+            return false;
+        }
+        $.ajax({
+            url: '/appraisal/findRanking.do',
+            type: 'GET',
+            dataType: 'JSON',
+            data: {
+                "m_aggregateScore": dreamScoreV,
+                "code": yzmDreamV
+            },
+            success: function (res) {
+                if (res.rtnCode == "1000006") {
+                    $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+                    return;
+                }
+                var data = $.parseJSON(res.bizData);
+                if (!data) {
+                    $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+                    return;
+                }
+                if (res.rtnCode == "0000000") {
+                    $('#precedence-school-layer,.tansLayer').show();
+                    $('#precedenceScoreInfo').text(dreamScoreV);
+                    $('#current-year').text(data.m_years);
+                    var dreamSchoolList = ''
+                        +'<ul>'
+                        +'<li class="result1">'
+                        +'<span class="t">文史类</span>'
+                        +'<span class="num"><b>' + (data.m_ws_ranking || '') + '</b>位</span>'
+                        +'</li>'
+                        +'<li class="result2">'
+                        +'<span class="t">理工类</span>'
+                        +'<span class="num"><b>' + (data.m_lg_ranking || '') + '</b>位</span>'
+                        +'</li>'
+                        +'</ul>';
+                    $('#precedence-list').append(dreamSchoolList);
+
+                    $('#confirm').on('click', function(e) {
+                        $('#precedence-school-layer,.tansLayer').hide();
+                    });
+
+                }
+            }
+        });
+    });
 
 
 });

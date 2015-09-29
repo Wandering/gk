@@ -2,39 +2,35 @@
 
 @import "../../common/styles/comm.scss";
 
-*{
-  margin: 0;
-  padding: 0;
-}
-
-.mt20{
+.mt20 {
   margin-top: 20px;
 }
-.mt60{
+
+.mt60 {
   margin-top: 60px;
 }
 
-
-
 @mixin arrow-up {
   content: '';
-  width:0;
-  height:0;
-  border-left:20px solid transparent;
-  border-right:20px solid transparent;
-  border-bottom:20px solid #f6f6f6;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid #f6f6f6;
   position: relative;
   top: -56px;
 }
 
-.detile-content{
+.detile-content {
   padding-left: 20px;
 }
-.detile-header{
+
+.detile-header {
   height: 20px;
   font-size: 16px;
 }
-.order-number{
+
+.order-number {
   display: inline-block;
   width: 20px;
   height: 20px;
@@ -44,16 +40,18 @@
   background-color: #626161;
   color: #dedede;
 }
-.detile-title{
+
+.detile-title {
   color: #626161;
   margin-left: 10px;
 }
-.detile-info{
+
+.detile-info {
   background-color: #f6f6f6;
   padding: 20px;
   border: 1px solid #edecec;
   line-height: 1.8;
-  &:before{
+  &:before {
     @include arrow-up;
   }
 }
@@ -62,40 +60,67 @@
   margin-bottom: 50px;
 }
 
-.search-result-num{
+.search-result-num {
   font-size: 20px;
   color: #6f6d6d;
 
-  span{
+  span {
     font-size: 16px;
     color: #6f6d6d;
     margin-left: 20px;
   }
 }
 
-
-
-.content{
-  .second-title{
+.content {
+  .second-title {
     font-size: 14px;
     color: #858282;
     text-align: center;
     line-height: 50px;
   }
-  .step-banner{
+  .step-banner {
     margin-top: 30px;
     margin-bottom: 53px;
     width: 1000px;
     height: 73px;
   }
-  table{
+  table {
     width: 100%;
-    .t-title{
+    margin-bottom: 45px;
+    .t-title {
+      line-height: 40px;
       background-color: #f5f5f5;
       color: #333;
       font-size: 14px;
       border: 1px solid $borderColor;
+      font-weight: bold;
     }
+    .t-content {
+      line-height: 34px;
+      border: 1px solid $borderColor;
+      border-top: none;
+      text-align: left;
+      font-size: 14px;
+      text-indent: 40px;
+      p{
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+  .tip-board {
+    h2 {
+      font-size: 16px;
+      color: #8a6d3b;
+    }
+    background-color: #fcf8e3;
+    border-radius: 5px;
+    padding: 10px;
+    line-height: 12px;
+    font-size: 12px;
+    color: #8a6d45;
+    border: 1px solid #faecce;
+    margin-bottom: 40px;
   }
 }
 
