@@ -95,11 +95,11 @@ public class AppraisalController extends BaseController {
         Object resultCode = session.getAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value);
 
         if(resultCode==null){
-            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
 
         if(!resultCode.toString().equals(code.toUpperCase())){
-            throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
 
         session.removeAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value);
@@ -141,11 +141,11 @@ public class AppraisalController extends BaseController {
         Object resultCode = session.getAttribute(VerificationKeyConst.GET_THE_ORDER+value);
 
         if(resultCode==null){
-            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
 
         if(!resultCode.toString().equals(code.toUpperCase())){
-            throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
         session.removeAttribute(VerificationKeyConst.GET_THE_ORDER+value);
 
