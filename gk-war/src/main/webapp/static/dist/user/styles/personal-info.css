@@ -703,6 +703,19 @@ a.next-btn:hover {
       border-radius: 3px;
       cursor: pointer; }
 
+#uploadify {
+  margin: 20px 0;
+  background-color: #e24d39;
+  width: 70px;
+  text-align: center;
+  line-height: 22px;
+  height: 22px;
+  cursor: pointer;
+  color: #fff;
+  border-radius: 3px;
+  font-size: 12px;
+  position: relative; }
+
 .error-tips {
   padding: 10px;
   text-align: center;
@@ -711,3 +724,8 @@ a.next-btn:hover {
   color: #fff;
   border-radius: 3px;
   width: 78%; }
+
+#SWFUpload_0 {
+  position: absolute;
+  z-index: 1;
+  left: 0; }
