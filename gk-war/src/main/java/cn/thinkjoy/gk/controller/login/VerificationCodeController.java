@@ -23,7 +23,7 @@ import java.util.Random;
 
 @Controller
 @Scope("prototype")
-@RequestMapping("/verification/code")
+@RequestMapping("/verifyCode")
 public class VerificationCodeController extends BaseController {
 
 	private static final Logger LOGGER= LoggerFactory.getLogger(VerificationCodeController.class);
@@ -109,7 +109,7 @@ public class VerificationCodeController extends BaseController {
 
 	@RequestMapping(value = "verifyCode",method = RequestMethod.GET)
 	@ResponseBody
-	public String verifyCode(@RequestParam(value="type",required = false) String type,
+	public boolean verifyCode(@RequestParam(value="type",required = false) String type,
 							 @RequestParam(value="code",required = false) String code){
 		Object resultCode = null;
 		if(VerificationKeyConst.COLLEGE_RECOMMENDATION_TYPE==Integer.valueOf(type)){
@@ -122,15 +122,18 @@ public class VerificationCodeController extends BaseController {
 			throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
 		}
 
+		boolean flag = true;
 		if(resultCode==null){
+			flag = false;
 			throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
 		}
 
 		if(!resultCode.toString().equals(code)){
+			flag = false;
 			throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
 		}
 
-		return "success";
+		return flag;
 	}
 
 }
