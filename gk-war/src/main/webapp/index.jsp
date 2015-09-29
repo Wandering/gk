@@ -41,14 +41,13 @@
                         <a target="_blank" href="/consult/profession_info.jsp" class="name">专业选择</a>
                         <span class="num">4</span>
 
-                        <p class="txt">研发智能测评系统，快速测评适合考生就读的专业以及就业方向，同时提供本科十三大类六百多个专业，专科十九大类一千多个专业相关信息</p>
+                        <p class="txt">专业测评系统测定适合专业及就业方向，查询本，专科近两千个专业相关信息</p>
                     </li>
                     <li class="item">
                         <img src="/static/dist/index/images/flow-img5.png" alt=""/>
                         <a target="_blank" href="/after/after.jsp" class="name">志愿指导</a>
                         <span class="num">5</span>
-
-                        <p class="txt">根据考生分数和位次快速锁定适合填报的院校，并按照冲稳保垫的原则对院校进行分类和排序，并出具评测报告，同时还提供线上线下专家一对一服务</p>
+                        <p class="txt">根据分数和位次快速锁定院校，并对院校进行分类和排序，同时提供线上线下专家一对一服务</p>
                     </li>
                 </ul>
             </div>
