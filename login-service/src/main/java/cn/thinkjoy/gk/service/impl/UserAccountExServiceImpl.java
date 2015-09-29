@@ -76,8 +76,6 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
             UserInfo userInfo = new UserInfo();
             userInfo.setId(userAccount.getId());
             userInfo.setToken(UUID.randomUUID().toString());
-            String s = null;
-            s.length();
             userInfoExDAO.insertUserInfo(userInfo);
             UserVip userVip = new UserVip();
             userVip.setId(userAccount.getId());
