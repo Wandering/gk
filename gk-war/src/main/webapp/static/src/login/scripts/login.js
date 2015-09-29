@@ -121,8 +121,6 @@ define(function (require) {
                                             Dom.codeText.attr('disabled', false)
                                         }
                                     }, 1000);
-
-
                                 } else {
                                     Dom.errorTip2.text(res.msg).fadeIn();
                                 }
@@ -179,7 +177,7 @@ define(function (require) {
                         window.location.assign('http://' + window.location.host + '/user/personal-info.jsp');
                         //window.location.href = 'http://'+window.location.host+'/login/login.jsp';
                     }else{
-                        Dom.errorTip2(res.msg);
+                        Dom.errorTip2.text(res.msg);
                     }
                 }
             })
