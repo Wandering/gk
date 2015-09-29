@@ -22,7 +22,7 @@
     <div class="content">
         <div class="search-content">
              <span>
-                 <input type="text" id="search" placeholder="请输入专业名称进行搜索">
+                 <input type="text" id="search" placeholder="请输入关键字进行搜索">
                  <input type="button" value="搜索" id="btn-search">
                  <!--<button>我要预约</button>-->
                  <a href="/user/order-expert.jsp">我要预约</a>
@@ -31,14 +31,11 @@
         <div class="content-list">
             <div class="content-title-list">
                 <div class="col-3 t-indent">标题</div>
-                <div class="col-1">时间</div>
+                <div class="col-1 t-time">时间</div>
             </div>
             <div class="data-list">
-                <a class="row" href="javascript:void(0);" id="go-detail">
-                    <div class="col-3" id="title" data-id=""></div>
-                    <div class="col-1" id="createTime"></div>
-                </a>
             </div>
+            <div class="more hide"><a href="javascript:void(0)" class="next-btn">加载更多...</a></div>
         </div>
     </div>
 </div>
