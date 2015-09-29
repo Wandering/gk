@@ -159,6 +159,7 @@ define(function (require) {
                         } else {
                             $('#profession_list').html('<p style="text-align: center">暂无信息！</p>');
                             $('#page').html('');
+                            $('.record').html('');
                         }
                     }
                 },
@@ -261,7 +262,9 @@ define(function (require) {
             var that = this;
             $('#page a').on('click', function(e) {
                 if ($(this).hasClass('previous-page')) {
-                    that.curPage--;
+                    if (that.curPage > 1) {
+                        that.curPage--;
+                    }
                     if (that.curPage > 0) {
                         if (!$('#page a.' + that.curPage)[0] && that.totalPage > 10) {
                             that.refreshPage(that.curPage);
@@ -272,7 +275,9 @@ define(function (require) {
                         that.getProfession(that.curPage);
                     }
                 } else if ($(this).hasClass('next-page')) {
-                    that.curPage++;
+                    if (that.curPage < that.totalPage) {
+                        that.curPage++;
+                    }
                     if (that.curPage <= that.totalPage) {
                         if (!$('#page a.' + that.curPage)[0] && that.totalPage > 10) {
                             that.refreshPage(that.curPage);
