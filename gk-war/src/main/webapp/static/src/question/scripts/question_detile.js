@@ -101,12 +101,16 @@ define(function (require) {
                     that.renderList('hot', data.bizData);
                 }
             });
+        },
+        updateReadNum: function(id) {
+            $.get('/question/updateBrowseNum.do?id=' + id, function(data) {});
         }
     }
 
     $(document).ready(function() {
         var id = getUrLinKey('id');
         Question.get(id);
+        Question.updateReadNum(id);
         Question.getNew();
         Question.getHot();
     });
