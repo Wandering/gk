@@ -90,7 +90,9 @@ public class AppraisalController extends BaseController {
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
 
-        Object resultCode = session.getAttribute(VerificationKeyConst.COLLEGE_EVALUATION+getCookieValue());
+        String value = getCookieValue();
+
+        Object resultCode = session.getAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value);
 
         if(resultCode==null){
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
@@ -99,6 +101,9 @@ public class AppraisalController extends BaseController {
         if(!resultCode.toString().equals(code.toUpperCase())){
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
         }
+
+        session.removeAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value);
+
         String returnStr = null;
         try {
 
@@ -131,7 +136,9 @@ public class AppraisalController extends BaseController {
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
 
-        Object resultCode = session.getAttribute(VerificationKeyConst.GET_THE_ORDER+getCookieValue());
+        String value = getCookieValue();
+
+        Object resultCode = session.getAttribute(VerificationKeyConst.GET_THE_ORDER+value);
 
         if(resultCode==null){
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
@@ -140,6 +147,7 @@ public class AppraisalController extends BaseController {
         if(!resultCode.toString().equals(code.toUpperCase())){
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
         }
+        session.removeAttribute(VerificationKeyConst.GET_THE_ORDER+value);
 
         String returnStr = null;
         try {
