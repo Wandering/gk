@@ -77,7 +77,7 @@
             <li id="">全部</li>
         </ul>
         <div class="into-search">
-            <a href="/before/teacher-lecture.jsp?classifyType=1" target="_blank" class="into-btn">进入名师讲堂</a>
+            <a href="/before/teacher-lecture.jsp?classifyType=1&searchV=" target="_blank" class="into-btn">进入名师讲堂</a>
             <form action="">
                 <section class="section-article">
                     <div class="search-content ta">
@@ -152,7 +152,7 @@
     <div class="tabs">
         <ul class="tabs-list mt20 subjectList" classifyType="2"><li id="">全部</li></ul>
         <div class="into-search">
-            <a href="/before/mentality.jsp?classifyType=2" target="_blank" class="into-btn">进入高考心理</a>
+            <a href="/before/mentality.jsp?classifyType=2&searchV=" target="_blank" class="into-btn">进入高考心理</a>
             <form action="">
                 <section class="section-article">
                     <div class="search-content ta">
@@ -220,10 +220,10 @@
                 <label>选择文理科：</label>
                 <ul class="group-radio">
                     <li>
-                        <span><input type="radio" name="category" value="1" />文科</span>
+                        <span><input type="radio" name="category" value="文科" />文科</span>
                     </li>
                     <li>
-                        <span><input type="radio" name="category" value="3" />理科</span>
+                        <span><input type="radio" name="category" value="理科" />理科</span>
                     </li>
                 </ul>
             </div>
@@ -245,10 +245,8 @@
     </div>
 </div>
 
-
-
-
 <div class="main-volunteer-box" style="display: none;">
+
     <div class="school-eval w1000">
         <div class="tip">
             <p>依据考分估算出我的位次、获得推荐院校信息、以及我的理想院校测评</p>
@@ -261,21 +259,22 @@
             </div>
         </div>
         <div class="eval-right">
+            <div class="error-tips hide"></div>
             <div class="form-control">
                 <label>分数</label>
-                <input type="text" class="score-input" placeholder="请输入分数"/>
+                <input type="text" class="score-input" id="score-input" placeholder="请输入分数"/>
             </div>
 
             <div class="category mt10">
                 <label>选择批次：</label>
                 <ul class="group-radio">
                     <li>
-                        <span><input type="radio" name="category" value="1" />一批本科</span>
-                        <span><input type="radio" name="category" value="3" />三批本科</span>
+                        <span><input type="radio" name="batch" value="一批本科" />一批本科</span>
+                        <span><input type="radio" name="batch" value="三批本科" />三批本科</span>
                     </li>
                     <li class="tar">
-                        <span><input type="radio" name="category" value="2" />二批本科</span>
-                        <span><input type="radio" name="category" value="4" />高职(专科)</span>
+                        <span><input type="radio" name="batch" value="二批本科" />二批本科</span>
+                        <span><input type="radio" name="batch" value="高职（专科）" />高职（专科）</span>
                     </li>
                 </ul>
             </div>
@@ -283,10 +282,10 @@
                 <label>选择文理科：</label>
                 <ul class="group-radio">
                     <li>
-                        <span><input type="radio" name="category" value="1" />文科</span>
+                        <span><input type="radio" name="subjectType" value="文史" />文史</span>
                     </li>
                     <li>
-                        <span><input type="radio" name="category" value="3" />理科</span>
+                        <span><input type="radio" name="subjectType" value="理工" />理工</span>
                     </li>
                 </ul>
             </div>
@@ -297,7 +296,7 @@
                     <input type="text" placeholder="请输入分数"/>
                 </span>
                 <a>
-                    <img src="/static/dist/before/images/bottom-banner.jpg" />
+                    <img src="/static/dist/before/images/yzm.png" />
                 </a>
             </div>
 
@@ -308,68 +307,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-<%--<div class="main-volunteer-box">--%>
-    <%--<div class="w1000 main-volunteer">--%>
-        <%--<div class="fl">--%>
-            <%--<div class="img">--%>
-                <%--<img src="/static/dist/before/images/zd-pic.png" alt=""/>--%>
-                <%--<strong>院校推荐、志愿指导</strong>--%>
-                <%--<p>依据总分、位次获取推荐院校及志愿指导</p>--%>
-            <%--</div>--%>
-        <%--</div>--%>
-        <%--<div class="fr">--%>
-            <%--<form action="" class="zd-form">--%>
-                <%--<div class="form-control">--%>
-                    <%--<label>您的考号</label>--%>
-                    <%--<input type="text" class="input" name="" placeholder="请输入您的考号" id=""/>--%>
-                <%--</div>--%>
-                <%--<div class="form-control">--%>
-                    <%--<label>您的分数</label>--%>
-                    <%--<input type="text" class="input" name="" placeholder="请输入您的分数" id=""/>--%>
-                <%--</div>--%>
-                <%--<div class="form-control">--%>
-                    <%--<label>您的位次</label>--%>
-                    <%--<input type="text" class="input" name="" placeholder="请输入您的位次" id=""/>--%>
-                <%--</div>--%>
-                <%--<div class="form-control yzm-control">--%>
-                    <%--<label>验证码</label>--%>
-                    <%--<input type="text" class="input yzm" name="" placeholder="请填写验证码" id=""/>--%>
-                    <%--<img src="/static/dist/before/images/yzm.png" alt=""/>--%>
-                <%--</div>--%>
-                <%--<div class="form-control-btn">--%>
-                    <%--<input type="button" class="btn" value="下一步"/>--%>
-                <%--</div>--%>
-
-            <%--</form>--%>
-        <%--</div>--%>
-    <%--</div>--%>
-<%--</div>--%>
-
-
-
-
-
-
-<%--<div class="tansLayer" style="display: none;"></div>--%>
-<%--<div class="volunteer-flow3-layer" style="display: none;">--%>
-    <%--<div class="top-close">--%>
-        <%--<a href="" class="close-btn">x</a>--%>
-    <%--</div>--%>
-    <%--<div class="tips">--%>
-        <%--<strong>温馨提示：</strong>--%>
-        <%--<p>依据平行志愿规则，系统推荐遵循分数最大化，为您推荐一下A、B、C、D四挡院校；考生可根据个性化需求调整院校顺位；</p>--%>
-    <%--</div>--%>
-    <%--<div class="volunteer-flow3-body">--%>
-
-    <%--</div>--%>
-
-<%--</div>--%>
-
 
 <div class="tansLayer" style="display: none;"></div>
 <div class="evaluating-layer" style="display: none;">
@@ -400,6 +337,103 @@
         <a href="javascript:;" class="evaluating-result-close close-btn">返回上一步</a>
     </div>
 </div>
+
+
+
+<div class="volunteer-flow3-layer" style="display: none;">
+    <div class="top-close">
+        <a href="javascript:;" class="close-btn">x</a>
+    </div>
+
+    <div class="tips">
+        <strong>温馨提示：</strong>
+        <p>本页推荐结果、依据您的分数（模考成绩）进行评估获得。如果您想获得更为精确的志愿指导，请使用我们为您提供的志愿指导服务。</p>
+    </div>
+    <div class="volunteer-flow3-body">
+        <div class="info-explain">
+            <strong>录取指数说明</strong>
+            <ul>
+                <li>
+                    <span class="starA-icon"></span>可以冲一冲的院校；
+                </li>
+                <li>
+                    <span class="starB-icon"></span>可以稳一稳的院校；
+                </li>
+                <li>
+                    <span class="starC-icon"></span>可以保一保的院校；
+                </li>
+                <li>
+                    <span class="starD-icon"></span>可以垫一垫的院校；
+                </li>
+            </ul>
+        </div>
+        <div class="info-result">
+            <ul>
+                <li class="starA">
+                    <div class="title">
+                        <span class="">A档（冲）</span>
+                        <p>录取指数: <i class="starA-icon"></i></p>
+                    </div>
+                    <div class="no-school hide" id="no-school0">
+                        <p>① 本录取指数下、没有合理院校可推荐；</p>
+                        <p>② 在真是填报时、可以参开选择其他档中的院校；</p>
+                    </div>
+                    <div class="school-list hide" id="school-list0">
+                        <div><a href="" class="school-name">西安交通大学</a></div>
+                    </div>
+                </li>
+                <li class="starB">
+                    <div class="title">
+                        <span>B档（稳）</span>
+                        <p>录取指数: <i class="starB-icon"></i></p>
+                    </div>
+                    <div class="no-school hide" id="no-school1">
+                        <p>① 本录取指数下、没有合理院校可推荐；</p>
+                        <p>② 在真是填报时、可以参开选择其他档中的院校；</p>
+                    </div>
+                    <div class="school-list hide" id="school-list1"></div>
+                </li>
+                <li class="starC">
+                    <div class="title">
+                        <span>C档（保）</span>
+                        <p>录取指数: <i class="starC-icon"></i></p>
+                    </div>
+                    <div class="no-school hide" id="no-school2">
+                        <p>① 本录取指数下、没有合理院校可推荐；</p>
+                        <p>② 在真是填报时、可以参开选择其他档中的院校；</p>
+                    </div>
+                    <div class="school-list hide" id="school-list2"></div>
+                </li>
+                <li class="starD">
+                    <div class="title">
+                        <span>D档（垫）</span>
+                        <p>录取指数: <i class="starD-icon"></i></p>
+                    </div>
+                    <div class="no-school hide" id="no-school3">
+                        <p>① 本录取指数下、没有合理院校可推荐；</p>
+                        <p>② 在真是填报时、可以参开选择其他档中的院校；</p>
+                    </div>
+                    <div class="school-list hide" id="school-list3"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <%@ include file="/common/footer.jsp"%>
 <script>
     seajs.use("/static/src/before/scripts/before");

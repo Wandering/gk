@@ -29,10 +29,11 @@
     <div class="tabs">
         <div class="filtrate">
             <select class="sel-item subjectList" name="" id="">
-                <option value="">选择科目</option>
+                <option value="">全部科目</option>
             </select>
-            <select class="sel-item" name="" id="">
-                <option value="">按上传顺序</option>
+            <select class="sel-item subject-fun" name="" id="">
+                <option value="1">按上传顺序</option>
+                <option value="0">按播放次数</option>
             </select>
         </div>
         <div class="into-search">
@@ -40,8 +41,8 @@
                 <section class="section-article">
                     <div class="search-content ta">
                  <span>
-                     <input type="text" placeholder="请输入搜索内容"/>
-                     <input type="button" value="搜索"/>
+                     <input type="text" id="searchVal" placeholder="请输入搜索内容"/>
+                     <input type="button" id="search-btn" value="搜索"/>
                 </span>
                     </div>
                 </section>
