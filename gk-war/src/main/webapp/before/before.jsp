@@ -82,7 +82,7 @@
                 <section class="section-article">
                     <div class="search-content ta">
                  <span>
-                     <input type="text" id="teacher-lecture-search-input" placeholder="请输入搜索内容"/>
+                     <input type="text" onkeydown="if(event.keyCode==13)return false;" id="teacher-lecture-search-input" placeholder="请输入搜索内容"/>
                      <input type="button" id="teacher-lecture-search-btn" value="搜索"/>
                 </span>
                     </div>
@@ -120,7 +120,7 @@
                 <section class="section-article">
                     <div class="search-content ta">
                  <span>
-                     <input type="text" id="exam-search-input" placeholder="请输入搜索内容"/>
+                     <input type="text" onkeydown="if(event.keyCode==13)return false;" id="exam-search-input" placeholder="请输入搜索内容"/>
                      <input type="button" id="exam-search-btn" value="搜索"/>
                 </span>
                     </div>
@@ -157,7 +157,7 @@
                 <section class="section-article">
                     <div class="search-content ta">
                  <span>
-                     <input type="text" id="mentality-search-input" placeholder="请输入搜索内容"/>
+                     <input type="text" onkeydown="if(event.keyCode==13)return false;" id="mentality-search-input" placeholder="请输入搜索内容"/>
                      <input type="button" id="mentality-search-btn" value="搜索"/>
                 </span>
                     </div>

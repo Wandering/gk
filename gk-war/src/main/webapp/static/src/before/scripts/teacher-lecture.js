@@ -114,6 +114,8 @@ define(function (require) {
 
     var searchs=$('#searchVal').val();
 
+
+
     UI.$nextPage.on('click', function () {
         var pageNo = UI.$listMsgItem.attr('pageNo');
         getList(pageNo, pageSize,1,"",searchs);
@@ -127,7 +129,8 @@ define(function (require) {
         UI.$listMsgItem.attr('pageNo',0);
         var pageNo = UI.$listMsgItem.attr('pageNo');
         UI.$listMsgItem.html('');
-        getList(pageNo, pageSize,sortType,subjectId,searchs);
+        getList(pageNo, pageSize,sortType,subjectId,"");
+        $('#searchVal').val("");
     });
     //
     //
@@ -138,7 +141,8 @@ define(function (require) {
         UI.$listMsgItem.attr('pageNo',0);
         var pageNo = UI.$listMsgItem.attr('pageNo');
         UI.$listMsgItem.html('');
-        getList(pageNo, pageSize,sortType,subjectId,searchs);
+        getList(pageNo, pageSize,sortType,subjectId,"");
+        $('#searchVal').val("");
     });
     //
 
