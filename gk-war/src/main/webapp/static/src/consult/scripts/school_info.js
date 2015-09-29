@@ -196,6 +196,7 @@ define(function(require) {
         },
         refreshPage: function(curPage) {
             var arryPage = this.refreshPageShow(curPage);
+            console.log(arryPage);
             var pageHtml = [];
             pageHtml.push('<a class="previous-page">上一页</a>');
             for (var i = 0; i < arryPage.length; i++) {
@@ -226,6 +227,7 @@ define(function(require) {
                 } else if ($(this).hasClass('next-page')) {
                     that.curPage++;
                     if (that.curPage <= that.totalPage) {
+                        console.log($('#page a.' + that.curPage)[0]);
                         if (!$('#page a.' + that.curPage)[0] && this.totalPage > 10) {
                             that.refreshPage(that.curPage);
                         }

@@ -16,21 +16,24 @@ define(function (require) {
 
         $('.into-evalution a').on('click',function(e) {
             //window.location.href = '';
-            $.ajax({
-                type: 'post',
-                url: '/appraisal/lstest.do',
-                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
-                data: {},
-                dataType: 'json',
-                success: function(data) {
-                    console.log(data);
-                    if ('0000000' === data.rtnCode) {
-                        var url = data.bizData;
-                    }
-                },
-                error: function(data) {
-                }
+            $.get('/appraisal/lstest.do', function(data) {
+
             });
+            //$.ajax({
+            //    type: 'post',
+            //    url: '/appraisal/lstest.do',
+            //    contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+            //    data: {},
+            //    dataType: 'json',
+            //    success: function(data) {
+            //        console.log(data);
+            //        if ('0000000' === data.rtnCode) {
+            //            var url = data.bizData;
+            //        }
+            //    },
+            //    error: function(data) {
+            //    }
+            //});
         });
     });
 });

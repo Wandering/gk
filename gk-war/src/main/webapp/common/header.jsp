@@ -7,13 +7,13 @@
     <ul class="main-menu fl">
       <li><a class="index" href="/index.jsp">首页</a></li>
       <li><a class="guide" href="/guide/guide.jsp">高考政策</a>
-        <ul>
+        <ul class="submenu">
           <li><a href="/guide/guide.jsp">政策解读</a></li>
           <li><a href="/guide/volunteer_forum.jsp">志愿讲堂</a></li>
         </ul>
       </li>
       <li><a class="gk_hot" href="/consult/gk_hot.jsp">高考资讯</a>
-        <ul>
+        <ul class="submenu">
           <li><a href="/consult/consult.jsp">专业测评</a></li>
           <li><a href="/consult/school_info.jsp">院校信息</a></li>
           <li><a href="/consult/profession_info.jsp">专业信息</a></li>
