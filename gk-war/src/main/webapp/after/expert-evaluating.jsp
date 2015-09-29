@@ -36,7 +36,7 @@
                 <th>高考分数</th>
                 <th>一批本科省控线</th>
             </tr>
-            <tr>
+            <tr class="t-content">
                 <td>一班</td>
                 <td>2012-5-10</td>
                 <td>标题1</td>
