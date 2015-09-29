@@ -49,9 +49,9 @@ define(function (require) {
             $('.subject').attr('value', personListData.subjectType);
             $('.mail').attr('value', personListData.mail);
             $('.qq').attr('value', personListData.qq);
-            $('#cmbProvince option').attr('value', personListData.provinceId);
-            $('#cmbCity option').attr('value', personListData.cityId);
-            $('#cmbArea option').attr('value', personListData.countyId);
+            //$('#cmbProvince option').attr('value', personListData.provinceId);
+            //$('#cmbCity option').attr('value', personListData.cityId);
+            //$('#cmbArea option').attr('value', personListData.countyId);
             if (personListData.sex == 1) {
                 $('#sex_m').attr('checked', true)
             } else {
@@ -62,6 +62,9 @@ define(function (require) {
             } else {
                 $('#subject_w').attr('checked', true)
             }
+
+            Area.init(personListData);
+            Area.addEventForArea();
         } else {
             alert(res.msg);
         }
@@ -72,32 +75,120 @@ define(function (require) {
     var cmbCity = '';
     var cmbArea = '';
 
-    $.ajax({
-        url: '/region/getAllRegion.do',
-        dataType: 'json',
-        type: 'get',
-        data: {},
-        success: function (res) {
-            if (res.rtnCode == '0000000') {
-                var provinceList = res.bizData;
-                console.info(provinceList[0].cityList[0].name);
-                console.info(provinceList[0].cityList[0].id);
-                console.info(provinceList[0].cityList[0].provinceId);
+    var Area = {
+        data:[],
+        init: function(personListData) {
+            var that = this;
+            $.get('/region/getAllRegion.do', function(ret) {
+                if ('0000000' === ret.rtnCode) {
+                    that.data = ret.bizData;
+                    $('#cmbProvince').html(that.render(that.data, true));
+                    if (personListData.provinceId) {
+                        $('#cmbProvince').val(personListData.provinceId);
+                        that.changeProvince(personListData.provinceId);
+                        $('#cmbCity').val(personListData.cityId);
+                        that.changeCity(personListData.cityId)
+                        $('#cmbArea').val(personListData.countyId);
+                    }
+                }
+            });
+        },
+        render: function(data, flag) {
+            var html = [];
+            if (flag) {
+                html.push('<option>请选择...</option>');
+            }
+            $.each(data, function(i, value) {
+                html.push('<option value="' + value.id + '">' + value.name + '</option>');
+            });
+            return html.join('');
+        },
+        changeProvince: function(value) {
+            if (value) {
+                var city = this.getCity(value);
+                if (city && city.length > 0) {
+                    $('#cmbCity').html(this.render(city));
+                    this.changeCity(city[0].id);
+                } else {
+                    $('#cmbCity').html('<option>请选择...</option>');
+                }
+            }
+        },
+        changeCity: function(value) {
+            var provinceId = $('#cmbProvince').val();
+            if (value && provinceId) {
+                var countyList = this.getCounty(provinceId, value);
+                if (countyList && countyList.length > 0) {
+                    $('#cmbArea').html(this.render(countyList));
+                } else {
+                    $('#cmbArea').html('<option>请选择...</option>');
+                }
+            }
+        },
+        addEventForArea: function() {
+            var that = this;
+            $('#cmbProvince').change(function(e) {
+                var value = this.value;
+                that.changeProvince(value);
+            });
 
-                $.each(provinceList, function (i, v) {
-                    cmbProvince += '<option value="' + i + '">' + v.name + '</option>';
-                    console.log(v);
-                });
-                console.log(cmbProvince);
-
-                $('#cmbProvince').html(cmbProvince);
-
+            $('#cmbCity').change(function(e) {
+                var value = this.value;
+                that.changeCity(value);
+            });
+        },
+        getCity: function(id) {
+            for (var i = 0, len = this.data.length; i < len; i++) {
+                if (this.data[i].id == id) {
+                    return this.data[i].cityList;
+                }
+            }
+        },
+        getCounty: function(provinceId, cityId) {
+            for (var i = 0, len = this.data.length; i < len; i++) {
+                if (this.data[i].id == provinceId) {
+                    var cityList = this.data[i].cityList;
+                    if (cityList.length <= 0) {
+                      return null;
+                    }
+                    var j = 0, jlen = cityList.length;
+                    for (; j < jlen; j++) {
+                       if (cityList[j].id == cityId) {
+                           return cityList[j].countyList;
+                       }
+                    }
+                }
             }
         }
-    });
-    $('#cmbProvince').onchange(function(){
-        alert(1);
-    });
+    };
+
+
+    //$.ajax({
+    //    url: '/region/getAllRegion.do',
+    //    dataType: 'json',
+    //    type: 'get',
+    //    data: {},
+    //    success: function (res) {
+    //        if (res.rtnCode == '0000000') {
+    //            var provinceList = res.bizData;
+    //            console.info(provinceList[0].cityList[0].name);
+    //            console.info(provinceList[0].cityList[0].id);
+    //            console.info(provinceList[0].cityList[0].provinceId);
+    //
+    //            $.each(provinceList, function (i, v) {
+    //                cmbProvince += '<option value="' + i + '">' + v.name + '</option>';
+    //                console.log(v);
+    //            });
+    //            console.log(cmbProvince);
+    //
+    //            $('#cmbProvince').html(cmbProvince);
+    //
+    //        }
+    //    }
+    //});
+    //$('#cmbProvince').onchange(function(){
+    //    alert(1);
+    //});
     //头像上传
     setTimeout(function () {
         //初始化文件上传
@@ -224,9 +315,9 @@ define(function (require) {
             type: 'post',
             data: {
                 name: name,
-                provinceId: '610000',
-                cityId: '610800',
-                countyId: '610802',
+                provinceId: $('#cmbProvince').val(),
+                cityId: $('#cmbCity').val(),
+                countyId: $('#cmbArea').val(),
                 schoolName: school,
                 sex: sex,
                 birthdayDate: birthdayDate,
