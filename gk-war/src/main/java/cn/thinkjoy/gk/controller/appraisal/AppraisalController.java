@@ -79,12 +79,12 @@ public class AppraisalController extends BaseController {
     @RequestMapping(value = "/schoolTest",method = RequestMethod.GET)
     @ResponseBody
     public String schoolTest(@RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore,
-                             @RequestParam(value="m_batch",required=false) String m_batch,
+                             @RequestParam(value="m_university_name",required=false) String m_university_name,
                              @RequestParam(value="m_kelei",required=false) String m_kelei,
                              @RequestParam(value="code",required=false) String code) throws Exception{
 
         if(StringUtils.isBlank(m_aggregateScore)
-                || StringUtils.isBlank(m_batch)
+                || StringUtils.isBlank(m_university_name)
                 || StringUtils.isBlank(m_kelei)
                 || StringUtils.isBlank(code)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
@@ -102,7 +102,7 @@ public class AppraisalController extends BaseController {
         String returnStr = null;
         try {
 
-            String result = HttpRequestUtil.doGet("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/CollegeEval/GetEvaluation/m_aggregateScore/"+m_aggregateScore+"/m_batch/"+m_batch+"/m_kelei/"+m_kelei);
+            String result = HttpRequestUtil.doGet("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/CollegeEval/GetEvaluation/m_aggregateScore/"+m_aggregateScore+"/m_batch/"+m_university_name+"/m_kelei/"+m_kelei);
 
             if(StringUtils.isEmpty(result)){
                 throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
