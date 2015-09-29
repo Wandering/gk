@@ -86,12 +86,14 @@ public class VerificationCodeController extends BaseController {
 				// 将产生的四个随机数组合在一起。
 				randomCode.append(code);
 			}
+
+			String value = getCookieValue();
 			if(VerificationKeyConst.COLLEGE_RECOMMENDATION_TYPE==Integer.valueOf(type)){
-				session.setAttribute(VerificationKeyConst.COLLEGE_RECOMMENDATION, randomCode.toString());
+				session.setAttribute(VerificationKeyConst.COLLEGE_RECOMMENDATION+value, randomCode.toString());
 			}else if(VerificationKeyConst.COLLEGE_EVALUATION_TYPE==Integer.valueOf(type)){
-				session.setAttribute(VerificationKeyConst.COLLEGE_EVALUATION, randomCode.toString());
+				session.setAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value, randomCode.toString());
 			}else if(VerificationKeyConst.GET_THE_ORDER_TYPE==Integer.valueOf(type)){
-				session.setAttribute(VerificationKeyConst.GET_THE_ORDER, randomCode.toString());
+				session.setAttribute(VerificationKeyConst.GET_THE_ORDER+value, randomCode.toString());
 			}else{
 				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
 			}

@@ -5,6 +5,7 @@ import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.controller.before.pojo.JsonPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
+import cn.thinkjoy.gk.util.VerificationKeyConst;
 import com.jlusoft.microschool.core.utils.JsonMapper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -24,9 +25,23 @@ public class CollegeRecController extends BaseController{
     @ResponseBody
     public String GetCollegeList(@RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore,
                                    @RequestParam(value="m_batch",required=false) String m_batch,
-                                           @RequestParam(value="m_kelei",required=false) String m_kelei){
-        if(StringUtils.isBlank(m_aggregateScore) || StringUtils.isBlank(m_batch) || StringUtils.isBlank(m_kelei)){
+                                           @RequestParam(value="m_kelei",required=false) String m_kelei,
+                                           @RequestParam(value="code",required=false) String code){
+        if(StringUtils.isBlank(m_aggregateScore)
+                || StringUtils.isBlank(m_batch)
+                || StringUtils.isBlank(m_kelei)
+                || StringUtils.isBlank(code)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
+        }
+
+        Object resultCode = session.getAttribute(VerificationKeyConst.COLLEGE_RECOMMENDATION+getCookieValue());
+
+        if(resultCode==null){
+            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
+        }
+
+        if(!resultCode.toString().equals(code)){
+            throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
         }
 
 //        JsonPojo jsonPojo = new JsonPojo();

@@ -14,7 +14,7 @@
     <ul class="main-menu fl" id="before-menu">
       <li>
         <a href="/index.jsp">首页</a>
-        <ul style="left:-28px">
+        <ul class="submenu">
           <li><a href="/guide/guide.jsp">高考政策</a></li>
           <li><a href="/consult/gk_hot.jsp">高考资讯</a></li>
           <li><a href="/before/before.jsp">考前备考</a></li>
