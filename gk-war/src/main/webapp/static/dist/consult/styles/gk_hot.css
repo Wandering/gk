@@ -985,7 +985,8 @@ section:last-child {
   color: #dedede; }
 
 .detile-title {
-  color: #626161; }
+  color: #626161;
+  margin-left: 10px; }
 
 .detile-info {
   background-color: #f6f6f6;

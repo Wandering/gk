@@ -100,6 +100,8 @@ define(function (require) {
             }
             getArticleList(curObj, parseInt($(this).attr('data-page')) + 1);
         });
+
+        flowplayer("player", "/static/src/guide/scripts/flowplayer-3.2.18.swf");
     });
 });
 

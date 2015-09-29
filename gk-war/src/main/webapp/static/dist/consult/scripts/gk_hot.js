@@ -54,6 +54,10 @@ define(function (require) {
                             return;
                         }
                     }
+                    if (pageNO == 1) {
+                        that.nextBtn.show();
+                    }
+
                     that.nextBtn.attr('data-page', pageNO);
                     that.render(data.bizData, pageNO);
                 } else {
