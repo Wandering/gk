@@ -14,5 +14,5 @@ public interface IEXPaperService {
      * @param pageSize
      * @return
      */
-    List<ExaminationPaper> getPaperPage(Integer sortType ,String years,String searchName, Integer offSet, Integer pageSize);
+    List<ExaminationPaper> getPaperPage(Long subjectId,Integer sortType ,String years,String searchName, Integer offSet, Integer pageSize);
 }

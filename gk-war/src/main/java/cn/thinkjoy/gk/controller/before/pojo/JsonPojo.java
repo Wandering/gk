@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.pojo;
+package cn.thinkjoy.gk.controller.before.pojo;
 
 import java.io.Serializable;
 

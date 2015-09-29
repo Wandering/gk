@@ -72,11 +72,11 @@ define(function(require) {
             for (; i < len; i++) {
                 var trClass = i % 2 != 0 ? 'active' : '';
                 html.push('<tr class="' + trClass + '">'
-                                + '<td class="name">' + data[i].name + '</td>'
-                                + '<td>' + data[i].provinceName + '</td>'
-                                + '<td>' + data[i].universityType + '</td>'
-                                + '<td>' + data[i].subjection + '</td>'
-                                + '<td>' + data[i].property + '</td>'
+                                + '<td class="name">' + (data[i].name || '') + '</td>'
+                                + '<td>' + (data[i].provinceName || '') + '</td>'
+                                + '<td>' + (data[i].universityType || '') + '</td>'
+                                + '<td>' + (data[i].subjection || '') + '</td>'
+                                + '<td>' + (data[i].property || '') + '</td>'
                                 + '<td>' + '<a target="_blank" href="/consult/school_detile.jsp?id=' + data[i].code + '">查看详情</a>' + '</td>'
                             + '</tr>');
             }

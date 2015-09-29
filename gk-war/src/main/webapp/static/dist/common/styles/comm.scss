@@ -43,9 +43,12 @@
     margin-top: 5px;
     margin-right: 100px;
   }
+
+
   .main-menu {
     li {
       display: inline-block;
+      position: relative;
     }
     a {
       margin: 0 25px;
@@ -121,6 +124,34 @@
       }
     }
   }
+}
+
+.main-menu li > ul {
+  display: none;
+  position: absolute;
+  top:50px;
+  //border-bottom: 1px solid #51a9e1;
+  z-index: 444;
+  white-space:nowrap;
+  background: $mainColor;
+}
+
+.main-menu li:hover > ul{
+  display: block;
+}
+
+.main-menu li > ul li{
+  display: inline-block;
+  color: #fff;
+  white-space:nowrap;
+  a{
+    color: #fff;
+  }
+}
+
+.main-menu li > ul li:hover {
+  //border-bottom: 3px solid #fff;
+  cursor: pointer;
 }
 
 //footer

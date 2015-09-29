@@ -77,22 +77,24 @@
       line-height: 35px;
       border-radius: 3px;
       transition: all .5s;
+      color: $mainRed;
+      background-color: #fff;
     }
     .btn-selected{
       background-color: $mainRed;
       color: #fff;
-      &:hover{
-        background-color: #fff;
-        color:$mainRed
-      }
+      //&:hover{
+      //  background-color: #fff;
+      //  color:$mainRed
+      //}
     }
     .btn-unselected{
-      color: $mainRed;
-      background-color: #fff;
-      &:hover{
-        background-color: $mainRed;
-        color: #fff;
-      }
+      //color: $mainRed;
+      //background-color: #fff;
+      //&:hover{
+      //  background-color: $mainRed;
+      //  color: #fff;
+      //}
     }
   }
 

@@ -13,7 +13,7 @@ import java.util.Map;
 public interface IMajoredService {
 
 
-    List<Map<String,Object>> getMajoreByParentId(int i);
+    List<Map<String,Object>> getMajoreByParentId(Long i);
 
     List<SubjectDto> searchMajored(MajoredQuery query);
 
