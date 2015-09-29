@@ -97,5 +97,30 @@ public class AppraisalController extends BaseController {
         return returnStr.toString();
     }
 
+    /**
+     * 获取位次
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/findRanking",method = RequestMethod.GET)
+    @ResponseBody
+    public String findRanking(@RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore) throws Exception{
+        String returnStr = null;
+        try {
+
+            String result = HttpRequestUtil.doGet("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/CandidateRanking/GetRanking/m_aggregateScore/"+m_aggregateScore);
+
+            if(StringUtils.isEmpty(result)){
+                throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
+            }
+
+            returnStr = result;
+
+        } catch (Exception e) {
+            throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
+        }
+        return returnStr.toString();
+    }
+
 }
 

@@ -67,7 +67,7 @@ define(function (require) {
                         '</div> ' +
                         '<div class="title-info"> ' +
                         '<h3>'+v.hotInformation+'</h3> ' +
-                        '<h6>'+v.informationSubContent+'</h6> ' +
+                        '<h6>'+v.informationContent+'</h6> ' +
                         '</div> ' +
                         '</li>'
                 });

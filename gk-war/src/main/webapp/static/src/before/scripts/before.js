@@ -182,15 +182,15 @@ define(function (require) {
         var batchV = $('input[name="batch"]:checked').val();
         var subjectTypeV = $('input[name="subjectType"]:checked').val();
         if (scoreV == '') {
-            $('.error-tips').text('请输入分数').fadeIn(1000).fadeOut(2000);
+            $('.error-tips').text('请输入分数').fadeIn(1000).fadeOut(1000);
             return false;
         }
         if (batchV == undefined) {
-            $('.error-tips').text('请选择批次').fadeIn(1000).fadeOut(2000);
+            $('.error-tips').text('请选择批次').fadeIn(1000).fadeOut(1000);
             return false;
         }
         if (subjectTypeV == undefined) {
-            $('.error-tips').text('请选择文理科').fadeIn(1000).fadeOut(2000);
+            $('.error-tips').text('请选择文理科').fadeIn(1000).fadeOut(1000);
             return false;
         }
         $.ajax({
