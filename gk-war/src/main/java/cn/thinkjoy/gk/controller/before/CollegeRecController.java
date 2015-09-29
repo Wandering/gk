@@ -2,11 +2,10 @@ package cn.thinkjoy.gk.controller.before;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.controller.before.pojo.JsonPojo;
+import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
 import cn.thinkjoy.gk.util.VerificationKeyConst;
-import com.jlusoft.microschool.core.utils.JsonMapper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,15 +33,31 @@ public class CollegeRecController extends BaseController{
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
 
-        Object resultCode = session.getAttribute(VerificationKeyConst.COLLEGE_RECOMMENDATION+getCookieValue());
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if(vipStatus==null||vipStatus==0){
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
+
+        Long value = userAccountPojo.getId();
+
+        Object resultCode = session.getAttribute(VerificationKeyConst.COLLEGE_RECOMMENDATION+value);
 
         if(resultCode==null){
-            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
 
-        if(!resultCode.toString().equals(code)){
-            throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
+        if(!resultCode.toString().equals(code.toUpperCase())){
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
+
+        session.removeAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value);
 
 //        JsonPojo jsonPojo = new JsonPojo();
 

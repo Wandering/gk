@@ -481,5 +481,7 @@ button.swiper-pagination-bullet {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
-background-color: #596b8b;
+  /*background-color: #596b8b;*/
+  background-color: #0e6bba;
+  /*background-color: #4e8cc6;*/
 }
