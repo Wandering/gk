@@ -271,24 +271,30 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
+                console.log(res);
                 var data = $.parseJSON(res.bizData);
                 console.log(data);
                 if (res.rtnCode == "0000000") {
+                    $('#dream-list').html('');
                     $('#dream-school-layer,.tansLayer').show();
                     $('#dreamScoreInfo').text(dreamScoreV);
                     $('#dreamSubjectTypeInfo').text(dreamSubjectTypeV);
                     $('#dreamSchoolInfo').text(dreamSchoolV);
                     for(var i=0;i<data.data.length;i++){
+
+                        var m_averagescores = data.data[i].m_averagescores;
+                        var m_batch = data.data[i].m_batch;
+                        var m_lowestscore = data.data[i].m_lowestscore;
                         var dreamSchoolList = ''
                             +'<ul>'
-                            +'<li class="pc">三批本科</li>'
+                            +'<li class="pc">'+ m_batch +'</li>'
                             +'<li class="result1">'
                             +'<span class="t">所需最低分数</span>'
-                            +'<span class="num"><strong>639</strong>分</span>'
+                            +'<span class="num"><strong>'+ m_averagescores +'</strong>分</span>'
                             +'</li>'
                             +'<li class="result2">'
                             +'<span class="t">所需平均分数</span>'
-                            +'<span class="num"><strong>652</strong>分</span>'
+                            +'<span class="num"><strong>'+ m_lowestscore +'</strong>分</span>'
                             +'</li>'
                             +'</ul>';
                         $('#dream-list').append(dreamSchoolList);
