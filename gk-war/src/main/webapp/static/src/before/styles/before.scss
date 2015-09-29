@@ -900,3 +900,15 @@ section:last-child {
   border-radius: 3px;
   width: 78%;
 }
+
+.result-info{
+  ul{
+    padding: 10px;
+    overflow: hidden;
+    li{
+      list-style: decimal;
+      clear: both;
+      line-height: 28px;
+    }
+  }
+}

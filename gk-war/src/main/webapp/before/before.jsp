@@ -269,12 +269,10 @@
                 <label>选择批次：</label>
                 <ul class="group-radio">
                     <li>
-                        <span><input type="radio" name="batch" value="一批本科" />一批本科</span>
-                        <span><input type="radio" name="batch" value="三批本科" />三批本科</span>
-                    </li>
-                    <li class="tar">
-                        <span><input type="radio" name="batch" value="二批本科" />二批本科</span>
-                        <span><input type="radio" name="batch" value="高职（专科）" />高职（专科）</span>
+                        <label><input type="radio" name="batch" value="一批本科" />一批本科</label>
+                        <label><input type="radio" name="batch" value="三批本科" />三批本科</label>
+                        <label><input type="radio" name="batch" value="二批本科" />二批本科</label>
+                        <label><input type="radio" name="batch" value="高职（专科）" />高职（专科）</label>
                     </li>
                 </ul>
             </div>
@@ -282,10 +280,10 @@
                 <label>选择文理科：</label>
                 <ul class="group-radio">
                     <li>
-                        <span><input type="radio" name="subjectType" value="文史" />文史</span>
+                        <span><label><input type="radio" name="subjectType" value="文史" />文史</label></span>
                     </li>
                     <li>
-                        <span><input type="radio" name="subjectType" value="理工" />理工</span>
+                        <span><label><input type="radio" name="subjectType" value="理工" />理工</label></span>
                     </li>
                 </ul>
             </div>
@@ -378,9 +376,7 @@
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
                         <p>② 在真是填报时、可以参开选择其他档中的院校；</p>
                     </div>
-                    <div class="school-list hide" id="school-list0">
-                        <div><a href="" class="school-name">西安交通大学</a></div>
-                    </div>
+                    <div class="school-list hide" id="school-list0"></div>
                 </li>
                 <li class="starB">
                     <div class="title">
@@ -415,6 +411,13 @@
                     </div>
                     <div class="school-list hide" id="school-list3"></div>
                 </li>
+            </ul>
+        </div>
+        <div class="result-info">
+            <ul>
+                <li>您录入的分数是666分、文史类，依据2015年招生情况，您的分数是一批本科；</li>
+                <li>如果您想选择其他批次院校，请返回重新选择，或根据本人志愿进行填报；</li>
+                <li>如果未能推荐出您的意向院校，请使用我们为您提供的理想院校测评服务.</li>
             </ul>
         </div>
     </div>

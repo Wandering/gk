@@ -709,3 +709,11 @@ ul.main-video-list {
   color: #fff;
   border-radius: 3px;
   width: 78%; }
+
+.result-info ul {
+  padding: 10px;
+  overflow: hidden; }
+  .result-info ul li {
+    list-style: decimal;
+    clear: both;
+    line-height: 28px; }
