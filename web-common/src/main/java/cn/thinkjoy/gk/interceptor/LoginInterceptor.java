@@ -24,7 +24,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     @Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		String url = request.getServletPath();
-		if(ServletPathConst.MAPPING_URLS.containsKey(url)){
+		if(!ServletPathConst.MAPPING_URLS.containsKey(url)){
 			return true;
 		}
 //		System.out.println("===========HandlerInterceptor1 preHandle");

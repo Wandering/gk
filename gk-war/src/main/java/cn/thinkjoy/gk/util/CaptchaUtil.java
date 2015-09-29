@@ -17,6 +17,8 @@ public class CaptchaUtil {
         Graphics g = image.getGraphics();
         g.fillRect(0, 0, image.getWidth(),image.getHeight());
         g.setFont(CaptchaConst.BASE_FONTS[random.nextInt(4)]);
+//        g.setFont(CaptchaConst.FONT_NEWROMAN);
+
         g.setColor(CaptchaConst.PURPLE_COLOR);
         //绘制随机字符
         StringBuffer randomString = new StringBuffer("");
