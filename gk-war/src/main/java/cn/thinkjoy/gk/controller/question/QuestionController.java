@@ -55,15 +55,6 @@ public class QuestionController extends BaseController {
     @ResponseBody
     public List<QuestionAnswerBean> newQuestion(@RequestParam(value="keyword",required=false) String keyword,PageQuery pageQuery) {
 
-//        LOGGER.info("用户［" + userId + "］获取热门问题列表");
-//        if (null == userId || userId == 0) {
-//            LOGGER.info("====notice send AUTHENTICATION_FAIL ");
-//            throw new BizException(ERRORCODE.AUTHENTICATION_FAIL.getCode(), ERRORCODE.AUTHENTICATION_FAIL.getMessage());
-//        }
-//        if(pageQuery==null){
-//            LOGGER.info("====notice hotQuestion PARAM_ERROR ");
-//            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
-//        }
         Integer startSize = pageQuery.getStartSize();
 
         if(startSize==null){
@@ -76,23 +67,9 @@ public class QuestionController extends BaseController {
             endSize = 10;
         }
 
-//        UserAccountPojo userAccountBean = getUserAccountPojo();
 
         Integer freeStatus = null;
 
-//        if(userAccountBean.getVipStatus()!=null&&userAccountBean.getVipStatus()==1){
-//            freeStatus = 1;
-//        }
-//        if(userCredentials.getUserType()==1){
-//            LOGGER.info("当前用户:"+userId+"为教师");
-//            freeStatus = null;
-//        }else{
-//            List<ViperInfo> viperInfos = vipService.getViperInfoList(Long.valueOf(userId), VipConst.EXPERT_CODE);
-//            if (null != viperInfos && viperInfos.size() > 0) {
-//                LOGGER.info("当前用户:"+userId+"为VIP");
-//                freeStatus = null;
-//            }
-//        }
         String word = null;
         if(!StringUtils.isEmpty(keyword)){
             try {
@@ -189,17 +166,6 @@ public class QuestionController extends BaseController {
     @ResponseBody
     public List<QuestionAnswerBean> hotQuestion(@RequestParam(value="keyword",required=false) String keyword,PageQuery pageQuery) {
 
-//        LOGGER.info("用户［" + userId + "］获取热门问题列表");
-//        if (null == userId || userId == 0) {
-//            LOGGER.info("====notice send AUTHENTICATION_FAIL ");
-//            throw new BizException(ERRORCODE.AUTHENTICATION_FAIL.getCode(), ERRORCODE.AUTHENTICATION_FAIL.getMessage());
-//        }
-
-//        if(pageQuery==null){
-//            LOGGER.info("====notice hotQuestion PARAM_ERROR ");
-//            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
-//        }
-
         Integer startSize = pageQuery.getStartSize();
 
         if(startSize==null){
@@ -213,24 +179,7 @@ public class QuestionController extends BaseController {
         }
 
 
-//        UserAccountPojo userAccountBean = getUserAccountPojo();
-
         Integer freeStatus = null;
-
-//        if(userAccountBean.getVipStatus()!=null&&userAccountBean.getVipStatus()==1){
-//            freeStatus = 1;
-//        }
-
-//        if(userCredentials.getUserType()==1){
-//            LOGGER.info("当前用户:"+userId+"为教师");
-//            freeStatus = null;
-//        }else{
-//            List<ViperInfo> viperInfos = vipService.getViperInfoList(Long.valueOf(userId), VipConst.EXPERT_CODE);
-//            if (null != viperInfos && viperInfos.size() > 0) {
-//                LOGGER.info("当前用户:"+userId+"为VIP");
-//                freeStatus = null;
-//            }
-//        }
 
         String word = null;
         if(!StringUtils.isEmpty(keyword)){
@@ -330,7 +279,6 @@ public class QuestionController extends BaseController {
     public QuestionAnswerBean questionDetail(@RequestParam(value="id",required=false) Long questionId) {
 
         if(questionId==null){
-            LOGGER.info("====notice questionDetail PARAM_ERROR ");
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
         }
 
@@ -418,33 +366,22 @@ public class QuestionController extends BaseController {
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
         }
 
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+
         String value = CookieUtil.getCookieValue(request.getCookies(), CookieConst.SS_USER_COOKIE_NAME);
-
-        UserAccountPojo account = getUserAccountPojo();
-
-//        Integer vipStatus = account.getVipStatus();
-
-        Long userId = account.getId();
 
 
         long currentTime = System.currentTimeMillis();
 
         Integer freeStatus = 0;
 
-//        LOGGER.info("vip状态:"+vipStatus);
-//        if (vipStatus==1) {
-//            LOGGER.info("当前用户:"+userId+"为VIP");
-//            freeStatus = 1;
-//        }
-
         String questionHtml = sendQuestionQuery.getQuestion();
 
         Question expertQuestion = new Question();
-
-
-//        String question = JSON.toJSONString(questionContentDtos);
-
-//        question = removeFourChar(question);
 
         expertQuestion.setQuestion(htmlToJSON(questionHtml));
 
@@ -500,17 +437,6 @@ public class QuestionController extends BaseController {
     @RequestMapping(value = "/updateBrowseNum", method = RequestMethod.POST)
     @ResponseBody
     public boolean updateBrowseNum(@RequestParam(value="id",required=false) Long id) {
-
-//        LOGGER.info("用户［" + userId + "］获取热门问题列表");
-//        if (null == userId || userId == 0) {
-//            LOGGER.info("====notice send AUTHENTICATION_FAIL ");
-//            throw new BizException(ERRORCODE.AUTHENTICATION_FAIL.getCode(), ERRORCODE.AUTHENTICATION_FAIL.getMessage());
-//        }
-
-//        if(pageQuery==null){
-//            LOGGER.info("====notice hotQuestion PARAM_ERROR ");
-//            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
-//        }
 
         boolean flag = false;
         try {
