@@ -42,10 +42,32 @@ define(function (require) {
     }
     getSubjectList();
 
+    // 获取年份
+    function getYearsList(){
+        $.ajax({
+            url:'/vip/getAccount.do',
+            type: 'GET',
+            dataType: 'JSON',
+            success: function (result) {
+                console.log(result);
+                var years = '';
+                if(result.rtnCode=="0000000"){
+                    var vipStatus = result.bizData.vipStatus;
+                    if(vipStatus==0){
+                        $('.years-fun').append('<option value="2014">2014年</option><option value="2013">2013年</option>')
+                    }
+                    if(vipStatus==1){
+                        $('.years-fun').append('<option value="2015">2015年(vip用户专享)</option><option value="2014">2014年</option><option value="2013">2013年</option>')
+                    }
+                }
+            }
+        });
+    }
+    getYearsList();
+
     // 分页数据
     var pageSize = 8;
     var searchVals = $('#searchVal').val();
-    console.log(searchVals)
     function getList(pageNo, pageSize,subjectId,years,searchVals) {
         // 获取首页列表
         $.getJSON(
@@ -59,7 +81,6 @@ define(function (require) {
                 searchName:searchVals
             },
             function (result) {
-                console.log(result);
                 if (result.rtnCode == "0800001") {
                     UI.$listMsgItem.append('<p class="noContent">' + result.msg + '</p>');
                     UI.$nextPage.hide();
@@ -106,7 +127,7 @@ define(function (require) {
                     pageNo++;
                     UI.$listMsgItem.attr('pageNo', pageNo);
                     if (dataJson.length < pageSize) {
-                        UI.$nextPage.removeClass('btn-primary').text("没有更多消息了")
+                        UI.$nextPage.hide();
                     }
                 }
             });
@@ -114,17 +135,34 @@ define(function (require) {
     // 初始化数据
     UI.$nextPage.on('click', function () {
         var pageNo = UI.$listMsgItem.attr('pageNo');
-        getList(pageNo, pageSize,"",searchVals);
+        $.ajax({
+            url:'/vip/getAccount.do',
+            type: 'GET',
+            dataType: 'JSON',
+            success: function (result) {
+                console.log(result);
+                if(result.rtnCode=="0000000"){
+                    var vipStatus = result.bizData.vipStatus;
+                    if(vipStatus==0){
+                        getList(pageNo, pageSize,"","2014",searchVals);
+                    }
+                    if(vipStatus==1){
+                        getList(pageNo, pageSize,"","2015",searchVals);
+                    }
+                }
+            }
+        });
     }).click();
 
 
     // 科目筛选
     $(".subjectList").change(function(){
         var subjectId = $(this).find("option:selected").attr('value');
+        var years = $('.years-fun').find("option:selected").attr('value');
         UI.$listMsgItem.attr('pageNo',0);
         var pageNo = UI.$listMsgItem.attr('pageNo');
         UI.$listMsgItem.html('');
-        getList(pageNo, pageSize,subjectId,searchVal);
+        getList(pageNo, pageSize,subjectId,years,searchVal);
     });
 
 
@@ -136,8 +174,10 @@ define(function (require) {
         UI.$listMsgItem.attr('pageNo',0);
         var pageNo = UI.$listMsgItem.attr('pageNo');
         UI.$listMsgItem.html('');
-        getList(pageNo, pageSize,sortType,subjectId,searchVal);
+        getList(pageNo, pageSize,subjectId,years,searchVal);
     });
+
+
 
 
 });

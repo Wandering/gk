@@ -4,6 +4,9 @@ define(function (require) {
     require('getTime');
     require('backToTop');
 
+    var modalLayer = require('modalLayer');
+
+
     // 切换tab
     $('.tabs-list').on('click', 'li', function () {
         $(this).addClass('active').siblings().removeClass('active');
@@ -102,17 +105,17 @@ define(function (require) {
     //名师讲堂搜索
     $('#teacher-lecture-search-btn').on('click', function () {
         var teacherSearchName = $('#teacher-lecture-search-input').val();
-        window.open('/before/teacher-lecture.jsp?teacherSearchName=' + teacherSearchName);
+        window.open('/before/teacher-lecture.jsp?classifyType=1&searchV=' + teacherSearchName);
     });
     //真题密卷
     $('#exam-search-btn').on('click', function () {
         var examSearchName = $('#exam-search-input').val();
-        window.open('/before/exam.jsp?examSearchName=' + examSearchName);
+        window.open('/before/exam.jsp?searchV=' + examSearchName);
     });
     // 高考心理
     $('#mentality-search-btn').on('click', function () {
         var mentalitySearchName = $('#mentality-search-input').val();
-        window.open('/before/mentality.jsp?mentalitySearchName=' + mentalitySearchName);
+        window.open('/before/mentality.jsp?classifyType=2&searchV=' + mentalitySearchName);
     });
 
 
@@ -171,14 +174,41 @@ define(function (require) {
         $('#main-volunteer-tabs li').eq(1).click();
         $('html,body').animate({scrollTop: ($('#main-volunteer-box').offset().top)}, 800);
     });
-
-
-
     var detailsUrl = window.location.search;
     var classifyType = detailsUrl.substr(14, 1);
     if (classifyType == '4') {
         $('#main-volunteer-tabs li').eq(1).click();
         $('html,body').animate({scrollTop: ($('#main-volunteer-box').offset().top)}, 800);
     }
-
+    // 院校推荐
+    $('#yxtj-sub').on('click',function(){
+        var scoreV = $('#score-input').val().trim();
+        var batchV = $('input[name="batch"]:checked').val();
+        var subjectTypeV = $('input[name="subjectType"]:checked').val();
+        if(scoreV==''){
+            modalLayer.modalTips("温馨提示", "请输入分数");
+            return false;
+        }
+        if(batchV == undefined){
+            modalLayer.modalTips("温馨提示", "请选择批次");
+             return false;
+        }
+        if(subjectTypeV == undefined){
+            modalLayer.modalTips("温馨提示", "请选择文理科");
+             return false;
+        }
+        $.ajax({
+            url:'/before/collegeRecommend/getCollegeList.do',
+            type: 'POST',
+            dataType: 'JSON',
+            data:{
+                "m_aggregateScore":500,
+                "m_batch":"二批本科",
+                "m_kelei":"文史"
+            },
+            success: function (res) {
+                console.log(res);
+            }
+        });
+    })
 });
