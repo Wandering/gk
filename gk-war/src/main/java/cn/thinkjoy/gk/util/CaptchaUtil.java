@@ -35,7 +35,7 @@ public class CaptchaUtil {
             red = random.nextInt(255);
             green = random.nextInt(255);
             blue = random.nextInt(255);
-//            g.translate(0,0);
+            g.translate(0,0);
             g.setColor(new Color(red, green, blue));
 //            g.drawString(rand,CaptchaConst.FONT_SPACING , 16);
             g.drawString(rand, (i + 1) * CaptchaConst.FONT_SPACING, CaptchaConst.TRANSLATE_START);
