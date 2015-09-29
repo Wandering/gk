@@ -51,6 +51,8 @@ public class CaptchaConst {
      * 新罗马
      */
     public static final Font FONT_NEWROMAN = new Font("Times New Roman",Font.CENTER_BASELINE,18);
+
+    public static final Font FIXEDSYS = new Font("Fixedsys", Font.BOLD, 24);
     /**
      * 字体数组
      */
