@@ -54,6 +54,7 @@
                         密码：<input type="password" class="input-pay-comm"/>
                     </div>
                 </div>
+                <div class="error-tips hide"></div>
                 <div class="btn-upgrade btn-green" id="accountBtn">升级</div>
             </div>
         </div>

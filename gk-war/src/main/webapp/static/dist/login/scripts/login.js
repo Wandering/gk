@@ -92,7 +92,7 @@ define(function (require) {
                 type: 'post',
                 dataType: 'json',
                 data: {
-                    type: 0,//0.注册标志
+                    type:0,//0.注册标志
                     account: reg_tel
                 },
                 success: function (res) {
@@ -110,18 +110,28 @@ define(function (require) {
                             },
                             success: function (res) {
                                 if (res.rtnCode == '0000000') {
-                                    Dom.codeText.css('background-color', '#ccc').attr('disabled', true);
+
+
+                                    //var captcha_lock = true;
+                                    //if (captcha_lock) {
+                                    //    captcha_lock = false;
+                                    //
+                                    //}
+
+                                    Dom.codeText.css('background-color', '#ccc').attr('disabled', false);
                                     var s = (JSON.parse(res.bizData)).time;
                                     var timer = setInterval(function () {
                                         s--;
                                         Dom.codeText.text(s + '秒后可重新获取');
                                         if (s <= 0) {
                                             clearInterval(timer);
-                                            Dom.codeText.text('重新获取').css('background-color', '#52d09c');
-                                            Dom.codeText.attr('disabled', false)
+                                            Dom.codeText.text('重新获取').css('background-color', '#52d09c').attr('disabled', true);
                                         }
                                     }, 1000);
-                                } else {
+
+
+
+                                }else{
                                     Dom.errorTip2.text(res.msg).fadeIn();
                                 }
                             }
@@ -174,10 +184,9 @@ define(function (require) {
                 success: function (res) {
                     console.log(res);
                     if (res.rtnCode == '0000000') {
-                        window.location.assign('http://' + window.location.host + '/user/personal-info.jsp');
-                        //window.location.href = 'http://'+window.location.host+'/login/login.jsp';
+                        window.location.href = 'http://'+window.location.host+'/login/login.jsp';
                     }else{
-                        Dom.errorTip2.text(res.msg);
+                        Dom.errorTip2(res.msg);
                     }
                 }
             })

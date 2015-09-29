@@ -114,7 +114,7 @@ define(function (require) {
     // 初始化数据
     UI.$nextPage.on('click', function () {
         var pageNo = UI.$listMsgItem.attr('pageNo');
-        getList(pageNo, pageSize,2,"",searchs);
+        getList(pageNo, pageSize,1,"",searchs);
     }).click();
 
 

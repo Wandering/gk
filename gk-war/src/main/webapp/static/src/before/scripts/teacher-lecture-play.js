@@ -28,13 +28,7 @@ define(function (require) {
                             fileUrl = dataJson[i].fileUrl,
                             isAccept = dataJson[i].isAccept,
                             sectionName = dataJson[i].sectionName;
-
-                        var  listMsgHtml = '';
-                        if(isAccept==1){
-                            listMsgHtml += '<a href="javascript:;" courseId="' + courseId + '" fileUrl="' + fileUrl + '">' + sectionName + '</a>';
-                        }else{
-                            listMsgHtml += '<a href="javascript:;" courseId="' + courseId + '" fileUrl="">' + sectionName + '</a>';
-                        }
+                        var listMsgHtml = '<a href="javascript:;" courseId="' + courseId + '" fileUrl="' + fileUrl + '">' + sectionName + '</a>';
                         $('#episode-num').append(listMsgHtml);
                     }
                     $('#episode-num').find('a:eq(0)').click();
@@ -54,19 +48,16 @@ define(function (require) {
                 }
             });
     }
+
     getList();
     $('#episode-num').on('click', 'a', function () {
         $(this).addClass('active').siblings().removeClass('active');
         var fileurl = $(this).attr('fileurl');
-        if(fileurl!="" || fileurl==null){
-            $('#player').attr('href', localhosts + fileurl);
-            var api = flowplayer(
-                "player",
-                "/static/src/guide/scripts/flowplayer-3.2.18.swf"
-            );
-        }else{
-            $('.error-tips').text('您还不是VIP用户,请升级为VIP后在观看。').fadeIn(1000).fadeOut(2000);
-        }
+        $('#player').attr('href', localhosts + fileurl);
+        var api = flowplayer(
+            "player",
+            "/static/src/guide/scripts/flowplayer-3.2.18.swf"
+        );
     });
 
 

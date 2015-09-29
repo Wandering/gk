@@ -77,6 +77,13 @@ define(function (require) {
             },
             success: function (res) {
                 console.log(res)
+                if(res.rtnCode=='0900002'){
+                    $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+
+
+
+
+                }
             }
         });
     });

@@ -20,35 +20,35 @@
                         <a target="_blank" href="/guide/guide.jsp" class="name">政策解读</a>
                         <span class="num">1</span>
 
-                        <p class="txt">专业而通俗地解读本省高考招生文件、高考志愿填报和招生的相关政策</p>
+                        <p class="txt">名师精品课程，全面剖析高考知识点以及提分技巧。</p>
                     </li>
                     <li class="item">
                         <img src="/static/dist/index/images/flow-img2.png" alt=""/>
                         <a target="_blank" href="/guide/volunteer_forum.jsp" class="name">志愿讲堂</a>
                         <span class="num">2</span>
 
-                        <p class="txt">全面介绍陕西省高考志愿填报的基础知识、规则及方法，帮您走出填报误区</p>
+                        <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
                     </li>
                     <li class="item">
                         <img src="/static/dist/index/images/flow-img3.png" alt=""/>
                         <a href="/consult/school_info.jsp" class="name">院校信息</a>
                         <span class="num">3</span>
 
-                        <p class="txt">快速查询招生院校信息及政策，完整准确提供历年高考招录数据，及相关信息</p>
+                        <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
                     </li>
                     <li class="item">
                         <img src="/static/dist/index/images/flow-img4.png" alt=""/>
                         <a target="_blank" href="/consult/profession_info.jsp" class="name">专业选择</a>
                         <span class="num">4</span>
 
-                        <p class="txt">研发智能测评系统，快速测评适合考生就读的专业以及就业方向，同时提供本科十三大类六百多个专业，专科十九大类一千多个专业相关信息</p>
+                        <p class="txt">根据分数快速定位院校及推荐院校</p>
                     </li>
                     <li class="item">
                         <img src="/static/dist/index/images/flow-img5.png" alt=""/>
                         <a target="_blank" href="/after/after.jsp" class="name">志愿指导</a>
                         <span class="num">5</span>
 
-                        <p class="txt">根据考生分数和位次快速锁定适合填报的院校，并按照冲稳保垫的原则对院校进行分类和排序，并出具评测报告，同时还提供线上线下专家一对一服务</p>
+                        <p class="txt">根据分数快速定位院校及推荐院校</p>
                     </li>
                 </ul>
             </div>

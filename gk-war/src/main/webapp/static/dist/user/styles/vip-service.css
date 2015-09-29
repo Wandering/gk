@@ -1063,7 +1063,8 @@ a.next-btn:hover {
           padding: 0 10px 0 30px; }
   .section .box-left, .section .box-right {
     width: 49.9%;
-    float: left; }
+    float: left;
+    position: relative; }
   .section .box-left {
     height: 340px;
     border-right: 1px solid #e5e5e5; }
@@ -1116,3 +1117,14 @@ a.next-btn:hover {
       .tel-content-box .row .col-3 .tel-num .tel {
         margin-left: 5px;
         margin-right: 30px; }
+
+.error-tips {
+  position: absolute;
+  width: 405px;
+  left: 35px;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 10px;
+  background-color: #e24d39;
+  color: #fff;
+  border-radius: 3px; }

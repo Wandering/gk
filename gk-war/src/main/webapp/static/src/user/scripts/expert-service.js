@@ -44,10 +44,6 @@ define(function (require) {
                 },
                 success: function (res) {
                     if (res.rtnCode == '0000000') {
-                        if(res.bizData.length == '0'){
-                            $('.content-list').addClass('no-msg').html('对不起，暂无数据 ').fadeIn();
-                            return false;
-                        }
                         var template = '';
                         $.each(res.bizData, function (i, v) {
                             template += '<a class="row go-detail" href="javascript:void(0);"> ' +
@@ -55,18 +51,12 @@ define(function (require) {
                             '<div class="col-1 createTime">' + getTime(v.createDate) + '</div> ' +
                             '</a>';
                         });
-                        if (res.bizData.length < size) {
+                        if (res.bizData.length > size) {
                             pointList.next.hide();
                         } else {
                             pointList.next.show();
                         }
-                        //if (num == 1) {
-                        //    pointList.renderContainer.html(template);
-                        //} else {
-                        //    pointList.renderContainer.append(template);
-                        //}
-
-                        pointList.renderContainer.append(template);
+                        pointList.renderContainer.html(template);
                     }
                 }
             })
@@ -74,18 +64,17 @@ define(function (require) {
     };
     pointList.getList(pointList.num, pointList.size);
     pointList.next.on('click', function () {
-        pointList.num ++;
-        pointList.getList(pointList.num, pointList.size);
+        pointList.getList(2, pointList.size);
+    });
+    //搜索
+    pointList.search.keydown(function () {
+        if (event.keyCode == 13) {
+            pointList.getList(pointList.num, pointList.size, pointList.search.val());
+        }
     });
     pointList.btnSearch.click(function () {
         pointList.getList(pointList.num, pointList.size, pointList.search.val());
     });
-    //搜索
-    //pointList.search.keydown(function () {
-    //    if (event.keyCode == 13) {
-    //        pointList.getList(pointList.num, pointList.size, pointList.search.val());
-    //    }
-    //});
     //预定详情
     $(document).on('click', '.go-detail', function (e) {
         e.stopPropagation();
