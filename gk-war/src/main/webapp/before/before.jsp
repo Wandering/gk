@@ -32,19 +32,19 @@
     <ul class="flow-main-list">
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a target="_blank" href="/before/teacher-lecture.jsp?classifyType=1" class="name">名师讲堂</a>
+            <a target="_blank" href="/before/teacher-lecture.jsp?classifyType=1&searchV=" class="name">名师讲堂</a>
             <span class="num">1</span>
             <p class="txt">名师精品课程，全面剖析高考知识点以及提分技巧。</p>
         </li>
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a target="_blank" href="/before/exam.jsp?classifyType=3" class="name">真题密卷</a>
+            <a target="_blank" href="/before/exam.jsp?classifyType=3&searchV=" class="name">真题密卷</a>
             <span class="num">2</span>
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a target="_blank" href="/before/mentality.jsp?classifyType=2" class="name">高考心理</a>
+            <a target="_blank" href="/before/mentality.jsp?classifyType=2&searchV=" class="name">高考心理</a>
             <span class="num">3</span>
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
@@ -115,7 +115,7 @@
     <div class="tabs">
         <ul class="tabs-list mt20 subjectList" classifyType="3"><li id="">全部</li></ul>
         <div class="into-search">
-            <a href="/before/exam.jsp?classifyType=3" target="_blank" class="into-btn">真题密卷</a>
+            <a href="/before/exam.jsp?classifyType=3&searchV=" target="_blank" class="into-btn">真题密卷</a>
             <form action="">
                 <section class="section-article">
                     <div class="search-content ta">
