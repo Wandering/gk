@@ -249,16 +249,13 @@ define(function (require) {
 
     $('#volunteer-flow3-layer').on('click','.close-btn',function(){
         $('#volunteer-flow3-layer,.tansLayer').hide();
+        $('#college-yzm').attr('src','/verifyCode/randomVerifyCode.do?type=1&code=' + Math.random());
     });
 
     // 院校评测验证码
     $('#yzmDreamSchool').on('click',function(){
         $('#yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=2&code=' + Math.random());
     }).attr('src','/verifyCode/randomVerifyCode.do?type=2');
-
-
-
-
     // 院校测评
     $('#evaluating-sub').on('click', function () {
         var dreamScoreV = $('#dream-score-input').val().trim();
@@ -335,8 +332,9 @@ define(function (require) {
     });
 
     $('#dream-school-layer').on('click','.close-btn',function(){
-        $('#volunteer-flow3-layer,.tansLayer').hide();
-    })
+        $('#dream-school-layer,.tansLayer').hide();
+        $('#yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=2&code=' + Math.random());
+    });
 
     $('#precedence-yzmDreamSchool').on('click',function(){
         $('#precedence-yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=3&code=' + Math.random());
@@ -344,7 +342,6 @@ define(function (require) {
 
     //获得位次
     $('#precedence-sub').on('click', function(e) {
-
         var dreamScoreV = $('#precedence-score-input').val().trim();
         var yzmDreamV = $('#precedence-yzmDream').val();
         if (dreamScoreV == '') {
@@ -392,11 +389,17 @@ define(function (require) {
 
                     $('#confirm').on('click', function(e) {
                         $('#precedence-school-layer,.tansLayer').hide();
+                        $('#precedence-yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=3&code=' + Math.random());
                     });
 
                 }
             }
         });
+    });
+
+    $('#precedence-school-layer').on('click','.close-btn',function(){
+        $('#precedence-school-layer,.tansLayer').hide();
+        $('#precedence-yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=3&code=' + Math.random());
     });
 
 
