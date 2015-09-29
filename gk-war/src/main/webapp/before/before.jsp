@@ -286,7 +286,7 @@
                     <input type="text" placeholder=""/>
                 </span>
                 <a>
-                    <img src="/static/dist/before/images/yzm.png" />
+                    <img id="college-yzm" src="" />
                 </a>
             </div>
 
@@ -371,10 +371,10 @@
 
     <div class="evaluating-body">
         <div class="evaluating-result-tips">
-            <p>您本次录入的分数是：<strong><span id="precedenceScoreInfo"></span>分、<span id="precedenceSubjectTypeInfo"></span>类</strong></p>
+            <p>您本次录入的分数是：<strong><span id="precedenceScoreInfo"></span>分</strong></p>
         </div>
         <div class="evaluating-result">
-            <p class="tips">依据2015年的录取情况、在陕西省填报该院校您需要以下分数(在陕）：</p>
+            <p class="tips">依据<span id="current-year"></span>年的录取情况、在陕西省填报该院校您需要以下分数(在陕）：</p>
             <div class="evaluating-result-num" id="precedence-list">
                 <%--<ul>--%>
                 <%--<li class="pc">三批本科</li>--%>
@@ -388,6 +388,9 @@
                 <%--</li>--%>
                 <%--</ul>--%>
             </div>
+        </div>
+        <div style="text-align: center">
+            <a class="evaluating-result-close close-btn" id="confirm">关闭</a>
         </div>
     </div>
 </div>
