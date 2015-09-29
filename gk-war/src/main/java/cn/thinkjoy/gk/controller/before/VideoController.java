@@ -50,13 +50,8 @@ public class VideoController extends BaseController {
         String subjectId = request.getParameter("subjectId");
         String sortType = HttpUtil.getParameter(request,"sortType","1");//默认按照创时间倒序排序
         String searchName = request.getParameter("searchName");
-        if(StringUtils.isNotBlank(searchName)){
-            try {
-                searchName = new String(searchName.getBytes("ISO-8859-1"));
-            }catch (Exception E){
 
-            }
-        }
+
         if(StringUtils.isBlank(classifyType)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
