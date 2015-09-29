@@ -205,7 +205,10 @@ define(function (require) {
             success: function (res) {
                 //console.log(res)
                 if (res.rtnCode == "0000000") {
-                    $('.volunteer-flow3-layer,.tansLayer').show();
+                    $('#volunteer-flow3-layer,.tansLayer').show();
+                    $('#score-num').text(scoreV+"分");
+                    $('#batchV').text(batchV);
+                    $('#subjectTypeV').text(subjectTypeV);
                     var dataJson = res.bizData.result.data;
                     for (var i = 0; i < dataJson.length; i++) {
                         if (dataJson[i].status == 0) {
@@ -223,6 +226,10 @@ define(function (require) {
                 }
             }
         });
+    })
+
+    $('#volunteer-flow3-layer').on('click','.close-btn',function(){
+        $('#volunteer-flow3-layer,.tansLayer').hide();
     })
 
 

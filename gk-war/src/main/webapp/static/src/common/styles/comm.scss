@@ -130,9 +130,8 @@
   display: none;
   position: absolute;
   top:50px;
-  //border-bottom: 1px solid #51a9e1;
+  left: -10px;
   z-index: 444;
-  white-space:nowrap;
   background: $mainColor;
 }
 
@@ -141,16 +140,29 @@
 }
 
 .main-menu li > ul li{
-  display: inline-block;
-  color: #fff;
-  white-space:nowrap;
-  a{
-    color: #fff;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  a {
+    text-align: center;
+    line-height: 37px;
+    display: block;
+    width: 135px;
+    border-bottom: 1px solid #3e3e3e;
+    font-size: 16px;
+    cursor: pointer;
+    color: #b1b0b0;
+    text-decoration: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    &:hover {
+      color: #fff;
+      background-color: #202020;
+    }
   }
 }
 
 .main-menu li > ul li:hover {
-  //border-bottom: 3px solid #fff;
   cursor: pointer;
 }
 

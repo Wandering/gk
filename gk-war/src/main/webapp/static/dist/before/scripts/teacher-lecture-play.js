@@ -42,8 +42,8 @@ define(function (require) {
         var fileurl = $(this).attr('fileurl');
         var videoUrl ='vcastr_file='+localhosts+fileurl;
         console.log(videoUrl)
-        $('#play-video').find('[name="FlashVars"]').attr('value','vcastr_file=/static/src/before/images/01.flv');
-        $('#play-video').find('embed').attr('flashvars','vcastr_file=/static/src/before/images/01.flv');
+        $('#play-video').find('[name="FlashVars"]').attr('value',videoUrl);
+        $('#play-video').find('embed').attr('flashvars',videoUrl);
     });
 
 
