@@ -1090,9 +1090,13 @@ a.next-btn:hover {
       cursor: pointer; }
     .school-table td.name, .school-table th.name {
       text-align: left;
-      padding-left: 10px; }
+      padding-left: 10px;
+      max-width: 200px; }
   .school-table td {
-    color: #555; }
+    color: #555;
+    max-width: 400px; }
+    .school-table td.name {
+      max-width: 200px; }
   .school-table th {
     color: #444; }
 
