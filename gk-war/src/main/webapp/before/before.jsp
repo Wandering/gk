@@ -243,7 +243,6 @@
 </div>
 
 <div class="main-volunteer-box" style="display: none;">
-
     <div class="school-eval w1000">
         <div class="tip">
             <p>依据考分估算出我的位次、获得推荐院校信息、以及我的理想院校测评</p>

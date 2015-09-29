@@ -278,10 +278,7 @@ define(function (require) {
                     $('#dreamScoreInfo').text(dreamScoreV);
                     $('#dreamSubjectTypeInfo').text(dreamSubjectTypeV);
                     $('#dreamSchoolInfo').text(dreamSchoolV);
-
                     for(var i=0;i<data.data.length;i++){
-
-
                         var dreamSchoolList = ''
                             +'<ul>'
                             +'<li class="pc">三批本科</li>'
