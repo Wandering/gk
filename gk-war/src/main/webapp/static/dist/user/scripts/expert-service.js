@@ -25,10 +25,12 @@ define(function (require) {
     }
 
     //拉取数据列表
-    var appointmentList = {
+    var pointList = {
         num: 1,
         size: 10,
         next: $('.more'),
+        search: $('#search'),
+        btnSearch:$('#btn-search'),
         renderContainer: $('.data-list'),
         getList: function (num, size, key_search) {
             $.ajax({
@@ -50,35 +52,29 @@ define(function (require) {
                             '</a>';
                         });
                         if (res.bizData.length > size) {
-                            appointmentList.next.hide();
+                            pointList.next.hide();
                         } else {
-                            appointmentList.next.show();
+                            pointList.next.show();
                         }
-                        appointmentList.renderContainer.html(template);
+                        pointList.renderContainer.html(template);
                     }
                 }
             })
         }
     };
-    //getListNext:function(){
-    //
-    //}
-    appointmentList.getList(appointmentList.num, appointmentList.size);
-    appointmentList.next.on('click',function(){
-        appointmentList.getList();
+    pointList.getList(pointList.num, pointList.size);
+    pointList.next.on('click', function () {
+        pointList.getList(2, 10);
     });
-    ////搜索
-    //var search = $('#search');
-    //search.keydown(function () {
-    //    var key_search = search.val();
-    //    if (event.keyCode == 13) {
-    //        getList(1, 5, key_search);
-    //    }
-    //});
-    //$('#btn-search').click(function () {
-    //    var key_search = $('#search').val();
-    //    getList(1, 5, key_search);
-    //});
+    //搜索
+    pointList.search.keydown(function () {
+        if (event.keyCode == 13) {
+            pointList.getList(pointList.num, pointList.size, pointList.search.val());
+        }
+    });
+    pointList.btnSearch.click(function () {
+        pointList.getList(pointList.num, pointList.size, pointList.search.val());
+    });
     //预定详情
     $(document).on('click', '.go-detail', function (e) {
         e.stopPropagation();

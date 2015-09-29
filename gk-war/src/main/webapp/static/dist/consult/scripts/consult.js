@@ -6,6 +6,8 @@ define(function (require) {
     var $ = require('$');
     require('swiper');
 
+    var api = flowplayer("player", "/static/src/guide/scripts/flowplayer-3.2.18.swf");
+
     $(document).ready(function() {
         $('#search').on('click', function(e) {
             var val = $('#keywords').val();
