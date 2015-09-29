@@ -32,7 +32,7 @@
         </div>
         <div id="detail_content_question">
         </div>
-        <div><a href="javascript:void(0)" class="next-btn hide">加载更多...</a></div>
+        <div><a href="javascript:void(0)" class="next-btn" style="display: none">加载更多...</a></div>
         <%--<div class="detail-content">--%>
             <%--<div class="detail-header">--%>
                 <%--<span class="detail-title">军队、武警部队院校招生，国防生体格检查标准</span>--%>
