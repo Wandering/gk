@@ -2,7 +2,7 @@
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
  * Project Name: gk
- * $Id:  UserInfo.java 2015-09-22 20:31:45 $
+ * $Id:  UserInfo.java 2015-09-28 18:43:26 $
  */
 
 
@@ -26,8 +26,12 @@ public class UserInfo extends BaseDomain{
     private String name;
     /** 头像 */
     private String icon;
+    /** 省份Id */
+    private String provinceId;
+    /** 城市Id */
+    private String cityId;
     /** 区域Id */
-    private Long countyId;
+    private String countyId;
     /** 学校名称 */
     private String schoolName;
     /** 生日 */
@@ -64,11 +68,25 @@ public class UserInfo extends BaseDomain{
     public String getIcon() {
         return this.icon;
     }
-    public void setCountyId(Long value) {
+    public void setProvinceId(String value) {
+        this.provinceId = value;
+    }
+
+    public String getProvinceId() {
+        return this.provinceId;
+    }
+    public void setCityId(String value) {
+        this.cityId = value;
+    }
+
+    public String getCityId() {
+        return this.cityId;
+    }
+    public void setCountyId(String value) {
         this.countyId = value;
     }
 
-    public Long getCountyId() {
+    public String getCountyId() {
         return this.countyId;
     }
     public void setSchoolName(String value) {
@@ -117,9 +135,11 @@ public class UserInfo extends BaseDomain{
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
                 .append("Id",getId())
-                .append("Token", getToken())
+                .append("Token",getToken())
                 .append("Name",getName())
                 .append("Icon",getIcon())
+                .append("ProvinceId",getProvinceId())
+                .append("CityId",getCityId())
                 .append("CountyId",getCountyId())
                 .append("SchoolName",getSchoolName())
                 .append("BirthdayDate",getBirthdayDate())

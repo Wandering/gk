@@ -3,7 +3,6 @@ define(function (require) {
     require('swiper');
     require('getTime');
     require('backToTop');
-
     // 切换tab
     $('.tabs-list').on('click', 'li', function () {
         $(this).addClass('active').siblings().removeClass('active');
@@ -46,7 +45,7 @@ define(function (require) {
 
 
     // 获取名师讲堂 & 高考心理
-    function getList(obj, subjectId, classifyType, searchName) {
+    function getList(obj, subjectId, classifyType) {
         $(obj).html('').hide();
         $.getJSON(
             '/before/video/getVideoList.do',
@@ -75,7 +74,7 @@ define(function (require) {
                         if (dataJson[i].frontCover == null || dataJson[i].frontCover == "") {
                             videoUrl = '/static/dist/common/images/video-default.png';
                         } else {
-                            videoUrl = localhosts+dataJson[i].frontCover;
+                            videoUrl = localhosts + dataJson[i].frontCover;
                         }
                         var listMsgHtml = ''
                             + '<li class="item">'
@@ -102,17 +101,17 @@ define(function (require) {
     //名师讲堂搜索
     $('#teacher-lecture-search-btn').on('click', function () {
         var teacherSearchName = $('#teacher-lecture-search-input').val();
-        window.open('/before/teacher-lecture.jsp?teacherSearchName=' + teacherSearchName);
+        window.open('/before/teacher-lecture.jsp?classifyType=1&searchV=' + teacherSearchName);
     });
     //真题密卷
     $('#exam-search-btn').on('click', function () {
         var examSearchName = $('#exam-search-input').val();
-        window.open('/before/exam.jsp?examSearchName=' + examSearchName);
+        window.open('/before/exam.jsp?searchV=' + examSearchName);
     });
     // 高考心理
     $('#mentality-search-btn').on('click', function () {
         var mentalitySearchName = $('#mentality-search-input').val();
-        window.open('/before/mentality.jsp?mentalitySearchName=' + mentalitySearchName);
+        window.open('/before/mentality.jsp?classifyType=2&searchV=' + mentalitySearchName);
     });
 
 
@@ -171,14 +170,62 @@ define(function (require) {
         $('#main-volunteer-tabs li').eq(1).click();
         $('html,body').animate({scrollTop: ($('#main-volunteer-box').offset().top)}, 800);
     });
-
-
-
     var detailsUrl = window.location.search;
     var classifyType = detailsUrl.substr(14, 1);
     if (classifyType == '4') {
         $('#main-volunteer-tabs li').eq(1).click();
         $('html,body').animate({scrollTop: ($('#main-volunteer-box').offset().top)}, 800);
     }
+    // 院校推荐
+    $('#yxtj-sub').on('click', function () {
+        var scoreV = $('#score-input').val().trim();
+        var batchV = $('input[name="batch"]:checked').val();
+        var subjectTypeV = $('input[name="subjectType"]:checked').val();
+        if (scoreV == '') {
+            $('.error-tips').text('请输入分数').fadeIn(1000).fadeOut(2000);
+            return false;
+        }
+        if (batchV == undefined) {
+            $('.error-tips').text('请选择批次').fadeIn(1000).fadeOut(2000);
+            return false;
+        }
+        if (subjectTypeV == undefined) {
+            $('.error-tips').text('请选择文理科').fadeIn(1000).fadeOut(2000);
+            return false;
+        }
+        $.ajax({
+            url: '/before/collegeRecommend/getCollegeList.do',
+            type: 'GET',
+            dataType: 'JSON',
+            data: {
+                "m_aggregateScore": scoreV,
+                "m_batch": batchV,
+                "m_kelei": subjectTypeV
+            },
+            success: function (res) {
+                //console.log(res)
+                if (res.rtnCode == "0000000") {
+                    $('.volunteer-flow3-layer,.tansLayer').show();
+                    var dataJson = res.bizData.result.data;
+                    for (var i = 0; i < dataJson.length; i++) {
+                        if (dataJson[i].status == 0) {
+                            $('#no-school' + i).show();
+                        } else {
+                            var schoolData = dataJson[i].data;
+                            for (var j = 0; j < schoolData.length; j++) {
+                                var m_university_code = schoolData[j].m_university_code;
+                                var m_university_name = schoolData[j].m_university_name;
+                                var schoolList = '<div><a target="_blank" href="/consult/school_detile.jsp?id='+ m_university_code +'">'+ m_university_name +'</a></div>';
+                                $('#school-list'+i).append(schoolList).show();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    })
+
+
+
 
 });
