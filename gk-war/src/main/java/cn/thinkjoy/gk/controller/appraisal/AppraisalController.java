@@ -6,6 +6,7 @@ import cn.thinkjoy.gk.controller.appraisal.bean.AppraisalBean;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
+import cn.thinkjoy.gk.util.VerificationKeyConst;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -71,7 +72,7 @@ public class AppraisalController extends BaseController {
     }
 
     /**
-     * 专业测评
+     * 院校测评
      * @return
      * @throws Exception
      */
@@ -79,7 +80,17 @@ public class AppraisalController extends BaseController {
     @ResponseBody
     public String schoolTest(@RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore,
                              @RequestParam(value="m_batch",required=false) String m_batch,
-                             @RequestParam(value="m_kelei",required=false) String m_kelei) throws Exception{
+                             @RequestParam(value="m_kelei",required=false) String m_kelei,
+                             @RequestParam(value="code",required=false) String code) throws Exception{
+        Object resultCode = session.getAttribute(VerificationKeyConst.COLLEGE_EVALUATION+getCookieValue());
+
+        if(resultCode==null){
+            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
+        }
+
+        if(!resultCode.toString().equals(code)){
+            throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
+        }
         String returnStr = null;
         try {
 
@@ -104,7 +115,19 @@ public class AppraisalController extends BaseController {
      */
     @RequestMapping(value = "/findRanking",method = RequestMethod.GET)
     @ResponseBody
-    public String findRanking(@RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore) throws Exception{
+    public String findRanking(@RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore,
+                              @RequestParam(value="code",required=false) String code) throws Exception{
+
+        Object resultCode = session.getAttribute(VerificationKeyConst.GET_THE_ORDER+getCookieValue());
+
+        if(resultCode==null){
+            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
+        }
+
+        if(!resultCode.toString().equals(code)){
+            throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
+        }
+
         String returnStr = null;
         try {
 
