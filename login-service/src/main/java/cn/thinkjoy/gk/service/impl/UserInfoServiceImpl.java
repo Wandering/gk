@@ -2,7 +2,7 @@
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
  * Project Name: gk
- * $Id:  UserInfoServiceImpl.java 2015-09-22 20:31:45 $
+ * $Id:  UserInfoServiceImpl.java 2015-09-28 18:43:26 $
  */
 package cn.thinkjoy.gk.service.impl;
 

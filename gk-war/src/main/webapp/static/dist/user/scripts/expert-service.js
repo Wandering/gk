@@ -18,7 +18,6 @@ define(function (require) {
                 fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     };
-
     function getTime(timestamp) {
         var newDate = new Date();
         newDate.setTime(timestamp);
@@ -26,49 +25,58 @@ define(function (require) {
     }
 
     //拉取数据列表
-    function getList(no, size, key_search) {
-        $.ajax({
-            url: '/appointment/getAppointment.do',
-            dataType: 'json',
-            type: 'get',
-            data: {
-                pageNo: no,
-                pageSize: size,
-                titleKey: key_search  //关键字搜索
-            },
-            success: function (res) {
-                if (res.rtnCode == '0000000') {
-                    console.log(res.bizData);
-                    var template = '';
-                    $.each(res.bizData, function (i, v) {
-                        console.log(v);
-                        template += '<a class="row go-detail" href="javascript:void(0);"> ' +
-                        '<div class="col-3 title" data-id="'+ v.id+'">' + v.title + '</div> ' +
-                        '<div class="col-1 createTime">' + getTime(v.createDate) + '</div> ' +
-                        '</a>'
-                    });
-                    $('.data-list').html(template);
-
+    var pointList = {
+        num: 1,
+        size: 10,
+        next: $('.more'),
+        search: $('#search'),
+        btnSearch:$('#btn-search'),
+        renderContainer: $('.data-list'),
+        getList: function (num, size, key_search) {
+            $.ajax({
+                url: '/appointment/getAppointment.do',
+                dataType: 'json',
+                type: 'get',
+                data: {
+                    pageNo: num,
+                    pageSize: size,
+                    titleKey: key_search  //关键字搜索
+                },
+                success: function (res) {
+                    if (res.rtnCode == '0000000') {
+                        var template = '';
+                        $.each(res.bizData, function (i, v) {
+                            template += '<a class="row go-detail" href="javascript:void(0);"> ' +
+                            '<div class="col-3 title" data-id="' + v.id + '">' + v.title + '</div> ' +
+                            '<div class="col-1 createTime">' + getTime(v.createDate) + '</div> ' +
+                            '</a>';
+                        });
+                        if (res.bizData.length > size) {
+                            pointList.next.hide();
+                        } else {
+                            pointList.next.show();
+                        }
+                        pointList.renderContainer.html(template);
+                    }
                 }
-            }
-        })
-    }
-
-    getList(1, 5);
+            })
+        }
+    };
+    pointList.getList(pointList.num, pointList.size);
+    pointList.next.on('click', function () {
+        pointList.getList(2, 10);
+    });
     //搜索
-    var search = $('#search');
-    search.keydown(function () {
-        var key_search = search.val();
+    pointList.search.keydown(function () {
         if (event.keyCode == 13) {
-            getList(1, 5, key_search);
+            pointList.getList(pointList.num, pointList.size, pointList.search.val());
         }
     });
-    $('#btn-search').click(function () {
-        var key_search = $('#search').val();
-        getList(1, 5, key_search);
+    pointList.btnSearch.click(function () {
+        pointList.getList(pointList.num, pointList.size, pointList.search.val());
     });
     //预定详情
-    $(document).on('click','.go-detail',function(e){
+    $(document).on('click', '.go-detail', function (e) {
         e.stopPropagation();
         var id = $(this).find('.title').attr('data-id');
         window.location.href = 'http://' + window.location.host + '/user/expert-service-detail.jsp?id=' + id;

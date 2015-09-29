@@ -5,7 +5,7 @@ define(function (require) {
     var classifyType = detailsUrl.substr(14, 1);
     var num = detailsUrl.indexOf("&");
     var courseId = detailsUrl.substr(num + 10);
-    (classifyType == 1)?(window.document.title = "名师学堂详情"):(window.document.title = "高考心理详情");
+    (classifyType == 1) ? (window.document.title = "名师学堂详情") : (window.document.title = "高考心理详情");
 
     var localhosts = 'http://www.gkzy114.com';
 
@@ -32,6 +32,19 @@ define(function (require) {
                         $('#episode-num').append(listMsgHtml);
                     }
                     $('#episode-num').find('a:eq(0)').click();
+                    var firstFileurl = $('#episode-num').find('a:eq(0)').attr('fileurl');
+                    console.log(firstFileurl);
+                    $('#player').attr('href', localhosts + firstFileurl);
+                    var api = flowplayer(
+                        "player",
+                        "/static/src/guide/scripts/flowplayer-3.2.18.swf",
+                        {
+                            clip: {
+                                autoPlay: false,       //是否自动播放，默认true
+                                autoBuffering: false     //是否自动缓冲视频，默认true
+                            }
+                        }
+                    );
                 }
             });
     }
@@ -40,10 +53,11 @@ define(function (require) {
     $('#episode-num').on('click', 'a', function () {
         $(this).addClass('active').siblings().removeClass('active');
         var fileurl = $(this).attr('fileurl');
-        var videoUrl ='vcastr_file='+localhosts+fileurl;
-        console.log(videoUrl)
-        $('#play-video').find('[name="FlashVars"]').attr('value','vcastr_file=/static/src/before/images/01.flv');
-        $('#play-video').find('embed').attr('flashvars','vcastr_file=/static/src/before/images/01.flv');
+        $('#player').attr('href', localhosts + fileurl);
+        var api = flowplayer(
+            "player",
+            "/static/src/guide/scripts/flowplayer-3.2.18.swf"
+        );
     });
 
 

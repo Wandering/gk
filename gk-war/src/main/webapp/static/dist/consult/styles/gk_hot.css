@@ -464,19 +464,32 @@ input, textarea {
   display: none;
   position: absolute;
   top: 50px;
+  left: -10px;
   z-index: 444;
-  white-space: nowrap;
   background: #353535; }
 
 .main-menu li:hover > ul {
   display: block; }
 
 .main-menu li > ul li {
-  display: inline-block;
-  color: #fff;
-  white-space: nowrap; }
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important; }
   .main-menu li > ul li a {
-    color: #fff; }
+    text-align: center;
+    line-height: 37px;
+    display: block;
+    width: 135px;
+    border-bottom: 1px solid #3e3e3e;
+    font-size: 16px;
+    cursor: pointer;
+    color: #b1b0b0;
+    text-decoration: none;
+    margin: 0 !important;
+    padding: 0 !important; }
+    .main-menu li > ul li a:hover {
+      color: #fff;
+      background-color: #202020; }
 
 .main-menu li > ul li:hover {
   cursor: pointer; }
@@ -985,7 +998,8 @@ section:last-child {
   color: #dedede; }
 
 .detile-title {
-  color: #626161; }
+  color: #626161;
+  margin-left: 10px; }
 
 .detile-info {
   background-color: #f6f6f6;

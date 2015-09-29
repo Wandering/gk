@@ -9,8 +9,9 @@ define(function (require) {
         prevButton: '.swiper-button-prev',
         loop: true
     });
+    //banner
     $.ajax({
-        url: '/banner/getUrlByType.do',
+        url: '/banner/getBannerByType.do',
         type: 'get',
         dataType: 'json',
         data: {

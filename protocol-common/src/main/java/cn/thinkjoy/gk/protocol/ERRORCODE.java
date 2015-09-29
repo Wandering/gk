@@ -39,8 +39,10 @@ public enum ERRORCODE {
 	VIP_EXIST("0900001","该用户已经是VIP了，请勿重复申请"),
 	VIP_CARD_NOT_INVALID("0900002","该卡无效"),
 	RESTFUL_INTERFACE_ISNULL("1000001","第三方数据接口返回数据为空"),
-	RESTFUL_INTERFACE_ISERROR("1000002","第三方数据接口异常");
-	;
+	RESTFUL_INTERFACE_ISERROR("1000002","第三方数据接口异常"),
+	VERIFICATION_CODE_ERROR("1000003","生成验证码发生错误");
+
+
 
 	/** The code. */
 	private final String code;

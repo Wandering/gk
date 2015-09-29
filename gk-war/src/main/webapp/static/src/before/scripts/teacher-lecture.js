@@ -58,7 +58,7 @@ define(function (require) {
                 classifyType:1,
                 sortType:sortType,
                 subjectId:subjectId,
-                teacherSearchName:searchVals
+                searchName:searchVals
             },
             function (result) {
                 console.log(result);
@@ -113,6 +113,8 @@ define(function (require) {
 
 
     var searchs=$('#searchVal').val();
+
+
 
     UI.$nextPage.on('click', function () {
         var pageNo = UI.$listMsgItem.attr('pageNo');

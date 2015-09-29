@@ -382,18 +382,19 @@ ul.main-video-list {
         height: 46px; }
     .school-eval .eval-right .category {
       width: 100%; }
-      .school-eval .eval-right .category label {
+      .school-eval .eval-right .category span.t {
         text-align: center;
         float: left;
         position: relative;
         top: 14px; }
       .school-eval .eval-right .category .group-radio {
         overflow: hidden; }
-        .school-eval .eval-right .category .group-radio li {
+        .school-eval .eval-right .category .group-radio label {
           float: left;
-          width: 50%; }
-          .school-eval .eval-right .category .group-radio li.tar {
-            text-align: right; }
+          width: 50%;
+          height: 30px;
+          position: relative;
+          top: 7px; }
         .school-eval .eval-right .category .group-radio span {
           display: inline-block;
           width: 126px;
@@ -540,8 +541,8 @@ ul.main-video-list {
   top: 50%;
   left: 50%;
   width: 1000px;
-  height: 590px;
-  margin: -295px 0 0 -500px;
+  height: 520px;
+  margin: -260px 0 0 -500px;
   z-index: 10;
   background: #fff;
   border-radius: 3px; }
@@ -615,7 +616,7 @@ ul.main-video-list {
           background: url("../../../dist/after/images/startD-icon.png") no-repeat; }
     .volunteer-flow3-layer .volunteer-flow3-body .info-result {
       overflow: hidden;
-      height: 285px;
+      height: 208px;
       border: 1px solid #ccc;
       border-top: none;
       padding: 20px 0 0; }
@@ -625,7 +626,7 @@ ul.main-video-list {
         overflow: hidden; }
         .volunteer-flow3-layer .volunteer-flow3-body .info-result ul li {
           width: 216px;
-          height: 241px;
+          height: 190px;
           overflow: hidden;
           float: left;
           margin-right: 11px;
@@ -676,6 +677,8 @@ ul.main-video-list {
       padding: 10px 20px;
       font-size: 14px;
       line-height: 20px; }
+      .volunteer-flow3-layer .volunteer-flow3-body .no-school p {
+        margin: 0; }
     .volunteer-flow3-layer .volunteer-flow3-body .school-list {
       padding: 20px; }
       .volunteer-flow3-layer .volunteer-flow3-body .school-list div {
@@ -709,3 +712,20 @@ ul.main-video-list {
   color: #fff;
   border-radius: 3px;
   width: 78%; }
+
+.result-info {
+  border: 1px solid #ccc;
+  border-top: none;
+  padding: 10px 20px;
+  color: #999; }
+  .result-info ul {
+    overflow: hidden; }
+    .result-info ul li {
+      list-style: decimal;
+      clear: both;
+      line-height: 28px; }
+      .result-info ul li strong {
+        font-weight: bold;
+        color: #444; }
+      .result-info ul li span {
+        color: #f0ad4e; }
