@@ -40,7 +40,7 @@ public class QuestionInterceptor extends HandlerInterceptorAdapter {
     @Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		String url = request.getServletPath();
-		if(url.indexOf("/question/")>-1||url.indexOf("/answer/")>-1){
+		if(url.indexOf("/question/insert.do")>-1||url.indexOf("/answer/findMyQuestion.do")>-1){
 
 			String value = CookieUtil.getCookieValue(request.getCookies(), CookieConst.USER_COOKIE_NAME);
 
