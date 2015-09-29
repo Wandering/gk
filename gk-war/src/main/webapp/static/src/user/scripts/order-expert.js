@@ -66,7 +66,7 @@ define(function (require) {
             success: function (res) {
                 if (res.rtnCode == '0000000') {
                     $('.error-tips').text('恭喜你，预约成功').fadeIn(1000).fadeOut(3000);
-                    window.location.href = 'http://' +window.location.host+'user/expert-service-detail.jsp'
+                    window.location.href = 'http://' +window.location.host+'/user/expert-service.jsp'
                 } else {
                     $('.error-tips').text('对不起，预约失败').fadeIn(1000).fadeOut(3000);
                 }

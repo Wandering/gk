@@ -48,7 +48,9 @@
 
         <div class="school-table mt20" id="profession_list">
         </div>
-        <div class="page" id="page">
+        <div class="page">
+            <span class="record"></span>
+            <span id="page"></span>
         </div>
     </div>
 </div>

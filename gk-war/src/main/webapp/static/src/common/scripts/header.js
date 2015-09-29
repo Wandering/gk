@@ -32,6 +32,7 @@ define(function (require) {
                 $('.after').addClass('active');
                 break;
             default:
+                $('.index').addClass('active');
                 break;
         }
     }

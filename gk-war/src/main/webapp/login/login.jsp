@@ -41,7 +41,7 @@
                 <input type="tel" class="input-comm tel-number" placeholder="手机号"/>
                 <i class="icon-user-code"></i>
                 <input type="text" class="input-comm pdr100 captcha-code" placeholder="验证码"/>
-                <span class="code-text">获取验证码</span>
+                <button class="code-text">获取验证码</button>
                 <i class="icon-user-psd"></i>
                 <input type="password" class="input-comm reg-password" placeholder="密码"/>
                 <i class="icon-conform-psd"></i>
