@@ -243,8 +243,8 @@ public class UniversityController extends BaseController {
          * 大学介绍
          */
         String  universityIntro=iUniversityService.getUniversityIntro(schoolCode);
-        entrollPlans.add(lastEntrollPlan);
         entrollPlans.add(entrollPlan);
+        entrollPlans.add(lastEntrollPlan);
         entrollPlanDto.setEntroIntro(entroIntro);
         entrollPlanDto.setUniversityIntro(universityIntro);
         entrollPlanDto.setEnrollPlan(entrollPlans);
