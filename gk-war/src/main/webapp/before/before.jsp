@@ -32,19 +32,19 @@
     <ul class="flow-main-list">
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a target="_blank" href="/before/teacher-lecture.jsp?classifyType=1" class="name">名师讲堂</a>
+            <a target="_blank" href="/before/teacher-lecture.jsp?classifyType=1&searchV=" class="name">名师讲堂</a>
             <span class="num">1</span>
             <p class="txt">名师精品课程，全面剖析高考知识点以及提分技巧。</p>
         </li>
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a target="_blank" href="/before/exam.jsp?classifyType=3" class="name">真题密卷</a>
+            <a target="_blank" href="/before/exam.jsp?classifyType=3&searchV=" class="name">真题密卷</a>
             <span class="num">2</span>
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
         <li class="item">
             <img src="/static/dist/before/images/flow-img1.png" alt=""/>
-            <a target="_blank" href="/before/mentality.jsp?classifyType=2" class="name">高考心理</a>
+            <a target="_blank" href="/before/mentality.jsp?classifyType=2&searchV=" class="name">高考心理</a>
             <span class="num">3</span>
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
@@ -115,7 +115,7 @@
     <div class="tabs">
         <ul class="tabs-list mt20 subjectList" classifyType="3"><li id="">全部</li></ul>
         <div class="into-search">
-            <a href="/before/exam.jsp?classifyType=3" target="_blank" class="into-btn">真题密卷</a>
+            <a href="/before/exam.jsp?classifyType=3&searchV=" target="_blank" class="into-btn">真题密卷</a>
             <form action="">
                 <section class="section-article">
                     <div class="search-content ta">
@@ -266,26 +266,20 @@
             </div>
 
             <div class="category mt10">
-                <label>选择批次：</label>
-                <ul class="group-radio">
-                    <li>
-                        <label><input type="radio" name="batch" value="一批本科" />一批本科</label>
-                        <label><input type="radio" name="batch" value="三批本科" />三批本科</label>
-                        <label><input type="radio" name="batch" value="二批本科" />二批本科</label>
-                        <label><input type="radio" name="batch" value="高职（专科）" />高职（专科）</label>
-                    </li>
-                </ul>
+                <span class="t">选择批次：</span>
+                <div class="group-radio">
+                    <label><input type="radio" name="batch" value="一批本科" />一批本科</label>
+                    <label><input type="radio" name="batch" value="二批本科" />二批本科</label>
+                    <label><input type="radio" name="batch" value="三批本科" />三批本科</label>
+                    <label><input type="radio" name="batch" value="高职（专科）" />高职（专科）</label>
+                </div>
             </div>
             <div class="category mt10">
-                <label>选择文理科：</label>
-                <ul class="group-radio">
-                    <li>
-                        <span><label><input type="radio" name="subjectType" value="文史" />文史</label></span>
-                    </li>
-                    <li>
-                        <span><label><input type="radio" name="subjectType" value="理工" />理工</label></span>
-                    </li>
-                </ul>
+                <span class="t">选择文理科：</span>
+                <div class="group-radio">
+                    <label><input type="radio" name="subjectType" value="文史" />文史</label>
+                    <label><input type="radio" name="subjectType" value="理工" />理工</label>
+                </div>
             </div>
 
             <div class="indent mt10">
@@ -338,7 +332,7 @@
 
 
 
-<div class="volunteer-flow3-layer" style="display: none;">
+<div class="volunteer-flow3-layer" id="volunteer-flow3-layer" style="display: none;">
     <div class="top-close">
         <a href="javascript:;" class="close-btn">x</a>
     </div>
@@ -415,9 +409,9 @@
         </div>
         <div class="result-info">
             <ul>
-                <li>您录入的分数是666分、文史类，依据2015年招生情况，您的分数是一批本科；</li>
-                <li>如果您想选择其他批次院校，请返回重新选择，或根据本人志愿进行填报；</li>
-                <li>如果未能推荐出您的意向院校，请使用我们为您提供的理想院校测评服务.</li>
+                <li>您录入的分数是<strong id="score-num">666分</strong>、<strong id="subjectTypeV">文史类</strong>，依据2015年招生情况，您的分数是<strong id="batchV">一批本科</strong>；</li>
+                <li>如果您想选择<strong>其他批次院校</strong>，请返回重新选择，或根据本人志愿进行填报；</li>
+                <li>如果未能推荐出您的意向院校，请使用我们为您提供的<span>理想院校测评</span>服务.</li>
             </ul>
         </div>
     </div>
