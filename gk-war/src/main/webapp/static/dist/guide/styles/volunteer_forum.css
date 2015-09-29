@@ -650,7 +650,8 @@ section:last-child {
     background-color: #626161;
     color: #dedede; }
   .section-article .detile-title {
-    color: #626161; }
+    color: #626161;
+    margin-left: 5px; }
   .section-article .detile-info {
     background-color: #f6f6f6;
     padding: 20px;

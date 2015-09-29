@@ -55,7 +55,7 @@ define(function (require) {
             return html.join('');
         },
         getMyQuestion: function(contentId, isAnswer) {
-            var url = ' /answer/myQuestion.do?';
+            var url = '/answer/findMyQuestion.do?';
             this.getData(url, contentId, isAnswer);
         },
         getData: function(url, contentId, isAnswer) {
@@ -85,12 +85,13 @@ define(function (require) {
         addNextPageHandle: function() {
             this.startSize += 5;
             this.endSize += 5;
-            this.getMyQuestion('tab_1', 1);
+            var isAnswer = $('.toggle-nav div.btn-selected').attr('data-isAnswer');
+            this.getMyQuestion('detail_content_question', isAnswer);
         }
     };
 
     $(document).ready(function() {
-        Question.getMyQuestion('tab_1', 1);
+        Question.getMyQuestion('detail_content_question', 1);
         Question.next.on('click', function(e) {
             Question.addNextPageHandle();
         });
@@ -103,6 +104,10 @@ define(function (require) {
         $('.toggle-nav div.btn').on('click', function() {
             if (!$(this).hasClass('btn-selected')) {
                 $(this).addClass('btn-selected').siblings().removeClass('btn-selected');
+                var isAnswer = $(this).attr('data-isAnswer');
+                Question.startSize = 0;
+                Question.endSize = 5;
+                Question.getMyQuestion('detail_content_question', isAnswer);
             }
         });
     });
