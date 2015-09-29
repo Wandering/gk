@@ -65,6 +65,12 @@
 .tab-content{
   margin: 20px 0 50px 0;
 
+  p img {
+    margin: 0 auto !important;
+    text-align: center !important;
+    display: block;
+  }
+
   p{
     line-height: 1.8;
   }

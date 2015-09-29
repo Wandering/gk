@@ -955,5 +955,9 @@ a.next-btn:hover {
 
 .tab-content {
   margin: 20px 0 50px 0; }
+  .tab-content p img {
+    margin: 0 auto !important;
+    text-align: center !important;
+    display: block; }
   .tab-content p {
     line-height: 1.8; }
