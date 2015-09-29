@@ -45,7 +45,7 @@
                 <section class="section-article">
                     <div class="search-content ta">
                  <span>
-                     <input type="text" id="searchVal" placeholder="请输入搜索内容"/>
+                     <input type="text" onkeydown="if(event.keyCode==13)return false;"  id="searchVal" placeholder="请输入搜索内容"/>
                      <input type="button" id="search-btn" value="搜索"/>
                 </span>
                     </div>
