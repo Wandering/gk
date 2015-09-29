@@ -110,14 +110,6 @@ define(function (require) {
                             },
                             success: function (res) {
                                 if (res.rtnCode == '0000000') {
-
-
-                                    //var captcha_lock = true;
-                                    //if (captcha_lock) {
-                                    //    captcha_lock = false;
-                                    //
-                                    //}
-
                                     Dom.codeText.css('background-color', '#ccc').attr('disabled', true);
                                     var s = (JSON.parse(res.bizData)).time;
                                     var timer = setInterval(function () {
