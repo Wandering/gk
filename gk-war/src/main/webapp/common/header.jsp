@@ -19,7 +19,14 @@
           <li><a href="/consult/profession_info.jsp">专业信息</a></li>
         </ul>
       </li>
-      <li><a class="before" href="/before/before.jsp">考前备考</a></li>
+      <li><a class="before" href="/before/before.jsp">考前备考</a>
+        <ul class="submenu">
+          <li><a href="/before/teacher-lecture.jsp?classifyType=1&searchV=">名师讲堂</a></li>
+          <li><a href="/before/exam.jsp?classifyType=3&searchV=">真题密卷</a></li>
+          <li><a href="/before/mentality.jsp?classifyType=2&searchV=">高考心理</a></li>
+          <li><a href="/before/before.jsp?classifyType=4">院校推荐</a></li>
+        </ul>
+      </li>
       <li><a class="after" href="/after/after.jsp">考后报考</a></li>
     </ul>
     <div class="log-reg hide">

@@ -49,6 +49,12 @@ public class AnswerController extends BaseController {
                                                    @RequestParam(value="isAnswer",required=false) Integer isAnswer,
             PageQuery pageQuery) throws Exception {
 
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+
         Integer startSize = pageQuery.getStartSize();
 
         if(startSize==null){

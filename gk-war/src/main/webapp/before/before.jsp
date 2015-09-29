@@ -192,12 +192,13 @@
         <ul class="tabs-list mt20" id="main-volunteer-tabs">
             <li class="active">院校评测</li>
             <li>院校推荐</li>
+            <li>获得位次</li>
         </ul>
     </div>
 </div>
 
 
-<div class="main-volunteer-box">
+<div class="main-volunteer-box" id="dream-school">
     <div class="school-eval w1000">
         <div class="tip">
             <p>院校评测使用的分数，位次数据，招生计划为往年数据，结果仅供参考，且系统推荐学校有限制，若要使用最新，更全面，更多推荐学校，请升级为VIP。</p>
@@ -208,32 +209,29 @@
             <h6>直接系统告诉我可以报的院校名称，容我考虑考虑</h6>
         </div>
         <div class="eval-right">
+            <div class="error-tips hide"></div>
             <div class="form-control">
                 <label>分数</label>
-                <input type="text" class="score-input" placeholder="请输入分数"/>
+                <input type="text" class="score-input" id="dream-score-input" placeholder="请输入分数"/>
             </div>
             <div class="form-control">
                 <label>院校</label>
-                <input type="text" class="school-input" placeholder="请填写理想院校"/>
+                <input type="text" class="school-input" id="dream-school-input" placeholder="请填写理想院校"/>
             </div>
-            <div class="category mt10">
-                <label>选择文理科：</label>
-                <ul class="group-radio">
-                    <li>
-                        <span><input type="radio" name="category" value="文科" />文科</span>
-                    </li>
-                    <li>
-                        <span><input type="radio" name="category" value="理科" />理科</span>
-                    </li>
-                </ul>
+            <div class="category mt10" style="height: 40px;">
+                <span class="t">选择文理科：</span>
+                <div class="group-radio">
+                        <label><input type="radio" name="dreamSubjectType" value="文史" />文史</label>
+                        <label><input type="radio" name="dreamSubjectType" value="理工" />理工</label>
+                </div>
             </div>
             <div class="indent mt10">
                 <span class="ident-code">
                     <label>验证码</label>
-                    <input type="text" placeholder="请输入分数"/>
+                    <input type="text" id="yzmDream" placeholder=""/>
                 </span>
                 <a>
-                    <img src="/static/dist/before/images/yzm.png" />
+                    <img id="yzmDreamSchool" src=""   />
                 </a>
             </div>
 
@@ -244,6 +242,7 @@
         </div>
     </div>
 </div>
+
 
 <div class="main-volunteer-box" style="display: none;">
 
@@ -285,10 +284,10 @@
             <div class="indent mt10">
                 <span class="ident-code">
                     <label>验证码</label>
-                    <input type="text" placeholder="请输入分数"/>
+                    <input type="text" placeholder=""/>
                 </span>
                 <a>
-                    <img src="/static/dist/before/images/yzm.png" />
+                    <img id="college-yzm" src="" />
                 </a>
             </div>
 
@@ -300,33 +299,100 @@
     </div>
 </div>
 
+<div class="main-volunteer-box" id="precedence" style="display: none">
+    <div class="school-eval w1000">
+        <div class="tip">
+            <p>院校评测使用的分数，位次数据，招生计划为往年数据，结果仅供参考，且系统推荐学校有限制，若要使用最新，更全面，更多推荐学校，请升级为VIP。</p>
+        </div>
+        <div class="eval-left">
+            <img src="/static/dist/before/images/bottom-banner.jpg" />
+            <h3>获得位次</h3>
+            <h6>我想通过分数让平台为我估测我的位次。</h6>
+        </div>
+        <div class="eval-right">
+            <div class="error-tips hide"></div>
+            <div class="form-control">
+                <label>分数</label>
+                <input type="text" class="score-input" id="precedence-score-input" placeholder="请输入分数"/>
+            </div>
+            <div class="indent mt10">
+                <span class="ident-code">
+                    <label>验证码</label>
+                    <input type="text" id="precedence-yzmDream" placeholder=""/>
+                </span>
+                <a>
+                    <img id="precedence-yzmDreamSchool" src=""   />
+                </a>
+            </div>
+
+            <div class="submit mt20">
+                <input type="submit" id="precedence-sub" value="获得位次"/>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <div class="tansLayer" style="display: none;"></div>
-<div class="evaluating-layer" style="display: none;">
+<div class="evaluating-layer" id="dream-school-layer" style="display: none;">
     <div class="top-close">
         <a href="javascript:;" class="close-btn">x</a>
     </div>
 
     <div class="evaluating-body">
         <div class="evaluating-result-tips">
-            <p>您本次录入的分数是：<strong>600分、理工类</strong></p>
-            <p>所测评的目标院校是：<strong>西安交通大学</strong></p>
+            <p>您本次录入的分数是：<strong><span id="dreamScoreInfo"></span>分、<span id="dreamSubjectTypeInfo"></span>类</strong></p>
+            <p>所测评的目标院校是：<strong id="dreamSchoolInfo"></strong></p>
         </div>
         <div class="evaluating-result">
-            <p class="tips">依据2015年的录取情况、在陕西省填报该院校您需要以下分数(在陕一批本科）：</p>
-            <div class="evaluating-result-num">
-                <ul>
-                    <li class="result1">
-                        <span class="t">所需最低分数</span>
-                        <span class="num"><strong>639</strong>分</span>
-                    </li>
-                    <li class="result2">
-                        <span class="t">所需平均分数</span>
-                        <span class="num"><strong>652</strong>分</span>
-                    </li>
-                </ul>
+            <p class="tips">依据2015年的录取情况、在陕西省填报该院校您需要以下分数(在陕）：</p>
+            <div class="evaluating-result-num" id="dream-list">
+                <%--<ul>--%>
+                    <%--<li class="pc">三批本科</li>--%>
+                    <%--<li class="result1">--%>
+                        <%--<span class="t">所需最低分数</span>--%>
+                        <%--<span class="num"><strong>639</strong>分</span>--%>
+                    <%--</li>--%>
+                    <%--<li class="result2">--%>
+                        <%--<span class="t">所需平均分数</span>--%>
+                        <%--<span class="num"><strong>652</strong>分</span>--%>
+                    <%--</li>--%>
+                <%--</ul>--%>
             </div>
         </div>
-        <a href="javascript:;" class="evaluating-result-close close-btn">返回上一步</a>
+    </div>
+</div>
+
+
+<div class="tansLayer" style="display: none;"></div>
+<div class="evaluating-layer" id="precedence-school-layer" style="display: none;">
+    <div class="top-close">
+        <a href="javascript:;" class="close-btn">x</a>
+    </div>
+
+    <div class="evaluating-body">
+        <div class="evaluating-result-tips">
+            <p>您本次录入的分数是：<strong><span id="precedenceScoreInfo"></span>分</strong></p>
+        </div>
+        <div class="evaluating-result">
+            <p class="tips">依据<span id="current-year"></span>年的录取情况、在陕西省填报该院校您需要以下分数(在陕）：</p>
+            <div class="evaluating-result-num" id="precedence-list">
+                <%--<ul>--%>
+                <%--<li class="pc">三批本科</li>--%>
+                <%--<li class="result1">--%>
+                <%--<span class="t">所需最低分数</span>--%>
+                <%--<span class="num"><strong>639</strong>分</span>--%>
+                <%--</li>--%>
+                <%--<li class="result2">--%>
+                <%--<span class="t">所需平均分数</span>--%>
+                <%--<span class="num"><strong>652</strong>分</span>--%>
+                <%--</li>--%>
+                <%--</ul>--%>
+            </div>
+        </div>
+        <div style="text-align: center">
+            <a class="evaluating-result-close close-btn" id="confirm">关闭</a>
+        </div>
     </div>
 </div>
 

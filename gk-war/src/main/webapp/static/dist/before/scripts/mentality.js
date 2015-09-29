@@ -125,7 +125,7 @@ define(function (require) {
         UI.$listMsgItem.attr('pageNo',0);
         var pageNo = UI.$listMsgItem.attr('pageNo');
         UI.$listMsgItem.html('');
-        getList(pageNo, pageSize,sortType,subjectId,searchs);
+        getList(pageNo, pageSize,sortType,subjectId,"");
     });
 
 
@@ -136,7 +136,7 @@ define(function (require) {
         UI.$listMsgItem.attr('pageNo',0);
         var pageNo = UI.$listMsgItem.attr('pageNo');
         UI.$listMsgItem.html('');
-        getList(pageNo, pageSize,sortType,subjectId,searchs);
+        getList(pageNo, pageSize,sortType,subjectId,"");
     });
 
 
