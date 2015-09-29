@@ -1162,7 +1162,8 @@ a.next-btn:hover {
         font-size: 12px;
         border-radius: 3px;
         right: 10px;
-        cursor: pointer; }
+        cursor: pointer;
+        border: none; }
 
 .footer {
   background-color: #fff;

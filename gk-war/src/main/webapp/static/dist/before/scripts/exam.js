@@ -12,14 +12,28 @@ define(function (require) {
 
     var localhosts = 'http://www.gkzy114.com';
 
-    var searchValUrl = window.location.search;
-    var num = searchValUrl.indexOf("?");
-    var searchVal = searchValUrl.substr(num+16);
-    $('#searchVal').val(searchVal);
+    //var searchValUrl = window.location.search;
+    //var num = searchValUrl.indexOf("?");
+    //var searchVal = searchValUrl.substr(num+16);
+    //$('#searchVal').val(searchVal);
+
+
+    var detailsUrl = decodeURIComponent(window.location.search);
+    var classifyType = detailsUrl.substr(14, 1);
+    var num = detailsUrl.indexOf('&');
+    var searchV = detailsUrl.substr(num + 9);
+    console.log(classifyType)
+    console.log(searchV);
+
+    $('#searchVal').val(searchV);
+
+
+
+
 
     // 搜索
     $('#search-btn').on('click',function(){
-       window.location.href='/before/exam.jsp?examSearchName='+ $('#searchVal').val()
+       window.location.href='/before/exam.jsp?classifyType=3&searchV='+ $('#searchVal').val()
     });
 
 
@@ -162,7 +176,8 @@ define(function (require) {
         UI.$listMsgItem.attr('pageNo',0);
         var pageNo = UI.$listMsgItem.attr('pageNo');
         UI.$listMsgItem.html('');
-        getList(pageNo, pageSize,subjectId,years,searchVal);
+        getList(pageNo, pageSize,subjectId,years,"");
+        $('#searchVal').val("");
     });
 
 
@@ -174,7 +189,8 @@ define(function (require) {
         UI.$listMsgItem.attr('pageNo',0);
         var pageNo = UI.$listMsgItem.attr('pageNo');
         UI.$listMsgItem.html('');
-        getList(pageNo, pageSize,subjectId,years,searchVal);
+        getList(pageNo, pageSize,subjectId,years,"");
+        $('#searchVal').val("");
     });
 
 

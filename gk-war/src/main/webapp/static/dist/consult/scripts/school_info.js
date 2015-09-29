@@ -153,7 +153,8 @@ define(function(require) {
             this.totalPage = Math.ceil(totals / 10);
             var pageHtml = [];
             var startNum = (curPage - 1) * 10 + 1;
-            pageHtml.push('<span class="record">共' + totals + '条记录 <span class="startNum">' + startNum + '</span>/' + totals + '</span>');
+            $('.record').html('共' + totals + '条记录&nbsp;&nbsp;共' + this.totalPage + '页&nbsp;&nbsp;<span class="startNum">' + startNum + '</span>/' + totals);
+            //pageHtml.push('<span class="record">共' + totals + '条记录 <span class="startNum">' + startNum + '</span>/' + totals + '</span>');
             pageHtml.push('<a class="previous-page">上一页</a>');
             var num = this.totalPage > 10 ? 10: this.totalPage;
             for (var i = 0; i < num; i++) {
@@ -177,7 +178,6 @@ define(function(require) {
             var minNum = this.totalPage > 10 ? 10 : this.totalPage;
             num = num < minNum ? minNum : num;
             var oldNum = num;
-            console.log(num);
             var arryPage = [];
             for (var i = 0; i < 10; i++) {
                 arryPage.push(num--);
@@ -215,7 +215,7 @@ define(function(require) {
                 if ($(this).hasClass('previous-page')) {
                     that.curPage--;
                     if (that.curPage > 0) {
-                        if (!$('#page a.' + that.curPage)[0] && this.totalPage > 10) {
+                        if (!$('#page a.' + that.curPage)[0] && that.totalPage > 10) {
                             that.refreshPage(that.curPage);
                         }
                         $('#page a.' + that.curPage).addClass('active').siblings().removeClass('active');
@@ -226,7 +226,7 @@ define(function(require) {
                 } else if ($(this).hasClass('next-page')) {
                     that.curPage++;
                     if (that.curPage <= that.totalPage) {
-                        if (!$('#page a.' + that.curPage)[0] && this.totalPage > 10) {
+                        if (!$('#page a.' + that.curPage)[0] && that.totalPage > 10) {
                             that.refreshPage(that.curPage);
                         }
                         $('#page a.' + that.curPage).addClass('active').siblings().removeClass('active');
@@ -238,7 +238,7 @@ define(function(require) {
                     if (!$(this).hasClass('active')) {
                         that.curPage = parseInt($(this).text());
                         $(this).addClass('active').siblings().removeClass('active');
-                        if (this.totalPage > 10) {
+                        if (that.totalPage > 10) {
                             var nextPage = that.curPage + 1;
                             var prePage = that.curPage - 1;
                             if (nextPage <= that.totalPage && prePage > 0) {

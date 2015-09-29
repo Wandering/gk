@@ -110,17 +110,29 @@ define(function (require) {
                             },
                             success: function (res) {
                                 if (res.rtnCode == '0000000') {
-                                    Dom.codeText.unbind('click').css('background-color', '#ccc');
+
+
+                                    //var captcha_lock = true;
+                                    //if (captcha_lock) {
+                                    //    captcha_lock = false;
+                                    //
+                                    //}
+
+                                    Dom.codeText.css('background-color', '#ccc').attr('disabled', false);
                                     var s = (JSON.parse(res.bizData)).time;
                                     var timer = setInterval(function () {
                                         s--;
                                         Dom.codeText.text(s + '秒后可重新获取');
                                         if (s <= 0) {
                                             clearInterval(timer);
-                                            Dom.codeText.text('重新获取').css('background-color', '#52d09c');
+                                            Dom.codeText.text('重新获取').css('background-color', '#52d09c').attr('disabled', true);
                                         }
                                     }, 1000);
-                                    Dom.codeText.bind('click');
+
+
+
+                                }else{
+                                    Dom.errorTip2.text(res.msg).fadeIn();
                                 }
                             }
                         });
