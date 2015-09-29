@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/static/dist/user/styles/personal-info.min.css"/>
     <link rel="stylesheet" href="/static/bower_components/laydate/need/laydate.css"/>
     <link rel="stylesheet" href="/static/bower_components/laydate/skins/dahong/laydate.css"/>
+    <link rel="stylesheet" href="/static/bower_components/uploadify/uploadify.css"/>
 </head>
 <body>
 <%@include file="/common/header.jsp"%>
@@ -39,9 +40,15 @@
                 </div>
                 <div class="group-comm">
                     所在地区
-                    <select id="cmbProvince" class="user-select-comm ml35"></select>
-                    <select id="cmbCity" class="user-select-comm"></select>
-                    <select id="cmbArea" class="user-select-comm"></select>
+                    <select id="cmbProvince" class="user-select-comm ml35">
+                        <option value="1">请选择</option>
+                    </select>
+                    <select id="cmbCity" class="user-select-comm">
+                        <option value="1">请选择</option>
+                    </select>
+                    <select id="cmbArea" class="user-select-comm">
+                        <option value="1">请选择</option>
+                    </select>
                 </div>
                 <div class="group-comm">
                     所在学校<input type="text" class="user-input-comm school" value=""/>
@@ -56,8 +63,8 @@
                 </div>
                 <div class="group-comm">
                     科目选择
-                    <label class="radius-comm"><input name="subject" type="radio" value="1" id="subject_w"/>文科 </label>
-                    <label class="radius-comm"><input name="subject" type="radio" value="0" id="subject_l"/>理科 </label>
+                    <label class="radius-comm"><input name="subject" type="radio" value="0" id="subject_w"/>文科 </label>
+                    <label class="radius-comm"><input name="subject" type="radio" value="1" id="subject_l"/>理科 </label>
                 </div>
                 <div class="group-comm">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email<input type="text" class="user-input-comm mail" />
@@ -72,11 +79,8 @@
 </div>
 
 <%@include file="/common/footer.jsp"%>
-<%--<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>--%>
-<%--<script src="/static/bower_components/uploadify/jquery.uploadify.js"/>--%>
-<script type="text/javascript">
-//    alert(1);
-</script>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/static/bower_components/uploadify/jquery.uploadify.js"></script>
 <script>
     seajs.use("/static/src/user/scripts/personal-info");
 </script>

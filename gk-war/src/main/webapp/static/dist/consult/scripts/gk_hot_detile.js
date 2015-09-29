@@ -29,8 +29,10 @@ define(function (require) {
                     $('#section_article').html(html.join(''));
                     $.each($('#section_article img'), function(i, value) {
                         var src = $(value).attr('src');
-                        src = 'http://www.gkzy114.com' + src;
-                        $(value).attr('src', src);
+                        if (src.indexOf('http://') < 0 && src.indexOf('https://') < 0) {
+                            src = 'http://www.gkzy114.com' + src;
+                            $(value).attr('src', src);
+                        }
                     })
                 } else {
                     $('#section_article').html('<h6>暂无信息！</h6>');

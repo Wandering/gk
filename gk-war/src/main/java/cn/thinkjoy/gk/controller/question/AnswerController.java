@@ -43,7 +43,7 @@ public class AnswerController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/myQuestion", method = RequestMethod.GET)
+    @RequestMapping(value = "/findMyQuestion", method = RequestMethod.GET)
     @ResponseBody
     public List<QuestionAnswerBean> findMyQuestion(@RequestParam(value="keyword",required=false) String keyword,
                                                    @RequestParam(value="isAnswer",required=false) Integer isAnswer,

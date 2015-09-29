@@ -172,8 +172,7 @@ define(function (require) {
                 success: function (res) {
                     console.log(res);
                     if (res.rtnCode == '0000000') {
-                        //有服务端跳转
-                        //window.location.href = 'http://'+window.location.host+'/index.jsp';
+                        window.location.href = 'http://'+window.location.host+'/login.jsp';
                     }else{
                         Dom.errorTip2(res.msg);
                     }
