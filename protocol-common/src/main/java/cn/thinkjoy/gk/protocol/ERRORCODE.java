@@ -42,7 +42,8 @@ public enum ERRORCODE {
 	RESTFUL_INTERFACE_ISERROR("1000002","第三方数据接口异常"),
 	CREATE_VERIFY_CODE_ERROR("1000003","生成验证码发生错误!"),
 	NO_LOGIN("1000004","请先登录后再进行操作"),
-	VERIFY_CODE_ERROR("0100005", "验证码错误!");
+	VERIFY_CODE_ERROR("0100005", "验证码错误!"),
+	NOT_IS_VIP_ERROR("0100006", "非VIP用户!");
 
 
 

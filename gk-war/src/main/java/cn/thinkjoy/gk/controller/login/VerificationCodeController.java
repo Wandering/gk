@@ -86,17 +86,19 @@ public class VerificationCodeController extends BaseController {
 //				// 将产生的四个随机数组合在一起。
 //				randomCode.append(code);
 //			}
+
+			String randomCode = CaptchaUtil.getRandomString(image).toUpperCase();
 //
-//			String value = getCookieValue();
-//			if(VerificationKeyConst.COLLEGE_RECOMMENDATION_TYPE==Integer.valueOf(type)){
-//				session.setAttribute(VerificationKeyConst.COLLEGE_RECOMMENDATION+value, randomCode.toString());
-//			}else if(VerificationKeyConst.COLLEGE_EVALUATION_TYPE==Integer.valueOf(type)){
-//				session.setAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value, randomCode.toString());
-//			}else if(VerificationKeyConst.GET_THE_ORDER_TYPE==Integer.valueOf(type)){
-//				session.setAttribute(VerificationKeyConst.GET_THE_ORDER+value, randomCode.toString());
-//			}else{
-//				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
-//			}
+			String value = getCookieValue();
+			if(VerificationKeyConst.COLLEGE_RECOMMENDATION_TYPE==Integer.valueOf(type)){
+				session.setAttribute(VerificationKeyConst.COLLEGE_RECOMMENDATION+value, randomCode.toString());
+			}else if(VerificationKeyConst.COLLEGE_EVALUATION_TYPE==Integer.valueOf(type)){
+				session.setAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value, randomCode.toString());
+			}else if(VerificationKeyConst.GET_THE_ORDER_TYPE==Integer.valueOf(type)){
+				session.setAttribute(VerificationKeyConst.GET_THE_ORDER+value, randomCode.toString());
+			}else{
+				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
+			}
 //			response.setHeader("Pragma", "no-cache");
 //			response.setHeader("Cache-Control", "no-cache");
 //			response.setDateHeader("Expires", 0);
