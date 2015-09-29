@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,8 +51,6 @@ public class VideoController extends BaseController {
         String subjectId = request.getParameter("subjectId");
         String sortType = HttpUtil.getParameter(request,"sortType","1");//默认按照创时间倒序排序
         String searchName = request.getParameter("searchName");
-
-
         if(StringUtils.isBlank(classifyType)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
@@ -84,10 +83,16 @@ public class VideoController extends BaseController {
     @ResponseBody
     public List<VideoSection> getVideoSectionList(){
         String courseId = request.getParameter("courseId");
-        UserAccountPojo user = getUserAccountPojo();
+        UserAccountPojo user=null;
+        try{
+            user = getUserAccountPojo();
+        }catch (Exception e){
+           throw  new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
         if(StringUtils.isBlank(courseId)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
+        List<VideoSection> videoSectionList=new ArrayList<>();
         Map<String,Object> queryMap = new HashMap<>();
         queryMap.put("courseId",courseId);
         List<VideoSection> videoSections = videoSectionService.queryList(queryMap, "sectionSort", "ASC");
@@ -102,8 +107,13 @@ public class VideoController extends BaseController {
             }else {
                 videoSection.setIsAccept(1);
             }
+            videoSectionList.add(videoSection);
         }
-        return videoSections;
+        VideoCourse videoCourse =(VideoCourse) videoCourseService.findOne("id",courseId);
+        videoCourse.setId(videoCourse.getId());
+        videoCourse.setHit(videoCourse.getHit() + 1);
+        videoCourseService.update(videoCourse);
+        return videoSectionList;
     }
 
     /**

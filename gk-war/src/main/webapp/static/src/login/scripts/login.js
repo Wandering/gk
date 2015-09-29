@@ -92,7 +92,7 @@ define(function (require) {
                 type: 'post',
                 dataType: 'json',
                 data: {
-                    type:0,//0.注册标志
+                    type: 0,//0.注册标志
                     account: reg_tel
                 },
                 success: function (res) {
@@ -110,7 +110,15 @@ define(function (require) {
                             },
                             success: function (res) {
                                 if (res.rtnCode == '0000000') {
-                                    Dom.codeText.unbind('click').css('background-color', '#ccc');
+
+
+                                    //var captcha_lock = true;
+                                    //if (captcha_lock) {
+                                    //    captcha_lock = false;
+                                    //
+                                    //}
+
+                                    Dom.codeText.css('background-color', '#ccc').attr('disabled', true);
                                     var s = (JSON.parse(res.bizData)).time;
                                     var timer = setInterval(function () {
                                         s--;
@@ -118,9 +126,13 @@ define(function (require) {
                                         if (s <= 0) {
                                             clearInterval(timer);
                                             Dom.codeText.text('重新获取').css('background-color', '#52d09c');
+                                            Dom.codeText.attr('disabled', false)
                                         }
                                     }, 1000);
-                                    Dom.codeText.bind('click');
+
+
+                                } else {
+                                    Dom.errorTip2.text(res.msg).fadeIn();
                                 }
                             }
                         });

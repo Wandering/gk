@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class AppraisalController extends BaseController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/lstest",method = RequestMethod.POST)
+    @RequestMapping(value = "/lstest",method = RequestMethod.GET)
     @ResponseBody
     public String lstest() throws Exception{
 
@@ -40,7 +41,7 @@ public class AppraisalController extends BaseController {
 
         AppraisalBean appraisalBean = new AppraisalBean();
 
-        appraisalBean.setTesterId(userAccountPojo.getId());
+        appraisalBean.setTesterId(userAccountPojo.getId()+"gk360");
 
         appraisalBean.setTesterNm(userAccountPojo.getName());
 
@@ -57,7 +58,38 @@ public class AppraisalController extends BaseController {
             }
 
             JSONObject obj = JSON.parseObject(result);
+
+            if("500".equals(obj.getString("code"))){
+                throw new BizException(ERRORCODE.FAIL.getCode(),obj.getString("info"));
+            }
             returnStr.append(obj.getString("data").replace("\\", ""));
+
+        } catch (Exception e) {
+            throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
+        }
+        return returnStr.toString();
+    }
+
+    /**
+     * 专业测评
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/schoolTest",method = RequestMethod.GET)
+    @ResponseBody
+    public String schoolTest(@RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore,
+                             @RequestParam(value="m_batch",required=false) String m_batch,
+                             @RequestParam(value="m_kelei",required=false) String m_kelei) throws Exception{
+        String returnStr = null;
+        try {
+
+            String result = HttpRequestUtil.doGet("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/CollegeEval/GetEvaluation/m_aggregateScore/"+m_aggregateScore+"/m_batch/"+m_batch+"/m_kelei/"+m_kelei);
+
+            if(StringUtils.isEmpty(result)){
+                throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
+            }
+
+            returnStr = result;
 
         } catch (Exception e) {
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());

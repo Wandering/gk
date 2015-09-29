@@ -22,35 +22,38 @@ public class CollegeRecController extends BaseController{
 
     @RequestMapping(value = "getCollegeList",method = RequestMethod.GET)
     @ResponseBody
-    public JsonPojo GetCollegeList(@RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore,
+    public String GetCollegeList(@RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore,
                                    @RequestParam(value="m_batch",required=false) String m_batch,
                                            @RequestParam(value="m_kelei",required=false) String m_kelei){
         if(StringUtils.isBlank(m_aggregateScore) || StringUtils.isBlank(m_batch) || StringUtils.isBlank(m_kelei)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
 
-        JsonPojo jsonPojo = new JsonPojo();
+//        JsonPojo jsonPojo = new JsonPojo();
 
         String url = null;
         try {
-            url ="http://sn.gaokao360.gkzy114.com/index.php?s=Restful/CollegeReco/GetCollegeList/m_aggregateScore/"+m_aggregateScore+"/m_batch/"+new String(m_batch.getBytes("ISO-8859-1"),"UTF-8")+"/m_kelei/"+new String(m_kelei.getBytes("ISO-8859-1"),"UTF-8");
+            url ="http://sn.gaokao360.gkzy114.com/index.php?s=Restful/CollegeReco/GetCollegeList/m_aggregateScore/"+m_aggregateScore+"/m_batch/"+m_batch+"/m_kelei/"+m_kelei;
 
         }catch (Exception e){
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
         }
+
+        StringBuffer returnStr = new StringBuffer();
 
         try {
             String resultData = HttpRequestUtil.doGet(url);
             if(StringUtils.isBlank(resultData)){
                 throw new BizException(ERRORCODE.RESTFUL_INTERFACE_ISNULL.getCode(),ERRORCODE.RESTFUL_INTERFACE_ISNULL.getMessage());
             }
-            jsonPojo = JsonMapper.buildNormalMapper().fromJson(resultData,JsonPojo.class);
+//            jsonPojo = JsonMapper.buildNormalMapper().fromJson(resultData,JsonPojo.class);
 
+            returnStr.append(resultData);
         }catch (Exception E){
                 throw new BizException(ERRORCODE.RESTFUL_INTERFACE_ISERROR.getCode(),ERRORCODE.RESTFUL_INTERFACE_ISERROR.getMessage());
 
         }
-        return jsonPojo;
+        return returnStr.toString();
     }
 
 }

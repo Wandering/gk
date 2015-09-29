@@ -64,7 +64,7 @@ define(function (require) {
     };
     pointList.getList(pointList.num, pointList.size);
     pointList.next.on('click', function () {
-        pointList.getList(2, 10);
+        pointList.getList(2, pointList.size);
     });
     //搜索
     pointList.search.keydown(function () {

@@ -79,3 +79,10 @@ section:last-child {
     cursor: pointer;
   }
 }
+
+#error_tip{
+  display: none;
+  color: #e24333;
+  text-align: center;
+  padding: 10px 0;
+}
