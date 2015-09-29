@@ -213,6 +213,10 @@ define(function (require) {
             },
             success: function (res) {
                 //console.log(res)
+                if (res.rtnCode == "1000006") {
+                    $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+                    return;
+                }
                 if (res.rtnCode == "0000000") {
                     $('#volunteer-flow3-layer,.tansLayer').show();
                     $('#score-num').text(scoreV+"分");
@@ -288,11 +292,17 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
+                if (res.rtnCode == "1000006") {
+                    $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+                    return;
+                }
                 var data = $.parseJSON(res.bizData);
+
                 if (!data) {
                     $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
                     return;
                 }
+
                 if (res.rtnCode == "0000000") {
                     $('#dream-list').html('');
                     $('#dream-school-layer,.tansLayer').show();
@@ -353,6 +363,10 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
+                if (res.rtnCode == "1000006") {
+                    $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+                    return;
+                }
                 var data = $.parseJSON(res.bizData);
                 if (!data) {
                     $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
