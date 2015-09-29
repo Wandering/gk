@@ -20,6 +20,9 @@ public class CaptchaUtil {
 //        g.setFont(CaptchaConst.FONT_NEWROMAN);
 
         g.setColor(CaptchaConst.PURPLE_COLOR);
+
+        // 画边框
+		g.drawRect(0, 0, CaptchaConst.PIC_WIDTH- 1, CaptchaConst.PIC_HEIGHT - 1);
         //绘制随机字符
         StringBuffer randomString = new StringBuffer("");
         String rand = null;
@@ -28,7 +31,7 @@ public class CaptchaUtil {
             rand = String.valueOf(CaptchaConst.RAND_STRING.charAt(random.nextInt(CaptchaConst.RAND_STRING.length()-1)));
             randomString.append(rand);
             g.translate(0,0);
-            g.drawString(rand,stringPoint+CaptchaConst.FONT_SPACING*i , 16);
+            g.drawString(rand,CaptchaConst.FONT_SPACING , 16);
         }
         g.dispose();
         g=null;

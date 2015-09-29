@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.interceptor;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.constant.CookieConst;
 import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.constant.ServletPathConst;
@@ -43,8 +44,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 		if (StringUtils.isEmpty(value)||!redisFlag) {
 //			request.getRequestDispatcher().forward(request, response);
-			response.sendRedirect("/doLogin.do");
-			return false;
+			throw new BizException("1000004","请先登录后再进行操作");
 		}
 
 		return true;
