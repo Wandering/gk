@@ -18,7 +18,6 @@ define(function (require) {
                 fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     };
-
     function getTime(timestamp) {
         var newDate = new Date();
         newDate.setTime(timestamp);
@@ -26,49 +25,62 @@ define(function (require) {
     }
 
     //拉取数据列表
-    function getList(no, size, key_search) {
-        $.ajax({
-            url: '/appointment/getAppointment.do',
-            dataType: 'json',
-            type: 'get',
-            data: {
-                pageNo: no,
-                pageSize: size,
-                titleKey: key_search  //关键字搜索
-            },
-            success: function (res) {
-                if (res.rtnCode == '0000000') {
-                    console.log(res.bizData);
-                    var template = '';
-                    $.each(res.bizData, function (i, v) {
-                        console.log(v);
-                        template += '<a class="row go-detail" href="javascript:void(0);"> ' +
-                        '<div class="col-3 title" data-id="'+ v.id+'">' + v.title + '</div> ' +
-                        '<div class="col-1 createTime">' + getTime(v.createDate) + '</div> ' +
-                        '</a>'
-                    });
-                    $('.data-list').html(template);
-
+    var appointmentList = {
+        num: 1,
+        size: 10,
+        next: $('.more'),
+        renderContainer: $('.data-list'),
+        getList: function (num, size, key_search) {
+            $.ajax({
+                url: '/appointment/getAppointment.do',
+                dataType: 'json',
+                type: 'get',
+                data: {
+                    pageNo: num,
+                    pageSize: size,
+                    titleKey: key_search  //关键字搜索
+                },
+                success: function (res) {
+                    if (res.rtnCode == '0000000') {
+                        var template = '';
+                        $.each(res.bizData, function (i, v) {
+                            template += '<a class="row go-detail" href="javascript:void(0);"> ' +
+                            '<div class="col-3 title" data-id="' + v.id + '">' + v.title + '</div> ' +
+                            '<div class="col-1 createTime">' + getTime(v.createDate) + '</div> ' +
+                            '</a>';
+                        });
+                        if (res.bizData.length > size) {
+                            appointmentList.next.hide();
+                        } else {
+                            appointmentList.next.show();
+                        }
+                        appointmentList.renderContainer.html(template);
+                    }
                 }
-            }
-        })
-    }
-
-    getList(1, 5);
-    //搜索
-    var search = $('#search');
-    search.keydown(function () {
-        var key_search = search.val();
-        if (event.keyCode == 13) {
-            getList(1, 5, key_search);
+            })
         }
+    };
+    //getListNext:function(){
+    //
+    //}
+    appointmentList.getList(appointmentList.num, appointmentList.size);
+    appointmentList.next.on('click',function(){
+        appointmentList.getList();
     });
-    $('#btn-search').click(function () {
-        var key_search = $('#search').val();
-        getList(1, 5, key_search);
-    });
+    ////搜索
+    //var search = $('#search');
+    //search.keydown(function () {
+    //    var key_search = search.val();
+    //    if (event.keyCode == 13) {
+    //        getList(1, 5, key_search);
+    //    }
+    //});
+    //$('#btn-search').click(function () {
+    //    var key_search = $('#search').val();
+    //    getList(1, 5, key_search);
+    //});
     //预定详情
-    $(document).on('click','.go-detail',function(e){
+    $(document).on('click', '.go-detail', function (e) {
         e.stopPropagation();
         var id = $(this).find('.title').attr('data-id');
         window.location.href = 'http://' + window.location.host + '/user/expert-service-detail.jsp?id=' + id;

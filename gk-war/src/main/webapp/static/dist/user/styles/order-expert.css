@@ -721,3 +721,26 @@ a.next-btn:hover {
       font-size: 16px;
       cursor: pointer;
       display: inline-block; }
+
+#content {
+  border-radius: 3px;
+  width: 835px;
+  height: 300px;
+  border: 1px solid #E5E5E5;
+  padding: 10px;
+  font-size: 14px;
+  resize: none; }
+
+.require {
+  vertical-align: top; }
+
+.error-tips {
+  padding: 10px;
+  border-radius: 3px;
+  width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  color: #fff;
+  background-color: #e24d39;
+  top: 50%;
+  left: 50%; }

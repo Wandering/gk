@@ -213,7 +213,7 @@ define(function (require) {
                 subjectType: subject,
                 mail: mail,
                 icon: img_url,
-                qq: qq
+                qq: qqƒ
             },
             success: function (res) {
                 if (res.rtnCode == '0000000') {
