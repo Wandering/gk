@@ -199,7 +199,7 @@ define(function (require) {
         }
         $.ajax({
             url:'/before/collegeRecommend/getCollegeList.do',
-            type: 'POST',
+            type: 'GET',
             dataType: 'JSON',
             data:{
                 "m_aggregateScore":scoreV,
@@ -223,8 +223,8 @@ define(function (require) {
                                 console.log(schoolData[j].m_university_name)
                                 var m_university_code = schoolData[j].m_university_code;
                                 var m_university_name = schoolData[j].m_university_name;
-                                var schoolList = '<div><a href="/consult/school_detile.jsp?id="'+ m_university_code +' class="school-name">'+ m_university_name +'</a></div>'
-                                $('#school-list'+i).append(schoolList)
+                                var schoolList = '<div><a target="_blank" href="/consult/school_detile.jsp?id='+ m_university_code +'" class="school-name">'+ m_university_name +'</a></div>'
+                                $('#school-list'+i).append(schoolList).show();
                             }
                         }
                     }
