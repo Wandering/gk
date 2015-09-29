@@ -181,7 +181,6 @@ define(function (require) {
 
     // 院校推荐
     $('#yxtj-sub').on('click', function () {
-        $('#college-yzm').attr('src','/verifyCode/randomVerifyCode.do?type=1&code=' + Math.random());
         var scoreV = $('#score-input').val().trim();
         var batchV = $('input[name="batch"]:checked').val();
         var subjectTypeV = $('input[name="subjectType"]:checked').val();
@@ -262,7 +261,6 @@ define(function (require) {
 
     // 院校测评
     $('#evaluating-sub').on('click', function () {
-        $('#yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=2&code=' + Math.random());
         var dreamScoreV = $('#dream-score-input').val().trim();
         var dreamSchoolV = $('#dream-school-input').val().trim();
         var dreamSubjectTypeV = $('input[name="dreamSubjectType"]:checked').val();
@@ -346,7 +344,7 @@ define(function (require) {
 
     //获得位次
     $('#precedence-sub').on('click', function(e) {
-        $('#precedence-yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=3&code=' + Math.random());
+
         var dreamScoreV = $('#precedence-score-input').val().trim();
         var yzmDreamV = $('#precedence-yzmDream').val();
         if (dreamScoreV == '') {
