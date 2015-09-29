@@ -1122,8 +1122,9 @@ selectList
 
 
     <select id="getUniversityDetail" parameterType="java.lang.String" resultType="UniversityDto">
-        select code,name,subjection,educationLevel as educatLevel,type as universityType,property,address,contactPhone,
-       '' as universityImage,provinceName,url from gk_university where 1=1 and code=#{code} limit 0,1
+        select a.code,a.name,a.subjection,a.educationLevel as educatLevel,a.type as universityType,b.name as property,a.address,a.contactPhone,
+       '' as universityImage,a.provinceName,a.url from gk_university a left join gk_university_dict  b on b.type='FEATURE' and b.dictId=a.property
+        where 1=1 and code=#{code} limit 0,1
     </select>
 
 

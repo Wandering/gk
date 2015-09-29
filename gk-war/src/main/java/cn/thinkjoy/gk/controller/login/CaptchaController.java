@@ -86,7 +86,7 @@ public class CaptchaController extends BaseController {
 				if(smsResult) {
 					String userCaptchaKey = RedisConst.USER_CAPTCHA_KEY+account;
 					RedisUtil.getInstance().set(userCaptchaKey,randomString);
-					RedisUtil.getInstance().expire(timeKey, 7200, TimeUnit.SECONDS);
+					RedisUtil.getInstance().expire(userCaptchaKey, 600, TimeUnit.SECONDS);
 					RedisUtil.getInstance().set(timeKey, String.valueOf(System.currentTimeMillis()));
 					RedisUtil.getInstance().expire(timeKey, 60, TimeUnit.SECONDS);
 				}
