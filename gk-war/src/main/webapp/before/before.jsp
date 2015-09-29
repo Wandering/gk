@@ -227,10 +227,10 @@
             <div class="indent mt10">
                 <span class="ident-code">
                     <label>验证码</label>
-                    <input type="text" placeholder="请输入分数"/>
+                    <input type="text" id="yzmDream" placeholder="请输入分数"/>
                 </span>
                 <a>
-                    <img src="/static/dist/before/images/yzm.png" />
+                    <img id="yzmDreamSchool" src=""   />
                 </a>
             </div>
 
@@ -298,32 +298,32 @@
 </div>
 
 <div class="tansLayer" style="display: none;"></div>
-<div class="evaluating-layer" style="display: none;">
+<div class="evaluating-layer" id="dream-school-layer" style="display: none;">
     <div class="top-close">
         <a href="javascript:;" class="close-btn">x</a>
     </div>
 
     <div class="evaluating-body">
         <div class="evaluating-result-tips">
-            <p>您本次录入的分数是：<strong>600分、理工类</strong></p>
-            <p>所测评的目标院校是：<strong>西安交通大学</strong></p>
+            <p>您本次录入的分数是：<strong><span id="dreamScoreInfo"></span>分、<span id="dreamSubjectTypeInfo"></span>类</strong></p>
+            <p>所测评的目标院校是：<strong id="dreamSchoolInfo"></strong></p>
         </div>
         <div class="evaluating-result">
-            <p class="tips">依据2015年的录取情况、在陕西省填报该院校您需要以下分数(在陕一批本科）：</p>
-            <div class="evaluating-result-num">
-                <ul>
-                    <li class="result1">
-                        <span class="t">所需最低分数</span>
-                        <span class="num"><strong>639</strong>分</span>
-                    </li>
-                    <li class="result2">
-                        <span class="t">所需平均分数</span>
-                        <span class="num"><strong>652</strong>分</span>
-                    </li>
-                </ul>
+            <p class="tips">依据2015年的录取情况、在陕西省填报该院校您需要以下分数(在陕）：</p>
+            <div class="evaluating-result-num" id="dream-list">
+                <%--<ul>--%>
+                    <%--<li class="pc">三批本科</li>--%>
+                    <%--<li class="result1">--%>
+                        <%--<span class="t">所需最低分数</span>--%>
+                        <%--<span class="num"><strong>639</strong>分</span>--%>
+                    <%--</li>--%>
+                    <%--<li class="result2">--%>
+                        <%--<span class="t">所需平均分数</span>--%>
+                        <%--<span class="num"><strong>652</strong>分</span>--%>
+                    <%--</li>--%>
+                <%--</ul>--%>
             </div>
         </div>
-        <a href="javascript:;" class="evaluating-result-close close-btn">返回上一步</a>
     </div>
 </div>
 

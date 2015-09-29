@@ -417,7 +417,7 @@ ul.main-video-list {
   position: fixed;
   top: 50%;
   width: 1000px;
-  height: 430px;
+  min-height: 430px;
   margin: -215px 0 0 -500px;
   z-index: 10;
   background: #fff;
@@ -442,8 +442,8 @@ ul.main-video-list {
     .evaluating-layer .evaluating-body .evaluating-result-tips {
       border: 1px solid #f1f1f1;
       overflow: hidden;
-      height: 90px;
-      padding: 20px 25px 0; }
+      height: 70px;
+      padding: 5px 25px 0; }
       .evaluating-layer .evaluating-body .evaluating-result-tips p {
         display: block;
         clear: both;
@@ -458,31 +458,43 @@ ul.main-video-list {
       border: 1px solid #f1f1f1;
       border-top: none;
       overflow: hidden;
-      height: 177px;
-      padding: 20px 25px 0; }
+      padding: 5px 25px 20px; }
       .evaluating-layer .evaluating-body .evaluating-result .tips {
         font-size: 18px;
         color: #999;
-        margin: 10px 0 0; }
+        margin: 10px 0 0;
+        padding: 10px; }
       .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num {
-        margin: 30px 0 0; }
+        margin: 10px 0 0; }
+        .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num ul {
+          width: 980px;
+          display: block;
+          clear: both;
+          margin-top: 20px;
+          overflow: hidden; }
         .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num ul li {
           float: left;
-          width: 410px;
-          height: 90px;
+          width: 350px;
+          height: 70px;
           border: 1px solid;
-          line-height: 90px;
+          line-height: 70px;
           font-size: 24px;
           margin-right: 20px; }
           .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num ul li .t {
             float: left;
-            width: 214px;
+            width: 190px;
             text-align: center;
             color: #fff; }
           .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num ul li .num {
-            margin-left: 50px; }
+            margin-left: 18px; }
             .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num ul li .num strong {
               font-size: 49px; }
+        .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num ul li.pc {
+          width: 140px;
+          text-align: center;
+          color: #e24d39;
+          border: 1px solid #e24d39;
+          font-size: 22px; }
         .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num .result1 {
           border-color: #e24d39; }
           .evaluating-layer .evaluating-body .evaluating-result .evaluating-result-num .result1 .t {
