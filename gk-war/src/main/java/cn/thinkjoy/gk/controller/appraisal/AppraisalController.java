@@ -95,11 +95,11 @@ public class AppraisalController extends BaseController {
         Object resultCode = session.getAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value);
 
         if(resultCode==null){
-            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
 
         if(!resultCode.toString().equals(code.toUpperCase())){
-            throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
 
         session.removeAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value);
@@ -107,7 +107,7 @@ public class AppraisalController extends BaseController {
         String returnStr = null;
         try {
 
-            String result = HttpRequestUtil.doGet("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/CollegeEval/GetEvaluation/m_aggregateScore/"+m_aggregateScore+"/m_batch/"+m_university_name+"/m_kelei/"+m_kelei);
+            String result = HttpRequestUtil.doGet("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/CollegeEval/GetEvaluation/m_aggregateScore/"+m_aggregateScore+"/m_university_name/"+m_university_name+"/m_kelei/"+m_kelei);
 
             if(StringUtils.isEmpty(result)){
                 throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
@@ -141,11 +141,11 @@ public class AppraisalController extends BaseController {
         Object resultCode = session.getAttribute(VerificationKeyConst.GET_THE_ORDER+value);
 
         if(resultCode==null){
-            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
 
         if(!resultCode.toString().equals(code.toUpperCase())){
-            throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
         session.removeAttribute(VerificationKeyConst.GET_THE_ORDER+value);
 
