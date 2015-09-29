@@ -25,8 +25,8 @@
     </div>
     <div class="w1000">
         <img src="/static/dist/after/images/step-banner.png" class="step-banner"/>
-        <table width="300" border="1" cellspacing="0">
-            <tr>
+        <table border="1" cellspacing="0">
+            <tr class="t-title">
                 <th>姓名</th>
                 <th>性别</th>
                 <th>学校</th>
