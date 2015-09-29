@@ -410,6 +410,8 @@ input, textarea {
     text-decoration: none; }
     .header .main-menu a:hover {
       color: #fff; }
+    .header .main-menu a:visited {
+      color: #fff; }
   .header .main-menu a.active {
     color: #fff; }
   .header .log-reg a {
