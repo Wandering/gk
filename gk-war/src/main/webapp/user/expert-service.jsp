@@ -35,7 +35,7 @@
             </div>
             <div class="data-list">
             </div>
-            <div class="more hide"><a href="javascript:void(0)" class="next-btn">加载更多...</a></div>
+            <div class="more hide"><a href="javascript:void(0)" class="next-btn">加载更多</a></div>
         </div>
     </div>
 </div>

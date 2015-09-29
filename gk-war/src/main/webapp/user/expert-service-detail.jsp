@@ -21,10 +21,10 @@
     </ul>
     <div class="content">
         <div class="search-content">
-             <span>
-                 <input type="text" placeholder="请输入搜索内容">
-                 <input type="button" value="搜索">
-            </span>
+             <%--<span>--%>
+                 <%--<input type="text" placeholder="请输入搜索内容">--%>
+                 <%--<input type="button" value="搜索">--%>
+            <%--</span>--%>
         </div>
         <div class="content-list">
             <div class="data-list">
