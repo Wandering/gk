@@ -192,6 +192,7 @@
         <ul class="tabs-list mt20" id="main-volunteer-tabs">
             <li class="active">院校评测</li>
             <li>院校推荐</li>
+            <li>获得位次</li>
         </ul>
     </div>
 </div>
@@ -220,14 +221,14 @@
             <div class="category mt10" style="height: 40px;">
                 <span class="t">选择文理科：</span>
                 <div class="group-radio">
-                    <label><input type="radio" name="dreamSubjectType" value="文史" />文史</label>
-                    <label><input type="radio" name="dreamSubjectType" value="理工" />理工</label>
+                        <label><input type="radio" name="dreamSubjectType" value="文史" />文史</label>
+                        <label><input type="radio" name="dreamSubjectType" value="理工" />理工</label>
                 </div>
             </div>
             <div class="indent mt10">
                 <span class="ident-code">
                     <label>验证码</label>
-                    <input type="text" id="yzmDream" placeholder="请输入分数"/>
+                    <input type="text" id="yzmDream" placeholder=""/>
                 </span>
                 <a>
                     <img id="yzmDreamSchool" src=""   />
@@ -241,6 +242,7 @@
         </div>
     </div>
 </div>
+
 
 <div class="main-volunteer-box" style="display: none;">
     <div class="school-eval w1000">
@@ -281,7 +283,7 @@
             <div class="indent mt10">
                 <span class="ident-code">
                     <label>验证码</label>
-                    <input type="text" placeholder="请输入分数"/>
+                    <input type="text" placeholder=""/>
                 </span>
                 <a>
                     <img src="/static/dist/before/images/yzm.png" />
@@ -290,6 +292,40 @@
 
             <div class="submit mt20">
                 <input type="submit" id="yxtj-sub" value="提交"/>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="main-volunteer-box" id="precedence" style="display: none">
+    <div class="school-eval w1000">
+        <div class="tip">
+            <p>院校评测使用的分数，位次数据，招生计划为往年数据，结果仅供参考，且系统推荐学校有限制，若要使用最新，更全面，更多推荐学校，请升级为VIP。</p>
+        </div>
+        <div class="eval-left">
+            <img src="/static/dist/before/images/bottom-banner.jpg" />
+            <h3>获得位次</h3>
+            <h6>我想通过分数让平台为我估测我的位次。</h6>
+        </div>
+        <div class="eval-right">
+            <div class="error-tips hide"></div>
+            <div class="form-control">
+                <label>分数</label>
+                <input type="text" class="score-input" id="precedence-score-input" placeholder="请输入分数"/>
+            </div>
+            <div class="indent mt10">
+                <span class="ident-code">
+                    <label>验证码</label>
+                    <input type="text" id="precedence-yzmDream" placeholder=""/>
+                </span>
+                <a>
+                    <img id="precedence-yzmDreamSchool" src=""   />
+                </a>
+            </div>
+
+            <div class="submit mt20">
+                <input type="submit" id="precedence-sub" value="获得位次"/>
             </div>
 
         </div>
@@ -310,6 +346,36 @@
         <div class="evaluating-result">
             <p class="tips">依据2015年的录取情况、在陕西省填报该院校您需要以下分数(在陕）：</p>
             <div class="evaluating-result-num" id="dream-list">
+                <%--<ul>--%>
+                    <%--<li class="pc">三批本科</li>--%>
+                    <%--<li class="result1">--%>
+                        <%--<span class="t">所需最低分数</span>--%>
+                        <%--<span class="num"><strong>639</strong>分</span>--%>
+                    <%--</li>--%>
+                    <%--<li class="result2">--%>
+                        <%--<span class="t">所需平均分数</span>--%>
+                        <%--<span class="num"><strong>652</strong>分</span>--%>
+                    <%--</li>--%>
+                <%--</ul>--%>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="tansLayer" style="display: none;"></div>
+<div class="evaluating-layer" id="precedence-school-layer" style="display: none;">
+    <div class="top-close">
+        <a href="javascript:;" class="close-btn">x</a>
+    </div>
+
+    <div class="evaluating-body">
+        <div class="evaluating-result-tips">
+            <p>您本次录入的分数是：<strong><span id="precedenceScoreInfo"></span>分、<span id="precedenceSubjectTypeInfo"></span>类</strong></p>
+        </div>
+        <div class="evaluating-result">
+            <p class="tips">依据2015年的录取情况、在陕西省填报该院校您需要以下分数(在陕）：</p>
+            <div class="evaluating-result-num" id="precedence-list">
                 <%--<ul>--%>
                 <%--<li class="pc">三批本科</li>--%>
                 <%--<li class="result1">--%>
@@ -411,7 +477,21 @@
             </ul>
         </div>
     </div>
+
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <%@ include file="/common/footer.jsp"%>
 <script>

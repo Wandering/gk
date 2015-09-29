@@ -303,7 +303,53 @@ define(function (require) {
         $('#volunteer-flow3-layer,.tansLayer').hide();
     })
 
+    //获得位次
+    $('#precedence-sub').on('click', function(e) {
+        var dreamScoreV = $('#precedence-score-input').val().trim();
+        var yzmDreamV = $('#precedence-yzmDream').val();
+        if (dreamScoreV == '') {
+            $('.error-tips').text('请输入分数').fadeIn(1000).fadeOut(1000);
+            return false;
+        }
+        if (yzmDreamV == '') {
+            $('.error-tips').text('请填写验证码').fadeIn(1000).fadeOut(1000);
+            return false;
+        }
+        $.ajax({
+            url: '/appraisal/findRanking.do',
+            type: 'GET',
+            dataType: 'JSON',
+            data: {
+                "m_aggregateScore": dreamScoreV
+            },
+            success: function (res) {
+                var data = $.parseJSON(res.bizData);
+                console.log('获得位次-------------');
+                console.log(data);
+                if (res.rtnCode == "0000000") {
+                    $('#precedence-school-layer,.tansLayer').show();
+                    $('#precedenceScoreInfo').text(dreamScoreV);
 
+                    for(var i=0;i<data.data.length;i++){
+                        var dreamSchoolList = ''
+                            +'<ul>'
+                            +'<li class="pc">三批本科</li>'
+                            +'<li class="result1">'
+                            +'<span class="t">所需最低分数</span>'
+                            +'<span class="num"><strong>639</strong>分</span>'
+                            +'</li>'
+                            +'<li class="result2">'
+                            +'<span class="t">所需平均分数</span>'
+                            +'<span class="num"><strong>652</strong>分</span>'
+                            +'</li>'
+                            +'</ul>';
+                        $('#precedence-list').append(dreamSchoolList);
+                    }
+
+                }
+            }
+        });
+    });
 
 
 });

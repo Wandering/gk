@@ -40,7 +40,7 @@ public class CollegeRecController extends BaseController{
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
         }
 
-        if(!resultCode.toString().equals(code)){
+        if(!resultCode.toString().equals(code.toUpperCase())){
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
         }
 

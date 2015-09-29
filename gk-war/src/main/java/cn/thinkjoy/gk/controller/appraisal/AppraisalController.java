@@ -82,13 +82,21 @@ public class AppraisalController extends BaseController {
                              @RequestParam(value="m_batch",required=false) String m_batch,
                              @RequestParam(value="m_kelei",required=false) String m_kelei,
                              @RequestParam(value="code",required=false) String code) throws Exception{
+
+        if(StringUtils.isBlank(m_aggregateScore)
+                || StringUtils.isBlank(m_batch)
+                || StringUtils.isBlank(m_kelei)
+                || StringUtils.isBlank(code)){
+            throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
+        }
+
         Object resultCode = session.getAttribute(VerificationKeyConst.COLLEGE_EVALUATION+getCookieValue());
 
         if(resultCode==null){
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
         }
 
-        if(!resultCode.toString().equals(code)){
+        if(!resultCode.toString().equals(code.toUpperCase())){
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
         }
         String returnStr = null;
@@ -118,13 +126,18 @@ public class AppraisalController extends BaseController {
     public String findRanking(@RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore,
                               @RequestParam(value="code",required=false) String code) throws Exception{
 
+        if(StringUtils.isBlank(m_aggregateScore)
+                || StringUtils.isBlank(code)){
+            throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
+        }
+
         Object resultCode = session.getAttribute(VerificationKeyConst.GET_THE_ORDER+getCookieValue());
 
         if(resultCode==null){
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
         }
 
-        if(!resultCode.toString().equals(code)){
+        if(!resultCode.toString().equals(code.toUpperCase())){
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
         }
 
