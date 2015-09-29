@@ -232,7 +232,7 @@
   border-right: 20px solid transparent;
   border-bottom: 20px solid #f6f6f6;
   position: relative;
-  top: -56px;
+  top: -50px;
 }
 
 .detile-content {
@@ -261,12 +261,16 @@
 
 .detile-info {
   background-color: #f6f6f6;
-  padding: 20px;
+  padding: 10px;
   border: 1px solid #edecec;
   line-height: 1.8;
-  &:before {
-    @include arrow-up;
+  p{
+    margin: 0;
+    line-height: 1.5;
   }
+  //&:before {
+  //  @include arrow-up;
+  //}
 }
 
 /*热门资讯*/

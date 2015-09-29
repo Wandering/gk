@@ -46,7 +46,8 @@ define(function (require) {
                 $(this).addClass('active').siblings().removeClass('active');
                 var id = $(this).attr('data-id');
                 if (id) {
-                    $('#classify a.' + id).show().siblings().hide();
+                    $('#classify a').hide();
+                    $('#classify a.' + id).show();
                 } else {
                     $('#classify a').show();
                 }
@@ -173,13 +174,13 @@ define(function (require) {
             for (; i < len; i++) {
                 var trClass = i % 2 != 0 ? 'active' : '';
                 html.push('<tr class="' + trClass + '">'
-                    + '<td class="name"><a href="/consult/profession_detile.jsp?id=' + data[i].code + '">' + data[i].name + '</a></td>'
-                    + '<td>' + data[i].planNumber + '</td>'
-                    + '<td>' + data[i].schoolLength + '</td>'
-                    + '<td>' + data[i].foreginLanguage + '</td>'
-                    + '<td>' + data[i].feeStandard+ '</td>'
+                    + '<td class="name"><a href="/consult/profession_detile.jsp?id=' + data[i].code + '">' + (data[i].name || '') + '</a></td>'
+                    + '<td>' + (data[i].planNumber || '') + '</td>'
+                    + '<td>' + (data[i].schoolLength || '') + '</td>'
+                    + '<td>' + (data[i].foreginLanguage || '') + '</td>'
+                    + '<td>' + (data[i].feeStandard || '') + '</td>'
                     + '<td>'
-                    + '<a target="_blank" href="/consult/school_detile.jsp?id=' + data[i].universityCode + '">' + data[i].universityName + '</a>'
+                    + '<a target="_blank" href="/consult/school_detile.jsp?id=' + data[i].universityCode + '">' + (data[i].universityName || '') + '</a>'
                     + '</td>'
                     + '</tr>');
             }
@@ -193,7 +194,8 @@ define(function (require) {
             var startNum = (curPage - 1) * 10 + 1;
             pageHtml.push('<span class="record">共' + totals + '条记录 <span class="startNum">' + startNum + '</span>/' + totals + '</span>');
             pageHtml.push('<a class="previous-page">上一页</a>');
-            for (var i = 0; i < this.totalPage; i++) {
+            var num = this.totalPage > 10 ? 10: this.totalPage;
+            for (var i = 0; i < num; i++) {
                 var page = i + 1;
                 if (curPage == page) {
                     pageHtml.push('<a class="active ' + page + '">' + page + '</a>');
@@ -211,7 +213,8 @@ define(function (require) {
         refreshPageShow: function(curPage) {
             var num = curPage + 2;
             num = num > this.totalPage ? this.totalPage : num;
-            num = num < 10 ? 10: num;
+            var minNum = this.totalPage > 10 ? 10 : this.totalPage;
+            num = num < minNum ? minNum: num;
             var oldNum = num;
             var arryPage = [];
             for (var i = 0; i < 10; i++) {
@@ -250,7 +253,7 @@ define(function (require) {
                 if ($(this).hasClass('previous-page')) {
                     that.curPage--;
                     if (that.curPage > 0) {
-                        if (!$('#page a.' + that.curPage)[0]) {
+                        if (!$('#page a.' + that.curPage)[0] && this.totalPage > 10) {
                             that.refreshPage(that.curPage);
                         }
                         $('#page a.' + that.curPage).addClass('active').siblings().removeClass('active');
@@ -261,7 +264,7 @@ define(function (require) {
                 } else if ($(this).hasClass('next-page')) {
                     that.curPage++;
                     if (that.curPage <= that.totalPage) {
-                        if (!$('#page a.' + that.curPage)[0]) {
+                        if (!$('#page a.' + that.curPage)[0] && this.totalPage > 10) {
                             that.refreshPage(that.curPage);
                         }
                         $('#page a.' + that.curPage).addClass('active').siblings().removeClass('active');
@@ -273,12 +276,14 @@ define(function (require) {
                     if (!$(this).hasClass('active')) {
                         that.curPage = parseInt($(this).text());
                         $(this).addClass('active').siblings().removeClass('active');
-                        var nextPage = that.curPage + 1;
-                        var prePage = that.curPage - 1;
-                        if (nextPage <= that.totalPage || prePage > 0) {
-                            if (!$('#page a.' + nextPage)[0] || !$('#page a.' + prePage)[0]) {
-                                that.refreshPage(that.curPage);
-                                $('#page a.' + that.curPage).addClass('active')
+                        if (this.totalPage > 10) {
+                            var nextPage = that.curPage + 1;
+                            var prePage = that.curPage - 1;
+                            if (nextPage <= that.totalPage && prePage > 0) {
+                                if (!$('#page a.' + nextPage)[0] || !$('#page a.' + prePage)[0]) {
+                                    that.refreshPage(that.curPage);
+                                    $('#page a.' + that.curPage).addClass('active')
+                                }
                             }
                         }
                         if (that.curPage > 0 && that.curPage <= that.totalPage) {

@@ -43,9 +43,12 @@ public class AnswerController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/myQuestion", method = RequestMethod.GET)
+    @RequestMapping(value = "/findMyQuestion", method = RequestMethod.GET)
     @ResponseBody
-    public List<QuestionAnswerBean> findMyQuestion(@RequestParam(value="keyword",required=false) String keyword,PageQuery pageQuery) throws Exception {
+    public List<QuestionAnswerBean> findMyQuestion(@RequestParam(value="keyword",required=false) String keyword,
+                                                   @RequestParam(value="isAnswer",required=false) Integer isAnswer,
+            PageQuery pageQuery) throws Exception {
+
         Integer startSize = pageQuery.getStartSize();
 
         if(startSize==null){
@@ -76,7 +79,7 @@ public class AnswerController extends BaseController {
 
         Long userId = account.getId();
 
-        List<QuestionDetailBean> questionDetailBeans = answerService.findAnswerPage(word,userId, startSize, endSize);
+        List<QuestionDetailBean> questionDetailBeans = answerService.findAnswerPage(word,isAnswer,userId, startSize, endSize);
 
         List<QuestionAnswerBean> questionAnswerBeans = new ArrayList<QuestionAnswerBean>();
 

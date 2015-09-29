@@ -390,12 +390,18 @@ input, textarea {
   line-height: 50px;
   width: 100%;
   background-color: #353535; }
+  .header.fix {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 888; }
   .header .logo {
     height: 40px;
     margin-top: 5px;
     margin-right: 100px; }
   .header .main-menu li {
-    display: inline-block; }
+    display: inline-block;
+    position: relative; }
   .header .main-menu a {
     margin: 0 25px;
     color: #b1b0b0;
@@ -453,6 +459,27 @@ input, textarea {
         .header .user-info-list .menu li a:hover {
           color: #fff;
           background-color: #202020; }
+
+.main-menu li > ul {
+  display: none;
+  position: absolute;
+  top: 50px;
+  z-index: 444;
+  white-space: nowrap;
+  background: #353535; }
+
+.main-menu li:hover > ul {
+  display: block; }
+
+.main-menu li > ul li {
+  display: inline-block;
+  color: #fff;
+  white-space: nowrap; }
+  .main-menu li > ul li a {
+    color: #fff; }
+
+.main-menu li > ul li:hover {
+  cursor: pointer; }
 
 .footer .bottom-nav {
   padding-top: 50px;
@@ -601,7 +628,7 @@ a.next-btn:hover {
     color: #e24d39 !important; }
 
 .content {
-  height: 700px; }
+  height: auto; }
   .content .search-content {
     margin-top: 20px;
     text-align: right; }
@@ -659,34 +686,18 @@ a.next-btn:hover {
       line-height: 35px;
       border-radius: 3px;
       -webkit-transition: all 0.5s;
-              transition: all 0.5s; }
+              transition: all 0.5s;
+      color: #e24d39;
+      background-color: #fff; }
     .content .toggle-nav .btn-selected {
       background-color: #e24d39;
       color: #fff; }
-      .content .toggle-nav .btn-selected:hover {
-        background-color: #fff;
-        color: #e24d39; }
-    .content .toggle-nav .btn-unselected {
-      color: #e24d39;
-      background-color: #fff; }
-      .content .toggle-nav .btn-unselected:hover {
-        background-color: #e24d39;
-        color: #fff; }
   .content .detail-info {
     background-color: #f6f6f6;
-    padding: 20px;
+    padding: 15px;
     border: 1px solid #edecec;
     line-height: 1.8;
     font-size: 12px; }
-    .content .detail-info:before {
-      content: '';
-      width: 0;
-      height: 0;
-      border-left: 20px solid transparent;
-      border-right: 20px solid transparent;
-      border-bottom: 20px solid #f6f6f6;
-      position: relative;
-      top: -45px; }
   .content .detail-content {
     font-size: 16px;
     color: #626161;

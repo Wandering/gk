@@ -10,6 +10,8 @@ define(function (require) {
         $nextPage: $('#nextPage')
     };
 
+    var localhosts = 'http://www.gkzy114.com';
+
     var searchValUrl = window.location.search;
     var num = searchValUrl.indexOf("?");
     var searchVal = searchValUrl.substr(num+16);
@@ -44,7 +46,7 @@ define(function (require) {
     var pageSize = 8;
     var searchVals = $('#searchVal').val();
     console.log(searchVals)
-    function getList(pageNo, pageSize,searchVals) {
+    function getList(pageNo, pageSize,subjectId,years,searchVals) {
         // 获取首页列表
         $.getJSON(
             "/before/paper/getPaperList.do",
@@ -52,8 +54,8 @@ define(function (require) {
                 pageNo: pageNo,
                 pageSize: pageSize,
                 sortType :1 ,
-                years:'2014',
-                subjectId:"",
+                years:years,
+                subjectId:subjectId,
                 searchName:searchVals
             },
             function (result) {
@@ -92,7 +94,7 @@ define(function (require) {
                         }
                         var listMsgHtml = ''
                             +'<li class="item">'
-                            +'<a href="'+ resources +'">'
+                            +'<a target="_blank" href="'+ localhosts + resources +'">'
                             +'<span class="subject-n"><strong>'+ subjectTypeTxt +'</strong></span>'
                             +'<span class="subject-t">'+ paperName +'</span>'
                             +'<span class="subject-d">上传时间：'+ getTime(createDate) +'</span>'
@@ -112,9 +114,30 @@ define(function (require) {
     // 初始化数据
     UI.$nextPage.on('click', function () {
         var pageNo = UI.$listMsgItem.attr('pageNo');
-        getList(pageNo, pageSize,searchVals);
+        getList(pageNo, pageSize,"",searchVals);
     }).click();
 
+
+    // 科目筛选
+    $(".subjectList").change(function(){
+        var subjectId = $(this).find("option:selected").attr('value');
+        UI.$listMsgItem.attr('pageNo',0);
+        var pageNo = UI.$listMsgItem.attr('pageNo');
+        UI.$listMsgItem.html('');
+        getList(pageNo, pageSize,subjectId,searchVal);
+    });
+
+
+
+    // 年份选择
+    $(".years-fun").change(function(){
+        var years = $(this).find("option:selected").attr('value');
+        var subjectId = $('.subjectList').find("option:selected").attr('value');
+        UI.$listMsgItem.attr('pageNo',0);
+        var pageNo = UI.$listMsgItem.attr('pageNo');
+        UI.$listMsgItem.html('');
+        getList(pageNo, pageSize,sortType,subjectId,searchVal);
+    });
 
 
 });

@@ -21,7 +21,7 @@ public class MajoredServiceImpl implements IMajoredService {
     private IMajoredDAO majoredDAO;
 
     @Override
-    public List<Map<String, Object>> getMajoreByParentId(int i) {
+    public List<Map<String, Object>> getMajoreByParentId(Long i) {
         return majoredDAO.getMajoreByParentId(i);
     }
 

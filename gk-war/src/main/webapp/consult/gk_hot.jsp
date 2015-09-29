@@ -34,7 +34,7 @@
         </section>
 
         <div id="wrapper"></div>
-        <div><a href="javascript:void(0)" class="next-btn">加载更多...</a></div>
+        <div><a href="javascript:void(0)" class="next-btn" style="display: none">加载更多...</a></div>
 
         <%--<div class="detile-content mt20">--%>
             <%--<div class="detile-header">--%>

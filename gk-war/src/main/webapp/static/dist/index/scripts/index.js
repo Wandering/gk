@@ -81,7 +81,7 @@ define(function (require) {
     //在线互动获取数据
     (function() {
         var Question = {
-            render: function() {
+            render: function(data) {
                 var html = [];
                 for (var i = 0, len = data.length; i < len; i++) {
                     var question = data[i].question;
@@ -90,18 +90,18 @@ define(function (require) {
                     for (var t = 0, tlen = questions.length; t < tlen; t++) {
                         title.push(questions[t].text);
                     }
-                    var time = new Date(data[i].createTime).Format('yyyy-MM-dd hh:mm');
+                    var time = new Date(question.createTime).Format('yyyy-MM-dd hh:mm');
                     var answer = data[i].answer;
                     var answers = answer.answers;
                     var content = [];
                     for (var c = 0, clen = answers.length; c < clen; c++) {
-                        var text = answers[i].text;
-                        if (answers[i].text.length > 200) {
-                            text = text.substring(0, 200);
+                        var text = answers[c].text;
+                        if (answers[c].text.length > 300) {
+                            text = text.substring(0, 300);
                         }
                         content.push('<p>' + text + '</p>');
-                        if (answers[i].img) {
-                            content.push('<p class="ta"><img src="' + answers[i].img + '" /></p>');
+                        if (answers[c].img) {
+                            content.push('<p class="ta"><img src="' + answers[c].img + '" /></p>');
                         }
                     }
                     html.push('<div class="detile-content mt20">'
@@ -115,6 +115,7 @@ define(function (require) {
                         + '</div>'
                         + '</div>');
                 }
+                return html.join('');
             },
             getNew: function(contentId) {
                 var url = '/question/newQuestion.do?';

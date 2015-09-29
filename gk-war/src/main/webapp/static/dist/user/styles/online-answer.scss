@@ -13,7 +13,7 @@
 }
 
 .content {
-  height: 700px;
+  height: auto;
   .search-content {
     margin-top: 20px;
     text-align: right;
@@ -77,22 +77,24 @@
       line-height: 35px;
       border-radius: 3px;
       transition: all .5s;
+      color: $mainRed;
+      background-color: #fff;
     }
     .btn-selected{
       background-color: $mainRed;
       color: #fff;
-      &:hover{
-        background-color: #fff;
-        color:$mainRed
-      }
+      //&:hover{
+      //  background-color: #fff;
+      //  color:$mainRed
+      //}
     }
     .btn-unselected{
-      color: $mainRed;
-      background-color: #fff;
-      &:hover{
-        background-color: $mainRed;
-        color: #fff;
-      }
+      //color: $mainRed;
+      //background-color: #fff;
+      //&:hover{
+      //  background-color: $mainRed;
+      //  color: #fff;
+      //}
     }
   }
 
@@ -109,13 +111,13 @@
 
   .detail-info{
     background-color: #f6f6f6;
-    padding: 20px;
+    padding: 15px;
     border: 1px solid #edecec;
     line-height: 1.8;
     font-size: 12px;
-    &:before{
-      @include arrow-up;
-    }
+    //&:before{
+    //  @include arrow-up;
+    //}
   }
   .detail-content{
     font-size: 16px;

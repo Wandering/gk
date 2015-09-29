@@ -4,6 +4,7 @@ import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.domain.UniversityDict;
 import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.query.MajoredQuery;
+import cn.thinkjoy.gk.service.IDataDictService;
 import cn.thinkjoy.gk.service.IMajoredService;
 import cn.thinkjoy.gk.service.IUniversityDictService;
 import com.alibaba.dubbo.common.logger.Logger;
@@ -32,6 +33,8 @@ public class MajoredController extends BaseController {
      private IMajoredService  iMajoredService;
     @Autowired
     private IUniversityDictService iUniversityDictService;
+    @Autowired
+    private IDataDictService iDataDictService;
     /**
      * 获取初始化信息
      * @return
@@ -42,15 +45,15 @@ public class MajoredController extends BaseController {
         Map<String,Object> responseMap=new HashMap<String, Object>();
         Map<String,Object> params=new HashMap<>();
         params.put("type","BATCHTYPE");
-        List<UniversityDict> universityBatchList=iUniversityDictService.queryList(params,"id","asc");
+        List<Map<String,Object>> universityBatchList=iDataDictService.queryDictList(params);
         /**
          * 封装学科门类 本科
          */
         List<SubjectTypeDto> bkSubjectTypeDtos=new ArrayList<>();
-        List<Map<String,Object>>  bkSubjectTypes =iMajoredService.getMajoreByParentId(1);
+        List<Map<String,Object>>  bkSubjectTypes =iMajoredService.getMajoreByParentId(1l);
         for(Map<String,Object> map:bkSubjectTypes){
             SubjectTypeDto subjectTypeDto= new SubjectTypeDto();
-            subjectTypeDto.setId((Integer)map.get("id"));
+            subjectTypeDto.setId((Long)map.get("id"));
             subjectTypeDto.setName(map.get("name").toString());
             List<Map<String,Object>> majoredMaps=iMajoredService.getMajoreByParentId(subjectTypeDto.getId());
             subjectTypeDto.setMajoredType(majoredMaps);
@@ -61,20 +64,20 @@ public class MajoredController extends BaseController {
          *封装学科门类 专科
          */
         List<SubjectTypeDto> zkSubjectTypeDtos=new ArrayList<>();
-        List<Map<String,Object>>  zkSubjectTypes =iMajoredService.getMajoreByParentId(2);
+        List<Map<String,Object>>  zkSubjectTypes =iMajoredService.getMajoreByParentId(2l);
         for(Map<String,Object> map:zkSubjectTypes){
             SubjectTypeDto subjectTypeDto= new SubjectTypeDto();
-            subjectTypeDto.setId((Integer)map.get("id"));
+            subjectTypeDto.setId((Long)map.get("id"));
             subjectTypeDto.setName(map.get("name").toString());
             List<Map<String,Object>> majoredMaps=iMajoredService.getMajoreByParentId(subjectTypeDto.getId());
             subjectTypeDto.setMajoredType(majoredMaps);
             zkSubjectTypeDtos.add(subjectTypeDto);
         }
         List<BatchTypeDto> batchTypeDtos=new ArrayList<>();
-        for(UniversityDict universityDict:universityBatchList){
+        for(Map<String,Object> universityDict:universityBatchList){
             BatchTypeDto batchTypeDto=new BatchTypeDto();
-            batchTypeDto.setId(universityDict.getDictId());
-            batchTypeDto.setName(universityDict.getName());
+            batchTypeDto.setId(Integer.valueOf(universityDict.get("id").toString()));
+            batchTypeDto.setName(universityDict.get("name").toString());
             if(batchTypeDto.getName().contains("本科")){
                 batchTypeDto.setSubjectType(bkSubjectTypeDtos);
             }else{
@@ -95,6 +98,7 @@ public class MajoredController extends BaseController {
     @ResponseBody
     public Page<SubjectDto> searchMajored(MajoredQuery query){
         Page<SubjectDto> page=new Page<>();
+        query.setPageNo((query.getPageNo()-1)*query.getPageSize());
          List<SubjectDto> majoredDtos= iMajoredService.searchMajored(query);
         Integer count=iMajoredService.searchMajoredCount(query);
         page.setCount(count);
@@ -127,7 +131,7 @@ public class MajoredController extends BaseController {
         String majoredCode=request.getParameter("code");
         majoredDto=iMajoredService.getMajoredByCode(majoredCode);
         majoredDetailDto.setMainCourse(majoredDto.getMainCourse());
-        majoredDetailDto.setSimilarMajor(majoredDto.getSimilarMajor());
+        majoredDetailDto.setSimilarMajor(majoredDto.getSimilarMajored());
         majoredDetailDto.setWorkGuide(majoredDto.getWorkGuide());
         Map<String,Object> map=new HashMap<>();
         map.put("type","PROPERTY");//院校类型
