@@ -27,8 +27,8 @@
         <section class="section-article">
             <div class="search-content">
                  <span>
-                     <input type="text" placeholder="请输入专业名称进行搜索"/>
-                     <input type="button" value="搜索"/>
+                     <input type="text" placeholder="请输入专业名称进行搜索" id="keywords"/>
+                     <input type="button" value="搜索" id="search"/>
                 </span>
             </div>
             <div class="video">

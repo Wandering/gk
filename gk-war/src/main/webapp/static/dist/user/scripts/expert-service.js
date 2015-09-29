@@ -26,6 +26,7 @@ define(function (require) {
     }
 
     //拉取数据列表
+    var size = 4;
     function getList(no, size, key_search) {
         $.ajax({
             url: '/appointment/getAppointment.do',
@@ -38,23 +39,24 @@ define(function (require) {
             },
             success: function (res) {
                 if (res.rtnCode == '0000000') {
-                    console.log(res.bizData);
                     var template = '';
                     $.each(res.bizData, function (i, v) {
-                        console.log(v);
                         template += '<a class="row go-detail" href="javascript:void(0);"> ' +
                         '<div class="col-3 title" data-id="'+ v.id+'">' + v.title + '</div> ' +
                         '<div class="col-1 createTime">' + getTime(v.createDate) + '</div> ' +
-                        '</a>'
+                        '</a>';
                     });
+                    if(res.bizData.length <size){
+                        $('.more').hide();
+                    }else{
+                        $('.more').show();
+                    }
                     $('.data-list').html(template);
-
                 }
             }
         })
     }
-
-    getList(1, 5);
+    getList(1, size);
     //搜索
     var search = $('#search');
     search.keydown(function () {

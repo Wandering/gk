@@ -10,7 +10,7 @@ define(function (require) {
         var redirectPath = location.protocol + '//' + location.host + '/question/proxy.html';
         editor = K.create('textarea[name="content"]', {
             resizeType: 1,
-            height:400,
+            height:380,
             allowImageRemote: false,
             formatUploadUrl: false,
             uploadJson: "http://10.21.67.8:8080/file/upload/saveiframefile.shtml?redirectPath=" + redirectPath,
@@ -79,13 +79,14 @@ define(function (require) {
         var start = Date.parse(new Date(s)) / 1000;
         var end = Date.parse(new Date(e)) / 1000;
         //提交内容信息
+        console.log($('#content').val());
         $.ajax({
             url: '/appointment/addAppointment.do',
             dataType: 'json',
             type: 'post',
             data: {
                 "title": $('.order-theme').val(),
-                "content": $('.'),
+                "content": $('#content').val(),
                 "startDate": start,
                 "endDate": end,
                 "name": $('.name').val(),
