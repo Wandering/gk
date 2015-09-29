@@ -15,22 +15,18 @@ define(function (require) {
         });
 
         $('.into-evalution a').on('click',function(e) {
-            //window.location.href = '';
-            $.ajax({
-                type: 'post',
-                url: '/appraisal/lstest.do',
-                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
-                data: {},
-                dataType: 'json',
-                success: function(data) {
-                    console.log(data);
-                    if ('0000000' === data.rtnCode) {
-                        var url = data.bizData;
+            var flag = false;
+            if (!flag) {
+                flag = true;
+                $.get('/appraisal/lstest.do', function(data) {
+                    flag = true;
+                    if ('0000000' === data.rtnCode && data.bizData) {
+                        window.location.href = data.bizData;
+                    } else {
+                        $('#error_tip').html(data.msg);
                     }
-                },
-                error: function(data) {
-                }
-            });
+                });
+            }
         });
     });
 });

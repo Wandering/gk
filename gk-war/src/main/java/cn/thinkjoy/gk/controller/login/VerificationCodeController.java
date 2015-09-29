@@ -30,9 +30,15 @@ public class VerificationCodeController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "randomVerifyCode",method = RequestMethod.GET)
 	public void getValidataCode(HttpServletRequest request,HttpServletResponse response){
-		String type = request.getParameter("type");
-		if(org.apache.commons.lang.StringUtils.isBlank(type)){
+		String tempType = request.getParameter("type");
+		if(org.apache.commons.lang.StringUtils.isBlank(tempType)){
 			throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
+		}
+		int type=-1;
+		try {
+		     type= Integer.valueOf(tempType);
+		}catch(Exception e){
+			throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
 		}
 		BufferedImage image = null;
 		try {
@@ -86,7 +92,7 @@ public class VerificationCodeController extends BaseController {
 				randomCode.append(code);
 			}
 			HttpSession session = request.getSession();
-			if(VerificationKeyConst.COLLEGE_RECOMMENDATION_TYPE==Integer.valueOf(type)){
+			if(VerificationKeyConst.COLLEGE_RECOMMENDATION_TYPE==type){
 				session.setAttribute(VerificationKeyConst.COLLEGE_RECOMMENDATION, randomCode.toString());
 			}else if(VerificationKeyConst.COLLEGE_EVALUATION_TYPE==Integer.valueOf(type)){
 				session.setAttribute(VerificationKeyConst.COLLEGE_EVALUATION, randomCode.toString());
