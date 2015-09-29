@@ -10,17 +10,9 @@
 <%@ include file="/before/header-before.jsp"%>
 <div class="content">
     <div class="banner">
-            <div class="play-video" id="play-video">
-                <object class id="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="760" height="428">
-                    <param name="movie" value="/static/src/before/scripts/flvplayer.swf">
-                    <param name="quality" value="high">
-                    <param name="allowFullScreen" value="true">
-                    <param name="IsAutoPlay" value="0" />
-                    <param name="BufferTime" value="3" />
-                    <param name="FlashVars" value="vcastr_file=/static/src/before/images/1234.flv">
-                    <embed src="/static/src/before/scripts/flvplayer.swf" allowfullscreen="true" flashvars="vcastr_file=/static/src/before/images/1234.flv" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="760" height="428"></embed>
-                </object>
-            </div>
+        <div class="video mt60 ta">
+            <a href="" style="display:inline-block;width:760px;height:428px;position: relative;top: 32px" id="player"></a>
+        </div>
     </div>
     <div class="mian-body w1000">
         <h1>徐老师<span>语文</span></h1>
@@ -31,6 +23,7 @@
     </div>
 </div>
 <%@ include file="/common/footer.jsp"%>
+<script type="text/javascript" src="/static/src/guide/scripts/flowplayer-3.2.13.min.js"></script>
 <script>
     seajs.use("/static/src/before/scripts/teacher-lecture-play");
 </script>
