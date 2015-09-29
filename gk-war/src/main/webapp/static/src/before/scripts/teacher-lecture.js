@@ -114,6 +114,8 @@ define(function (require) {
 
     var searchs=$('#searchVal').val();
 
+
+
     UI.$nextPage.on('click', function () {
         var pageNo = UI.$listMsgItem.attr('pageNo');
         getList(pageNo, pageSize,1,"",searchs);
