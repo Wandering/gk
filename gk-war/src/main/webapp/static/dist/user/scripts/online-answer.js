@@ -54,13 +54,13 @@ define(function (require) {
             }
             return html.join('');
         },
-        getMyQuestion: function(contentId) {
-            var url = ' /answer/myQuestion.do?';
-            this.getData(url, contentId);
+        getMyQuestion: function(contentId, isAnswer) {
+            var url = '/answer/findMyQuestion.do?';
+            this.getData(url, contentId, isAnswer);
         },
-        getData: function(url, contentId) {
+        getData: function(url, contentId, isAnswer) {
             var that = this;
-            $.get(url + 'startSize=' + this.startSize + '&endSize=' + this.endSize, function(data) {
+            $.get(url + 'startSize=' + this.startSize + '&endSize=' + this.endSize + '&isAnswer=' + isAnswer, function(data) {
                 if ('0000000' === data.rtnCode) {
                     if (data.bizData.length > 0) {
                         that.next.show();
@@ -85,14 +85,30 @@ define(function (require) {
         addNextPageHandle: function() {
             this.startSize += 5;
             this.endSize += 5;
-            this.getMyQuestion('detail_content_question');
+            var isAnswer = $('.toggle-nav div.btn-selected').attr('data-isAnswer');
+            this.getMyQuestion('detail_content_question', isAnswer);
         }
     };
 
     $(document).ready(function() {
-        Question.getMyQuestion('detail_content_question');
+        Question.getMyQuestion('detail_content_question', 1);
         Question.next.on('click', function(e) {
             Question.addNextPageHandle();
+        });
+
+        $('#search').on('click', function(e) {
+            var val = $('#keywords').val();
+            window.location.href = '/question/question.jsp?val=' + val;
+        });
+
+        $('.toggle-nav div.btn').on('click', function() {
+            if (!$(this).hasClass('btn-selected')) {
+                $(this).addClass('btn-selected').siblings().removeClass('btn-selected');
+                var isAnswer = $(this).attr('data-isAnswer');
+                Question.startSize = 0;
+                Question.endSize = 5;
+                Question.getMyQuestion('detail_content_question', isAnswer);
+            }
         });
     });
 

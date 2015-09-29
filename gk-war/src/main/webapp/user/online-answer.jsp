@@ -19,10 +19,10 @@
         <li><a href="/user/expert-service.jsp">专家服务</a></li>
     </ul>
     <div class="content">
-        <%--<div class="toggle-nav">--%>
-            <%--<div class="btn btn-selected">已解答</div>--%>
-            <%--<div class="btn btn-unselected">未解答</div>--%>
-        <%--</div>--%>
+        <div class="toggle-nav">
+            <div class="btn btn-selected" data-isAnswer="1">已解答</div>
+            <div class="btn" data-isAnswer="0">未解答</div>
+        </div>
         <div class="search-content">
              <span>
                  <input type="text" placeholder="请输入关键词进行搜索" id="keywords">
@@ -30,8 +30,9 @@
                  <a target="_blank" href="/question/ask.jsp">我要提问</a>
             </span>
         </div>
-        <div id="detail_content_question"></div>
-        <div><a href="javascript:void(0)" class="next-btn hide">加载更多...</a></div>
+        <div id="detail_content_question">
+        </div>
+        <div><a href="javascript:void(0)" class="next-btn" style="display: none">加载更多...</a></div>
         <%--<div class="detail-content">--%>
             <%--<div class="detail-header">--%>
                 <%--<span class="detail-title">军队、武警部队院校招生，国防生体格检查标准</span>--%>

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>院校信息</title>
+    <title>专业基本信息</title>
     <%@ include file="/common/meta.jsp"%>
     <link rel="stylesheet" href="/static/dist/consult/styles/profession_detile.css" />
 </head>

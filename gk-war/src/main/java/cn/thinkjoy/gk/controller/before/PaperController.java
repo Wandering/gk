@@ -36,9 +36,10 @@ public class PaperController extends BaseController {
         String pageNo = HttpUtil.getParameter(request, "pageNo", "0");
         String pageSize = HttpUtil.getParameter(request,"pageSize","10");
         String sortType = HttpUtil.getParameter(request,"sortType","1");
+        String subjectId = request.getParameter("subjectId");
         String years = request.getParameter("years");
         String searchName = request.getParameter("searchName");
-        List<ExaminationPaper> papers = iexPaperService.getPaperPage(Integer.parseInt(sortType),years,searchName,Integer.parseInt(pageNo)*Integer.parseInt(pageSize),Integer.parseInt(pageSize));
+        List<ExaminationPaper> papers = iexPaperService.getPaperPage(StringUtils.isBlank(subjectId)? null : Long.valueOf(subjectId),Integer.parseInt(sortType),years,searchName,Integer.parseInt(pageNo)*Integer.parseInt(pageSize),Integer.parseInt(pageSize));
         if(papers == null || papers.size() == 0){
             throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
         }

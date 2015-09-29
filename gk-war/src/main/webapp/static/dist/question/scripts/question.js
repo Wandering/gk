@@ -28,7 +28,11 @@ define(function(require) {
                     html.push('<section class="ask-answer mt20">');
                     html.push('<div class="ask mt20">');
                     html.push('<div class="head-img">');
-                    html.push('<img src="' + (question.userIcon || '') + '" />');
+                    var src = question.userIcon;
+                    if (!'aa.jpg'.match(/(.jpg|.png|.gif)/g)) {
+                        src = '/static/src/common/images/user_default.png';
+                    }
+                    html.push('<img src="' + (src || '') + '" />');
                     html.push('</div>');
                     html.push('<div class="head-info">');
                     var createTime = new Date(question.createTime).Format('yyyy-MM-dd hh:mm');

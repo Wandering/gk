@@ -33,8 +33,8 @@
 
             <div>
                 <div id="category">
-                    <button data-id="1">文科</button>
-                    <button data-id="2">理科</button>
+                    <button data-id="1">文史</button>
+                    <button data-id="2">理工</button>
                 </div>
                 <div id="enroll_content"></div>
             </div>

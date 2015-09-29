@@ -46,7 +46,8 @@ define(function (require) {
                 $(this).addClass('active').siblings().removeClass('active');
                 var id = $(this).attr('data-id');
                 if (id) {
-                    $('#classify a.' + id).show().siblings().hide();
+                    $('#classify a').hide();
+                    $('#classify a.' + id).show();
                 } else {
                     $('#classify a').show();
                 }
@@ -173,13 +174,13 @@ define(function (require) {
             for (; i < len; i++) {
                 var trClass = i % 2 != 0 ? 'active' : '';
                 html.push('<tr class="' + trClass + '">'
-                    + '<td class="name"><a href="/consult/profession_detile.jsp?id=' + data[i].code + '">' + data[i].name + '</a></td>'
-                    + '<td>' + data[i].planNumber + '</td>'
-                    + '<td>' + data[i].schoolLength + '</td>'
-                    + '<td>' + data[i].foreginLanguage + '</td>'
-                    + '<td>' + data[i].feeStandard+ '</td>'
+                    + '<td class="name"><a href="/consult/profession_detile.jsp?id=' + data[i].code + '">' + (data[i].name || '') + '</a></td>'
+                    + '<td>' + (data[i].planNumber || '') + '</td>'
+                    + '<td>' + (data[i].schoolLength || '') + '</td>'
+                    + '<td>' + (data[i].foreginLanguage || '') + '</td>'
+                    + '<td>' + (data[i].feeStandard || '') + '</td>'
                     + '<td>'
-                    + '<a target="_blank" href="/consult/school_detile.jsp?id=' + data[i].universityCode + '">' + data[i].universityName + '</a>'
+                    + '<a target="_blank" href="/consult/school_detile.jsp?id=' + data[i].universityCode + '">' + (data[i].universityName || '') + '</a>'
                     + '</td>'
                     + '</tr>');
             }
@@ -193,7 +194,8 @@ define(function (require) {
             var startNum = (curPage - 1) * 10 + 1;
             pageHtml.push('<span class="record">共' + totals + '条记录 <span class="startNum">' + startNum + '</span>/' + totals + '</span>');
             pageHtml.push('<a class="previous-page">上一页</a>');
-            for (var i = 0; i < this.totalPage; i++) {
+            var num = this.totalPage > 10 ? 10: this.totalPage;
+            for (var i = 0; i < num; i++) {
                 var page = i + 1;
                 if (curPage == page) {
                     pageHtml.push('<a class="active ' + page + '">' + page + '</a>');

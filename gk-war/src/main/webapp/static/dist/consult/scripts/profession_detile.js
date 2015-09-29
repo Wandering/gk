@@ -33,7 +33,7 @@ define(function (require) {
             });
         },
         renderInfo: function(obj) {
-            $('#info_content').html('<img class="fl" src="' + (obj.universityImage || '') + '" />'
+            $('#info_content').html('<img class="fl" src="' + (obj.universityImage || '/static/src/common/images/kqbk_banner_default.png') + '" />'
                                     + '<div class="info">'
                                         + '<ul>'
                                             + '<li class="school-name">' + obj.name + '</li>'
@@ -74,9 +74,9 @@ define(function (require) {
             });
         },
         renderReation: function(data) {
-            $('#tab_0').html('<p class="article">' + data.similarMajor + '</p>');
-            $('#tab_1').html('<p class="article">' + data.mainCourse + '</p>');
-            $('#tab_2').html('<p class="article">' + data.workGuide + '</p>');
+            $('#tab_0').html('<p class="article">' + (data.similarMajor || '暂无信息！') + '</p>');
+            $('#tab_1').html('<p class="article">' + (data.mainCourse || '暂无信息！') + '</p>');
+            $('#tab_2').html('<p class="article">' + (data.workGuide || '暂无信息！') + '</p>');
             var openUniversity = data.openUniversity;
             var html = [];
 

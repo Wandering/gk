@@ -33,7 +33,7 @@ define(function (require) {
             });
         },
         renderInfo: function(obj) {
-            $('#info_content').html('<img class="fl" src="' + (obj.universityImage || '') + '" />'
+            $('#info_content').html('<img class="fl" src="' + (obj.universityImage || '/static/src/common/images/kqbk_banner_default.png') + '" />'
                                     + '<div class="info">'
                                         + '<ul>'
                                             + '<li class="school-name">' + obj.name + '</li>'
@@ -73,10 +73,26 @@ define(function (require) {
                 }
             });
         },
+        renderList: function(list) {
+            var html = [];
+            html.push('<ul>');
+            $.each(list, function(i, value) {
+                html.push('<li>' + value + '</li>');
+            });
+            html.push('</ul>');
+            return html.join('');
+        },
         renderReation: function(data) {
-            $('#tab_0').html('<p class="article">' + data.similarMajor + '</p>');
-            $('#tab_1').html('<p class="article">' + data.mainCourse + '</p>');
-            $('#tab_2').html('<p class="article">' + data.workGuide + '</p>');
+
+            var similarMajor = data.similarMajor ? data.similarMajor.split('丨') : [];
+
+            var mainCourse = data.mainCourse ? data.mainCourse.split('丨') : [];
+
+            var defaultTipMsg = '<p class="article">暂无信息！</p>';
+
+            $('#tab_0').html(this.renderList(similarMajor) || defaultTipMsg);
+            $('#tab_1').html(this.renderList(mainCourse) || defaultTipMsg);
+            $('#tab_2').html('<p class="article">' + (data.workGuide || '暂无信息！') + '</p>');
             var openUniversity = data.openUniversity;
             var html = [];
 

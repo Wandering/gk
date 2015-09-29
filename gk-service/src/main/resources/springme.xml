@@ -39,11 +39,25 @@
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
-        <qualifier value="order" />
+        <qualifier value="gk" />
     </bean>
 
-    <!-- 使用annotation定义事务 -->
-    <tx:annotation-driven transaction-manager="transactionManager" />
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="insert*" propagation="REQUIRED" />
+            <tx:method name="batch*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="save*" propagation="REQUIRED" />
+            <tx:method name="*" propagation="SUPPORTS" />
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config expose-proxy="true">
+        <aop:pointcut id="services" expression="execution(* cn.thinkjoy.gk.service.impl.*.*(..))" />
+        <aop:advisor pointcut-ref="services" advice-ref="txAdvice"/>
+    </aop:config>
 
     <!-- MyBatis配置 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

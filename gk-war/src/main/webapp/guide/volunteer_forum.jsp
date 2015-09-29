@@ -23,13 +23,18 @@
         </div>
         <h6 class="w1000 ta sub-title c888 mt20">全面介绍陕西省高考志愿填报的基础知识、规则及方法，帮您掌握志愿填报的方法和技巧走出填报误区。</h6>
 
-        <div class="video mt60">
-            <video id="home_video" controls="" preload="none" poster="/img/poster.jpg" class="video-js vjs-default-skin">
-                <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
-                <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm">
-                <track kind="captions" src="/vtt/captions.vtt" srclang="en" label="English">
-                </track>
-            </video>
+        <div class="video mt60 ta">
+            <div class="play-video ta" id="play-video">
+                <object class id="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="760" height="428">
+                    <param name="movie" value="/static/src/before/scripts/flvplayer.swf">
+                    <param name="quality" value="high">
+                    <param name="allowFullScreen" value="true">
+                    <param name="IsAutoPlay" value="0" />
+                    <param name="BufferTime" value="3" />
+                    <param name="FlashVars" value="/static/src/before/images/1234.flv">
+                    <embed src="/static/src/before/scripts/flvplayer.swf" allowfullscreen="true" flashvars="/static/src/before/images/1234.flv" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="760" height="428"></embed>
+                </object>
+            </div>
         </div>
 
         <div id="tab_title_content">

@@ -56,7 +56,8 @@ public class VipController extends BaseController {
 			UserVip userVip=new UserVip();
 			userVip.setId(userAccountPojo.getId());
 			userVip.setEndDate(card.getEndDate());
-			vipService.insert(userVip);
+			userVip.setStatus(1);
+			vipService.update(userVip);
 			return  "success";
 		}
 	}

@@ -31,7 +31,7 @@ public class BannerController extends BaseController{
      * 通过type类型拿到跳转页面的url
      * @return
      */
-    @RequestMapping(value = "getUrlByType",method = RequestMethod.GET)
+    @RequestMapping(value = "getBannerByType",method = RequestMethod.GET)
     @ResponseBody
     public List<Banner> getUrlByType(HttpServletRequest request){
         String type = request.getParameter("type");

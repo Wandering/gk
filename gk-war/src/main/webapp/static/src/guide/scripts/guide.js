@@ -33,6 +33,12 @@ define(function (require) {
             if ('0000000' === data.rtnCode) {
                 if (data.bizData) {
                     $('#tab_content').html(data.bizData.content);
+                    $.each($('#tab_content img'), function(i, value) {
+                        var src = $(value).attr('src');
+                        if (src.indexOf('http://') < 0 && src.indexOf('https://') < 0) {
+                            $(value).attr('src', 'http://www.gkzy114.com/' + src);
+                        }
+                    });
                 }
             }
         });
