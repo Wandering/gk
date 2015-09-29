@@ -6,6 +6,15 @@ define(function (require) {
     var $ = require('$');
     require('swiper');
 
+    var getQueryStr = function(_url, _param) {
+        var rs = new RegExp("(^|)" + _param + "=([^\&]*)(\&|$)", "g").exec(_url),
+            tmp;
+        if (tmp = rs) {
+            return tmp[2];
+        }
+        return "";
+    };
+
     var Profession = {
         curPage:1,
         totalPage:0,
@@ -373,6 +382,10 @@ define(function (require) {
 
     $(document).ready(function() {
         Profession.getOptions();
+        var keywords = decodeURIComponent(getQueryStr(window.location.href, 'val'));
+        if (keywords) {
+            $('#search').val(keywords);
+        }
         $('#search_button').on('click', function() {
             var search = $('#search').val();
             if (search) {

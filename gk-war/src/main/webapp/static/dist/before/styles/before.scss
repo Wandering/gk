@@ -497,7 +497,7 @@ section:last-child {
         }
         span {
           display: inline-block;
-          width: 100px;
+          width: 126px;
           line-height: 40px;
           text-align: left;
         }
@@ -888,5 +888,27 @@ section:last-child {
   }
   p {
     font-size: 12px;
+  }
+}
+
+.error-tips{
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 45px;
+  background-color: #e24d39;
+  color: #fff;
+  border-radius: 3px;
+  width: 78%;
+}
+
+.result-info{
+  ul{
+    padding: 10px;
+    overflow: hidden;
+    li{
+      list-style: decimal;
+      clear: both;
+      line-height: 28px;
+    }
   }
 }

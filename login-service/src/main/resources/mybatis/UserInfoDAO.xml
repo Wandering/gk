@@ -29,6 +29,8 @@
         token as token ,
         name as name ,
         icon as icon ,
+        provinceId as provinceId ,
+        cityId as cityId ,
         countyId as countyId ,
         schoolName as schoolName ,
         birthdayDate as birthdayDate ,
@@ -42,6 +44,8 @@
         token,
         name,
         icon,
+        provinceId,
+        cityId,
         countyId,
         schoolName,
         birthdayDate,
@@ -53,6 +57,8 @@
         #{token},
         #{name},
         #{icon},
+        #{provinceId},
+        #{cityId},
         #{countyId},
         #{schoolName},
         #{birthdayDate},
@@ -78,6 +84,12 @@
             </if>
             <if test="icon!=null">
                 icon = #{icon},
+            </if>
+            <if test="provinceId!=null">
+                provinceId = #{provinceId},
+            </if>
+            <if test="cityId!=null">
+                cityId = #{cityId},
             </if>
             <if test="countyId!=null">
                 countyId = #{countyId},
@@ -117,6 +129,12 @@
             <if test="map.icon!=null">
                 icon = #{map.icon},
             </if>
+            <if test="map.provinceId!=null">
+                provinceId = #{map.provinceId},
+            </if>
+            <if test="map.cityId!=null">
+                cityId = #{map.cityId},
+            </if>
             <if test="map.countyId!=null">
                 countyId = #{map.countyId},
             </if>
@@ -155,6 +173,12 @@
             <if test="update.icon!=null">
                 icon = #{update.icon},
             </if>
+            <if test="update.provinceId!=null">
+                provinceId = #{update.provinceId},
+            </if>
+            <if test="update.cityId!=null">
+                cityId = #{update.cityId},
+            </if>
             <if test="update.countyId!=null">
                 countyId = #{update.countyId},
             </if>
@@ -191,6 +215,12 @@
             <if test="condition.icon!=null">
                 AND icon = #{condition.icon}
             </if>
+            <if test="condition.provinceId!=null">
+                AND provinceId = #{condition.provinceId}
+            </if>
+            <if test="condition.cityId!=null">
+                AND cityId = #{condition.cityId}
+            </if>
             <if test="condition.countyId!=null">
                 AND countyId = #{condition.countyId}
             </if>
@@ -220,6 +250,8 @@
         token,
         name,
         icon,
+        provinceId,
+        cityId,
         countyId,
         schoolName,
         birthdayDate,
@@ -231,6 +263,8 @@
         #{map.token},
         #{map.name},
         #{map.icon},
+        #{map.provinceId},
+        #{map.cityId},
         #{map.countyId},
         #{map.schoolName},
         #{map.birthdayDate},
@@ -248,6 +282,8 @@
             token = #{token},
             name = #{name},
             icon = #{icon},
+            provinceId = #{provinceId},
+            cityId = #{cityId},
             countyId = #{countyId},
             schoolName = #{schoolName},
             birthdayDate = #{birthdayDate},
@@ -283,6 +319,12 @@
             </if>
             <if test="icon!=null">
                 AND icon = #{icon}
+            </if>
+            <if test="provinceId!=null">
+                AND provinceId = #{provinceId}
+            </if>
+            <if test="cityId!=null">
+                AND cityId = #{cityId}
             </if>
             <if test="countyId!=null">
                 AND countyId = #{countyId}
@@ -374,6 +416,12 @@
             <if test="condition.icon!=null">
                 ${condition.groupOp}   ${condition.icon.field}  ${condition.icon.op}  #{condition.icon.data}
             </if>
+            <if test="condition.provinceId!=null">
+                ${condition.groupOp}   ${condition.provinceId.field}  ${condition.provinceId.op}  #{condition.provinceId.data}
+            </if>
+            <if test="condition.cityId!=null">
+                ${condition.groupOp}   ${condition.cityId.field}  ${condition.cityId.op}  #{condition.cityId.data}
+            </if>
             <if test="condition.countyId!=null">
                 ${condition.groupOp}   ${condition.countyId.field}  ${condition.countyId.op}  #{condition.countyId.data}
             </if>
@@ -423,6 +471,12 @@
             <if test="condition.icon!=null">
                 AND icon like CONCAT('%', #{condition.icon} , '%')
             </if>
+            <if test="condition.provinceId!=null">
+                AND provinceId like CONCAT('%', #{condition.provinceId} , '%')
+            </if>
+            <if test="condition.cityId!=null">
+                AND cityId like CONCAT('%', #{condition.cityId} , '%')
+            </if>
             <if test="condition.countyId!=null">
                 AND countyId like CONCAT('%', #{condition.countyId} , '%')
             </if>
@@ -468,6 +522,12 @@
             <if test="condition.icon!=null">
                 AND icon = #{condition.icon}
             </if>
+            <if test="condition.provinceId!=null">
+                AND provinceId = #{condition.provinceId}
+            </if>
+            <if test="condition.cityId!=null">
+                AND cityId = #{condition.cityId}
+            </if>
             <if test="condition.countyId!=null">
                 AND countyId = #{condition.countyId}
             </if>
@@ -512,6 +572,12 @@
             <if test="condition.icon!=null">
                 AND icon = #{condition.icon}
             </if>
+            <if test="condition.provinceId!=null">
+                AND provinceId = #{condition.provinceId}
+            </if>
+            <if test="condition.cityId!=null">
+                AND cityId = #{condition.cityId}
+            </if>
             <if test="condition.countyId!=null">
                 AND countyId = #{condition.countyId}
             </if>
@@ -554,6 +620,12 @@
             </if>
             <if test="icon!=null">
                 ${groupOp} ${icon.field} ${icon.op}  #{icon.data}
+            </if>
+            <if test="provinceId!=null">
+                ${groupOp} ${provinceId.field} ${provinceId.op}  #{provinceId.data}
+            </if>
+            <if test="cityId!=null">
+                ${groupOp} ${cityId.field} ${cityId.op}  #{cityId.data}
             </if>
             <if test="countyId!=null">
                 ${groupOp} ${countyId.field} ${countyId.op}  #{countyId.data}

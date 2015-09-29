@@ -56,7 +56,7 @@ define(function (require) {
                 classifyType:1,
                 sortType:sortType,
                 subjectId:subjectId,
-                teacherSearchName:searchVals
+                searchName:searchVals
             },
             function (result) {
                 console.log(result);
