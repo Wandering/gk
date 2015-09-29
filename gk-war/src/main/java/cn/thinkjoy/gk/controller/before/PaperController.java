@@ -46,7 +46,7 @@ public class PaperController extends BaseController {
 
             }
         }
-        List<ExaminationPaper> papers = iexPaperService.getPaperPage(Long.valueOf(subjectId),Integer.parseInt(sortType),years,searchName,Integer.parseInt(pageNo)*Integer.parseInt(pageSize),Integer.parseInt(pageSize));
+        List<ExaminationPaper> papers = iexPaperService.getPaperPage(StringUtils.isBlank(subjectId)? null : Long.valueOf(subjectId),Integer.parseInt(sortType),years,searchName,Integer.parseInt(pageNo)*Integer.parseInt(pageSize),Integer.parseInt(pageSize));
         if(papers == null || papers.size() == 0){
             throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
         }
