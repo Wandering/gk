@@ -41,7 +41,7 @@ public class AppraisalController extends BaseController {
 
         AppraisalBean appraisalBean = new AppraisalBean();
 
-        appraisalBean.setTesterId(userAccountPojo.getId());
+        appraisalBean.setTesterId(userAccountPojo.getId()+"gk360");
 
         appraisalBean.setTesterNm(userAccountPojo.getName());
 
@@ -58,6 +58,10 @@ public class AppraisalController extends BaseController {
             }
 
             JSONObject obj = JSON.parseObject(result);
+
+            if("500".equals(obj.getString("code"))){
+                throw new BizException(ERRORCODE.FAIL.getCode(),obj.getString("info"));
+            }
             returnStr.append(obj.getString("data").replace("\\", ""));
 
         } catch (Exception e) {
