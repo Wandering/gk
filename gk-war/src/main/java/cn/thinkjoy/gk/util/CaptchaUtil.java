@@ -26,12 +26,13 @@ public class CaptchaUtil {
         //绘制随机字符
         StringBuffer randomString = new StringBuffer("");
         String rand = null;
-        int stringPoint = CaptchaConst.TRANSLATE_START*random.nextInt(3);
+//        int stringPoint = CaptchaConst.TRANSLATE_START*random.nextInt(3);
         for(int i=1;i<=CaptchaConst.RANDOM_STRING_NUM;i++){
             rand = String.valueOf(CaptchaConst.RAND_STRING.charAt(random.nextInt(CaptchaConst.RAND_STRING.length()-1)));
             randomString.append(rand);
             g.translate(0,0);
-            g.drawString(rand,CaptchaConst.FONT_SPACING , 16);
+//            g.drawString(rand,CaptchaConst.FONT_SPACING , 16);
+            g.drawString(rand, (i + 1) * CaptchaConst.FONT_SPACING, CaptchaConst.TRANSLATE_START);
         }
         g.dispose();
         g=null;
