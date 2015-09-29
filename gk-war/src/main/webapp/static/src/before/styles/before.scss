@@ -479,7 +479,7 @@ section:last-child {
     .category{
       width: 100%;
 
-      label{
+      span.t{
         text-align: center;
         float: left;
         position: relative;
@@ -488,13 +488,14 @@ section:last-child {
 
       .group-radio {
         overflow: hidden;
-        li{
+        label{
           float: left;
           width: 50%;
-          &.tar{
-            text-align: right;
-          }
+          height: 30px;
+          position: relative;
+          top:7px;
         }
+
         span {
           display: inline-block;
           width: 126px;
@@ -680,8 +681,8 @@ section:last-child {
   top: 50%;
   left:50%;
   width: 1000px;
-  height: 590px;
-  margin:-295px 0 0 -500px;
+  height: 520px;
+  margin:-260px 0 0 -500px;
   z-index: 10;
   background: #fff;
   border-radius: 3px;
@@ -771,7 +772,7 @@ section:last-child {
     }
     .info-result{
       overflow: hidden;
-      height: 285px;
+      height: 208px;
       border: 1px solid #ccc;
       border-top: none;
       padding: 20px 0 0;
@@ -781,7 +782,7 @@ section:last-child {
         overflow: hidden;
         li{
           width: 216px;
-          height: 241px;
+          height: 190px;
           overflow: hidden;
           float: left;
           margin-right: 11px;
@@ -855,6 +856,9 @@ section:last-child {
       padding:10px 20px;
       font-size: 14px;
       line-height: 20px;
+      p{
+        margin: 0;
+      }
     }
     .school-list{
       padding: 20px;
@@ -902,13 +906,23 @@ section:last-child {
 }
 
 .result-info{
+  border: 1px solid #ccc;
+  border-top: none;
+  padding: 10px 20px;
+  color: #999;
   ul{
-    padding: 10px;
     overflow: hidden;
     li{
       list-style: decimal;
       clear: both;
       line-height: 28px;
+      strong{
+        font-weight: bold;
+        color: #444;
+      }
+      span{
+        color: #f0ad4e;
+      }
     }
   }
 }
