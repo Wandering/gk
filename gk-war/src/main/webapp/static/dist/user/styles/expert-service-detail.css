@@ -649,7 +649,8 @@ a.next-btn:hover {
       color: #fff;
       padding-left: 10px; }
   .content .content-list {
-    border-top: 2px solid #e5e5e5; }
+    border-top: 2px solid #e5e5e5;
+    margin-top: 70px; }
   .content .requirement-box-content {
     border-bottom: 1px solid #e5e5e5;
     line-height: 24px;

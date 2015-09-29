@@ -600,7 +600,8 @@ a.next-btn:hover {
     color: #e24d39 !important; }
 
 .content {
-  min-height: 300px; }
+  min-height: 440px;
+  overflow: hidden; }
   .content .search-content {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -645,16 +646,22 @@ a.next-btn:hover {
   .content .content-list {
     border-top: 2px solid #e5e5e5; }
   .content .row, .content .content-title-list {
+    display: block;
     height: 45px;
     line-height: 45px;
     width: 100%;
     border-bottom: 1px solid #e5e5e5; }
     .content .row .t-indent, .content .content-title-list .t-indent {
-      text-indent: 200px; }
+      text-indent: 200px;
+      background-color: #f1f1f1; }
+    .content .row .t-time, .content .content-title-list .t-time {
+      background-color: #f1f1f1; }
     .content .row .col-3, .content .content-title-list .col-3 {
       float: left;
       box-sizing: border-box;
-      width: 79.999%; }
+      width: 79.999%;
+      height: 45px;
+      overflow: hidden; }
     .content .row .col-1, .content .content-title-list .col-1 {
       text-align: center;
       float: left;

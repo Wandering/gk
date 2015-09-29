@@ -38,33 +38,39 @@ define(function (require) {
             },
             success: function (res) {
                 if (res.rtnCode == '0000000') {
+                    console.log(res.bizData);
+                    var template = '';
                     $.each(res.bizData, function (i, v) {
-                        $('#title').text(v.title).attr('data-id', v.id);
-                        $('#createTime').text(getTime(v.createDate));
                         console.log(v);
+                        template += '<a class="row go-detail" href="javascript:void(0);"> ' +
+                        '<div class="col-3 title" data-id="'+ v.id+'">' + v.title + '</div> ' +
+                        '<div class="col-1 createTime">' + getTime(v.createDate) + '</div> ' +
+                        '</a>'
                     });
+                    $('.data-list').html(template);
+
                 }
             }
         })
     }
 
-    getList(1, 3);
+    getList(1, 5);
     //搜索
     var search = $('#search');
     search.keydown(function () {
         var key_search = search.val();
         if (event.keyCode == 13) {
-            getList(1, 3, key_search);
+            getList(1, 5, key_search);
         }
     });
     $('#btn-search').click(function () {
         var key_search = $('#search').val();
-        getList(1, 3, key_search);
+        getList(1, 5, key_search);
     });
     //预定详情
-    $('#go-detail').click(function (e) {
+    $(document).on('click','.go-detail',function(e){
         e.stopPropagation();
-        var id = $('#title').attr('data-id');
+        var id = $(this).find('.title').attr('data-id');
         window.location.href = 'http://' + window.location.host + '/user/expert-service-detail.jsp?id=' + id;
-    })
+    });
 });

@@ -36,26 +36,9 @@
         </div>
         <div class="input-item-comm">
             <span class="w-title">预约日期</span>
-    <input onclick="laydate({
-                format: 'YYYY/MM/DD',
-                min: laydate.now(), //设定最小日期为当前日期
-                max: '2099-06-16', //最大日期
-                istime: true,
-                istoday: false,
-                choose: function(datas){
-                     end.min = datas; //开始日选好后，重置结束日的最小日期
-                     end.start = datas //将结束日的初始值设定为开始日
-                }})" class="comm-input data-start laydate-icon">
+            <input onclick="laydate()" class="comm-input data-start laydate-icon">
             &nbsp;至
-    <input onclick="laydate({
-                format: 'YYYY/MM/DD',
-                min: laydate.now(),
-                max: '2099-06-16',
-                istime: true,
-                istoday: false,
-                choose: function(datas){
-                    start.max = datas; //结束日选好后，重置开始日的最大日期
-    }})" class="comm-input data-end laydate-icon">
+            <input onclick="laydate()" class="comm-input data-end laydate-icon">
             <span class="des-text">请告诉我们您期望与专家见面沟通的日期</span>
         </div>
         <div class="input-item-comm">

@@ -668,11 +668,9 @@ a.next-btn:hover {
       color: #999; }
     .content .input-item-comm .ke-container {
       margin-left: 130px !important;
-      height: 390px;
+      height: 350px;
       width: auto !important;
       margin-top: -15px; }
-    .content .input-item-comm .ke-edit {
-      height: 350px !important; }
   .content .comm-input {
     height: 35px;
     width: 842px;
