@@ -184,6 +184,9 @@ public class RegisterController extends BaseController {
     private boolean checkCaptcha(String account,String captcha){
         boolean equals=false;
         String userCaptchaKey = RedisConst.USER_CAPTCHA_KEY+account;
+        if (RedisUtil.getInstance().get(userCaptchaKey)==null){
+            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "验证码过期或不存在，请重新获取!");
+        }
         String cap=RedisUtil.getInstance().get(userCaptchaKey).toString();
         if (captcha.equals(cap)){
             RedisUtil.getInstance().del(userCaptchaKey);
