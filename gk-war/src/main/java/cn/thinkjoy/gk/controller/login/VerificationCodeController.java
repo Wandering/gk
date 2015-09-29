@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
@@ -27,10 +28,10 @@ public class VerificationCodeController extends BaseController {
 
 	private static final Logger LOGGER= LoggerFactory.getLogger(VerificationCodeController.class);
 
-	@ResponseBody
+
 	@RequestMapping(value = "randomVerifyCode",method = RequestMethod.GET)
-	public void getValidataCode(HttpServletRequest request,HttpServletResponse response){
-		String type = request.getParameter("type");
+	@ResponseBody
+	public void getVerifyCode(@RequestParam(value="type",required = false) String type){
 		if(org.apache.commons.lang.StringUtils.isBlank(type)){
 			throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
 		}
@@ -85,13 +86,14 @@ public class VerificationCodeController extends BaseController {
 				// 将产生的四个随机数组合在一起。
 				randomCode.append(code);
 			}
-			HttpSession session = request.getSession();
 			if(VerificationKeyConst.COLLEGE_RECOMMENDATION_TYPE==Integer.valueOf(type)){
 				session.setAttribute(VerificationKeyConst.COLLEGE_RECOMMENDATION, randomCode.toString());
 			}else if(VerificationKeyConst.COLLEGE_EVALUATION_TYPE==Integer.valueOf(type)){
 				session.setAttribute(VerificationKeyConst.COLLEGE_EVALUATION, randomCode.toString());
 			}else if(VerificationKeyConst.GET_THE_ORDER_TYPE==Integer.valueOf(type)){
 				session.setAttribute(VerificationKeyConst.GET_THE_ORDER, randomCode.toString());
+			}else{
+				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
 			}
 			response.setHeader("Pragma", "no-cache");
 			response.setHeader("Cache-Control", "no-cache");
@@ -100,8 +102,35 @@ public class VerificationCodeController extends BaseController {
 			//将内存中的图片通过流动形式输出到客户端
 			ImageIO.write(image, CaptchaConst.JPEG, response.getOutputStream());
 		} catch (Exception e) {
-			new BizException(ERRORCODE.VERIFICATION_CODE_ERROR.getCode(),ERRORCODE.VERIFICATION_CODE_ERROR.getMessage());
+			throw new BizException(ERRORCODE.VERIFICATION_CODE_ERROR.getCode(),ERRORCODE.VERIFICATION_CODE_ERROR.getMessage());
 		}
+	}
+
+
+	@RequestMapping(value = "verifyCode",method = RequestMethod.GET)
+	@ResponseBody
+	public String verifyCode(@RequestParam(value="type",required = false) String type,
+							 @RequestParam(value="code",required = false) String code){
+		Object resultCode = null;
+		if(VerificationKeyConst.COLLEGE_RECOMMENDATION_TYPE==Integer.valueOf(type)){
+			resultCode = session.getAttribute(VerificationKeyConst.COLLEGE_RECOMMENDATION);
+		}else if(VerificationKeyConst.COLLEGE_EVALUATION_TYPE==Integer.valueOf(type)){
+			resultCode = session.getAttribute(VerificationKeyConst.COLLEGE_EVALUATION);
+		}else if(VerificationKeyConst.GET_THE_ORDER_TYPE==Integer.valueOf(type)){
+			resultCode = session.getAttribute(VerificationKeyConst.GET_THE_ORDER);
+		}else{
+			throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
+		}
+
+		if(resultCode==null){
+			throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
+		}
+
+		if(!resultCode.toString().equals(code)){
+			throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
+		}
+
+		return "success";
 	}
 
 }
