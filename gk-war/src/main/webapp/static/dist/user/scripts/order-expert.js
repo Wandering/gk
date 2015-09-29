@@ -1,66 +1,7 @@
 define(function (require) {
     var $ = require('$');
-    require('header-user');
     require('laydate');
     require('swiper');
-    //编辑框
-    var editor;
-    KindEditor.ready(function (K) {
-        var location = window.location;
-        var redirectPath = location.protocol + '//' + location.host + '/question/proxy.html';
-        editor = K.create('textarea[name="content"]', {
-            resizeType: 1,
-            height:400,
-            allowImageRemote: false,
-            formatUploadUrl: false,
-            uploadJson: "http://10.21.67.8:8080/file/upload/saveiframefile.shtml?redirectPath=" + redirectPath,
-            filePostName: "file",
-            allowPreviewEmoticons: false,
-            allowFileManager: false,
-            items: ['plainpaste', 'insertorderedlist', 'insertunorderedlist', 'forecolor', 'hilitecolor', 'bold',
-                'italic', 'underline', '|', 'image', 'fullscreen'],
-            afterBlur: function () {
-                this.sync();
-            },
-            afterChange: function () {
-                //var limitNum = 6000;  //设定限制字数
-                //var pattern = '还可以输入<var class="num" id="num">' + limitNum + '</var>字';
-                //$('.KindEditor .word_count').html(pattern); //输入显示
-                //if (this.count('text') > limitNum) {
-                //    pattern = ('已经超过<var class="num c-c00" id="num">' + (limitNum - this.count('text')) + '</var>字');
-                //} else {
-                //    //计算剩余字数
-                //    var result = limitNum - this.count('text');
-                //    pattern = '还可以输入<var class="num" id="num">' + result + '</var>字';
-                //}
-                //if (this.count('text') > 0) {
-                //    $('#description').val(this.count('text'));
-                //    $('.ke-container').removeClass('n-invalid');
-                //} else {
-                //    $('#description').val("")
-                //}
-                //$('.KindEditor .word_count').html(pattern); //输入显示
-                //console.log(editor.count('text') )
-            },
-            //上传文件后执行的回调函数,获取上传图片的路径
-            afterUpload: function (res) {
-                console.log(res)
-            }
-        });
-    });
-    //开始日期，结束日期
-    //var start = {
-    //    elem: '.data-start',
-    //    format: 'YYYY/MM/DD hh:mm:ss',
-    //    min: laydate.now(), //设定最小日期为当前日期
-    //    max: '2099-06-16 23:59:59', //最大日期
-    //    istime: true,
-    //    istoday: false,
-    //    choose: function(datas){
-    //        end.min = datas; //开始日选好后，重置结束日的最小日期
-    //        end.start = datas //将结束日的初始值设定为开始日
-    //    }
-    //};
     //var end = {
     //    elem: '.data-end',
     //    format: 'YYYY/MM/DD hh:mm:ss',
@@ -74,27 +15,60 @@ define(function (require) {
     //};
 
     $('.btn-submit').click(function () {
+        //验证
         var s = $('.data-start').val();
         var e = $('.data-end').val();
         var start = Date.parse(new Date(s)) / 1000;
         var end = Date.parse(new Date(e)) / 1000;
-        //提交内容信息
+        var title = $('.order-theme').val().trim();
+        var content = $('#content').val();
+        var name = $('.name').val();
+        var mobile = $('.mobile').val();
+        var qq = $('.qq').val();
+        if (title.length > 50 ) {
+            $('.error-tips').text('标题字数过长，请输入50字以内').fadeIn(1000).fadeOut(3000);
+            return false;
+        }
+        if (content.length > 500 ) {
+            $('.error-tips').text('预约内容过长，500字以内').fadeIn(1000).fadeOut(3000);
+            return false;
+        }
+        if (content.length == 0 || title.length == 0 ||end.length == 0 || start.length == 0 || name.length == 0 || mobile.length == 0 || qq.length == 0) {
+            $('.error-tips').text('为了保证内容完整性，该表单每项都必填。').fadeIn(1000).fadeOut(3000);
+            return false;
+        }
+        var qq_reg = /^\s*[.0-9]{5,11}\s*$/;
+        if (!qq_reg.test(qq)) {
+            $('.error-tips').text('QQ号码输入有误').fadeIn(1000).fadeOut(3000);
+            return false;
+        }
+
+        var reg = /^0?1[3|4|5|6|7|8][0-9]\d{8}$/;
+        if (!reg.test(mobile)) {
+            $('.error-tips').text('预约电话号码输入有误').fadeIn(1000).fadeOut(3000);
+            return false;
+        }
+
+
         $.ajax({
             url: '/appointment/addAppointment.do',
             dataType: 'json',
             type: 'post',
             data: {
-                "title": $('.order-theme').val(),
-                "content": $('.'),
+                "title": title,
+                "content": content,
                 "startDate": start,
                 "endDate": end,
-                "name": $('.name').val(),
-                "mobile": $('.mobile').val(),
-                "qq": $('.qq').val()
+                "name": name,
+                "mobile": mobile,
+                "qq": qq
             },
             success: function (res) {
                 if (res.rtnCode == '0000000') {
-                    console.log(res);
+                    $('.error-tips').text('恭喜你，预约成功').fadeIn(1000).fadeOut(3000);
+                    window.location.href = 'http://' +window.location.host+'user/expert-service-detail.jsp'
+                } else {
+                    $('.error-tips').text('对不起，预约失败').fadeIn(1000).fadeOut(3000);
                 }
             }
         })

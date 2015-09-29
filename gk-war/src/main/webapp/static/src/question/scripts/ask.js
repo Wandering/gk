@@ -3,6 +3,15 @@
  */
 
 define(function (require) {
+
+    function GetCookie(sMainName, sSubName) {
+        var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
+        return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
+    }
+    if (!GetCookie("gkuser") || GetCookie("gkuser") == '""') {
+        window.location.href = '/login/login.jsp';
+    }
+
     var $ = require('$');
     require('header-user');
     require('swiper');

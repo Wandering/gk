@@ -62,13 +62,23 @@ public class InfoController extends BaseController {
 
     /**
      * 更改个人信息
-     * TODO 头像未处理
+     * @param name
+     * @param countyId
+     * @param schoolName
+     * @param sex
+     * @param birthdayDate
+     * @param subjectType
+     * @param mail
+     * @param icon
+     * @param qq
      * @return
      */
     @RequestMapping(value = "updateUserInfo",method = RequestMethod.POST)
     @ResponseBody
     public String updateUserInfo(@RequestParam(value="name",required = true) String name,
-                                 @RequestParam(value="countyId",required = true) long countyId,
+                                 @RequestParam(value="provinceId",required = true) String provinceId,
+                                 @RequestParam(value="cityId",required = true) String cityId,
+                                 @RequestParam(value="countyId",required = true) String countyId,
                                  @RequestParam(value="schoolName",required = true) String schoolName,
                                  @RequestParam(value="sex",required = true) int sex,
                                  @RequestParam(value="birthdayDate",required = true) long birthdayDate,
@@ -81,6 +91,8 @@ public class InfoController extends BaseController {
             String id=getCookieValue();
             UserInfo userInfo=userInfoExService.findUserInfoById(Long.valueOf(id));
             userInfo.setName(name);
+            userInfo.setProvinceId(provinceId);
+            userInfo.setCityId(cityId);
             userInfo.setCountyId(countyId);
             userInfo.setSchoolName(schoolName);
             userInfo.setSex(sex);
@@ -91,7 +103,7 @@ public class InfoController extends BaseController {
             userInfo.setIcon(icon);
             userInfoExService.updateUserInfoById(userInfo);
         }catch (Exception e){
-            e.printStackTrace();
+            throw e;
         }
         return "success";
     }

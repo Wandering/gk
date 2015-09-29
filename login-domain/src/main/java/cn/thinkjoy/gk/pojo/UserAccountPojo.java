@@ -12,18 +12,9 @@ public class UserAccountPojo extends BaseDomain {
     private String account;
     private String password;
     private Integer userType;
-    private Long countyId;
     private Integer vipStatus;
 
     public UserAccountPojo(){
-    }
-
-    public Long getCountyId() {
-        return countyId;
-    }
-
-    public void setCountyId(Long countyId) {
-        this.countyId = countyId;
     }
 
     public String getAccount() {
