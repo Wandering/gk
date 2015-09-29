@@ -79,22 +79,35 @@ public class AppraisalController extends BaseController {
     @RequestMapping(value = "/schoolTest",method = RequestMethod.GET)
     @ResponseBody
     public String schoolTest(@RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore,
-                             @RequestParam(value="m_batch",required=false) String m_batch,
+                             @RequestParam(value="m_university_name",required=false) String m_university_name,
                              @RequestParam(value="m_kelei",required=false) String m_kelei,
                              @RequestParam(value="code",required=false) String code) throws Exception{
-        Object resultCode = session.getAttribute(VerificationKeyConst.COLLEGE_EVALUATION+getCookieValue());
+
+        if(StringUtils.isBlank(m_aggregateScore)
+                || StringUtils.isBlank(m_university_name)
+                || StringUtils.isBlank(m_kelei)
+                || StringUtils.isBlank(code)){
+            throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
+        }
+
+        String value = getCookieValue();
+
+        Object resultCode = session.getAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value);
 
         if(resultCode==null){
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
         }
 
-        if(!resultCode.toString().equals(code)){
+        if(!resultCode.toString().equals(code.toUpperCase())){
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
         }
+
+        session.removeAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value);
+
         String returnStr = null;
         try {
 
-            String result = HttpRequestUtil.doGet("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/CollegeEval/GetEvaluation/m_aggregateScore/"+m_aggregateScore+"/m_batch/"+m_batch+"/m_kelei/"+m_kelei);
+            String result = HttpRequestUtil.doGet("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/CollegeEval/GetEvaluation/m_aggregateScore/"+m_aggregateScore+"/m_batch/"+m_university_name+"/m_kelei/"+m_kelei);
 
             if(StringUtils.isEmpty(result)){
                 throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
@@ -118,15 +131,23 @@ public class AppraisalController extends BaseController {
     public String findRanking(@RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore,
                               @RequestParam(value="code",required=false) String code) throws Exception{
 
-        Object resultCode = session.getAttribute(VerificationKeyConst.GET_THE_ORDER+getCookieValue());
+        if(StringUtils.isBlank(m_aggregateScore)
+                || StringUtils.isBlank(code)){
+            throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
+        }
+
+        String value = getCookieValue();
+
+        Object resultCode = session.getAttribute(VerificationKeyConst.GET_THE_ORDER+value);
 
         if(resultCode==null){
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
         }
 
-        if(!resultCode.toString().equals(code)){
+        if(!resultCode.toString().equals(code.toUpperCase())){
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
         }
+        session.removeAttribute(VerificationKeyConst.GET_THE_ORDER+value);
 
         String returnStr = null;
         try {
