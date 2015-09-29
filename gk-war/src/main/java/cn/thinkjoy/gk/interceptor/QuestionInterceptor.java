@@ -1,8 +1,10 @@
 package cn.thinkjoy.gk.interceptor;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.constant.CookieConst;
 import cn.thinkjoy.gk.constant.CookieTimeConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.CookieUtil;
 import cn.thinkjoy.ss.api.IUserAccountService;
@@ -61,6 +63,10 @@ public class QuestionInterceptor extends HandlerInterceptorAdapter {
 				userInfoBean.setSourceType(7);
 
 				long id = userInfoService.insertUserInfo(userInfoBean);
+
+				if(id==0){
+					throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
+				}
 
 				response.addCookie(CookieUtil.addCookie(CookieConst.SS_USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE,"/"));
 			}else{
