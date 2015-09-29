@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller.question;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.constant.CookieConst;
 import cn.thinkjoy.gk.controller.question.bean.QuestionAnswerBean;
 import cn.thinkjoy.gk.controller.question.dto.AnswerDetailDto;
 import cn.thinkjoy.gk.controller.question.dto.QuestionContentDto;
@@ -10,6 +11,7 @@ import cn.thinkjoy.gk.controller.question.query.SendQuestionQuery;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.protocol.PageQuery;
+import cn.thinkjoy.gk.util.CookieUtil;
 import cn.thinkjoy.ss.api.IQuestionService;
 import cn.thinkjoy.ss.bean.QuestionDetailBean;
 import cn.thinkjoy.ss.domain.Question;
@@ -416,6 +418,8 @@ public class QuestionController extends BaseController {
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
         }
 
+        String value = CookieUtil.getCookieValue(request.getCookies(), CookieConst.SS_USER_COOKIE_NAME);
+
         UserAccountPojo account = getUserAccountPojo();
 
 //        Integer vipStatus = account.getVipStatus();
@@ -449,7 +453,7 @@ public class QuestionController extends BaseController {
         expertQuestion.setCreateDate(currentTime);
         expertQuestion.setLastModDate(currentTime);
         expertQuestion.setIsOpen(0);
-        expertQuestion.setUserId(Long.valueOf(userId));
+        expertQuestion.setUserId(Long.valueOf(value));
         expertQuestion.setDisableStatus(0);
         if(StringUtils.isEmpty(sendQuestionQuery.getExpertId())){
             expertQuestion.setExpertId(0L);

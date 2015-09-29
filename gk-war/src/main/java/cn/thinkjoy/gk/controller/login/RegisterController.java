@@ -2,11 +2,14 @@ package cn.thinkjoy.gk.controller.login;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.constant.CookieConst;
+import cn.thinkjoy.gk.constant.CookieTimeConst;
 import cn.thinkjoy.gk.constant.RedisConst;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.util.CookieUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import com.jlusoft.microschool.core.utils.MD5Util;
 import org.apache.commons.lang3.StringUtils;
@@ -84,6 +87,10 @@ public class RegisterController extends BaseController {
             }catch(Exception e){
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"账户注册失败");
             }
+            userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
+            long id = userAccountBean.getId();
+            response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE, "/"));
+            setUserAccountPojo(userAccountBean);
         }catch (Exception e){
             throw e;
         }finally {

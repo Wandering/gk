@@ -39,6 +39,7 @@ define(function (require) {
             } else {
                 avatar = personListData.icon
             }
+            console.log(res);
             $('.avatar-img').attr('src', avatar);
             $('.avatar-box').show();
             $('.name').attr('value', personListData.name);
@@ -48,6 +49,9 @@ define(function (require) {
             $('.subject').attr('value', personListData.subjectType);
             $('.mail').attr('value', personListData.mail);
             $('.qq').attr('value', personListData.qq);
+            $('#cmbProvince option').attr('value', personListData.provinceId);
+            $('#cmbCity option').attr('value', personListData.cityId);
+            $('#cmbArea option').attr('value', personListData.countyId);
             if (personListData.sex == 1) {
                 $('#sex_m').attr('checked', true)
             } else {
@@ -64,7 +68,10 @@ define(function (require) {
     });
     $('.content').fadeIn();
     //省市地区
-    var cmbProvince, cmbCity, cmbArea;
+    var cmbProvince = '';
+    var cmbCity = '';
+    var cmbArea = '';
+
     $.ajax({
         url: '/region/getAllRegion.do',
         dataType: 'json',
@@ -72,13 +79,24 @@ define(function (require) {
         data: {},
         success: function (res) {
             if (res.rtnCode == '0000000') {
-                var getAllRegion = res.bizData;
-                //console.info(getAllRegion);
-                $.each(getAllRegion, function (i, v) {
-                    //console.log(v.cityList[0].name);
-                })
+                var provinceList = res.bizData;
+                console.info(provinceList[0].cityList[0].name);
+                console.info(provinceList[0].cityList[0].id);
+                console.info(provinceList[0].cityList[0].provinceId);
+
+                $.each(provinceList, function (i, v) {
+                    cmbProvince += '<option value="' + i + '">' + v.name + '</option>';
+                    console.log(v);
+                });
+                console.log(cmbProvince);
+
+                $('#cmbProvince').html(cmbProvince);
+
             }
         }
+    });
+    $('#cmbProvince').onchange(function(){
+        alert(1);
     });
     //头像上传
     setTimeout(function () {
@@ -206,18 +224,20 @@ define(function (require) {
             type: 'post',
             data: {
                 name: name,
-                countyId: '2',
+                provinceId: '610000',
+                cityId: '610800',
+                countyId: '610802',
                 schoolName: school,
                 sex: sex,
                 birthdayDate: birthdayDate,
                 subjectType: subject,
                 mail: mail,
                 icon: img_url,
-                qq: qqƒ
+                qq: qq
             },
             success: function (res) {
                 if (res.rtnCode == '0000000') {
-                    $('.user-avatar').attr('src',img_url);
+                    $('.user-avatar').attr('src', img_url);
                     $('.error-tips').text('信息更新成功').fadeIn(1000).fadeOut(2000);
                 } else {
                     $('.content').text(res.msg);

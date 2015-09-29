@@ -41,13 +41,13 @@
                 <div class="group-comm">
                     所在地区
                     <select id="cmbProvince" class="user-select-comm ml35">
-                        <option value="1">请选择</option>
+                        <option></option>
                     </select>
                     <select id="cmbCity" class="user-select-comm">
-                        <option value="1">请选择</option>
+                        <option></option>
                     </select>
                     <select id="cmbArea" class="user-select-comm">
-                        <option value="1">请选择</option>
+                        <option></option>
                     </select>
                 </div>
                 <div class="group-comm">

@@ -145,7 +145,7 @@ define(function (require) {
             tabContent.push('<table border="0" cellpadding="0" cellspacing="0">'
                 + '<thead>'
                 + '<tr>'
-                + '<th>专业名称</th>'
+                + '<th class="name">专业名称</th>'
                 + '<th>批次</th>'
                 + '<th>科类</th>'
                 + '<th>计划人数</th>'
@@ -156,7 +156,7 @@ define(function (require) {
                 + '<tbody>');
             for (var j = 0, infolen = infos.length; j < infolen; j++) {
                 tabContent.push('<tr>'
-                    + '<td>' + (infos[j].majoredName || '') + '</td>'
+                    + '<td class="name">' + (infos[j].majoredName || '') + '</td>'
                     + '<td>' + (infos[j].batch || '') + '</td>'
                     + '<td>' + (infos[j].subject || '') + '</td>'
                     + '<td>' + (infos[j].planNumber || '') + '</td>'
