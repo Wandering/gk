@@ -1047,7 +1047,11 @@ a.next-btn:hover {
       color: #fff;
       padding-left: 10px; }
   .content .content-list {
-    border-top: 2px solid #e5e5e5; }
+    border-top: 2px solid #e5e5e5;
+    padding-bottom: 80px; }
+  .content .no-msg {
+    text-align: center;
+    padding-top: 150px; }
   .content .row, .content .content-title-list {
     display: block;
     height: 45px;

@@ -14,11 +14,11 @@ public class CaptchaConst {
     /**
      * 图片宽
      */
-    public static final int PIC_WIDTH = 100;
+    public static final int PIC_WIDTH = 120;
     /**
      * 图片高
      */
-    public static final int PIC_HEIGHT = 26;
+    public static final int PIC_HEIGHT = 46;
     /**
      * 随机产生字符数量
      */
@@ -51,6 +51,8 @@ public class CaptchaConst {
      * 新罗马
      */
     public static final Font FONT_NEWROMAN = new Font("Times New Roman",Font.CENTER_BASELINE,18);
+
+    public static final Font FIXEDSYS = new Font("Fixedsys", Font.BOLD, 24);
     /**
      * 字体数组
      */
