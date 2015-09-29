@@ -173,6 +173,10 @@ define(function (require) {
         $('#main-volunteer-tabs li').eq(1).click();
         $('html,body').animate({scrollTop: ($('#main-volunteer-box').offset().top)}, 800);
     }
+
+    $('#college-yzm').on('click',function(){
+        $('#college-yzm').attr('src','/verifyCode/randomVerifyCode.do?type=1&code=' + Math.random());
+    }).attr('src','/verifyCode/randomVerifyCode.do?type=1');
     // 院校推荐
     $('#yxtj-sub').on('click', function () {
         var scoreV = $('#score-input').val().trim();
@@ -233,7 +237,6 @@ define(function (require) {
     $('#yzmDreamSchool').on('click',function(){
         $('#yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=2&code=' + Math.random());
     }).attr('src','/verifyCode/randomVerifyCode.do?type=2');
-
 
 
 
@@ -306,6 +309,10 @@ define(function (require) {
         $('#volunteer-flow3-layer,.tansLayer').hide();
     })
 
+    $('#precedence-yzmDreamSchool').on('click',function(){
+        $('#precedence-yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=3&code=' + Math.random());
+    }).attr('src','/verifyCode/randomVerifyCode.do?type=3');
+
     //获得位次
     $('#precedence-sub').on('click', function(e) {
         var dreamScoreV = $('#precedence-score-input').val().trim();
@@ -323,31 +330,35 @@ define(function (require) {
             type: 'GET',
             dataType: 'JSON',
             data: {
-                "m_aggregateScore": dreamScoreV
+                "m_aggregateScore": dreamScoreV,
+                "code": yzmDreamV
             },
             success: function (res) {
                 var data = $.parseJSON(res.bizData);
-                console.log('获得位次-------------');
-                console.log(data);
+                if (!data) {
+                    $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+                    return;
+                }
                 if (res.rtnCode == "0000000") {
                     $('#precedence-school-layer,.tansLayer').show();
                     $('#precedenceScoreInfo').text(dreamScoreV);
+                    $('#current-year').text(data.m_years);
+                    var dreamSchoolList = ''
+                        +'<ul>'
+                        +'<li class="result1">'
+                        +'<span class="t">文史类</span>'
+                        +'<span class="num"><b>' + (data.m_ws_ranking || '') + '</b>位</span>'
+                        +'</li>'
+                        +'<li class="result2">'
+                        +'<span class="t">理工类</span>'
+                        +'<span class="num"><b>' + (data.m_lg_ranking || '') + '</b>位</span>'
+                        +'</li>'
+                        +'</ul>';
+                    $('#precedence-list').append(dreamSchoolList);
 
-                    for(var i=0;i<data.data.length;i++){
-                        var dreamSchoolList = ''
-                            +'<ul>'
-                            +'<li class="pc">三批本科</li>'
-                            +'<li class="result1">'
-                            +'<span class="t">所需最低分数</span>'
-                            +'<span class="num"><strong>639</strong>分</span>'
-                            +'</li>'
-                            +'<li class="result2">'
-                            +'<span class="t">所需平均分数</span>'
-                            +'<span class="num"><strong>652</strong>分</span>'
-                            +'</li>'
-                            +'</ul>';
-                        $('#precedence-list').append(dreamSchoolList);
-                    }
+                    $('#confirm').on('click', function(e) {
+                        $('#precedence-school-layer,.tansLayer').hide();
+                    });
 
                 }
             }
