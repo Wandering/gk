@@ -52,7 +52,7 @@ ul.main-video-list {
       line-height: 24px;
       border: solid #e5e5e5;
       border-width: 1px 0;
-      height: 186px;
+      height: 198px;
       padding: 18px 0 0;
       margin: 15px 0; }
     ul.main-video-list li.item .funs {
@@ -206,7 +206,7 @@ ul.main-video-list {
   font-size: 0;
   margin: 0;
   line-height: 0;
-  top: 150px;
+  top: 155px;
   z-index: 2; }
 
 .filtrate {

@@ -10,9 +10,9 @@ define(function (require) {
         var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
         return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
     }
-    if (!GetCookie("gkuser") || GetCookie("gkuser") == '""') {
-        window.location.href = '/login/login.jsp';
-    }
+    //if (!GetCookie("gkuser") || GetCookie("gkuser") == '""') {
+    //    window.location.href = '/login/login.jsp';
+    //}
 
     var api = flowplayer("player", "/static/src/guide/scripts/flowplayer-3.2.18.swf");
 
