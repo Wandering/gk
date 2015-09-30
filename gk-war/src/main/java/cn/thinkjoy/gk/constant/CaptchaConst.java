@@ -38,25 +38,25 @@ public class CaptchaConst {
     /**
      * 字体
      */
-    public static final Font BASE_FONT = new Font("宋体",Font.CENTER_BASELINE,18);
+    public static final Font BASE_FONT = new Font("宋体",Font.CENTER_BASELINE,34);
     /**
      * Bernard MT 字体
      */
-    public static final Font FONT_BERNARD = new Font("Bernard MT",Font.CENTER_BASELINE,18);
+    public static final Font FONT_BERNARD = new Font("Bernard MT",Font.CENTER_BASELINE,34);
     /**
      * 楷体
      */
-    public static final Font FONT_KAITI = new Font("楷体",Font.CENTER_BASELINE,18);
+    public static final Font FONT_KAITI = new Font("楷体",Font.CENTER_BASELINE,34);
     /**
      * 新罗马
      */
-    public static final Font FONT_NEWROMAN = new Font("Times New Roman",Font.CENTER_BASELINE,18);
+    public static final Font FONT_NEWROMAN = new Font("Times New Roman",Font.CENTER_BASELINE,34);
 
-    public static final Font FIXEDSYS = new Font("Fixedsys", Font.BOLD, 24);
+    public static final Font FIXEDSYS = new Font("Fixedsys", Font.BOLD, 34);
     /**
      * 字体数组
      */
-    public static final Font [] BASE_FONTS = {BASE_FONT,FONT_BERNARD,FONT_KAITI,FONT_NEWROMAN};
+    public static final Font [] BASE_FONTS = {BASE_FONT,FONT_BERNARD,FONT_KAITI,FIXEDSYS,FONT_NEWROMAN};
 
     /**
      * 输出图片类型
@@ -65,10 +65,10 @@ public class CaptchaConst {
     /**
      * 字体间距
      */
-    public static final int FONT_SPACING = 11;
+    public static final int FONT_SPACING = 20;
 
     /**
      * 坐标变换的距离
      */
-    public static final int TRANSLATE_START = 16;
+    public static final int TRANSLATE_START = 35;
 }

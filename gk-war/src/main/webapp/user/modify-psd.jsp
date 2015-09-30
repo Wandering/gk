@@ -22,7 +22,7 @@
     </ul>
     <div class="content">
         <div class="input-item-comm">
-            <span class="w-title">登陆账号</span>
+            <span class="w-title">登录账号</span>
             <span id="tel"></span>
         </div>
         <div class="input-item-comm">
