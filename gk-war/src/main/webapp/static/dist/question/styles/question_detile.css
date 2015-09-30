@@ -18,7 +18,8 @@ html {
  * Remove default margin.
  */
 body {
-  margin: 0; }
+  margin: 0;
+  font-family: "Microsoft YaHei","Helvetica Neue", Helvetica, Arial, sans-serif; }
 
 ul, li {
   margin: 0;
@@ -1077,7 +1078,8 @@ html {
  * Remove default margin.
  */
 body {
-  margin: 0; }
+  margin: 0;
+  font-family: "Microsoft YaHei","Helvetica Neue", Helvetica, Arial, sans-serif; }
 
 ul, li {
   margin: 0;

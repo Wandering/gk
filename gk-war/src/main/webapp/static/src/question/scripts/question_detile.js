@@ -23,7 +23,7 @@ define(function (require) {
                 html.push('<img src="' + (question.userIcon || '/static/src/common/images/user_default.png') + '" />');
                 html.push('</div>');
                 html.push('<div class="head-info">');
-                html.push('<h6>来自 ' + (question.userName || '匿名专家') + new Date(question.createTime).Format('yyyy-MM-dd hh-mm') + '</h6>');
+                html.push('<h6>来自 ' + (question.userName || '匿名专家') + new Date(question.createTime).Format('yyyy-MM-dd hh:mm') + '</h6>');
                 var questions = question.questions;
                 var text = [];
                 var textImg = [];
