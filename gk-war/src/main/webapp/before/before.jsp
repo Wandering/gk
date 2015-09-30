@@ -412,7 +412,7 @@
                     </div>
                     <div class="no-school hide" id="no-school0">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
-                        <p>② 在真是填报时、可以参开选择其他档中的院校；</p>
+                        <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
                     <div class="school-list hide" id="school-list0"></div>
                 </li>
@@ -423,7 +423,7 @@
                     </div>
                     <div class="no-school hide" id="no-school1">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
-                        <p>② 在真是填报时、可以参开选择其他档中的院校；</p>
+                        <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
                     <div class="school-list hide" id="school-list1"></div>
                 </li>
@@ -434,7 +434,7 @@
                     </div>
                     <div class="no-school hide" id="no-school2">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
-                        <p>② 在真是填报时、可以参开选择其他档中的院校；</p>
+                        <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
                     <div class="school-list hide" id="school-list2"></div>
                 </li>
@@ -445,7 +445,7 @@
                     </div>
                     <div class="no-school hide" id="no-school3">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
-                        <p>② 在真是填报时、可以参开选择其他档中的院校；</p>
+                        <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
                     <div class="school-list hide" id="school-list3"></div>
                 </li>
