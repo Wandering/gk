@@ -402,7 +402,8 @@ input, textarea {
     margin-right: 100px; }
   .header .main-menu > li {
     display: inline-block;
-    position: relative; }
+    position: relative;
+    float: left; }
     .header .main-menu > li a {
       display: inline-block;
       height: 50px;
@@ -1462,7 +1463,8 @@ input, textarea {
     margin-right: 100px; }
   .header .main-menu > li {
     display: inline-block;
-    position: relative; }
+    position: relative;
+    float: left; }
     .header .main-menu > li a {
       display: inline-block;
       height: 50px;
