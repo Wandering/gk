@@ -53,7 +53,9 @@ define(function (require) {
                 if (question) {
                     var questions = question.questions;
                     for (var j = 0, jlen = questions.length; j < jlen; j++) {
-                        text.push(questions[j].text);
+                        if (questions[j].text) {
+                            text.push(questions[j].text);
+                        }
                     }
                 }
                 if (text.length > 0) {

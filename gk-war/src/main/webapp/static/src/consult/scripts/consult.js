@@ -30,6 +30,8 @@ define(function (require) {
                     flag = true;
                     if ('0000000' === data.rtnCode && data.bizData) {
                         window.location.href = data.bizData;
+                    } if ('0100006' === data.rtnCode) {
+                        window.location.href = '/user/vip-service.jsp';
                     } else {
                         $('#error_tip').html(data.msg);
                         $('#error_tip').show();
