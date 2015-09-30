@@ -47,12 +47,12 @@ define(function (require) {
                 var text = [];
                 if (question) {
                     var questions = question.questions;
-                    for (var i = 0, len = questions.length; i < len; i++) {
-                        text.push(questions[i].text);
+                    for (var j = 0, jlen = questions.length; j < jlen; j++) {
+                        text.push(questions[j].text);
                     }
                 }
                 if (text.length > 0) {
-                    html.push('<li><a target="_blank" href="/question/question_detile.jsp?id=' + data[i].userId + '">' + text.join('') + '</a></li>');
+                    html.push('<li><a target="_blank" href="/question/question_detile.jsp?id=' + question.userId + '">' + text.join('') + '</a></li>');
                 }
             }
 
@@ -101,12 +101,29 @@ define(function (require) {
                     that.renderList('hot', data.bizData);
                 }
             });
+        },
+        updateReadNum: function(id) {
+            //$.get('/question/updateBrowseNum.do?id=' + id, function(data) {});
+            $.ajax({
+                type: 'post',
+                url: '/question/updateBrowseNum.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    id:id
+                },
+                dataType: 'json',
+                success: function(data) {
+                },
+                error: function(data) {
+                }
+            });
         }
     }
 
     $(document).ready(function() {
         var id = getUrLinKey('id');
         Question.get(id);
+        Question.updateReadNum(id);
         Question.getNew();
         Question.getHot();
     });

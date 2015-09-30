@@ -47,8 +47,9 @@ define(function(require) {
                 } else {
                     if (!$(this).hasClass('active')) {
                         $(this).addClass('active').siblings().removeClass('active');
-                        that.getSchoolList(1);
+                        //that.getSchoolList(1);
                     }
+                    that.getSchoolList(1);
                 }
 
             });
@@ -142,6 +143,7 @@ define(function(require) {
                         } else {
                             $('#school_list').html('<p style="text-align: center">暂无信息！</p>');
                             $('#page').html('');
+                            $('.record').html('');
                         }
                     }
                 },
@@ -211,9 +213,12 @@ define(function(require) {
         },
         pageEventHandle: function() {
             var that = this;
+            $('#page a').off('click');
             $('#page a').on('click', function(e) {
                 if ($(this).hasClass('previous-page')) {
-                    that.curPage--;
+                    if (that.curPage > 1) {
+                        that.curPage--;
+                    }
                     if (that.curPage > 0) {
                         if (!$('#page a.' + that.curPage)[0] && that.totalPage > 10) {
                             that.refreshPage(that.curPage);
@@ -224,7 +229,9 @@ define(function(require) {
                         that.getSchoolList(that.curPage);
                     }
                 } else if ($(this).hasClass('next-page')) {
-                    that.curPage++;
+                    if (that.curPage < that.totalPage) {
+                        that.curPage++;
+                    }
                     if (that.curPage <= that.totalPage) {
                         if (!$('#page a.' + that.curPage)[0] && that.totalPage > 10) {
                             that.refreshPage(that.curPage);

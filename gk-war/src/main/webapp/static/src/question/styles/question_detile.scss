@@ -19,7 +19,7 @@
 
 .ask-list{
   width: 19%;
-  float: left;
+  float: right;
   border-left: 1px solid #F1F1F1;
 
   h3{
@@ -43,5 +43,8 @@
     margin: 15px 0;
     font-size: 12px;
     color: #444;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 }
