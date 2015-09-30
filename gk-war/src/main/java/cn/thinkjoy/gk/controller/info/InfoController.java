@@ -75,17 +75,17 @@ public class InfoController extends BaseController {
      */
     @RequestMapping(value = "updateUserInfo",method = RequestMethod.POST)
     @ResponseBody
-    public String updateUserInfo(@RequestParam(value="name",required = true) String name,
-                                 @RequestParam(value="provinceId",required = true) String provinceId,
-                                 @RequestParam(value="cityId",required = true) String cityId,
-                                 @RequestParam(value="countyId",required = true) String countyId,
-                                 @RequestParam(value="schoolName",required = true) String schoolName,
-                                 @RequestParam(value="sex",required = true) int sex,
-                                 @RequestParam(value="birthdayDate",required = true) long birthdayDate,
-                                 @RequestParam(value="subjectType",required = true) int subjectType,
-                                 @RequestParam(value="mail",required = true) String mail,
-                                 @RequestParam(value="icon",required = true) String icon,
-                                 @RequestParam(value="qq",required = true) String qq
+    public String updateUserInfo(@RequestParam(value="name",required = false) String name,
+                                 @RequestParam(value="provinceId",required = false) String provinceId,
+                                 @RequestParam(value="cityId",required = false) String cityId,
+                                 @RequestParam(value="countyId",required = false) String countyId,
+                                 @RequestParam(value="schoolName",required = false) String schoolName,
+                                 @RequestParam(value="sex",required = false) int sex,
+                                 @RequestParam(value="birthdayDate",required = false) long birthdayDate,
+                                 @RequestParam(value="subjectType",required = false) int subjectType,
+                                 @RequestParam(value="mail",required = false) String mail,
+                                 @RequestParam(value="icon",required = false) String icon,
+                                 @RequestParam(value="qq",required = false) String qq
                                  ){
         try {
             String id=getCookieValue();
