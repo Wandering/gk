@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <div class="header">
   <div class="w1000">
-    <a href="">
+    <a href="/index.jsp">
       <img src="/static/dist/common/images/logo-min.png" alt="高考360" class="logo fl"/>
     </a>
     <ul class="main-menu fl">

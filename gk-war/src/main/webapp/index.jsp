@@ -12,6 +12,20 @@
     <%@ include file="common/banner-wipe.jsp" %>
     <!--指导流程-->
     <div class="section page-body">
+        <div class="page-body hot-news-head">
+            <section style="padding:10px 0 0">
+                <div class="content-title">
+                    <p class="fl w40"></p>
+                    <p class="fl w20">
+                        <i class="fl arraw"></i>
+                        <span>指导流程</span>
+                        <i class="fr arraw"></i>
+                    </p>
+
+                    <p class="fl w40"></p>
+                </div>
+            </section>
+        </div>
         <section>
             <div class="w1000 flow-main">
                 <ul class="flow-main-list">
