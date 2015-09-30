@@ -14,17 +14,12 @@ public class CookieUtil {
 	 * @param expiry cookie的有效期
 	 * @return
 	 */
-	public static final Cookie addCookie(String name, String value, int expiry ,String path){
+	public static final Cookie addCookie(String name, String value, int expiry){
 		Cookie cookie = new Cookie(name, value);
 //		cookie.setDomain("*");
-		if (StringUtils.isNotBlank(path)) {
-			cookie.setPath(path);
-		}
+//		cookie.setPath("/");
 		cookie.setMaxAge(expiry);
 		return cookie;
-	}
-	public static final Cookie addCookie(String name, String value, int expiry){
-		return addCookie(name,value,expiry,null);
 	}
 
 	/**

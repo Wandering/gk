@@ -68,12 +68,12 @@ public class QuestionInterceptor extends HandlerInterceptorAdapter {
 					throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
 				}
 
-				response.addCookie(CookieUtil.addCookie(CookieConst.SS_USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE,"/"));
+				response.addCookie(CookieUtil.addCookie(CookieConst.SS_USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
 			}else{
 				String ssValue = CookieUtil.getCookieValue(request.getCookies(), CookieConst.SS_USER_COOKIE_NAME);
 
 				if(StringUtils.isEmpty(ssValue)){
-					response.addCookie(CookieUtil.addCookie(CookieConst.SS_USER_COOKIE_NAME, String.valueOf(userAccountBean.getId()), CookieTimeConst.DEFAULT_COOKIE, "/"));
+					response.addCookie(CookieUtil.addCookie(CookieConst.SS_USER_COOKIE_NAME, String.valueOf(userAccountBean.getId()), CookieTimeConst.DEFAULT_COOKIE));
 				}
 			}
 		}
