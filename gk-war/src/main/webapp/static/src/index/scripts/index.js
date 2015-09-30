@@ -63,7 +63,7 @@ define(function (require) {
                 //console.log(res);
                 var template = '';
                 $.each(dataJson,function(i,v){
-                    template += '<li>' +
+                    template += '<a href="consult/gk_hot_detile.jsp?method=hot&id=' + v.id + '"><li>' +
                         '<div class="icon ta"> ' +
                         '<span>'+ getTime1(v.lastModDate) +'</span> ' +
                         '</div> ' +
@@ -71,7 +71,7 @@ define(function (require) {
                         '<h3>'+v.hotInformation+'</h3> ' +
                         '<h6>'+v.informationSubContent+'</h6> ' +
                         '</div> ' +
-                        '</li>'
+                        '</li></a>'
                 });
                 $('.hot-list').html(template);
             }

@@ -1054,6 +1054,8 @@ h1 {
 
 .school-table {
   margin-bottom: 20px; }
+  .school-table div, .school-table p {
+    line-height: 1.8; }
   .school-table table {
     border-collapse: collapse;
     width: 100%; }
