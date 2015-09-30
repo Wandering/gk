@@ -28,19 +28,19 @@ public class GKInformationController extends BaseController{
 
     /**
      *
-     * ËùÓÐ¸ß¿¼ÈÈµãÐÅÏ¢
+     * ï¿½ï¿½ï¿½Ð¸ß¿ï¿½ï¿½Èµï¿½ï¿½ï¿½Ï¢
      * @return
      */
     @RequestMapping(value = "getAllInformation",method = RequestMethod.GET)
     @ResponseBody
     public List<Information> getAllInformation(HttpServletRequest request){
-        String pn = request.getParameter("pageNo"); //Ò³Âë
+        String pn = request.getParameter("pageNo"); //Ò³ï¿½ï¿½
         if (pn == null||pn.length() < 0) {
-            pn = "0";   //Èç¹ûÃ»ÓÐÉèÖÃÒ³Âë£¬Ä¬ÈÏµÚÒ»Ò³
+            pn = "0";   //ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ë£¬Ä¬ï¿½Ïµï¿½Ò»Ò³
         }
-        String ps = request.getParameter("pageSize");            //Ã¿Ò³ÏÔÊ¾¼¸ÌõÐÅÏ¢
+        String ps = request.getParameter("pageSize");            //Ã¿Ò³ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
         if (ps == null||ps.length() < 0){
-            ps="4";  //Èç¹ûÃ»ÓÐÉè¶¨£¬Ä¬ÈÏÏÔÊ¾4ÌõÊý¾Ý
+            ps="4";  //ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½è¶¨ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½Ê¾4ï¿½ï¿½ï¿½ï¿½ï¿½
         }
         List<Information> information = informationService.getAllInformation(Integer.valueOf(pn) * Integer.valueOf(ps), Integer.valueOf(ps));
         return information;
@@ -48,23 +48,23 @@ public class GKInformationController extends BaseController{
     }
     /**
      *
-     * ¸ù¾Ý¹Ø¼ü×Ö²éÑ¯ÈÈµãÐÅÏ¢
+     * ï¿½ï¿½Ý¹Ø¼ï¿½ï¿½Ö²ï¿½Ñ¯ï¿½Èµï¿½ï¿½ï¿½Ï¢
      * @return
      */
     @RequestMapping(value = "getInformationByKey",method = RequestMethod.GET)
     @ResponseBody
     public List<Information> getInformationByKey(HttpServletRequest request) throws UnsupportedEncodingException {
-        String key = request.getParameter("key");                  //»ñÈ¡¹Ø¼ü×Ö
-        String keyString = new String(key.getBytes("ISO-8859-1"),"UTF-8");
-        String pn = request.getParameter("pageNo"); //Ò³Âë
+        String key = request.getParameter("key");                  //ï¿½ï¿½È¡ï¿½Ø¼ï¿½ï¿½ï¿½
+//        String keyString = new String(key.getBytes("ISO-8859-1"),"UTF-8");
+        String pn = request.getParameter("pageNo"); //Ò³ï¿½ï¿½
         if (pn == null||pn.length() < 0) {
-            pn = "0";   //Èç¹ûÃ»ÓÐÉèÖÃÒ³Âë£¬Ä¬ÈÏµÚÒ»Ò³
+            pn = "0";   //ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ë£¬Ä¬ï¿½Ïµï¿½Ò»Ò³
         }
-        String ps = request.getParameter("pageSize");            //Ã¿Ò³ÏÔÊ¾¼¸ÌõÐÅÏ¢
+        String ps = request.getParameter("pageSize");            //Ã¿Ò³ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
         if (ps == null||ps.length() < 0){
-            ps="4";  //Èç¹ûÃ»ÓÐÉè¶¨£¬Ä¬ÈÏÏÔÊ¾4ÌõÊý¾Ý
+            ps="4";  //ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½è¶¨ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½Ê¾4ï¿½ï¿½ï¿½ï¿½ï¿½
         }
-        List<Information> information = informationService.getInformationByKey(keyString, Integer.valueOf(pn) * Integer.valueOf(ps), Integer.valueOf(ps));
+        List<Information> information = informationService.getInformationByKey(key, Integer.valueOf(pn) * Integer.valueOf(ps), Integer.valueOf(ps));
         return information;
     }
 

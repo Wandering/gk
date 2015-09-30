@@ -213,7 +213,7 @@ define(function (require) {
             },
             success: function (res) {
                 //console.log(res)
-                if (res.rtnCode == "1000006") {
+                if (res.rtnCode == "1000006" || res.rtnCode == "1000004") {
                     $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
                     return;
                 }
@@ -292,7 +292,7 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
-                if (res.rtnCode == "1000006") {
+                if (res.rtnCode == "1000006" || res.rtnCode == "1000004") {
                     $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
                     return;
                 }
@@ -363,7 +363,7 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
-                if (res.rtnCode == "1000006") {
+                if (res.rtnCode == "1000006" || res.rtnCode == "1000004") {
                     $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
                     return;
                 }

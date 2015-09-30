@@ -469,7 +469,7 @@ input, textarea {
   max-height: 0;
   position: absolute;
   top: 100%;
-  z-index: 0;
+  z-index: -5;
   -webkit-perspective: 400px;
   -ms-perspective: 400px;
   -o-perspective: 400px;
@@ -498,78 +498,78 @@ input, textarea {
         color: #fff;
         background-color: #202020; }
 
-.main-menu > li:hover .submenu, .menu > li:focus .submenu {
+.main-menu > li:hover .submenu, .main-menu > li:focus .submenu {
   max-height: 2000px;
   z-index: 10; }
 
-.main-menu > li:hover .submenu li, .menu > li:focus .submenu li {
+.main-menu > li:hover .submenu > li, .main-menu > li:focus .submenu > li {
   opacity: 1;
   -webkit-transform: none;
   -ms-transform: none;
   transform: none; }
 
 /* CSS3 delays for transition effects */
-.main-menu li:hover .submenu li:nth-child(1) {
+.main-menu > li:hover .submenu li:nth-child(1) {
   -webkit-transition-delay: 0s;
   transition-delay: 0s; }
 
-.main-menu li:hover .submenu li:nth-child(2) {
+.main-menu > li:hover .submenu li:nth-child(2) {
   -webkit-transition-delay: 50ms;
   transition-delay: 50ms; }
 
-.main-menu li:hover .submenu li:nth-child(3) {
+.main-menu > li:hover .submenu li:nth-child(3) {
   -webkit-transition-delay: 100ms;
   transition-delay: 100ms; }
 
-.main-menu li:hover .submenu li:nth-child(4) {
+.main-menu > li:hover .submenu li:nth-child(4) {
   -webkit-transition-delay: 150ms;
   transition-delay: 150ms; }
 
-.main-menu li:hover .submenu li:nth-child(5) {
+.main-menu > li:hover .submenu li:nth-child(5) {
   -webkit-transition-delay: 200ms;
   transition-delay: 200ms; }
 
-.main-menu li:hover .submenu li:nth-child(6) {
+.main-menu > li:hover .submenu li:nth-child(6) {
   -webkit-transition-delay: 250ms;
   transition-delay: 250ms; }
 
-.menu li:hover .submenu li:nth-child(7) {
+.main-menu > li:hover .submenu li:nth-child(7) {
   -webkit-transition-delay: 300ms;
   transition-delay: 300ms; }
 
-.main-menu li:hover .submenu li:nth-child(8) {
+.main-menu > li:hover .submenu li:nth-child(8) {
   -webkit-transition-delay: 350ms;
   transition-delay: 350ms; }
 
-.submenu li:nth-child(1) {
+.submenu > li:nth-child(1) {
   -webkit-transition-delay: 350ms;
   transition-delay: 350ms; }
 
-.submenu li:nth-child(2) {
+.submenu > li:nth-child(2) {
   -webkit-transition-delay: 300ms;
   transition-delay: 300ms; }
 
-.submenu li:nth-child(3) {
+.submenu > li:nth-child(3) {
   -webkit-transition-delay: 250ms;
   transition-delay: 250ms; }
 
-.submenu li:nth-child(4) {
+.submenu > li:nth-child(4) {
   -webkit-transition-delay: 200ms;
   transition-delay: 200ms; }
 
-.submenu li:nth-child(5) {
+.submenu > li:nth-child(5) {
   -webkit-transition-delay: 150ms;
   transition-delay: 150ms; }
 
-.submenu li:nth-child(6) {
+.submenu > li:nth-child(6) {
   -webkit-transition-delay: 100ms;
   transition-delay: 100ms; }
 
-.submenu li:nth-child(7) {
+.submenu > li:nth-child(7) {
   -webkit-transition-delay: 50ms;
   transition-delay: 50ms; }
 
-.submenu li:nth-child(8) {
+.submenu > li:nth-child(8) {
   -webkit-transition-delay: 0s;
   transition-delay: 0s; }
 
@@ -678,7 +678,7 @@ a.next-btn {
 
 a.next-btn:hover {
   color: #fff;
-  text-decoration: underline; }
+  text-decoration: none; }
 
 .noContent {
   text-align: center;

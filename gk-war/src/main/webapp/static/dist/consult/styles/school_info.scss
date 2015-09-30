@@ -129,11 +129,16 @@
     &.name{
       text-align: left;
       padding-left: 10px;
+      max-width: 200px;
     }
   }
 
   td{
     color: #555;
+    max-width: 400px;
+    &.name{
+      max-width: 200px;
+    }
   }
   
   th{

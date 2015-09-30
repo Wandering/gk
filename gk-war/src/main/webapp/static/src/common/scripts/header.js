@@ -15,6 +15,10 @@ define(function (require) {
     function addMenuActive() {
         var pathName = window.location.pathname.split('/');
         var pageName = pathName[pathName.length - 1];
+        if (!pageName) {
+            $('.index').addClass('active');
+            return;
+        }
         switch (pageName) {
             case 'index.jsp':
                 $('.index').addClass('active');

@@ -30,7 +30,7 @@
       <li><a class="after" href="/after/after.jsp">考后报考</a></li>
     </ul>
     <div class="log-reg hide">
-      <a href="/login/login.jsp">登陆/注册</a>
+      <a href="/login/login.jsp">登录/注册</a>
     </div>
     <div class="user-info-list fr hide">
       <div class="user">
