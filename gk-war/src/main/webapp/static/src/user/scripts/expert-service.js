@@ -81,11 +81,11 @@ define(function (require) {
         pointList.getList(pointList.num, pointList.size, pointList.search.val());
     });
     //搜索
-    //pointList.search.keydown(function () {
-    //    if (event.keyCode == 13) {
-    //        pointList.getList(pointList.num, pointList.size, pointList.search.val());
-    //    }
-    //});
+    pointList.search.keydown(function () {
+        if (event.keyCode == 13) {
+            pointList.getList(pointList.num, pointList.size, pointList.search.val());
+        }
+    });
     //预定详情
     $(document).on('click', '.go-detail', function (e) {
         e.stopPropagation();
