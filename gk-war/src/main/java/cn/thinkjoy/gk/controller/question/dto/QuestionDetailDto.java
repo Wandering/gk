@@ -8,6 +8,8 @@ import java.util.List;
  */
 public class QuestionDetailDto extends UserCommonDto implements Serializable {
 
+	private Long questionId;
+
 	private List<QuestionContentDto> questions;
 
 	private Integer disableNum;
@@ -15,6 +17,14 @@ public class QuestionDetailDto extends UserCommonDto implements Serializable {
 	private Integer disableStatus;
 
 	private Long createTime;
+
+	public Long getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(Long questionId) {
+		this.questionId = questionId;
+	}
 
 	public List<QuestionContentDto> getQuestions() {
 		return questions;
