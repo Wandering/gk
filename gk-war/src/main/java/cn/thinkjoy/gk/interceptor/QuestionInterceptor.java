@@ -110,7 +110,6 @@ public class QuestionInterceptor extends HandlerInterceptorAdapter {
 				}
 			}
 		}
-
 		return true;
 	}
 
