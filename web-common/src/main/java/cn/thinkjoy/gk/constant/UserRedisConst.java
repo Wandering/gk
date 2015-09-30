@@ -5,6 +5,6 @@ public class UserRedisConst {
 	/**
 	 * 用户信息
 	 */
-	public static final String USER_KEY = "gkuser_";
+	public static final String USER_KEY = "gk_user_";
 	
 }
