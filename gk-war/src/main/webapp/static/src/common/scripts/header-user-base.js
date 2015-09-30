@@ -12,6 +12,7 @@ define(function (require, exports, modules) {
         //判断当前用户cookie是否存在
         if (!GetCookie("gkuser") || GetCookie("gkuser") == '""') {
             console.log('没有登录');
+
             $('.menu').hide();
             $('.log-reg').show();
         } else {
@@ -22,6 +23,11 @@ define(function (require, exports, modules) {
                 type: 'get',
                 data: {},
                 success: function (res) {
+                    console.log(res)
+                    //if (res.rtnCode == '1000004') {
+                    //    window.location.href = '/login/login.jsp';
+                    //}
+
                     if (res.rtnCode == '0000000') {
                         var userData = res.bizData;
                         $('#accountNum').attr('accountNum',userData.account);
@@ -54,7 +60,8 @@ define(function (require, exports, modules) {
                     if (res.rtnCode == '0000000') {
                         window.location.href = '/index.jsp';
                     } else {
-                        alert(res.msg);
+                        //window.location.href = '/login/login.jsp';
+                        console.log(res.msg);
                     }
                 }
             });
