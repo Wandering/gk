@@ -33,6 +33,7 @@ define(function (require) {
             });
         },
         renderInfo: function(obj) {
+            var address = '院校地址：' + (obj.address || '');
             $('#info_content').html('<img class="fl" src="' + (obj.universityImage || '/static/src/common/images/kqbk_banner_default.png') + '" />'
                                     + '<div class="info">'
                                         + '<ul>'
