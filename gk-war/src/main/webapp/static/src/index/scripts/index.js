@@ -51,7 +51,6 @@ define(function (require) {
                         + '<p class="area-name">' + address + '</p>'
                         + '<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">' + telphone + '</span>'+ name + '</p>'
                         + '</div>';
-                    console.log(addressHtml)
                     $('#address-box').html(addressHtml);
                 });
             } else {
