@@ -47,7 +47,6 @@ define(function (require) {
 
     // 分页数据
     function getList(pageNo, pageSize,sortType,subjectId,searchVals) {
-        // 获取首页列表
         $.getJSON(
             "/before/video/getVideoList.do",
             {
@@ -66,6 +65,7 @@ define(function (require) {
                 }
                 if (result.rtnCode == "0000000") {
                     var dataJson = result.bizData;
+                    console.log(dataJson)
                     if(dataJson.length>0){
                         UI.$nextPage.show();
                     }
@@ -73,8 +73,10 @@ define(function (require) {
                     for (var i = 0; i < dataJson.length; i++) {
                         var subjectName = dataJson[i].title,
                             teacherName = dataJson[i].teacherName,
+                            courseId = dataJson[i].courseId,
                             hit = dataJson[i].hit,
                             subcontent = dataJson[i].subcontent;
+                        var detailsUrl = '/before/teacher-lecture-play.jsp?classifyType=2&courseId=' + courseId;
                         var videoUrl='';
                         if (dataJson[i].frontCover == null || dataJson[i].frontCover == "") {
                             videoUrl = '/static/dist/common/images/video-default.png';
@@ -93,7 +95,7 @@ define(function (require) {
                             +'</div>'
                             +'<p class="txt">'+ subcontent +'</p>'
                             +'<div class="funs">'
-                            +'<a href="" class="btn">点击播放</a>'
+                            + '<a target="_blank" href="' + detailsUrl + '" class="btn">点击播放</a>'
                             +'</div>'
                             +'</li>';
                         UI.$listMsgItem.append(listMsgHtml);

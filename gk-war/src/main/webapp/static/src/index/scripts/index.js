@@ -2,7 +2,7 @@ define(function (require) {
     var $ = require('$');
     require('swiper');
     require('getTime');
-
+    require('backToTop');
 
     var url = 'http://' + window.location.host;
     $(function () {
@@ -51,7 +51,6 @@ define(function (require) {
                         + '<p class="area-name">' + address + '</p>'
                         + '<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">' + telphone + '</span>'+ name + '</p>'
                         + '</div>';
-                    console.log(addressHtml)
                     $('#address-box').html(addressHtml);
                 });
             } else {
@@ -91,13 +90,18 @@ define(function (require) {
     (function () {
         var Question = {
             render: function (data) {
+                if (data.length > 5) {
+                    data.length = 5;
+                }
                 var html = [];
                 for (var i = 0, len = data.length; i < len; i++) {
                     var question = data[i].question;
                     var questions = question.questions;
                     var title = [];
                     for (var t = 0, tlen = questions.length; t < tlen; t++) {
-                        title.push(questions[t].text);
+                        if (questions[t].text) {
+                            title.push(questions[t].text);
+                        }
                     }
                     var time = new Date(question.createTime).Format('yyyy-MM-dd hh:mm');
                     var answer = data[i].answer;
@@ -113,10 +117,10 @@ define(function (require) {
                             content.push('<p class="ta"><img src="' + answers[c].img + '" /></p>');
                         }
                     }
-                    html.push('<a href="/question/question_detile.jsp?id=' + question.userId + '"><div class="detile-content mt20">'
+                    html.push('<a href="/question/question_detile.jsp?id=' + question.questionId + '"><div class="detile-content mt20">'
                     + '<div class="detile-header">'
                     + '<span class="order-number">' + (i + 1) + '</span>'
-                    + '<span class="detile-title">' + title.join('') + '</span>'
+                    + '<span class="detile-title">' + title.join('').substring(0, 50) + '</span>'
                     + '<span class="fr">' + time + '</span>'
                     + '</div>'
                     + '<div class="detile-info mt20">'

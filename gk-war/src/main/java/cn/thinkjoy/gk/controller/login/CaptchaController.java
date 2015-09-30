@@ -75,6 +75,7 @@ public class CaptchaController extends BaseController {
 
 				String randomString = CaptchaUtil.getRandomNumString(6);
 
+				System.out.println(account);
 				System.out.println(randomString);
 				SMSCheckCode smsCheckCode=new SMSCheckCode();
 				smsCheckCode.setPhone(account);

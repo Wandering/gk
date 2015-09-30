@@ -64,7 +64,7 @@ public class GKInformationController extends BaseController{
         if (ps == null||ps.length() < 0){
             ps="4";  //���û���趨��Ĭ����ʾ4�����
         }
-        List<Information> information = informationService.getInformationByKey(key, Integer.valueOf(pn) * Integer.valueOf(ps), Integer.valueOf(ps));
+        List<Information> information = informationService.getInformationByKey(key, (Integer.valueOf(pn)-1) * Integer.valueOf(ps), Integer.valueOf(ps));
         return information;
     }
 
