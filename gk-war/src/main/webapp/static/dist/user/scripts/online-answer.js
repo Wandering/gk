@@ -38,7 +38,7 @@ define(function (require) {
                     ask = ask.substring(0, 50);
                 }
 
-                html.push('<div class="detail-content">'
+                html.push('<a href="/question/question_detile.jsp?id=' + Question.userId + '"><div class="detail-content">'
                     + '<div class="detail-header">'
                     + '<span class="order-number">' + (i + 1 + this.startSize) + '、</span>'
                     + '<span class="detail-title">' + ask + '</span>'
@@ -50,7 +50,7 @@ define(function (require) {
                        + '</div>');
                 }
 
-                html.push('</div>');
+                html.push('</div></a>');
             }
             return html.join('');
         },

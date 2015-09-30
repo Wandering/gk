@@ -1,9 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>在线互动详情页</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="../../dist/question/styles/question_detile.css" />
+    <link rel="stylesheet" href="/static/dist/question/styles/question_detile.css" />
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
