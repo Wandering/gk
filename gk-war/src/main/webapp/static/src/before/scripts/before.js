@@ -352,6 +352,7 @@ define(function (require) {
 
     //获得位次
     $('#precedence-sub').on('click', function(e) {
+
         var dreamScoreV = $('#precedence-score-input').val().trim();
         var yzmDreamV = $('#precedence-yzmDream').val();
         if (dreamScoreV == '') {
@@ -381,6 +382,7 @@ define(function (require) {
                     return;
                 }
                 if (res.rtnCode == "0000000") {
+                    $('#precedence-list').html('');
                     $('#precedence-school-layer,.tansLayer').show();
                     $('#precedenceScoreInfo').text(dreamScoreV);
                     $('#current-year').text(data.m_years);
