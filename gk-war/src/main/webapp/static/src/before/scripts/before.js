@@ -304,7 +304,7 @@ define(function (require) {
                     return;
                 }
                 var data = $.parseJSON(res.bizData);
-
+                 console.log(data)
                 if (!data) {
                     $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
                     return;
@@ -326,11 +326,11 @@ define(function (require) {
                             +'<li class="pc">'+ m_batch +'</li>'
                             +'<li class="result1">'
                             +'<span class="t">所需最低分数</span>'
-                            +'<span class="num"><strong>'+ m_averagescores +'</strong>分</span>'
+                            +'<span class="num"><strong>'+ m_lowestscore +'</strong>分</span>'
                             +'</li>'
                             +'<li class="result2">'
                             +'<span class="t">所需平均分数</span>'
-                            +'<span class="num"><strong>'+ m_lowestscore +'</strong>分</span>'
+                            +'<span class="num"><strong>'+ m_averagescores +'</strong>分</span>'
                             +'</li>'
                             +'</ul>';
                         $('#dream-list').append(dreamSchoolList);
