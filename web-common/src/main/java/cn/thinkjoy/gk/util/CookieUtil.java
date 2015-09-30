@@ -16,7 +16,7 @@ public class CookieUtil {
 	 */
 	public static final Cookie addCookie(String name, String value, int expiry){
 		Cookie cookie = new Cookie(name, value);
-		cookie.setDomain("*");
+//		cookie.setDomain("*");
 		cookie.setPath("/");
 		cookie.setMaxAge(expiry);
 		return cookie;
