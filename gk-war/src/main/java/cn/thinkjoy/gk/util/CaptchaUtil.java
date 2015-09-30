@@ -16,8 +16,8 @@ public class CaptchaUtil {
         //产生Image对象的Graphics对象,改对象可以在图像上进行各种绘制操作
         Graphics g = image.getGraphics();
         g.fillRect(0, 0, image.getWidth(),image.getHeight());
-        g.setFont(CaptchaConst.FIXEDSYS);
-//        g.setFont(CaptchaConst.BASE_FONTS[random.nextInt(4)]);
+//        g.setFont(CaptchaConst.FIXEDSYS);
+        g.setFont(CaptchaConst.BASE_FONTS[random.nextInt(4)]);
 //        g.setFont(CaptchaConst.FONT_NEWROMAN);
 
         g.setColor(CaptchaConst.PURPLE_COLOR);
