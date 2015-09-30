@@ -40,21 +40,21 @@ public class CaptchaConst {
     /**
      * 字体
      */
-    public static final Font BASE_FONT = new Font("宋体",Font.CENTER_BASELINE,18);
+    public static final Font BASE_FONT = new Font("宋体",Font.CENTER_BASELINE,20);
     /**
      * Bernard MT 字体
      */
-    public static final Font FONT_BERNARD = new Font("Bernard MT",Font.CENTER_BASELINE,18);
+    public static final Font FONT_BERNARD = new Font("Bernard MT",Font.CENTER_BASELINE,20);
     /**
      * 楷体
      */
-    public static final Font FONT_KAITI = new Font("楷体",Font.CENTER_BASELINE,18);
+    public static final Font FONT_KAITI = new Font("楷体",Font.CENTER_BASELINE,20);
 
-    public static final Font FIXEDSYS = new Font("Fixedsys", Font.BOLD, 18);
+    public static final Font FIXEDSYS = new Font("Fixedsys", Font.BOLD, 20);
     /**
      * 新罗马
      */
-    public static final Font FONT_NEWROMAN = new Font("Times New Roman",Font.CENTER_BASELINE,18);
+    public static final Font FONT_NEWROMAN = new Font("Times New Roman",Font.CENTER_BASELINE,20);
     /**
      * 字体数组
      */
@@ -67,11 +67,11 @@ public class CaptchaConst {
     /**
      * 字体间距
      */
-    public static final int FONT_SPACING = 20;
+    public static final int FONT_SPACING = 10;
     
     /**
      * 坐标变换的距离
      */
-    public static final int TRANSLATE_START = 30;
+    public static final int TRANSLATE_START = 20;
         
 }

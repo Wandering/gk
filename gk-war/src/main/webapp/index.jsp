@@ -282,15 +282,15 @@
     <div class="section page-body">
         <section>
             <div class="content-title">
-                <p class="fl w40"></p>
+                <p class="fl w40 w35"></p>
 
-                <p class="fl w20">
+                <p class="fl w20 w30">
                     <i class="fl arraw"></i>
-                    <span>高考日程</span>
+                    <span>高考志愿填报日程</span>
                     <i class="fr arraw"></i>
                 </p>
 
-                <p class="fl w40"></p>
+                <p class="fl w40 w35"></p>
             </div>
             <div class="calendar mt20">
                 <img src="/static/dist/index/images/calendar_img.png"/>
