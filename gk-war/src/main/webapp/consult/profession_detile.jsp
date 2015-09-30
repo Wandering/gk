@@ -10,7 +10,6 @@
 <%@ include file="/common/header.jsp"%>
 
 <div class="content">
-    <%@ include file="/common/banner-wipe.jsp"%>
     <div class="w1000">
         <div class="basic-info">
             <h1>专业基本信息</h1>
