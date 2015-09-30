@@ -31,3 +31,6 @@
     <p class="w1000">联系信息:E-mail:cewfefe@163.com QQ:5454555 备案号:陕ICP备343454135-1号 [站长统计]</p>
   </div>
 </div>
+<%--<a class="top" href="javascript:void(0)" onclick="window.scrollTo(0, 0)">--%>
+  <%--<img src="/static/dist/common/images/icon-top.png" />--%>
+<%--</a>--%>
