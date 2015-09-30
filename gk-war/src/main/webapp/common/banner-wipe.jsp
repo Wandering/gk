@@ -11,7 +11,7 @@
     <div class="swiper-wrapper">
       <div class="swiper-slide slide-1"><img src="/static/dist/common/images/banner-0.png" alt=""/></div>
       <div class="swiper-slide slide-2"><img src="/static/dist/common/images/banner-2.png" alt=""/></div>
-      <div class="swiper-slide slide-3"><img src="/static/dist/common/images/banner.png" alt=""/></div>
+      <%--<div class="swiper-slide slide-3"><img src="/static/dist/common/images/banner.png" alt=""/></div>--%>
       <%--<div class="swiper-slide slide-3"><img src="/static/dist/common/images/banner.png" alt="" class="banner-toggle"/></div>--%>
     </div>
     <div class="swiper-pagination"></div>
