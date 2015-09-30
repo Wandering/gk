@@ -31,8 +31,9 @@ public class VipController extends BaseController {
 	private IUserVipService vipService;
 	@Autowired
 	private ICardService cardService;
-	@RequestMapping(value = "/upgradeVipByCard",method = RequestMethod.POST)
 
+	@RequestMapping(value = "/upgradeVipByCard",method = RequestMethod.POST)
+	@ResponseBody
 	public String upgradeVipByCard(CardPojo cardPojo) {
 		UserAccountPojo userAccountPojo=super.getUserAccountPojo();
 		if(null==userAccountPojo ||  null==userAccountPojo.getId()){
@@ -61,6 +62,7 @@ public class VipController extends BaseController {
 			return  "success";
 		}
 	}
+
 	/**
 	 *
 	 * @return

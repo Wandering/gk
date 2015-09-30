@@ -2,10 +2,10 @@ package cn.thinkjoy.gk.controller.before;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.controller.before.pojo.JsonPojo;
+import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
-import com.jlusoft.microschool.core.utils.JsonMapper;
+import cn.thinkjoy.gk.util.VerificationKeyConst;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +24,40 @@ public class CollegeRecController extends BaseController{
     @ResponseBody
     public String GetCollegeList(@RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore,
                                    @RequestParam(value="m_batch",required=false) String m_batch,
-                                           @RequestParam(value="m_kelei",required=false) String m_kelei){
-        if(StringUtils.isBlank(m_aggregateScore) || StringUtils.isBlank(m_batch) || StringUtils.isBlank(m_kelei)){
+                                           @RequestParam(value="m_kelei",required=false) String m_kelei,
+                                           @RequestParam(value="code",required=false) String code){
+        if(StringUtils.isBlank(m_aggregateScore)
+                || StringUtils.isBlank(m_batch)
+                || StringUtils.isBlank(m_kelei)
+                || StringUtils.isBlank(code)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
+
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if(vipStatus==null||vipStatus==0){
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
+
+        Long value = userAccountPojo.getId();
+
+        Object resultCode = session.getAttribute(VerificationKeyConst.COLLEGE_RECOMMENDATION+value);
+
+        if(resultCode==null){
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
+        }
+
+        if(!resultCode.toString().equals(code.toUpperCase())){
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
+        }
+
+        session.removeAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value);
 
 //        JsonPojo jsonPojo = new JsonPojo();
 

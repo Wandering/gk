@@ -20,25 +20,30 @@ define(function (require) {
                 html.push('<section class="ask-answer mt20">');
                 html.push('<div class="ask mt20">');
                 html.push('<div class="head-img">');
-                html.push('<img src="' + question.userIcon || '' + '" />');
+                html.push('<img src="' + (question.userIcon || '/static/src/common/images/user_default.png') + '" />');
                 html.push('</div>');
                 html.push('<div class="head-info">');
-                html.push('<h6>来自 ' + question.userName || '匿名专家' + new Date(question.createTime).Format('yyyy-MM-dd hh-mm') + '</h6>');
+                html.push('<h6>来自 ' + (question.userName || '匿名专家') + new Date(question.createTime).Format('yyyy-MM-dd hh-mm') + '</h6>');
                 var questions = question.questions;
                 var text = [];
+                var textImg = [];
                 for (var i = 0, len = questions.length; i < len; i++) {
                     text.push(questions[i].text);
+                    if (questions[i].img) {
+                        textImg.push('<img src="' + questions[i].img + '" />');
+                    }
                 }
                 html.push('<h3>' + text.join('') + '</h3>');
+                html.push('<p>' + textImg.join('') + '</hp>');
                 html.push('</div></div>');
             }
 
             var answer = data.answer;
-
-            if (answer) {
+            if (answer && answer.answers && answer.answers.length > 0) {
                 html.push(this.renderAnswer(answer));
             }
             html.push('</section>');
+            $('#section_article').html(html.join(''));
         },
         renderList: function(id, data) {
             var html = [];
@@ -47,12 +52,12 @@ define(function (require) {
                 var text = [];
                 if (question) {
                     var questions = question.questions;
-                    for (var i = 0, len = questions.length; i < len; i++) {
-                        text.push(questions[i].text);
+                    for (var j = 0, jlen = questions.length; j < jlen; j++) {
+                        text.push(questions[j].text);
                     }
                 }
                 if (text.length > 0) {
-                    html.push('<li><a target="_blank" href="/question/question_detile.jsp?id=' + data[i].userId + '">' + text.join('') + '</a></li>');
+                    html.push('<li><a target="_blank" href="/question/question_detile.jsp?id=' + question.questionId + '">' + text.join('') + '</a></li>');
                 }
             }
 
@@ -64,7 +69,7 @@ define(function (require) {
             html.push('<li>');
             html.push('<div class="left">');
             html.push('<div class="head-img">');
-            html.push('<img src="' + answer.userIcon + '" />');
+            html.push('<img src="' + (answer.userIcon || '/static/src/common/images/user_default.png') + '" />');
             html.push('<i class="star"></i>');
             html.push('</div>');
             html.push('<span>' + answer.userName + '</span>');
@@ -72,11 +77,17 @@ define(function (require) {
             var answers = answer.answers;
             var text = [];
             for (var i = 0, len = answers.length; i < len; i++) {
-                text.push('<p>' + answers[i].text + '</p>');
-                text.push('<p><img src="' + answers[i].img + '" /></p>');
+                if (answers[i].text) {
+                    text.push('<p>' + answers[i].text + '</p>');
+                }
+
+                if (answers[i].img) {
+                    text.push('<p><img src="' + answers[i].img + '" /></p>');
+                }
             }
             html.push('<div class="right">' + text.join('') + '</div>');
             html.push('</li></ul>');
+            return html.join('');
         },
         get: function(id) {
             var that = this;
@@ -101,12 +112,29 @@ define(function (require) {
                     that.renderList('hot', data.bizData);
                 }
             });
+        },
+        updateReadNum: function(id) {
+            //$.get('/question/updateBrowseNum.do?id=' + id, function(data) {});
+            $.ajax({
+                type: 'post',
+                url: '/question/updateBrowseNum.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    id:id
+                },
+                dataType: 'json',
+                success: function(data) {
+                },
+                error: function(data) {
+                }
+            });
         }
     }
 
     $(document).ready(function() {
         var id = getUrLinKey('id');
         Question.get(id);
+        Question.updateReadNum(id);
         Question.getNew();
         Question.getHot();
     });

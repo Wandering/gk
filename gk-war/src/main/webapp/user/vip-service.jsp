@@ -47,13 +47,14 @@
                     <p>充值账号：<span class="accountNum"></span></p>
                     <div class="input-box">
                         <img src="/static/dist/user/images/icon-card-pay.png" alt=""/>
-                        卡号：<input type="text" class="input-pay-comm"/>
+                        卡号：<input type="text" id="pay-card" class="input-pay-comm"/>
                     </div>
                     <div class="input-box">
                         <img src="/static/dist/user/images/icon-pay-lock.png" alt=""/>
-                        密码：<input type="password" class="input-pay-comm"/>
+                        密码：<input type="text" id="pay-password"  class="input-pay-comm"/>
                     </div>
                 </div>
+                <div class="error-tips hide"></div>
                 <div class="btn-upgrade btn-green" id="accountBtn">升级</div>
             </div>
         </div>

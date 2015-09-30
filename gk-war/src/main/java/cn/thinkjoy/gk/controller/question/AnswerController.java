@@ -49,6 +49,12 @@ public class AnswerController extends BaseController {
                                                    @RequestParam(value="isAnswer",required=false) Integer isAnswer,
             PageQuery pageQuery) throws Exception {
 
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+
         Integer startSize = pageQuery.getStartSize();
 
         if(startSize==null){
@@ -61,14 +67,14 @@ public class AnswerController extends BaseController {
             endSize = 10;
         }
 
-        String word = null;
-        if(!StringUtils.isEmpty(keyword)){
-            try {
-                word = (new String(keyword.getBytes("ISO-8859-1"),"UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
-            }
-        }
+//        String word = null;
+//        if(!StringUtils.isEmpty(keyword)){
+//            try {
+//                word = (new String(keyword.getBytes("ISO-8859-1"),"UTF-8"));
+//            } catch (UnsupportedEncodingException e) {
+//                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
+//            }
+//        }
 
         UserAccountPojo account = getUserAccountPojo();
 
@@ -79,7 +85,7 @@ public class AnswerController extends BaseController {
 
         Long userId = account.getId();
 
-        List<QuestionDetailBean> questionDetailBeans = answerService.findAnswerPage(word,isAnswer,userId, startSize, endSize);
+        List<QuestionDetailBean> questionDetailBeans = answerService.findAnswerPage(keyword,isAnswer,userId, startSize, endSize);
 
         List<QuestionAnswerBean> questionAnswerBeans = new ArrayList<QuestionAnswerBean>();
 
@@ -148,6 +154,7 @@ public class AnswerController extends BaseController {
                 questionDetailDto.setDisableNum(disableNum);
                 questionDetailDto.setDisableStatus(questionDetail.getDisableStatus());
                 questionDetailDto.setCreateTime(questionDetail.getCreateTime());
+                questionDetailDto.setQuestionId(questionDetail.getQuestionId());
                 questionAnswerBean.setQuestion(questionDetailDto);
 
                 questionAnswerBeans.add(questionAnswerBean);

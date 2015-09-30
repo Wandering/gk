@@ -8,7 +8,7 @@ public class SubjectDto {
     private String name;
     private Integer planNumber;
     private String schoolLength;
-    private String foreignLanguage;
+    private String foreginLanguage;
     private String feeStandard;
     private Integer universityCode;
     private String universityName;
@@ -45,12 +45,12 @@ public class SubjectDto {
         this.schoolLength = schoolLength;
     }
 
-    public String getForeignLanguage() {
-        return foreignLanguage;
+    public String getForeginLanguage() {
+        return foreginLanguage;
     }
 
-    public void setForeignLanguage(String foreignLanguage) {
-        this.foreignLanguage = foreignLanguage;
+    public void setForeginLanguage(String foreginLanguage) {
+        this.foreginLanguage = foreginLanguage;
     }
 
     public String getFeeStandard() {

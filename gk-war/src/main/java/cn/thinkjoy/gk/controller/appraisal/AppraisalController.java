@@ -6,6 +6,7 @@ import cn.thinkjoy.gk.controller.appraisal.bean.AppraisalBean;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
+import cn.thinkjoy.gk.util.VerificationKeyConst;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -37,7 +38,17 @@ public class AppraisalController extends BaseController {
     @ResponseBody
     public String lstest() throws Exception{
 
-        UserAccountPojo userAccountPojo =  getUserAccountPojo();
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if(vipStatus==null||vipStatus==0){
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
 
         AppraisalBean appraisalBean = new AppraisalBean();
 
@@ -71,19 +82,111 @@ public class AppraisalController extends BaseController {
     }
 
     /**
-     * 专业测评
+     * 院校测评
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/schoolTest",method = RequestMethod.GET)
     @ResponseBody
     public String schoolTest(@RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore,
-                             @RequestParam(value="m_batch",required=false) String m_batch,
-                             @RequestParam(value="m_kelei",required=false) String m_kelei) throws Exception{
+                             @RequestParam(value="m_university_name",required=false) String m_university_name,
+                             @RequestParam(value="m_kelei",required=false) String m_kelei,
+                             @RequestParam(value="code",required=false) String code) throws Exception{
+
+        if(StringUtils.isBlank(m_aggregateScore)
+                || StringUtils.isBlank(m_university_name)
+                || StringUtils.isBlank(m_kelei)
+                || StringUtils.isBlank(code)){
+            throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
+        }
+
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if(vipStatus==null||vipStatus==0){
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
+
+        Long value = userAccountPojo.getId();
+
+        Object resultCode = session.getAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value);
+
+        if(resultCode==null){
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
+        }
+
+        if(!resultCode.toString().equals(code.toUpperCase())){
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
+        }
+
+        session.removeAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value);
+
         String returnStr = null;
         try {
 
-            String result = HttpRequestUtil.doGet("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/CollegeEval/GetEvaluation/m_aggregateScore/"+m_aggregateScore+"/m_batch/"+m_batch+"/m_kelei/"+m_kelei);
+            String result = HttpRequestUtil.doGet("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/CollegeEval/GetEvaluation/m_aggregateScore/"+m_aggregateScore+"/m_university_name/"+m_university_name+"/m_kelei/"+m_kelei);
+
+            if(StringUtils.isEmpty(result)){
+                throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
+            }
+
+            returnStr = result;
+
+        } catch (Exception e) {
+            throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
+        }
+        return returnStr.toString();
+    }
+
+    /**
+     * 获取位次
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/findRanking",method = RequestMethod.GET)
+    @ResponseBody
+    public String findRanking(@RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore,
+                              @RequestParam(value="code",required=false) String code) throws Exception{
+
+        if(StringUtils.isBlank(m_aggregateScore)
+                || StringUtils.isBlank(code)){
+            throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
+        }
+
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if(vipStatus==null||vipStatus==0){
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
+
+        Long value = userAccountPojo.getId();
+
+        Object resultCode = session.getAttribute(VerificationKeyConst.GET_THE_ORDER+value);
+
+        if(resultCode==null){
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
+        }
+
+        if(!resultCode.toString().equals(code.toUpperCase())){
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
+        }
+        session.removeAttribute(VerificationKeyConst.GET_THE_ORDER+value);
+
+        String returnStr = null;
+        try {
+
+            String result = HttpRequestUtil.doGet("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/CandidateRanking/GetRanking/m_aggregateScore/"+m_aggregateScore);
 
             if(StringUtils.isEmpty(result)){
                 throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());

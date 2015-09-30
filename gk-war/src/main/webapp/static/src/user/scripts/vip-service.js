@@ -67,16 +67,34 @@ define(function (require) {
     });
 
     $('#accountBtn').on('click',function(){
+        if($('#pay-card').val().trim()==""){
+            $('.error-tips').text("卡号不能为空").fadeIn(1000).fadeOut(1000);
+            return;
+        }
+        if($('#pay-password').val().trim()==""){
+            $('.error-tips').text("卡密码不能为空").fadeIn(1000).fadeOut(1000);
+            return;
+        }
+
         $.ajax({
             url:'/vip/upgradeVipByCard.do',
             type: 'POST',
             dataType: 'JSON',
             data:{
-                "cardNumber": 333333,
-                "password": 444444
+                "cardNumber": $('#pay-card').val(),
+                "password": $('#pay-password').val()
             },
             success: function (res) {
-                console.log(res)
+
+                if(res.rtnCode=='0000000'){
+                    $('.error-tips').text("申请成功").fadeIn(1000).fadeOut(1000);
+                }
+
+
+                if(res.rtnCode=='0900002' || res.rtnCode=='0900001'){
+                    $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+
+                }
             }
         });
     });

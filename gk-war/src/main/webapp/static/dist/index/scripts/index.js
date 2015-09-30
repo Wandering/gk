@@ -1,6 +1,8 @@
 define(function (require) {
     var $ = require('$');
     require('swiper');
+    require('getTime');
+
 
     var url = 'http://' + window.location.host;
     $(function () {
@@ -63,11 +65,11 @@ define(function (require) {
                 $.each(dataJson,function(i,v){
                     template += '<li>' +
                         '<div class="icon ta"> ' +
-                        '<span>4月25日</span> ' +
+                        '<span>'+ getTime1(v.lastModDate) +'</span> ' +
                         '</div> ' +
                         '<div class="title-info"> ' +
                         '<h3>'+v.hotInformation+'</h3> ' +
-                        '<h6>'+v.informationContent+'</h6> ' +
+                        '<h6>'+v.informationSubContent+'</h6> ' +
                         '</div> ' +
                         '</li>'
                 });
@@ -104,7 +106,7 @@ define(function (require) {
                             content.push('<p class="ta"><img src="' + answers[c].img + '" /></p>');
                         }
                     }
-                    html.push('<div class="detile-content mt20">'
+                    html.push('<a href="/question/question_detile.jsp?id=' + question.userId + '"><div class="detile-content mt20">'
                         + '<div class="detile-header">'
                         + '<span class="order-number">' + (i + 1) + '</span>'
                         + '<span class="detile-title">' + title.join('') + '</span>'
@@ -113,7 +115,7 @@ define(function (require) {
                         + '<div class="detile-info mt20">'
                         + content.join('')
                         + '</div>'
-                        + '</div>');
+                        + '</div></a>');
                 }
                 return html.join('');
             },
