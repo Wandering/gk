@@ -38,10 +38,7 @@
             <%--<select class="sel-item" name="" id="">--%>
                 <%--<option value="">西安铁一中</option>--%>
             <%--</select>--%>
-            <select class="sel-item years-fun" name="" id="">
-                <option value="2014">2014年</option>
-                <option value="2013">2013年</option>
-            </select>
+            <select class="sel-item years-fun" name="" id=""></select>
         </div>
         <div class="into-search">
             <form action="">

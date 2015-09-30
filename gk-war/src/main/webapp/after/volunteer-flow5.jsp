@@ -98,11 +98,11 @@
                 <td class="item4">
                     <div class="">
                         <label>
-                            <input type="radio" name="isFun" id=""/> 是
+                            <input type="radio" checked name="isFun1" id=""/> 是
                         </label>
                         <p>（建议服从）</p>
                         <label>
-                            <input type="radio" name="isFun" id=""/> 否
+                            <input type="radio" name="isFun1" id=""/> 否
                         </label>
                     </div>
                 </td>
@@ -129,11 +129,11 @@
                 <td class="item4">
                     <div class="">
                         <label>
-                            <input type="radio" name="isFun" id=""/> 是
+                            <input type="radio" checked name="isFun2" id=""/> 是
                         </label>
                         <p>（建议服从）</p>
                         <label>
-                            <input type="radio" name="isFun" id=""/> 否
+                            <input type="radio" name="isFun2" id=""/> 否
                         </label>
                     </div>
                 </td>
@@ -160,11 +160,11 @@
                 <td class="item4">
                     <div class="">
                         <label>
-                            <input type="radio" name="isFun" id=""/> 是
+                            <input type="radio" checked name="isFun3" id=""/> 是
                         </label>
                         <p>（建议服从）</p>
                         <label>
-                            <input type="radio" name="isFun" id=""/> 否
+                            <input type="radio" name="isFun3" id=""/> 否
                         </label>
                     </div>
                 </td>
@@ -191,11 +191,11 @@
                 <td class="item4">
                     <div class="">
                         <label>
-                            <input type="radio" name="isFun" id=""/> 是
+                            <input type="radio" checked name="isFun4" id=""/> 是
                         </label>
                         <p>（建议服从）</p>
                         <label>
-                            <input type="radio" name="isFun" id=""/> 否
+                            <input type="radio" name="isFun4" id=""/> 否
                         </label>
                     </div>
                 </td>
