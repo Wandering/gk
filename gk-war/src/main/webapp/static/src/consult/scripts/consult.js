@@ -6,6 +6,14 @@ define(function (require) {
     var $ = require('$');
     require('swiper');
 
+    function GetCookie(sMainName, sSubName) {
+        var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
+        return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
+    }
+    if (!GetCookie("gkuser") || GetCookie("gkuser") == '""') {
+        window.location.href = '/login/login.jsp';
+    }
+
     var api = flowplayer("player", "/static/src/guide/scripts/flowplayer-3.2.18.swf");
 
     $(document).ready(function() {
@@ -24,6 +32,7 @@ define(function (require) {
                         window.location.href = data.bizData;
                     } else {
                         $('#error_tip').html(data.msg);
+                        $('#error_tip').show();
                     }
                 });
             }

@@ -292,7 +292,7 @@
 
                 <p class="fl w40 w35"></p>
             </div>
-            <div class="calendar mt20">
+            <div class="calendar">
                 <img src="/static/dist/index/images/calendar_img.png"/>
             </div>
         </section>

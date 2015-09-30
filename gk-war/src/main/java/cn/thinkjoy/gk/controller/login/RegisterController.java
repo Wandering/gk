@@ -89,7 +89,7 @@ public class RegisterController extends BaseController {
             }
             userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
             long id = userAccountBean.getId();
-            response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE, "/"));
+            response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
             setUserAccountPojo(userAccountBean);
         }catch (Exception e){
             throw e;
@@ -190,17 +190,16 @@ public class RegisterController extends BaseController {
      */
     private boolean checkCaptcha(String account,String captcha){
         boolean equals=false;
-        String userCaptchaKey = RedisConst.USER_CAPTCHA_KEY+account;
-        if (RedisUtil.getInstance().get(userCaptchaKey)==null){
+        String key = RedisConst.USER_CAPTCHA_KEY+account;
+        if (RedisUtil.getInstance().get(key)==null){
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "验证码过期或不存在，请重新获取!");
         }
-        String cap=RedisUtil.getInstance().get(userCaptchaKey).toString();
+        String cap=RedisUtil.getInstance().get(key).toString();
         if (captcha.equals(cap)){
-            RedisUtil.getInstance().del(userCaptchaKey);
+            RedisUtil.getInstance().del(key);
             equals=true;
         }
         return equals;
     }
-
 
 }

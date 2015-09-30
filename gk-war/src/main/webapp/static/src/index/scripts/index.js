@@ -2,7 +2,7 @@ define(function (require) {
     var $ = require('$');
     require('swiper');
     require('getTime');
-
+    require('backToTop');
 
     var url = 'http://' + window.location.host;
     $(function () {
