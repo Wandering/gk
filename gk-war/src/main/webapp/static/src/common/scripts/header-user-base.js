@@ -54,7 +54,7 @@ define(function (require, exports, modules) {
                     if (res.rtnCode == '0000000') {
                         window.location.href = '/index.jsp';
                     } else {
-                        alert(res.msg);
+                        //alert(res.msg);
                     }
                 }
             });
