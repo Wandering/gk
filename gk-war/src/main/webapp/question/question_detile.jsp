@@ -10,7 +10,6 @@
 <%@ include file="/common/header.jsp"%>
 
 <div class="content">
-    <%@ include file="/common/banner-wipe.jsp"%>
     <div class="w1000">
 
         <%--<div class="search-content ta mt20">--%>
