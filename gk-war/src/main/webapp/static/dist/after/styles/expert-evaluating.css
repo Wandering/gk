@@ -1094,3 +1094,73 @@ a.next-btn:hover {
   .content .tip-board h2 {
     font-size: 16px;
     color: #8a6d3b; }
+
+.content .evaluate-count {
+  border-bottom: 1px solid #e5e5e5; }
+  .content .evaluate-count .eva-title {
+    font-size: 20px;
+    color: #52abd0;
+    margin-top: 25px;
+    line-height: 30px; }
+  .content .evaluate-count .row {
+    position: relative;
+    height: 200px; }
+    .content .evaluate-count .row .eva-left-bg {
+      margin: 0 30px 0; }
+    .content .evaluate-count .row .col-1-img {
+      position: absolute;
+      top: 0; }
+    .content .evaluate-count .row .col-1 {
+      position: absolute;
+      top: 0;
+      left: 80px; }
+    .content .evaluate-count .row .col-2 {
+      position: absolute;
+      top: 48px;
+      left: 80px; }
+    .content .evaluate-count .row .col-3 {
+      position: absolute;
+      top: 98px;
+      left: 80px; }
+    .content .evaluate-count .row .col-4 {
+      position: absolute;
+      top: 150px;
+      left: 80px; }
+    .content .evaluate-count .row .eva {
+      position: absolute;
+      top: 60px;
+      right: 460px;
+      color: #74bbd9;
+      font-size: 20px; }
+  .content .evaluate-count .color-green {
+    color: #52d09c; }
+  .content .evaluate-count .color-red {
+    color: #e24d39; }
+  .content .evaluate-count .ml240 {
+    margin-left: 240px;
+    display: inline-block; }
+  .content .evaluate-count .eva-text {
+    line-height: 26px;
+    font-size: 14px;
+    color: #555; }
+  .content .evaluate-count .navigation-box {
+    position: relative;
+    border: 2px dashed #dcdcdc;
+    height: 125px;
+    width: 100%;
+    margin: 65px auto 90px; }
+    .content .evaluate-count .navigation-box .tip {
+      color: #e24d39;
+      font-size: 14px;
+      line-height: 125px;
+      margin-left: 100px; }
+    .content .evaluate-count .navigation-box .btn {
+      border: 1px solid #e24d39;
+      color: #e24d39;
+      width: 100px;
+      line-height: 40px;
+      border-radius: 3px;
+      text-align: center; }
+      .content .evaluate-count .navigation-box .btn:hover {
+        background-color: #e24d39;
+        color: #fff; }
