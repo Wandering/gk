@@ -140,11 +140,8 @@ public class UniversityController extends BaseController {
             map.put("type","FEATURE");//院校特征类型
             List<UniversityDict> universityFeatureList=universityDictService.queryList(map,"id","asc");
             for(UniversityDict universityDict:universityFeatureList){
-                if((universityFeatureId.intValue() & universityDict.getDictId().intValue()) %2 !=0){
-                    if((universityFeatureId.intValue()<=universityDict.getDictId().intValue())){
+                if((universityFeatureId.intValue() & universityDict.getDictId().intValue()) >= universityFeatureId.intValue() ){
                         universityFeatureParam.add(universityDict.getDictId());
-                    }
-
                 }
             }
         }
