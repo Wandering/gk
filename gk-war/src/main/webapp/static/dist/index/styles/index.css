@@ -402,7 +402,8 @@ input, textarea {
     margin-right: 100px; }
   .header .main-menu > li {
     display: inline-block;
-    position: relative; }
+    position: relative;
+    float: left; }
     .header .main-menu > li a {
       display: inline-block;
       height: 50px;
@@ -1014,6 +1015,9 @@ a.next-btn:hover {
     .flow-main-list li.item p.txt {
       margin: 0 auto;
       display: block; }
+    .flow-main-list li.item img {
+      width: 42px;
+      height: 37px; }
     .flow-main-list li.item p.txt {
       color: #878787;
       font-size: 12px;
