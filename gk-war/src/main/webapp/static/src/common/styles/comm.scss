@@ -512,14 +512,14 @@ a.next-btn:hover {
   //border: 1px solid #d9d9d9;
   color: #9c9c9c;
   font-size: 16px;
-  width: 42px;
-  height: 42px;
-  line-height: 42px;
+  width: 50px;
+  height: 50px;
+  //line-height: 42px;
   text-align: center;
   text-decoration: none;
   _position: absolute;
   _top: expression(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight);
-  background: url('../../common/images/icon-top.png') no-repeat left top;
+  background: $secondColor url('../../common/images/icon-top.png') no-repeat center center;
 }
 
 .toTop:hover {

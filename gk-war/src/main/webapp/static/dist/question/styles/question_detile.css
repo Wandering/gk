@@ -703,14 +703,13 @@ a.next-btn:hover {
   visibility: visible;
   color: #9c9c9c;
   font-size: 16px;
-  width: 42px;
-  height: 42px;
-  line-height: 42px;
+  width: 50px;
+  height: 50px;
   text-align: center;
   text-decoration: none;
   _position: absolute;
   _top: expression(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight);
-  background: url("../../common/images/icon-top.png") no-repeat left top; }
+  background: #494848 url("../../common/images/icon-top.png") no-repeat center center; }
 
 .Huialert {
   position: relative;
@@ -1763,14 +1762,13 @@ a.next-btn:hover {
   visibility: visible;
   color: #9c9c9c;
   font-size: 16px;
-  width: 42px;
-  height: 42px;
-  line-height: 42px;
+  width: 50px;
+  height: 50px;
   text-align: center;
   text-decoration: none;
   _position: absolute;
   _top: expression(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight);
-  background: url("../../common/images/icon-top.png") no-repeat left top; }
+  background: #494848 url("../../common/images/icon-top.png") no-repeat center center; }
 
 .Huialert {
   position: relative;
