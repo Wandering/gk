@@ -39,7 +39,11 @@ public class CaptchaUtil {
             g.translate(0, 0);
             g.setColor(new Color(red, green, blue));
 //            g.drawString(rand,CaptchaConst.FONT_SPACING , 16);
-            g.drawString(rand, (i + 1) * CaptchaConst.FONT_SPACING, CaptchaConst.TRANSLATE_START);
+            if(i==1){
+                g.drawString(rand, CaptchaConst.FONT_SPACING, CaptchaConst.TRANSLATE_START);
+            }else {
+                g.drawString(rand, i* CaptchaConst.FONT_SPACING, CaptchaConst.TRANSLATE_START);
+            }
         }
         g.dispose();
         g=null;
