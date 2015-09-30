@@ -402,6 +402,7 @@ public class QuestionController extends BaseController {
         expertQuestion.setTags("其他");
         expertQuestion.setFreeStatus(freeStatus);
         expertQuestion.setSourceType(7);
+        expertQuestion.setBrowseNum(0L);
 
         int id = questionService.insert(expertQuestion);
 
