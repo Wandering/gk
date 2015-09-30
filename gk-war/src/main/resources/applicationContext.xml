@@ -11,7 +11,7 @@
     <import resource="classpath:springme.xml" />
 
     <!--默认的redis配置，启动时会建立连接-->
-    <import resource="classpath*:spring-redis.xml" />
+    <!--<import resource="classpath*:spring-redis.xml" />-->
 
     <bean id="redisUtil" class="cn.thinkjoy.gk.util.RedisUtil">
         <property name="redisRepository" ref="redisRepository"/>

@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller.question;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.constant.CookieConst;
 import cn.thinkjoy.gk.controller.question.bean.QuestionAnswerBean;
 import cn.thinkjoy.gk.controller.question.dto.AnswerDetailDto;
 import cn.thinkjoy.gk.controller.question.dto.QuestionContentDto;
@@ -9,6 +10,7 @@ import cn.thinkjoy.gk.controller.question.dto.QuestionDetailDto;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.protocol.PageQuery;
+import cn.thinkjoy.gk.util.CookieUtil;
 import cn.thinkjoy.ss.api.IAnswerService;
 import cn.thinkjoy.ss.bean.QuestionDetailBean;
 import com.alibaba.fastjson.JSON;
@@ -83,9 +85,9 @@ public class AnswerController extends BaseController {
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
         }
 
-        Long userId = account.getId();
+        String userId = CookieUtil.getCookieValue(request.getCookies(), CookieConst.SS_USER_COOKIE_NAME);
 
-        List<QuestionDetailBean> questionDetailBeans = answerService.findAnswerPage(keyword,isAnswer,userId, startSize, endSize);
+        List<QuestionDetailBean> questionDetailBeans = answerService.findAnswerPage(keyword,isAnswer,Long.valueOf(userId), startSize, endSize);
 
         List<QuestionAnswerBean> questionAnswerBeans = new ArrayList<QuestionAnswerBean>();
 
