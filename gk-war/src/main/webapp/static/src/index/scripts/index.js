@@ -113,7 +113,7 @@ define(function (require) {
                             content.push('<p class="ta"><img src="' + answers[c].img + '" /></p>');
                         }
                     }
-                    html.push('<a href="/question/question_detile.jsp?id=' + question.userId + '"><div class="detile-content mt20">'
+                    html.push('<a href="/question/question_detile.jsp?id=' + question.questionId + '"><div class="detile-content mt20">'
                     + '<div class="detile-header">'
                     + '<span class="order-number">' + (i + 1) + '</span>'
                     + '<span class="detile-title">' + title.join('') + '</span>'

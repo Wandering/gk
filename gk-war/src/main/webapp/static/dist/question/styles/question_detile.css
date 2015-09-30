@@ -463,6 +463,12 @@ input, textarea {
           color: #fff;
           background-color: #202020; }
 
+.top {
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  z-index: 222; }
+
 /* submenu styles */
 .submenu {
   left: 0;
@@ -1523,6 +1529,12 @@ input, textarea {
           color: #fff;
           background-color: #202020; }
 
+.top {
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  z-index: 222; }
+
 /* submenu styles */
 .submenu {
   left: 0;
@@ -2212,3 +2224,9 @@ section:last-child {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden; }
+
+.head-info p {
+  margin-top: 10px; }
+
+.ask-answer .head-img {
+  float: left; }

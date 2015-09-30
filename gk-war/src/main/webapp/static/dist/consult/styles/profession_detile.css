@@ -463,6 +463,12 @@ input, textarea {
           color: #fff;
           background-color: #202020; }
 
+.top {
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  z-index: 222; }
+
 /* submenu styles */
 .submenu {
   left: 0;

@@ -130,6 +130,15 @@
   }
 }
 
+//返回顶部
+
+.top{
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  z-index: 222;
+}
+
 /* submenu styles */
 .submenu {
   left: 0;
