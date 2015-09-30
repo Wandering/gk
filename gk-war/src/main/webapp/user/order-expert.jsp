@@ -6,8 +6,8 @@
     <title>我要预约</title>
     <link rel="stylesheet" href="/static/dist/user/styles/order-expert.min.css"/>
     <%--<link rel="stylesheet" href="/static/bower_components/laydate/need/laydate.css"/>--%>
-    <%--<link rel="stylesheet" href="/static/bower_components/laydate/skins/dahong/laydate.css"/>--%>
-    <link rel="stylesheet" href="/static/bower_components/kindeditor/themes/default/default.css"/>
+    <link rel="stylesheet" href="/static/bower_components/laydate/skins/dahong/laydate.css"/>
+    <%--<link rel="stylesheet" href="/static/bower_components/kindeditor/themes/default/default.css"/>--%>
     <script src="/static/bower_components/laydate/laydate.js"></script>
 </head>
 <body>
@@ -43,10 +43,10 @@
         <script>
             var start = {
                 elem: '#start',
-                format: 'YYYY/MM/DD hh:mm:ss',
+                format: 'YYYY-MM-DD',
                 min: laydate.now(), //设定最小日期为当前日期
-                max: '2099-06-16 23:59:59', //最大日期
-                istime: true,
+                max: '2099-06-16', //最大日期
+                festival: true, //显示节日
                 istoday: false,
                 choose: function(datas){
                     end.min = datas; //开始日选好后，重置结束日的最小日期
@@ -55,15 +55,16 @@
             };
             var end = {
                 elem: '#end',
-                format: 'YYYY/MM/DD hh:mm:ss',
+                format: 'YYYY-MM-DD',
                 min: laydate.now(),
-                max: '2099-06-16 23:59:59',
-                istime: true,
+                max: '2099-06-16',
+                festival: true, //显示节日
                 istoday: false,
                 choose: function(datas){
                     start.max = datas; //结束日选好后，重置开始日的最大日期
                 }
             };
+            laydate.skin('dahong');
             laydate(start);
             laydate(end);
         </script>

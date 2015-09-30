@@ -45,11 +45,7 @@ define(function (require) {
 
     function getRightInfo() {
         if ('hot' === method) {
-            return;
-        }
-        var code = getUrLinKey('code');
-        if (code) {
-            $.get('/volunteerSchool/ranks.do?cateId=' + code, function(data) {
+            $.get('/gkinformation/getAllInformation.do?pageNo=0', function(data) {
                 if ('0000000' === data.rtnCode) {
                     var biz = data.bizData;
                     if (biz.length > 0) {
@@ -57,13 +53,32 @@ define(function (require) {
                         html.push('<h3>高考热点</h3>');
                         html.push('<ul>');
                         for (var i = 0, len = biz.length; i < len; i++) {
-                            html.push('<li><a target="_blank" href="/consult/gk_hot_detile.jsp?id=' + biz[i].id + '">' + biz[i].title + '</a></li>');
+                            html.push('<li><a target="_blank" href="/consult/gk_hot_detile.jsp?method=hot&id=' + biz[i].id + '">' + biz[i].hotInformation + '</a></li>');
                         }
                         html.push('</ul>');
                         $('#ask_list').html(html.join(''));
                     }
                 }
             });
+        } else {
+            var code = getUrLinKey('code');
+            if (code) {
+                $.get('/volunteerSchool/ranks.do?cateId=' + code, function(data) {
+                    if ('0000000' === data.rtnCode) {
+                        var biz = data.bizData;
+                        if (biz.length > 0) {
+                            var html = [];
+                            html.push('<h3>高考热点</h3>');
+                            html.push('<ul>');
+                            for (var i = 0, len = biz.length; i < len; i++) {
+                                html.push('<li><a target="_blank" href="/consult/gk_hot_detile.jsp?id=' + biz[i].id + '">' + biz[i].title + '</a></li>');
+                            }
+                            html.push('</ul>');
+                            $('#ask_list').html(html.join(''));
+                        }
+                    }
+                });
+            }
         }
     }
 
