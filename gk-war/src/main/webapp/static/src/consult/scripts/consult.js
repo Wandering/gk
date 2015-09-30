@@ -32,6 +32,7 @@ define(function (require) {
                         window.location.href = data.bizData;
                     } else {
                         $('#error_tip').html(data.msg);
+                        $('#error_tip').show();
                     }
                 });
             }
