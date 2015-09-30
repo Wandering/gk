@@ -202,10 +202,21 @@
         line-height: 40px;
         border-radius: 3px;
         text-align: center;
+        cursor: pointer;
         &:hover{
           background-color: $mainRed;
           color: #fff;
         }
+      }
+      .btn-next{
+        position: absolute;
+        top: 50px;
+        right: 200px;
+      }
+      .btn-before{
+        position: absolute;
+        top: 50px;
+        right: 60px;
       }
     }
   }

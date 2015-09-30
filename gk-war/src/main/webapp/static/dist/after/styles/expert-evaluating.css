@@ -1160,7 +1160,16 @@ a.next-btn:hover {
       width: 100px;
       line-height: 40px;
       border-radius: 3px;
-      text-align: center; }
+      text-align: center;
+      cursor: pointer; }
       .content .evaluate-count .navigation-box .btn:hover {
         background-color: #e24d39;
         color: #fff; }
+    .content .evaluate-count .navigation-box .btn-next {
+      position: absolute;
+      top: 50px;
+      right: 200px; }
+    .content .evaluate-count .navigation-box .btn-before {
+      position: absolute;
+      top: 50px;
+      right: 60px; }

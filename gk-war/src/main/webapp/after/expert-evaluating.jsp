@@ -271,8 +271,8 @@
             </div>
             <div class="navigation-box">
                 <span class="tip">正式填报志愿请登录网址：sn.gaokao360.net</span>
-                <div class="btn">下一步</div>
-                <div class="btn">返回上一步</div>
+                <div class="btn btn-before">返回上一步</div>
+                <div class="btn btn-next">下一步</div>
             </div>
         </div>
 
