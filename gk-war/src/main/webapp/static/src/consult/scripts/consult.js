@@ -31,7 +31,8 @@ define(function (require) {
                     if ('0000000' === data.rtnCode && data.bizData) {
                         window.location.href = data.bizData;
                     } if ('0100006' === data.rtnCode) {
-                        window.location.href = '/user/vip-service.jsp';
+                        $('#error_tip').html('您好，您不是VIP用户，请进入<a href="/user/vip-service.jsp">个人中心</a>进行VIP升级。');
+                        $('#error_tip').show();
                     } else {
                         $('#error_tip').html(data.msg);
                         $('#error_tip').show();
