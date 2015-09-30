@@ -61,11 +61,11 @@
                 <td class="item4">
                     <div class="">
                         <label>
-                            <input type="radio" name="isFun" id=""/> 是
+                            <input type="radio" checked name="isFun1" id=""/> 是
                         </label>
                         <p>（建议服从）</p>
                         <label>
-                            <input type="radio" name="isFun" id=""/> 否
+                            <input type="radio" name="isFun1" id=""/> 否
                         </label>
                     </div>
                 </td>
@@ -92,11 +92,11 @@
                 <td class="item4">
                     <div class="">
                         <label>
-                            <input type="radio" name="isFun" id=""/> 是
+                            <input type="radio" checked name="isFun2" id=""/> 是
                         </label>
                         <p>（建议服从）</p>
                         <label>
-                            <input type="radio" name="isFun" id=""/> 否
+                            <input type="radio" name="isFun2" id=""/> 否
                         </label>
                     </div>
                 </td>
@@ -123,11 +123,11 @@
                 <td class="item4">
                     <div class="">
                         <label>
-                            <input type="radio" name="isFun" id=""/> 是
+                            <input type="radio" checked name="isFun3" id=""/> 是
                         </label>
                         <p>（建议服从）</p>
                         <label>
-                            <input type="radio" name="isFun" id=""/> 否
+                            <input type="radio" name="isFun3" id=""/> 否
                         </label>
                     </div>
                 </td>
@@ -154,11 +154,11 @@
                 <td class="item4">
                     <div class="">
                         <label>
-                            <input type="radio" name="isFun" id=""/> 是
+                            <input type="radio" checked name="isFun4" id=""/> 是
                         </label>
                         <p>（建议服从）</p>
                         <label>
-                            <input type="radio" name="isFun" id=""/> 否
+                            <input type="radio" name="isFun4" id=""/> 否
                         </label>
                     </div>
                 </td>
@@ -168,7 +168,6 @@
     </div>
 </div>
 
-<%@ include file="/common/footer.jsp"%>
 
 
 <div class="tansLayer" style="display: none;"></div>
@@ -178,7 +177,7 @@
     </div>
     <div class="tips">
         <strong>温馨提示：</strong>
-        <p>依据平行志愿规则，系统推荐遵循分数最大化，为您推荐一下A、B、C、D四挡院校；考生可根据个性化需求调整院校顺位；</p>
+        <p>依据平行志愿规则，系统推荐遵循分数最大化，为您推荐一下A、B、C、D四档院校；考生可根据个性化需求调整院校顺位。</p>
     </div>
     <div class="volunteer-flow3-body">
         <div class="search-box">
@@ -233,12 +232,12 @@
                 </li>
                 <li class="starC">
                     <div class="title">
-                        <span>B档（稳）</span>
+                        <span>C档（保）</span>
                         <p>录取指数: <i class="starC-icon"></i></p>
                     </div>
                     <div class="no-school">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
-                        <p>② 在真是填报时、可以参开选择其他档中的院校；</p>
+                        <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
                     <div class="school-list">
                         <div><a href="" class="school-name">西安交通大学</a><a href="" class="school-sel">选择</a></div>
@@ -247,12 +246,12 @@
                 </li>
                 <li class="starD">
                     <div class="title">
-                        <span>B档（稳）</span>
+                        <span>D档（垫）</span>
                         <p>录取指数: <i class="starD-icon"></i></p>
                     </div>
                     <div class="no-school">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
-                        <p>② 在真是填报时、可以参开选择其他档中的院校；</p>
+                        <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
                     <div class="school-list">
                         <div><a href="" class="school-name">西安交通大学</a><a href="" class="school-sel">选择</a></div>

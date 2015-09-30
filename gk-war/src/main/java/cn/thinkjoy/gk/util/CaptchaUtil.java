@@ -16,17 +16,30 @@ public class CaptchaUtil {
         //产生Image对象的Graphics对象,改对象可以在图像上进行各种绘制操作
         Graphics g = image.getGraphics();
         g.fillRect(0, 0, image.getWidth(),image.getHeight());
+//        g.setFont(CaptchaConst.FIXEDSYS);
         g.setFont(CaptchaConst.BASE_FONTS[random.nextInt(4)]);
+//        g.setFont(CaptchaConst.FONT_NEWROMAN);
+
         g.setColor(CaptchaConst.PURPLE_COLOR);
+
+        // 画边框
+		g.drawRect(0, 0, CaptchaConst.PIC_WIDTH- 1, CaptchaConst.PIC_HEIGHT - 1);
+        int red = 0, green = 0, blue = 0;
         //绘制随机字符
         StringBuffer randomString = new StringBuffer("");
         String rand = null;
-        int stringPoint = CaptchaConst.TRANSLATE_START*random.nextInt(3);
+//        int stringPoint = CaptchaConst.TRANSLATE_START*random.nextInt(3);
         for(int i=1;i<=CaptchaConst.RANDOM_STRING_NUM;i++){
             rand = String.valueOf(CaptchaConst.RAND_STRING.charAt(random.nextInt(CaptchaConst.RAND_STRING.length()-1)));
             randomString.append(rand);
-            g.translate(0,0);
-            g.drawString(rand,stringPoint+CaptchaConst.FONT_SPACING*i , 16);
+            // 产生随机的颜色分量来构造颜色值，这样输出的每位数字的颜色值都将不同。
+            red = random.nextInt(255);
+            green = random.nextInt(255);
+            blue = random.nextInt(255);
+            g.translate(0, 0);
+            g.setColor(new Color(red, green, blue));
+//            g.drawString(rand,CaptchaConst.FONT_SPACING , 16);
+            g.drawString(rand, (i + 1) * CaptchaConst.FONT_SPACING, CaptchaConst.TRANSLATE_START);
         }
         g.dispose();
         g=null;

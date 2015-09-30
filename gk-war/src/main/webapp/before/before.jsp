@@ -283,7 +283,7 @@
             <div class="indent mt10">
                 <span class="ident-code">
                     <label>验证码</label>
-                    <input type="text" placeholder=""/>
+                    <input type="text" id="yzmCollege" placeholder=""/>
                 </span>
                 <a>
                     <img id="college-yzm" src="" />
@@ -345,19 +345,10 @@
         </div>
         <div class="evaluating-result">
             <p class="tips">依据2015年的录取情况、在陕西省填报该院校您需要以下分数(在陕）：</p>
-            <div class="evaluating-result-num" id="dream-list">
-                <%--<ul>--%>
-                    <%--<li class="pc">三批本科</li>--%>
-                    <%--<li class="result1">--%>
-                        <%--<span class="t">所需最低分数</span>--%>
-                        <%--<span class="num"><strong>639</strong>分</span>--%>
-                    <%--</li>--%>
-                    <%--<li class="result2">--%>
-                        <%--<span class="t">所需平均分数</span>--%>
-                        <%--<span class="num"><strong>652</strong>分</span>--%>
-                    <%--</li>--%>
-                <%--</ul>--%>
-            </div>
+            <div class="evaluating-result-num" id="dream-list"></div>
+        </div>
+        <div style="text-align: center">
+            <a class="evaluating-result-close close-btn">关闭</a>
         </div>
     </div>
 </div>
@@ -375,22 +366,10 @@
         </div>
         <div class="evaluating-result">
             <p class="tips">依据<span id="current-year"></span>年的录取情况、在陕西省填报该院校您需要以下分数(在陕）：</p>
-            <div class="evaluating-result-num" id="precedence-list">
-                <%--<ul>--%>
-                <%--<li class="pc">三批本科</li>--%>
-                <%--<li class="result1">--%>
-                <%--<span class="t">所需最低分数</span>--%>
-                <%--<span class="num"><strong>639</strong>分</span>--%>
-                <%--</li>--%>
-                <%--<li class="result2">--%>
-                <%--<span class="t">所需平均分数</span>--%>
-                <%--<span class="num"><strong>652</strong>分</span>--%>
-                <%--</li>--%>
-                <%--</ul>--%>
-            </div>
+            <div class="evaluating-result-num" id="precedence-list"></div>
         </div>
         <div style="text-align: center">
-            <a class="evaluating-result-close close-btn" id="confirm">关闭</a>
+            <a class="evaluating-result-close close-btn">关闭</a>
         </div>
     </div>
 </div>
@@ -433,7 +412,7 @@
                     </div>
                     <div class="no-school hide" id="no-school0">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
-                        <p>② 在真是填报时、可以参开选择其他档中的院校；</p>
+                        <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
                     <div class="school-list hide" id="school-list0"></div>
                 </li>
@@ -444,7 +423,7 @@
                     </div>
                     <div class="no-school hide" id="no-school1">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
-                        <p>② 在真是填报时、可以参开选择其他档中的院校；</p>
+                        <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
                     <div class="school-list hide" id="school-list1"></div>
                 </li>
@@ -455,7 +434,7 @@
                     </div>
                     <div class="no-school hide" id="no-school2">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
-                        <p>② 在真是填报时、可以参开选择其他档中的院校；</p>
+                        <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
                     <div class="school-list hide" id="school-list2"></div>
                 </li>
@@ -466,7 +445,7 @@
                     </div>
                     <div class="no-school hide" id="no-school3">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
-                        <p>② 在真是填报时、可以参开选择其他档中的院校；</p>
+                        <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
                     <div class="school-list hide" id="school-list3"></div>
                 </li>
@@ -476,8 +455,11 @@
             <ul>
                 <li>您录入的分数是<strong id="score-num">666分</strong>、<strong id="subjectTypeV">文史类</strong>，依据2015年招生情况，您的分数是<strong id="batchV">一批本科</strong>；</li>
                 <li>如果您想选择<strong>其他批次院校</strong>，请返回重新选择，或根据本人志愿进行填报；</li>
-                <li>如果未能推荐出您的意向院校，请使用我们为您提供的<span>理想院校测评</span>服务.</li>
+                <li>如果未能推荐出您的意向院校，请使用我们为您提供的<a href="javascript:;" id="dreanSchoolBtn">理想院校测评</a>服务.</li>
             </ul>
+        </div>
+        <div style="text-align: center">
+            <a class="evaluating-result-close close-btn">关闭</a>
         </div>
     </div>
 

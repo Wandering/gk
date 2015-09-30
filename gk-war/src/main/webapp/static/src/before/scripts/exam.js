@@ -83,7 +83,6 @@ define(function (require) {
     var pageSize = 8;
     var searchVals = $('#searchVal').val();
     function getList(pageNo, pageSize,subjectId,years,searchVals) {
-        // 获取首页列表
         $.getJSON(
             "/before/paper/getPaperList.do",
             {
@@ -95,7 +94,7 @@ define(function (require) {
                 searchName:searchVals
             },
             function (result) {
-                if (result.rtnCode == "0800001") {
+                if (result.rtnCode == "0800001" || result.rtnCode == "1000004") {
                     UI.$listMsgItem.append('<p class="noContent">' + result.msg + '</p>');
                     UI.$nextPage.hide();
                 }
@@ -155,6 +154,10 @@ define(function (require) {
             dataType: 'JSON',
             success: function (result) {
                 console.log(result);
+                if (result.rtnCode == "1000004") {
+                    UI.$listMsgItem.append('<p class="noContent">' + result.msg + '</p>');
+                    UI.$nextPage.hide();
+                }
                 if(result.rtnCode=="0000000"){
                     var vipStatus = result.bizData.vipStatus;
                     if(vipStatus==0){

@@ -462,7 +462,7 @@ button.swiper-pagination-bullet {
 
 /*swipe幻灯片*/
   .wipe {
-    height: 530px;
+    height: 540px;
     overflow: hidden;
     width: 100%;
   }
@@ -482,6 +482,16 @@ button.swiper-pagination-bullet {
   -webkit-align-items: center;
   align-items: center;
   /*background-color: #596b8b;*/
-  background-color: #0e6bba;
   /*background-color: #4e8cc6;*/
+}
+
+.slide-1{
+  background-color: #0e6bba;
+}
+.slide-2{
+  background-color: #596b8b;
+}
+
+.slide-3{
+  background-color: #596b8b;
 }

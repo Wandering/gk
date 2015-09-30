@@ -18,79 +18,160 @@ define(function (require) {
     var Profession = {
         curPage:1,
         totalPage:0,
-        render: function(data) {
-            var batch = [], classify = [], profession = [];
-            var i = 0, len = data.length;
-
-            batch.push('<a class="both active">全部</a>');
-            classify.push('<a class="both active">全部</a>');
-            profession.push('<a class="both active">全部</a>');
-
+        data:[],
+        render: function() {
+            this.renderCommon('batch', this.data);
+            this.renderCommon('classify', this.getClassify());
+            //var batch = [], classify = [], profession = [];
+            //var i = 0, len = data.length;
+            //
+            //batch.push('<a class="both active">全部</a>');
+            //classify.push('<a class="both active">全部</a>');
+            //profession.push('<a class="both active">全部</a>');
+            //
+            //for (; i < len; i++) {
+            //    batch.push('<a data-id="' + data[i].id + '">' + data[i].name + '</a>');
+            //    var subjectType = data[i].subjectType;
+            //
+            //    for (var j = 0, jlen = subjectType.length; j < jlen; j++) {
+            //        classify.push('<a class="' + data[i].id + '" data-id="' + subjectType[j].id + '">' + subjectType[j].name + '</a>');
+            //
+            //        var majoredType = subjectType[j].majoredType;
+            //
+            //        for (var n = 0, nlen = majoredType.length; n < nlen; n++) {
+            //            profession.push('<a class="' + subjectType[j].id + '" data-id="' + majoredType[n].id + '">' + majoredType[n].name + '</a>');
+            //        }
+            //    }
+            //}
+            //$('#batch').html(batch.join(''));
+            //$('#classify').html(classify.join(''));
+            //$('#profession').html(profession.join(''));
+            this.addEventHandle();
+            this.addEventForClassify();
+            this.getProfession(1);
+        },
+        getClassify: function(id) {
+            var i = 0, len = this.data.length;
+            var arry = {};
             for (; i < len; i++) {
-                batch.push('<a data-id="' + data[i].id + '">' + data[i].name + '</a>');
-                var subjectType = data[i].subjectType;
-
-                for (var j = 0, jlen = subjectType.length; j < jlen; j++) {
-                    classify.push('<a class="' + data[i].id + '" data-id="' + subjectType[j].id + '">' + subjectType[j].name + '</a>');
-
-                    var majoredType = subjectType[j].majoredType;
-
-                    for (var n = 0, nlen = majoredType.length; n < nlen; n++) {
-                        profession.push('<a class="' + subjectType[j].id + '" data-id="' + majoredType[n].id + '">' + majoredType[n].name + '</a>');
+                if (id) {
+                    if (id == this.data[i].id) {
+                        return this.data[i].subjectType;
+                    }
+                } else {
+                    var subjectType = this.data[i].subjectType;
+                    for (var j = 0, jlen = subjectType.length; j < jlen; j++) {
+                        arry[subjectType[j].id] = subjectType[j].name;
                     }
                 }
+            };
+            var allArray = [];
+            for (var key in arry) {
+                allArray.push({
+                    id: key,
+                    name: arry[key]
+                });
             }
-            $('#batch').html(batch.join(''));
-            $('#classify').html(classify.join(''));
-            $('#profession').html(profession.join(''));
-            this.addEventHandle();
-            this.getProfession(1);
+            return allArray;
+        },
+        getProfessionData: function(id) {
+            var batchId = $('#batch a.active').attr('data-id');
+            if (!id) {
+              return [];
+            }
+            for (var i = 0; i < this.data.length; i++) {
+                //if (batchId == this.data[i].id) {
+                    var subjectType = this.data[i].subjectType;
+                    for (var j = 0; j < subjectType.length; j++) {
+                        if (id == subjectType[j].id) {
+                            return subjectType[j].majoredType;
+                        }
+                    }
+                //}
+            }
+            return [];
+        },
+        renderCommon: function(eleId, data) {
+            var html = [];
+            var i = 0, len = data.length;
+            html.push('<a class="both active">全部</a>');
+            for (; i < len; i++) {
+                html.push('<a data-id="' + data[i].id + '">' + data[i].name + '</a>');
+            }
+            $('#' + eleId).html(html.join(''));
+        },
+        addEventForClassify: function() {
+            var that = this;
+            $('#classify a').on('click', function(e) {
+
+                //if ($(this).hasClass('active')) {
+                //    return;
+                //}
+                $(this).addClass('active').siblings().removeClass('active');
+                var id = $(this).attr('data-id');
+                if (id) {
+                    $('#profession_content').show();
+                } else {
+                    $('#profession').html('');
+                    $('#profession_content').hide();
+                }
+                var profession = that.getProfessionData(id);
+                if (profession && profession.length > 0) {
+                    that.renderCommon('profession', profession);
+                    that.addEventForProfession();
+                } else {
+                    $('#profession').html('');
+                    $('#profession_content').hide();
+                }
+
+                //$('#profession a').removeClass('active');
+                //if (id) {
+                //    $('#profession_content').show();
+                //    $('#profession a').hide();
+                //    $('#profession a.' + id).show();
+                //    $('#profession a.both').show().addClass('active');
+                //} else {
+                //    $('#profession_content').hide();
+                //}
+                that.getProfession(1);
+            });
         },
         addEventHandle: function() {
             var that = this;
             $('#batch a').on('click', function(e) {
-                if ($(this).hasClass('active')) {
-                    return;
-                }
+                //if ($(this).hasClass('active')) {
+                //    return;
+                //}
                 $(this).addClass('active').siblings().removeClass('active');
                 var id = $(this).attr('data-id');
-                if (id) {
-                    $('#classify a').hide();
-                    $('#classify a.' + id).show();
-                } else {
-                    $('#classify a').show();
-                }
-                $('#classify a.both').show().addClass('active').siblings().removeClass('active');
+                $('#profession').html('');
                 $('#profession_content').hide();
-                $('#profession a').removeClass('active');
+                that.renderCommon('classify', that.getClassify(id));
+                that.addEventForClassify();
+                //if (id) {
+                //    $('#classify a').hide();
+                //    $('#classify a.' + id).show();
+                //} else {
+                //    $('#classify a').show();
+                //}
+                //$('#classify a.both').show().addClass('active').siblings().removeClass('active');
+                //$('#profession_content').hide();
+                //$('#profession a').removeClass('active');
                 that.getProfession(1);
             });
 
-            $('#classify a').on('click', function(e) {
-
-                if ($(this).hasClass('active')) {
-                    return;
-                }
-                $(this).addClass('active').siblings().removeClass('active');
-                var id = $(this).attr('data-id');
-                $('#profession a').removeClass('active');
-                if (id) {
-                    $('#profession_content').show();
-                    $('#profession a').hide();
-                    $('#profession a.' + id).show();
-                    $('#profession a.both').show().addClass('active');
-                } else {
-                    $('#profession_content').hide();
-                }
-                that.getProfession(1);
-            });
-
+        },
+        addEventForProfession: function() {
+            var that = this;
             $('#profession a').on('click', function(e) {
-                if (!$(this).hasClass('active')) {
-                    $(this).addClass('active').siblings().removeClass('active');
-                    that.getProfession(1);
-                    return;
-                }
+                //if (!$(this).hasClass('active')) {
+                //    $(this).addClass('active').siblings().removeClass('active');
+                //    that.getProfession(1);
+                //    return;
+                //}
+
+                $(this).addClass('active').siblings().removeClass('active');
+                that.getProfession(1);
             });
         },
         getOptions: function() {
@@ -98,7 +179,8 @@ define(function (require) {
             $.get('/majored/getInitInfo.do', function(data) {
                 if ('0000000' === data.rtnCode) {
                     if (data.bizData.batchType) {
-                        that.render(data.bizData.batchType);
+                        that.data = data.bizData.batchType;
+                        that.render();
                     }
                 }
             });

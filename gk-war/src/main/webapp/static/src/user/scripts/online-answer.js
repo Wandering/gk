@@ -38,7 +38,7 @@ define(function (require) {
                     ask = ask.substring(0, 50);
                 }
 
-                html.push('<div class="detail-content">'
+                html.push('<a href="/question/question_detile.jsp?id=' + question.userId + '"><div class="detail-content">'
                     + '<div class="detail-header">'
                     + '<span class="order-number">' + (i + 1 + this.startSize) + '、</span>'
                     + '<span class="detail-title">' + ask + '</span>'
@@ -50,7 +50,7 @@ define(function (require) {
                        + '</div>');
                 }
 
-                html.push('</div>');
+                html.push('</div></a>');
             }
             return html.join('');
         },
@@ -60,7 +60,8 @@ define(function (require) {
         },
         getData: function(url, contentId, isAnswer) {
             var that = this;
-            $.get(url + 'startSize=' + this.startSize + '&endSize=' + this.endSize + '&isAnswer=' + isAnswer, function(data) {
+            var keywords = $('#keywords').val();
+            $.get(url + 'startSize=' + this.startSize + '&endSize=' + this.endSize + '&isAnswer=' + isAnswer + '&keyword=' + keywords, function(data) {
                 if ('0000000' === data.rtnCode) {
                     if (data.bizData.length > 0) {
                         that.next.show();
@@ -97,8 +98,12 @@ define(function (require) {
         });
 
         $('#search').on('click', function(e) {
-            var val = $('#keywords').val();
-            window.location.href = '/question/question.jsp?val=' + val;
+            //var val = $('#keywords').val();
+            //window.location.href = '/question/question.jsp?val=' + val;
+            var isAnswer =  $('.toggle-nav div.btn-selected').attr('data-isAnswer');
+            Question.startSize = 0;
+            Question.endSize = 5;
+            Question.getMyQuestion('detail_content_question', isAnswer);
         });
 
         $('.toggle-nav div.btn').on('click', function() {

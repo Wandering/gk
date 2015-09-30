@@ -25,7 +25,7 @@ define(function(require) {
             for (; i < len; i++) {
                 var question = data[i].question;
                 if (question) {
-                    html.push('<section class="ask-answer mt20">');
+                    html.push('<a href="/question/question_detile.jsp?id=' + question.userId + '"><section class="ask-answer mt20">');
                     html.push('<div class="ask mt20">');
                     html.push('<div class="head-img">');
                     var src = question.userIcon;
@@ -36,7 +36,6 @@ define(function(require) {
                     html.push('</div>');
                     html.push('<div class="head-info">');
                     var createTime = new Date(question.createTime).Format('yyyy-MM-dd hh:mm');
-                    console.log(createTime);
                     html.push('<h6>来自 ' + (question.userName || '匿名专家  ') + createTime + '</h6>');
                     var questions = question.questions;
                     var text = [];
@@ -51,7 +50,7 @@ define(function(require) {
                 if (answer) {
                     html.push(this.renderAnswer(answer));
                 }
-                html.push('</section>');
+                html.push('</section></a>');
             }
 
             if (this.startSize == 0) {

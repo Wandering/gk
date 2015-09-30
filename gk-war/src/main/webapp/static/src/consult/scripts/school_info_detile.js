@@ -33,6 +33,7 @@ define(function (require) {
             });
         },
         renderInfo: function(obj) {
+            var address = '院校地址：' + (obj.address || '');
             $('#info_content').html('<img class="fl" src="' + (obj.universityImage || '/static/src/common/images/kqbk_banner_default.png') + '" />'
                                     + '<div class="info">'
                                         + '<ul>'
@@ -145,7 +146,7 @@ define(function (require) {
             tabContent.push('<table border="0" cellpadding="0" cellspacing="0">'
                 + '<thead>'
                 + '<tr>'
-                + '<th class="name">专业名称</th>'
+                + '<th  class="name">专业名称</th>'
                 + '<th>批次</th>'
                 + '<th>科类</th>'
                 + '<th>计划人数</th>'
@@ -156,12 +157,12 @@ define(function (require) {
                 + '<tbody>');
             for (var j = 0, infolen = infos.length; j < infolen; j++) {
                 tabContent.push('<tr>'
-                    + '<td class="name">' + (infos[j].majoredName || '') + '</td>'
-                    + '<td>' + (infos[j].batch || '') + '</td>'
-                    + '<td>' + (infos[j].subject || '') + '</td>'
-                    + '<td>' + (infos[j].planNumber || '') + '</td>'
-                    + '<td>' + (infos[j].schoolLength || '') + '</td>'
-                    + '<td>' + (infos[j].feeStandard || '') + '</td>'
+                    + '<td width="50%" class="name">' + (infos[j].majoredName || '') + '</td>'
+                    + '<td width="10%">' + (infos[j].batch || '') + '</td>'
+                    + '<td width="10%">' + (infos[j].subject || '') + '</td>'
+                    + '<td width="10%">' + (infos[j].planNumber || '') + '</td>'
+                    + '<td width="10%">' + (infos[j].schoolLength || '') + '</td>'
+                    + '<td width="10%">' + (infos[j].feeStandard || '') + '</td>'
                     + '</tr>');
             }
             tabContent.push('</tbody>'

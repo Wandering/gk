@@ -184,7 +184,7 @@ define(function (require) {
         var scoreV = $('#score-input').val().trim();
         var batchV = $('input[name="batch"]:checked').val();
         var subjectTypeV = $('input[name="subjectType"]:checked').val();
-        var yzmDreamV = $('#college-yzm').val().trim();
+        var yzmDreamV = $('#yzmCollege').val().trim();
         if (scoreV == '') {
             $('.error-tips').text('请输入分数').fadeIn(1000).fadeOut(1000);
             return false;
@@ -212,8 +212,8 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
-                //console.log(res)
-                if (res.rtnCode == "1000006") {
+                console.log(res)
+                if (res.rtnCode == "0100006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
                     $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
                     return;
                 }
@@ -222,7 +222,8 @@ define(function (require) {
                     $('#score-num').text(scoreV+"分");
                     $('#batchV').text(batchV);
                     $('#subjectTypeV').text(subjectTypeV);
-                    var dataJson = res.bizData.result.data;
+                    var data = $.parseJSON(res.bizData);
+                    var dataJson = data.result.data;
 
                     if (!dataJson) {
                         $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
@@ -249,16 +250,22 @@ define(function (require) {
 
     $('#volunteer-flow3-layer').on('click','.close-btn',function(){
         $('#volunteer-flow3-layer,.tansLayer').hide();
+        $('#college-yzm').attr('src','/verifyCode/randomVerifyCode.do?type=1&code=' + Math.random());
     });
+
+
+    $('#dreanSchoolBtn').on('click',function(){
+        $('#volunteer-flow3-layer,.tansLayer').hide();
+        $('#college-yzm').attr('src','/verifyCode/randomVerifyCode.do?type=1&code=' + Math.random());
+        $('#main-volunteer-tabs li:eq(0)').click();
+    });
+
+
 
     // 院校评测验证码
     $('#yzmDreamSchool').on('click',function(){
         $('#yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=2&code=' + Math.random());
     }).attr('src','/verifyCode/randomVerifyCode.do?type=2');
-
-
-
-
     // 院校测评
     $('#evaluating-sub').on('click', function () {
         var dreamScoreV = $('#dream-score-input').val().trim();
@@ -292,7 +299,7 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
-                if (res.rtnCode == "1000006") {
+                if (res.rtnCode == "1000006" || res.rtnCode == "1000004") {
                     $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
                     return;
                 }
@@ -335,8 +342,9 @@ define(function (require) {
     });
 
     $('#dream-school-layer').on('click','.close-btn',function(){
-        $('#volunteer-flow3-layer,.tansLayer').hide();
-    })
+        $('#dream-school-layer,.tansLayer').hide();
+        $('#yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=2&code=' + Math.random());
+    });
 
     $('#precedence-yzmDreamSchool').on('click',function(){
         $('#precedence-yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=3&code=' + Math.random());
@@ -363,7 +371,7 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
-                if (res.rtnCode == "1000006") {
+                if (res.rtnCode == "1000006" || res.rtnCode == "1000004") {
                     $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
                     return;
                 }
@@ -391,11 +399,17 @@ define(function (require) {
 
                     $('#confirm').on('click', function(e) {
                         $('#precedence-school-layer,.tansLayer').hide();
+                        $('#precedence-yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=3&code=' + Math.random());
                     });
 
                 }
             }
         });
+    });
+
+    $('#precedence-school-layer').on('click','.close-btn',function(){
+        $('#precedence-school-layer,.tansLayer').hide();
+        $('#precedence-yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=3&code=' + Math.random());
     });
 
 
