@@ -16,8 +16,8 @@ public class CaptchaUtil {
         //产生Image对象的Graphics对象,改对象可以在图像上进行各种绘制操作
         Graphics g = image.getGraphics();
         g.fillRect(0, 0, image.getWidth(),image.getHeight());
-        g.setFont(CaptchaConst.FIXEDSYS);
-//        g.setFont(CaptchaConst.BASE_FONTS[random.nextInt(4)]);
+//        g.setFont(CaptchaConst.FIXEDSYS);
+        g.setFont(CaptchaConst.BASE_FONTS[random.nextInt(4)]);
 //        g.setFont(CaptchaConst.FONT_NEWROMAN);
 
         g.setColor(CaptchaConst.PURPLE_COLOR);
@@ -39,7 +39,11 @@ public class CaptchaUtil {
             g.translate(0, 0);
             g.setColor(new Color(red, green, blue));
 //            g.drawString(rand,CaptchaConst.FONT_SPACING , 16);
-            g.drawString(rand, (i + 1) * CaptchaConst.FONT_SPACING, CaptchaConst.TRANSLATE_START);
+            if(i==1){
+                g.drawString(rand, CaptchaConst.FONT_SPACING, CaptchaConst.TRANSLATE_START);
+            }else {
+                g.drawString(rand, i* CaptchaConst.FONT_SPACING, CaptchaConst.TRANSLATE_START);
+            }
         }
         g.dispose();
         g=null;

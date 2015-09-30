@@ -28,7 +28,7 @@
                  <span>
                      <input type="text" placeholder="" id="key_words"/>
                      <input type="button" value="搜索" id="search"/>
-                     <a target="_blank" href="/question/ask.jsp">我要提问</a>
+                     <%--<a target="_blank" href="/question/ask.jsp">我要提问</a>--%>
                 </span>
             </div>
         </section>

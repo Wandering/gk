@@ -30,8 +30,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,16 +68,16 @@ public class QuestionController extends BaseController {
 
         Integer freeStatus = null;
 
-        String word = null;
-        if(!StringUtils.isEmpty(keyword)){
-            try {
-                word = (new String(keyword.getBytes("ISO-8859-1"),"UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
-            }
-        }
+//        String word = null;
+//        if(!StringUtils.isEmpty(keyword)){
+//            try {
+//                word = (new String(keyword.getBytes("ISO-8859-1"),"UTF-8"));
+//            } catch (UnsupportedEncodingException e) {
+//                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
+//            }
+//        }
 
-        List<QuestionDetailBean> questionDetailBeans = questionService.findQuestionAnswerPage(word,freeStatus, null,1 , 7, startSize, endSize);
+        List<QuestionDetailBean> questionDetailBeans = questionService.findQuestionAnswerPage(keyword,freeStatus, null,1 , 7, startSize, endSize);
 
         List<QuestionAnswerBean> questionAnswerBeans = new ArrayList<QuestionAnswerBean>();
 
@@ -148,6 +146,7 @@ public class QuestionController extends BaseController {
                 questionDetailDto.setDisableNum(disableNum);
                 questionDetailDto.setDisableStatus(questionDetail.getDisableStatus());
                 questionDetailDto.setCreateTime(questionDetail.getCreateTime());
+                questionDetailDto.setQuestionId(questionDetail.getQuestionId());
                 questionAnswerBean.setQuestion(questionDetailDto);
 
                 questionAnswerBeans.add(questionAnswerBean);
@@ -181,16 +180,16 @@ public class QuestionController extends BaseController {
 
         Integer freeStatus = null;
 
-        String word = null;
-        if(!StringUtils.isEmpty(keyword)){
-            try {
-                word = (new String(keyword.getBytes("ISO-8859-1"),"UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
-            }
-        }
+//        String word = null;
+//        if(!StringUtils.isEmpty(keyword)){
+//            try {
+//                word = (new String(keyword.getBytes("ISO-8859-1"),"UTF-8"));
+//            } catch (UnsupportedEncodingException e) {
+//                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
+//            }
+//        }
 
-        List<QuestionDetailBean> questionDetailBeans = questionService.findHotQuestionAnswerPage(word,freeStatus, null,1 , 7, startSize, endSize);
+        List<QuestionDetailBean> questionDetailBeans = questionService.findHotQuestionAnswerPage(keyword,freeStatus, null,1 , 7, startSize, endSize);
 
         List<QuestionAnswerBean> questionAnswerBeans = new ArrayList<QuestionAnswerBean>();
 
@@ -259,6 +258,7 @@ public class QuestionController extends BaseController {
                 questionDetailDto.setDisableNum(disableNum);
                 questionDetailDto.setDisableStatus(questionDetail.getDisableStatus());
                 questionDetailDto.setCreateTime(questionDetail.getCreateTime());
+                questionDetailDto.setQuestionId(questionDetail.getQuestionId());
                 questionAnswerBean.setQuestion(questionDetailDto);
 
                 questionAnswerBeans.add(questionAnswerBean);

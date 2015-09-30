@@ -213,7 +213,7 @@ define(function (require) {
             },
             success: function (res) {
                 console.log(res)
-                if (res.rtnCode == "1000006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
+                if (res.rtnCode == "0100006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
                     $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
                     return;
                 }
