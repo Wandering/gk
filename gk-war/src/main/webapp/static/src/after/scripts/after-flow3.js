@@ -23,8 +23,13 @@ define(function (require) {
             success: function (res) {
                 console.log(res);
 
+                if (res.rtnCode == "0100006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
+                    $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+                    return;
+                }
                 if (res.rtnCode == "0000000") {
-
+                    var data = $.parseJSON(res.bizData);
+                    console.log(data.data)
 
                 }
             }
