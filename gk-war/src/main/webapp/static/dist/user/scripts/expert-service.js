@@ -46,7 +46,7 @@ define(function (require) {
                     if (res.rtnCode == '0000000') {
                         if(res.bizData.length == '0'){
                             $('.content-list').addClass('no-msg').html('对不起，暂无数据 ').fadeIn();
-                            return false;
+                            //return false;
                         }
                         var template = '';
                         $.each(res.bizData, function (i, v) {
@@ -78,9 +78,10 @@ define(function (require) {
         pointList.getList(pointList.num, pointList.size);
     });
     pointList.btnSearch.click(function () {
+        pointList.renderContainer.html('');
         pointList.getList(pointList.num, pointList.size, pointList.search.val());
     });
-    //搜索
+    ////搜索
     //pointList.search.keydown(function () {
     //    if (event.keyCode == 13) {
     //        pointList.getList(pointList.num, pointList.size, pointList.search.val());

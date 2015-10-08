@@ -30,6 +30,8 @@ public class ServletPathConst {
         MAPPING_URLS.put("/orders/createOrders.do","");
         MAPPING_URLS.put("/product/findProductPage.do","");
         MAPPING_URLS.put("/product/findProduct.do","");
-
+        MAPPING_URLS.put("/guide/batch.do","");
+        MAPPING_URLS.put("/guide/school.do","");
+        MAPPING_URLS.put("/guide/report.do","");
     }
 }

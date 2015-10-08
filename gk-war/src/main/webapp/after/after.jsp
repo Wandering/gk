@@ -9,9 +9,9 @@
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
-<div class="content">
-    <%@ include file="/common/banner-wipe.jsp"%>
-</div>
+<%--<div class="content">--%>
+    <%--<%@ include file="/common/banner-wipe.jsp"%>--%>
+<%--</div>--%>
 <div class="w1000">
     <div class="content-title">
         <p class="fl w40"></p>

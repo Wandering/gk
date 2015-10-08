@@ -18,7 +18,8 @@ html {
  * Remove default margin.
  */
 body {
-  margin: 0; }
+  margin: 0;
+  font-family: "Microsoft YaHei","Helvetica Neue", Helvetica, Arial, sans-serif; }
 
 ul, li {
   margin: 0;
@@ -401,7 +402,8 @@ input, textarea {
     margin-right: 100px; }
   .header .main-menu > li {
     display: inline-block;
-    position: relative; }
+    position: relative;
+    float: left; }
     .header .main-menu > li a {
       display: inline-block;
       height: 50px;
@@ -1013,6 +1015,9 @@ a.next-btn:hover {
     .flow-main-list li.item p.txt {
       margin: 0 auto;
       display: block; }
+    .flow-main-list li.item img {
+      width: 42px;
+      height: 37px; }
     .flow-main-list li.item p.txt {
       color: #878787;
       font-size: 12px;
@@ -1168,7 +1173,7 @@ a.next-btn:hover {
   padding-left: 20px; }
 
 .detile-header {
-  height: 20px;
+  overflow: hidden;
   font-size: 16px; }
 
 .order-number {
@@ -1209,7 +1214,7 @@ a.next-btn:hover {
     .hot-list li .title-info h3 {
       font-size: 16px;
       color: #333;
-      margin: 10px 0;
+      margin: 0 0 10px 0;
       overflow: hidden;
       white-space: nowrap; }
     .hot-list li .title-info h6 {

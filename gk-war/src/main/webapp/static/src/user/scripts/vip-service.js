@@ -99,4 +99,25 @@ define(function (require) {
         });
     });
 
+
+    //各地招办联系方式
+    $.get('/agent/getAgent.do', function (res) {
+        if (res.rtnCode == '0000000') {
+            var dataJson = res.bizData;
+            var addressHtml = ''
+            $.each(dataJson, function (i, v) {
+                var address = v.address;
+                var name = v.name;
+                var telphone = v.telphone;
+                addressHtml+= '<div class="col-3">'
+                + '<p class="area-name">' + address + '</p>'
+                + '<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">' + telphone + '</span>'+ name + '</p>'
+                + '</div>';
+                $('#address-box').html(addressHtml);
+            });
+        } else {
+            alert(res.msg);
+        }
+    });
+
 });

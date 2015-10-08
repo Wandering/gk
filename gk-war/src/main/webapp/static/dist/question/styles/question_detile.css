@@ -18,7 +18,8 @@ html {
  * Remove default margin.
  */
 body {
-  margin: 0; }
+  margin: 0;
+  font-family: "Microsoft YaHei","Helvetica Neue", Helvetica, Arial, sans-serif; }
 
 ul, li {
   margin: 0;
@@ -401,7 +402,8 @@ input, textarea {
     margin-right: 100px; }
   .header .main-menu > li {
     display: inline-block;
-    position: relative; }
+    position: relative;
+    float: left; }
     .header .main-menu > li a {
       display: inline-block;
       height: 50px;
@@ -1077,7 +1079,8 @@ html {
  * Remove default margin.
  */
 body {
-  margin: 0; }
+  margin: 0;
+  font-family: "Microsoft YaHei","Helvetica Neue", Helvetica, Arial, sans-serif; }
 
 ul, li {
   margin: 0;
@@ -1460,7 +1463,8 @@ input, textarea {
     margin-right: 100px; }
   .header .main-menu > li {
     display: inline-block;
-    position: relative; }
+    position: relative;
+    float: left; }
     .header .main-menu > li a {
       display: inline-block;
       height: 50px;

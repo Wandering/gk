@@ -44,7 +44,7 @@ define(function (require) {
             html.push('<div class="detile-header">');
             html.push('<span class="order-number">' + (i + (page - 1) * 8 + 1) + '</span>');
             html.push('<span class="detile-title">' + list[i].title + '</span>');
-            html.push(' <span class="fr">上传时间：' + new Date(list[i].lastModDate).Format('yyyy-MM-dd hh-mm') + '</span>');
+            html.push(' <span class="fr">上传时间：' + new Date(list[i].lastModDate).Format('yyyy-MM-dd hh:mm') + '</span>');
             html.push('</div>');
             html.push('<div class="detile-info mt20">');
             html.push(list[i].summary);

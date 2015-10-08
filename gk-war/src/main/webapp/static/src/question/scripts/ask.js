@@ -8,9 +8,9 @@ define(function (require) {
         var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
         return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
     }
-    if (!GetCookie("gkuser") || GetCookie("gkuser") == '""') {
-        window.location.href = '/login/login.jsp';
-    }
+    //if (!GetCookie("gkuser") || GetCookie("gkuser") == '""') {
+    //    window.location.href = '/login/login.jsp';
+    //}
 
     function getUrLinKey(name) {
         var reg = new RegExp("(^|\\?|&)" + name + "=([^&]*)(\\s|&|$)", "i");
@@ -123,6 +123,15 @@ define(function (require) {
                     } else {
                         $('#error').show().html(data.msg);
                     }
+
+                    if ('1000004' === data.rtnCode) {
+                        $('#error_tip').html(data.msg + ",请<a target='_blank' href='/login/login.jsp'>登录</a>");
+                        $('#error_tip').show();
+                    }
+
+
+
+
                 },
                 error: function(data) {
                     flag = false;

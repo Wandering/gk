@@ -18,7 +18,8 @@ html {
  * Remove default margin.
  */
 body {
-  margin: 0; }
+  margin: 0;
+  font-family: "Microsoft YaHei","Helvetica Neue", Helvetica, Arial, sans-serif; }
 
 ul, li {
   margin: 0;
@@ -401,7 +402,8 @@ input, textarea {
     margin-right: 100px; }
   .header .main-menu > li {
     display: inline-block;
-    position: relative; }
+    position: relative;
+    float: left; }
     .header .main-menu > li a {
       display: inline-block;
       height: 50px;
@@ -1058,7 +1060,7 @@ a.next-btn:hover {
         box-sizing: border-box;
         width: 100%;
         font-size: 13px;
-        color: #bebdbd;
+        color: #252323;
         border: 1px solid #e5e5e5 !important;
         height: 45px;
         line-height: 45px;
