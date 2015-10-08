@@ -453,22 +453,7 @@
             <a class="evaluating-result-close close-btn">关闭</a>
         </div>
     </div>
-
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <%@ include file="/common/footer.jsp"%>
 <script>
     seajs.use("/static/src/before/scripts/before");
