@@ -80,6 +80,7 @@
     text-decoration: underline; }
 
 .volunteer-flow2 {
+  clear: both;
   overflow: hidden;
   margin: 20px 0; }
   .volunteer-flow2 .info1 {
@@ -95,7 +96,17 @@
     background: #f9f9f9;
     border-top: none;
     padding: 20px;
-    line-height: 28px; }
+    line-height: 28px;
+    position: relative; }
+    .volunteer-flow2 .info2 .btn {
+      position: absolute;
+      right: 20px;
+      top: 50px;
+      background: #e24333;
+      border-radius: 3px;
+      color: #fff;
+      padding: 2px 18px;
+      font-size: 14px; }
   .volunteer-flow2 h3 {
     color: #444;
     font-size: 20px;

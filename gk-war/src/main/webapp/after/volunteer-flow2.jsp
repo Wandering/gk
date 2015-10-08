@@ -9,9 +9,6 @@
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
-<div class="content">
-    <%@ include file="/common/banner-wipe.jsp"%>
-</div>
 <div class="w1000">
     <div class="content-title">
         <p class="fl w40"></p>
@@ -37,16 +34,16 @@
     <div class="fr">
         <div class="volunteer-flow2">
             <div class="info1">
-                您的分数是<strong>450分</strong>、<strong>理工类</strong>； <br/>
-                依据2015年批次控制线，您的分数达到<strong>二批本科</strong>；<br/>
+                您的分数是<strong id="scoresNum">450分</strong>、<strong id="subType">理工类</strong>； <br/>
+                依据2015年批次控制线，您的分数达到<strong id="batch">二批本科</strong>；<br/>
                 请选择一下批次，进入院校推荐。
             </div>
             <div class="info2">
                 <h3>普通第二批本科院校</h3>
                 2015年控制线：<strog>文科 467分</strog>，<strong>理科440分</strong>
+                <input type="button" class="btn" onclick="window.location.href='/after/volunteer-flow3.jsp'" value="开始"/>
             </div>
             <div class="form-control-btn">
-                <input type="button" class="btn" onclick="window.location.href='/after/volunteer-flow3.jsp'" value="开始"/>
                 <input type="button" class="prev-btn" onclick="window.location.href='/after/after.jsp'" value="返回上一步"/>
             </div>
         </div>

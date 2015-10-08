@@ -33,10 +33,32 @@ define(function (require) {
                 },
                 success: function (res) {
                     console.log(res)
-
+                    if (res.rtnCode == "0100006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
+                        $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
+                        return;
+                    }
                     if (res.rtnCode == "0000000") {
+                        var data = $.parseJSON(res.bizData);
+                        $('#volunteer-flow1').hide();
+                        $('#volunteer-flow2').show();
+                        console.log(data)
+                        $('#scoresNum').text(aggregateScoreV);
+                        $('#subType').text(subjectTypeV+"类");
+                        $.each(data.data, function (i, v) {
+                            $('#batch').text();
+                            var schoolListHtml = ''
+                                +'<div class="info2">'
+                                +'<h3>普通'+ v.m_batch +'院校</h3>'
+                                +'2015年控制线：<strong>文科分</strong>，<strong>理科分</strong>'
+                                +'<a href="javascript:;" onclick=""  class="btn" id="">开始</a>'
+                                +'</div>';
+                            $('#school-list-info').append(schoolListHtml);
+                        });
+
+
 
                     }
+
                 }
             });
 
@@ -45,6 +67,12 @@ define(function (require) {
 
 
 
+        });
+
+
+        $('#prev-btn').on('click',function(){
+            $('#volunteer-flow1').show();
+            $('#volunteer-flow2').hide();
         });
 
     })
