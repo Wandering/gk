@@ -42,7 +42,11 @@ define(function(require) {
                     for (var j = 0, jlen = questions.length; j < jlen; j++) {
                         text.push(questions[j].text);
                     }
-                    html.push('<h3>' + text.join('').substring(0, 200) + '...</h3>');
+                    var textStr = text.join('');
+                    if (textStr.length > 200) {
+                        textStr =  textStr.substring(0, 200) + '...';
+                    }
+                    html.push('<h3>' + textStr + '</h3>');
                     html.push('</div></div>');
                 }
 
@@ -80,7 +84,10 @@ define(function(require) {
                 }
             }
             var shortText = text.join('');
-            html.push('<div class="right">' + shortText.substring(0, 200) + '...</div>');
+            if (shortText.length > 200) {
+                shortText =  shortText.substring(0, 200) + '...';
+            }
+            html.push('<div class="right">' + shortText + '</div>');
             html.push('</li></ul>');
             return html.join('');
         },

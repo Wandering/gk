@@ -40,7 +40,7 @@ define(function (require) {
             }
             var contactPhone = '联系电话：' + (obj.contactPhone || '');
             var phoneClassName = '';
-            if (phoneClassName.length > 16) {
+            if (contactPhone.length > 16) {
                 phoneClassName = 'integet-line';
             }
 
@@ -89,7 +89,12 @@ define(function (require) {
             var tab = [];
             var tabContent = [];
             for (var i = 0, len = data.length; i < len; i++) {
-                tab.push('<li>' + data[i].title + '</li>');
+                if (data[i].title.indexOf('年')) {
+                    var year = data[i].title.substring(0, 4);
+                    tab.push('<li>' + data[i].title.replace(year, year + '年') + '</li>');
+                } else {
+                    tab.push('<li>' + data[i].title + '</li>');
+                }
                 var infos = data[i].infos;
                 tabContent.push('<div style="display:none" class="school-table mt20" id="school_table_' + i + '">'
                                 + '<table border="0" cellpadding="0" cellspacing="0">'
