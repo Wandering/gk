@@ -27,12 +27,18 @@ define(function (require) {
             if (!flag) {
                 flag = true;
                 $.get('/appraisal/lstest.do', function(data) {
+                    console.log(data.rtnCode)
                     flag = true;
                     if ('0000000' === data.rtnCode && data.bizData) {
                         window.location.href = data.bizData;
-                    } if ('0100006' === data.rtnCode) {
-                        window.location.href = '/user/vip-service.jsp';
-                    } else {
+                    }
+                    if ('0100006' === data.rtnCode) {
+                        $('#error_tip').html('您好，您不是VIP用户，请进入<a href="/user/vip-service.jsp">个人中心</a>进行VIP升级。');
+                        $('#error_tip').show();
+                    } if ('1000004' === data.rtnCode) {
+                        $('#error_tip').html(data.msg + ",请<a target='_blank' href='/login/login.jsp'>登录</a>");
+                        $('#error_tip').show();
+                    }else {
                         $('#error_tip').html(data.msg);
                         $('#error_tip').show();
                     }
