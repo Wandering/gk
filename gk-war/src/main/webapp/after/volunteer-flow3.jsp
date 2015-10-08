@@ -9,7 +9,6 @@
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
-
 <div class="w1000">
     <div class="content-title">
         <p class="fl w40"></p>
@@ -24,7 +23,6 @@
     </div>
 </div>
 <h6 class="w1000 ta content-title-sub">独创分差位次修正算法，为您科学推荐报考院校。原来填报志愿可以如此简单！</h6>
-
 <div class="w1000 main-volunteer">
     <div class="volunteer-flow3">
         <table class="volunteer-flow3-table">
@@ -168,8 +166,8 @@
 
 
 
-<div class="tansLayer" style="display: none;"></div>
-<div class="volunteer-flow3-layer" style="display: none;">
+<div class="tansLayer" style="display: block;"></div>
+<div class="volunteer-flow3-layer" style="display: block;">
     <div class="top-close">
         <a href="javascript:;" class="close-btn close-flow3-layer">x</a>
     </div>
@@ -264,7 +262,7 @@
 
 <%@ include file="/common/footer.jsp"%>
 <script>
-    seajs.use("/static/src/after/scripts/after");
+    seajs.use("/static/src/after/scripts/after-flow3");
 </script>
 
 
