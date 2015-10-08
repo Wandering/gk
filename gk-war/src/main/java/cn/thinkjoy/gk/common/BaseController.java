@@ -47,7 +47,6 @@ public class BaseController{
 		Long id = Long.valueOf(getCookieValue());
 		String key = UserRedisConst.USER_KEY + id;
 		UserAccountPojo userAccountBean  = null;
-		RedisUtil.getInstance().del(key);
 		if(!RedisUtil.getInstance().exists(key)){
 			userAccountBean = userAccountExService.findUserAccountPojoById(id);
 			if(null!=userAccountBean){

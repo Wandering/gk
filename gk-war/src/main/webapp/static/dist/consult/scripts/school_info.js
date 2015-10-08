@@ -41,6 +41,7 @@ define(function(require) {
             var that = this;
             $('.options a').on('click', function(e) {
                 var parentId = $(this).parent().attr('id');
+                that.curPage = 1;
                 if ('universityFeature' === parentId) {
                     $(this).toggleClass('active');
                     that.getSchoolList(1);

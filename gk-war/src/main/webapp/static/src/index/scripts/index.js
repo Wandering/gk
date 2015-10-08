@@ -111,16 +111,23 @@ define(function (require) {
                         var text = answers[c].text;
                         if (answers[c].text.length > 300) {
                             text = text.substring(0, 300);
+                            text += '...';
                         }
                         content.push('<p>' + text + '</p>');
                         if (answers[c].img) {
                             content.push('<p class="ta"><img src="' + answers[c].img + '" /></p>');
                         }
                     }
+
+                    var title = title.join('');
+                    if (title.length > 50) {
+                        title = title.substring(0, 50);
+                        title += '...';
+                    }
                     html.push('<a href="/question/question_detile.jsp?id=' + question.questionId + '"><div class="detile-content mt20">'
                     + '<div class="detile-header">'
                     + '<span class="order-number">' + (i + 1) + '</span>'
-                    + '<span class="detile-title">' + title.join('').substring(0, 50) + '</span>'
+                    + '<span class="detile-title">' + title + '</span>'
                     + '<span class="fr">' + time + '</span>'
                     + '</div>'
                     + '<div class="detile-info mt20">'
