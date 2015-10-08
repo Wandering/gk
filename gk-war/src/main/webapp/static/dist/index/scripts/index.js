@@ -70,13 +70,13 @@ define(function (require) {
                 var template = '';
                 $.each(dataJson, function (i, v) {
                     template += '<li>' +
-                    '<div class="icon ta"> ' +
+                    '<a href="/consult/gk_hot_detile.jsp?method=hot&id=' + v.id + '"><div class="icon ta"> ' +
                     '<span>' + getTime1(v.lastModDate) + '</span> ' +
                     '</div> ' +
                     '<div class="title-info"> ' +
                     '<h3>' + v.hotInformation + '</h3> ' +
                     '<h6>' + v.informationSubContent + '</h6> ' +
-                    '</div> ' +
+                    '</div></a>' +
                     '</li>'
                 });
                 $('.hot-list').html(template);
@@ -156,29 +156,5 @@ define(function (require) {
         Question.getHot('tab_1');
     })();
 
-
-    // 各地招办联系方式
-    //$.getJSON('/agent/getAgent.do', function (res) {
-    //    console.log(res)
-    //    var dataJson = res.bizData;
-    //    if(res.rtnCode=="0000000"){
-    //        for (var i = 0; i < dataJson.length; i++) {
-    //            var address = dataJson[i].address;
-    //            var name = dataJson[i].name;
-    //            var telphone = dataJson[i].telphone;
-    //            console.log(address)
-    //            console.log(name)
-    //            console.log(telphone)
-    //            var addressHtml = ''
-    //                + '<div class="col-3">'
-    //                + '<p class="area-name">' + address + '</p>'
-    //                + '<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">' + telphone + '</span>'+ name + '</p>'
-    //                + '</div>';
-    //            $('#address-box').html(addressHtml);
-    //        }
-    //    }
-    //
-    //
-    //})
 
 });

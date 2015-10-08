@@ -36,7 +36,7 @@ define(function(require) {
                     html.push('</div>');
                     html.push('<div class="head-info">');
                     var createTime = new Date(question.createTime).Format('yyyy-MM-dd hh:mm');
-                    html.push('<h6>来自 ' + (question.userName || '匿名专家  ') + createTime + '</h6>');
+                    html.push('<h6>来自 ' + (question.userName || '匿名专家') + createTime + '</h6>');
                     var questions = question.questions;
                     var text = [];
                     for (var j = 0, jlen = questions.length; j < jlen; j++) {
