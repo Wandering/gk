@@ -88,7 +88,7 @@ public class LoginController extends BaseController {
 	public String logout() throws Exception {
 //		boolean status = true;
 		try {
-			RedisUtil.getInstance().del(UserRedisConst.USER_KEY + getCookieValue());
+//			RedisUtil.getInstance().del(UserRedisConst.USER_KEY + getCookieValue());
 			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, null, CookieTimeConst.CLEAN_COOKIE));
 		}catch(Exception e){
 //			status = false;
