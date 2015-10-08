@@ -9,9 +9,6 @@
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
-<%--<div class="content">--%>
-    <%--<%@ include file="/common/banner-wipe.jsp"%>--%>
-<%--</div>--%>
 <div class="w1000">
     <div class="content-title">
         <p class="fl w40"></p>
@@ -39,18 +36,26 @@
         </div>
     </div>
     <div class="fr">
+        <div class="error-tips hide"></div>
         <form action="" class="zd-form">
             <div class="form-control">
                 <label>您的考号</label>
-                <input type="text" class="input" name="" placeholder="请输入您的考号" id=""/>
+                <input type="text" class="input" id="candidateNumber-input" name="" placeholder="请输入您的考号" id=""/>
             </div>
             <div class="form-control">
                 <label>您的分数</label>
-                <input type="text" class="input" name="" placeholder="请输入您的分数" id=""/>
+                <input type="text" class="input" id="aggregateScore-input" name="" placeholder="请输入您的分数" id=""/>
             </div>
             <div class="form-control">
                 <label>您的位次</label>
-                <input type="text" class="input" name="" placeholder="请输入您的位次" id=""/>
+                <input type="text" class="input" id="ranking-input" name="" placeholder="请输入您的位次" id=""/>
+            </div>
+            <div class="category mt10">
+                <span class="t">选择文理科：</span>
+                <div class="group-radio">
+                    <label><input type="radio" name="subjectType" value="文史" />文史</label>
+                    <label><input type="radio" name="subjectType" value="理工" />理工</label>
+                </div>
             </div>
             <div class="form-control yzm-control">
                 <label>验证码</label>
@@ -58,14 +63,15 @@
                 <img src="/static/dist/after/images/yzm.png" alt=""/>
             </div>
             <div class="form-control-btn">
-                <input type="button" class="btn" id="volunteer-flow1-btn" onclick="window.location.href='/after/volunteer-flow2.jsp'" value="下一步"/>
+                <input type="button" class="btn" id="volunteer-flow1-btn" value="下一步"/>
             </div>
 
         </form>
     </div>
 </div>
-
 <%@ include file="/common/footer.jsp"%>
-
+<script>
+    seajs.use("/static/src/after/scripts/after");
+</script>
 </body>
 </html>
