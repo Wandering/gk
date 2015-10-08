@@ -77,16 +77,16 @@
                 请选择一下批次，进入院校推荐。
             </div>
             <div class="school-list-info" id="school-list-info">
-                <div class="info2">
-                    <h3>普通第二批本科院校</h3>
-                    2015年控制线：<strong>文科 467分</strong>，<strong>理科440分</strong>
-                    <a href="/after/volunteer-flow3.jsp" class="btn">开始</a>
-                </div>
-                <div class="info2">
-                    <h3>普通第二批本科院校</h3>
-                    2015年控制线：<strong>文科 467分</strong>，<strong>理科440分</strong>
-                    <a href="/after/volunteer-flow3.jsp" class="btn">开始</a>
-                </div>
+                <%--<div class="info2">--%>
+                    <%--<h3>普通第二批本科院校</h3>--%>
+                    <%--2015年控制线：<strong>文科 467分</strong>，<strong>理科440分</strong>--%>
+                    <%--<a href="/after/volunteer-flow3.jsp" class="btn">开始</a>--%>
+                <%--</div>--%>
+                <%--<div class="info2">--%>
+                    <%--<h3>普通第二批本科院校</h3>--%>
+                    <%--2015年控制线：<strong>文科 467分</strong>，<strong>理科440分</strong>--%>
+                    <%--<a href="/after/volunteer-flow3.jsp" class="btn">开始</a>--%>
+                <%--</div>--%>
             </div>
             <div class="form-control-btn">
                 <input type="button" class="prev-btn" id="prev-btn" value="返回上一步"/>
@@ -94,9 +94,25 @@
         </div>
     </div>
 </div>
+
+<form id="forwardForm" method="post" action="/forward.do">
+    <%--<input type="hidden" name="m_candidateNumber" value="0" />--%>
+    <%--<input type="hidden" name="m_aggregateScore" value="390" />--%>
+    <%--<input type="hidden" name="m_ranking" value="722232" />--%>
+    <%--<input type="hidden" name="m_kelei" value="文史" />--%>
+    <%--<input type="hidden" name="m_batch_id" value="4" />--%>
+    <%--<input type="hidden" name="m_batch" value="高职（专科）" />--%>
+    <%--<input type="hidden" name="m_province_id" value="0" />--%>
+    <%--<input type="hidden" name="m_province" value="陕西" />--%>
+    <%--<input type="hidden" name="m_specialty_id" value="" />--%>
+    <%--<input type="hidden" name="m_specialty_name" value="" />--%>
+    <%--<input type="hidden" name="m_favorites_by_university_codes" value="" />--%>
+</form>
 <%@ include file="/common/footer.jsp"%>
 <script>
     seajs.use("/static/src/after/scripts/after");
+
+
 </script>
 </body>
 </html>

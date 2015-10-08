@@ -166,8 +166,8 @@
 
 
 
-<div class="tansLayer" style="display: block;"></div>
-<div class="volunteer-flow3-layer" style="display: block;">
+<div class="tansLayer" style="display: none;"></div>
+<div class="volunteer-flow3-layer" id="volunteer-flow3-layer" style="display: none;">
     <div class="top-close">
         <a href="javascript:;" class="close-btn close-flow3-layer">x</a>
     </div>
@@ -207,52 +207,48 @@
         <div class="info-result">
             <ul>
                 <li class="starA">
-                    <div class="title"  onclick="window.location.href='/after/volunteer-flow5.jsp'">
+                    <div class="title">
                         <span class="">A档（冲）</span>
                         <p>录取指数: <i class="starA-icon"></i></p>
                     </div>
-                    <div class="school-list">
-                        <div><a href="" class="school-name">西安交通大学</a><a href="" class="school-sel">选择</a></div>
-                        <div><a href="" class="school-name">西安交通大学</a><a href="" class="school-sel">选择</a></div>
+                    <div class="no-school hide" id="no-school0">
+                        <p>① 本录取指数下、没有合理院校可推荐；</p>
+                        <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
+                    <div class="school-list hide" id="school-list0"></div>
                 </li>
                 <li class="starB">
                     <div class="title">
                         <span>B档（稳）</span>
                         <p>录取指数: <i class="starB-icon"></i></p>
                     </div>
-                    <div class="school-list">
-                        <div><a href="" class="school-name">西安交通大学</a><a href="" class="school-sel">选择</a></div>
-                        <div><a href="" class="school-name">西安交通大学</a><a href="" class="school-sel">选择</a></div>
+                    <div class="no-school hide" id="no-school1">
+                        <p>① 本录取指数下、没有合理院校可推荐；</p>
+                        <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
+                    <div class="school-list hide" id="school-list1"></div>
                 </li>
                 <li class="starC">
                     <div class="title">
                         <span>C档（保）</span>
                         <p>录取指数: <i class="starC-icon"></i></p>
                     </div>
-                    <div class="no-school">
+                    <div class="no-school hide" id="no-school2">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
                         <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
-                    <div class="school-list">
-                        <div><a href="" class="school-name">西安交通大学</a><a href="" class="school-sel">选择</a></div>
-                        <div><a href="" class="school-name">西安交通大学</a><a href="" class="school-sel">选择</a></div>
-                    </div>
+                    <div class="school-list hide" id="school-list2"></div>
                 </li>
                 <li class="starD">
                     <div class="title">
                         <span>D档（垫）</span>
                         <p>录取指数: <i class="starD-icon"></i></p>
                     </div>
-                    <div class="no-school">
+                    <div class="no-school hide" id="no-school3">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
                         <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
-                    <div class="school-list">
-                        <div><a href="" class="school-name">西安交通大学</a><a href="" class="school-sel">选择</a></div>
-                        <div><a href="" class="school-name">西安交通大学</a><a href="" class="school-sel">选择</a></div>
-                    </div>
+                    <div class="school-list hide" id="school-list3"></div>
                 </li>
             </ul>
         </div>
@@ -263,6 +259,7 @@
 <%@ include file="/common/footer.jsp"%>
 <script>
     seajs.use("/static/src/after/scripts/after-flow3");
+    var params = decodeURIComponent('${params}');
 </script>
 
 

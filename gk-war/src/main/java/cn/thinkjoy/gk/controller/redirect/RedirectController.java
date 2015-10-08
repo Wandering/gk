@@ -63,7 +63,7 @@ public class RedirectController extends BaseController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/forward",method = RequestMethod.GET)
+    @RequestMapping(value = "/forward",method = RequestMethod.POST)
     public String forward(@RequestParam(value="params",required=false) String params,
                            @RequestParam(value="url",required=false) String url) throws Exception{
 
