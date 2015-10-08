@@ -9,9 +9,6 @@
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
-<%--<div class="content">--%>
-    <%--<%@ include file="/common/banner-wipe.jsp"%>--%>
-<%--</div>--%>
 <div class="w1000">
     <div class="content-title">
         <p class="fl w40"></p>
@@ -39,33 +36,67 @@
         </div>
     </div>
     <div class="fr">
-        <form action="" class="zd-form">
-            <div class="form-control">
-                <label>您的考号</label>
-                <input type="text" class="input" name="" placeholder="请输入您的考号" id=""/>
+
+        <div class="error-tips hide"></div>
+        <div class="volunteer-flow1" id="volunteer-flow1" style="display: block;">
+            <form action="" class="zd-form">
+                <div class="form-control">
+                    <label>您的考号</label>
+                    <input type="text" class="input" id="candidateNumber-input" name="" placeholder="请输入您的考号" id=""/>
+                </div>
+                <div class="form-control">
+                    <label>您的分数</label>
+                    <input type="text" class="input" id="aggregateScore-input" name="" placeholder="请输入您的分数" id=""/>
+                </div>
+                <div class="form-control">
+                    <label>您的位次</label>
+                    <input type="text" class="input" id="ranking-input" name="" placeholder="请输入您的位次" id=""/>
+                </div>
+                <div class="category mt10">
+                    <span class="t">选择文理科：</span>
+                    <div class="group-radio">
+                        <label><input type="radio" name="subjectType" value="文史" />文史</label>
+                        <label><input type="radio" name="subjectType" value="理工" />理工</label>
+                    </div>
+                </div>
+                <div class="form-control yzm-control">
+                    <label>验证码</label>
+                    <input type="text" class="input yzm" name="" placeholder="请填写验证码" id=""/>
+                    <img src="/static/dist/after/images/yzm.png" alt=""/>
+                </div>
+                <div class="form-control-btn">
+                    <input type="button" class="btn" id="volunteer-flow1-btn" value="下一步"/>
+                </div>
+            </form>
+        </div>
+
+        <div class="volunteer-flow2" id="volunteer-flow2" style="display:block;">
+            <div class="info1">
+                您的分数是<strong id="scoresNum"></strong>、<strong id="subType"></strong>； <br/>
+                依据2015年批次控制线，您的分数达到<strong id="batch"></strong>；<br/>
+                请选择一下批次，进入院校推荐。
             </div>
-            <div class="form-control">
-                <label>您的分数</label>
-                <input type="text" class="input" name="" placeholder="请输入您的分数" id=""/>
-            </div>
-            <div class="form-control">
-                <label>您的位次</label>
-                <input type="text" class="input" name="" placeholder="请输入您的位次" id=""/>
-            </div>
-            <div class="form-control yzm-control">
-                <label>验证码</label>
-                <input type="text" class="input yzm" name="" placeholder="请填写验证码" id=""/>
-                <img src="/static/dist/after/images/yzm.png" alt=""/>
+            <div class="school-list-info" id="school-list-info">
+                <div class="info2">
+                    <h3>普通第二批本科院校</h3>
+                    2015年控制线：<strong>文科 467分</strong>，<strong>理科440分</strong>
+                    <a href="/after/volunteer-flow3.jsp" class="btn">开始</a>
+                </div>
+                <div class="info2">
+                    <h3>普通第二批本科院校</h3>
+                    2015年控制线：<strong>文科 467分</strong>，<strong>理科440分</strong>
+                    <a href="/after/volunteer-flow3.jsp" class="btn">开始</a>
+                </div>
             </div>
             <div class="form-control-btn">
-                <input type="button" class="btn" id="volunteer-flow1-btn" onclick="window.location.href='/after/volunteer-flow2.jsp'" value="下一步"/>
+                <input type="button" class="prev-btn" id="prev-btn" value="返回上一步"/>
             </div>
-
-        </form>
+        </div>
     </div>
 </div>
-
 <%@ include file="/common/footer.jsp"%>
-
+<script>
+    seajs.use("/static/src/after/scripts/after");
+</script>
 </body>
 </html>
