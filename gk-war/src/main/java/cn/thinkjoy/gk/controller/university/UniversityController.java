@@ -188,7 +188,8 @@ public class UniversityController extends BaseController {
     public UniversityDto getUniversityDetail(){
         UniversityDto universityDto=new UniversityDto();
         String schoolCode=request.getParameter("code");
-        universityDto=iUniversityService.getUniversityDetail(schoolCode);
+        String batch =request.getParameter("batch");
+        universityDto=iUniversityService.getUniversityDetail(schoolCode,batch);
         return universityDto;
     }
 

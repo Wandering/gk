@@ -51,8 +51,8 @@ public class ExUniversityServiceImpl implements IExUniversityService {
 
 
     @Override
-    public UniversityDto getUniversityDetail(String schoolCode) {
-        return iUniversityDAO.getUniversityDetail(schoolCode);
+    public UniversityDto getUniversityDetail(String schoolCode,String batch) {
+        return iUniversityDAO.getUniversityDetail(schoolCode,batch);
     }
 
     @Override

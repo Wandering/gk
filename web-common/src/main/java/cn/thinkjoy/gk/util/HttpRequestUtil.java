@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +48,48 @@ public class HttpRequestUtil {
         HttpConnectionParams.setConnectionTimeout(client.getParams(), HTTP_TIME_OUT);
         HttpConnectionParams.setSoTimeout(client.getParams(),HTTP_SO_TIME_OUT);
         client.execute(httpGet);
+    }
+
+    /**
+     * post请求
+     * @param url         url地址
+     * @param jsonParam     参数
+     * @param noNeedResponse    不需要返回结果
+     * @return
+     */
+    public static String httpPost(String url,String jsonParam, boolean noNeedResponse) throws Exception{
+        //post请求返回结果
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        String jsonResult = null;
+        HttpPost method = new HttpPost(url);
+        try {
+            if (null != jsonParam) {
+                //解决中文乱码问题
+                StringEntity entity = new StringEntity(jsonParam, "utf-8");
+                entity.setContentEncoding("UTF-8");
+                entity.setContentType("application/json");
+                method.setEntity(entity);
+            }
+            HttpResponse result = httpClient.execute(method);
+            url = URLDecoder.decode(url, "UTF-8");
+            /**请求发送成功，并得到响应**/
+            if (result.getStatusLine().getStatusCode() == 200) {
+                try {
+                    /**读取服务器返回过来的json字符串数据**/
+                    jsonResult = EntityUtils.toString(result.getEntity());
+                    if (noNeedResponse) {
+                        return null;
+                    }
+                    /**把json字符串转换成json对象**/
+//                    jsonResult = JSONObject.fromObject(str);
+                } catch (Exception e) {
+                    throw e;
+                }
+            }
+        } catch (IOException e) {
+            throw e;
+        }
+        return jsonResult;
     }
 
     /**

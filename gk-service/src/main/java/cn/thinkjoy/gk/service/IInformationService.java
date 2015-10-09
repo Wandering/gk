@@ -11,4 +11,6 @@ public interface IInformationService {
     public List<Information> getAllInformation(Integer offset,Integer rows);
     public List<Information> getInformationByKey(String key,Integer offset,Integer rows);
     public Information getInformationContentById(Integer id);
+    public List<Information> getHotInformation(Integer offset, Integer rows);
+    boolean updateHotInformation(Integer id);
 }
