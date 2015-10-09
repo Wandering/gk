@@ -44,6 +44,13 @@ public class GuideController extends BaseController {
                         @RequestParam(value="m_ranking",required=false) String m_ranking,
             @RequestParam(value="code",required=false) String code) throws Exception{
 
+        if(StringUtils.isBlank(m_candidateNumber)
+                || StringUtils.isBlank(m_aggregateScore)
+                || StringUtils.isBlank(m_kelei)
+                || StringUtils.isBlank(m_ranking)
+                || StringUtils.isBlank(code)){
+            throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
+        }
 
         UserAccountPojo userAccountPojo = getUserAccountPojo();
 
@@ -114,6 +121,20 @@ public class GuideController extends BaseController {
                         @RequestParam(value="m_specialty_name",required=false) String m_specialty_name,
                         @RequestParam(value="m_favorites_by_university_codes",required=false) String m_favorites_by_university_codes
             ) throws Exception{
+
+        if(StringUtils.isBlank(m_candidateNumber)
+                || StringUtils.isBlank(m_aggregateScore)
+                || StringUtils.isBlank(m_kelei)
+                || StringUtils.isBlank(m_ranking)
+                || StringUtils.isBlank(m_batch_id)
+                || StringUtils.isBlank(m_batch)
+                || StringUtils.isBlank(m_province_id)
+                || StringUtils.isBlank(m_province)
+                || StringUtils.isBlank(m_specialty_id)
+                || StringUtils.isBlank(m_specialty_name)
+                || StringUtils.isBlank(m_favorites_by_university_codes)){
+            throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
+        }
 
         UserAccountPojo userAccountPojo = getUserAccountPojo();
 
