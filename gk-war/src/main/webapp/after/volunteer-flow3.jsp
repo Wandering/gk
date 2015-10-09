@@ -43,14 +43,17 @@
                         <section class="section-article">
                             <div class="search-content ta">
                                  <span>
-                                     <input type="text" class="open-flow3" placeholder="请输入院校名称"/>
-                                     <input type="button"  class="open-flow3" value="选择院校"/>
+                                     <input type="text" dataType="A" class="open-flow3" placeholder="请输入院校名称"/>
+                                     <input type="button" dataType="A"  class="open-flow3" value="选择院校"/>
                                 </span>
                             </div>
                         </section>
                         <div class="tips">
                             <strong>温馨提示：</strong>
                             <p>请准确无误的填写考号、分数及位次；所录入的信息一旦提交将不可更改。</p>
+                        </div>
+                        <div class="school-list-box">
+
                         </div>
                     </div>
                 </td>
@@ -74,8 +77,8 @@
                         <section class="section-article">
                             <div class="search-content ta">
                                  <span>
-                                     <input type="text"  class="open-flow3" placeholder="请输入院校名称"/>
-                                     <input type="button"  class="open-flow3" value="选择院校"/>
+                                     <input type="text" dataType="B" class="open-flow3" placeholder="请输入院校名称"/>
+                                     <input type="button" dataType="B"  class="open-flow3" value="选择院校"/>
                                 </span>
                             </div>
                         </section>
@@ -105,8 +108,8 @@
                         <section class="section-article">
                             <div class="search-content ta">
                                  <span>
-                                     <input type="text"  class="open-flow3" placeholder="请输入院校名称"/>
-                                     <input type="button"  class="open-flow3" value="选择院校"/>
+                                     <input type="text" dataType="C"  class="open-flow3" placeholder="请输入院校名称"/>
+                                     <input type="button" dataType="C"  class="open-flow3" value="选择院校"/>
                                 </span>
                             </div>
                         </section>
@@ -136,8 +139,8 @@
                         <section class="section-article">
                             <div class="search-content ta">
                                  <span>
-                                     <input type="text"  class="open-flow3" placeholder="请输入院校名称"/>
-                                     <input type="button"  class="open-flow3" value="选择院校"/>
+                                     <input type="text" dataType="D"  class="open-flow3" placeholder="请输入院校名称"/>
+                                     <input type="button" dataType="D"  class="open-flow3" value="选择院校"/>
                                 </span>
                             </div>
                         </section>
@@ -163,12 +166,15 @@
             </tbody>
         </table>
     </div>
+    <div class="form-control-btn">
+        <input type="button" class="btn" id="volunteer-flow3-btn" value="下一步"/>
+    </div>
 </div>
 
 
 
 <div class="tansLayer" style="display: none;"></div>
-<div class="volunteer-flow3-layer" id="volunteer-flow3-layer" style="display: none;">
+<div class="volunteer-flow3-layer"  id="volunteer-flow3-layer" style="display: none;">
     <div class="top-close">
         <a href="javascript:;" class="close-btn close-flow3-layer">x</a>
     </div>

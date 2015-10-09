@@ -38,7 +38,7 @@
     <div class="fr">
 
         <div class="error-tips hide"></div>
-        <div class="volunteer-flow1" id="volunteer-flow1" style="display: block;">
+        <div class="volunteer-flow1" id="volunteer-flow1">
             <form action="" class="zd-form">
                 <div class="form-control">
                     <label>您的考号</label>
@@ -52,17 +52,19 @@
                     <label>您的位次</label>
                     <input type="text" class="input" id="ranking-input" name="" placeholder="请输入您的位次" id=""/>
                 </div>
-                <div class="category mt10">
-                    <span class="t">选择文理科：</span>
-                    <div class="group-radio">
-                        <label><input type="radio" name="subjectType" value="文史" />文史</label>
-                        <label><input type="radio" name="subjectType" value="理工" />理工</label>
-                    </div>
+                <div class="form-control category mt10">
+                    <label class="t">选择文理科</label>
+                    <span class="group-radio">
+                        <label><input type="radio" name="subjectType" value="文史" /> 文史</label>
+                        <label><input type="radio" name="subjectType" value="理工" /> 理工</label>
+                    </span>
                 </div>
                 <div class="form-control yzm-control">
                     <label>验证码</label>
                     <input type="text" class="input yzm" name="" placeholder="请填写验证码" id=""/>
-                    <img src="/static/dist/after/images/yzm.png" alt=""/>
+                    <a>
+                        <img id="yzmDreamSchool" src="/verifyCode/randomVerifyCode.do?type=4" />
+                    </a>
                 </div>
                 <div class="form-control-btn">
                     <input type="button" class="btn" id="volunteer-flow1-btn" value="下一步"/>
@@ -70,7 +72,7 @@
             </form>
         </div>
 
-        <div class="volunteer-flow2" id="volunteer-flow2" style="display:block;">
+        <div class="volunteer-flow2" id="volunteer-flow2" style="display:none;">
             <div class="info1">
                 您的分数是<strong id="scoresNum"></strong>、<strong id="subType"></strong>； <br/>
                 依据2015年批次控制线，您的分数达到<strong id="batch"></strong>；<br/>

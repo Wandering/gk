@@ -20,6 +20,9 @@ define(function (require) {
                 return false;
             }
 
+            $('#yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=4');
+
+
 
             $.ajax({
                 url: '/guide/batch.do',
@@ -42,10 +45,10 @@ define(function (require) {
                         $('#volunteer-flow1').hide();
                         $('#volunteer-flow2').show();
                         //console.log(data)
-                        $('#scoresNum').text(aggregateScoreV);
+                        $('#scoresNum').text(aggregateScoreV+"分");
                         $('#subType').text(subjectTypeV+"类");
                         $.each(data.data, function (i, v) {
-                            $('#batch').text();
+                            $('#batch').text(data.data[0].m_batch);
                             var params = {
                                 "m_candidateNumber":candidateNumberV,
                                 "m_aggregateScore":aggregateScoreV,
@@ -63,7 +66,7 @@ define(function (require) {
                             var schoolListHtml = ''
                                 +'<div class="info2">'
                                 +'<h3>普通'+ v.m_batch +'院校</h3>'
-                                + v.m_years_fl+'<strong>文科分</strong>，<strong>理科分</strong>'
+                                + v.m_years_fl+'：<strong>'+ v.m_liberalarts +'分</strong>，<strong>'+ v.m_science +'分</strong>'
                                 +'<form id="forwardForm" method="post" action="/forward.do">'
                                 +'<input type="hidden" name="params" value="'+encodeURIComponent(jsons)+'" />'
                                 +'<input type="hidden" name="url" value="/after/volunteer-flow3.jsp" />'
