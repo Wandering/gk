@@ -4,11 +4,12 @@
 <mapper namespace="cn.thinkjoy.gk.dao.IUniversityExDAO">
 
     <select id="getWSUniversityDetail" resultType="UniversityDetailDto">
-        SELECT a.code,a.name,a.subjection,a.type,b.wsPlanNumber planNum,b.wsEnrollNumber enrollNum,
-        b.wsLowestScore lowestScore ,b.wsLowestRank lowestRanking,b.wsAverageScore averageScore,b.wsAverageRank averageScoresRanking,
-        (select name from gk_university_dict where dictId =a.property) dictName
+        SELECT a.code,a.name,a.subjection,a.type,b.lgPlanNumber planNum,b.lgEnrollNumber enrollNum,
+        b.lgLowestScore lowestScore ,b.lgLowestRank lowestRanking,b.lgAverageScore averageScore,b.lgAverageRank averageScoresRanking
+        ,c.name dictName
         FROM gk_university a
         left join gk_enroll_report b on a.code = b.universityCode
+        left join gk_university_dict c on c.dictId = a.property
         <where>
             1=1
             <if test="year!=null">
@@ -25,10 +26,11 @@
 
     <select id="getLGUniversityDetail" resultType="UniversityDetailDto">
         SELECT a.code,a.name,a.subjection,a.type,b.lgPlanNumber planNum,b.lgEnrollNumber enrollNum,
-        b.lgLowestScore lowestScore ,b.lgLowestRank lowestRanking,b.lgAverageScore averageScore,b.lgAverageRank averageScoresRanking,
-        (select name from gk_university_dict where dictId =a.property) dictName
+        b.lgLowestScore lowestScore ,b.lgLowestRank lowestRanking,b.lgAverageScore averageScore,b.lgAverageRank averageScoresRanking
+        ,c.name dictName
         FROM gk_university a
         left join gk_enroll_report b on a.code = b.universityCode
+        left join gk_university_dict c on c.dictId = a.property
         <where>
             1=1
             <if test="year!=null">
