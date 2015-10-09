@@ -41,34 +41,42 @@ define(function (require) {
                         var data = $.parseJSON(res.bizData);
                         $('#volunteer-flow1').hide();
                         $('#volunteer-flow2').show();
-                        console.log(data)
+                        //console.log(data)
                         $('#scoresNum').text(aggregateScoreV);
                         $('#subType').text(subjectTypeV+"类");
                         $.each(data.data, function (i, v) {
                             $('#batch').text();
+                            var params = {
+                                "m_candidateNumber":candidateNumberV,
+                                "m_aggregateScore":aggregateScoreV,
+                                "m_ranking":rankingV,
+                                "m_kelei":subjectTypeV,
+                                "m_batch_id":v.m_batch_id,
+                                "m_batch":v.m_batch,
+                                "m_province_id":"",
+                                "m_province":"陕西",
+                                "m_specialty_id":"",
+                                "m_specialty_name":"",
+                                "m_favorites_by_university_codes":""
+                            };
+                            var jsons = JSON.stringify(params);
                             var schoolListHtml = ''
                                 +'<div class="info2">'
                                 +'<h3>普通'+ v.m_batch +'院校</h3>'
                                 +'2015年控制线：<strong>文科分</strong>，<strong>理科分</strong>'
-                                +'<a href="javascript:;" onclick=""  class="btn" id="">开始</a>'
+                                +'<form id="forwardForm" method="post" action="/forward.do">'
+                                +'<input type="hidden" name="params" value="'+encodeURIComponent(jsons)+'" />'
+                                +'<input type="hidden" name="url" value="/after/volunteer-flow3.jsp" />'
+                                +'<input type="submit" class="btn" value="开始"></a>'
+                                +'</form>'
                                 +'</div>';
                             $('#school-list-info').append(schoolListHtml);
                         });
-
-
-
                     }
 
                 }
             });
-
-
-
-
-
-
         });
-
 
         $('#prev-btn').on('click',function(){
             $('#volunteer-flow1').show();
@@ -76,4 +84,6 @@ define(function (require) {
         });
 
     })
+
+
 });

@@ -111,21 +111,43 @@ public class GuideController extends BaseController {
 
         StringBuffer returnStr = new StringBuffer("");
         try {
+            StringBuffer url = new StringBuffer("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetCollegeList");
 
+            if(!StringUtils.isEmpty(m_candidateNumber)){
+                url.append("/m_candidateNumber/"+m_candidateNumber);
+            }
+            if(!StringUtils.isEmpty(m_aggregateScore)){
+                url.append("/m_aggregateScore/"+m_aggregateScore);
+            }
+            if(!StringUtils.isEmpty(m_ranking)){
+                url.append("/m_ranking/"+m_ranking);
+            }
+            if(!StringUtils.isEmpty(m_kelei)){
+                url.append("/m_kelei/"+m_kelei);
+            }
+            if(!StringUtils.isEmpty(m_batch_id)){
+                url.append("/m_batch_id/"+m_batch_id);
+            }
+            if(!StringUtils.isEmpty(m_batch)){
+                url.append("/m_batch/"+m_batch);
+            }
+            if(!StringUtils.isEmpty(m_province_id)){
+                url.append("/m_province_id/"+m_province_id);
+            }
+            if(!StringUtils.isEmpty(m_province)){
+                url.append("/m_province/"+m_province);
+            }
+            if(!StringUtils.isEmpty(m_specialty_id)){
+                url.append("/m_specialty_id/"+m_specialty_id);
+            }
+            if(!StringUtils.isEmpty(m_specialty_name)){
+                url.append("/m_specialty_name/"+m_specialty_name);
+            }
+            if(!StringUtils.isEmpty(m_favorites_by_university_codes)){
+                url.append("/m_favorites_by_university_codes/"+m_favorites_by_university_codes);
+            }
 
-            String result = HttpRequestUtil.doGet("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetCollegeList"
-                    +"m_candidateNumber"+m_candidateNumber
-                    +"/m_aggregateScore/"+m_aggregateScore
-                    +"/m_ranking/"+m_ranking
-                    +"/m_kelei/"+m_kelei
-                            +"/m_batch_id/" +m_batch_id
-                            +"/m_batch/" +m_batch
-                            +"/m_province_id/" +m_province_id
-                            +"/m_province/" +m_province
-                            +"/m_specialty_id/" +m_specialty_id
-                            +"/m_specialty_name/" +m_specialty_name
-                            +"/m_favorites_by_university_codes/" +m_favorites_by_university_codes
-            );
+            String result = HttpRequestUtil.doGet(url.toString());
 
             if(StringUtils.isEmpty(result)){
                 throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
