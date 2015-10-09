@@ -1164,10 +1164,27 @@ selectList
         and code=#{code} limit 0,1
     </select>
 
-
     <select id="getUniversityIntro" parameterType="java.lang.String" resultType="java.lang.String">
         select universityIntro from gk_university where 1=1
         and code=#{code} limit 0,1
     </select>
+
+    <select id="getWSUniversityDetail" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT a.code,a.name,a.subjection,a.type,b.wsPlanNumber planNum,b.wsEnrollNumber enrollNum,
+        b.wsLowestScore,b.wsLowestRank,b.wsAverageScore,b.wsAverageRank
+        FROM gk_university a
+        left join gk_enroll_report b on a.code = b.universityCode
+        where b.year = 2014 and code =#{code}
+    </select>
+
+    <select id="getLGUniversityDetail" parameterType="java.lang.String" resultType="UniversityDetailDto">
+        SELECT a.code,a.name,a.subjection,a.type,b.wsPlanNumber planNum,b.wsEnrollNumber enrollNum,
+        b.wsLowestScore,b.wsLowestRank,b.wsAverageScore,b.wsAverageRank
+        FROM gk_university a
+        left join gk_enroll_report b on a.code = b.universityCode
+        where b.year = 2014 and code =#{code}
+    </select>
+
+
 </mapper>
 

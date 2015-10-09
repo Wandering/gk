@@ -10,6 +10,7 @@ import cn.thinkjoy.gk.service.IUniversityDictService;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +25,7 @@ import java.util.Map;
  * Created by wpliu on 15/9/25.
  */
 @Controller("majoredController")
+@Scope("prototype")
 @RequestMapping("/majored")
 public class MajoredController extends BaseController {
 
