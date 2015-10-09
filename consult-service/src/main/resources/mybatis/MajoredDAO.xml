@@ -15,12 +15,12 @@
          from gk_majored a  left join gk_enroll_plan  b  on a.id=b.majoredId  where 1=1 and b.year='2015'
         <if test="condition.subjectTypeName!=null and condition.subjectTypeName!=''">
 
-             and b.subjectType =#{condition.subjectTypeName}
+             and a.subjectType=#{condition.subjectTypeName}
 
         </if>
 
         <if test="condition.majoredTypeName!=null and condition.majoredTypeName!=''">
-            and b.majoredType=#{condition.majoredTypeName}
+            and a.majoredType=#{condition.majoredTypeName}
         </if>
 
         <if test="condition.searchName!=null and condition.searchName!=''">
@@ -39,12 +39,12 @@
         from gk_majored a  left join gk_enroll_plan  b  on a.id=b.majoredId  where 1=1 and b.year='2015'
         <if test="condition.subjectTypeName!=null and condition.subjectTypeName!=''">
 
-            and b.subjectType =#{condition.subjectTypeName}
+            and a.subjectType =#{condition.subjectTypeName}
 
         </if>
 
         <if test="condition.majoredTypeName!=null and condition.majoredTypeName!=''">
-            and b.majoredType=#{condition.majoredTypeName}
+            and a.majoredType=#{condition.majoredTypeName}
         </if>
 
         <if test="condition.searchName!=null and condition.searchName!=''">
