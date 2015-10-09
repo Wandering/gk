@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.service;
 
+import cn.thinkjoy.gk.pojo.MajorDetailPojo;
 import cn.thinkjoy.gk.pojo.MajoredDto;
 import cn.thinkjoy.gk.pojo.SubjectDto;
 import cn.thinkjoy.gk.query.MajoredQuery;
@@ -21,6 +22,8 @@ public interface IMajoredService {
 
     MajoredDto getMajoredByCode(String majoredCode);
 
-
     List<Map<String,Object>> getUniversityByCode(String majoredCode, String name);
+
+    List<MajorDetailPojo> getMajorDetailList(String code,String batch,Integer year);
+
 }
