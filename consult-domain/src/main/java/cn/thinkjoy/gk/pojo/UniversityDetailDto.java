@@ -107,11 +107,5 @@ public class UniversityDetailDto {
         this.averageScoresRanking = averageScoresRanking;
     }
 
-    public String getEnrollIntro() {
-        return enrollIntro;
-    }
 
-    public void setEnrollIntro(String enrollIntro) {
-        this.enrollIntro = enrollIntro;
-    }
 }
