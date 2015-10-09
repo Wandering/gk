@@ -5,7 +5,7 @@
 
     <select id="getWSUniversityDetail" resultType="UniversityDetailDto">
         SELECT a.code,a.name,a.subjection,a.type,b.wsPlanNumber planNum,b.wsEnrollNumber enrollNum,
-        b.wsLowestScore lowestScore ,b.wsLowestRank lowestRank,b.wsAverageScore averageScore,b.wsAverageRank averageRank
+        b.wsLowestScore lowestScore ,b.wsLowestRank lowestRanking,b.wsAverageScore averageScore,b.wsAverageRank averageScoresRanking
         FROM gk_university a
         left join gk_enroll_report b on a.code = b.universityCode
         where b.year = #{year} and a.code =#{code} and b.batch = #{batch}
@@ -13,7 +13,7 @@
 
     <select id="getLGUniversityDetail" resultType="UniversityDetailDto">
         SELECT a.code,a.name,a.subjection,a.type,b.lgPlanNumber planNum,b.lgEnrollNumber enrollNum,
-        b.lgLowestScore lowestScore ,b.lgLowestRank lowestRank,b.lgAverageScore averageScore,b.lgAverageRank averageRank
+        b.lgLowestScore lowestScore ,b.lgLowestRank lowestRanking,b.lgAverageScore averageScore,b.lgAverageRank averageScoresRanking
         FROM gk_university a
         left join gk_enroll_report b on a.code = b.universityCode
         where b.year = #{year} and a.code =#{code} and b.batch = #{batch}
