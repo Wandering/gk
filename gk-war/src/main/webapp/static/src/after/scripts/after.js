@@ -35,7 +35,8 @@ define(function (require) {
                     "m_candidateNumber": candidateNumberV,
                     "m_aggregateScore": aggregateScoreV,
                     "m_ranking": rankingV,
-                    "m_kelei": subjectTypeV
+                    "m_kelei": subjectTypeV,
+                    "code": yzmDreamV
                 },
                 success: function (res) {
                     console.log(res)
