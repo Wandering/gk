@@ -63,7 +63,7 @@ define(function (require) {
                             var schoolListHtml = ''
                                 +'<div class="info2">'
                                 +'<h3>普通'+ v.m_batch +'院校</h3>'
-                                +'2015年控制线：<strong>文科分</strong>，<strong>理科分</strong>'
+                                + v.m_years_fl+'<strong>文科分</strong>，<strong>理科分</strong>'
                                 +'<form id="forwardForm" method="post" action="/forward.do">'
                                 +'<input type="hidden" name="params" value="'+encodeURIComponent(jsons)+'" />'
                                 +'<input type="hidden" name="url" value="/after/volunteer-flow3.jsp" />'

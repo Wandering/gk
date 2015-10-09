@@ -23,8 +23,8 @@
     </div>
 </div>
 <h6 class="w1000 ta content-title-sub">独创分差位次修正算法，为您科学推荐报考院校。原来填报志愿可以如此简单！</h6>
-<div class="error-tips hide"></div>
 <div class="w1000 main-volunteer">
+    <div class="error-tips hide"></div>
     <div class="volunteer-flow3">
         <table class="volunteer-flow3-table">
             <thead>
