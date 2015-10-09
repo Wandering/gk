@@ -121,7 +121,8 @@ define(function (require) {
             dataType: 'JSON',
             data:{
                 code:2406,
-                type:0
+                type:0,
+                batch:"高职（专科）"
             },
             success: function (res) {
                 console.log(res);
