@@ -5,6 +5,7 @@ define(function (require) {
         $('.volunteer-flow3-table').on('click', '.open-flow3', function () {
             $('.tansLayer,.volunteer-flow3-layer').show();
             $('#volunteer-flow3-layer').attr('dataType', $(this).attr('dataType'))
+            getSchool(params1, "", "");
         });
 
 
@@ -29,7 +30,7 @@ define(function (require) {
             "m_favorites_by_university_codes": ""
         };
 
-        getSchool(params1, "", "");
+
         function getSchool(paramsJson, m_province, m_specialty_name) {
             paramsJson.m_province = m_province;
             paramsJson.m_specialty_name = m_specialty_name;
@@ -65,6 +66,9 @@ define(function (require) {
                             m_keleiType = 1;
                         }
 
+                        var datatypeId = $('#volunteer-flow3-layer').attr('datatype');
+                        console.log(datatypeId)
+
                         $.each(listData.data, function (i, v) {
                             if (listData.data[i].data.length == 0) {
                                 $('.no-school').show();
@@ -77,7 +81,7 @@ define(function (require) {
                                     var schoolListHtml = ''
                                         + '<div>'
                                         + '<span class="fl"><a target="_blank" href="/consult/school_detile.jsp?id=' + m.m_university_code + '&batch=' + m_batch_id + '" id="' + m.m_university_code + '">' + m.m_university_name + '</a></span>'
-                                        + '<span class="fr" id="' + m.m_university_code + '" type = "' + m_keleiType + '">选择</span>'
+                                        + '<span class="fr selSchool" datatypeId="'+ datatypeId +'" id="' + m.m_university_code + '" type = "' + m_keleiType + '">选择</span>'
                                         + '</div>';
                                     $('#school-list' + i).append(schoolListHtml);
                                 })
@@ -115,10 +119,10 @@ define(function (require) {
             type: 'GET',
             dataType: 'JSON',
             data: {
-                code: 2406,
+                code: 4004,
                 type: 0,
                 year: 2014,
-                batch: "高职（专科）"
+                batch: "二批本科"
             },
             success: function (res) {
                 console.log(res);
