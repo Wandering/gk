@@ -294,7 +294,7 @@ public class UniversityController extends BaseController {
         try {
             str = new String(batch.getBytes("ISO-8859-1"),"UTF-8");
         } catch (UnsupportedEncodingException e) {
-            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage())
+            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
         }
 
         return universityExService.getUniversityDetail(code,str,type,2014);
