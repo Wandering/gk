@@ -43,7 +43,7 @@ public class UniversityController extends BaseController {
     @Autowired
     private IExUniversityService iUniversityService;
     @Autowired
-    private IUniversityDictService universityDictService ;
+    private IUniversityDictService universityDictService;
 
     @Autowired
     private IUniversityExService universityExService;
@@ -279,7 +279,8 @@ public class UniversityController extends BaseController {
     @RequestMapping(value = "/universityDetail",method = RequestMethod.GET)
     @ResponseBody
     public UniversityDetailDto universityDetail(@RequestParam(value="code",required=false) String code,
-                                                @RequestParam(value="type",required=false) Integer type){
+                                                @RequestParam(value="type",required=false) Integer type,
+                                                @RequestParam(value="batch",required=false) String batch){
 
 
         if(StringUtils.isBlank(code)
@@ -287,6 +288,6 @@ public class UniversityController extends BaseController {
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
 
-        return universityExService.getUniversityDetail(code,type);
+        return universityExService.getUniversityDetail(code,batch,type,2014);
     }
 }
