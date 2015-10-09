@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IUniversityExDAO">
+
+    <select id="getWSUniversityDetail" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT a.code,a.name,a.subjection,a.type,b.wsPlanNumber planNum,b.wsEnrollNumber enrollNum,
+        b.wsLowestScore lowestScore ,b.wsLowestRank lowestRank,b.wsAverageScore averageScore,b.wsAverageRank averageRank
+        FROM gk_university a
+        left join gk_enroll_report b on a.code = b.universityCode
+        where b.year = 2014 and code =#{code}
+    </select>
+
+    <select id="getLGUniversityDetail" parameterType="java.lang.String" resultType="UniversityDetailDto">
+        SELECT a.code,a.name,a.subjection,a.type,b.lgPlanNumber planNum,b.lgEnrollNumber enrollNum,
+        b.lgLowestScore lowestScore ,b.lgLowestRank lowestRank,b.lgAverageScore averageScore,b.lgAverageRank averageRank
+        FROM gk_university a
+        left join gk_enroll_report b on a.code = b.universityCode
+        where b.year = 2014 and code =#{code}
+    </select>
+
+
+</mapper>
+
