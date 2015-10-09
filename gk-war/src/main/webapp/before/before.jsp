@@ -204,7 +204,7 @@
         </div>
         <div class="eval-right">
             <div class="error-tips hide"></div>
-            <div class="form-control">
+            <div class="form-control mt0">
                 <label>分数</label>
                 <input type="text" class="score-input" id="dream-score-input" placeholder="请输入分数"/>
             </div>
@@ -249,7 +249,7 @@
         </div>
         <div class="eval-right">
             <div class="error-tips hide"></div>
-            <div class="form-control">
+            <div class="form-control mt0">
                 <label>分数</label>
                 <input type="text" class="score-input" id="score-input" placeholder="请输入分数"/>
             </div>
@@ -301,7 +301,7 @@
         </div>
         <div class="eval-right">
             <div class="error-tips hide"></div>
-            <div class="form-control">
+            <div class="form-control mt0">
                 <label>分数</label>
                 <input type="text" class="score-input" id="precedence-score-input" placeholder="请输入分数"/>
             </div>

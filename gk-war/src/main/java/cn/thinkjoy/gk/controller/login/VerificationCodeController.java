@@ -96,6 +96,8 @@ public class VerificationCodeController extends BaseController {
 				session.setAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value, randomCode.toString());
 			}else if(VerificationKeyConst.GET_THE_ORDER_TYPE==Integer.valueOf(type)){
 				session.setAttribute(VerificationKeyConst.GET_THE_ORDER+value, randomCode.toString());
+			}else if(VerificationKeyConst.GET_BATCH_TYPE==Integer.valueOf(type)){
+				session.setAttribute(VerificationKeyConst.GET_BATCH+value, randomCode.toString());
 			}else{
 				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
 			}

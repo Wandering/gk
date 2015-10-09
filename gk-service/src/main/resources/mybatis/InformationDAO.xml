@@ -19,5 +19,17 @@
         WHERE status = 0 AND id=#{id}
     </select>
 
+    <select id="getHotInformation" parameterType="java.lang.Integer" resultType="Information">
+        SELECT createDate,lastModDate,hotInformation,informationContent FROM gk_gkinformation_gkhot
+        WHERE status = 0 ORDER BY hotCount DESC
+        limit ${offset},${rows}
+    </select>
+
+    <update id="updateHotCount" parameterType="java.lang.Integer" >
+         UPDATE gk_gkinformation_gkhot
+         SET hotCount = hotCount + 1
+         WHERE id=#{id}
+    </update>
+
 </mapper>
 

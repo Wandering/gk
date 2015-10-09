@@ -3,6 +3,7 @@ package cn.thinkjoy.gk.controller.volunteer;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.controller.appraisal.bean.AppraisalBean;
+import cn.thinkjoy.gk.controller.volunteer.bean.ReportBean;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
@@ -40,7 +41,9 @@ public class GuideController extends BaseController {
     public String batch(@RequestParam(value="m_candidateNumber",required=false) String m_candidateNumber,
                         @RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore,
                         @RequestParam(value="m_kelei",required=false) String m_kelei,
-                        @RequestParam(value="m_ranking",required=false) String m_ranking) throws Exception{
+                        @RequestParam(value="m_ranking",required=false) String m_ranking,
+            @RequestParam(value="code",required=false) String code) throws Exception{
+
 
         UserAccountPojo userAccountPojo = getUserAccountPojo();
 
@@ -53,6 +56,21 @@ public class GuideController extends BaseController {
         if(vipStatus==null||vipStatus==0){
             throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
         }
+
+        Long value = userAccountPojo.getId();
+
+        Object resultCode = session.getAttribute(VerificationKeyConst.GET_BATCH+value);
+
+        if(resultCode==null){
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
+        }
+
+        if(!resultCode.toString().equals(code.toUpperCase())){
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
+        }
+
+        session.removeAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value);
+
 
         StringBuffer returnStr = new StringBuffer("");
         try {
@@ -167,64 +185,51 @@ public class GuideController extends BaseController {
         return returnStr.toString();
     }
 
-//    /**
-//     * 获取志愿指导院校
-//     * @return
-//     * @throws Exception
-//     */
-//    @RequestMapping(value = "/report",method = RequestMethod.GET)
-//    @ResponseBody
-//    public String report(@RequestParam(value="data",required=false) String data,
-//                        @RequestParam(value="related",required=false) String related
-//    ) throws Exception{
-//
-//        UserAccountPojo userAccountPojo = getUserAccountPojo();
-//
-//        if(userAccountPojo==null){
-//            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
-//        }
-//
-//        Integer vipStatus = userAccountPojo.getVipStatus();
-//
-//        if(vipStatus==null||vipStatus==0){
-//            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
-//        }
-//
-//        StringBuffer returnStr = new StringBuffer("");
-//        try {
-//
-//
-//            String result = HttpRequestUtil.doGet("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetReport/"
-//                            +"m_candidateNumber"+m_candidateNumber
-//                            +"/m_aggregateScore/"+m_aggregateScore
-//                            +"/m_ranking/"+m_ranking
-//                            +"/m_kelei/"+m_kelei
-//                            +"/m_batch_id/" +m_batch_id
-//                            +"/m_batch/" +m_batch
-//                            +"/m_province_id/" +m_province_id
-//                            +"/m_province/" +m_province
-//                            +"/m_specialty_id/" +m_specialty_id
-//                            +"/m_specialty_name/" +m_specialty_name
-//                            +"/m_favorites_by_university_codes/" +m_favorites_by_university_codes
-//            );
-//
-//            if(StringUtils.isEmpty(result)){
-//                throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
-//            }
-//
-//            JSONObject obj = JSON.parseObject(result);
-//
-//            if("500".equals(obj.getString("code"))){
-//                throw new BizException(ERRORCODE.FAIL.getCode(),obj.getString("info"));
-//            }
-//
-//            returnStr.append(obj.toJSONString().replace("\\", ""));
-//
-//        } catch (Exception e) {
-//            throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
-//        }
-//        return returnStr.toString();
-//    }
+    /**
+     * 获取志愿指导院校
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/report",method = RequestMethod.GET)
+    @ResponseBody
+    public String report(ReportBean reportBean) throws Exception{
+
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if(vipStatus==null||vipStatus==0){
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
+
+        StringBuffer returnStr = new StringBuffer("");
+
+        try {
+
+
+            String result = HttpRequestUtil.httpPost("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetReport",JSON.toJSONString(reportBean),false);
+
+            if(StringUtils.isEmpty(result)){
+                throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
+            }
+
+            JSONObject obj = JSON.parseObject(result);
+
+            if("500".equals(obj.getString("code"))){
+                throw new BizException(ERRORCODE.FAIL.getCode(),obj.getString("info"));
+            }
+
+            returnStr.append(obj.toJSONString().replace("\\", ""));
+
+        } catch (Exception e) {
+            throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
+        }
+        return returnStr.toString();
+    }
 
 }
 
