@@ -480,5 +480,14 @@ define(function (require) {
                 Profession.getSearch();
             }
         });
+
+        $('#search').keydown(function(e) {
+            if (e.keyCode == 13) {
+                var search = $('#search').val();
+                if (search) {
+                    Profession.getSearch();
+                }
+            }
+        })
     });
 });
