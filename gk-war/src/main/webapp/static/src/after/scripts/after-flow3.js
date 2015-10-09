@@ -55,7 +55,7 @@ define(function (require) {
                             $('.school-list').hide();
                         }
 
-                        //console.log(data)
+                        console.log(data);
 
                         var m_keleiType = '';
                         //console.log(data.related.m_kelei)
