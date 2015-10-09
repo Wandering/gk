@@ -312,8 +312,12 @@ public class UniversityController extends BaseController {
 
         int planNum = universityDetailDto.getPlanNum();
 
-        if((enrollNum-planNum)>0){
+        int num = enrollNum-planNum;
+
+        if(num>0){
             universityDetailDto.setEnrollIntro("实际招生超过计划招生数!");
+        }else if(num==0){
+            universityDetailDto.setEnrollIntro("实际招生和计划招生数相等!");
         }else{
             universityDetailDto.setEnrollIntro("计划招生超过实际招生数!");
         }
