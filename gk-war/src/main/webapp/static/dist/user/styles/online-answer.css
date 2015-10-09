@@ -1095,3 +1095,6 @@ a.next-btn:hover {
       font-size: 16px;
       color: #6f6d6d;
       margin-left: 20px; }
+
+#detail_content_question {
+  min-height: 400px; }

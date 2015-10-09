@@ -1006,7 +1006,8 @@ a.next-btn:hover {
 h1 {
   font-size: 30px;
   color: #333;
-  margin-top: 40px; }
+  margin-top: 40px;
+  font-weight: 400; }
 
 .info-content {
   height: 232px; }
@@ -1016,13 +1017,14 @@ h1 {
   .info-content .info {
     height: 100%; }
     .info-content .info ul {
-      overflow: hidden; }
+      overflow: hidden;
+      padding-left: 50px; }
       .info-content .info ul li {
         float: left;
         width: 45%;
         height: 30px;
         line-height: 30px;
-        margin: 5px 0 0 20px;
+        margin: 5px 0 0 10px;
         font-size: 16px;
         color: #636363; }
         .info-content .info ul li span {
@@ -1032,7 +1034,7 @@ h1 {
           font-size: 30px;
           color: #444;
           width: 90%;
-          margin: 10px 0 10px 10px; }
+          margin: 0px 0 10px 10px; }
         .info-content .info ul li.integet-line {
           width: 90%; }
 
@@ -1058,7 +1060,8 @@ h1 {
 .school-table {
   margin-bottom: 20px; }
   .school-table div, .school-table p {
-    line-height: 1.8; }
+    line-height: 24px;
+    font-size: 14px; }
   .school-table table {
     border-collapse: collapse;
     width: 100%; }
@@ -1073,7 +1076,8 @@ h1 {
     background-color: #f5f5f5; }
   .school-table td, .school-table th {
     border: 1px solid #f1f1f1;
-    text-align: center; }
+    text-align: center;
+    font-size: 14px; }
     .school-table td a, .school-table th a {
       color: #e24333;
       cursor: pointer; }

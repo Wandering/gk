@@ -1066,6 +1066,9 @@ section:last-child {
 .detile-header {
   height: 20px;
   font-size: 16px; }
+  .detile-header span.fr {
+    color: #b7b6b6;
+    font-size: 12px; }
 
 .order-number {
   display: inline-block;
@@ -1084,18 +1087,11 @@ section:last-child {
 
 .detile-info {
   background-color: #f6f6f6;
-  padding: 20px;
+  padding: 20px 20px 20px 30px;
   border: 1px solid #edecec;
-  line-height: 1.8; }
-  .detile-info:before {
-    content: '';
-    width: 0;
-    height: 0;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    border-bottom: 20px solid #f6f6f6;
-    position: relative;
-    top: -56px; }
+  line-height: 24px;
+  color: #606060;
+  font-size: 12px; }
 
 .detile-content:last-child {
   margin-bottom: 50px; }

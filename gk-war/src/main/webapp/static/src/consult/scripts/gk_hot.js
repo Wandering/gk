@@ -27,7 +27,7 @@ define(function (require) {
                 html.push('<span class="order-number">' + num + '</span>');
                 html.push('<span class="detile-title">' + data[i].hotInformation + '</span>');
                 var date = new Date(data[i].lastModDate).Format('yyyy-MM-dd hh:mm');
-                html.push('<span class="fr">上传时间：' + date + '</span>');
+                html.push('<span class="fr">' + date + '</span>');
                 html.push('</div>');
                 html.push('<div class="detile-info mt20">');
                 html.push(data[i].informationSubContent);

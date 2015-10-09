@@ -234,7 +234,7 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-container-horizontal > .swiper-pagination {
-  bottom: 20px;
+  bottom: 15px;
   left: 0;
   width: 100%
 }
@@ -484,17 +484,17 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-slide img{
-  height: 300px;
+  height: 360px;
   width: 100%;
 }
 
 .slide-1{
-  background-color: #0e6bba;
+  background-color: #ce4230;
 }
 .slide-2{
-  background-color: #de5c3c;
+  background-color: #0d63b2;
 }
 
 .slide-3{
-  background-color: #596b8b;
+  background-color: #25b76f;
 }

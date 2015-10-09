@@ -1070,7 +1070,8 @@ a.next-btn:hover {
       font-size: 30px;
       color: #333;
       text-align: center;
-      line-height: 2; }
+      line-height: 2;
+      font-weight: 400; }
 
 /*关于平台*/
 .mt20 {
@@ -1101,7 +1102,8 @@ a.next-btn:hover {
         font-size: 20px;
         color: #454545;
         text-align: center;
-        line-height: 40px; }
+        line-height: 40px;
+        font-weight: 300; }
       .about-platform ul li .info-content p {
         font-size: 12px;
         color: #7e7d7d;
@@ -1175,6 +1177,8 @@ a.next-btn:hover {
 .detile-header {
   overflow: hidden;
   font-size: 16px; }
+  .detile-header span.fr {
+    font-size: 10px; }
 
 .order-number {
   display: inline-block;
@@ -1187,16 +1191,19 @@ a.next-btn:hover {
   color: #dedede; }
 
 .detile-title {
-  color: #626161; }
+  color: #626161;
+  font-size: 16px;
+  margin-left: 10px; }
 
 .detile-info {
   background-color: #f6f6f6;
   padding: 10px;
   border: 1px solid #edecec;
-  line-height: 1.8; }
+  font-size: 12px;
+  color: #727171; }
   .detile-info p {
     margin: 0;
-    line-height: 1.5; }
+    line-height: 32px; }
 
 /*热门资讯*/
 .hot-list {
@@ -1206,17 +1213,18 @@ a.next-btn:hover {
   padding-bottom: 40px; }
   .hot-list li {
     float: left;
-    width: 50%;
+    width: 47%;
     height: 48px;
     margin: 15px 0; }
     .hot-list li.ml {
-      margin-left: 8%; }
+      margin-left: 6%; }
     .hot-list li .title-info h3 {
       font-size: 16px;
       color: #333;
       margin: 0 0 10px 0;
       overflow: hidden;
-      white-space: nowrap; }
+      white-space: nowrap;
+      text-overflow: ellipsis; }
     .hot-list li .title-info h6 {
       font-size: 12px;
       color: #817f7f;

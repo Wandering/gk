@@ -99,6 +99,7 @@
       color: #333;
       text-align: center;
       line-height: 2;
+      font-weight: 400;
     }
   }
 }
@@ -141,6 +142,7 @@
           color: #454545;
           text-align: center;
           line-height: 40px;
+          font-weight: 300;
         }
 
         p {
@@ -246,6 +248,10 @@
 .detile-header {
   overflow: hidden;
   font-size: 16px;
+
+  span.fr {
+    font-size: 10px;
+  }
 }
 
 .order-number {
@@ -261,20 +267,20 @@
 
 .detile-title {
   color: #626161;
+  font-size: 16px;
+  margin-left: 10px;
 }
 
 .detile-info {
   background-color: #f6f6f6;
   padding: 10px;
   border: 1px solid #edecec;
-  line-height: 1.8;
+  font-size: 12px;
+  color: #727171;
   p{
     margin: 0;
-    line-height: 1.5;
+    line-height: 32px;
   }
-  //&:before {
-  //  @include arrow-up;
-  //}
 }
 
 /*热门资讯*/
@@ -285,11 +291,11 @@
   padding-bottom: 40px;
   li {
     float: left;
-    width: 50%;
+    width: 47%;
     height: 48px;
     margin: 15px 0;
     &.ml {
-      margin-left: 8%;
+      margin-left: 6%;
     }
 
     .title-info {
@@ -299,6 +305,7 @@
         margin: 0 0 10px 0;
         overflow: hidden;
         white-space: nowrap;
+        text-overflow: ellipsis;
       }
       h6 {
         font-size: 12px;

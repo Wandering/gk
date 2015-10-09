@@ -151,6 +151,7 @@ section:last-child {
     height: 40px;
     line-height: 40px;
     overflow: hidden;
+    font-size: 14px;
     .subject-n {
       float: left;
       width: 84px;
@@ -310,6 +311,7 @@ section:last-child {
           width: 99px;
         }
       }
+
       .yzm-control {
         width: 220px;
         position: relative;
@@ -443,6 +445,10 @@ section:last-child {
       .school-input{
         background: url('../images/icon-02.png') no-repeat 12px center;
       }
+    }
+
+    .mt0 {
+      margin-top: 0px;
     }
 
     .indent {
