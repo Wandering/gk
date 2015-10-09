@@ -146,12 +146,14 @@ define(function (require) {
         },
         getEnroll: function(code) {
             var that = this;
+            var batch = getUrLinKey('batch');
             $.ajax({
                 type: 'post',
                 url: '/university/getEnrollPlan.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
-                    code:code
+                    code: code,
+                    batch: batch
                 },
                 dataType: 'json',
                 success: function(data) {

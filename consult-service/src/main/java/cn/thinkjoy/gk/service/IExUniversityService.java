@@ -30,7 +30,7 @@ public interface IExUniversityService {
 
     String getUniversityEnrollIntro(String schoolCode);
 
-    List<PlanInfo> getPlanInfosByYear(int i,String schoolCode);
+    List<PlanInfo> getPlanInfosByYear(int i,String schoolCode,String batch);
 
     String getUniversityIntro(String schoolCode);
 }
