@@ -185,14 +185,14 @@
     <div class="volunteer-flow3-body">
         <div class="search-box">
             <span>您可选择地区（省份）活查找专业、进行院校推荐！请搜索:</span>
-            <select name="" id="">
+            <select name="" id="province-list">
                 <option value="">所有省</option>
             </select>
-            <input type="text" name="" class="search-input" id="" placeholder="请输入专业名称查询" />
-            <label>
-                <input type="checkbox" name="" id=""/>从我收藏的院校中获得推荐
-            </label>
-            <input type="button" class="search-btn" value="查询"/>
+            <input type="text" name="" class="search-input" id="specialty-input" placeholder="请输入专业名称查询" />
+            <%--<label>--%>
+                <%--<input type="checkbox" name="" id=""/>从我收藏的院校中获得推荐--%>
+            <%--</label>--%>
+            <input type="button" class="search-btn" id="specialty-search-btn" value="查询"/>
         </div>
         <div class="info-explain">
             <strong>录取指数说明</strong>
