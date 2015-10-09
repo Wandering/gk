@@ -11,6 +11,8 @@ public class UniversityDetailDto {
 
     private String subjection;
 
+    private String dictName;
+
     private String type;
 
     private Integer planNum;
@@ -107,5 +109,19 @@ public class UniversityDetailDto {
         this.averageScoresRanking = averageScoresRanking;
     }
 
+    public String getDictName() {
+        return dictName;
+    }
 
+    public void setDictName(String dictName) {
+        this.dictName = dictName;
+    }
+
+    public String getEnrollIntro() {
+        return enrollIntro;
+    }
+
+    public void setEnrollIntro(String enrollIntro) {
+        this.enrollIntro = enrollIntro;
+    }
 }
