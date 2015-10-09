@@ -82,7 +82,7 @@ define(function (require) {
                                     var schoolListHtml = ''
                                         + '<div>'
                                         + '<span class="fl"><a target="_blank" href="/consult/school_detile.jsp?id=' + m.m_university_code + '&batch=' + m_batch_id + '" id="' + m.m_university_code + '">' + m.m_university_name + '</a></span>'
-                                        + '<span class="fr selSchool" datatypeId="'+ datatypeId +'" id="' + m.m_university_code + '" type = "' + m_keleiType + '" m_batch="'+ m_batch +'">选择</span>'
+                                        + '<span class="fr selSchool" datatypeId="' + datatypeId + '" id="' + m.m_university_code + '" type = "' + m_keleiType + '" m_batch="' + m_batch + '">选择</span>'
                                         + '</div>';
                                     $('#school-list' + i).append(schoolListHtml);
                                 })
@@ -115,11 +115,13 @@ define(function (require) {
         });
 
 
-        $('#volunteer-flow3-layer').on('click','.selSchool',function(){
+        $('#volunteer-flow3-layer').on('click', '.selSchool', function () {
             var code = $(this).attr('id');
             var type = $(this).attr('type');
             var m_batch = $(this).attr('m_batch');
-            console.log(code+"=" + type+"=="+m_batch)
+            var datatypeid = $(this).attr('datatypeid');
+            var years = 2014;
+            console.log(code + "=" + type + "==" + m_batch);
             $.ajax({
                 url: '/university/universityDetail.do',
                 type: 'GET',
@@ -127,7 +129,7 @@ define(function (require) {
                 data: {
                     code: code,
                     type: type,
-                    year: 2014,
+                    year: years,
                     batch: m_batch
                 },
                 success: function (res) {
@@ -135,29 +137,58 @@ define(function (require) {
                     var data = res.bizData;
                     if ('0000000' === result.rtnCode) {
                         var dicName = '';
-                        if(data.dictName){
+                        if (data.dictName) {
                             dicName = data.dictName;
                         }
                         var infoHtml = ''
                             + '<p>'
-                            + '院校代码：'+ data.code +'  <br/>'
-                            + '院校特征：'+ dicName +'<br/>'
-                            + '院校隶属：'+ data.subjection +'<br/>'
-                            + '院校类型：'+ data.type +'<br/>'
-                            + '2014年最低投档分：'+ data.lowestScore +'<br/>'
-                            + '2014年最低位次：'+ data.lowestRanking +' <br/>'
-                            + '2014年录取平均分：'+ data.averageScore +' <br/>'
-                            + '2014年平均分位次：'+ data.averageScoresRanking +' <br/>'
-                            + '历年招生情况：'+ data.enrollIntro +' <br/>'
+                            + '院校代码：' + data.code + '  <br/>'
+                            + '院校特征：' + dicName + '<br/>'
+                            + '院校隶属：' + data.subjection + '<br/>'
+                            + '院校类型：' + data.type + '<br/>'
+                            + '2014年最低投档分：' + data.lowestScore + '<br/>'
+                            + '2014年最低位次：' + data.lowestRanking + ' <br/>'
+                            + '2014年录取平均分：' + data.averageScore + ' <br/>'
+                            + '2014年平均分位次：' + data.averageScoresRanking + ' <br/>'
+                            + '历年招生情况：' + data.enrollIntro + ' <br/>'
                             + '录取指数：★★'
-                            + '</p>'
+                            + '</p>';
+                        $('#result-info' + datatypeid).html(infoHtml);
+                        $('#specialty' + datatypeid).show().attr({'m_batch':m_batch,'code':code});
                     }
-
-
-
                 }
             });
         });
+
+        // 获取专业
+        $('.specialty').on('click','.specialty-click',function(){
+            var parents = $(this).parents('.specialty');
+            var m_batch = parents.attr('m_batch');
+            var code = parents.attr('code');
+            var year = parents.attr('year');
+            console.log(m_batch + "=" + code + "=" + year)
+            $.ajax({
+                url: '/majored/majorList.do',
+                type: 'GET',
+                dataType: 'JSON',
+                data: {
+                    code: code,
+                    year: year,
+                    batch: m_batch
+                },
+                success: function (res) {
+                    console.log(res);
+                    //var data = res.bizData;
+                    //if ('0000000' === result.rtnCode) {
+                    //}
+                }
+            });
+
+        });
+        $('#specialty-layer').on('click','.close-btn',function(){
+            $('#specialty-layer,.tansLayer').hide();
+        });
+
 
 
 

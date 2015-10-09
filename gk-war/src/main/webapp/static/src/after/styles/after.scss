@@ -285,7 +285,8 @@
   top: expression(documentElement.scrollTop + documentElement.clientHeight - this.offsetHeight);
 }
 
-.volunteer-flow3-layer {
+.volunteer-flow3-layer,
+.specialty-layer {
   left: 50%;
   position: fixed;
   top: 50%;
@@ -312,7 +313,8 @@
   .tips{
     margin: 0 30px;
   }
-  .volunteer-flow3-body{
+  .volunteer-flow3-body,
+  .specialty-body{
     padding: 0 30px;
     overflow: hidden;
     .search-box{
@@ -526,6 +528,9 @@
      }
      .sel-num{
        float: right;
+       a{
+         text-decoration: underline;
+       }
      }
    }
  }

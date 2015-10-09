@@ -68,7 +68,40 @@
                         </div>
                     </div>
                 </td>
-                <td class="item3"></td>
+                <td class="item3">
+                    <ul class="specialty" id="specialty1" m_batch="高职（专科）" code="2406" year="2014">
+                        <li>
+                            <span class="num">1.</span>
+                            <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">2.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">3.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">4.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">5.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">6.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                    </ul>
+                </td>
                 <td class="item4">
                     <div class="">
                         <label>
@@ -102,7 +135,11 @@
                         </div>
                     </div>
                 </td>
-                <td class="item3"></td>
+                <td class="item3">
+                    <div id="specialty2" class="specialty-list">
+
+                    </div>
+                </td>
                 <td class="item4">
                     <div class="">
                         <label>
@@ -136,7 +173,11 @@
                         </div>
                     </div>
                 </td>
-                <td class="item3"></td>
+                <td class="item3">
+                    <div id="specialty3" class="specialty-list">
+
+                    </div>
+                </td>
                 <td class="item4">
                     <div class="">
                         <label>
@@ -170,7 +211,11 @@
                         </div>
                     </div>
                 </td>
-                <td class="item3"></td>
+                <td class="item3">
+                    <div id="specialty4" class="specialty-list">
+
+                    </div>
+                </td>
                 <td class="item4">
                     <div class="">
                         <label>
@@ -280,7 +325,37 @@
             </ul>
         </div>
     </div>
+</div>
 
+
+
+
+
+
+<div class="specialty-layer"  id="specialty-layer" style="display: none;">
+    <div class="top-close">
+        <a href="javascript:;" class="close-btn close-specialty-layer">x</a>
+    </div>
+    <div class="specialty-body">
+        <table>
+            <thead>
+                <tr>
+                    <th>专业名称</th>
+                    <th>批次</th>
+                    <th>科类</th>
+                    <th>计划人数</th>
+                    <th>学制</th>
+                    <th>收费标准</th>
+                </tr>
+            </thead>
+            <tbody id="specialty-content">
+                <tr>
+                    <td></td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
 </div>
 
 <%@ include file="/common/footer.jsp"%>

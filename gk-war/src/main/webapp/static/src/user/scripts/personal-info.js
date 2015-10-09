@@ -279,7 +279,7 @@ define(function (require) {
             $('.error-tips').text('用户名不能大于10个字').fadeIn();
             return false;
         }
-        if( name.length>20){
+        if( school.length>20){
             $('.error-tips').text('学校名不能大于20个字').fadeIn();
             return false;
         }

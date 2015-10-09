@@ -231,7 +231,8 @@
   left: expression(documentElement.scrollLeft + documentElement.clientWidth - this.offsetWidth);
   top: expression(documentElement.scrollTop + documentElement.clientHeight - this.offsetHeight); }
 
-.volunteer-flow3-layer {
+.volunteer-flow3-layer,
+.specialty-layer {
   left: 50%;
   position: fixed;
   top: 50%;
@@ -241,11 +242,13 @@
   z-index: 10;
   background: #fff;
   border-radius: 3px; }
-  .volunteer-flow3-layer .top-close {
+  .volunteer-flow3-layer .top-close,
+  .specialty-layer .top-close {
     height: 20px;
     margin-top: 10px;
     overflow: hidden; }
-    .volunteer-flow3-layer .top-close .close-btn {
+    .volunteer-flow3-layer .top-close .close-btn,
+    .specialty-layer .top-close .close-btn {
       float: right;
       margin: 0 20px 0 0;
       width: 14px;
@@ -253,25 +256,38 @@
       background: url("../../common/images/close-btn.png") no-repeat;
       font-size: 0;
       line-height: 0; }
-  .volunteer-flow3-layer .tips {
+  .volunteer-flow3-layer .tips,
+  .specialty-layer .tips {
     margin: 0 30px; }
-  .volunteer-flow3-layer .volunteer-flow3-body {
+  .volunteer-flow3-layer .volunteer-flow3-body,
+  .volunteer-flow3-layer .specialty-body,
+  .specialty-layer .volunteer-flow3-body,
+  .specialty-layer .specialty-body {
     padding: 0 30px;
     overflow: hidden; }
-    .volunteer-flow3-layer .volunteer-flow3-body .search-box {
+    .volunteer-flow3-layer .volunteer-flow3-body .search-box,
+    .volunteer-flow3-layer .specialty-body .search-box,
+    .specialty-layer .volunteer-flow3-body .search-box,
+    .specialty-layer .specialty-body .search-box {
       height: 60px;
       line-height: 60px;
       border: 1px solid #ccc;
       margin-top: 11px;
       padding: 0 20px;
       font-size: 14px; }
-      .volunteer-flow3-layer .volunteer-flow3-body .search-box .search-input {
+      .volunteer-flow3-layer .volunteer-flow3-body .search-box .search-input,
+      .volunteer-flow3-layer .specialty-body .search-box .search-input,
+      .specialty-layer .volunteer-flow3-body .search-box .search-input,
+      .specialty-layer .specialty-body .search-box .search-input {
         border: 1px solid #f1f1f1;
         width: 136px;
         padding: 0 10px;
         height: 23px;
         margin-right: 10px; }
-      .volunteer-flow3-layer .volunteer-flow3-body .search-box .search-btn {
+      .volunteer-flow3-layer .volunteer-flow3-body .search-box .search-btn,
+      .volunteer-flow3-layer .specialty-body .search-box .search-btn,
+      .specialty-layer .volunteer-flow3-body .search-box .search-btn,
+      .specialty-layer .specialty-body .search-box .search-btn {
         width: 57px;
         height: 29px;
         background: #f0ad4e;
@@ -280,116 +296,218 @@
         text-align: center;
         line-height: 29px;
         margin: 0 10px; }
-    .volunteer-flow3-layer .volunteer-flow3-body .info-explain {
+    .volunteer-flow3-layer .volunteer-flow3-body .info-explain,
+    .volunteer-flow3-layer .specialty-body .info-explain,
+    .specialty-layer .volunteer-flow3-body .info-explain,
+    .specialty-layer .specialty-body .info-explain {
       overflow: hidden;
       height: 87px;
       border: 1px solid #ccc;
       border-top: none;
       padding: 0 20px; }
-      .volunteer-flow3-layer .volunteer-flow3-body .info-explain strong {
+      .volunteer-flow3-layer .volunteer-flow3-body .info-explain strong,
+      .volunteer-flow3-layer .specialty-body .info-explain strong,
+      .specialty-layer .volunteer-flow3-body .info-explain strong,
+      .specialty-layer .specialty-body .info-explain strong {
         font-size: 16px;
         color: #444;
         margin: 20px 0 0;
         display: block; }
-      .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li {
+      .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li,
+      .volunteer-flow3-layer .specialty-body .info-explain ul li,
+      .specialty-layer .volunteer-flow3-body .info-explain ul li,
+      .specialty-layer .specialty-body .info-explain ul li {
         float: left;
         width: 216px;
         line-height: 40px; }
-        .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li span {
+        .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li span,
+        .volunteer-flow3-layer .specialty-body .info-explain ul li span,
+        .specialty-layer .volunteer-flow3-body .info-explain ul li span,
+        .specialty-layer .specialty-body .info-explain ul li span {
           width: 62px;
           height: 15px;
           font-size: 0;
           line-height: 0;
           display: inline-block;
           color: #666; }
-        .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li .starA-icon {
+        .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li .starA-icon,
+        .volunteer-flow3-layer .specialty-body .info-explain ul li .starA-icon,
+        .specialty-layer .volunteer-flow3-body .info-explain ul li .starA-icon,
+        .specialty-layer .specialty-body .info-explain ul li .starA-icon {
           background: url("../../../dist/after/images/startA-icon.png") no-repeat; }
-        .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li .starB-icon {
+        .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li .starB-icon,
+        .volunteer-flow3-layer .specialty-body .info-explain ul li .starB-icon,
+        .specialty-layer .volunteer-flow3-body .info-explain ul li .starB-icon,
+        .specialty-layer .specialty-body .info-explain ul li .starB-icon {
           background: url("../../../dist/after/images/startB-icon.png") no-repeat; }
-        .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li .starC-icon {
+        .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li .starC-icon,
+        .volunteer-flow3-layer .specialty-body .info-explain ul li .starC-icon,
+        .specialty-layer .volunteer-flow3-body .info-explain ul li .starC-icon,
+        .specialty-layer .specialty-body .info-explain ul li .starC-icon {
           background: url("../../../dist/after/images/startC-icon.png") no-repeat; }
-        .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li .starD-icon {
+        .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li .starD-icon,
+        .volunteer-flow3-layer .specialty-body .info-explain ul li .starD-icon,
+        .specialty-layer .volunteer-flow3-body .info-explain ul li .starD-icon,
+        .specialty-layer .specialty-body .info-explain ul li .starD-icon {
           background: url("../../../dist/after/images/startD-icon.png") no-repeat; }
-    .volunteer-flow3-layer .volunteer-flow3-body .info-result {
+    .volunteer-flow3-layer .volunteer-flow3-body .info-result,
+    .volunteer-flow3-layer .specialty-body .info-result,
+    .specialty-layer .volunteer-flow3-body .info-result,
+    .specialty-layer .specialty-body .info-result {
       overflow: hidden;
       height: 285px;
       border: 1px solid #ccc;
       border-top: none;
       padding: 20px 0 0; }
-      .volunteer-flow3-layer .volunteer-flow3-body .info-result ul {
+      .volunteer-flow3-layer .volunteer-flow3-body .info-result ul,
+      .volunteer-flow3-layer .specialty-body .info-result ul,
+      .specialty-layer .volunteer-flow3-body .info-result ul,
+      .specialty-layer .specialty-body .info-result ul {
         padding-left: 18px;
         width: 1300px;
         overflow: hidden; }
-        .volunteer-flow3-layer .volunteer-flow3-body .info-result ul li {
+        .volunteer-flow3-layer .volunteer-flow3-body .info-result ul li,
+        .volunteer-flow3-layer .specialty-body .info-result ul li,
+        .specialty-layer .volunteer-flow3-body .info-result ul li,
+        .specialty-layer .specialty-body .info-result ul li {
           width: 216px;
           height: 241px;
           overflow: hidden;
           float: left;
           margin-right: 11px;
           border: 1px solid #fff; }
-          .volunteer-flow3-layer .volunteer-flow3-body .info-result ul li .title {
+          .volunteer-flow3-layer .volunteer-flow3-body .info-result ul li .title,
+          .volunteer-flow3-layer .specialty-body .info-result ul li .title,
+          .specialty-layer .volunteer-flow3-body .info-result ul li .title,
+          .specialty-layer .specialty-body .info-result ul li .title {
             width: 216px;
             height: 71px;
             color: #fff;
             text-align: center;
             padding: 20px 0 0; }
-            .volunteer-flow3-layer .volunteer-flow3-body .info-result ul li .title span {
+            .volunteer-flow3-layer .volunteer-flow3-body .info-result ul li .title span,
+            .volunteer-flow3-layer .specialty-body .info-result ul li .title span,
+            .specialty-layer .volunteer-flow3-body .info-result ul li .title span,
+            .specialty-layer .specialty-body .info-result ul li .title span {
               font-size: 20px; }
-            .volunteer-flow3-layer .volunteer-flow3-body .info-result ul li .title p {
+            .volunteer-flow3-layer .volunteer-flow3-body .info-result ul li .title p,
+            .volunteer-flow3-layer .specialty-body .info-result ul li .title p,
+            .specialty-layer .volunteer-flow3-body .info-result ul li .title p,
+            .specialty-layer .specialty-body .info-result ul li .title p {
               padding: 0;
               margin: 10px 0; }
-              .volunteer-flow3-layer .volunteer-flow3-body .info-result ul li .title p i {
+              .volunteer-flow3-layer .volunteer-flow3-body .info-result ul li .title p i,
+              .volunteer-flow3-layer .specialty-body .info-result ul li .title p i,
+              .specialty-layer .volunteer-flow3-body .info-result ul li .title p i,
+              .specialty-layer .specialty-body .info-result ul li .title p i {
                 width: 62px;
                 height: 15px;
                 font-size: 0;
                 line-height: 0;
                 display: inline-block;
                 background-size: 100px auto; }
-        .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starA {
+        .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starA,
+        .volunteer-flow3-layer .specialty-body .info-result ul .starA,
+        .specialty-layer .volunteer-flow3-body .info-result ul .starA,
+        .specialty-layer .specialty-body .info-result ul .starA {
           border: 1px solid #e24d39; }
-          .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starA .title {
+          .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starA .title,
+          .volunteer-flow3-layer .specialty-body .info-result ul .starA .title,
+          .specialty-layer .volunteer-flow3-body .info-result ul .starA .title,
+          .specialty-layer .specialty-body .info-result ul .starA .title {
             background: #e24d39; }
-            .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starA .title .starA-icon {
+            .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starA .title .starA-icon,
+            .volunteer-flow3-layer .specialty-body .info-result ul .starA .title .starA-icon,
+            .specialty-layer .volunteer-flow3-body .info-result ul .starA .title .starA-icon,
+            .specialty-layer .specialty-body .info-result ul .starA .title .starA-icon {
               background: url("../../../dist/after/images/startA-icon.png") no-repeat; }
-        .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starB {
+        .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starB,
+        .volunteer-flow3-layer .specialty-body .info-result ul .starB,
+        .specialty-layer .volunteer-flow3-body .info-result ul .starB,
+        .specialty-layer .specialty-body .info-result ul .starB {
           border: 1px solid #f0ad4e; }
-          .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starB .title {
+          .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starB .title,
+          .volunteer-flow3-layer .specialty-body .info-result ul .starB .title,
+          .specialty-layer .volunteer-flow3-body .info-result ul .starB .title,
+          .specialty-layer .specialty-body .info-result ul .starB .title {
             background: #f0ad4e; }
-            .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starB .title .starB-icon {
+            .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starB .title .starB-icon,
+            .volunteer-flow3-layer .specialty-body .info-result ul .starB .title .starB-icon,
+            .specialty-layer .volunteer-flow3-body .info-result ul .starB .title .starB-icon,
+            .specialty-layer .specialty-body .info-result ul .starB .title .starB-icon {
               background: url("../../../dist/after/images/startB-icon.png") no-repeat; }
-        .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starC {
+        .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starC,
+        .volunteer-flow3-layer .specialty-body .info-result ul .starC,
+        .specialty-layer .volunteer-flow3-body .info-result ul .starC,
+        .specialty-layer .specialty-body .info-result ul .starC {
           border: 1px solid #52d09c; }
-          .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starC .title {
+          .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starC .title,
+          .volunteer-flow3-layer .specialty-body .info-result ul .starC .title,
+          .specialty-layer .volunteer-flow3-body .info-result ul .starC .title,
+          .specialty-layer .specialty-body .info-result ul .starC .title {
             background: #52d09c; }
-            .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starC .title .starC-icon {
+            .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starC .title .starC-icon,
+            .volunteer-flow3-layer .specialty-body .info-result ul .starC .title .starC-icon,
+            .specialty-layer .volunteer-flow3-body .info-result ul .starC .title .starC-icon,
+            .specialty-layer .specialty-body .info-result ul .starC .title .starC-icon {
               background: url("../../../dist/after/images/startC-icon.png") no-repeat; }
-        .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starD {
+        .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starD,
+        .volunteer-flow3-layer .specialty-body .info-result ul .starD,
+        .specialty-layer .volunteer-flow3-body .info-result ul .starD,
+        .specialty-layer .specialty-body .info-result ul .starD {
           border: 1px solid #52abd0; }
-          .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starD .title {
+          .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starD .title,
+          .volunteer-flow3-layer .specialty-body .info-result ul .starD .title,
+          .specialty-layer .volunteer-flow3-body .info-result ul .starD .title,
+          .specialty-layer .specialty-body .info-result ul .starD .title {
             background: #52abd0; }
-            .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starD .title .starD-icon {
+            .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starD .title .starD-icon,
+            .volunteer-flow3-layer .specialty-body .info-result ul .starD .title .starD-icon,
+            .specialty-layer .volunteer-flow3-body .info-result ul .starD .title .starD-icon,
+            .specialty-layer .specialty-body .info-result ul .starD .title .starD-icon {
               background: url("../../../dist/after/images/startD-icon.png") no-repeat; }
-    .volunteer-flow3-layer .volunteer-flow3-body .no-school {
+    .volunteer-flow3-layer .volunteer-flow3-body .no-school,
+    .volunteer-flow3-layer .specialty-body .no-school,
+    .specialty-layer .volunteer-flow3-body .no-school,
+    .specialty-layer .specialty-body .no-school {
       padding: 10px 20px;
       font-size: 14px;
       line-height: 20px; }
-    .volunteer-flow3-layer .volunteer-flow3-body .school-list {
+    .volunteer-flow3-layer .volunteer-flow3-body .school-list,
+    .volunteer-flow3-layer .specialty-body .school-list,
+    .specialty-layer .volunteer-flow3-body .school-list,
+    .specialty-layer .specialty-body .school-list {
       padding: 5px 10px;
       overflow-y: auto;
       height: 140px; }
-      .volunteer-flow3-layer .volunteer-flow3-body .school-list div {
+      .volunteer-flow3-layer .volunteer-flow3-body .school-list div,
+      .volunteer-flow3-layer .specialty-body .school-list div,
+      .specialty-layer .volunteer-flow3-body .school-list div,
+      .specialty-layer .specialty-body .school-list div {
         margin: 0;
         line-height: 28px;
         font-size: 14px; }
-        .volunteer-flow3-layer .volunteer-flow3-body .school-list div .fl {
+        .volunteer-flow3-layer .volunteer-flow3-body .school-list div .fl,
+        .volunteer-flow3-layer .specialty-body .school-list div .fl,
+        .specialty-layer .volunteer-flow3-body .school-list div .fl,
+        .specialty-layer .specialty-body .school-list div .fl {
           width: 165px;
           overflow: hidden; }
-        .volunteer-flow3-layer .volunteer-flow3-body .school-list div .fr {
+        .volunteer-flow3-layer .volunteer-flow3-body .school-list div .fr,
+        .volunteer-flow3-layer .specialty-body .school-list div .fr,
+        .specialty-layer .volunteer-flow3-body .school-list div .fr,
+        .specialty-layer .specialty-body .school-list div .fr {
           color: #e24333;
           cursor: pointer; }
-      .volunteer-flow3-layer .volunteer-flow3-body .school-list .school-name {
+      .volunteer-flow3-layer .volunteer-flow3-body .school-list .school-name,
+      .volunteer-flow3-layer .specialty-body .school-list .school-name,
+      .specialty-layer .volunteer-flow3-body .school-list .school-name,
+      .specialty-layer .specialty-body .school-list .school-name {
         float: left; }
-      .volunteer-flow3-layer .volunteer-flow3-body .school-list .school-sel {
+      .volunteer-flow3-layer .volunteer-flow3-body .school-list .school-sel,
+      .volunteer-flow3-layer .specialty-body .school-list .school-sel,
+      .specialty-layer .volunteer-flow3-body .school-list .school-sel,
+      .specialty-layer .specialty-body .school-list .school-sel {
         float: right;
         color: #e24d39; }
 
@@ -419,6 +537,8 @@
         padding: 3px 8px; }
     .specialty li .sel-num {
       float: right; }
+      .specialty li .sel-num a {
+        text-decoration: underline; }
 
 .error-tips {
   padding: 10px;

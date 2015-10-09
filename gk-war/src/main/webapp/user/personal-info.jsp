@@ -31,7 +31,7 @@
             <div class="user-item fr">
                 <div class="error-tips hide"></div>
                 <div class="group-comm account-box">
-                    登陆账号
+                    登录账号
                     <span class="account-tel"></span>
                     <a href="/user/modify-psd.jsp" class="modify-psd">修改密码</a>
                 </div>
