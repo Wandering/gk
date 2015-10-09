@@ -11,7 +11,7 @@
         left join gk_enroll_report b on a.code = b.universityCode
         left join gk_university_dict c on c.dictId = a.property
         <where>
-            1=1
+            c.type = 'FEATURE'
             <if test="year!=null">
                 and b.year = #{year}
             </if>
@@ -32,7 +32,7 @@
         left join gk_enroll_report b on a.code = b.universityCode
         left join gk_university_dict c on c.dictId = a.property
         <where>
-            1=1
+            c.type = 'FEATURE'
             <if test="year!=null">
                 and b.year = #{year}
             </if>
