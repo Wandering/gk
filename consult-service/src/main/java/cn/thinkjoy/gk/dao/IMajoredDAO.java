@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.dao;
 
+import cn.thinkjoy.gk.pojo.MajorDetailPojo;
 import cn.thinkjoy.gk.pojo.MajoredDto;
 import cn.thinkjoy.gk.pojo.SubjectDto;
 import cn.thinkjoy.gk.query.MajoredQuery;
@@ -22,4 +23,6 @@ public interface IMajoredDAO {
     MajoredDto getMajoredByCode(@Param("code")String majoredCode);
 
     List<Map<String,Object>> getUniversityByCode(@Param("code")String majoredCode, @Param("batchName")String name);
+
+    List<MajorDetailPojo> getMajorDetailList(Map<String,Object> params);
 }
