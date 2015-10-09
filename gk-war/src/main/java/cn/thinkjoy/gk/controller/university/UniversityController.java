@@ -281,11 +281,14 @@ public class UniversityController extends BaseController {
     @ResponseBody
     public UniversityDetailDto universityDetail(@RequestParam(value="code",required=false) String code,
                                                 @RequestParam(value="type",required=false) Integer type,
+                                                @RequestParam(value="year",required=false) Integer year,
                                                 @RequestParam(value="batch",required=false) String batch){
 
 
         if(StringUtils.isBlank(code)
-                ||null==type){
+                ||StringUtils.isBlank(batch)
+                ||null==type
+                ||null==year){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
 
@@ -299,7 +302,7 @@ public class UniversityController extends BaseController {
 
         UniversityDetailDto universityDetailDto = null;
         try{
-            universityExService.getUniversityDetail(code,batch,type,2014);
+            universityDetailDto = universityExService.getUniversityDetail(code,batch,type,year);
         }catch(Exception e){
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
         }
