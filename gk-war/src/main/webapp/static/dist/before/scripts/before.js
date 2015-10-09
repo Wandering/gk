@@ -139,7 +139,7 @@ define(function (require) {
                             resources = dataJson[i].resources;
                         var listMsgHtml = ''
                             + '<li class="item">'
-                            + '<a target="_blank" href="' + resources + '">'
+                            + '<a target="_blank" href="' + localhosts+resources + '">'
                             + '<span class="subject-n"><strong>' + subject + '</strong></span>'
                             + '<span class="subject-t">' + paperName + '</span>'
                             + '<span class="subject-d">上传时间：' + getTime(createDate) + '</span>'

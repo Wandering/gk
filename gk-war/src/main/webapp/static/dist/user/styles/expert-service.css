@@ -1058,6 +1058,9 @@ a.next-btn:hover {
   .content .no-msg {
     text-align: center;
     padding-top: 150px; }
+    .content .no-msg p {
+      font-size: 16px;
+      color: #b0b0b0; }
   .content .row, .content .content-title-list {
     display: block;
     height: 45px;

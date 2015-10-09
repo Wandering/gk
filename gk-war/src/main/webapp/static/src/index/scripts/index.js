@@ -91,8 +91,8 @@ define(function (require) {
     (function () {
         var Question = {
             render: function (data) {
-                if (data.length > 5) {
-                    data.length = 5;
+                if (data.length > 3) {
+                    data.length = 3;
                 }
                 var html = [];
                 for (var i = 0, len = data.length; i < len; i++) {
@@ -132,6 +132,7 @@ define(function (require) {
                     + '<span class="fr">' + time + '</span>'
                     + '</div>'
                     + '<div class="detile-info mt20">'
+                    + '<img class="triangle" src="/static/dist/common/images/triangle.png" />'
                     + content.join('')
                     + '</div>'
                     + '</div>');

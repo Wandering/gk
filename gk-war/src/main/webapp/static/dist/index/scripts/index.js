@@ -69,14 +69,15 @@ define(function (require) {
                 //console.log(res);
                 var template = '';
                 $.each(dataJson, function (i, v) {
-                    template += '<li>' +
-                    '<a href="/consult/gk_hot_detile.jsp?method=hot&id=' + v.id + '"><div class="icon ta"> ' +
+                    var liClass = i % 2 == 0 ? '' : 'ml';
+                    template += '<li class="' + liClass + '">' +
+                    '<div class="icon ta"> ' +
                     '<span>' + getTime1(v.lastModDate) + '</span> ' +
                     '</div> ' +
                     '<div class="title-info"> ' +
-                    '<h3>' + v.hotInformation + '</h3> ' +
+                    '<h3><a href="/consult/gk_hot_detile.jsp?method=hot&id=' + v.id + '">' + v.hotInformation + '</a></h3>' +
                     '<h6>' + v.informationSubContent + '</h6> ' +
-                    '</div></a>' +
+                    '</div>' +
                     '</li>'
                 });
                 $('.hot-list').html(template);
@@ -90,8 +91,8 @@ define(function (require) {
     (function () {
         var Question = {
             render: function (data) {
-                if (data.length > 5) {
-                    data.length = 5;
+                if (data.length > 3) {
+                    data.length = 3;
                 }
                 var html = [];
                 for (var i = 0, len = data.length; i < len; i++) {
@@ -124,16 +125,17 @@ define(function (require) {
                         title = title.substring(0, 50);
                         title += '...';
                     }
-                    html.push('<a href="/question/question_detile.jsp?id=' + question.questionId + '"><div class="detile-content mt20">'
+                    html.push('<div class="detile-content mt20">'
                     + '<div class="detile-header">'
                     + '<span class="order-number">' + (i + 1) + '</span>'
-                    + '<span class="detile-title">' + title + '</span>'
+                    + '<span class="detile-title"><a href="/question/question_detile.jsp?id=' + question.questionId + '">' + title + '</a></span>'
                     + '<span class="fr">' + time + '</span>'
                     + '</div>'
                     + '<div class="detile-info mt20">'
+                    + '<img class="triangle" src="/static/dist/common/images/triangle.png" />'
                     + content.join('')
                     + '</div>'
-                    + '</div></a>');
+                    + '</div>');
                 }
                 return html.join('');
             },

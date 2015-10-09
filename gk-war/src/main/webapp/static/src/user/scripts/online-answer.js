@@ -46,6 +46,7 @@ define(function (require) {
                     + '</div>');
                 if (content.length > 0) {
                    html.push('<div class="detail-info">'
+                       + '<img class="triangle" src="/static/dist/common/images/triangle.png" />'
                        + content.join('')
                        + '</div>');
                 }

@@ -1043,7 +1043,12 @@ section:last-child {
     border: 1px solid #edecec;
     line-height: 24px;
     color: #606060;
-    font-size: 12px; }
+    font-size: 12px;
+    position: relative; }
+    .section-article .detile-info img.triangle {
+      position: absolute;
+      top: -10px;
+      left: 20px; }
   .section-article h6 {
     height: 30px;
     line-height: 30px;

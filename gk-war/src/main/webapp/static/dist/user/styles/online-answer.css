@@ -1079,7 +1079,12 @@ a.next-btn:hover {
     padding: 15px;
     border: 1px solid #edecec;
     line-height: 1.8;
-    font-size: 12px; }
+    font-size: 12px;
+    position: relative; }
+    .content .detail-info img.triangle {
+      position: absolute;
+      top: -10px;
+      left: 20px; }
   .content .detail-content {
     font-size: 16px;
     color: #626161;

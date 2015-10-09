@@ -1092,11 +1092,16 @@ section:last-child {
 
 .detile-info {
   background-color: #f6f6f6;
-  padding: 20px 20px 20px 30px;
+  padding: 20px;
   border: 1px solid #edecec;
   line-height: 24px;
   color: #606060;
-  font-size: 12px; }
+  font-size: 12px;
+  position: relative; }
+  .detile-info img.triangle {
+    position: absolute;
+    top: -10px;
+    left: 20px; }
 
 .detile-content:last-child {
   margin-bottom: 50px; }

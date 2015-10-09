@@ -163,7 +163,7 @@ define(function (require) {
         $('.tansLayer,.evaluating-layer').hide();
     });
     // 院校推荐 锚点
-    $('#volunteer-flow').on('click', function () {
+    $('#volunteer-flow, #volunteer-flow1').on('click', function () {
         $('#main-volunteer-tabs li').eq(1).click();
         $('html,body').animate({scrollTop: ($('#main-volunteer-box').offset().top)}, 800);
     });

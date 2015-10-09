@@ -44,9 +44,10 @@ define(function (require) {
             html.push('<div class="detile-header">');
             html.push('<span class="order-number">' + (i + (page - 1) * 8 + 1) + '</span>');
             html.push('<span class="detile-title">' + list[i].title + '</span>');
-            html.push(' <span class="fr">上传时间：' + new Date(list[i].lastModDate).Format('yyyy-MM-dd hh:mm') + '</span>');
+            html.push(' <span class="fr">' + new Date(list[i].lastModDate).Format('yyyy-MM-dd hh:mm') + '</span>');
             html.push('</div>');
             html.push('<div class="detile-info mt20">');
+            html.push('<img class="triangle" src="/static/dist/common/images/triangle.png" />');
             html.push(list[i].summary);
             html.push('</div>');
             html.push('</div></a>');
@@ -101,7 +102,12 @@ define(function (require) {
             getArticleList(curObj, parseInt($(this).attr('data-page')) + 1);
         });
 
-        var api = flowplayer("player", "/static/src/guide/scripts/flowplayer-3.2.18.swf");
+        var api = flowplayer("player", "/static/src/guide/scripts/flowplayer-3.2.18.swf", {
+            clip: {
+                autoPlay: false,       //是否自动播放，默认true
+                autoBuffering: false     //是否自动缓冲视频，默认true
+            }
+        });
     });
 });
 
