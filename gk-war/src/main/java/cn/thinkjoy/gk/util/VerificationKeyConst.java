@@ -21,6 +21,12 @@ public class VerificationKeyConst {
 	public static final int GET_THE_ORDER_TYPE=3;
 	public static final String GET_THE_ORDER="GET_THE_ORDER";
 
+	/**
+	 * 获取志愿指导验证码key和参数type值
+	 */
+	public static final int GET_BATCH_TYPE=4;
+	public static final String GET_BATCH="GET_BATCH";
+
 
         
 }
