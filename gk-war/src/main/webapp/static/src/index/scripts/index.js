@@ -75,7 +75,7 @@ define(function (require) {
                     '<span>' + getTime1(v.lastModDate) + '</span> ' +
                     '</div> ' +
                     '<div class="title-info"> ' +
-                    '<a href="/consult/gk_hot_detile.jsp?method=hot&id=' + v.id + '"><h3>' + v.hotInformation + '</h3></a>' +
+                    '<h3><a href="/consult/gk_hot_detile.jsp?method=hot&id=' + v.id + '">' + v.hotInformation + '</a></h3>' +
                     '<h6>' + v.informationSubContent + '</h6> ' +
                     '</div>' +
                     '</li>'
@@ -128,7 +128,7 @@ define(function (require) {
                     html.push('<div class="detile-content mt20">'
                     + '<div class="detile-header">'
                     + '<span class="order-number">' + (i + 1) + '</span>'
-                    + '<a href="/question/question_detile.jsp?id=' + question.questionId + '"><span class="detile-title">' + title + '</span></a>'
+                    + '<span class="detile-title"><a href="/question/question_detile.jsp?id=' + question.questionId + '">' + title + '</a></span>'
                     + '<span class="fr">' + time + '</span>'
                     + '</div>'
                     + '<div class="detile-info mt20">'
