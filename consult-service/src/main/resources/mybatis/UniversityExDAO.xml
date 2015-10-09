@@ -3,20 +3,46 @@
 
 <mapper namespace="cn.thinkjoy.gk.dao.IUniversityExDAO">
 
-    <select id="getWSUniversityDetail" parameterType="java.lang.String" resultType="java.lang.String">
-        SELECT a.code,a.name,a.subjection,a.type,b.wsPlanNumber planNum,b.wsEnrollNumber enrollNum,
-        b.wsLowestScore lowestScore ,b.wsLowestRank lowestRank,b.wsAverageScore averageScore,b.wsAverageRank averageRank
+    <select id="getWSUniversityDetail" resultType="UniversityDetailDto">
+        SELECT a.code,a.name,a.subjection,a.type,b.lgPlanNumber planNum,b.lgEnrollNumber enrollNum,
+        b.lgLowestScore lowestScore ,b.lgLowestRank lowestRanking,b.lgAverageScore averageScore,b.lgAverageRank averageScoresRanking
+        ,c.name dictName
         FROM gk_university a
         left join gk_enroll_report b on a.code = b.universityCode
-        where b.year = #{year} and a.code =#{code} and b.batch = #{batch}
+        left join gk_university_dict c on c.dictId = a.property
+        <where>
+            c.type = 'FEATURE'
+            <if test="year!=null">
+                and b.year = #{year}
+            </if>
+            <if test="code!=null">
+                and a.code =#{code}
+            </if>
+            <if test="batch!=null">
+                and b.batch = #{batch}
+            </if>
+        </where>
     </select>
 
-    <select id="getLGUniversityDetail" parameterType="java.lang.String" resultType="UniversityDetailDto">
+    <select id="getLGUniversityDetail" resultType="UniversityDetailDto">
         SELECT a.code,a.name,a.subjection,a.type,b.lgPlanNumber planNum,b.lgEnrollNumber enrollNum,
-        b.lgLowestScore lowestScore ,b.lgLowestRank lowestRank,b.lgAverageScore averageScore,b.lgAverageRank averageRank
+        b.lgLowestScore lowestScore ,b.lgLowestRank lowestRanking,b.lgAverageScore averageScore,b.lgAverageRank averageScoresRanking
+        ,c.name dictName
         FROM gk_university a
         left join gk_enroll_report b on a.code = b.universityCode
-        where b.year = #{year} and a.code =#{code} and b.batch = #{batch}
+        left join gk_university_dict c on c.dictId = a.property
+        <where>
+            c.type = 'FEATURE'
+            <if test="year!=null">
+                and b.year = #{year}
+            </if>
+            <if test="code!=null">
+                and a.code =#{code}
+            </if>
+            <if test="batch!=null">
+                and b.batch = #{batch}
+            </if>
+        </where>
     </select>
 
 
