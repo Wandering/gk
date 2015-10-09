@@ -8,7 +8,7 @@
         b.wsLowestScore lowestScore ,b.wsLowestRank lowestRank,b.wsAverageScore averageScore,b.wsAverageRank averageRank
         FROM gk_university a
         left join gk_enroll_report b on a.code = b.universityCode
-        where b.year = 2014 and code =#{code}
+        where b.year = #{year} and a.code =#{code} and b.batch = #{batch}
     </select>
 
     <select id="getLGUniversityDetail" parameterType="java.lang.String" resultType="UniversityDetailDto">
@@ -16,7 +16,7 @@
         b.lgLowestScore lowestScore ,b.lgLowestRank lowestRank,b.lgAverageScore averageScore,b.lgAverageRank averageRank
         FROM gk_university a
         left join gk_enroll_report b on a.code = b.universityCode
-        where b.year = 2014 and code =#{code}
+        where b.year = #{year} and a.code =#{code} and b.batch = #{batch}
     </select>
 
 

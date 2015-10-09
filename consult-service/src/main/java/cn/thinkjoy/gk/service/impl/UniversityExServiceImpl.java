@@ -12,6 +12,9 @@ import cn.thinkjoy.gk.service.IUniversityExService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Service("UniversityExServiceImpl")
 public class UniversityExServiceImpl implements IUniversityExService{
@@ -20,14 +23,20 @@ public class UniversityExServiceImpl implements IUniversityExService{
     private IUniversityExDAO universityExDAO;
 
     @Override
-    public UniversityDetailDto getUniversityDetail(String schoolCode, Integer type) {
+    public UniversityDetailDto getUniversityDetail(String schoolCode, String batch, Integer type,Integer year) {
 
         UniversityDetailDto universityDetailDto = null;
 
+        Map<String,Object> params = new HashMap<>();
+
+        params.put("code",schoolCode);
+        params.put("batch",batch);
+        params.put("year",year);
+
         if(type==0){
-            universityDetailDto = universityExDAO.getWSUniversityDetail(schoolCode);
+            universityDetailDto = universityExDAO.getWSUniversityDetail(params);
         }else if(type==1){
-            universityDetailDto = universityExDAO.getLGUniversityDetail(schoolCode);
+            universityDetailDto = universityExDAO.getLGUniversityDetail(params);
         }
 
         return universityDetailDto;

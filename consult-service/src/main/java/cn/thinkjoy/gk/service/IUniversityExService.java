@@ -11,6 +11,6 @@ import cn.thinkjoy.gk.pojo.UniversityDetailDto;
 
 public interface IUniversityExService{
 
-    UniversityDetailDto getUniversityDetail(String schoolCode,Integer type);
+    UniversityDetailDto getUniversityDetail(String schoolCode,String batch,Integer type,Integer year);
 
 }
