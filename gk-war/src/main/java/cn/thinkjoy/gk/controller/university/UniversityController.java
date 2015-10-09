@@ -289,14 +289,14 @@ public class UniversityController extends BaseController {
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
 
-        String str = null;
+//        String str = null;
+//
+//        try {
+//            str = new String(batch.getBytes("ISO-8859-1"),"UTF-8");
+//        } catch (UnsupportedEncodingException e) {
+//            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
+//        }
 
-        try {
-            str = new String(batch.getBytes("ISO-8859-1"),"UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
-        }
-
-        return universityExService.getUniversityDetail(code,str,type,2014);
+        return universityExService.getUniversityDetail(code,batch,type,2014);
     }
 }

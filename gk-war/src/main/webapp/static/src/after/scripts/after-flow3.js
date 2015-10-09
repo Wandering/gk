@@ -34,14 +34,14 @@ define(function (require) {
         function getSchool(paramsJson,m_province,m_specialty_name){
             paramsJson.m_province = m_province;
             paramsJson.m_specialty_name = m_specialty_name;
-            console.log(paramsJson);
+            //console.log(paramsJson);
             $.ajax({
                 url: '/guide/school.do',
                 type: 'GET',
                 dataType: 'JSON',
                 data:paramsJson,
                 success: function (res) {
-                    console.log(res);
+                    //console.log(res);
                     if (res.rtnCode == "0100006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
                         $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
                         return;
@@ -56,10 +56,10 @@ define(function (require) {
                             $('.school-list').hide();
                         }
 
-                        console.log(data)
+                        //console.log(data)
 
                         var m_keleiType = '';
-                        console.log(data.related.m_kelei)
+                        //console.log(data.related.m_kelei)
                         if(data.related.m_kelei=="文史"){
                             m_keleiType = 0;
                         }else if(data.related.m_kelei=="理工"){

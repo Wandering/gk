@@ -3,7 +3,7 @@
 
 <mapper namespace="cn.thinkjoy.gk.dao.IUniversityExDAO">
 
-    <select id="getWSUniversityDetail" parameterType="java.lang.String" resultType="java.lang.String">
+    <select id="getWSUniversityDetail" parameterType="map" resultType="java.lang.String">
         SELECT a.code,a.name,a.subjection,a.type,b.wsPlanNumber planNum,b.wsEnrollNumber enrollNum,
         b.wsLowestScore lowestScore ,b.wsLowestRank lowestRank,b.wsAverageScore averageScore,b.wsAverageRank averageRank
         FROM gk_university a
@@ -11,7 +11,7 @@
         where b.year = #{year} and a.code =#{code} and b.batch = #{batch}
     </select>
 
-    <select id="getLGUniversityDetail" parameterType="java.lang.String" resultType="UniversityDetailDto">
+    <select id="getLGUniversityDetail" parameterType="map" resultType="UniversityDetailDto">
         SELECT a.code,a.name,a.subjection,a.type,b.lgPlanNumber planNum,b.lgEnrollNumber enrollNum,
         b.lgLowestScore lowestScore ,b.lgLowestRank lowestRank,b.lgAverageScore averageScore,b.lgAverageRank averageRank
         FROM gk_university a
