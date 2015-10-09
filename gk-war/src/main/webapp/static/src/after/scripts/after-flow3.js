@@ -50,6 +50,7 @@ define(function (require) {
                         var data = $.parseJSON(res.bizData);
                         //console.log(data)
                         var m_batch_id = data.related.m_batch_id;
+                        var m_batch = data.related.m_batch;
                         var listData = data.data.result;
                         if (listData.data.length == 0) {
                             $('.no-school').show();
@@ -81,7 +82,7 @@ define(function (require) {
                                     var schoolListHtml = ''
                                         + '<div>'
                                         + '<span class="fl"><a target="_blank" href="/consult/school_detile.jsp?id=' + m.m_university_code + '&batch=' + m_batch_id + '" id="' + m.m_university_code + '">' + m.m_university_name + '</a></span>'
-                                        + '<span class="fr selSchool" datatypeId="'+ datatypeId +'" id="' + m.m_university_code + '" type = "' + m_keleiType + '">选择</span>'
+                                        + '<span class="fr selSchool" datatypeId="'+ datatypeId +'" id="' + m.m_university_code + '" type = "' + m_keleiType + '" m_batch="'+ m_batch +'">选择</span>'
                                         + '</div>';
                                     $('#school-list' + i).append(schoolListHtml);
                                 })
@@ -114,39 +115,50 @@ define(function (require) {
         });
 
 
-        $.ajax({
-            url: '/university/universityDetail.do',
-            type: 'GET',
-            dataType: 'JSON',
-            data: {
-                code: 4004,
-                type: 0,
-                year: 2014,
-                batch: "二批本科"
-            },
-            success: function (res) {
-                console.log(res);
-                var data = res.bizData;
-                if ('0000000' === result.rtnCode) {
-                    var infoHtml = ''
-                        + '<p>'
-                        + '院校代码：'+ data.code +'  <br/>'
-                        + '院校特征：211 研<br/>'
-                        + '院校隶属：'+ data.subjection +'<br/>'
-                        + '院校类型：'+ data.type +'<br/>'
-                        + '2014年最低投档分：'+ data.lowestScore +'<br/>'
-                        + '2014年最低位次：'+ data.lowestRanking +' <br/>'
-                        + '2014年录取平均分：'+ data.averageScore +' <br/>'
-                        + '2014年平均分位次：'+ data.averageScoresRanking +' <br/>'
-                        + '历年招生情况：'+ data.enrollIntro +' <br/>'
-                        + '录取指数：★★'
-                        + '</p>'
+        $('#volunteer-flow3-layer').on('click','.selSchool',function(){
+            var code = $(this).attr('id');
+            var type = $(this).attr('type');
+            var m_batch = $(this).attr('m_batch');
+            console.log(code+"=" + type+"=="+m_batch)
+            $.ajax({
+                url: '/university/universityDetail.do',
+                type: 'GET',
+                dataType: 'JSON',
+                data: {
+                    code: code,
+                    type: type,
+                    year: 2014,
+                    batch: m_batch
+                },
+                success: function (res) {
+                    console.log(res);
+                    var data = res.bizData;
+                    if ('0000000' === result.rtnCode) {
+                        var dicName = '';
+                        if(data.dictName){
+                            dicName = data.dictName;
+                        }
+                        var infoHtml = ''
+                            + '<p>'
+                            + '院校代码：'+ data.code +'  <br/>'
+                            + '院校特征：'+ dicName +'<br/>'
+                            + '院校隶属：'+ data.subjection +'<br/>'
+                            + '院校类型：'+ data.type +'<br/>'
+                            + '2014年最低投档分：'+ data.lowestScore +'<br/>'
+                            + '2014年最低位次：'+ data.lowestRanking +' <br/>'
+                            + '2014年录取平均分：'+ data.averageScore +' <br/>'
+                            + '2014年平均分位次：'+ data.averageScoresRanking +' <br/>'
+                            + '历年招生情况：'+ data.enrollIntro +' <br/>'
+                            + '录取指数：★★'
+                            + '</p>'
+                    }
+
+
+
                 }
-
-
-
-            }
+            });
         });
+
 
 
     })
