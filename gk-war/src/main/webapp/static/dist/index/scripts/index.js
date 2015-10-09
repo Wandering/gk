@@ -70,13 +70,13 @@ define(function (require) {
                 var template = '';
                 $.each(dataJson, function (i, v) {
                     template += '<li>' +
-                    '<div class="icon ta"> ' +
+                    '<a href="/consult/gk_hot_detile.jsp?method=hot&id=' + v.id + '"><div class="icon ta"> ' +
                     '<span>' + getTime1(v.lastModDate) + '</span> ' +
                     '</div> ' +
                     '<div class="title-info"> ' +
                     '<h3>' + v.hotInformation + '</h3> ' +
                     '<h6>' + v.informationSubContent + '</h6> ' +
-                    '</div> ' +
+                    '</div></a>' +
                     '</li>'
                 });
                 $('.hot-list').html(template);
@@ -111,16 +111,23 @@ define(function (require) {
                         var text = answers[c].text;
                         if (answers[c].text.length > 300) {
                             text = text.substring(0, 300);
+                            text += '...';
                         }
                         content.push('<p>' + text + '</p>');
                         if (answers[c].img) {
                             content.push('<p class="ta"><img src="' + answers[c].img + '" /></p>');
                         }
                     }
+
+                    var title = title.join('');
+                    if (title.length > 50) {
+                        title = title.substring(0, 50);
+                        title += '...';
+                    }
                     html.push('<a href="/question/question_detile.jsp?id=' + question.questionId + '"><div class="detile-content mt20">'
                     + '<div class="detile-header">'
                     + '<span class="order-number">' + (i + 1) + '</span>'
-                    + '<span class="detile-title">' + title.join('').substring(0, 50) + '</span>'
+                    + '<span class="detile-title">' + title + '</span>'
                     + '<span class="fr">' + time + '</span>'
                     + '</div>'
                     + '<div class="detile-info mt20">'
@@ -156,29 +163,5 @@ define(function (require) {
         Question.getHot('tab_1');
     })();
 
-
-    // 各地招办联系方式
-    //$.getJSON('/agent/getAgent.do', function (res) {
-    //    console.log(res)
-    //    var dataJson = res.bizData;
-    //    if(res.rtnCode=="0000000"){
-    //        for (var i = 0; i < dataJson.length; i++) {
-    //            var address = dataJson[i].address;
-    //            var name = dataJson[i].name;
-    //            var telphone = dataJson[i].telphone;
-    //            console.log(address)
-    //            console.log(name)
-    //            console.log(telphone)
-    //            var addressHtml = ''
-    //                + '<div class="col-3">'
-    //                + '<p class="area-name">' + address + '</p>'
-    //                + '<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">' + telphone + '</span>'+ name + '</p>'
-    //                + '</div>';
-    //            $('#address-box').html(addressHtml);
-    //        }
-    //    }
-    //
-    //
-    //})
 
 });
