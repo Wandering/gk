@@ -25,6 +25,8 @@ public class UniversityDetailDto {
 
     private String averageScoresRanking;
 
+    private String enrollIntro;
+
     public String getCode() {
         return code;
     }
@@ -103,5 +105,13 @@ public class UniversityDetailDto {
 
     public void setAverageScoresRanking(String averageScoresRanking) {
         this.averageScoresRanking = averageScoresRanking;
+    }
+
+    public String getEnrollIntro() {
+        return enrollIntro;
+    }
+
+    public void setEnrollIntro(String enrollIntro) {
+        this.enrollIntro = enrollIntro;
     }
 }
