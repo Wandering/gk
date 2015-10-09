@@ -41,7 +41,9 @@ public class GuideController extends BaseController {
     public String batch(@RequestParam(value="m_candidateNumber",required=false) String m_candidateNumber,
                         @RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore,
                         @RequestParam(value="m_kelei",required=false) String m_kelei,
-                        @RequestParam(value="m_ranking",required=false) String m_ranking) throws Exception{
+                        @RequestParam(value="m_ranking",required=false) String m_ranking,
+            @RequestParam(value="code",required=false) String code) throws Exception{
+
 
         UserAccountPojo userAccountPojo = getUserAccountPojo();
 
@@ -54,6 +56,21 @@ public class GuideController extends BaseController {
         if(vipStatus==null||vipStatus==0){
             throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
         }
+
+        Long value = userAccountPojo.getId();
+
+        Object resultCode = session.getAttribute(VerificationKeyConst.GET_BATCH+value);
+
+        if(resultCode==null){
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
+        }
+
+        if(!resultCode.toString().equals(code.toUpperCase())){
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
+        }
+
+        session.removeAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value);
+
 
         StringBuffer returnStr = new StringBuffer("");
         try {
