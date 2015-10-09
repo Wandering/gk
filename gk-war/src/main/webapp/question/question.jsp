@@ -33,8 +33,8 @@
             </div>
 
             <ul class="tabs-list mt60" id="tabs_list">
-                <li class="active" data-method="getNew">最新问题</li>
-                <li data-method="getHot">热门问题</li>
+                <li class="active" data-method="getNew">最新解答</li>
+                <li data-method="getHot">热门解答</li>
             </ul>
 
             <div id="question_content"></div>

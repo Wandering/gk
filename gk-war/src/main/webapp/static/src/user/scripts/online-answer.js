@@ -61,7 +61,7 @@ define(function (require) {
         getData: function(url, contentId, isAnswer) {
             var that = this;
             var keywords = $('#keywords').val();
-            $.get(url + 'startSize=' + this.startSize + '&endSize=' + this.endSize + '&isAnswer=' + isAnswer + '&keyword=' + keywords, function(data) {
+            var xhr = $.get(url + 'startSize=' + this.startSize + '&endSize=' + this.endSize + '&isAnswer=' + isAnswer + '&keyword=' + keywords, function(data) {
                 if ('0000000' === data.rtnCode) {
                     if (data.bizData.length > 0) {
                         that.next.show();
@@ -73,7 +73,7 @@ define(function (require) {
 
                     } else {
                         if (that.startSize == 0) {
-                            $('#' + contentId).html('<p class="mt20 ta">暂无信息！</p>');
+                            $('#' + contentId).html(that.getTipTmpl('暂时没有数据，请耐心等待哦'));
                             that.next.hide();
                         } else {
                             that.next.text('暂无更多信息！');
@@ -81,7 +81,12 @@ define(function (require) {
                         }
                     }
                 }
+            }).error(function(e) {
+                $('#' + contentId).html(that.getTipTmpl('服务器开小差啦~ ~ ~'));
             });
+        },
+        getTipTmpl: function(msg) {
+            return '<div class="error-tip-new"><img src="/static/dist/common/images/no-data-logo.png" /><p class="ta">' + msg + '</p></div>'
         },
         addNextPageHandle: function() {
             this.startSize += 5;
@@ -104,6 +109,18 @@ define(function (require) {
             Question.startSize = 0;
             Question.endSize = 5;
             Question.getMyQuestion('detail_content_question', isAnswer);
+        });
+
+        $('#keywords').keydown(function(e) {
+            if (e.keyCode == 13) {
+                var search = $('#keywords').val();
+                if (search) {
+                    var isAnswer =  $('.toggle-nav div.btn-selected').attr('data-isAnswer');
+                    Question.startSize = 0;
+                    Question.endSize = 5;
+                    Question.getMyQuestion('detail_content_question', isAnswer);
+                }
+            }
         });
 
         $('.toggle-nav div.btn').on('click', function() {

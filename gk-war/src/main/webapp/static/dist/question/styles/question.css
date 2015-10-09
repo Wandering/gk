@@ -449,7 +449,7 @@ input, textarea {
       position: absolute;
       background-color: #353535;
       top: 50px;
-      right: 0;
+      right: -30px;
       overflow: hidden; }
       .header .user-info-list .menu li a {
         text-align: center;
@@ -643,6 +643,11 @@ input, textarea {
   color: #888;
   font-size: 14px;
   margin-bottom: 40px; }
+
+.sub-title {
+  color: #888;
+  font-size: 14px;
+  font-weight: 200; }
 
 /*文章中得导航栏*/
 .tabs-list {
