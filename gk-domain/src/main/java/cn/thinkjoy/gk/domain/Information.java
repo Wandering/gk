@@ -17,6 +17,8 @@ public class Information extends BaseDomain{
     private String informationSubContent;
     /*高考热点内容*/
     public String informationContent;
+    /*点击次数*/
+    public  Long hotCount;
 
     @Override
     public Long getId() {return id;}
@@ -57,5 +59,13 @@ public class Information extends BaseDomain{
 
     public void setInformationContent(String informationContent) {
         this.informationContent = informationContent;
+    }
+
+    public Long getHotCount() {
+        return hotCount;
+    }
+
+    public void setHotCount(Long hotCount) {
+        this.hotCount = hotCount;
     }
 }

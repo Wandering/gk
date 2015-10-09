@@ -8,12 +8,6 @@
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
-
-<div class="content">
-    <%@ include file="/common/banner-wipe.jsp" %>
-
-</div>
-
 <div class="w1000">
     <div class="content-title">
         <p class="fl w40"></p>
@@ -245,11 +239,8 @@
 
 
 <div class="main-volunteer-box" style="display: none;">
-    <div class="school-eval w1000">
-        <div class="tip">
-            <p>依据考分估算出我的位次、获得推荐院校信息、以及我的理想院校测评</p>
-        </div>
-        <div class="eval-left yztj-fl">
+    <div class="school-eval w1000" style="padding:40px 0 0;">
+        <div class="eval-left yztj-fl" >
             <div class="img">
                 <img src="/static/dist/before/images/zd-pic.png" alt=""/>
                 <strong>院校推荐、志愿指导</strong>
@@ -365,7 +356,7 @@
             <p>您本次录入的分数是：<strong><span id="precedenceScoreInfo"></span>分</strong></p>
         </div>
         <div class="evaluating-result">
-            <p class="tips">依据<span id="current-year"></span>年的录取情况、在陕西省填报该院校您需要以下分数(在陕）：</p>
+            <p class="tips">依据<span id="current-year"></span>依据2014年的录取情况、在陕西省你的分数预估在以下位次:</p>
             <div class="evaluating-result-num" id="precedence-list"></div>
         </div>
         <div style="text-align: center">
@@ -462,22 +453,7 @@
             <a class="evaluating-result-close close-btn">关闭</a>
         </div>
     </div>
-
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <%@ include file="/common/footer.jsp"%>
 <script>
     seajs.use("/static/src/before/scripts/before");

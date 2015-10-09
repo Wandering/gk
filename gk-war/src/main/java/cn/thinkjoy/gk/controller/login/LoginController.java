@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-//@Scope("prototype")
+@Scope("prototype")
 @RequestMapping("/login")
 public class LoginController extends BaseController {
 
@@ -31,18 +31,6 @@ public class LoginController extends BaseController {
 
 	@Autowired
 	private IUserAccountExService userAccountExService;
-
-	@RequestMapping(value = "/doLogin", method = RequestMethod.GET)
-	public String showIndex() throws Exception {
-		String value = getCookieValue();
-		if(!StringUtils.isEmpty(value)){
-			Long id = Long.valueOf(value);
-			if(RedisUtil.getInstance().exists(UserRedisConst.USER_KEY + id)){
-				return ControllerReturnConst.REDIRECT+"/index.do";
-			}
-		}
-		return "login";
-	}
 
 	/**
 	 * 登陆
@@ -79,7 +67,7 @@ public class LoginController extends BaseController {
 
 			id = userAccountBean.getId();
 
-			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE,"/"));
+			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
 
 			setUserAccountPojo(userAccountBean);
 
@@ -100,24 +88,13 @@ public class LoginController extends BaseController {
 	public String logout() throws Exception {
 //		boolean status = true;
 		try {
-			RedisUtil.getInstance().del(UserRedisConst.USER_KEY + getCookieValue());
-			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, null, CookieTimeConst.CLEAN_COOKIE,"/"));
+//			RedisUtil.getInstance().del(UserRedisConst.USER_KEY + getCookieValue());
+			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, null, CookieTimeConst.CLEAN_COOKIE));
 		}catch(Exception e){
 //			status = false;
 			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
 		}
 		return "success";
-	}
-
-	/**
-	 * 测试getUserAccountPojo是否可以取到
-	 * @return
-	 */
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public String test() throws Exception {
-		UserAccountPojo userAccountPojo=getUserAccountPojo();
-		System.out.println(userAccountPojo);
-		return "/index";
 	}
 
 }

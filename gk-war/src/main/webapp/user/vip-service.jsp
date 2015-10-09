@@ -47,11 +47,11 @@
                     <p>充值账号：<span class="accountNum"></span></p>
                     <div class="input-box">
                         <img src="/static/dist/user/images/icon-card-pay.png" alt=""/>
-                        卡号：<input type="text" class="input-pay-comm"/>
+                        卡号：<input type="text" id="pay-card" class="input-pay-comm"/>
                     </div>
                     <div class="input-box">
                         <img src="/static/dist/user/images/icon-pay-lock.png" alt=""/>
-                        密码：<input type="password" class="input-pay-comm"/>
+                        密码：<input type="text" id="pay-password"  class="input-pay-comm"/>
                     </div>
                 </div>
                 <div class="error-tips hide"></div>
@@ -62,65 +62,76 @@
 </div>
 <div class="section w1000">
     <p class="link-tel-title">全国服务商联系方式及地址 </p>
+    <ul class="tab-info ">
+        <div class="tel-content-box">
+            <div class="row" id='address-box'>
+                <%--<div class="col-3">--%>
+                <%--<p class="area-name">陕西省延安市</p>--%>
 
-    <div class="tel-content-box">
-        <div class="row">
-            <div class="col-3">
-                <p class="area-name">陕西省延安市</p>
+                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
+                <%--陕西省延安市--%>
+                <%--</p>--%>
+                <%--</div>--%>
+                <%--<div class="col-3">--%>
+                <%--<p class="area-name">陕西省延安市</p>--%>
 
-                <p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"/><span class="tel">4008-005-0001</span> 陕西省延安市
-                </p>
+                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
+                <%--陕西省延安市--%>
+                <%--</p>--%>
+                <%--</div>--%>
+                <%--<div class="col-3">--%>
+                <%--<p class="area-name">陕西省延安市</p>--%>
+
+                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
+                <%--陕西省延安市--%>
+                <%--</p>--%>
+                <%--</div>--%>
+                <%--<div class="col-3">--%>
+                <%--<p class="area-name">陕西省延安市</p>--%>
+
+                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
+                <%--陕西省延安市--%>
+                <%--</p>--%>
+                <%--</div>--%>
+                <%--<div class="col-3">--%>
+                <%--<p class="area-name">陕西省延安市</p>--%>
+
+                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
+                <%--陕西省延安市--%>
+                <%--</p>--%>
+                <%--</div>--%>
+                <%--<div class="col-3">--%>
+                <%--<p class="area-name">陕西省延安市</p>--%>
+
+                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
+                <%--陕西省延安市--%>
+                <%--</p>--%>
+                <%--</div>--%>
+                <%--<div class="col-3">--%>
+                <%--<p class="area-name">陕西省延安市</p>--%>
+
+                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
+                <%--陕西省延安市--%>
+                <%--</p>--%>
+                <%--</div>--%>
+                <%--<div class="col-3">--%>
+                <%--<p class="area-name">陕西省延安市</p>--%>
+
+                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
+                <%--陕西省延安市--%>
+                <%--</p>--%>
+                <%--</div>--%>
+                <%--<div class="col-3">--%>
+                <%--<p class="area-name">陕西省延安市</p>--%>
+
+                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
+                <%--陕西省延安市--%>
+                <%--</p>--%>
+                <%--</div>--%>
+
             </div>
-            <div class="col-3">
-                <p class="area-name">陕西省延安市</p>
-
-                <p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"/><span class="tel">4008-005-0001</span> 陕西省延安市
-                </p>
-            </div>
-            <div class="col-3">
-                <p class="area-name">陕西省延安市</p>
-
-                <p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"/><span class="tel">4008-005-0001</span> 陕西省延安市
-                </p>
-            </div>
-            <div class="col-3">
-                <p class="area-name">陕西省延安市</p>
-
-                <p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"/><span class="tel">4008-005-0001</span> 陕西省延安市
-                </p>
-            </div>
-            <div class="col-3">
-                <p class="area-name">陕西省延安市</p>
-
-                <p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"/><span class="tel">4008-005-0001</span> 陕西省延安市
-                </p>
-            </div>
-            <div class="col-3">
-                <p class="area-name">陕西省延安市</p>
-
-                <p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"/><span class="tel">4008-005-0001</span> 陕西省延安市
-                </p>
-            </div>
-            <div class="col-3">
-                <p class="area-name">陕西省延安市</p>
-
-                <p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"/><span class="tel">4008-005-0001</span> 陕西省延安市
-                </p>
-            </div>
-            <div class="col-3">
-                <p class="area-name">陕西省延安市</p>
-                <p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"/><span class="tel">4008-005-0001</span> 陕西省延安市
-                </p>
-            </div>
-            <div class="col-3">
-                <p class="area-name">陕西省延安市</p>
-
-                <p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"/><span class="tel">4008-005-0001</span> 陕西省延安市
-                </p>
-            </div>
-
         </div>
-    </div>
+    </ul>
 </div>
 
 

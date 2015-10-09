@@ -33,7 +33,7 @@
                 <p class="app-icon"><a href="/consult/school_info.jsp" target="_blank">院校信息</a></p>
             </div>
             <div class="col-3">
-                <a href="">
+                <a href="/before/before.jsp">
                     <img src="/static/dist/user/images/app-center-icon3.png"/>
                 </a>
                 <p class="app-icon">高考备考</p>
@@ -41,7 +41,7 @@
         </div>
         <div class="row">
             <div class="col-3">
-                <a href="">
+                <a href="/after/expert-evaluating.jsp">
                     <img src="/static/dist/user/images/app-center-icon4.png"/>
                 </a>
                 <p class="app-icon">测试专业</p>
@@ -53,7 +53,7 @@
                 <p class="app-icon">模拟填报</p>
             </div>
             <div class="col-3">
-                <a href="">
+                <a href="/after/after.jsp">
                     <img src="/static/dist/user/images/app-center-icon6.png"/>
                 </a>
                 <p class="app-icon">志愿指导</p>

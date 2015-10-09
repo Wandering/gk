@@ -10,7 +10,6 @@
 <%@ include file="/common/header.jsp"%>
 
 <div class="content">
-    <%@ include file="/common/banner-wipe.jsp"%>
     <div class="w1000">
         <div class="content-title mt60">
             <p class="fl w40"></p>
@@ -25,7 +24,7 @@
 
         <div class="search-content ta mt60">
             <span>
-                 <input type="text" placeholder="请输入学院名称" id="school_serach"/>
+                 <input type="text" placeholder="请输入院校名称进行搜索 " id="school_serach"/>
                  <input type="button" value="搜索" id="search_button"/>
             </span>
         </div>

@@ -28,7 +28,11 @@ define(function (require) {
 
     //获取用户信息
     $.get('/vip/getAccount.do', function (res) {
-        $('.account-tel').text(res.bizData.account);
+        if (res.rtnCode == '0000000') {
+            $('.account-tel').text(res.bizData.account);
+        } else {
+            console.log(res.msg);
+        }
     });
     $.get('/info/getUserInfo.do', function (res) {
         if (res.rtnCode == '0000000') {
@@ -76,10 +80,10 @@ define(function (require) {
     var cmbArea = '';
 
     var Area = {
-        data:[],
-        init: function(personListData) {
+        data: [],
+        init: function (personListData) {
             var that = this;
-            $.get('/region/getAllRegion.do', function(ret) {
+            $.get('/region/getAllRegion.do', function (ret) {
                 if ('0000000' === ret.rtnCode) {
                     that.data = ret.bizData;
                     $('#cmbProvince').html(that.render(that.data, true));
@@ -93,17 +97,17 @@ define(function (require) {
                 }
             });
         },
-        render: function(data, flag) {
+        render: function (data, flag) {
             var html = [];
             if (flag) {
                 html.push('<option>请选择...</option>');
             }
-            $.each(data, function(i, value) {
+            $.each(data, function (i, value) {
                 html.push('<option value="' + value.id + '">' + value.name + '</option>');
             });
             return html.join('');
         },
-        changeProvince: function(value) {
+        changeProvince: function (value) {
             if (value) {
                 var city = this.getCity(value);
                 if (city && city.length > 0) {
@@ -114,7 +118,7 @@ define(function (require) {
                 }
             }
         },
-        changeCity: function(value) {
+        changeCity: function (value) {
             var provinceId = $('#cmbProvince').val();
             if (value && provinceId) {
                 var countyList = this.getCounty(provinceId, value);
@@ -125,37 +129,37 @@ define(function (require) {
                 }
             }
         },
-        addEventForArea: function() {
+        addEventForArea: function () {
             var that = this;
-            $('#cmbProvince').change(function(e) {
+            $('#cmbProvince').change(function (e) {
                 var value = this.value;
                 that.changeProvince(value);
             });
 
-            $('#cmbCity').change(function(e) {
+            $('#cmbCity').change(function (e) {
                 var value = this.value;
                 that.changeCity(value);
             });
         },
-        getCity: function(id) {
+        getCity: function (id) {
             for (var i = 0, len = this.data.length; i < len; i++) {
                 if (this.data[i].id == id) {
                     return this.data[i].cityList;
                 }
             }
         },
-        getCounty: function(provinceId, cityId) {
+        getCounty: function (provinceId, cityId) {
             for (var i = 0, len = this.data.length; i < len; i++) {
                 if (this.data[i].id == provinceId) {
                     var cityList = this.data[i].cityList;
                     if (cityList.length <= 0) {
-                      return null;
+                        return null;
                     }
                     var j = 0, jlen = cityList.length;
                     for (; j < jlen; j++) {
-                       if (cityList[j].id == cityId) {
-                           return cityList[j].countyList;
-                       }
+                        if (cityList[j].id == cityId) {
+                            return cityList[j].countyList;
+                        }
                     }
                 }
             }
@@ -163,32 +167,7 @@ define(function (require) {
     };
 
 
-    //$.ajax({
-    //    url: '/region/getAllRegion.do',
-    //    dataType: 'json',
-    //    type: 'get',
-    //    data: {},
-    //    success: function (res) {
-    //        if (res.rtnCode == '0000000') {
-    //            var provinceList = res.bizData;
-    //            console.info(provinceList[0].cityList[0].name);
-    //            console.info(provinceList[0].cityList[0].id);
-    //            console.info(provinceList[0].cityList[0].provinceId);
-    //
-    //            $.each(provinceList, function (i, v) {
-    //                cmbProvince += '<option value="' + i + '">' + v.name + '</option>';
-    //                console.log(v);
-    //            });
-    //            console.log(cmbProvince);
-    //
-    //            $('#cmbProvince').html(cmbProvince);
-    //
-    //        }
-    //    }
-    //});
-    //$('#cmbProvince').onchange(function(){
-    //    alert(1);
-    //});
+
     //头像上传
     setTimeout(function () {
         //初始化文件上传
@@ -292,7 +271,7 @@ define(function (require) {
         var birthdayDate = Date.parse(new Date(str)) / 1000;
         var name = $('.name').val().trim();
 
-        if (name.length ==0) {
+        if (name.length == 0) {
             $('.error-tips').text('用户名不能为空').fadeIn();
             return false;
         }
@@ -300,17 +279,24 @@ define(function (require) {
             $('.error-tips').text('用户名不能大于10个字').fadeIn();
             return false;
         }
-        var mail = $('.mail').val().trim();
-        var mail_reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-        if (!mail_reg.test(mail)) {
-            $('.error-tips').text('邮箱填写有误').fadeIn();
+        if( name.length>20){
+            $('.error-tips').text('学校名不能大于20个字').fadeIn();
             return false;
         }
-        var qq_reg = /^\s*[.0-9]{5,11}\s*$/;
         var qq = $('.qq').val().trim();
-        if (!qq_reg.test(qq)) {
-            $('.error-tips').text('QQ号码输入有误').fadeIn();
-            return false;
+        var mail = $('.mail').val().trim();
+
+        if (qq.length != 0 || mail.length != 0) {
+            var mail_reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+            if (!mail_reg.test(mail)) {
+                $('.error-tips').text('邮箱填写有误').fadeIn();
+                return false;
+            }
+            var qq_reg = /^\s*[.0-9]{5,11}\s*$/;
+            if (!qq_reg.test(qq) || qq.length > 20) {
+                $('.error-tips').text('QQ号码输入有误').fadeIn();
+                return false;
+            }
         }
         var img_url = $('.avatar-img ').attr('src');
         $.ajax({

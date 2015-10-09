@@ -21,6 +21,10 @@
       margin: 0 auto;
       display: block;
     }
+    img{
+      width: 42px;
+      height: 37px;
+    }
     p.txt {
       color: #878787;
       font-size: 12px;
@@ -240,7 +244,7 @@
 }
 
 .detile-header {
-  height: 20px;
+  overflow: hidden;
   font-size: 16px;
 }
 
@@ -292,7 +296,7 @@
       h3 {
         font-size: 16px;
         color: #333;
-        margin: 10px 0;
+        margin: 0 0 10px 0;
         overflow: hidden;
         white-space: nowrap;
       }
@@ -371,7 +375,18 @@
 /*高考日程*/
 .calendar {
   width: 100%;
+  margin-top: 40px;
   img {
     width: 100%;
+  }
+}
+
+.content-title {
+  .w35{
+    width: 35%;
+  }
+
+  .w30{
+    width: 30%;
   }
 }

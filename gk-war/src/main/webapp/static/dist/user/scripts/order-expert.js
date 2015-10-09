@@ -1,18 +1,8 @@
 define(function (require) {
     var $ = require('$');
-    require('laydate');
+    //require('laydate');
     require('swiper');
-    //var end = {
-    //    elem: '.data-end',
-    //    format: 'YYYY/MM/DD hh:mm:ss',
-    //    min: laydate.now(),
-    //    max: '2099-06-16 23:59:59',
-    //    istime: true,
-    //    istoday: false,
-    //    choose: function(datas){
-    //        start.max = datas; //结束日选好后，重置开始日的最大日期
-    //    }
-    //};
+
 
     $('.btn-submit').click(function () {
         //验证
@@ -29,8 +19,8 @@ define(function (require) {
             $('.error-tips').text('标题字数过长，请输入50字以内').fadeIn(1000).fadeOut(3000);
             return false;
         }
-        if (content.length > 500 ) {
-            $('.error-tips').text('预约内容过长，500字以内').fadeIn(1000).fadeOut(3000);
+        if (content.length > 5000 ) {
+            $('.error-tips').text('预约内容过长，5000字以内').fadeIn(1000).fadeOut(3000);
             return false;
         }
         if (content.length == 0 || title.length == 0 ||end.length == 0 || start.length == 0 || name.length == 0 || mobile.length == 0 || qq.length == 0) {
@@ -66,7 +56,7 @@ define(function (require) {
             success: function (res) {
                 if (res.rtnCode == '0000000') {
                     $('.error-tips').text('恭喜你，预约成功').fadeIn(1000).fadeOut(3000);
-                    window.location.href = 'http://' +window.location.host+'user/expert-service-detail.jsp'
+                    window.location.href = 'http://' +window.location.host+'/user/expert-service.jsp'
                 } else {
                     $('.error-tips').text('对不起，预约失败').fadeIn(1000).fadeOut(3000);
                 }

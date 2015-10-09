@@ -10,7 +10,6 @@
 <%@ include file="/common/header.jsp"%>
 
 <div class="content">
-    <%@ include file="/common/banner-wipe.jsp"%>
     <div class="w1000">
         <div class="content-title mt60">
             <p class="fl w40"></p>
@@ -21,7 +20,7 @@
             </p>
             <p class="fl w40"></p>
         </div>
-        <h6 class="w1000 ta sub-title c888 mt20">及及时、准确发布在陕招生的相关院校、专业及招生计划信息，方便您查询、筛选、了解。</h6>
+        <h6 class="w1000 ta sub-title c888 mt20">及时、准确发布在陕招生的相关院校、专业及招生计划信息，方便您查询、筛选、了解。</h6>
 
         <div class="search-content ta mt60">
             <span>

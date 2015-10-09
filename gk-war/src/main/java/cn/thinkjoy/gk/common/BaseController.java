@@ -47,12 +47,10 @@ public class BaseController{
 		Long id = Long.valueOf(getCookieValue());
 		String key = UserRedisConst.USER_KEY + id;
 		UserAccountPojo userAccountBean  = null;
-		RedisUtil.getInstance().del(key);
 		if(!RedisUtil.getInstance().exists(key)){
 			userAccountBean = userAccountExService.findUserAccountPojoById(id);
 			if(null!=userAccountBean){
-				RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 10L, TimeUnit.MINUTES);
-
+				RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 5L, TimeUnit.HOURS);
 			}
 		} else{
 			userAccountBean = JSON.parseObject(RedisUtil.getInstance().get(key).toString(),UserAccountPojo.class);

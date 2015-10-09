@@ -1,7 +1,9 @@
 package cn.thinkjoy.gk.controller.information;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.domain.Information;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IInformationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +66,7 @@ public class GKInformationController extends BaseController{
         if (ps == null||ps.length() < 0){
             ps="4";  //���û���趨��Ĭ����ʾ4�����
         }
-        List<Information> information = informationService.getInformationByKey(key, Integer.valueOf(pn) * Integer.valueOf(ps), Integer.valueOf(ps));
+        List<Information> information = informationService.getInformationByKey(key, (Integer.valueOf(pn) - 1) * Integer.valueOf(ps), Integer.valueOf(ps));
         return information;
     }
 
@@ -75,4 +77,31 @@ public class GKInformationController extends BaseController{
         return information;
     }
 
+    @RequestMapping(value="getHotInformation",method=RequestMethod.GET)
+    @ResponseBody
+    public  List<Information> getHotInformation(HttpServletRequest request){
+        String pn = request.getParameter("pageNo");
+        if(pn == null || pn.length() < 0){
+            pn = "0";
+        }
+        String ps = request.getParameter("pageSize");
+        if (ps == null|| ps.length() < 0){
+            ps = "4";
+        }
+        List<Information> information = informationService.getHotInformation(Integer.valueOf(pn) * Integer.valueOf(ps), Integer.valueOf(ps));
+        return  information;
+    }
+
+    @RequestMapping(value = "updateHotCount",method = RequestMethod.GET)
+    @ResponseBody
+    public boolean updateHotCount(@RequestParam(value = "id",required = false)Integer id) {
+        boolean flag = false;
+        try {
+            informationService.updateHotInformation(id);
+            flag = true;
+        } catch (Exception e) {
+            throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
+        }
+        return flag;
+    }
 }

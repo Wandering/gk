@@ -34,6 +34,23 @@ define(function (require) {
         },
         renderInfo: function(obj) {
             var address = '院校地址：' + (obj.address || '');
+            var addressClassName = '';
+            if (address.length > 17) {
+                addressClassName = 'integet-line';
+            }
+            var contactPhone = '联系电话：' + (obj.contactPhone || '');
+            var phoneClassName = '';
+            if (contactPhone.length > 16) {
+                phoneClassName = 'integet-line';
+            }
+
+            var url = '院校网址：' + (obj.url || '');
+            var urlClassName = '';
+            console.log(url.length);
+            if (url.length > 20) {
+                urlClassName = 'integet-line';
+            }
+
             $('#info_content').html('<img class="fl" src="' + (obj.universityImage || '/static/src/common/images/kqbk_banner_default.png') + '" />'
                                     + '<div class="info">'
                                         + '<ul>'
@@ -43,9 +60,9 @@ define(function (require) {
                                             + '<li>学历层次：' + (obj.educatLevel || '') + '</li>'
                                             + '<li>院校特征：' + (obj.property || '') + '</li>'
                                             + '<li>院校类型：' + (obj.universityType || '') + '</li>'
-                                            + '<li>院校网址：<a href="' + obj.url + '">' + (obj.url || '') + '</a></li>'
-                                            + '<li>院校地址：' + (obj.address || '') + '</li>'
-                                            + '<li>联系电话：<span>' + (obj.contactPhone || '') + '</span></li>'
+                                            + '<li class="' + urlClassName + '">院校网址：<a href="' + obj.url + '">' + (obj.url || '') + '</a></li>'
+                                            + '<li class="' + addressClassName + '">' + address + '</li>'
+                                            + '<li class="' + phoneClassName + '">联系电话：<span>' + (obj.contactPhone || '') + '</span></li>'
                                         + '</ul>'
                                     + '</div>');
         },
@@ -72,7 +89,12 @@ define(function (require) {
             var tab = [];
             var tabContent = [];
             for (var i = 0, len = data.length; i < len; i++) {
-                tab.push('<li>' + data[i].title + '</li>');
+                if (data[i].title.indexOf('年')) {
+                    var year = data[i].title.substring(0, 4);
+                    tab.push('<li>' + data[i].title.replace(year, year + '年') + '</li>');
+                } else {
+                    tab.push('<li>' + data[i].title + '</li>');
+                }
                 var infos = data[i].infos;
                 tabContent.push('<div style="display:none" class="school-table mt20" id="school_table_' + i + '">'
                                 + '<table border="0" cellpadding="0" cellspacing="0">'

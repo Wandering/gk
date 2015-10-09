@@ -10,14 +10,13 @@
 <%@ include file="/common/header.jsp"%>
 
 <div class="content">
-    <%@ include file="/common/banner-wipe.jsp"%>
     <div class="w1000">
 
         <div class="search-content ta mt20">
                  <span>
                      <input type="text" placeholder="请输入搜索关键字" id="keywords"/>
                      <input type="button" value="搜索" id="search"/>
-                     <a target="_blank" href="/question/ask.jsp">我要提问</a>
+                     <%--<a target="_blank" href="/question/ask.jsp">我要提问</a>--%>
                 </span>
         </div>
 

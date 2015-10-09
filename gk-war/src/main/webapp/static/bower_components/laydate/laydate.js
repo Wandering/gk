@@ -7,7 +7,7 @@
  @Site：http://sentsin.com/layui/laydate
 
  */
-define(function (require, exports, module) {
+//define(function (require, exports, module) {
     ;!function (a) {
         var b = {
             path: "",
@@ -266,4 +266,4 @@ define(function (require, exports, module) {
             c.skinLink.href = c.getPath + h[4] + a + h[5]
         }
     }(window);
-});
+//});
