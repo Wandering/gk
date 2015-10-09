@@ -225,13 +225,25 @@ public class UniversityController extends BaseController {
     @ResponseBody
     public EntrollPlanDto getEnrollPlan(){
         String schoolCode=request.getParameter("code");
+        String batch=request.getParameter("batch");
         EntrollPlanDto entrollPlanDto=new EntrollPlanDto();
         List<EntrollPlan> entrollPlans=new ArrayList<EntrollPlan>();
+        switch (batch){
+            case "1": batch="一批本科";
+                  break;
+            case "2": batch="二批本科";
+                  break;
+            case "3":batch="三批本科";
+                  break;
+            case "4":batch="高职（专科）";
+                 break;
+            default: batch="";
 
+        }
         EntrollPlan entrollPlan=new EntrollPlan();
         EntrollPlan lastEntrollPlan=new EntrollPlan();
-        List<PlanInfo> planInfos=iUniversityService.getPlanInfosByYear(2015,schoolCode);
-        List<PlanInfo> lastPlanInfos=iUniversityService.getPlanInfosByYear(2014,schoolCode);
+        List<PlanInfo> planInfos=iUniversityService.getPlanInfosByYear(2015,schoolCode,batch);
+        List<PlanInfo> lastPlanInfos=iUniversityService.getPlanInfosByYear(2014,schoolCode,batch);
         entrollPlan.setTitle("2015年招生计划");
         entrollPlan.setPlanInfos(planInfos);
         lastEntrollPlan.setTitle("2014年招生计划");

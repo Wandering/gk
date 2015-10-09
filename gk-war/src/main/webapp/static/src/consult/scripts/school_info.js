@@ -353,6 +353,16 @@ define(function(require) {
             if (search) {
                 School.getSearch();
             }
+        });
+
+        $('#school_serach').keydown(function(e) {
+            if (e.keyCode == 13) {
+                var search = $('#school_serach').val();
+                if (search) {
+                    School.getSearch();
+                }
+            }
         })
+
     });
 });
