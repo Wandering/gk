@@ -1058,7 +1058,9 @@ a.next-btn:hover {
     margin-top: 15px;
     font-size: 14px; }
     .select-option li.lable {
-      width: 10%; }
+      width: 10%;
+      height: 26px;
+      line-height: 26px; }
     .select-option li.options {
       width: 90%; }
     .select-option li a {
