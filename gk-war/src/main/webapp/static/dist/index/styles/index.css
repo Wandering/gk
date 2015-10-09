@@ -1064,7 +1064,7 @@ a.next-btn:hover {
       position: relative;
       top: -35px;
       left: 50%;
-      margin-left: -30px; }
+      margin-left: -20px; }
     .page-body.hot-news-body section {
       padding: 0; }
   .page-body section {
@@ -1193,7 +1193,7 @@ a.next-btn:hover {
   line-height: 20px;
   border-radius: 10px;
   background-color: #626161;
-  color: #dedede; }
+  color: #fff; }
 
 .detile-title {
   color: #626161;
@@ -1202,13 +1202,18 @@ a.next-btn:hover {
 
 .detile-info {
   background-color: #f6f6f6;
-  padding: 10px;
+  padding: 20px;
   border: 1px solid #edecec;
   font-size: 12px;
-  color: #727171; }
+  color: #727171;
+  position: relative; }
   .detile-info p {
     margin: 0;
-    line-height: 32px; }
+    line-height: 24px; }
+  .detile-info img.triangle {
+    position: absolute;
+    top: -10px;
+    left: 20px; }
 
 /*热门资讯*/
 .hot-list {
@@ -1229,7 +1234,10 @@ a.next-btn:hover {
       margin: 0 0 10px 0;
       overflow: hidden;
       white-space: nowrap;
-      text-overflow: ellipsis; }
+      text-overflow: ellipsis;
+      font-weight: 200; }
+      .hot-list li .title-info h3 a {
+        color: #333; }
     .hot-list li .title-info h6 {
       font-size: 12px;
       color: #817f7f;
@@ -1240,14 +1248,14 @@ a.next-btn:hover {
     .hot-list li .icon {
       width: 48px;
       height: 48px;
-      background: #e24d39 url("../images/time-icon.png") no-repeat center 8px;
+      background: #e24d39 url("../images/time-icon.png") no-repeat center 7px;
       float: left;
-      margin-right: 5px; }
+      margin-right: 14px; }
       .hot-list li .icon span {
         font-size: 10px;
         color: #fff;
         position: relative;
-        top: 28px; }
+        top: 25px; }
 
 .tel-content-box {
   margin-top: 30px;

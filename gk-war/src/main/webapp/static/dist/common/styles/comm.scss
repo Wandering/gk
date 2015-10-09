@@ -108,7 +108,7 @@
       position: absolute;
       background-color: #353535;
       top: 50px;
-      right: 0;
+      right: -30px;
       overflow: hidden;
       li {
         a {
@@ -408,10 +408,9 @@
   }
   .w40 {
     width: 40%;
-    height: 2px;
-    background-color: $mainRed;
-
-    margin-top: 16px;
+    height: 1px;
+    background-color: #f1f1f1;
+    margin-top: 17px;
   }
   .w20 {
     width: 20%;
@@ -421,9 +420,9 @@
     .arraw {
       background: url("../../../dist/common/images/title-icon.png") left top no-repeat;
       display: inline-block;
-      width: 25px;
-      height: 18px;
-      margin-top: 8px;
+      width: 14px;
+      height: 14px;
+      margin-top: 10px;
     }
     span {
       font-size: 30px;
@@ -435,6 +434,12 @@
   color: #888;
   font-size: 14px;
   margin-bottom: 40px;
+}
+
+.sub-title{
+  color: #888;
+  font-size: 14px;
+  font-weight: 200;
 }
 
 /*文章中得导航栏*/
