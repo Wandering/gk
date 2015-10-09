@@ -8,7 +8,7 @@
         b.wsLowestScore lowestScore ,b.wsLowestRank lowestRank,b.wsAverageScore averageScore,b.wsAverageRank averageRank
         FROM gk_university a
         left join gk_enroll_report b on a.code = b.universityCode
-        where b.year = 2014 and code =#{code}
+        where b.year = #{year} and code =#{code}
     </select>
 
     <select id="getLGUniversityDetail" parameterType="java.lang.String" resultType="UniversityDetailDto">

@@ -127,12 +127,7 @@ public class GuideController extends BaseController {
                 || StringUtils.isBlank(m_kelei)
                 || StringUtils.isBlank(m_ranking)
                 || StringUtils.isBlank(m_batch_id)
-                || StringUtils.isBlank(m_batch)
-                || StringUtils.isBlank(m_province_id)
-                || StringUtils.isBlank(m_province)
-                || StringUtils.isBlank(m_specialty_id)
-                || StringUtils.isBlank(m_specialty_name)
-                || StringUtils.isBlank(m_favorites_by_university_codes)){
+                || StringUtils.isBlank(m_batch)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
 
