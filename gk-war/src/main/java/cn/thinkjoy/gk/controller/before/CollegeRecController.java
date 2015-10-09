@@ -7,6 +7,7 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
 import cn.thinkjoy.gk.util.VerificationKeyConst;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Created by yhwang on 15/9/28.
  */
 @Controller
+@Scope("prototype")
 @RequestMapping("/before/collegeRecommend")
 public class CollegeRecController extends BaseController{
 
