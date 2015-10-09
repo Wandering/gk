@@ -48,12 +48,26 @@
                                 </span>
                             </div>
                         </section>
-                        <div class="tips">
+                        <div class="tips hide">
                             <strong>温馨提示：</strong>
                             <p>请准确无误的填写考号、分数及位次；所录入的信息一旦提交将不可更改。</p>
                         </div>
                         <div class="school-list-box">
 
+                        </div>
+                        <div class="result-info-details">
+                            <p>
+                                院校代码：4004  <br/>
+                                院校特征：211 研<br/>
+                                院校隶属：教育部直属   <br/>
+                                院校类型：工科             <br/>
+                                2014年最低投档分：592           <br/>
+                                2014年最低位次：8959                 <br/>
+                                2014年录取平均分：602                     <br/>
+                                2014年平均分位次：7006                         <br/>
+                                历年招生情况：实际招生超过计划招生数                    <br/>
+                                录取指数：★★
+                            </p>
                         </div>
                     </div>
                 </td>
