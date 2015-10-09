@@ -449,7 +449,7 @@ input, textarea {
       position: absolute;
       background-color: #353535;
       top: 50px;
-      right: 0;
+      right: -30px;
       overflow: hidden; }
       .header .user-info-list .menu li a {
         text-align: center;
@@ -622,9 +622,9 @@ input, textarea {
     padding: 0; }
   .content-title .w40 {
     width: 40%;
-    height: 2px;
-    background-color: #e24d39;
-    margin-top: 16px; }
+    height: 1px;
+    background-color: #f1f1f1;
+    margin-top: 17px; }
   .content-title .w20 {
     width: 20%;
     height: 34px;
@@ -633,9 +633,9 @@ input, textarea {
     .content-title .w20 .arraw {
       background: url("../../../dist/common/images/title-icon.png") left top no-repeat;
       display: inline-block;
-      width: 25px;
-      height: 18px;
-      margin-top: 8px; }
+      width: 14px;
+      height: 14px;
+      margin-top: 10px; }
     .content-title .w20 span {
       font-size: 30px; }
 
@@ -643,6 +643,11 @@ input, textarea {
   color: #888;
   font-size: 14px;
   margin-bottom: 40px; }
+
+.sub-title {
+  color: #888;
+  font-size: 14px;
+  font-weight: 200; }
 
 /*文章中得导航栏*/
 .tabs-list {
@@ -1006,7 +1011,8 @@ a.next-btn:hover {
 h1 {
   font-size: 30px;
   color: #333;
-  margin-top: 40px; }
+  margin-top: 40px;
+  font-weight: 400; }
 
 .info-content {
   height: 232px; }
@@ -1016,13 +1022,14 @@ h1 {
   .info-content .info {
     height: 100%; }
     .info-content .info ul {
-      overflow: hidden; }
+      overflow: hidden;
+      padding-left: 50px; }
       .info-content .info ul li {
         float: left;
         width: 45%;
         height: 30px;
         line-height: 30px;
-        margin: 10px 0 0 20px;
+        margin: 10px 0 0 10px;
         font-size: 16px;
         color: #636363; }
         .info-content .info ul li span {
@@ -1032,7 +1039,7 @@ h1 {
           font-size: 30px;
           color: #444;
           width: 90%;
-          margin: 20px 0 10px 20px; }
+          margin: 0px 0 10px 10px; }
 
 .tabs-content {
   width: 100%;
@@ -1040,7 +1047,9 @@ h1 {
   margin: 20px 0;
   padding: 0 10px; }
   .tabs-content .article {
-    padding: 30px 0; }
+    padding: 30px 0;
+    font-size: 14px;
+    line-height: 24px; }
   .tabs-content h5 {
     color: #f00; }
   .tabs-content ul {

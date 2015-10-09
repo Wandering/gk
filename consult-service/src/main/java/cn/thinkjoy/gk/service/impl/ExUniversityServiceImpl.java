@@ -51,8 +51,8 @@ public class ExUniversityServiceImpl implements IExUniversityService {
 
 
     @Override
-    public UniversityDto getUniversityDetail(String schoolCode) {
-        return iUniversityDAO.getUniversityDetail(schoolCode);
+    public UniversityDto getUniversityDetail(String schoolCode,String batch) {
+        return iUniversityDAO.getUniversityDetail(schoolCode,batch);
     }
 
     @Override
@@ -68,8 +68,8 @@ public class ExUniversityServiceImpl implements IExUniversityService {
     }
 
     @Override
-    public List<PlanInfo> getPlanInfosByYear(int i,String schoolCode) {
-        return iUniversityDAO.getPlanInfosByYear(i,schoolCode);
+    public List<PlanInfo> getPlanInfosByYear(int i,String schoolCode,String batch) {
+        return iUniversityDAO.getPlanInfosByYear(i,schoolCode,batch);
     }
 
     @Override

@@ -449,7 +449,7 @@ input, textarea {
       position: absolute;
       background-color: #353535;
       top: 50px;
-      right: 0;
+      right: -30px;
       overflow: hidden; }
       .header .user-info-list .menu li a {
         text-align: center;
@@ -622,9 +622,9 @@ input, textarea {
     padding: 0; }
   .content-title .w40 {
     width: 40%;
-    height: 2px;
-    background-color: #e24d39;
-    margin-top: 16px; }
+    height: 1px;
+    background-color: #f1f1f1;
+    margin-top: 17px; }
   .content-title .w20 {
     width: 20%;
     height: 34px;
@@ -633,9 +633,9 @@ input, textarea {
     .content-title .w20 .arraw {
       background: url("../../../dist/common/images/title-icon.png") left top no-repeat;
       display: inline-block;
-      width: 25px;
-      height: 18px;
-      margin-top: 8px; }
+      width: 14px;
+      height: 14px;
+      margin-top: 10px; }
     .content-title .w20 span {
       font-size: 30px; }
 
@@ -643,6 +643,11 @@ input, textarea {
   color: #888;
   font-size: 14px;
   margin-bottom: 40px; }
+
+.sub-title {
+  color: #888;
+  font-size: 14px;
+  font-weight: 200; }
 
 /*文章中得导航栏*/
 .tabs-list {
@@ -1066,3 +1071,5 @@ section:last-child {
   color: #e24333;
   text-align: center;
   padding: 10px 0; }
+  #error_tip a {
+    color: #e24333; }

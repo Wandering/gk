@@ -5,7 +5,8 @@
   padding: 20px 18px 10px;
   color: #8a6d45;
   overflow: hidden;
-  border-radius: 3px; }
+  border-radius: 3px;
+  width: 964px; }
   .tips strong {
     display: block;
     font-size: 16px; }
@@ -54,6 +55,8 @@
         display: inline-block;
         text-align: center;
         color: #777; }
+      .main-volunteer .fr .zd-form .form-control .group-radio label {
+        border-right: none; }
       .main-volunteer .fr .zd-form .form-control .input {
         width: 215px;
         padding: 0 10px; }
@@ -371,11 +374,19 @@
       font-size: 14px;
       line-height: 20px; }
     .volunteer-flow3-layer .volunteer-flow3-body .school-list {
-      padding: 20px; }
+      padding: 5px 10px;
+      overflow-y: auto;
+      height: 140px; }
       .volunteer-flow3-layer .volunteer-flow3-body .school-list div {
         margin: 0;
         line-height: 28px;
         font-size: 14px; }
+        .volunteer-flow3-layer .volunteer-flow3-body .school-list div .fl {
+          width: 165px;
+          overflow: hidden; }
+        .volunteer-flow3-layer .volunteer-flow3-body .school-list div .fr {
+          color: #e24333;
+          cursor: pointer; }
       .volunteer-flow3-layer .volunteer-flow3-body .school-list .school-name {
         float: left; }
       .volunteer-flow3-layer .volunteer-flow3-body .school-list .school-sel {
@@ -417,3 +428,12 @@
   color: #fff;
   border-radius: 3px;
   width: 78%; }
+
+#volunteer-flow3-btn {
+  margin: 0 auto;
+  display: block;
+  float: none; }
+
+#yzmDreamSchool {
+  width: 110px;
+  height: 47px; }

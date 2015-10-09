@@ -36,22 +36,22 @@
 
     <select id="searchMajoredCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         select count(*)
-        from gk_enroll_plan where 1=1 and year='2015'
+        from gk_majored a  left join gk_enroll_plan  b  on a.id=b.majoredId  where 1=1 and b.year='2015'
         <if test="condition.subjectTypeName!=null and condition.subjectTypeName!=''">
 
-            and majoredName like CONCAT('%',#{condition.subjectTypeName},'%')
+            and b.majoredName like CONCAT('%',#{condition.subjectTypeName},'%')
 
         </if>
 
         <if test="condition.majoredTypeName!=null and condition.majoredTypeName!=''">
-            and majoredName like CONCAT('%',#{condition.majoredTypeName},'%')
+            and b.majoredName like CONCAT('%',#{condition.majoredTypeName},'%')
         </if>
 
         <if test="condition.searchName!=null and condition.searchName!=''">
-            and majoredName like CONCAT('%',#{condition.searchName},'%')
+            and b.majoredName like CONCAT('%',#{condition.searchName},'%')
         </if>
         <if test="condition.batchTypeName!=null and condition.batchTypeName!=''">
-            and batch=#{condition.batchTypeName}
+            and b.batch=#{condition.batchTypeName}
         </if>
     </select>
 

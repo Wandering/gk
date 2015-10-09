@@ -132,7 +132,8 @@ ul.main-video-list {
     border-bottom: 2px solid #f7f7f7;
     height: 40px;
     line-height: 40px;
-    overflow: hidden; }
+    overflow: hidden;
+    font-size: 14px; }
     .main-exam-list li .subject-n {
       float: left;
       width: 84px;
@@ -360,6 +361,8 @@ ul.main-video-list {
         background: url("../images/icon-01.png") no-repeat 12px center; }
       .school-eval .eval-right .form-control .school-input {
         background: url("../images/icon-02.png") no-repeat 12px center; }
+    .school-eval .eval-right .mt0 {
+      margin-top: 0px; }
     .school-eval .eval-right .indent .ident-code {
       display: inline-block;
       width: 231px;
@@ -411,6 +414,9 @@ ul.main-video-list {
       color: #fff;
       background-color: #e24333;
       border-radius: 4px; }
+
+.pl {
+  padding-left: 15px; }
 
 .evaluating-layer {
   left: 50%;

@@ -151,6 +151,7 @@ section:last-child {
     height: 40px;
     line-height: 40px;
     overflow: hidden;
+    font-size: 14px;
     .subject-n {
       float: left;
       width: 84px;
@@ -310,6 +311,7 @@ section:last-child {
           width: 99px;
         }
       }
+
       .yzm-control {
         width: 220px;
         position: relative;
@@ -445,6 +447,10 @@ section:last-child {
       }
     }
 
+    .mt0 {
+      margin-top: 0px;
+    }
+
     .indent {
       .ident-code {
         display: inline-block;
@@ -520,6 +526,10 @@ section:last-child {
       }
     }
   }
+}
+
+.pl{
+  padding-left: 15px;
 }
 
 

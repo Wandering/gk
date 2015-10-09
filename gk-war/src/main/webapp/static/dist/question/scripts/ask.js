@@ -85,6 +85,15 @@ define(function (require) {
             return;
         }
 
+        var text = editor.text().replace(/<[^>]+>/ig, '');
+        if (!text) {
+            $('#error').show().html('请输入问题描述！');
+            setTimeout(function() {
+                $('#error').hide();
+            }, 2000)
+            return;
+        }
+
         console.log(content);
         var flag = false;
         if (!flag) {

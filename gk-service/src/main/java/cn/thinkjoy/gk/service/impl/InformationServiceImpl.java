@@ -25,7 +25,7 @@ public class InformationServiceImpl implements IInformationService {
     }
     @Override
     public List<Information> getInformationByKey(String key,Integer offset,Integer rows) {
-        List<Information> list = informationDAO.getInformationByKey(key,offset,rows);
+        List<Information> list = informationDAO.getInformationByKey(key, offset, rows);
         return list;
     }
 
@@ -34,4 +34,23 @@ public class InformationServiceImpl implements IInformationService {
         Information information = informationDAO.getInformationContentById(id);
         return information;
     }
+
+    @Override
+    public List<Information> getHotInformation(Integer offset, Integer rows){
+        List<Information> list = informationDAO.getHotInformation(offset, rows);
+        return list;
+    }
+
+    @Override
+    public boolean updateHotInformation(Integer id) {
+        boolean flag = false;
+        try {
+            informationDAO.updateHotCount(id);
+            flag = true;
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
 }

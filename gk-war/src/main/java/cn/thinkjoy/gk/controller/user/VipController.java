@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.Map;
 
-@Scope("prototype")
 @Controller("VipController")
+@Scope("prototype")
 @RequestMapping(value = "/vip")
 public class VipController extends BaseController {
 

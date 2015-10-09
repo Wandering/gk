@@ -24,13 +24,13 @@ public interface IExUniversityService {
 
     Integer getUniversityCount(Map<String,Object> universityQuery);
 
-    UniversityDto getUniversityDetail(String schoolCode);
+    UniversityDto getUniversityDetail(String schoolCode,String batch);
 
     List<EnrollInfo> getEnrollInfoByYear(int i,String schoolCode);
 
     String getUniversityEnrollIntro(String schoolCode);
 
-    List<PlanInfo> getPlanInfosByYear(int i,String schoolCode);
+    List<PlanInfo> getPlanInfosByYear(int i,String schoolCode,String batch);
 
     String getUniversityIntro(String schoolCode);
 }

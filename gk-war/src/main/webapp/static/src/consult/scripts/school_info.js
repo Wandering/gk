@@ -66,7 +66,7 @@ define(function(require) {
                                 + '<th>所在地区</th>'
                                 + '<th>院校类型</th>'
                                 + '<th>院校隶属</th>'
-                                + '<th>院校特征</th>'
+                                + '<th class="name">院校特征</th>'
                                 + '<th>院校信息</th>'
                             + '</tr>'
                         + '</thead>'
@@ -78,7 +78,7 @@ define(function(require) {
                                 + '<td>' + (data[i].provinceName || '') + '</td>'
                                 + '<td>' + (data[i].universityType || '') + '</td>'
                                 + '<td>' + (data[i].subjection || '') + '</td>'
-                                + '<td>' + (data[i].property || '') + '</td>'
+                                + '<td class="name">' + (data[i].property || '') + '</td>'
                                 + '<td>' + '<a target="_blank" href="/consult/school_detile.jsp?id=' + data[i].code + '">查看详情</a>' + '</td>'
                             + '</tr>');
             }
@@ -353,6 +353,16 @@ define(function(require) {
             if (search) {
                 School.getSearch();
             }
+        });
+
+        $('#school_serach').keydown(function(e) {
+            if (e.keyCode == 13) {
+                var search = $('#school_serach').val();
+                if (search) {
+                    School.getSearch();
+                }
+            }
         })
+
     });
 });

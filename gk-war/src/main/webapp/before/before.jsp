@@ -31,19 +31,19 @@
             <p class="txt">名师精品课程，全面剖析高考知识点以及提分技巧。</p>
         </li>
         <li class="item">
-            <img src="/static/dist/before/images/flow-img1.png" alt=""/>
+            <img src="/static/dist/before/images/ztmj.png" alt=""/>
             <a target="_blank" href="/before/exam.jsp?classifyType=3&searchV=" class="name">真题密卷</a>
             <span class="num">2</span>
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
         <li class="item">
-            <img src="/static/dist/before/images/flow-img1.png" alt=""/>
+            <img src="/static/dist/before/images/gkxl.png" alt=""/>
             <a target="_blank" href="/before/mentality.jsp?classifyType=2&searchV=" class="name">高考心理</a>
             <span class="num">3</span>
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
         <li class="item">
-            <img src="/static/dist/before/images/flow-img1.png" alt=""/>
+            <img src="/static/dist/before/images/yxtj.png" alt=""/>
             <a href="javascript:;" class="name" id="volunteer-flow">院校推荐</a>
             <span class="num">4</span>
             <p class="txt">根据分数快速定位院校及推荐院校</p>
@@ -204,7 +204,7 @@
         </div>
         <div class="eval-right">
             <div class="error-tips hide"></div>
-            <div class="form-control">
+            <div class="form-control mt0">
                 <label>分数</label>
                 <input type="text" class="score-input" id="dream-score-input" placeholder="请输入分数"/>
             </div>
@@ -249,14 +249,14 @@
         </div>
         <div class="eval-right">
             <div class="error-tips hide"></div>
-            <div class="form-control">
+            <div class="form-control mt0">
                 <label>分数</label>
                 <input type="text" class="score-input" id="score-input" placeholder="请输入分数"/>
             </div>
 
             <div class="category mt10">
                 <span class="t">选择批次：</span>
-                <div class="group-radio">
+                <div class="group-radio pl">
                     <label><input type="radio" name="batch" value="一批本科" />一批本科</label>
                     <label><input type="radio" name="batch" value="二批本科" />二批本科</label>
                     <label><input type="radio" name="batch" value="三批本科" />三批本科</label>
@@ -301,7 +301,7 @@
         </div>
         <div class="eval-right">
             <div class="error-tips hide"></div>
-            <div class="form-control">
+            <div class="form-control mt0">
                 <label>分数</label>
                 <input type="text" class="score-input" id="precedence-score-input" placeholder="请输入分数"/>
             </div>
@@ -356,7 +356,7 @@
             <p>您本次录入的分数是：<strong><span id="precedenceScoreInfo"></span>分</strong></p>
         </div>
         <div class="evaluating-result">
-            <p class="tips">依据<span id="current-year"></span>依据2014年的录取情况、在陕西省你的分数预估在以下位次:</p>
+            <p class="tips">依据<span id="current-year"></span>年的录取情况、在陕西省你的分数预估在以下位次:</p>
             <div class="evaluating-result-num" id="precedence-list"></div>
         </div>
         <div style="text-align: center">

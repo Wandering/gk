@@ -9,6 +9,7 @@ import cn.thinkjoy.gk.service.IPolicyInterpretationService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import java.util.Map;
  * 政策解读
  */
 @Controller
+@Scope("prototype")
 @RequestMapping("/policyInterpretation")
 public class PolicyInterpretationController extends BaseController {
 
