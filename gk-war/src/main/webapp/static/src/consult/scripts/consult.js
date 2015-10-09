@@ -36,7 +36,7 @@ define(function (require) {
                         $('#error_tip').html('您好，您不是VIP用户，请进入<a href="/user/vip-service.jsp">个人中心</a>进行VIP升级。');
                         $('#error_tip').show();
                     } if ('1000004' === data.rtnCode) {
-                        $('#error_tip').html(data.msg + ',请<a style="color:#e24333" target="_blank" href="/login/login.jsp">登录</a>');
+                        $('#error_tip').html('<span style="color: #000">' + data.msg + ',请</span><a target="_blank" href="/login/login.jsp">登录</a>');
                         $('#error_tip').show();
                     }else {
                         $('#error_tip').html(data.msg);

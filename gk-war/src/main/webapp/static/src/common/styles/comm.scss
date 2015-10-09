@@ -108,7 +108,7 @@
       position: absolute;
       background-color: #353535;
       top: 50px;
-      right: 0;
+      right: -30px;
       overflow: hidden;
       li {
         a {
@@ -434,6 +434,12 @@
   color: #888;
   font-size: 14px;
   margin-bottom: 40px;
+}
+
+.sub-title{
+  color: #888;
+  font-size: 14px;
+  font-weight: 200;
 }
 
 /*文章中得导航栏*/

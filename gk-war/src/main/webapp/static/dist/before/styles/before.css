@@ -415,6 +415,9 @@ ul.main-video-list {
       background-color: #e24333;
       border-radius: 4px; }
 
+.pl {
+  padding-left: 15px; }
+
 .evaluating-layer {
   left: 50%;
   position: fixed;
