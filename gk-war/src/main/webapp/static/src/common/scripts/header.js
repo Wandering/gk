@@ -3,7 +3,7 @@ define(function (require) {
     require('header-user');
 
     $(document).scroll(function() {
-        if ($(this).scrollTop() > $(window).height()) {
+        if ($(this).scrollTop() > 70) {
             if (!$('.header').hasClass('fix')) {
                 $('.header').addClass('fix');
             }
