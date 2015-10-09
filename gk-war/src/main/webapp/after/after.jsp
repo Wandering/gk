@@ -61,9 +61,9 @@
                 </div>
                 <div class="form-control yzm-control">
                     <label>验证码</label>
-                    <input type="text" class="input yzm" name="" placeholder="请填写验证码" id=""/>
+                    <input type="text" id="yzmDreamSchool-input"  class="input yzm" name="" placeholder="请填写验证码" id=""/>
                     <a>
-                        <img id="yzmDreamSchool" src="/verifyCode/randomVerifyCode.do?type=4" />
+                        <img id="yzmDreamSchool" src="" />
                     </a>
                 </div>
                 <div class="form-control-btn">

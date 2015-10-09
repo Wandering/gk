@@ -1,7 +1,6 @@
 package cn.thinkjoy.gk.controller.user;
 
 
-import cn.thinkjoy.gk.common.BaseController;
 
 import cn.thinkjoy.gk.domain.Agent;
 import cn.thinkjoy.gk.pojo.AgentPojo;
@@ -9,6 +8,7 @@ import cn.thinkjoy.gk.service.IAgentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
@@ -16,6 +16,7 @@ import java.util.List;
 
 
 @Controller
+@Scope("prototype")
 @RequestMapping(value = "/agent")
 public class AgentController  {
 
