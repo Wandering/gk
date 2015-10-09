@@ -1126,7 +1126,11 @@ selectList
        '' as universityImage,a.provinceName,a.url from gk_university a left join gk_university_dict  b on b.type='FEATURE' and b.dictId=a.property
 
          left join gk_university_dict c on c.dictId=a.educationLevel and c.type='EDULEVEL'
-        where 1=1 and code=#{code} limit 0,1
+        where 1=1 and code=#{code}
+         <if test="batch!=null and batch != ''">
+              and a.batchType=#{batch}
+         </if>
+          limit 0,1
     </select>
 
 
