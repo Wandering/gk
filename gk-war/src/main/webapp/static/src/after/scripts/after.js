@@ -1,12 +1,16 @@
 define(function (require) {
     var $ = require('$');
     $(function(){
+        $('#yzmDreamSchool').on('click',function(){
+            $('#yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=4&code=' + Math.random());
+        }).attr('src','/verifyCode/randomVerifyCode.do?type=4');
         //
         $('#volunteer-flow1-btn').on('click',function(){
             var candidateNumberV = $('#candidateNumber-input').val().trim();
             var aggregateScoreV = $('#aggregateScore-input').val().trim();
             var rankingV = $('#ranking-input').val().trim();
             var subjectTypeV = $('input[name="subjectType"]:checked').val();
+            var yzmDreamV = $('#yzmDreamSchool-input').val().trim();
             if (candidateNumberV == '') {
                 $('.error-tips').text('请输入考号').fadeIn(1000).fadeOut(1000);
                 return false;
@@ -19,11 +23,10 @@ define(function (require) {
                 $('.error-tips').text('请输入位次').fadeIn(1000).fadeOut(1000);
                 return false;
             }
-
-            $('#yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=4');
-
-
-
+            if (yzmDreamV == '') {
+                $('.error-tips').text('请填写验证码').fadeIn(1000).fadeOut(1000);
+                return false;
+            }
             $.ajax({
                 url: '/guide/batch.do',
                 type: 'GET',
