@@ -142,7 +142,9 @@ define(function(require) {
                                 that.renderPage(1, data.bizData.count);
                             }
                         } else {
-                            $('#school_list').html('<p style="text-align: center">暂无信息！</p>');
+                            //$('#school_list').html('<p style="text-align: center">暂无信息！</p>');
+                            var pageErrorTip = require('pageErrorTip');
+                            $('#school_list').html(pageErrorTip('暂无相关数据'));
                             $('#page').html('');
                             $('.record').html('');
                         }

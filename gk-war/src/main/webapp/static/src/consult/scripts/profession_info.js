@@ -264,7 +264,9 @@ define(function (require) {
                         if (schoolList && schoolList.length > 0) {
                             that.renderProfessionList(schoolList);
                         } else {
-                            $('#profession_list').html('<p style="text-align: center">暂无信息！</p>');
+                            //$('#profession_list').html('<p style="text-align: center">暂无信息！</p>');
+                            var pageErrorTip = require('pageErrorTip');
+                            $('#profession_list').html(pageErrorTip('暂无相关数据'));
                             $('#page').html('');
                             $('.record').html('');
                         }
