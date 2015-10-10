@@ -370,7 +370,7 @@
                         <div class="specialty-list-info" id="specialty-list-info1"></div>
                     </td>
                     <td width="10%">
-                        <div id="isFunRadio1"></div>
+                        <div id="isFunRadio1" class="isFunRadio"></div>
                     </td>
                 </tr>
                 <tr class="t-content">
@@ -382,7 +382,7 @@
                         <div class="specialty-list-info" id="specialty-list-info2"></div>
                     </td>
                     <td>
-                        <div id="isFunRadio2"></div>
+                        <div id="isFunRadio2" class="isFunRadio"></div>
                     </td>
                 </tr>
                 <tr class="t-content">
@@ -394,7 +394,7 @@
                         <div class="specialty-list-info" id="specialty-list-info3"></div>
                     </td>
                     <td>
-                        <div id="isFunRadio3"></div>
+                        <div id="isFunRadio3" class="isFunRadio"></div>
                     </td>
                 </tr>
                 <tr class="t-content">
@@ -406,7 +406,7 @@
                         <div class="specialty-list-info" id="specialty-list-info4"></div>
                     </td>
                     <td>
-                        <div id="isFunRadio4"></div>
+                        <div id="isFunRadio4" class="isFunRadio"></div>
                     </td>
                 </tr>
             </table>
@@ -416,67 +416,86 @@
                     <div class="col-1-img">
                         <img src="/static/dist/after/images/eva-left-line1.png" class="eva-left-bg"/>
                     </div>
-                    <div class="col-1">
-                        西安交通大学
-                    </div>
-                    <div class="col-2">
-                        北京航空大学
-                    </div>
-                    <div class="col-3">
-                        同济大学
-                    </div>
-                    <div class="col-4">
-                        南开大学
-                    </div>
-                    <div class="eva">顺位合理</div>
+                    <div class="school-list-col"></div>
+                    <div class="eva" id="eva"></div>
                 </div>
             </div>
             <div class="evaluate-count">
-                <h3 class="eva-title color-green">志愿梯度合理性评估</h3>
+                <h3 class="eva-title color-green">去年招生情况</h3>
                 <div class="row">
                     <div class="col-1-img">
                         <img src="/static/dist/after/images/eva-left-line2.png" class="eva-left-bg"/>
                     </div>
-                    <div class="col-1">
-                        西安交通大学
-                        <span class="ml240">实际招生超过计划招生数</span>
-                    </div>
-                    <div class="col-2">
-                        北京航空大学
-                        <span class="ml240">实际招生超过计划招生数</span>
-                    </div>
-                    <div class="col-3">
-                        同济大学
-                        <span class="ml240">实际招生超过计划招生数</span>
-                    </div>
-                    <div class="col-4">
-                        南开大学
-                        <span class="ml240">实际招生超过计划招生数</span>
-                    </div>
+                    <div class="school-list-col"></div>
+                    <div id="enrollment"></div>
+                    <%--<div class="col-1">--%>
+                        <%--西安交通大学--%>
+                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
+                    <%--</div>--%>
+                    <%--<div class="col-2">--%>
+                        <%--北京航空大学--%>
+                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
+                    <%--</div>--%>
+                    <%--<div class="col-3">--%>
+                        <%--同济大学--%>
+                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
+                    <%--</div>--%>
+                    <%--<div class="col-4">--%>
+                        <%--南开大学--%>
+                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
+                    <%--</div>--%>
                 </div>
             </div>
             <div class="evaluate-count">
-                <h3 class="eva-title color-red">志愿梯度合理性评估</h3>
+                <h3 class="eva-title color-red">志愿完整度评估</h3>
                 <div class="row">
                     <div class="col-1-img">
                         <img src="/static/dist/after/images/eva-left-line3.png" class="eva-left-bg"/>
                     </div>
-                    <div class="col-1">
-                        西安交通大学
-                        <span class="ml240">实际招生超过计划招生数</span>
+                    <div class="school-list-col"></div>
+                    <div id="integrity"></div>
+                    <%--<div class="col-1">--%>
+                        <%--西安交通大学--%>
+                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
+                    <%--</div>--%>
+                    <%--<div class="col-2">--%>
+                        <%--北京航空大学--%>
+                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
+                    <%--</div>--%>
+                    <%--<div class="col-3">--%>
+                        <%--同济大学--%>
+                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
+                    <%--</div>--%>
+                    <%--<div class="col-4">--%>
+                        <%--南开大学--%>
+                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
+                    <%--</div>--%>
+                </div>
+            </div>
+            <div class="evaluate-count">
+                <h3 class="eva-title color-red">志愿专业是否服从调剂</h3>
+                <div class="row">
+                    <div class="col-1-img">
+                        <img src="/static/dist/after/images/eva-left-line3.png" class="eva-left-bg"/>
                     </div>
-                    <div class="col-2">
-                        北京航空大学
-                        <span class="ml240">实际招生超过计划招生数</span>
-                    </div>
-                    <div class="col-3">
-                        同济大学
-                        <span class="ml240">实际招生超过计划招生数</span>
-                    </div>
-                    <div class="col-4">
-                        南开大学
-                        <span class="ml240">实际招生超过计划招生数</span>
-                    </div>
+                    <div class="school-list-col"></div>
+                    <div id="exchange"></div>
+                    <%--<div class="col-1">--%>
+                        <%--西安交通大学--%>
+                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
+                    <%--</div>--%>
+                    <%--<div class="col-2">--%>
+                        <%--北京航空大学--%>
+                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
+                    <%--</div>--%>
+                    <%--<div class="col-3">--%>
+                        <%--同济大学--%>
+                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
+                    <%--</div>--%>
+                    <%--<div class="col-4">--%>
+                        <%--南开大学--%>
+                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
+                    <%--</div>--%>
                 </div>
                 <div class="eva-text">
                     作为压线生，心理是比较复杂的，首先是怕从本批次落榜，降档到下一个批次，“上”与“下”的矛盾和不平衡、不甘愿降档的心理始终横跨在自己眼前。其
