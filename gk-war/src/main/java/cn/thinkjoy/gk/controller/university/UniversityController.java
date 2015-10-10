@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +44,7 @@ public class UniversityController extends BaseController {
     @Autowired
     private IExUniversityService iUniversityService;
     @Autowired
-    private IUniversityDictService universityDictService ;
+    private IUniversityDictService universityDictService;
 
     @Autowired
     private IUniversityExService universityExService;
@@ -279,14 +280,51 @@ public class UniversityController extends BaseController {
     @RequestMapping(value = "/universityDetail",method = RequestMethod.GET)
     @ResponseBody
     public UniversityDetailDto universityDetail(@RequestParam(value="code",required=false) String code,
-                                                @RequestParam(value="type",required=false) Integer type){
+                                                @RequestParam(value="type",required=false) Integer type,
+                                                @RequestParam(value="year",required=false) Integer year,
+                                                @RequestParam(value="batch",required=false) String batch){
 
 
         if(StringUtils.isBlank(code)
-                ||null==type){
+                ||StringUtils.isBlank(batch)
+                ||null==type
+                ||null==year){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
 
-        return universityExService.getUniversityDetail(code,type);
+//        String str = null;
+//
+//        try {
+//            str = new String(batch.getBytes("ISO-8859-1"),"UTF-8");
+//        } catch (UnsupportedEncodingException e) {
+//            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
+//        }
+
+        UniversityDetailDto universityDetailDto = null;
+        try{
+            universityDetailDto = universityExService.getUniversityDetail(code,batch,type,year);
+        }catch(Exception e){
+            throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
+        }
+
+        if(universityDetailDto==null){
+            return null;
+        }
+
+        int enrollNum = universityDetailDto.getEnrollNum();
+
+        int planNum = universityDetailDto.getPlanNum();
+
+        int num = enrollNum-planNum;
+
+        if(num>0){
+            universityDetailDto.setEnrollIntro("实际招生超过计划招生数!");
+        }else if(num==0){
+            universityDetailDto.setEnrollIntro("实际招生和计划招生数相等!");
+        }else{
+            universityDetailDto.setEnrollIntro("计划招生超过实际招生数!");
+        }
+
+        return universityDetailDto;
     }
 }

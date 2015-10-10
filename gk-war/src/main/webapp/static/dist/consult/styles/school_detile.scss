@@ -14,6 +14,7 @@ h1 {
   font-size: 30px;
   color: #333;
   margin-top: 40px;
+  font-weight: 400;
 }
 
 .info-content {
@@ -27,12 +28,13 @@ h1 {
     height: 100%;
     ul {
       overflow: hidden;
+      padding-left: 50px;
       li {
         float: left;
         width: 45%;
         height: 30px;
         line-height: 30px;
-        margin: 5px 0 0 20px;
+        margin: 5px 0 0 10px;
         font-size: 16px;
         color: #636363;
         span {
@@ -43,7 +45,7 @@ h1 {
           font-size: 30px;
           color: #444;
           width: 90%;
-          margin: 10px 0 10px 10px;
+          margin: 0px 0 10px 10px;
         }
         &.integet-line {
           width: 90%;
@@ -81,7 +83,8 @@ h1 {
 .school-table {
   margin-bottom: 20px;
   div, p{
-    line-height: 1.8;
+    line-height: 24px;
+    font-size: 14px;
   }
   table {
     border-collapse: collapse;
@@ -114,6 +117,7 @@ h1 {
   td, th {
     border: 1px solid #f1f1f1;
     text-align: center;
+    font-size: 14px;
     a {
       color: #e24333;
       cursor: pointer;

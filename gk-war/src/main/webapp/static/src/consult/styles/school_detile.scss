@@ -41,6 +41,13 @@ h1 {
           font-size: 28px;
           color: #eea236;
         }
+        a.website{
+          text-decoration: underline;
+          color: #0000AA;
+        }
+        a.website:hover {
+          color: #e24333;
+        }
         &.school-name {
           font-size: 30px;
           color: #444;

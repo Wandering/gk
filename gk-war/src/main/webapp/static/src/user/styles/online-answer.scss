@@ -115,9 +115,15 @@
     border: 1px solid #edecec;
     line-height: 1.8;
     font-size: 12px;
+    position: relative;
     //&:before{
     //  @include arrow-up;
     //}
+    img.triangle {
+      position: absolute;
+      top: -10px;
+      left: 20px;
+    }
   }
   .detail-content{
     font-size: 16px;

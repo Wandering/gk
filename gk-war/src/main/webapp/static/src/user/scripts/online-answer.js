@@ -2,6 +2,12 @@ define(function (require) {
     var $ = require('$');
     require('header-user');
 
+    function getUrLinKey(name) {
+        var reg = new RegExp("(^|\\?|&)" + name + "=([^&]*)(\\s|&|$)", "i");
+        if (reg.test(window.location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
+        return "";
+    }
+
     var Question = {
         startSize: 0,
         endSize: 5,
@@ -46,6 +52,7 @@ define(function (require) {
                     + '</div>');
                 if (content.length > 0) {
                    html.push('<div class="detail-info">'
+                       + '<img class="triangle" src="/static/dist/common/images/triangle.png" />'
                        + content.join('')
                        + '</div>');
                 }
@@ -97,7 +104,14 @@ define(function (require) {
     };
 
     $(document).ready(function() {
-        Question.getMyQuestion('detail_content_question', 1);
+        var method = getUrLinKey('method');
+        if ('ask' === method) {
+            $('.ask').addClass('btn-selected').siblings().removeClass('btn-selected');
+            Question.getMyQuestion('detail_content_question', 0);
+        } else {
+            Question.getMyQuestion('detail_content_question', 1);
+        }
+
         Question.next.on('click', function(e) {
             Question.addNextPageHandle();
         });

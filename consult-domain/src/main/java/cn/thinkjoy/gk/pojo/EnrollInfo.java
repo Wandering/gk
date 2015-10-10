@@ -14,6 +14,7 @@ public class EnrollInfo {
     private Integer lowestRank;
     private Integer averageScore;
     private Integer averageRank;
+    private String batch;
 
     public String getSubjectName() {
         return subjectName;
@@ -85,5 +86,13 @@ public class EnrollInfo {
 
     public void setAverageRank(Integer averageRank) {
         this.averageRank = averageRank;
+    }
+
+    public String getBatch() {
+        return batch;
+    }
+
+    public void setBatch(String batch) {
+        this.batch = batch;
     }
 }

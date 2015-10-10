@@ -14,7 +14,12 @@ define(function (require) {
     //    window.location.href = '/login/login.jsp';
     //}
 
-    var api = flowplayer("player", "/static/src/guide/scripts/flowplayer-3.2.18.swf");
+    var api = flowplayer("player", "/static/src/guide/scripts/flowplayer-3.2.18.swf", {
+        clip: {
+            autoPlay: false,       //是否自动播放，默认true
+            autoBuffering: false     //是否自动缓冲视频，默认true
+        }
+    });
 
     $(document).ready(function() {
         $('#search').on('click', function(e) {

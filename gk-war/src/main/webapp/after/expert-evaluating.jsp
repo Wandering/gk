@@ -280,7 +280,7 @@
 
 <%@ include file="/common/footer.jsp" %>
 <script type="text/javascript">
-    seajs.use("${ctx}/static/src/consult/scripts/expert-evaluating");
+    seajs.use("${ctx}/static/src/after/scripts/expert-evaluating");
 </script>
 </body>
 </html>

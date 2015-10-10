@@ -9,11 +9,13 @@ package cn.thinkjoy.gk.dao;
 import cn.thinkjoy.gk.pojo.UniversityDetailDto;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Map;
+
 
 public interface IUniversityExDAO{
 
 
-    UniversityDetailDto getWSUniversityDetail(@Param("code") String schoolCode);
+    UniversityDetailDto getWSUniversityDetail(Map<String,Object> params);
 
-    UniversityDetailDto getLGUniversityDetail(@Param("code") String schoolCode);
+    UniversityDetailDto getLGUniversityDetail(Map<String,Object> params);
 }

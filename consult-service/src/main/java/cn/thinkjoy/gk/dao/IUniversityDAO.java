@@ -25,9 +25,9 @@ public interface IUniversityDAO extends IBaseDAO<University>{
 
     UniversityDto getUniversityDetail(@Param("code")String schoolCode,@Param("batch")String batch);
 
-    List<EnrollInfo> getEnrollInfoByYear(@Param("year")int i,@Param("code") String schoolCode);
+    List<EnrollInfo> getEnrollInfoByYear(Map<String, Object> params);
 
-    List<PlanInfo> getPlanInfosByYear(@Param("year")int i, @Param("code")String schoolCode,@Param("batch")String batch);
+    List<PlanInfo> getPlanInfosByYear(Map<String, Object> params);
 
     String getUniversityIntro(@Param("code")String schoolCode);
 

@@ -21,18 +21,19 @@ define(function (require) {
         render: function(data, pageNO) {
             var html = [];
             for (var i = 0, len = data.length; i < len; i++) {
-                html.push('<a href="/consult/gk_hot_detile.jsp?method=hot&id=' + data[i].id + '"><div class="detile-content mt20">');
+                html.push('<div class="detile-content mt20">');
                 html.push('<div class="detile-header">');
                 var num = i + 1 + 4 * (pageNO - 1);
                 html.push('<span class="order-number">' + num + '</span>');
-                html.push('<span class="detile-title">' + data[i].hotInformation + '</span>');
+                html.push('<span class="detile-title"><a href="/consult/gk_hot_detile.jsp?method=hot&id=' + data[i].id + '">' + data[i].hotInformation + '</a></span>');
                 var date = new Date(data[i].lastModDate).Format('yyyy-MM-dd hh:mm');
-                html.push('<span class="fr">上传时间：' + date + '</span>');
+                html.push('<span class="fr">' + date + '</span>');
                 html.push('</div>');
                 html.push('<div class="detile-info mt20">');
+                html.push('<img class="triangle" src="/static/dist/common/images/triangle.png" />');
                 html.push(data[i].informationSubContent);
                 html.push('</div>');
-                html.push('</div></a>');
+                html.push('</div>');
             }
             if (pageNO == 1) {
                 $('#wrapper').html(html.join(''));
@@ -42,7 +43,7 @@ define(function (require) {
         },
         getData: function(pageNO) {
             var that = this;
-            $.get('/gkinformation/getAllInformation.do?pageNo=' + (pageNO - 1), function(data) {
+            $.get('/gkinformation/getAllInformation.do?pageSize=10&pageNo=' + (pageNO - 1), function(data) {
                 if ('0000000' === data.rtnCode)  {
                     if (data.bizData.length <= 0) {
                         if (pageNO == 1){
@@ -82,7 +83,7 @@ define(function (require) {
         },
         getSearch: function(pageNO, keyWords) {
             var that = this;
-            $.get('/gkinformation/getInformationByKey.do?pageNo=' + pageNO + '&key=' + keyWords, function(data) {
+            $.get('/gkinformation/getInformationByKey.do?pageSize=10&pageNo=' + pageNO + '&key=' + keyWords, function(data) {
                 if ('0000000' === data.rtnCode)  {
                     if (data.bizData.length <= 0) {
                         if (pageNO == 1) {

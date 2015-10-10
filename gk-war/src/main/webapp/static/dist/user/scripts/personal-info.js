@@ -48,7 +48,7 @@ define(function (require) {
             $('.avatar-box').show();
             $('.name').attr('value', personListData.name);
             $('.school').attr('value', personListData.schoolName);
-            $('.birthdayDate').attr('value', getTime(personListData.birthdayDate));
+            $('.birthdayDate').attr('value', personListData.birthdayDate ? getTime(personListData.birthdayDate) : '1970-01-01');
             $('.sex').attr('value', personListData.sex);
             $('.subject').attr('value', personListData.subjectType);
             $('.mail').attr('value', personListData.mail);
