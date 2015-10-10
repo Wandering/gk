@@ -238,7 +238,7 @@ public class GuideController extends BaseController {
             throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
         }
 
-        Map<String,String> resultMap = new HashMap<>();
+        JSONObject resultObj = new JSONObject();
 
         try {
 
@@ -255,7 +255,7 @@ public class GuideController extends BaseController {
                 throw new BizException(ERRORCODE.FAIL.getCode(),obj.getString("info"));
             }
 
-            resultMap.put("report",obj.toJSONString().replace("\\", ""));
+            resultObj.put("report", obj);
 
         } catch (Exception e) {
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
@@ -292,8 +292,8 @@ public class GuideController extends BaseController {
             enrollMap.put(universityDetailDto.getName(),universityDetailDto.getEnrollIntro());
         }
 
-        resultMap.put("enroll",JSON.toJSONString(enrollMap));
-        return JSON.toJSONString(resultMap);
+        resultObj.put("enroll",enrollMap);
+        return JSON.toJSONString(resultObj);
     }
 
 //
