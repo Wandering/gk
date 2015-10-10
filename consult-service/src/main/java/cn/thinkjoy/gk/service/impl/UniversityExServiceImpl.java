@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -41,5 +42,24 @@ public class UniversityExServiceImpl implements IUniversityExService{
 
         return universityDetailDto;
 
+    }
+
+    @Override
+    public List<UniversityDetailDto> getUniversityDetailByCodes(List<String> schoolCodes, String batch, Integer type, Integer year) {
+        List<UniversityDetailDto> universityDetailDtos = null;
+
+        Map<String,Object> params = new HashMap<>();
+
+        params.put("codes",schoolCodes);
+        params.put("batch",batch);
+        params.put("year",year);
+
+        if(type==0){
+            universityDetailDtos = universityExDAO.getWSUniversityDetailByCodes(params);
+        }else if(type==1){
+            universityDetailDtos = universityExDAO.getLGUniversityDetailByCodes(params);
+        }
+
+        return universityDetailDtos;
     }
 }
