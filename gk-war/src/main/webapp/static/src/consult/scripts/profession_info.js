@@ -242,7 +242,7 @@ define(function (require) {
 
             var that = this;
             $.ajax({
-                type: 'post',
+                type: 'get',
                 url: '/majored/searchMajored.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
@@ -260,12 +260,9 @@ define(function (require) {
                 dataType: 'json',
                 success: function(data) {
                     if ('0000000' === data.rtnCode) {
-                        var schoolList = data.bizData.list;
+                        var schoolList = data.bizData;
                         if (schoolList && schoolList.length > 0) {
                             that.renderProfessionList(schoolList);
-                            if (pageNo == 1) {
-                                that.renderPage(1, data.bizData.count);
-                            }
                         } else {
                             $('#profession_list').html('<p style="text-align: center">暂无信息！</p>');
                             $('#page').html('');
@@ -274,6 +271,13 @@ define(function (require) {
                     }
                 },
                 error: function(data) {
+                }
+            });
+            $.get('/majored/searchMajoredCount.do', function(ret) {
+                if ('0000000' === ret.rtnCode) {
+                    if (pageNo == 1) {
+                        that.renderPage(1, ret.bizData);
+                    }
                 }
             });
         },
