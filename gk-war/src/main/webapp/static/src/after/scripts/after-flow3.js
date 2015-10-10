@@ -2,10 +2,11 @@ define(function (require) {
     var $ = require('$');
     $(function () {
         //
+        var paramsJson = JSON.parse(params);
         $('.volunteer-flow3-table').on('click', '.open-flow3', function () {
             $('.tansLayer,.volunteer-flow3-layer').show();
             $('#volunteer-flow3-layer').attr('dataType', $(this).attr('dataType'))
-            getSchool(params1, "", "");
+            getSchool(paramsJson, "", "");
         });
 
 
@@ -15,20 +16,20 @@ define(function (require) {
         //console.log(JSON.parse(params).m_province);
 
 
-        var paramsJson = JSON.parse(params);
-        var params1 = {
-            "m_candidateNumber": "0",
-            "m_aggregateScore": 390,
-            "m_ranking": 72465,
-            "m_kelei": "文史",
-            "m_batch_id": 4,
-            "m_batch": "高职（专科）",
-            "m_province_id": "0",
-            "m_province": "",
-            "m_specialty_id": "",
-            "m_specialty_name": "",
-            "m_favorites_by_university_codes": ""
-        };
+
+        //var params1 = {
+        //    "m_candidateNumber": "0",
+        //    "m_aggregateScore": 390,
+        //    "m_ranking": 72465,
+        //    "m_kelei": "文史",
+        //    "m_batch_id": 4,
+        //    "m_batch": "高职（专科）",
+        //    "m_province_id": "0",
+        //    "m_province": "",
+        //    "m_specialty_id": "",
+        //    "m_specialty_name": "",
+        //    "m_favorites_by_university_codes": ""
+        //};
 
 
 
@@ -287,10 +288,20 @@ define(function (require) {
                     var specialtyLength = $(this).find('input.write').length;
                     console.log(specialtytotaln + "--" + specialtyLength)
 
-                    if(specialtyLength==0){
-                        var schoolListColHtml = '<div class="col-list col-list2">志愿专业填写不完整</div>';
-                        $('#integrity').append(schoolListColHtml);
+                    var schoolListColHtml = '';
+                    if(specialtyLength < 6){
+                        schoolListColHtml += '<div class="col-list col-list2">志愿专业填写不完整</div>';
+                    }else{
+                        schoolListColHtml += '<div class="col-list col-list2">志愿专业填写完整</div>';
+
                     }
+                    $('#integrity').append(schoolListColHtml);
+
+
+                    //if(specialtyLength==0){
+                    //    var schoolListColHtml = '<div class="col-list col-list2">志愿专业填写不完整</div>';
+                    //    $('#integrity').append(schoolListColHtml);
+                    //}
 
                 })
             }
@@ -384,10 +395,27 @@ define(function (require) {
                             //console.log(v.m_university_name)
                             var schoolListColHtml = '<div class="col-list">'+ v.m_university_name +'</div>';
                             $('.school-list-col').append(schoolListColHtml);
-                        })
+                        });
 
                         var dataEnroll =$.parseJSON(res.bizData).enroll;
-                        console.log(dataEnroll)
+                        //console.log(dataEnroll)
+                        //$.each(dataEnroll,function(i,v){
+                        //    console.log(v)
+                        //    //var schoolListColHtml = '<div class="col-list">'+ v.m_university_name +'</div>';
+                        //    //$('.school-list-col').append(schoolListColHtml);
+                        //});
+                        var props = "";
+                        for(var p in dataEnroll){
+                            console.log(p + " = " + dataEnroll[p]);
+                             var schoolName = $('.school-list-col .col-list').text();
+                            if(schoolName==p){
+                                console.log(schoolName)
+                            }
+
+                            //var schoolListColHtml = '<div class="col-list col-list2">'+ isF +'</div>';
+                            //$('#enrollment').append(schoolListColHtml);
+
+                        }
 
                     }
 
