@@ -19,6 +19,12 @@
 
         </if>
 
+        <if test="condition.year!=null and condition.year!=''">
+
+            and b.year=#{year}
+
+        </if>
+
         <if test="condition.majoredTypeName!=null and condition.majoredTypeName!=''">
             and a.majoredType=#{condition.majoredTypeName}
         </if>
@@ -42,7 +48,11 @@
             and a.subjectType =#{condition.subjectTypeName}
 
         </if>
+        <if test="condition.year!=null and condition.year!=''">
 
+            and b.year=#{year}
+
+        </if>
         <if test="condition.majoredTypeName!=null and condition.majoredTypeName!=''">
             and a.majoredType=#{condition.majoredTypeName}
         </if>
