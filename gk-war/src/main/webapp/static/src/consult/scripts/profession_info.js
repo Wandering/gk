@@ -273,11 +273,32 @@ define(function (require) {
                 error: function(data) {
                 }
             });
-            $.get('/majored/searchMajoredCount.do', function(ret) {
-                if ('0000000' === ret.rtnCode) {
-                    if (pageNo == 1) {
-                        that.renderPage(1, ret.bizData);
+
+            $.ajax({
+                type: 'get',
+                url: '/majored/searchMajoredCount.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    batchTypeId:batchTypeId,
+                    batchTypeName:batchTypeName,
+                    subjectTypeId:subjectTypeId,
+                    subjectTypeName:subjectTypeName,
+                    majoredTypeId:majoredTypeId,
+                    majoredTypeName:majoredTypeName,
+                    year: year,
+                    pageSize:10,
+                    pageNo:pageNo,
+                    searchName:search
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if ('0000000' === data.rtnCode) {
+                        if (pageNo == 1) {
+                            that.renderPage(1, data.bizData);
+                        }
                     }
+                },
+                error: function(data) {
                 }
             });
         },
