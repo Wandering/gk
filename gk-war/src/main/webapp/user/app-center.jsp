@@ -41,7 +41,7 @@
         </div>
         <div class="row">
             <div class="col-3">
-                <a href="/after/expert-evaluating.jsp">
+                <a href="/consult/consult.jsp">
                     <img src="/static/dist/user/images/app-center-icon4.png"/>
                 </a>
                 <p class="app-icon">测试专业</p>
