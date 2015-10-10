@@ -345,6 +345,10 @@ define(function (require) {
                 success: function (res) {
                     console.log(res);
 
+                    if (res.rtnCode == "0000000") {
+
+                    }
+
                 }
             });
 
