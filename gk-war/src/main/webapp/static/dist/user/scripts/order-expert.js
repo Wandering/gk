@@ -27,6 +27,12 @@ define(function (require) {
             $('.error-tips').text('为了保证内容完整性，该表单每项都必填。').fadeIn(1000).fadeOut(3000);
             return false;
         }
+
+
+        if (name.length > 10 ) {
+            $('.error-tips').text('姓名不能超过10个字').fadeIn(1000).fadeOut(3000);
+            return false;
+        }
         var qq_reg = /^\s*[.0-9]{5,11}\s*$/;
         if (!qq_reg.test(qq)) {
             $('.error-tips').text('QQ号码输入有误').fadeIn(1000).fadeOut(3000);

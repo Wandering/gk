@@ -251,5 +251,19 @@ public class GuideController extends BaseController {
         return returnStr.toString();
     }
 
+//
+//    public static void main(String[] args) {
+//        String params ="{\"data\":[{\"sequence\":1,\"m_university_code\":\"1207\",\"m_university_name\":\"天津农学院\"},{\"sequence\":2,\"m_university_code\":\"1207\",\"m_university_name\":\"天津农学院\"},{\"sequence\":3,\"m_university_code\":\"1302\",\"m_university_name\":\"天津职业大学\"},{\"sequence\":4,\"m_university_code\":\"1548\",\"m_university_name\":\"沧州医学高等专科学校\"}],\"related\":{\"m_batch_id\":\"4\",\"m_batch\":\"高职（专科）\"}}";
+//
+//        String result = null;
+//        try {
+//            result = HttpRequestUtil.httpPost("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetReport", params, false);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        System.out.println(result);
+//    }
+
 }
 

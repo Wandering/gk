@@ -36,7 +36,7 @@ define(function(require) {
                     html.push('</div>');
                     html.push('<div class="head-info">');
                     var createTime = new Date(question.createTime).Format('yyyy-MM-dd hh:mm');
-                    html.push('<h6>来自 ' + (question.userName || '匿名专家') + createTime + '</h6>');
+                    html.push('<h6>来自 ' + (question.userName || '') + createTime + '</h6>');
                     var questions = question.questions;
                     var text = [];
                     for (var j = 0, jlen = questions.length; j < jlen; j++) {
@@ -73,7 +73,7 @@ define(function(require) {
             html.push('<img src="' + (answer.userIcon || '/static/src/common/images/user_default.png') + '" />');
             html.push('<i class="star"></i>');
             html.push('</div>');
-            html.push('<span>' + (answer.userName || '匿名') + '</span>');
+            html.push('<span>' + (answer.userName || '') + '</span>');
             html.push('</div>');
             var answers = answer.answers;
             var text = [];

@@ -42,7 +42,7 @@ define(function (require) {
             success: function (res) {
                 if (res.rtnCode == '0000000') {
                     var dataJson = res.bizData;
-                    var start = getTime(dataJson.startDate);
+                    var start = getTime(dataJson.startDate * 1000);
                     var end = getTime(dataJson.createDate);
                     $('#appointment-title').text(dataJson.title);
                     $('#appointment-start').text(start);

@@ -23,7 +23,7 @@ define(function (require) {
                 html.push('<img src="' + (question.userIcon || '/static/src/common/images/user_default.png') + '" />');
                 html.push('</div>');
                 html.push('<div class="head-info">');
-                html.push('<h6>来自 ' + (question.userName || '匿名专家') + new Date(question.createTime).Format('yyyy-MM-dd hh:mm') + '</h6>');
+                html.push('<h6>来自 ' + (question.userName || '') + new Date(question.createTime).Format('yyyy-MM-dd hh:mm') + '</h6>');
                 var questions = question.questions;
                 var text = [];
                 var textImg = [];
@@ -74,7 +74,7 @@ define(function (require) {
             html.push('<img src="' + (answer.userIcon || '/static/src/common/images/user_default.png') + '" />');
             html.push('<i class="star"></i>');
             html.push('</div>');
-            html.push('<span>' + answer.userName + '</span>');
+            html.push('<span>' + (answer.userName || '') + '</span>');
             html.push('</div>');
             var answers = answer.answers;
             var text = [];

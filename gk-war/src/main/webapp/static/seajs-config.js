@@ -14,7 +14,8 @@ seajs.config({
         "backToTop": "bower_components/utils/backToTop",
         "bsModal": "bower_components/utils/bootstrap-modal",
         "bsModalManager": "bower_components/utils/bootstrap-modalmanager",
-        "modalLayer": "bower_components/utils/modalLayer"
+        "modalLayer": "bower_components/utils/modalLayer",
+        "pageErrorTip": "bower_components/utils/pageErrorTip"
     },
     preload: ['$'],
     //map,批量更新时间戳

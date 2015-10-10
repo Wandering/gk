@@ -533,3 +533,12 @@ a.next-btn:hover {
   //text-decoration: none;
   //background-color: #999
 }
+
+.page-error-tip {
+  text-align: center;
+  padding: 10px 0;
+  p{
+    font-size: 16px;
+    color: #b0b0b0;
+  }
+}

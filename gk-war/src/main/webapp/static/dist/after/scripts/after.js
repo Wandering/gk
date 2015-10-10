@@ -27,6 +27,7 @@ define(function (require) {
                 $('.error-tips').text('请填写验证码').fadeIn(1000).fadeOut(1000);
                 return false;
             }
+            $('#school-list-info').html('');
             $.ajax({
                 url: '/guide/batch.do',
                 type: 'GET',
@@ -88,6 +89,7 @@ define(function (require) {
         $('#prev-btn').on('click',function(){
             $('#volunteer-flow1').show();
             $('#volunteer-flow2').hide();
+            $('#yzmDreamSchool').attr('src','/verifyCode/randomVerifyCode.do?type=4&code=' + Math.random());
         });
 
     })

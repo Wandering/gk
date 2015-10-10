@@ -718,6 +718,13 @@ a.next-btn:hover {
   _top: expression(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight);
   background: #494848 url("../../common/images/icon-top.png") no-repeat center center; }
 
+.page-error-tip {
+  text-align: center;
+  padding: 10px 0; }
+  .page-error-tip p {
+    font-size: 16px;
+    color: #b0b0b0; }
+
 .mt20 {
   margin-top: 20px; }
 
@@ -751,6 +758,11 @@ h1 {
         .info-content .info ul li span {
           font-size: 28px;
           color: #eea236; }
+        .info-content .info ul li a.website {
+          text-decoration: underline;
+          color: #0000AA; }
+        .info-content .info ul li a.website:hover {
+          color: #e24333; }
         .info-content .info ul li.school-name {
           font-size: 30px;
           color: #444;
@@ -759,10 +771,10 @@ h1 {
         .info-content .info ul li.integet-line {
           width: 90%; }
 
-#category {
+#category, #select_batch {
   text-align: right;
   margin-top: 10px; }
-  #category button {
+  #category button, #select_batch button {
     width: 64px;
     height: 30px;
     text-align: center;
@@ -775,7 +787,7 @@ h1 {
     outline: none;
     border-radius: 5px;
     margin-right: 10px; }
-    #category button.active {
+    #category button.active, #select_batch button.active {
       background-color: #f0ad4e; }
 
 .school-table {

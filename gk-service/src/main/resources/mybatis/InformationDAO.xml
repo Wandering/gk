@@ -20,7 +20,7 @@
     </select>
 
     <select id="getHotInformation" parameterType="java.lang.Integer" resultType="Information">
-        SELECT createDate,lastModDate,hotInformation,informationContent FROM gk_gkinformation_gkhot
+        SELECT id,createDate,lastModDate,hotInformation,informationContent FROM gk_gkinformation_gkhot
         WHERE status = 0 ORDER BY hotCount DESC
         limit ${offset},${rows}
     </select>

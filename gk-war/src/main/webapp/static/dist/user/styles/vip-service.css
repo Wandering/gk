@@ -718,6 +718,13 @@ a.next-btn:hover {
   _top: expression(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight);
   background: #494848 url("../../common/images/icon-top.png") no-repeat center center; }
 
+.page-error-tip {
+  text-align: center;
+  padding: 10px 0; }
+  .page-error-tip p {
+    font-size: 16px;
+    color: #b0b0b0; }
+
 .personal-tab {
   position: relative;
   margin-top: 20px;
@@ -815,9 +822,13 @@ a.next-btn:hover {
   .section .link-tel-title {
     font-size: 18px; }
 
+.tab-info {
+  overflow: hidden;
+  border-left: 1px solid #e5e5e5;
+  margin-bottom: 50px; }
+
 .tel-content-box {
   margin-bottom: 30px;
-  height: 255px;
   border: 1px solid #e5e5e5;
   border-right: none;
   border-bottom: none; }
