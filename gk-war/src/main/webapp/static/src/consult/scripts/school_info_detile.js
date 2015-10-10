@@ -28,9 +28,14 @@ define(function (require) {
                 success: function(data) {
                     if ('0000000' === data.rtnCode) {
                         that.renderInfo(data.bizData);
+                    } else {
+                        var pageErrorTip = require('pageErrorTip');
+                        $('#info_content').html(pageErrorTip('数据维护中'));
                     }
                 },
                 error: function(data) {
+                    var pageErrorTip = require('pageErrorTip');
+                    $('#info_content').html(pageErrorTip('数据维护中'));
                 }
             });
         },
