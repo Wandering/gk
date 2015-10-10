@@ -250,22 +250,23 @@ define(function (require) {
 
         // 下一步
         $('#volunteer-flow3-btn').on('click',function(){
-            //if($('#result-info1').text()==""){
-            //    $('.error-tips2').text("请在A志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if($('#result-info2').text()==""){
-            //    $('.error-tips2').text("请在B志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if($('#result-info3').text()==""){
-            //    $('.error-tips2').text("请在C志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if($('#result-info4').text()==""){
-            //    $('.error-tips2').text("请在D志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
+            $('.school-list-col,.enrollmentSchool').html('');
+            if($('#result-info1').text()==""){
+                $('.error-tips2').text("请在A志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if($('#result-info2').text()==""){
+                $('.error-tips2').text("请在B志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if($('#result-info3').text()==""){
+                $('.error-tips2').text("请在C志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if($('#result-info4').text()==""){
+                $('.error-tips2').text("请在D志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
             $('#main1').hide();
             $('#main2').show();
             // 学校信息
@@ -387,38 +388,24 @@ define(function (require) {
 
                     if (res.rtnCode == "0000000") {
                         var dataJson = $.parseJSON(res.bizData).report;
-                        //console.log(dataJson);
                         var description = dataJson.description;
                         $('#eva').text(description);
-                        //console.log(dataJson.data.length);
                         $.each(dataJson.data,function(i,v){
-                            //console.log(v.m_university_name)
                             var schoolListColHtml = '<div class="col-list">'+ v.m_university_name +'</div>';
                             $('.school-list-col').append(schoolListColHtml);
                         });
 
                         var dataEnroll =$.parseJSON(res.bizData).enroll;
-                        //console.log(dataEnroll)
-                        //$.each(dataEnroll,function(i,v){
-                        //    console.log(v)
-                        //    //var schoolListColHtml = '<div class="col-list">'+ v.m_university_name +'</div>';
-                        //    //$('.school-list-col').append(schoolListColHtml);
-                        //});
-                        var props = "";
-                        for(var p in dataEnroll){
-                            console.log(p + " = " + dataEnroll[p]);
-                             var schoolName = $('.school-list-col .col-list').text();
-                            if(schoolName==p){
-                                console.log(schoolName)
-                            }
-
-                            //var schoolListColHtml = '<div class="col-list col-list2">'+ isF +'</div>';
-                            //$('#enrollment').append(schoolListColHtml);
-
-                        }
-
+                        $.each(dataEnroll,function(i,v){
+                            console.log(v);
+                            var enrollIntro = v.enrollIntro;
+                            var name = v.name;
+                            var enrollmentSchoolHtml = '<div class="col-list">'+ name +'</div>';
+                            $('#enrollmentSchool').append(enrollmentSchoolHtml);
+                            var schoolListColHtml = '<div class="col-list col-list2">'+ enrollIntro +'</div>';
+                            $('#enrollment').append(schoolListColHtml);
+                        });
                     }
-
                 }
             });
 
@@ -435,14 +422,14 @@ define(function (require) {
                 var schoolListColHtml = '<div class="col-list col-list2">'+ isF +'</div>';
                 $('#exchange').append(schoolListColHtml);
             })
-
-
-
-
-
-
-
         });
+
+        // 上一步
+        $('#prev-btn').on('click',function(){
+            $('#main1').show();
+            $('#main2').hide();
+        });
+
 
         // 个人信息
         $.get('/info/getUserInfo.do', function (res) {

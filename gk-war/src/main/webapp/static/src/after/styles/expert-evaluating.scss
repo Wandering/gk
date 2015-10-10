@@ -167,6 +167,8 @@
         color: #74bbd9;
         font-size: 20px;
       }
+
+
     }
     .color-green{
       color: #52d09c;
@@ -179,9 +181,12 @@
       display: inline-block;
     }
     .eva-text{
-      line-height: 26px;
-      font-size: 14px;
       color: #555;
+      tab-index: 2em;
+      line-height: 22px;
+      border-top: 1px solid #e5e5e5;
+      overflow: hidden;
+      padding: 20px;
     }
     .navigation-box{
       position: relative;

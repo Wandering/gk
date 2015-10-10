@@ -277,6 +277,7 @@ public class GuideController extends BaseController {
         JSONObject enrollObj = null;
         for(UniversityDetailDto universityDetailDto :universityDetailDtos){
 
+            enrollObj = new JSONObject();
 
             int enrollNum = universityDetailDto.getEnrollNum();
 
