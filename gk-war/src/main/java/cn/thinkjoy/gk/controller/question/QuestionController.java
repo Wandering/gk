@@ -374,7 +374,6 @@ public class QuestionController extends BaseController {
 
         String value = CookieUtil.getCookieValue(request.getCookies(), CookieConst.SS_USER_COOKIE_NAME);
 
-
         long currentTime = System.currentTimeMillis();
 
         Integer freeStatus = 0;
