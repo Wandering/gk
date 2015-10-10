@@ -64,8 +64,11 @@
   li{
     float: left;
     margin-top: 15px;
+    font-size: 14px;
     &.lable{
       width: 10%;
+      height: 26px;
+      line-height: 26px;
     }
     &.options{
       width: 90%;
@@ -122,6 +125,7 @@
   td,th{
     border: 1px solid #f1f1f1;
     text-align: center;
+    font-size: 14px;
     a{
       color: #e24333;
       cursor: pointer;
@@ -153,6 +157,7 @@
 
   .record{
     float: left;
+    font-size: 12px;
   }
 
   a{
@@ -160,7 +165,7 @@
     padding: 8px 15px;
     margin: 0 2px;
     color: #000;
-    font-size: 14px;
+    font-size: 12px;
     cursor: pointer;
     &.active {
       color: #fff;

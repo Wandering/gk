@@ -21,7 +21,7 @@
     <div class="content">
         <div class="toggle-nav">
             <div class="btn btn-selected" data-isAnswer="1">已解答</div>
-            <div class="btn" data-isAnswer="0">未解答</div>
+            <div class="btn ask" data-isAnswer="0">未解答</div>
         </div>
         <div class="search-content">
              <span>

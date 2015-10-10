@@ -18,6 +18,9 @@ define(function (require) {
         var url = '/volunteerSchool/article.do';
         if ('hot' === method) {
             url = '/gkinformation/getInformationContentById.do';
+            $.get('/gkinformation/updateHotCount.do?id=' + id, function(ret) {
+                //console.log(ret);
+            });
         }
         $.get(url + '?id=' + id, function(data) {
             if ('0000000' === data.rtnCode) {
@@ -45,7 +48,7 @@ define(function (require) {
 
     function getRightInfo() {
         if ('hot' === method) {
-            $.get('/gkinformation/getAllInformation.do?pageNo=0', function(data) {
+            $.get('/gkinformation/getHotInformation.do?pageNo=0&pageSize=10', function(data) {
                 if ('0000000' === data.rtnCode) {
                     var biz = data.bizData;
                     if (biz.length > 0) {

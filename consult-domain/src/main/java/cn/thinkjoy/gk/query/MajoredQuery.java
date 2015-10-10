@@ -11,6 +11,7 @@ public class MajoredQuery {
     private Integer majoredTypeId;
     private String majoredTypeName;
     private String searchName;
+    private Integer year;
     private Integer pageNo;
     private Integer pageSize;
 
@@ -84,5 +85,13 @@ public class MajoredQuery {
 
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 }

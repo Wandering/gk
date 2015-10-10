@@ -61,7 +61,7 @@
   position: relative;
   top: -35px;
   left: 50%;
-  margin-left: -30px;
+  margin-left: -20px;
 }
 
 .page-body {
@@ -99,6 +99,7 @@
       color: #333;
       text-align: center;
       line-height: 2;
+      font-weight: 400;
     }
   }
 }
@@ -141,6 +142,7 @@
           color: #454545;
           text-align: center;
           line-height: 40px;
+          font-weight: 300;
         }
 
         p {
@@ -246,6 +248,11 @@
 .detile-header {
   overflow: hidden;
   font-size: 16px;
+
+  span.fr {
+    font-size: 10px;
+    color:#999;
+  }
 }
 
 .order-number {
@@ -256,25 +263,31 @@
   line-height: 20px;
   border-radius: 10px;
   background-color: #626161;
-  color: #dedede;
+  color: #fff;
 }
 
 .detile-title {
   color: #626161;
+  font-size: 16px;
+  margin-left: 10px;
 }
 
 .detile-info {
   background-color: #f6f6f6;
-  padding: 10px;
+  padding: 20px;
   border: 1px solid #edecec;
-  line-height: 1.8;
+  font-size: 12px;
+  color: #727171;
+  position: relative;
   p{
     margin: 0;
-    line-height: 1.5;
+    line-height: 24px;
   }
-  //&:before {
-  //  @include arrow-up;
-  //}
+  img.triangle {
+    position: absolute;
+    top: -10px;
+    left: 20px;
+  }
 }
 
 /*热门资讯*/
@@ -285,11 +298,11 @@
   padding-bottom: 40px;
   li {
     float: left;
-    width: 50%;
+    width: 47%;
     height: 48px;
     margin: 15px 0;
     &.ml {
-      margin-left: 8%;
+      margin-left: 6%;
     }
 
     .title-info {
@@ -299,6 +312,11 @@
         margin: 0 0 10px 0;
         overflow: hidden;
         white-space: nowrap;
+        text-overflow: ellipsis;
+        font-weight: 200;
+        a{
+          color: #333;
+        }
       }
       h6 {
         font-size: 12px;
@@ -313,15 +331,15 @@
     .icon {
       width: 48px;
       height: 48px;
-      background: #e24d39 url('../images/time-icon.png') no-repeat center 8px;
+      background: #e24d39 url('../images/time-icon.png') no-repeat center 7px;
       float: left;
-      margin-right: 5px;
+      margin-right: 14px;
 
       span {
         font-size: 10px;
         color: #fff;
         position: relative;
-        top: 28px;
+        top: 25px;
       }
     }
   }
@@ -389,4 +407,12 @@
   .w30{
     width: 30%;
   }
+}
+
+h6{
+  font-weight: 100;
+  font-size: 14px;
+}
+
+.sub-title {
 }

@@ -27,7 +27,7 @@
         </div>
         <div class="input-item-comm">
             <span class="w-title">当前密码</span>
-            &nbsp;<input type="password" class="comm-psd" id="current-psd"/>
+            <input type="password" class="comm-psd" id="current-psd"/>
             <span class="error-tips"></span>
         </div>
         <div class="input-item-comm">

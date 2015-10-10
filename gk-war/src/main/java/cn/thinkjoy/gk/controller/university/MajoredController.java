@@ -1,18 +1,23 @@
 package cn.thinkjoy.gk.controller.university;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.domain.UniversityDict;
 import cn.thinkjoy.gk.pojo.*;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.MajoredQuery;
 import cn.thinkjoy.gk.service.IDataDictService;
 import cn.thinkjoy.gk.service.IMajoredService;
 import cn.thinkjoy.gk.service.IUniversityDictService;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -24,6 +29,7 @@ import java.util.Map;
  * Created by wpliu on 15/9/25.
  */
 @Controller("majoredController")
+@Scope("prototype")
 @RequestMapping("/majored")
 public class MajoredController extends BaseController {
 
@@ -147,5 +153,33 @@ public class MajoredController extends BaseController {
         majoredDetailDto.setOpenUniversity(openUniversities);
         return majoredDetailDto;
     }
+
+
+    /**
+     * 获取专业信息
+     * @return
+     */
+    @RequestMapping(value = "/majorList",method = RequestMethod.GET)
+    @ResponseBody
+    public List<MajorDetailPojo> majorList(@RequestParam(value="code",required=false) String code,
+                                           @RequestParam(value="year",required=false) Integer year,
+                                           @RequestParam(value="batch",required=false) String batch){
+
+        if(StringUtils.isBlank(code)
+                ||StringUtils.isBlank(batch)
+                ||null==year){
+            throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
+        }
+
+        List<MajorDetailPojo> lists = null;
+
+        try {
+            lists = iMajoredService.getMajorDetailList(code, batch, year);
+        }catch(Exception e){
+            throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
+        }
+        return lists;
+    }
+
 
 }

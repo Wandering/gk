@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.Map;
 
-@Scope("prototype")
 @Controller("VipController")
+@Scope("prototype")
 @RequestMapping(value = "/vip")
 public class VipController extends BaseController {
 
@@ -36,10 +36,12 @@ public class VipController extends BaseController {
 	@ResponseBody
 	public String upgradeVipByCard(CardPojo cardPojo) {
 		UserAccountPojo userAccountPojo=super.getUserAccountPojo();
-		if(null==userAccountPojo ||  null==userAccountPojo.getId()){
+		if(null==userAccountPojo){
 			throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
 		}
-		if(null!=userAccountPojo && null!=userAccountPojo.getVipStatus() && userAccountPojo.getVipStatus().intValue()==1){
+
+        Integer vipStatus = userAccountPojo.getVipStatus();
+		if(userAccountPojo.getVipStatus().intValue()==1){
 			throw new BizException(ERRORCODE.VIP_EXIST.getCode(), ERRORCODE.VIP_EXIST.getMessage());
 
 		}
@@ -51,16 +53,24 @@ public class VipController extends BaseController {
 			throw new BizException(ERRORCODE.VIP_CARD_NOT_INVALID.getCode(), ERRORCODE.VIP_CARD_NOT_INVALID.getMessage());
 		}else if(0!=card.getUserId()){
 			throw new BizException(ERRORCODE.VIP_CARD_NOT_INVALID.getCode(), ERRORCODE.VIP_CARD_NOT_INVALID.getMessage());
-		}else{
-			card.setUserId(userAccountPojo.getId());
-			cardService.update(card);
-			UserVip userVip=new UserVip();
-			userVip.setId(userAccountPojo.getId());
-			userVip.setEndDate(card.getEndDate());
-			userVip.setStatus(1);
-			vipService.update(userVip);
-			return  "success";
 		}
+		card.setUserId(userAccountPojo.getId());
+		cardService.update(card);
+		UserVip userVip=new UserVip();
+		userVip.setId(userAccountPojo.getId());
+		userVip.setEndDate(card.getEndDate());
+		userVip.setStatus(1);
+		vipService.update(userVip);
+
+		userAccountPojo.setVipStatus(1);
+
+		try {
+			setUserAccountPojo(userAccountPojo);
+		}catch(Exception e){
+			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
+		}
+
+		return  "success";
 	}
 
 	/**

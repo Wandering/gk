@@ -8,9 +8,9 @@ define(function (require) {
         var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
         return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
     }
-    //if (!GetCookie("gkuser") || GetCookie("gkuser") == '""') {
-    //    window.location.href = '/login/login.jsp';
-    //}
+    if (!GetCookie("gkuser") || GetCookie("gkuser") == '""') {
+        window.location.href = '/login/login.jsp';
+    }
 
     function getUrLinKey(name) {
         var reg = new RegExp("(^|\\?|&)" + name + "=([^&]*)(\\s|&|$)", "i");
@@ -85,6 +85,15 @@ define(function (require) {
             return;
         }
 
+        var text = editor.text().replace(/<[^>]+>/ig, '');
+        if (!text) {
+            $('#error').show().html('请输入问题描述！');
+            setTimeout(function() {
+                $('#error').hide();
+            }, 2000)
+            return;
+        }
+
         console.log(content);
         var flag = false;
         if (!flag) {
@@ -118,7 +127,7 @@ define(function (require) {
                         var path = getUrLinKey('path');
 
                         if ('online' === path) {
-                            window.location.href = '/user/online-answer.jsp';
+                            window.location.href = '/user/online-answer.jsp?method=ask';
                         }
                     } else {
                         $('#error').show().html(data.msg);

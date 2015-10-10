@@ -41,7 +41,16 @@ public class GuideController extends BaseController {
     public String batch(@RequestParam(value="m_candidateNumber",required=false) String m_candidateNumber,
                         @RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore,
                         @RequestParam(value="m_kelei",required=false) String m_kelei,
-                        @RequestParam(value="m_ranking",required=false) String m_ranking) throws Exception{
+                        @RequestParam(value="m_ranking",required=false) String m_ranking,
+            @RequestParam(value="code",required=false) String code) throws Exception{
+
+        if(StringUtils.isBlank(m_candidateNumber)
+                || StringUtils.isBlank(m_aggregateScore)
+                || StringUtils.isBlank(m_kelei)
+                || StringUtils.isBlank(m_ranking)
+                || StringUtils.isBlank(code)){
+            throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
+        }
 
         UserAccountPojo userAccountPojo = getUserAccountPojo();
 
@@ -54,6 +63,21 @@ public class GuideController extends BaseController {
         if(vipStatus==null||vipStatus==0){
             throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
         }
+
+        Long value = userAccountPojo.getId();
+
+        Object resultCode = session.getAttribute(VerificationKeyConst.GET_BATCH+value);
+
+        if(resultCode==null){
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
+        }
+
+        if(!resultCode.toString().equals(code.toUpperCase())){
+            throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
+        }
+
+        session.removeAttribute(VerificationKeyConst.COLLEGE_EVALUATION+value);
+
 
         StringBuffer returnStr = new StringBuffer("");
         try {
@@ -97,6 +121,15 @@ public class GuideController extends BaseController {
                         @RequestParam(value="m_specialty_name",required=false) String m_specialty_name,
                         @RequestParam(value="m_favorites_by_university_codes",required=false) String m_favorites_by_university_codes
             ) throws Exception{
+
+        if(StringUtils.isBlank(m_candidateNumber)
+                || StringUtils.isBlank(m_aggregateScore)
+                || StringUtils.isBlank(m_kelei)
+                || StringUtils.isBlank(m_ranking)
+                || StringUtils.isBlank(m_batch_id)
+                || StringUtils.isBlank(m_batch)){
+            throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
+        }
 
         UserAccountPojo userAccountPojo = getUserAccountPojo();
 
@@ -213,6 +246,20 @@ public class GuideController extends BaseController {
         }
         return returnStr.toString();
     }
+
+//
+//    public static void main(String[] args) {
+//        String params ="{\"data\":[{\"sequence\":1,\"m_university_code\":\"1207\",\"m_university_name\":\"天津农学院\"},{\"sequence\":2,\"m_university_code\":\"1207\",\"m_university_name\":\"天津农学院\"},{\"sequence\":3,\"m_university_code\":\"1302\",\"m_university_name\":\"天津职业大学\"},{\"sequence\":4,\"m_university_code\":\"1548\",\"m_university_name\":\"沧州医学高等专科学校\"}],\"related\":{\"m_batch_id\":\"4\",\"m_batch\":\"高职（专科）\"}}";
+//
+//        String result = null;
+//        try {
+//            result = HttpRequestUtil.httpPost("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetReport", params, false);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        System.out.println(result);
+//    }
 
 }
 

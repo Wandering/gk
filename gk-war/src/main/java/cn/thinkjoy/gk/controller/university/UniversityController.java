@@ -4,23 +4,26 @@ package cn.thinkjoy.gk.controller.university;
  * Created by wpliu on 15/9/25.
  */
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.domain.UniversityDict;
 import cn.thinkjoy.gk.pojo.*;
-import cn.thinkjoy.gk.service.IDataDictService;
-import cn.thinkjoy.gk.service.IExUniversityService;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.service.*;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.query.UniversityQuery;
-import cn.thinkjoy.gk.service.IProvinceService;
-import cn.thinkjoy.gk.service.IUniversityDictService;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +35,7 @@ import java.util.Map;
  *
  */
 @Controller("universityController")
+@Scope("prototype")
 @RequestMapping("/university")
 public class UniversityController extends BaseController {
 
@@ -40,7 +44,10 @@ public class UniversityController extends BaseController {
     @Autowired
     private IExUniversityService iUniversityService;
     @Autowired
-    private IUniversityDictService universityDictService ;
+    private IUniversityDictService universityDictService;
+
+    @Autowired
+    private IUniversityExService universityExService;
 
     @Autowired
     private IProvinceService provinceService;
@@ -188,7 +195,8 @@ public class UniversityController extends BaseController {
     public UniversityDto getUniversityDetail(){
         UniversityDto universityDto=new UniversityDto();
         String schoolCode=request.getParameter("code");
-        universityDto=iUniversityService.getUniversityDetail(schoolCode);
+        String batch =request.getParameter("batch");
+        universityDto=iUniversityService.getUniversityDetail(schoolCode,batch);
         return universityDto;
     }
 
@@ -224,13 +232,25 @@ public class UniversityController extends BaseController {
     @ResponseBody
     public EntrollPlanDto getEnrollPlan(){
         String schoolCode=request.getParameter("code");
+        String batch=request.getParameter("batch");
         EntrollPlanDto entrollPlanDto=new EntrollPlanDto();
         List<EntrollPlan> entrollPlans=new ArrayList<EntrollPlan>();
+        switch (batch){
+            case "1": batch="一批本科";
+                  break;
+            case "2": batch="二批本科";
+                  break;
+            case "3":batch="三批本科";
+                  break;
+            case "4":batch="高职（专科）";
+                 break;
+            default: batch="";
 
+        }
         EntrollPlan entrollPlan=new EntrollPlan();
         EntrollPlan lastEntrollPlan=new EntrollPlan();
-        List<PlanInfo> planInfos=iUniversityService.getPlanInfosByYear(2015,schoolCode);
-        List<PlanInfo> lastPlanInfos=iUniversityService.getPlanInfosByYear(2014,schoolCode);
+        List<PlanInfo> planInfos=iUniversityService.getPlanInfosByYear(2015,schoolCode,batch);
+        List<PlanInfo> lastPlanInfos=iUniversityService.getPlanInfosByYear(2014,schoolCode,batch);
         entrollPlan.setTitle("2015年招生计划");
         entrollPlan.setPlanInfos(planInfos);
         lastEntrollPlan.setTitle("2014年招生计划");
@@ -250,5 +270,61 @@ public class UniversityController extends BaseController {
         entrollPlanDto.setEnrollPlan(entrollPlans);
 
         return  entrollPlanDto;
+    }
+
+
+    /**
+     * 获取院校详情
+     * @return
+     */
+    @RequestMapping(value = "/universityDetail",method = RequestMethod.GET)
+    @ResponseBody
+    public UniversityDetailDto universityDetail(@RequestParam(value="code",required=false) String code,
+                                                @RequestParam(value="type",required=false) Integer type,
+                                                @RequestParam(value="year",required=false) Integer year,
+                                                @RequestParam(value="batch",required=false) String batch){
+
+
+        if(StringUtils.isBlank(code)
+                ||StringUtils.isBlank(batch)
+                ||null==type
+                ||null==year){
+            throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
+        }
+
+//        String str = null;
+//
+//        try {
+//            str = new String(batch.getBytes("ISO-8859-1"),"UTF-8");
+//        } catch (UnsupportedEncodingException e) {
+//            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
+//        }
+
+        UniversityDetailDto universityDetailDto = null;
+        try{
+            universityDetailDto = universityExService.getUniversityDetail(code,batch,type,year);
+        }catch(Exception e){
+            throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
+        }
+
+        if(universityDetailDto==null){
+            return null;
+        }
+
+        int enrollNum = universityDetailDto.getEnrollNum();
+
+        int planNum = universityDetailDto.getPlanNum();
+
+        int num = enrollNum-planNum;
+
+        if(num>0){
+            universityDetailDto.setEnrollIntro("实际招生超过计划招生数!");
+        }else if(num==0){
+            universityDetailDto.setEnrollIntro("实际招生和计划招生数相等!");
+        }else{
+            universityDetailDto.setEnrollIntro("计划招生超过实际招生数!");
+        }
+
+        return universityDetailDto;
     }
 }

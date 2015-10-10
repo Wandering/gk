@@ -10,8 +10,10 @@ import cn.thinkjoy.gk.pojo.VideoCoursePojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.*;
 import cn.thinkjoy.gk.util.HttpUtil;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +28,7 @@ import java.util.Map;
  * Created by yhwang on 15/9/23.
  */
 @Controller
+@Scope("prototype")
 @RequestMapping("/before/video")
 public class VideoController extends BaseController {
     @Autowired
@@ -81,7 +84,7 @@ public class VideoController extends BaseController {
      */
     @RequestMapping(value = "getVideoSectionList",method = RequestMethod.GET)
     @ResponseBody
-    public List<VideoSection> getVideoSectionList(){
+    public Map<String,Object> getVideoSectionList(){
         String courseId = request.getParameter("courseId");
         UserAccountPojo user=null;
         try{
@@ -113,7 +116,10 @@ public class VideoController extends BaseController {
         videoCourse.setId(videoCourse.getId());
         videoCourse.setHit(videoCourse.getHit() + 1);
         videoCourseService.update(videoCourse);
-        return videoSectionList;
+        Map<String,Object> returnMap= Maps.newHashMap();
+        returnMap.put("videoCourse",videoCourse);
+        returnMap.put("videoSectionList",videoSectionList);
+        return returnMap;
     }
 
     /**

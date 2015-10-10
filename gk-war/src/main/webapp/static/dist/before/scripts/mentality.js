@@ -83,6 +83,10 @@ define(function (require) {
                         } else {
                             videoUrl = localhosts + dataJson[i].frontCover;
                         }
+                        var tmpContent = subcontent;
+                        if (tmpContent.length > 150) {
+                            tmpContent = tmpContent.substring(0, 150) + '...';
+                        }
                         var listMsgHtml = ''
                             +'<li class="item">'
                             +'<div class="img"><img src="'+ videoUrl +'" alt=""/></div>'
@@ -93,7 +97,7 @@ define(function (require) {
                             +'<div class="num">'
                             +'<span class="fl">点击量:'+ hit +'</span>'
                             +'</div>'
-                            +'<p class="txt">'+ subcontent +'</p>'
+                            +'<p class="txt">'+ tmpContent +'</p>'
                             +'<div class="funs">'
                             + '<a target="_blank" href="' + detailsUrl + '" class="btn">点击播放</a>'
                             +'</div>'
