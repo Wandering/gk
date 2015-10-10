@@ -16,7 +16,7 @@ define(function (require) {
         getProfessionInfo: function(code) {
             var that = this;
             $.ajax({
-                type: 'post',
+                type: 'get',
                 url: '/majored/getMajoredInfo.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
@@ -47,7 +47,7 @@ define(function (require) {
         getReationInfo: function(code) {
             var that = this;
             $.ajax({
-                type: 'post',
+                type: 'get',
                 url: '/majored/getMajoredDetail.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
