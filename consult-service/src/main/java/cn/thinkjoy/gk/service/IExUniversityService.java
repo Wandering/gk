@@ -26,11 +26,11 @@ public interface IExUniversityService {
 
     UniversityDto getUniversityDetail(String schoolCode,String batch);
 
-    List<EnrollInfo> getEnrollInfoByYear(int i,String schoolCode);
+    List<EnrollInfo> getEnrollInfoByYear(Integer year,String schoolCode);
 
     String getUniversityEnrollIntro(String schoolCode);
 
-    List<PlanInfo> getPlanInfosByYear(int i,String schoolCode,String batch);
+    List<PlanInfo> getPlanInfosByYear(Integer year,String schoolCode,String batch);
 
     String getUniversityIntro(String schoolCode);
 }
