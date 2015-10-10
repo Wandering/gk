@@ -4,6 +4,11 @@ define(function (require) {
     require('getTime');
     require('backToTop');
 
+    function GetCookie(sMainName, sSubName) {
+        var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
+        return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
+    }
+
     var url = 'http://' + window.location.host;
     $(function () {
         //在线互动
@@ -34,14 +39,24 @@ define(function (require) {
             //$('.tab-info').fadeOut();
             $('.tab-info').hide();
             $('.tab-info').eq(n).fadeIn(500);
-            (n == 1) ? (m.fadeOut()) : (m.fadeIn());
+            //(n == 1) ? (m.fadeOut()) : (m.fadeIn());
         });
         $('#hot-info').click(function () {
-            window.location.assign(url + '/consult/gk_hot.jsp')
+            var index = $('#tabs-hosts').find('li.active').index();
+            if (index == 0) {
+                window.location.assign(url + '/consult/gk_hot.jsp');
+            } else if(index == 1) {
+                if (!GetCookie("gkuser") || GetCookie("gkuser") == '""') {
+                    window.location.href = '/login/login.jsp';
+                } else {
+                    window.location.assign(url + '/user/vip-service.jsp');
+                }
+            }
         });
         $.get('/agent/getAgent.do', function (res) {
             if (res.rtnCode == '0000000') {
                 var dataJson = res.bizData;
+                dataJson.length > 9 ? dataJson.length = 9 : '';
                 var addressHtml = ''
                 $.each(dataJson, function (i, v) {
                     var address = v.address;
@@ -62,7 +77,8 @@ define(function (require) {
             dataType: 'json',
             type: 'get',
             data: {
-                "pageNo": 0
+                "pageNo": 0,
+                "pageSize": 6
             },
             success: function (res) {
                 var dataJson = res.bizData;

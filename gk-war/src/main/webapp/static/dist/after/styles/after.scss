@@ -285,7 +285,8 @@
   top: expression(documentElement.scrollTop + documentElement.clientHeight - this.offsetHeight);
 }
 
-.volunteer-flow3-layer {
+.volunteer-flow3-layer,
+.specialty-layer {
   left: 50%;
   position: fixed;
   top: 50%;
@@ -312,7 +313,8 @@
   .tips{
     margin: 0 30px;
   }
-  .volunteer-flow3-body{
+  .volunteer-flow3-body,
+  .specialty-body{
     padding: 0 30px;
     overflow: hidden;
     .search-box{
@@ -526,6 +528,9 @@
      }
      .sel-num{
        float: right;
+       a{
+         text-decoration: underline;
+       }
      }
    }
  }
@@ -550,4 +555,51 @@
 #yzmDreamSchool{
   width: 110px;
   height: 47px;
+}
+
+
+.school-table {
+  margin-bottom: 20px;
+  table {
+    border-collapse:collapse;
+    width: 100%;
+  }
+
+  tr{
+    height: 40px;
+    line-height: 40px;
+  }
+
+  thead {
+    tr {
+      background-color: #f5f5f5;
+    }
+  }
+
+  tbody {
+    tr {
+      &.active {
+        background-color: #f5f5f5;
+      }
+    }
+  }
+
+  td,th{
+    border: 1px solid #f1f1f1;
+    text-align: center;
+    font-size: 14px;
+    a{
+      color: #e24333;
+      cursor: pointer;
+    }
+  }
+
+  td{
+    color: #555;
+    max-width: 400px;
+  }
+
+  th{
+    color: #444;
+  }
 }

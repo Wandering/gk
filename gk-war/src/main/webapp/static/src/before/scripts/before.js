@@ -3,6 +3,7 @@ define(function (require) {
     require('swiper');
     require('getTime');
     require('backToTop');
+    var pageEroorTip = require('pageErrorTip');
     // 切换tab
     $('.tabs-list').on('click', 'li', function () {
         $(this).addClass('active').siblings().removeClass('active');
@@ -58,14 +59,15 @@ define(function (require) {
             },
             function (result) {
                 if (result.rtnCode == "0800001") {
-                    $(obj).append('<p class="noContent">' + result.msg + '</p>').fadeIn(500);
+                    //$(obj).append('<p class="noContent">' + result.msg + '</p>').fadeIn(500);
+                    $(obj).append(pageEroorTip('暂时没有数据，请耐心等待哦')).fadeIn(500);
                 }
                 if (result.rtnCode == "0000000") {
 
                     var dataJson = result.bizData;
                     for (var i = 0; i < dataJson.length; i++) {
-                        var subjectName = dataJson[i].subjectName,
-                            teacherName = dataJson[i].teacherName,
+                        var subjectName = dataJson[i].subjectName || '',
+                            teacherName = dataJson[i].teacherName || '',
                             courseId = dataJson[i].courseId,
                             hit = dataJson[i].hit,
                             subcontent = dataJson[i].subcontent;
@@ -75,6 +77,11 @@ define(function (require) {
                             videoUrl = '/static/dist/common/images/video-default.png';
                         } else {
                             videoUrl = localhosts + dataJson[i].frontCover;
+                        }
+
+                        var tmpContent = subcontent;
+                        if (tmpContent.length > 150) {
+                            tmpContent = tmpContent.substring(0, 150) + '...';
                         }
                         var listMsgHtml = ''
                             + '<li class="item">'
@@ -86,7 +93,7 @@ define(function (require) {
                             + '<div class="num">'
                             + '<span class="fl">点击量:' + hit + '</span>'
                             + '</div>'
-                            + '<p class="txt">' + subcontent + '</p>'
+                            + '<p class="txt">' + tmpContent + '</p>'
                             + '<div class="funs">'
                             + '<a target="_blank" href="' + detailsUrl + '" class="btn">点击播放</a>'
                             + '</div>'
@@ -129,7 +136,8 @@ define(function (require) {
             },
             function (result) {
                 if (result.rtnCode == "0800001") {
-                    $(obj).append('<p class="noContent">' + result.msg + '</p>').fadeIn(500);
+                    //$(obj).append('<p class="noContent">' + result.msg + '</p>').fadeIn(500);
+                    $(obj).append(pageEroorTip('暂时没有数据，请耐心等待哦')).fadeIn(500);
                 }
                 if (result.rtnCode == "0000000") {
                     var dataJson = result.bizData;

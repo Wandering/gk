@@ -21,7 +21,10 @@
             <h1>往年招生情况</h1>
             <ul class="tabs-list mt20" id="tabs_list_last">
             </ul>
-
+            <div id="select_batch">
+                <button data-id="1">文史</button>
+                <button data-id="2">理工</button>
+            </div>
             <div id="last_content">
 
             </div>

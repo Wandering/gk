@@ -9,8 +9,12 @@ package cn.thinkjoy.gk.service;
 
 import cn.thinkjoy.gk.pojo.UniversityDetailDto;
 
+import java.util.List;
+
 public interface IUniversityExService{
 
     UniversityDetailDto getUniversityDetail(String schoolCode,String batch,Integer type,Integer year);
+
+    List<UniversityDetailDto> getUniversityDetailByCodes(List<String> schoolCodes,String batch,Integer type,Integer year);
 
 }

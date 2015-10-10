@@ -756,3 +756,6 @@ ul.main-video-list {
 
 .error-tips {
   margin-bottom: 10px; }
+
+.page-error-tip {
+  margin-left: -200px; }

@@ -132,9 +132,15 @@
   }
 }
 
+.tab-info{
+  overflow: hidden;
+  border-left: 1px solid $borderColor;
+  margin-bottom: 50px;
+}
+
 .tel-content-box {
   margin-bottom: 30px;
-  height: 255px;
+  //height: 255px;
   border: 1px solid $borderColor;
   border-right: none;
   border-bottom: none;

@@ -22,7 +22,12 @@ define(function (require) {
                     $(obj).append('<p class="noContent">' + result.msg + '</p>');
                 }
                 if (result.rtnCode == "0000000") {
-                    var dataJson = result.bizData;
+                    var dataJson = result.bizData.videoSectionList;
+                    var videoCourse = result.bizData.videoCourse;
+                    if (videoCourse) {
+                        $('#title').html(videoCourse.teacher + '<span>' + videoCourse.title + '</span>');
+                        $('#subcontent').html(videoCourse.subcontent);
+                    }
                     for (var i = 0; i < dataJson.length; i++) {
                         var courseId = dataJson[i].courseId,
                             fileUrl = dataJson[i].fileUrl,
@@ -56,9 +61,15 @@ define(function (require) {
     }
     getList();
 
-    $.get('/before/video/getVideoSectionDetail.do?videoSectionId=' + 45, function(data) {
-
-    });
+    //$.get('/before/video/getVideoSectionList.do?courseId=' + courseId, function(data) {
+    //    if ('0000000' === data.rtnCode) {
+    //        var videoCourse = data.bizData.videoCourse;
+    //        if (videoCourse) {
+    //            $('#title').html(videoCourse.teacher + '<span>' + videoCourse.title + '</span>');
+    //            $('#subcontent').html(videoCourse.subcontent);
+    //        }
+    //    }
+    //});
     $('#episode-num').on('click', 'a', function () {
         $(this).addClass('active').siblings().removeClass('active');
         var fileurl = $(this).attr('fileurl');
