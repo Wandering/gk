@@ -10,6 +10,8 @@ public class MajorDetailPojo {
 
     private String name;
 
+    private Integer planNum;
+
     private String batch;
 
     private String subject;
@@ -56,5 +58,21 @@ public class MajorDetailPojo {
 
     public void setFeeStandard(String feeStandard) {
         this.feeStandard = feeStandard;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public Integer getPlanNum() {
+        return planNum;
+    }
+
+    public void setPlanNum(Integer planNum) {
+        this.planNum = planNum;
     }
 }

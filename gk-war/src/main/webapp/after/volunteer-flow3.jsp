@@ -48,28 +48,28 @@
                                 </span>
                             </div>
                         </section>
-                        <div class="tips hide">
+                        <div class="tips" id="tips1">
                             <strong>温馨提示：</strong>
                             <p>请准确无误的填写考号、分数及位次；所录入的信息一旦提交将不可更改。</p>
                         </div>
                         <div class="result-info-details" id="result-info1">
-                            <p>
-                                院校代码：4004  <br/>
-                                院校特征：211 研<br/>
-                                院校隶属：教育部直属   <br/>
-                                院校类型：工科             <br/>
-                                2014年最低投档分：592           <br/>
-                                2014年最低位次：8959                 <br/>
-                                2014年录取平均分：602                     <br/>
-                                2014年平均分位次：7006                         <br/>
-                                历年招生情况：实际招生超过计划招生数                    <br/>
-                                录取指数：★★
-                            </p>
+                            <%--<p>--%>
+                                <%--院校代码：4004  <br/>--%>
+                                <%--院校特征：211 研<br/>--%>
+                                <%--院校隶属：教育部直属   <br/>--%>
+                                <%--院校类型：工科             <br/>--%>
+                                <%--2014年最低投档分：592           <br/>--%>
+                                <%--2014年最低位次：8959                 <br/>--%>
+                                <%--2014年录取平均分：602                     <br/>--%>
+                                <%--2014年平均分位次：7006                         <br/>--%>
+                                <%--历年招生情况：实际招生超过计划招生数                    <br/>--%>
+                                <%--录取指数：★★--%>
+                            <%--</p>--%>
                         </div>
                     </div>
                 </td>
                 <td class="item3">
-                    <ul class="specialty" id="specialty1" m_batch="高职（专科）" code="2406" year="2014">
+                    <ul class="specialty hide" id="specialty1">
                         <li>
                             <span class="num">1.</span>
                             <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
@@ -126,7 +126,7 @@
                                 </span>
                             </div>
                         </section>
-                        <div class="tips">
+                        <div class="tips"  id="tips2">
                             <strong>温馨提示：</strong>
                             <p>请准确无误的填写考号、分数及位次；所录入的信息一旦提交将不可更改。</p>
                         </div>
@@ -136,9 +136,38 @@
                     </div>
                 </td>
                 <td class="item3">
-                    <div id="specialty2" class="specialty-list">
-
-                    </div>
+                    <ul class="specialty hide" id="specialty2">
+                        <li>
+                            <span class="num">1.</span>
+                            <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">2.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">3.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">4.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">5.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">6.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                    </ul>
                 </td>
                 <td class="item4">
                     <div class="">
@@ -164,7 +193,7 @@
                                 </span>
                             </div>
                         </section>
-                        <div class="tips">
+                        <div class="tips"  id="tips3">
                             <strong>温馨提示：</strong>
                             <p>请准确无误的填写考号、分数及位次；所录入的信息一旦提交将不可更改。</p>
                         </div>
@@ -174,9 +203,38 @@
                     </div>
                 </td>
                 <td class="item3">
-                    <div id="specialty3" class="specialty-list">
-
-                    </div>
+                    <ul class="specialty hide" id="specialty3">
+                        <li>
+                            <span class="num">1.</span>
+                            <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">2.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">3.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">4.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">5.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">6.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                    </ul>
                 </td>
                 <td class="item4">
                     <div class="">
@@ -202,7 +260,7 @@
                                 </span>
                             </div>
                         </section>
-                        <div class="tips">
+                        <div class="tips"  id="tips4">
                             <strong>温馨提示：</strong>
                             <p>请准确无误的填写考号、分数及位次；所录入的信息一旦提交将不可更改。</p>
                         </div>
@@ -212,9 +270,38 @@
                     </div>
                 </td>
                 <td class="item3">
-                    <div id="specialty4" class="specialty-list">
-
-                    </div>
+                    <ul class="specialty hide" id="specialty4">
+                        <li>
+                            <span class="num">1.</span>
+                            <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">2.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">3.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">4.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">5.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                        <li>
+                            <span class="num">6.</span>
+                            <span class="input"><input type="text" name="" id=""/></span>
+                            <span class="sel-num"><a href="javascript:;">选择专业</a></span>
+                        </li>
+                    </ul>
                 </td>
                 <td class="item4">
                     <div class="">
@@ -287,7 +374,7 @@
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
                         <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
-                    <div class="school-list hide" id="school-list0"></div>
+                    <div class="school-list hide" id="school-list0" dataType="A"></div>
                 </li>
                 <li class="starB">
                     <div class="title">
@@ -298,7 +385,7 @@
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
                         <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
-                    <div class="school-list hide" id="school-list1"></div>
+                    <div class="school-list hide" id="school-list1"  dataType="B"></div>
                 </li>
                 <li class="starC">
                     <div class="title">
@@ -309,7 +396,7 @@
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
                         <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
-                    <div class="school-list hide" id="school-list2"></div>
+                    <div class="school-list hide" id="school-list2"  dataType="C"></div>
                 </li>
                 <li class="starD">
                     <div class="title">
@@ -320,7 +407,7 @@
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
                         <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
-                    <div class="school-list hide" id="school-list3"></div>
+                    <div class="school-list hide" id="school-list3"  dataType="D"></div>
                 </li>
             </ul>
         </div>
@@ -336,8 +423,8 @@
     <div class="top-close">
         <a href="javascript:;" class="close-btn close-specialty-layer">x</a>
     </div>
-    <div class="specialty-body">
-        <table>
+    <div class="specialty-body school-table">
+        <table class="">
             <thead>
                 <tr>
                     <th>专业名称</th>
@@ -349,9 +436,7 @@
                 </tr>
             </thead>
             <tbody id="specialty-content">
-                <tr>
-                    <td></td>
-                </tr>
+
             </tbody>
 
         </table>
