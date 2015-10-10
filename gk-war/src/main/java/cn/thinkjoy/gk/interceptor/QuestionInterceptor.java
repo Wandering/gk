@@ -75,7 +75,7 @@ public class QuestionInterceptor extends HandlerInterceptorAdapter {
 				}
 
 				response.addCookie(CookieUtil.addCookie(CookieConst.SS_USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
-			}else{
+			} else {
 
 				String key = UserRedisConst.USER_KEY + value;
 
@@ -115,7 +115,6 @@ public class QuestionInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request,HttpServletResponse response, Object handler,ModelAndView modelAndView) throws Exception {
 //		System.out.println("===========HandlerInterceptor1 postHandle");
-
 	}
 
 	@Override
