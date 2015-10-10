@@ -24,14 +24,14 @@
             <!--找回密码-->
             <div class="register-input">
                 <span class="error-tip1">&nbsp;</span>
-                <i class="icon-user-account"></i>
+                <i class="icon-user-account icon-user-account-50"></i>
                 <input type="tel" class="input-comm tel" placeholder="注册账户的手机号"/>
-                <i class="icon-user-code"></i>
+                <i class="icon-user-code icon-user-code-105"></i>
                 <input type="text" class="input-comm pdr100 code" placeholder="验证码"/>
-                <span class="code-text">获取验证码</span>
-                <i class="icon-user-psd"></i>
+                <button class="code-text top77">获取验证码</button>
+                <i class="icon-user-psd icon-user-psd-164"></i>
                 <input type="password" class="input-comm new-psd" placeholder="新密码"/>
-                <i class="icon-conform-psd"></i>
+                <i class="icon-conform-psd icon-user-psd-221"></i>
                 <input type="password" class="input-comm confirm-psd" placeholder="确认密码"/>
                 <span class="error-tip2"></span>
                 <div class="btn-login" style="margin-top: 0">确定</div>

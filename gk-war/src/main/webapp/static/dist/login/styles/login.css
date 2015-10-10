@@ -825,7 +825,7 @@ a.next-btn:hover {
         .main .login-box .login-input .btn-login:hover {
           background-color: #2AD083; }
     .main .login-box .pdr100 {
-      padding-right: 100px !important; }
+      padding-right: 155px !important; }
     .main .login-box .register-input {
       position: relative; }
       .main .login-box .register-input i {
@@ -836,14 +836,22 @@ a.next-btn:hover {
         top: 41px;
         left: 20px;
         background: url(../../login/images/icon-user-account.png) no-repeat; }
+      .main .login-box .register-input .icon-user-account-50 {
+        top: 50px !important; }
       .main .login-box .register-input .icon-user-code {
         top: 96px;
         left: 20px;
         background: url(../../login/images/icon-user-code.png) no-repeat; }
+      .main .login-box .register-input .icon-user-code-105 {
+        top: 105px !important; }
       .main .login-box .register-input .icon-user-psd {
         top: 155px;
         left: 20px;
         background: url(../../login/images/icon-user-psd.png) no-repeat; }
+      .main .login-box .register-input .icon-user-psd-164 {
+        top: 164px !important; }
+      .main .login-box .register-input .icon-user-psd-221 {
+        top: 221px !important; }
       .main .login-box .register-input .icon-conform-psd {
         top: 212px;
         left: 20px;
@@ -854,7 +862,7 @@ a.next-btn:hover {
         box-sizing: border-box;
         width: 100%;
         font-size: 13px;
-        color: #bebdbd;
+        color: #252323;
         border: 1px solid #e5e5e5 !important;
         height: 45px;
         line-height: 45px;
@@ -895,6 +903,8 @@ a.next-btn:hover {
         right: 10px;
         cursor: pointer;
         border: none; }
+      .main .login-box .register-input .top77 {
+        top: 97px !important; }
 
 .footer {
   background-color: #fff;

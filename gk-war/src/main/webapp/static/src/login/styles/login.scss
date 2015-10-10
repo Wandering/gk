@@ -119,7 +119,7 @@
       }
     }
     .pdr100{
-      padding-right:100px!important;
+      padding-right:155px!important;
     }
     //      注册
     .register-input{
@@ -134,15 +134,27 @@
         left: 20px;
         background: url(../../login/images/icon-user-account.png) no-repeat;
       }
+      .icon-user-account-50{
+        top:50px!important;
+      }
       .icon-user-code{
         top:96px;
         left: 20px;
         background: url(../../login/images/icon-user-code.png) no-repeat;
       }
+      .icon-user-code-105{
+        top:105px!important;
+      }
       .icon-user-psd{
         top:155px;
         left: 20px;
         background: url(../../login/images/icon-user-psd.png) no-repeat;
+      }
+      .icon-user-psd-164{
+        top:164px!important;
+      }
+      .icon-user-psd-221{
+        top:221px!important;
       }
       .icon-conform-psd{
         top:212px;
@@ -155,7 +167,7 @@
         box-sizing: border-box;
         width: 100%;
         font-size: 13px;
-        color: #bebdbd;
+        color: #252323;
         border:1px solid $borderColor!important;
         height: 45px;
         line-height: 45px;
@@ -200,11 +212,13 @@
         cursor:pointer;
         border:none;
       }
+      .top77{
+        top: 97px!important;
+      }
 
     }
   }
 }
-
 .footer {
   background-color: #fff;
   box-sizing: border-box;

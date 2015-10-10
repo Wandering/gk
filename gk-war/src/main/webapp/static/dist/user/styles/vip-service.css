@@ -764,7 +764,8 @@ a.next-btn:hover {
       .section .choose-pay-box .pay-box p {
         font-size: 14px;
         color: #606060;
-        margin-top: 31px; }
+        margin-top: 28px;
+        margin-bottom: 20px; }
       .section .choose-pay-box .pay-box .pay-money {
         color: #e24d39;
         font-size: 25px;
@@ -772,7 +773,7 @@ a.next-btn:hover {
       .section .choose-pay-box .pay-box .pay-ab {
         position: absolute;
         left: 150px;
-        bottom: 32px;
+        bottom: 20px;
         display: block; }
       .section .choose-pay-box .pay-box .input-box {
         position: relative;
