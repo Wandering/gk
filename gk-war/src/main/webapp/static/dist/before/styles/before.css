@@ -22,7 +22,7 @@
 ul.main-video-list {
   min-height: 520px;
   overflow: hidden;
-  width: 1200px; }
+  width: 1000px; }
   ul.main-video-list li.item {
     width: 233px;
     height: 520px;
@@ -43,7 +43,8 @@ ul.main-video-list {
       width: 233px;
       overflow: hidden;
       line-height: 22px;
-      font-size: 12px; }
+      font-size: 12px;
+      color: #787777; }
     ul.main-video-list li.item .txt {
       display: block;
       font-size: 12px;
@@ -53,8 +54,8 @@ ul.main-video-list {
       border: solid #e5e5e5;
       border-width: 1px 0;
       height: 198px;
-      padding: 18px 0 0;
-      margin: 15px 0; }
+      padding: 10px 0;
+      margin: 24px 0; }
     ul.main-video-list li.item .funs {
       overflow: hidden; }
       ul.main-video-list li.item .funs .btn {
@@ -336,6 +337,9 @@ ul.main-video-list {
       color: #333;
       text-align: center;
       margin: 5px 0; }
+    .school-eval .eval-left h6 {
+      font-weight: 200;
+      margin-bottom: 20px; }
   .school-eval .eval-right {
     width: 358px;
     float: right;
@@ -386,18 +390,19 @@ ul.main-video-list {
     .school-eval .eval-right .category {
       width: 100%; }
       .school-eval .eval-right .category span.t {
-        text-align: center;
+        text-align: left;
         float: left;
         position: relative;
-        top: 14px; }
+        top: 11px;
+        width: 100px;
+        display: inline-block; }
       .school-eval .eval-right .category .group-radio {
         overflow: hidden; }
         .school-eval .eval-right .category .group-radio label {
           float: left;
           width: 50%;
-          height: 30px;
-          position: relative;
-          top: 7px; }
+          height: 40px;
+          line-height: 40px; }
         .school-eval .eval-right .category .group-radio span {
           display: inline-block;
           width: 126px;
@@ -408,15 +413,14 @@ ul.main-video-list {
           height: 20px;
           position: relative;
           top: 5px; }
+      .school-eval .eval-right .category .pl {
+        padding-left: 0px; }
     .school-eval .eval-right .submit input {
       width: 100%;
       line-height: 46px;
       color: #fff;
       background-color: #e24333;
       border-radius: 4px; }
-
-.pl {
-  padding-left: 15px; }
 
 .evaluating-layer {
   left: 50%;

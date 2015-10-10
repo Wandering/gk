@@ -55,6 +55,10 @@ define(function (require) {
             });
     }
     getList();
+
+    $.get('/before/video/getVideoSectionDetail.do?videoSectionId=' + 45, function(data) {
+
+    });
     $('#episode-num').on('click', 'a', function () {
         $(this).addClass('active').siblings().removeClass('active');
         var fileurl = $(this).attr('fileurl');

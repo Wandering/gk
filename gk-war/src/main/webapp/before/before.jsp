@@ -25,25 +25,33 @@
 <div class="w1000 flow-main">
     <ul class="flow-main-list">
         <li class="item">
-            <img src="/static/dist/before/images/flow-img1.png" alt=""/>
+            <a target="_blank" href="/before/teacher-lecture.jsp?classifyType=1&searchV=">
+                <img src="/static/dist/before/images/flow-img1.png" alt=""/>
+            </a>
             <a target="_blank" href="/before/teacher-lecture.jsp?classifyType=1&searchV=" class="name">名师讲堂</a>
             <span class="num">1</span>
             <p class="txt">名师精品课程，全面剖析高考知识点以及提分技巧。</p>
         </li>
         <li class="item">
-            <img src="/static/dist/before/images/ztmj.png" alt=""/>
+            <a target="_blank" href="/before/exam.jsp?classifyType=3&searchV=">
+                <img src="/static/dist/before/images/ztmj.png" alt=""/>
+            </a>
             <a target="_blank" href="/before/exam.jsp?classifyType=3&searchV=" class="name">真题密卷</a>
             <span class="num">2</span>
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
         <li class="item">
-            <img src="/static/dist/before/images/gkxl.png" alt=""/>
+            <a target="_blank" href="/before/mentality.jsp?classifyType=2&searchV=">
+                <img src="/static/dist/before/images/gkxl.png" alt=""/>
+            </a>
             <a target="_blank" href="/before/mentality.jsp?classifyType=2&searchV=" class="name">高考心理</a>
             <span class="num">3</span>
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
         <li class="item">
-            <img src="/static/dist/before/images/yxtj.png" alt=""/>
+            <a href="javascript:;" id="volunteer-flow1">
+                <img src="/static/dist/before/images/yxtj.png" alt=""/>
+            </a>
             <a href="javascript:;" class="name" id="volunteer-flow">院校推荐</a>
             <span class="num">4</span>
             <p class="txt">根据分数快速定位院校及推荐院校</p>

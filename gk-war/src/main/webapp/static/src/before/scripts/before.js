@@ -3,6 +3,7 @@ define(function (require) {
     require('swiper');
     require('getTime');
     require('backToTop');
+    var pageEroorTip = require('pageErrorTip');
     // 切换tab
     $('.tabs-list').on('click', 'li', function () {
         $(this).addClass('active').siblings().removeClass('active');
@@ -58,7 +59,8 @@ define(function (require) {
             },
             function (result) {
                 if (result.rtnCode == "0800001") {
-                    $(obj).append('<p class="noContent">' + result.msg + '</p>').fadeIn(500);
+                    //$(obj).append('<p class="noContent">' + result.msg + '</p>').fadeIn(500);
+                    $(obj).append(pageEroorTip('暂时没有数据，请耐心等待哦')).fadeIn(500);
                 }
                 if (result.rtnCode == "0000000") {
 
@@ -129,7 +131,8 @@ define(function (require) {
             },
             function (result) {
                 if (result.rtnCode == "0800001") {
-                    $(obj).append('<p class="noContent">' + result.msg + '</p>').fadeIn(500);
+                    //$(obj).append('<p class="noContent">' + result.msg + '</p>').fadeIn(500);
+                    $(obj).append(pageEroorTip('暂时没有数据，请耐心等待哦')).fadeIn(500);
                 }
                 if (result.rtnCode == "0000000") {
                     var dataJson = result.bizData;
@@ -163,7 +166,7 @@ define(function (require) {
         $('.tansLayer,.evaluating-layer').hide();
     });
     // 院校推荐 锚点
-    $('#volunteer-flow').on('click', function () {
+    $('#volunteer-flow, #volunteer-flow1').on('click', function () {
         $('#main-volunteer-tabs li').eq(1).click();
         $('html,body').animate({scrollTop: ($('#main-volunteer-box').offset().top)}, 800);
     });

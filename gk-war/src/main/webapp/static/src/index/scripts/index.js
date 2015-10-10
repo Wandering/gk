@@ -4,6 +4,11 @@ define(function (require) {
     require('getTime');
     require('backToTop');
 
+    function GetCookie(sMainName, sSubName) {
+        var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
+        return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
+    }
+
     var url = 'http://' + window.location.host;
     $(function () {
         //在线互动
@@ -34,14 +39,24 @@ define(function (require) {
             //$('.tab-info').fadeOut();
             $('.tab-info').hide();
             $('.tab-info').eq(n).fadeIn(500);
-            (n == 1) ? (m.fadeOut()) : (m.fadeIn());
+            //(n == 1) ? (m.fadeOut()) : (m.fadeIn());
         });
         $('#hot-info').click(function () {
-            window.location.assign(url + '/consult/gk_hot.jsp')
+            var index = $('#tabs-hosts').find('li.active').index();
+            if (index == 0) {
+                window.location.assign(url + '/consult/gk_hot.jsp');
+            } else if(index == 1) {
+                if (!GetCookie("gkuser") || GetCookie("gkuser") == '""') {
+                    window.location.href = '/login/login.jsp';
+                } else {
+                    window.location.assign(url + '/user/vip-service.jsp');
+                }
+            }
         });
         $.get('/agent/getAgent.do', function (res) {
             if (res.rtnCode == '0000000') {
                 var dataJson = res.bizData;
+                dataJson.length > 9 ? dataJson.length = 9 : '';
                 var addressHtml = ''
                 $.each(dataJson, function (i, v) {
                     var address = v.address;
@@ -91,8 +106,8 @@ define(function (require) {
     (function () {
         var Question = {
             render: function (data) {
-                if (data.length > 5) {
-                    data.length = 5;
+                if (data.length > 3) {
+                    data.length = 3;
                 }
                 var html = [];
                 for (var i = 0, len = data.length; i < len; i++) {
@@ -132,6 +147,7 @@ define(function (require) {
                     + '<span class="fr">' + time + '</span>'
                     + '</div>'
                     + '<div class="detile-info mt20">'
+                    + '<img class="triangle" src="/static/dist/common/images/triangle.png" />'
                     + content.join('')
                     + '</div>'
                     + '</div>');

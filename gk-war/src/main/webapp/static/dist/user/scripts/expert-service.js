@@ -45,7 +45,7 @@ define(function (require) {
                 success: function (res) {
                     if (res.rtnCode == '0000000') {
                         if(res.bizData.length == '0'){
-                            $('.content-list').addClass('no-msg').html('对不起，暂无数据 ').fadeIn();
+                            $('.content-list').addClass('no-msg').html('<img src="/static/dist/common/images/no-data-logo.png" /><p class="ta">暂时没有数据，请耐心等待哦</p>').fadeIn();
                             //return false;
                         }
                         var template = '';
@@ -80,6 +80,16 @@ define(function (require) {
     pointList.btnSearch.click(function () {
         pointList.renderContainer.html('');
         pointList.getList(pointList.num, pointList.size, pointList.search.val());
+    });
+
+    $('#search').keydown(function(e) {
+        if (e.keyCode == 13) {
+            var search = $('#search').val();
+            if (search) {
+                pointList.renderContainer.html('');
+                pointList.getList(pointList.num, pointList.size, pointList.search.val());
+            }
+        }
     });
     ////搜索
     //pointList.search.keydown(function () {

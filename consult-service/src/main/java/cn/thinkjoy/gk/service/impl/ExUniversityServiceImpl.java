@@ -8,6 +8,7 @@ import cn.thinkjoy.gk.service.IExUniversityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,10 +57,13 @@ public class ExUniversityServiceImpl implements IExUniversityService {
     }
 
     @Override
-    public List<EnrollInfo> getEnrollInfoByYear(int i,String schoolCode) {
+    public List<EnrollInfo> getEnrollInfoByYear(Integer year,String schoolCode) {
+        Map<String, Object> params = new HashMap<>();
 
+        params.put("year",year);
+        params.put("code",schoolCode);
 
-        return iUniversityDAO.getEnrollInfoByYear(i,schoolCode);
+        return iUniversityDAO.getEnrollInfoByYear(params);
     }
 
     @Override
@@ -68,8 +72,15 @@ public class ExUniversityServiceImpl implements IExUniversityService {
     }
 
     @Override
-    public List<PlanInfo> getPlanInfosByYear(int i,String schoolCode,String batch) {
-        return iUniversityDAO.getPlanInfosByYear(i,schoolCode,batch);
+    public List<PlanInfo> getPlanInfosByYear(Integer year,String schoolCode,String batch) {
+
+        Map<String, Object> params = new HashMap<>();
+
+        params.put("year",year);
+        params.put("code",schoolCode);
+        params.put("batch",batch);
+
+        return iUniversityDAO.getPlanInfosByYear(params);
     }
 
     @Override

@@ -61,7 +61,7 @@
   position: relative;
   top: -35px;
   left: 50%;
-  margin-left: -30px;
+  margin-left: -20px;
 }
 
 .page-body {
@@ -251,6 +251,7 @@
 
   span.fr {
     font-size: 10px;
+    color:#999;
   }
 }
 
@@ -262,7 +263,7 @@
   line-height: 20px;
   border-radius: 10px;
   background-color: #626161;
-  color: #dedede;
+  color: #fff;
 }
 
 .detile-title {
@@ -273,13 +274,19 @@
 
 .detile-info {
   background-color: #f6f6f6;
-  padding: 10px;
+  padding: 20px;
   border: 1px solid #edecec;
   font-size: 12px;
   color: #727171;
+  position: relative;
   p{
     margin: 0;
-    line-height: 32px;
+    line-height: 24px;
+  }
+  img.triangle {
+    position: absolute;
+    top: -10px;
+    left: 20px;
   }
 }
 
@@ -306,6 +313,10 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        font-weight: 200;
+        a{
+          color: #333;
+        }
       }
       h6 {
         font-size: 12px;
@@ -320,15 +331,15 @@
     .icon {
       width: 48px;
       height: 48px;
-      background: #e24d39 url('../images/time-icon.png') no-repeat center 8px;
+      background: #e24d39 url('../images/time-icon.png') no-repeat center 7px;
       float: left;
-      margin-right: 5px;
+      margin-right: 14px;
 
       span {
         font-size: 10px;
         color: #fff;
         position: relative;
-        top: 28px;
+        top: 25px;
       }
     }
   }
@@ -401,4 +412,7 @@
 h6{
   font-weight: 100;
   font-size: 14px;
+}
+
+.sub-title {
 }

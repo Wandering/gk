@@ -48,7 +48,7 @@ define(function (require) {
             $('.avatar-box').show();
             $('.name').attr('value', personListData.name);
             $('.school').attr('value', personListData.schoolName);
-            $('.birthdayDate').attr('value', getTime(personListData.birthdayDate));
+            $('.birthdayDate').attr('value', personListData.birthdayDate ? getTime(personListData.birthdayDate) : '1970-01-01');
             $('.sex').attr('value', personListData.sex);
             $('.subject').attr('value', personListData.subjectType);
             $('.mail').attr('value', personListData.mail);
@@ -279,7 +279,7 @@ define(function (require) {
             $('.error-tips').text('用户名不能大于10个字').fadeIn();
             return false;
         }
-        if( name.length>20){
+        if( school.length>20){
             $('.error-tips').text('学校名不能大于20个字').fadeIn();
             return false;
         }

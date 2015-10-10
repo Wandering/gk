@@ -20,8 +20,8 @@ define(function (require) {
         } else {
             currentPsd.removeClass('error-bd').next().text('');
         }
-        if ($.trim(currentPsd.val()).length < 6) {
-            currentPsd.addClass('error-bd').next().text('密码输入有误，最少6位');
+        if ($.trim(currentPsd.val()).length < 16  && $.trim(currentPsd.val()).length > 6) {
+            currentPsd.addClass('error-bd').next().text('密码输入有误，6-16位');
             return
         }
         if (newPsd.val() == '') {
@@ -30,8 +30,8 @@ define(function (require) {
         } else {
             newPsd.removeClass('error-bd').next().text('');
         }
-        if ($.trim(newPsd.val()).length < 6) {
-            newPsd.addClass('error-bd').next().text('新输入有误，最少6位');
+        if ($.trim(newPsd.val()).length < 16 && $.trim(newPsd.val()).length > 6) {
+            newPsd.addClass('error-bd').next().text('新输入有误，6-16位');
             return
         }
         if (confirmPsd.val() == '') {
@@ -40,8 +40,8 @@ define(function (require) {
         } else {
             confirmPsd.removeClass('error-bd').next().text('');
         }
-        if ($.trim(confirmPsd.val()).length < 6) {
-            confirmPsd.addClass('error-bd').next().text('新输入有误，最少6位');
+        if ($.trim(confirmPsd.val()).length < 16 && $.trim(confirmPsd.val()).length > 6) {
+            confirmPsd.addClass('error-bd').next().text('新输入有误，6-16位');
             return
         }
         if ($.trim(confirmPsd.val()) != $.trim(newPsd.val())) {
