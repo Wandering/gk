@@ -460,6 +460,10 @@ define(function (require) {
         });
 
 
+        // 打印
+        $('#print-btn').on('click',function(){
+            window.print();
+        });
 
 
 
