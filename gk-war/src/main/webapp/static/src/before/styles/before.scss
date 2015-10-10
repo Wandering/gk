@@ -25,7 +25,7 @@
 ul.main-video-list {
   min-height: 520px;
   overflow: hidden;
-  width: 1000px;
+  width: 1200px;
   li.item {
     width: 233px;
     height: 520px;
@@ -964,4 +964,7 @@ section:last-child {
 
 .error-tips{
   margin-bottom: 10px;
+}
+.page-error-tip {
+  margin-left: -200px;
 }

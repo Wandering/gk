@@ -816,7 +816,6 @@ section:last-child {
     .section-article article p {
       width: 100%;
       line-height: 24px;
-      text-indent: 1cm;
       margin-top: 10px;
       font-size: 14px;
       color: #666;
@@ -826,7 +825,7 @@ section:last-child {
 
 .ask-list {
   width: 19%;
-  float: left; }
+  float: right; }
   .ask-list h3 {
     width: 95%;
     padding-left: 5%;

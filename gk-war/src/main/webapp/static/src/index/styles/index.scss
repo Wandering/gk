@@ -295,7 +295,7 @@
   width: 96%;
   margin-left: 2%;
   overflow: hidden;
-  padding-bottom: 40px;
+  //padding-bottom: 40px;
   li {
     float: left;
     width: 47%;
@@ -316,6 +316,9 @@
         font-weight: 200;
         a{
           color: #333;
+          &:hover {
+            color: #e24333;
+          }
         }
       }
       h6 {

@@ -66,8 +66,8 @@ define(function (require) {
 
                     var dataJson = result.bizData;
                     for (var i = 0; i < dataJson.length; i++) {
-                        var subjectName = dataJson[i].subjectName,
-                            teacherName = dataJson[i].teacherName,
+                        var subjectName = dataJson[i].subjectName || '',
+                            teacherName = dataJson[i].teacherName || '',
                             courseId = dataJson[i].courseId,
                             hit = dataJson[i].hit,
                             subcontent = dataJson[i].subcontent;
@@ -77,6 +77,11 @@ define(function (require) {
                             videoUrl = '/static/dist/common/images/video-default.png';
                         } else {
                             videoUrl = localhosts + dataJson[i].frontCover;
+                        }
+
+                        var tmpContent = subcontent;
+                        if (tmpContent.length > 150) {
+                            tmpContent = tmpContent.substring(0, 150) + '...';
                         }
                         var listMsgHtml = ''
                             + '<li class="item">'
@@ -88,7 +93,7 @@ define(function (require) {
                             + '<div class="num">'
                             + '<span class="fl">点击量:' + hit + '</span>'
                             + '</div>'
-                            + '<p class="txt">' + subcontent + '</p>'
+                            + '<p class="txt">' + tmpContent + '</p>'
                             + '<div class="funs">'
                             + '<a target="_blank" href="' + detailsUrl + '" class="btn">点击播放</a>'
                             + '</div>'
