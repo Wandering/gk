@@ -116,7 +116,7 @@ define(function(require) {
             var that = this;
 
             $.ajax({
-                type: 'post',
+                type: 'get',
                 url: '/university/getUniversityList.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
