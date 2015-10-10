@@ -5,13 +5,12 @@
 
     <select id="getWSUniversityDetail" resultType="UniversityDetailDto">
         SELECT a.code,a.name,a.subjection,a.type,b.lgPlanNumber planNum,b.lgEnrollNumber enrollNum,
-        b.lgLowestScore lowestScore ,b.lgLowestRank lowestRanking,b.lgAverageScore averageScore,b.lgAverageRank averageScoresRanking
-        ,c.name dictName
+        b.lgLowestScore lowestScore ,b.lgLowestRank lowestRanking,b.lgAverageScore averageScore,b.lgAverageRank averageScoresRanking,
+        (select c.name from gk_university_dict c where c.dictId = a.property and c.type = 'FEATURE' ) dictName
         FROM gk_university a
         left join gk_enroll_report b on a.code = b.universityCode
-        left join gk_university_dict c on c.dictId = a.property
         <where>
-            c.type = 'FEATURE'
+            1=1
             <if test="year!=null">
                 and b.year = #{year}
             </if>
@@ -26,13 +25,12 @@
 
     <select id="getLGUniversityDetail" resultType="UniversityDetailDto">
         SELECT a.code,a.name,a.subjection,a.type,b.lgPlanNumber planNum,b.lgEnrollNumber enrollNum,
-        b.lgLowestScore lowestScore ,b.lgLowestRank lowestRanking,b.lgAverageScore averageScore,b.lgAverageRank averageScoresRanking
-        ,c.name dictName
+        b.lgLowestScore lowestScore ,b.lgLowestRank lowestRanking,b.lgAverageScore averageScore,b.lgAverageRank averageScoresRanking,
+        (select c.name from gk_university_dict c where c.dictId = a.property and c.type = 'FEATURE' ) dictName
         FROM gk_university a
         left join gk_enroll_report b on a.code = b.universityCode
-        left join gk_university_dict c on c.dictId = a.property
         <where>
-            c.type = 'FEATURE'
+            1=1
             <if test="year!=null">
                 and b.year = #{year}
             </if>
