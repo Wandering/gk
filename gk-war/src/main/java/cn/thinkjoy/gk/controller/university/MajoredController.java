@@ -92,6 +92,18 @@ public class MajoredController extends BaseController {
             batchTypeDtos.add(batchTypeDto);
         }
         responseMap.put("batchType",batchTypeDtos);
+
+        List<String> years = new ArrayList<String>();
+
+        years.add("2010");
+        years.add("2011");
+        years.add("2012");
+        years.add("2013");
+        years.add("2014");
+        years.add("2015");
+
+        responseMap.put("years",years);
+
         return responseMap;
     }
 

@@ -107,6 +107,7 @@ define(function (require) {
                 //if ($(this).hasClass('active')) {
                 //    return;
                 //}
+                that.curPage = 1;
                 $(this).addClass('active').siblings().removeClass('active');
                 var id = $(this).attr('data-id');
                 if (id) {
@@ -142,6 +143,7 @@ define(function (require) {
                 //if ($(this).hasClass('active')) {
                 //    return;
                 //}
+                that.curPage = 1;
                 $(this).addClass('active').siblings().removeClass('active');
                 var id = $(this).attr('data-id');
                 $('#profession').html('');
@@ -169,7 +171,7 @@ define(function (require) {
                 //    that.getProfession(1);
                 //    return;
                 //}
-
+                that.curPage = 1;
                 $(this).addClass('active').siblings().removeClass('active');
                 that.getProfession(1);
             });

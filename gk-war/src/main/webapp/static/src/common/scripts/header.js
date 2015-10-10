@@ -24,6 +24,7 @@ define(function (require) {
                 $('.index').addClass('active');
                 break;
             case 'guide.jsp':
+            case 'volunteer_forum.jsp':
                 $('.guide').addClass('active');
                 break;
             case 'gk_hot.jsp':
