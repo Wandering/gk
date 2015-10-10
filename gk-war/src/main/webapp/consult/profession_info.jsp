@@ -30,6 +30,11 @@
         </div>
 
         <ul class="select-option">
+            <li class="lable">年份 ：</li>
+            <li class="options" id="year">
+            </li>
+        </ul>
+        <ul class="select-option">
             <li class="lable">批次：</li>
             <li class="options" id="batch">
             </li>
