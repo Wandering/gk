@@ -718,6 +718,13 @@ a.next-btn:hover {
   _top: expression(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight);
   background: #494848 url("../../common/images/icon-top.png") no-repeat center center; }
 
+.page-error-tip {
+  text-align: center;
+  padding: 10px 0; }
+  .page-error-tip p {
+    font-size: 16px;
+    color: #b0b0b0; }
+
 * {
   margin: 0;
   padding: 0; }
@@ -788,8 +795,8 @@ section:last-child {
   height: 20px;
   font-size: 16px; }
   .detile-header span.fr {
-    color: #b7b6b6;
-    font-size: 12px; }
+    color: #999;
+    font-size: 10px; }
 
 .order-number {
   display: inline-block;

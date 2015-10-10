@@ -49,7 +49,7 @@
             <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
         </li>
         <li class="item">
-            <a href="javascript:;" class="name" id="volunteer-flow1">
+            <a href="javascript:;" id="volunteer-flow1">
                 <img src="/static/dist/before/images/yxtj.png" alt=""/>
             </a>
             <a href="javascript:;" class="name" id="volunteer-flow">院校推荐</a>
