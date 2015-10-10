@@ -144,7 +144,7 @@ public class MajoredController extends BaseController {
      *获取专业基本信息
      * @return
      */
-    @RequestMapping(value = "/getMajoredInfo",method = RequestMethod.POST)
+    @RequestMapping(value = "/getMajoredInfo",method = RequestMethod.GET)
     @ResponseBody
     public MajoredDto getMajoredInfo(){
         MajoredDto majoredDto=new MajoredDto();
