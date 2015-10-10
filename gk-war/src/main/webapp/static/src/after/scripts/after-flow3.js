@@ -206,7 +206,7 @@ define(function (require) {
                             var id = v.id;
                             var tbody = ''
                                 + '<tr>'
-                                + '<td><input type="radio" name="" id=""/> '+ name +'</td>'
+                                + '<td align="left"><input type="radio" name="" id=""/> '+ name +'</td>'
                                 + '<td>'+ m_batch +'</td>'
                                 + '<td>'+ subject +'</td>'
                                 + '<td></td>'
