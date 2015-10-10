@@ -16,6 +16,8 @@ define(function (require) {
 
 
         var paramsJson = JSON.parse(params);
+
+        console.log(paramsJson.m_kelei)
         var params1 = {
             "m_candidateNumber": "0",
             "m_aggregateScore": 390,
@@ -29,6 +31,7 @@ define(function (require) {
             "m_specialty_name": "",
             "m_favorites_by_university_codes": ""
         };
+
 
 
         function getSchool(paramsJson, m_province, m_specialty_name) {
@@ -205,6 +208,7 @@ define(function (require) {
                         $('#specialty-content').html('');
                         $('#specialty-layer,.tansLayer').show();
                         $.each(data, function (i, v) {
+                            var specialtyTotal = data.length;
                             var name = v.name;
                             var subject = v.subject;
                             var schoolLength = v.schoolLength;
@@ -213,7 +217,7 @@ define(function (require) {
                             var id = v.id;
                             var tbody = ''
                                 + '<tr>'
-                                + '<td class="tl"><label id="' + boxId + '" name="'+ name +'" index="' + index + '"><input type="radio" name="schoolType" id=""/> ' + name + '</label></td>'
+                                + '<td class="tl"><label id="' + boxId + '" name="'+ name +'" index="' + index + '" specialtyTotal="'+ specialtyTotal +'"><input type="radio" name="schoolType" id=""/> ' + name + '</label></td>'
                                 + '<td>' + m_batch + '</td>'
                                 + '<td>' + subject + '</td>'
                                 + '<td>' + planNum + '</td>'
@@ -246,22 +250,22 @@ define(function (require) {
 
         // 下一步
         $('#volunteer-flow3-btn').on('click',function(){
-            //if($('#result-info1').text()==""){
-            //    $('.error-tips2').text("请在A志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if($('#result-info2').text()==""){
-            //    $('.error-tips2').text("请在B志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if($('#result-info3').text()==""){
-            //    $('.error-tips2').text("请在C志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if($('#result-info4').text()==""){
-            //    $('.error-tips2').text("请在D志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
+            if($('#result-info1').text()==""){
+                $('.error-tips2').text("请在A志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if($('#result-info2').text()==""){
+                $('.error-tips2').text("请在B志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if($('#result-info3').text()==""){
+                $('.error-tips2').text("请在C志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if($('#result-info4').text()==""){
+                $('.error-tips2').text("请在D志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
             $('#main1').hide();
             $('#main2').show();
             $('#print-result-info1').html($('#result-info1').html()).prepend('<p>'+$('input[type="text"][dataType="1"]').val()+'</p>');
@@ -331,26 +335,61 @@ define(function (require) {
                     "m_batch": m_batch
                 };
 
+            var typeT = '';
+            var type = paramsJson.m_kelei;
+            if(type=="文史"){
+                typeT=0;
+            }else{
+                typeT=1;
+            }
+            var m_batch = paramsJson.m_batch;
             var params = {
                 "data":data,
                 "related":related
-            }
+            };
             $.ajax({
                 url: '/guide/report.do',
                 type: 'GET',
                 dataType: 'JSON',
                 data: {
-                    params: JSON.stringify(params)
+                    params: JSON.stringify(params),
+                    type:typeT,
+                    year:2014,
+                    batch:m_batch
                 },
                 success: function (res) {
                     console.log(res);
 
                     if (res.rtnCode == "0000000") {
-
+                        var dataJson = $.parseJSON(res.bizData).report;
+                        console.log(dataJson);
+                        var description = dataJson.description;
+                        $('#eva').text(description);
+                        console.log(dataJson.data.length)
+                        //$.each(dataJson.data,function(i,v){
+                        //    console.log(v.m_university_name)
+                        //    //var schoolListColHtml = '<div class="col-list">'+ v.m_university_name +'</div>';
+                        //    //$('.school-list-col').append(schoolListColHtml);
+                        //})
                     }
 
                 }
             });
+
+
+            // 是否调剂专业
+            $.each($('.isFunRadio'),function(i,v){
+                var isF = '';
+                var isFt = $(v).text();
+                if(isFt=="是"){
+                    isF += "志愿专业服从调剂";
+                }else{
+                    isF += "志愿专业不服从调剂";
+                }
+                var schoolListColHtml = '<div class="col-list col-list2">'+ isF +'</div>';
+                $('#exchange').append(schoolListColHtml);
+            })
+
 
 
 

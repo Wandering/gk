@@ -4,15 +4,19 @@ import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.controller.appraisal.bean.AppraisalBean;
 import cn.thinkjoy.gk.controller.volunteer.bean.ReportBean;
+import cn.thinkjoy.gk.pojo.UniversityDetailDto;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.service.IUniversityExService;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
 import cn.thinkjoy.gk.util.VerificationKeyConst;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -30,6 +36,9 @@ import java.util.Map;
 public class GuideController extends BaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(GuideController.class);
+
+    @Autowired
+    private IUniversityExService universityExService;
 
     /**
      * 获取批次
@@ -208,7 +217,10 @@ public class GuideController extends BaseController {
      */
     @RequestMapping(value = "/report",method = RequestMethod.GET)
     @ResponseBody
-    public String report(@RequestParam(value="params",required=false) String params) throws Exception{
+    public String report(@RequestParam(value="params",required=false) String params,
+                         @RequestParam(value="type",required=false) Integer type,
+                         @RequestParam(value="year",required=false) Integer year,
+                         @RequestParam(value="batch",required=false) String batch) throws Exception{
 
         if(StringUtils.isEmpty(params)){
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
@@ -226,7 +238,7 @@ public class GuideController extends BaseController {
             throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
         }
 
-        StringBuffer returnStr = new StringBuffer("");
+        JSONObject resultObj = new JSONObject();
 
         try {
 
@@ -243,12 +255,45 @@ public class GuideController extends BaseController {
                 throw new BizException(ERRORCODE.FAIL.getCode(),obj.getString("info"));
             }
 
-            returnStr.append(obj.toJSONString().replace("\\", ""));
+            resultObj.put("report", obj);
 
         } catch (Exception e) {
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
         }
-        return returnStr.toString();
+
+        JSONObject obj = JSON.parseObject(params);
+
+        JSONArray data = obj.getJSONArray("data");
+
+        List<String> codes = new ArrayList<>();
+        for(int i=0;i<data.size();i++){
+            codes.add(data.getJSONObject(i).getString("m_university_code"));
+        }
+
+        List<UniversityDetailDto> universityDetailDtos =universityExService.getUniversityDetailByCodes(codes,batch,type,year);
+
+        Map<String,String> enrollMap = new HashMap<>();
+
+        for(UniversityDetailDto universityDetailDto :universityDetailDtos){
+            int enrollNum = universityDetailDto.getEnrollNum();
+
+            int planNum = universityDetailDto.getPlanNum();
+
+            int num = enrollNum-planNum;
+
+            if(num>0){
+                universityDetailDto.setEnrollIntro("实际招生超过计划招生数!");
+            }else if(num==0){
+                universityDetailDto.setEnrollIntro("实际招生和计划招生数相等!");
+            }else{
+                universityDetailDto.setEnrollIntro("计划招生超过实际招生数!");
+            }
+
+            enrollMap.put(universityDetailDto.getName(),universityDetailDto.getEnrollIntro());
+        }
+
+        resultObj.put("enroll",enrollMap);
+        return JSON.toJSONString(resultObj);
     }
 
 //
