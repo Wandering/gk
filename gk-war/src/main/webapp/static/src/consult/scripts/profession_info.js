@@ -50,6 +50,9 @@ define(function (require) {
             this.addEventForClassify();
             this.getProfession(1);
         },
+        getYear: function() {
+
+        },
         getClassify: function(id) {
             var i = 0, len = this.data.length;
             var arry = {};
@@ -227,6 +230,7 @@ define(function (require) {
                     subjectTypeName:subjectTypeName,
                     majoredTypeId:majoredTypeId,
                     majoredTypeName:majoredTypeName,
+                    year: year,
                     pageSize:10,
                     pageNo:pageNo,
                     searchName:search
