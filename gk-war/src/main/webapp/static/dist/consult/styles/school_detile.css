@@ -775,7 +775,6 @@ h1 {
   text-align: right;
   margin-top: 10px; }
   #category button, #select_batch button {
-    width: 64px;
     height: 30px;
     text-align: center;
     line-height: 30px;
@@ -786,7 +785,8 @@ h1 {
     border: none;
     outline: none;
     border-radius: 5px;
-    margin-right: 10px; }
+    margin-right: 10px;
+    padding: 0px 20px; }
     #category button.active, #select_batch button.active {
       background-color: #f0ad4e; }
 

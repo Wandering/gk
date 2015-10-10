@@ -7,7 +7,11 @@ define(function (require) {
         paginationClickable: true,
         nextButton: '.swiper-button-next',
         prevButton: '.swiper-button-prev',
-        loop: true
+        loop: true,
+        //speed:500,
+        startSlide: 4,  //起始图片切换的索引位置
+        autoplay: 5000, //设置自动切换时间，单位毫秒
+        continuous: true
     });
     //banner
     $.ajax({

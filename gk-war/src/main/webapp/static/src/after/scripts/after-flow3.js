@@ -16,8 +16,6 @@ define(function (require) {
 
 
         var paramsJson = JSON.parse(params);
-
-        console.log(paramsJson.m_kelei)
         var params1 = {
             "m_candidateNumber": "0",
             "m_aggregateScore": 390,
@@ -236,8 +234,9 @@ define(function (require) {
             var Eid = $(this).attr('id');
             var index = $(this).attr('index');
             var name = $(this).attr('name');
-            console.log(Eid + "=" + name)
-            $('#'+Eid +' li:eq('+ index +')').find('input').val(name);
+            console.log(Eid + "=" + name);
+            var specialtyTotalN = $(this).attr('specialtyTotal')
+            $('#'+Eid +' li:eq('+ index +')').find('input').val(name).attr({'specialtyTotalN':specialtyTotalN}).addClass('write');
             $('#specialty-layer,.tansLayer').hide();
 
         });
@@ -250,34 +249,49 @@ define(function (require) {
 
         // 下一步
         $('#volunteer-flow3-btn').on('click',function(){
-            if($('#result-info1').text()==""){
-                $('.error-tips2').text("请在A志愿中选择学校").fadeIn(1000).fadeOut(1000);
-                return false;
-            }
-            if($('#result-info2').text()==""){
-                $('.error-tips2').text("请在B志愿中选择学校").fadeIn(1000).fadeOut(1000);
-                return false;
-            }
-            if($('#result-info3').text()==""){
-                $('.error-tips2').text("请在C志愿中选择学校").fadeIn(1000).fadeOut(1000);
-                return false;
-            }
-            if($('#result-info4').text()==""){
-                $('.error-tips2').text("请在D志愿中选择学校").fadeIn(1000).fadeOut(1000);
-                return false;
-            }
+            //if($('#result-info1').text()==""){
+            //    $('.error-tips2').text("请在A志愿中选择学校").fadeIn(1000).fadeOut(1000);
+            //    return false;
+            //}
+            //if($('#result-info2').text()==""){
+            //    $('.error-tips2').text("请在B志愿中选择学校").fadeIn(1000).fadeOut(1000);
+            //    return false;
+            //}
+            //if($('#result-info3').text()==""){
+            //    $('.error-tips2').text("请在C志愿中选择学校").fadeIn(1000).fadeOut(1000);
+            //    return false;
+            //}
+            //if($('#result-info4').text()==""){
+            //    $('.error-tips2').text("请在D志愿中选择学校").fadeIn(1000).fadeOut(1000);
+            //    return false;
+            //}
             $('#main1').hide();
             $('#main2').show();
+            // 学校信息
             $('#print-result-info1').html($('#result-info1').html()).prepend('<p>'+$('input[type="text"][dataType="1"]').val()+'</p>');
             $('#print-result-info2').html($('#result-info2').html()).prepend('<p>'+$('input[type="text"][dataType="2"]').val()+'</p>');
             $('#print-result-info3').html($('#result-info3').html()).prepend('<p>'+$('input[type="text"][dataType="3"]').val()+'</p>');
             $('#print-result-info4').html($('#result-info4').html()).prepend('<p>'+$('input[type="text"][dataType="4"]').val()+'</p>');
+            // 专业信息
             function getSpecialtyList(n){
                 $('#specialty-list-info'+n).html('');
                 $.each($('#specialty'+n).find('input'),function(i,v){
                     var specialtyListInfo ='<p>'+ (i+1) + '.' + $(v).val() +'</p>';
-                    console.log((i+1) + "." + $(v).val());
+                    //console.log((i+1) + "." + $(v).val());
                     $('#specialty-list-info'+n).append(specialtyListInfo)
+                });
+                $.each($('#specialty'+n),function(i,v){
+                    //console.log($(this).find('input').attr('specialtytotaln'))
+                    //console.log($(this).find('input.write').length)
+                    var specialtytotaln = $(this).find('input').attr('specialtytotaln');
+                    var specialtyLength = $(this).find('input.write').length;
+                    console.log(specialtytotaln + "--" + specialtyLength)
+
+                    if(specialtyLength==0){
+                        var schoolListColHtml = '<div class="col-list col-list2">志愿专业填写不完整</div>';
+                        $('#integrity').append(schoolListColHtml);
+                    }
+
                 })
             }
             getSpecialtyList(1);
@@ -358,19 +372,19 @@ define(function (require) {
                     batch:m_batch
                 },
                 success: function (res) {
-                    console.log(res);
+                    //console.log(res);
 
                     if (res.rtnCode == "0000000") {
                         var dataJson = $.parseJSON(res.bizData).report;
-                        console.log(dataJson);
+                        //console.log(dataJson);
                         var description = dataJson.description;
                         $('#eva').text(description);
-                        console.log(dataJson.data.length)
-                        //$.each(dataJson.data,function(i,v){
-                        //    console.log(v.m_university_name)
-                        //    //var schoolListColHtml = '<div class="col-list">'+ v.m_university_name +'</div>';
-                        //    //$('.school-list-col').append(schoolListColHtml);
-                        //})
+                        //console.log(dataJson.data.length);
+                        $.each(dataJson.data,function(i,v){
+                            //console.log(v.m_university_name)
+                            var schoolListColHtml = '<div class="col-list">'+ v.m_university_name +'</div>';
+                            $('.school-list-col').append(schoolListColHtml);
+                        })
                     }
 
                 }
