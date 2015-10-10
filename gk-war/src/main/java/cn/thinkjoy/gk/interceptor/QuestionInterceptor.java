@@ -42,7 +42,6 @@ public class QuestionInterceptor extends HandlerInterceptorAdapter {
 
 	public QuestionInterceptor() { }
 
-
     @Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		String url = request.getServletPath();
