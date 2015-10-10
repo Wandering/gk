@@ -57,7 +57,7 @@ define(function (require) {
                             $('.school-list').hide();
                         }
 
-                        console.log(data);
+                        //console.log(data);
 
                         var m_keleiType = '';
                         //console.log(data.related.m_kelei)
@@ -68,8 +68,8 @@ define(function (require) {
                         }
 
                         var datatypeId = $('#volunteer-flow3-layer').attr('datatype');
-                        console.log(datatypeId)
 
+                        $('.school-list').html('');
                         $.each(listData.data, function (i, v) {
                             if (listData.data[i].data.length == 0) {
                                 $('.no-school').show();
@@ -82,7 +82,7 @@ define(function (require) {
                                     var schoolListHtml = ''
                                         + '<div>'
                                         + '<span class="fl"><a target="_blank" href="/consult/school_detile.jsp?id=' + m.m_university_code + '&batch=' + m_batch_id + '" id="' + m.m_university_code + '">' + m.m_university_name + '</a></span>'
-                                        + '<span class="fr selSchool" datatypeId="' + datatypeId + '" id="' + m.m_university_code + '" type = "' + m_keleiType + '" m_batch="' + m_batch + '">选择</span>'
+                                        + '<span class="fr selSchool" datatypeId="' + datatypeId + '" m_university_name="' + m.m_university_name + '" id="' + m.m_university_code + '" type = "' + m_keleiType + '" m_batch="' + m_batch + '">选择</span>'
                                         + '</div>';
                                     $('#school-list' + i).append(schoolListHtml);
                                 })
@@ -120,8 +120,22 @@ define(function (require) {
             var type = $(this).attr('type');
             var m_batch = $(this).attr('m_batch');
             var datatypeid = $(this).attr('datatypeid');
+            var m_university_name = $(this).attr('m_university_name');
             var years = 2014;
-            console.log(code + "=" + type + "==" + m_batch);
+            //console.log($(this).parents('.school-list').attr('dataType'))
+            var star = '';
+            var starType = $(this).parents('.school-list').attr('dataType');
+            if (starType == "A") {
+                star = '★';
+            } else if (starType == "B") {
+                star = '★★';
+            } else if (starType == "C") {
+                star = '★★★';
+            } else {
+                star = '★★★★';
+            }
+            //console.log(code + "=" + type + "==" + m_batch);
+            //console.log(star);
             $.ajax({
                 url: '/university/universityDetail.do',
                 type: 'GET',
@@ -135,7 +149,7 @@ define(function (require) {
                 success: function (res) {
                     console.log(res);
                     var data = res.bizData;
-                    if ('0000000' === result.rtnCode) {
+                    if ('0000000' === res.rtnCode) {
                         var dicName = '';
                         if (data.dictName) {
                             dicName = data.dictName;
@@ -151,17 +165,20 @@ define(function (require) {
                             + '2014年录取平均分：' + data.averageScore + ' <br/>'
                             + '2014年平均分位次：' + data.averageScoresRanking + ' <br/>'
                             + '历年招生情况：' + data.enrollIntro + ' <br/>'
-                            + '录取指数：★★'
+                            + '录取指数：' + star
                             + '</p>';
+                        $('.open-flow3[type="text"][dataType="' + datatypeid + '"]').val(m_university_name);
                         $('#result-info' + datatypeid).html(infoHtml);
-                        $('#specialty' + datatypeid).show().attr({'m_batch':m_batch,'code':code});
+                        $('#specialty' + datatypeid).show().attr({'m_batch': m_batch, 'code': code, 'year': years});
+                        $('#volunteer-flow3-layer,.tansLayer').hide();
+                        $('#tips' + datatypeid).hide();
                     }
                 }
             });
         });
 
         // 获取专业
-        $('.specialty').on('click','.specialty-click',function(){
+        $('.specialty').on('click', '.specialty-click', function () {
             var parents = $(this).parents('.specialty');
             var m_batch = parents.attr('m_batch');
             var code = parents.attr('code');
@@ -178,18 +195,35 @@ define(function (require) {
                 },
                 success: function (res) {
                     console.log(res);
-                    //var data = res.bizData;
-                    //if ('0000000' === result.rtnCode) {
-                    //}
+                    var data = res.bizData;
+                    if ('0000000' === res.rtnCode) {
+                        $('#specialty-layer,.tansLayer').show();
+                        $.each(data, function (i, v) {
+                            var name = v.name;
+                            var subject = v.subject;
+                            var schoolLength = v.schoolLength;
+                            var feeStandard = v.feeStandard;
+                            var id = v.id;
+                            var tbody = ''
+                                + '<tr>'
+                                + '<td><input type="radio" name="" id=""/> '+ name +'</td>'
+                                + '<td>'+ m_batch +'</td>'
+                                + '<td>'+ subject +'</td>'
+                                + '<td></td>'
+                                + '<td>'+ schoolLength +'</td>'
+                                + '<td>'+ feeStandard +'</td>'
+                                + '</tr>';
+
+                            $('#specialty-content').append(tbody)
+                        });
+                    }
                 }
             });
 
         });
-        $('#specialty-layer').on('click','.close-btn',function(){
+        $('#specialty-layer').on('click', '.close-btn', function () {
             $('#specialty-layer,.tansLayer').hide();
         });
-
-
 
 
     })
