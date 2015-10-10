@@ -58,17 +58,12 @@ define(function (require) {
                             $('.no-school').show();
                             $('.school-list').hide();
                         }
-
-                        //console.log(data);
-
                         var m_keleiType = '';
-                        //console.log(data.related.m_kelei)
                         if (data.related.m_kelei == "文史") {
                             m_keleiType = 0;
                         } else if (data.related.m_kelei == "理工") {
                             m_keleiType = 1;
                         }
-
                         var datatypeId = $('#volunteer-flow3-layer').attr('datatype');
 
                         $('.school-list').html('');
@@ -113,7 +108,7 @@ define(function (require) {
         $('#specialty-search-btn').on('click', function () {
             var specialtyV = $('#specialty-input').val().trim();
             var provinceV = $("#province-list option:selected").val();
-            getSchool(params1, provinceV, specialtyV);
+            getSchool(paramsJson, provinceV, specialtyV);
         });
 
         // 选择学校
@@ -458,12 +453,9 @@ define(function (require) {
                 $('#subjectTypeT').text(subjectTypeT);
             }
         });
-
-
-
-
-
-
-
+        // 打印
+        $('#print-btn').on('click',function(){
+            window.print();
+        });
     })
 });
