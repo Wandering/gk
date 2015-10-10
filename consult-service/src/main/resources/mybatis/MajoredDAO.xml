@@ -12,7 +12,7 @@
         select b.majoredId as code,b.majoredName as name,b.enrollNumber as planNumber,
          b.schoolLength,b.foreignLanguage as foreginLanguage,b.feeStandard,b.universityCode,b.universityName
 
-         from gk_majored a  left join gk_enroll_plan  b  on a.id=b.majoredId  where 1=1 and b.year='2015'
+         from gk_majored a  left join gk_enroll_plan  b  on a.id=b.majoredId  where 1=1
         <if test="condition.subjectTypeName!=null and condition.subjectTypeName!=''">
 
              and a.subjectType=#{condition.subjectTypeName}
@@ -36,7 +36,7 @@
 
     <select id="searchMajoredCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         select count(*)
-        from gk_majored a  left join gk_enroll_plan  b  on a.id=b.majoredId  where 1=1 and b.year='2015'
+        from gk_majored a  left join gk_enroll_plan  b  on a.id=b.majoredId  where 1=1
         <if test="condition.subjectTypeName!=null and condition.subjectTypeName!=''">
 
             and a.subjectType =#{condition.subjectTypeName}
