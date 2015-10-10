@@ -149,7 +149,7 @@ define(function (require) {
                     batch: m_batch
                 },
                 success: function (res) {
-                    console.log(res);
+                    //console.log(res);
                     var data = res.bizData;
                     if ('0000000' === res.rtnCode) {
                         var dicName = '';
@@ -372,7 +372,7 @@ define(function (require) {
                     batch:m_batch
                 },
                 success: function (res) {
-                    //console.log(res);
+                    console.log(res);
 
                     if (res.rtnCode == "0000000") {
                         var dataJson = $.parseJSON(res.bizData).report;
@@ -385,6 +385,10 @@ define(function (require) {
                             var schoolListColHtml = '<div class="col-list">'+ v.m_university_name +'</div>';
                             $('.school-list-col').append(schoolListColHtml);
                         })
+
+                        var dataEnroll =$.parseJSON(res.bizData).enroll;
+                        console.log(dataEnroll)
+
                     }
 
                 }
