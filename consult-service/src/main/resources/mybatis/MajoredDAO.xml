@@ -15,8 +15,8 @@
         <if test="condition.subjectTypeName!=null and condition.subjectTypeName!=''">
              and a.subjectType=#{condition.subjectTypeName}
         </if>
-        <if test="condition.year!=null and condition.year!=''">
-            and b.year=#{year}
+        <if test="condition.year!=null">
+            and b.year=#{condition.year}
         </if>
         <if test="condition.majoredTypeName!=null and condition.majoredTypeName!=''">
             and a.majoredType=#{condition.majoredTypeName}
@@ -31,17 +31,12 @@
     </select>
 
     <select id="searchMajoredCount" parameterType="java.util.Map" resultType="java.lang.Integer">
-        select count(*)
-        from gk_majored a  left join gk_enroll_plan  b  on a.id=b.majoredId  where 1=1
-        <if test="condition.subjectTypeName!=null and condition.subjectTypeName!=''">
-
+        select count(a.id) from gk_majored a  left join gk_enroll_plan  b  on a.id=b.majoredId  where 1=1
+            <if test="condition.subjectTypeName!=null and condition.subjectTypeName!=''">
             and a.subjectType =#{condition.subjectTypeName}
-
         </if>
-        <if test="condition.year!=null and condition.year!=''">
-
-            and b.year=#{year}
-
+        <if test="condition.year!=null">
+            and b.year=#{condition.year}
         </if>
         <if test="condition.majoredTypeName!=null and condition.majoredTypeName!=''">
             and a.majoredType=#{condition.majoredTypeName}

@@ -112,7 +112,7 @@ public class UniversityController extends BaseController {
      * @param universityQuery
      * @return
      */
-    @RequestMapping(value = "/getUniversityList",method = RequestMethod.POST)
+    @RequestMapping(value = "/getUniversityList",method = RequestMethod.GET)
     @ResponseBody
     public Page<UniversityDto> getUniversityList(UniversityQuery universityQuery){
         Page<UniversityDto> page=new Page<>();
@@ -190,7 +190,7 @@ public class UniversityController extends BaseController {
      * 获取大学详情
      * @return
      */
-    @RequestMapping(value = "/getUniversityDetail",method = RequestMethod.POST)
+    @RequestMapping(value = "/getUniversityDetail",method = RequestMethod.GET)
     @ResponseBody
     public UniversityDto getUniversityDetail(){
         UniversityDto universityDto=new UniversityDto();
@@ -204,7 +204,7 @@ public class UniversityController extends BaseController {
      * 获取院校招生情况
      * @return
      */
-    @RequestMapping(value = "/getEnrollInfo",method = RequestMethod.POST)
+    @RequestMapping(value = "/getEnrollInfo",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> getEnrollInfo(){
         String schoolCode=request.getParameter("code");
@@ -228,7 +228,7 @@ public class UniversityController extends BaseController {
      *获取院校招生情况
      * @return
      */
-    @RequestMapping(value = "/getEnrollPlan",method = RequestMethod.POST)
+    @RequestMapping(value = "/getEnrollPlan",method = RequestMethod.GET)
     @ResponseBody
     public EntrollPlanDto getEnrollPlan(){
         String schoolCode=request.getParameter("code");

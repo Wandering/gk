@@ -112,23 +112,39 @@ public class MajoredController extends BaseController {
      * @param query
      * @return
      */
-    @RequestMapping(value = "/searchMajored",method = RequestMethod.POST)
+    @RequestMapping(value = "/searchMajored",method = RequestMethod.GET)
     @ResponseBody
-    public Page<SubjectDto> searchMajored(MajoredQuery query){
-        Page<SubjectDto> page=new Page<>();
+    public List<SubjectDto> searchMajored(MajoredQuery query){
+//        Page<SubjectDto> page=new Page<>();
         query.setPageNo((query.getPageNo()-1)*query.getPageSize());
-         List<SubjectDto> majoredDtos= iMajoredService.searchMajored(query);
-        Integer count=iMajoredService.searchMajoredCount(query);
-        page.setCount(count);
-        page.setList(majoredDtos);
-        return  page;
+        List<SubjectDto> majoredDtos= iMajoredService.searchMajored(query);
+//        page.setList(majoredDtos);
+        return  majoredDtos;
     }
+
+    /**
+     * 搜索专业信息
+     * @param query
+     * @return
+     */
+    @RequestMapping(value = "/searchMajoredCount",method = RequestMethod.GET)
+    @ResponseBody
+    public Integer searchMajoredCount(MajoredQuery query){
+//        Page<SubjectDto> page=new Page<>();
+//        query.setPageNo((query.getPageNo()-1)*query.getPageSize());
+        Integer count=iMajoredService.searchMajoredCount(query);
+//        page.setCount(count);
+        return  count;
+    }
+
+
+
 
     /**
      *获取专业基本信息
      * @return
      */
-    @RequestMapping(value = "/getMajoredInfo",method = RequestMethod.POST)
+    @RequestMapping(value = "/getMajoredInfo",method = RequestMethod.GET)
     @ResponseBody
     public MajoredDto getMajoredInfo(){
         MajoredDto majoredDto=new MajoredDto();
@@ -141,7 +157,7 @@ public class MajoredController extends BaseController {
      * 获取专业详细信息
      * @return
      */
-    @RequestMapping(value = "/getMajoredDetail",method = RequestMethod.POST)
+    @RequestMapping(value = "/getMajoredDetail",method = RequestMethod.GET)
     @ResponseBody
     public MajoredDetailDto getMajoredDetail(){
         MajoredDetailDto majoredDetailDto=new MajoredDetailDto();
