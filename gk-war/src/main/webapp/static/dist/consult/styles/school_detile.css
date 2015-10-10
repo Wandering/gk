@@ -1035,6 +1035,11 @@ h1 {
         .info-content .info ul li span {
           font-size: 28px;
           color: #eea236; }
+        .info-content .info ul li a.website {
+          text-decoration: underline;
+          color: #0000AA; }
+        .info-content .info ul li a.website:hover {
+          color: #e24333; }
         .info-content .info ul li.school-name {
           font-size: 30px;
           color: #444;
