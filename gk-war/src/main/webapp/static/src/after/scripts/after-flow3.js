@@ -16,6 +16,8 @@ define(function (require) {
 
 
         var paramsJson = JSON.parse(params);
+
+        console.log(paramsJson.m_kelei)
         var params1 = {
             "m_candidateNumber": "0",
             "m_aggregateScore": 390,
@@ -29,6 +31,7 @@ define(function (require) {
             "m_specialty_name": "",
             "m_favorites_by_university_codes": ""
         };
+
 
 
         function getSchool(paramsJson, m_province, m_specialty_name) {
@@ -205,6 +208,7 @@ define(function (require) {
                         $('#specialty-content').html('');
                         $('#specialty-layer,.tansLayer').show();
                         $.each(data, function (i, v) {
+                            var specialtyTotal = data.length;
                             var name = v.name;
                             var subject = v.subject;
                             var schoolLength = v.schoolLength;
@@ -213,7 +217,7 @@ define(function (require) {
                             var id = v.id;
                             var tbody = ''
                                 + '<tr>'
-                                + '<td class="tl"><label id="' + boxId + '" name="'+ name +'" index="' + index + '"><input type="radio" name="schoolType" id=""/> ' + name + '</label></td>'
+                                + '<td class="tl"><label id="' + boxId + '" name="'+ name +'" index="' + index + '" specialtyTotal="'+ specialtyTotal +'"><input type="radio" name="schoolType" id=""/> ' + name + '</label></td>'
                                 + '<td>' + m_batch + '</td>'
                                 + '<td>' + subject + '</td>'
                                 + '<td>' + planNum + '</td>'
@@ -331,29 +335,42 @@ define(function (require) {
                     "m_batch": m_batch
                 };
 
+            var typeT = '';
+            var type = paramsJson.m_kelei;
+            if(type=="文史"){
+                typeT=0;
+            }else{
+                typeT=1;
+            }
+            var m_batch = paramsJson.m_batch;
             var params = {
                 "data":data,
                 "related":related
-            }
+            };
             $.ajax({
                 url: '/guide/report.do',
                 type: 'GET',
                 dataType: 'JSON',
                 data: {
-                    params: JSON.stringify(params)
+                    params: JSON.stringify(params),
+                    type:typeT,
+                    year:2014,
+                    batch:m_batch
                 },
                 success: function (res) {
                     console.log(res);
 
                     if (res.rtnCode == "0000000") {
-                        var data = $.parseJSON(res.bizData);
-                        console.log(data);
-                        var description = data.description;
+                        var dataJson = $.parseJSON(res.bizData).report;
+                        console.log(dataJson);
+                        var description = dataJson.description;
                         $('#eva').text(description);
-                        $.each(data.data,function(i,v){
-                            var schoolListColHtml = '<div class="col-list">'+ v.m_university_name +'</div>';
-                            $('.school-list-col').append(schoolListColHtml);
-                        })
+                        console.log(dataJson.data.length)
+                        //$.each(dataJson.data,function(i,v){
+                        //    console.log(v.m_university_name)
+                        //    //var schoolListColHtml = '<div class="col-list">'+ v.m_university_name +'</div>';
+                        //    //$('.school-list-col').append(schoolListColHtml);
+                        //})
                     }
 
                 }
