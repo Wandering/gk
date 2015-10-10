@@ -12,7 +12,17 @@ define(function (require) {
         return "";
     }
 
+    var getQueryStr = function(_url, _param) {
+        var rs = new RegExp("(^|)" + _param + "=([^\&]*)(\&|$)", "g").exec(_url),
+            tmp;
+        if (tmp = rs) {
+            return tmp[2];
+        }
+        return "";
+    };
+
     var method = getUrLinKey('method');
+    var menuName = decodeURIComponent(getQueryStr(window.location.href, 'menuName'));
 
     function getArticleDetile(id) {
         var url = '/volunteerSchool/article.do';
@@ -53,7 +63,7 @@ define(function (require) {
                     var biz = data.bizData;
                     if (biz.length > 0) {
                         var html = [];
-                        html.push('<h3>高考热点</h3>');
+                        html.push('<h3>' + (menuName || '高考热点') + '</h3>');
                         html.push('<ul>');
                         for (var i = 0, len = biz.length; i < len; i++) {
                             html.push('<li><a target="_blank" href="/consult/gk_hot_detile.jsp?method=hot&id=' + biz[i].id + '">' + biz[i].hotInformation + '</a></li>');
@@ -71,7 +81,7 @@ define(function (require) {
                         var biz = data.bizData;
                         if (biz.length > 0) {
                             var html = [];
-                            html.push('<h3>高考热点</h3>');
+                            html.push('<h3>' + (menuName || '高考热点') + '</h3>');
                             html.push('<ul>');
                             for (var i = 0, len = biz.length; i < len; i++) {
                                 html.push('<li><a target="_blank" href="/consult/gk_hot_detile.jsp?id=' + biz[i].id + '">' + biz[i].title + '</a></li>');
