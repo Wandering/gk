@@ -77,7 +77,8 @@ define(function (require) {
             dataType: 'json',
             type: 'get',
             data: {
-                "pageNo": 0
+                "pageNo": 0,
+                "pageSize": 6
             },
             success: function (res) {
                 var dataJson = res.bizData;
