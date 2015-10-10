@@ -10,35 +10,25 @@
 
     <select id="searchMajored" parameterType="java.util.Map" resultType="SubjectDto">
         select b.majoredId as code,b.majoredName as name,b.enrollNumber as planNumber,
-         b.schoolLength,b.foreignLanguage as foreginLanguage,b.feeStandard,b.universityCode,b.universityName
-
-         from gk_majored a  left join gk_enroll_plan  b  on a.id=b.majoredId  where 1=1
+        b.schoolLength,b.foreignLanguage as foreginLanguage,b.feeStandard,b.universityCode,b.universityName
+        from gk_majored a  left join gk_enroll_plan  b  on a.id=b.majoredId  where 1=1
         <if test="condition.subjectTypeName!=null and condition.subjectTypeName!=''">
-
              and a.subjectType=#{condition.subjectTypeName}
-
         </if>
-
         <if test="condition.year!=null and condition.year!=''">
-
             and b.year=#{year}
-
         </if>
-
         <if test="condition.majoredTypeName!=null and condition.majoredTypeName!=''">
             and a.majoredType=#{condition.majoredTypeName}
         </if>
-
         <if test="condition.searchName!=null and condition.searchName!=''">
             and b.majoredName like CONCAT('%',#{condition.searchName},'%')
         </if>
         <if test="condition.batchTypeName!=null and condition.batchTypeName!=''">
              and b.batch=#{condition.batchTypeName}
         </if>
-         limit #{condition.pageNo},#{condition.pageSize}
+        limit #{condition.pageNo},#{condition.pageSize}
     </select>
-
-
 
     <select id="searchMajoredCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         select count(*)

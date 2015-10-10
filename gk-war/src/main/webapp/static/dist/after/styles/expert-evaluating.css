@@ -869,9 +869,12 @@ a.next-btn:hover {
     margin-left: 240px;
     display: inline-block; }
   .content .evaluate-count .eva-text {
-    line-height: 26px;
-    font-size: 14px;
-    color: #555; }
+    color: #555;
+    tab-index: 2em;
+    line-height: 22px;
+    border-top: 1px solid #e5e5e5;
+    overflow: hidden;
+    padding: 20px; }
   .content .evaluate-count .navigation-box {
     position: relative;
     border: 2px dashed #dcdcdc;

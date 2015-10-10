@@ -2,10 +2,11 @@ define(function (require) {
     var $ = require('$');
     $(function () {
         //
+        var paramsJson = JSON.parse(params);
         $('.volunteer-flow3-table').on('click', '.open-flow3', function () {
             $('.tansLayer,.volunteer-flow3-layer').show();
             $('#volunteer-flow3-layer').attr('dataType', $(this).attr('dataType'))
-            getSchool(params1, "", "");
+            getSchool(paramsJson, "", "");
         });
 
 
@@ -15,20 +16,20 @@ define(function (require) {
         //console.log(JSON.parse(params).m_province);
 
 
-        var paramsJson = JSON.parse(params);
-        var params1 = {
-            "m_candidateNumber": "0",
-            "m_aggregateScore": 390,
-            "m_ranking": 72465,
-            "m_kelei": "文史",
-            "m_batch_id": 4,
-            "m_batch": "高职（专科）",
-            "m_province_id": "0",
-            "m_province": "",
-            "m_specialty_id": "",
-            "m_specialty_name": "",
-            "m_favorites_by_university_codes": ""
-        };
+
+        //var params1 = {
+        //    "m_candidateNumber": "0",
+        //    "m_aggregateScore": 390,
+        //    "m_ranking": 72465,
+        //    "m_kelei": "文史",
+        //    "m_batch_id": 4,
+        //    "m_batch": "高职（专科）",
+        //    "m_province_id": "0",
+        //    "m_province": "",
+        //    "m_specialty_id": "",
+        //    "m_specialty_name": "",
+        //    "m_favorites_by_university_codes": ""
+        //};
 
 
 
@@ -149,7 +150,7 @@ define(function (require) {
                     batch: m_batch
                 },
                 success: function (res) {
-                    console.log(res);
+                    //console.log(res);
                     var data = res.bizData;
                     if ('0000000' === res.rtnCode) {
                         var dicName = '';
@@ -249,22 +250,23 @@ define(function (require) {
 
         // 下一步
         $('#volunteer-flow3-btn').on('click',function(){
-            //if($('#result-info1').text()==""){
-            //    $('.error-tips2').text("请在A志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if($('#result-info2').text()==""){
-            //    $('.error-tips2').text("请在B志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if($('#result-info3').text()==""){
-            //    $('.error-tips2').text("请在C志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if($('#result-info4').text()==""){
-            //    $('.error-tips2').text("请在D志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
+            $('.school-list-col,.enrollmentSchool,#exchange,#integrity,#eva,#enrollment').html('');
+            if($('#result-info1').text()==""){
+                $('.error-tips2').text("请在A志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if($('#result-info2').text()==""){
+                $('.error-tips2').text("请在B志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if($('#result-info3').text()==""){
+                $('.error-tips2').text("请在C志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if($('#result-info4').text()==""){
+                $('.error-tips2').text("请在D志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
             $('#main1').hide();
             $('#main2').show();
             // 学校信息
@@ -287,10 +289,20 @@ define(function (require) {
                     var specialtyLength = $(this).find('input.write').length;
                     console.log(specialtytotaln + "--" + specialtyLength)
 
-                    if(specialtyLength==0){
-                        var schoolListColHtml = '<div class="col-list col-list2">志愿专业填写不完整</div>';
-                        $('#integrity').append(schoolListColHtml);
+                    var schoolListColHtml = '';
+                    if(specialtyLength < 6){
+                        schoolListColHtml += '<div class="col-list col-list2">志愿专业填写不完整</div>';
+                    }else{
+                        schoolListColHtml += '<div class="col-list col-list2">志愿专业填写完整</div>';
+
                     }
+                    $('#integrity').append(schoolListColHtml);
+
+
+                    //if(specialtyLength==0){
+                    //    var schoolListColHtml = '<div class="col-list col-list2">志愿专业填写不完整</div>';
+                    //    $('#integrity').append(schoolListColHtml);
+                    //}
 
                 })
             }
@@ -372,21 +384,28 @@ define(function (require) {
                     batch:m_batch
                 },
                 success: function (res) {
-                    //console.log(res);
+                    console.log(res);
 
                     if (res.rtnCode == "0000000") {
                         var dataJson = $.parseJSON(res.bizData).report;
-                        //console.log(dataJson);
                         var description = dataJson.description;
                         $('#eva').text(description);
-                        //console.log(dataJson.data.length);
                         $.each(dataJson.data,function(i,v){
-                            //console.log(v.m_university_name)
                             var schoolListColHtml = '<div class="col-list">'+ v.m_university_name +'</div>';
                             $('.school-list-col').append(schoolListColHtml);
-                        })
-                    }
+                        });
 
+                        var dataEnroll =$.parseJSON(res.bizData).enroll;
+                        $.each(dataEnroll,function(i,v){
+                            console.log(v);
+                            var enrollIntro = v.enrollIntro;
+                            var name = v.name;
+                            var enrollmentSchoolHtml = '<div class="col-list">'+ name +'</div>';
+                            $('#enrollmentSchool').append(enrollmentSchoolHtml);
+                            var schoolListColHtml = '<div class="col-list col-list2">'+ enrollIntro +'</div>';
+                            $('#enrollment').append(schoolListColHtml);
+                        });
+                    }
                 }
             });
 
@@ -403,14 +422,14 @@ define(function (require) {
                 var schoolListColHtml = '<div class="col-list col-list2">'+ isF +'</div>';
                 $('#exchange').append(schoolListColHtml);
             })
-
-
-
-
-
-
-
         });
+
+        // 上一步
+        $('#prev-btn').on('click',function(){
+            $('#main1').show();
+            $('#main2').hide();
+        });
+
 
         // 个人信息
         $.get('/info/getUserInfo.do', function (res) {

@@ -306,7 +306,7 @@
         </div>
     </div>
 </div>
-<div id="main2" style="display: block;">
+<div id="main2" style="display: none;">
     <div class="content">
         <div class="w1000">
             <div class="content-title mt60">
@@ -426,24 +426,8 @@
                     <div class="col-1-img">
                         <img src="/static/dist/after/images/eva-left-line2.png" class="eva-left-bg"/>
                     </div>
-                    <div class="school-list-col"></div>
+                    <div id="enrollmentSchool" class="enrollmentSchool"></div>
                     <div id="enrollment"></div>
-                    <%--<div class="col-1">--%>
-                        <%--西安交通大学--%>
-                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
-                    <%--</div>--%>
-                    <%--<div class="col-2">--%>
-                        <%--北京航空大学--%>
-                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
-                    <%--</div>--%>
-                    <%--<div class="col-3">--%>
-                        <%--同济大学--%>
-                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
-                    <%--</div>--%>
-                    <%--<div class="col-4">--%>
-                        <%--南开大学--%>
-                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
-                    <%--</div>--%>
                 </div>
             </div>
             <div class="evaluate-count">
@@ -454,22 +438,6 @@
                     </div>
                     <div class="school-list-col"></div>
                     <div id="integrity"></div>
-                    <%--<div class="col-1">--%>
-                        <%--西安交通大学--%>
-                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
-                    <%--</div>--%>
-                    <%--<div class="col-2">--%>
-                        <%--北京航空大学--%>
-                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
-                    <%--</div>--%>
-                    <%--<div class="col-3">--%>
-                        <%--同济大学--%>
-                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
-                    <%--</div>--%>
-                    <%--<div class="col-4">--%>
-                        <%--南开大学--%>
-                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
-                    <%--</div>--%>
                 </div>
             </div>
             <div class="evaluate-count">
@@ -480,22 +448,6 @@
                     </div>
                     <div class="school-list-col"></div>
                     <div id="exchange"></div>
-                    <%--<div class="col-1">--%>
-                        <%--西安交通大学--%>
-                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
-                    <%--</div>--%>
-                    <%--<div class="col-2">--%>
-                        <%--北京航空大学--%>
-                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
-                    <%--</div>--%>
-                    <%--<div class="col-3">--%>
-                        <%--同济大学--%>
-                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
-                    <%--</div>--%>
-                    <%--<div class="col-4">--%>
-                        <%--南开大学--%>
-                        <%--<span class="ml240">实际招生超过计划招生数</span>--%>
-                    <%--</div>--%>
                 </div>
                 <div class="eva-text">
                     作为压线生，心理是比较复杂的，首先是怕从本批次落榜，降档到下一个批次，“上”与“下”的矛盾和不平衡、不甘愿降档的心理始终横跨在自己眼前。其
@@ -511,7 +463,7 @@
                 </div>
                 <div class="navigation-box">
                     <span class="tip">正式填报志愿请登录网址：sn.gaokao360.net</span>
-                    <div class="btn btn-before">返回上一步</div>
+                    <div class="btn btn-before" id="prev-btn">返回上一步</div>
                     <div class="btn btn-next">打印</div>
                 </div>
             </div>
