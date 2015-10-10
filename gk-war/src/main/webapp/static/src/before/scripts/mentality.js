@@ -52,7 +52,7 @@ define(function (require) {
             {
                 pageNo: pageNo,
                 pageSize: pageSize,
-                classifyType:1,
+                classifyType:2,
                 sortType:sortType,
                 subjectId:subjectId,
                 searchName:searchVals
