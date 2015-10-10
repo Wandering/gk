@@ -26,6 +26,14 @@ define(function (require) {
             var val = $('#keywords').val();
             window.location.href = '/consult/profession_info.jsp?val=' + val;
         });
+        $('#keywords').keydown(function(e) {
+            if (e.keyCode == 13) {
+                var val = $('#keywords').val();
+                if (val) {
+                    window.location.href = '/consult/profession_info.jsp?val=' + val;
+                }
+            }
+        });
 
         $('.into-evalution a').on('click',function(e) {
             var flag = false;
