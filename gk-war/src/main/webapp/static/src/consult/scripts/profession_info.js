@@ -19,9 +19,11 @@ define(function (require) {
         curPage:1,
         totalPage:0,
         data:[],
+        years: [],
         render: function() {
             this.renderCommon('batch', this.data);
             this.renderCommon('classify', this.getClassify());
+            this.renderCommon('year', this.getYear());
             //var batch = [], classify = [], profession = [];
             //var i = 0, len = data.length;
             //
@@ -46,12 +48,29 @@ define(function (require) {
             //$('#batch').html(batch.join(''));
             //$('#classify').html(classify.join(''));
             //$('#profession').html(profession.join(''));
+            this.addHandleYear();
             this.addEventHandle();
             this.addEventForClassify();
             this.getProfession(1);
         },
         getYear: function() {
-
+            var year = this.years;
+            var str = [];
+            for (var i = 0; i < year.length; i++) {
+                str.push({
+                    id: year[i],
+                    name: year[i]
+                });
+            }
+            return str;
+        },
+        addHandleYear: function() {
+            var that = this;
+            $('#year a').on('click', function(e) {
+                that.curPage = 1;
+                $(this).addClass('active').siblings().removeClass('active');
+                that.getProfession(1);
+            });
         },
         getClassify: function(id) {
             var i = 0, len = this.data.length;
@@ -185,6 +204,7 @@ define(function (require) {
                 if ('0000000' === data.rtnCode) {
                     if (data.bizData.batchType) {
                         that.data = data.bizData.batchType;
+                        that.years = data.bizData.years;
                         that.render();
                     }
                 }
@@ -217,6 +237,8 @@ define(function (require) {
             }
 
             var search = $('#search').val();
+
+            var year = $('#year a.active').attr('data-id') || '';
 
             var that = this;
             $.ajax({
