@@ -37,7 +37,7 @@
     </div>
     <div class="fr">
 
-        <div class="error-tips hide"></div>
+        <div class="error-tips hide" style="width:316px;"></div>
         <div class="volunteer-flow1" id="volunteer-flow1">
             <form action="" class="zd-form">
                 <div class="form-control">
