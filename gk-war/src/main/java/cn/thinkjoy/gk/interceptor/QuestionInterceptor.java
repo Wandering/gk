@@ -92,7 +92,7 @@ public class QuestionInterceptor extends HandlerInterceptorAdapter {
 				two.add(userAccountBean.getName());
 				two.add(userAccountBean.getIcon());
 
-				if(one.hashCode()==two.hashCode()){
+				if(one.hashCode()!=two.hashCode()){
 					UserInfo userInfo = new UserInfo();
 
 					userInfo.setId(userAccountBean.getId());
