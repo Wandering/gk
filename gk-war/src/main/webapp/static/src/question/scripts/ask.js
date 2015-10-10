@@ -127,7 +127,7 @@ define(function (require) {
                         var path = getUrLinKey('path');
 
                         if ('online' === path) {
-                            window.location.href = '/user/online-answer.jsp';
+                            window.location.href = '/user/online-answer.jsp?method=ask';
                         }
                     } else {
                         $('#error').show().html(data.msg);
