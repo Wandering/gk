@@ -45,10 +45,8 @@ public class UniversityController extends BaseController {
     private IExUniversityService iUniversityService;
     @Autowired
     private IUniversityDictService universityDictService;
-
     @Autowired
     private IUniversityExService universityExService;
-
     @Autowired
     private IProvinceService provinceService;
     @Autowired
