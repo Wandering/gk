@@ -250,7 +250,7 @@ define(function (require) {
 
         // 下一步
         $('#volunteer-flow3-btn').on('click',function(){
-            $('.school-list-col,.enrollmentSchool').html('');
+            $('.school-list-col,.enrollmentSchool,#exchange,#integrity,#eva,#enrollment').html('');
             if($('#result-info1').text()==""){
                 $('.error-tips2').text("请在A志愿中选择学校").fadeIn(1000).fadeOut(1000);
                 return false;
