@@ -246,22 +246,22 @@ define(function (require) {
 
         // 下一步
         $('#volunteer-flow3-btn').on('click',function(){
-            //if($('#result-info1').text()==""){
-            //    $('.error-tips2').text("请在A志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if($('#result-info2').text()==""){
-            //    $('.error-tips2').text("请在B志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if($('#result-info3').text()==""){
-            //    $('.error-tips2').text("请在C志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if($('#result-info4').text()==""){
-            //    $('.error-tips2').text("请在D志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
+            if($('#result-info1').text()==""){
+                $('.error-tips2').text("请在A志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if($('#result-info2').text()==""){
+                $('.error-tips2').text("请在B志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if($('#result-info3').text()==""){
+                $('.error-tips2').text("请在C志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if($('#result-info4').text()==""){
+                $('.error-tips2').text("请在D志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
             $('#main1').hide();
             $('#main2').show();
             $('#print-result-info1').html($('#result-info1').html()).prepend('<p>'+$('input[type="text"][dataType="1"]').val()+'</p>');
@@ -346,11 +346,33 @@ define(function (require) {
                     console.log(res);
 
                     if (res.rtnCode == "0000000") {
-
+                        var data = $.parseJSON(res.bizData);
+                        console.log(data);
+                        var description = data.description;
+                        $('#eva').text(description);
+                        $.each(data.data,function(i,v){
+                            var schoolListColHtml = '<div class="col-list">'+ v.m_university_name +'</div>';
+                            $('.school-list-col').append(schoolListColHtml);
+                        })
                     }
 
                 }
             });
+
+
+            // 是否调剂专业
+            $.each($('.isFunRadio'),function(i,v){
+                var isF = '';
+                var isFt = $(v).text();
+                if(isFt=="是"){
+                    isF += "志愿专业服从调剂";
+                }else{
+                    isF += "志愿专业不服从调剂";
+                }
+                var schoolListColHtml = '<div class="col-list col-list2">'+ isF +'</div>';
+                $('#exchange').append(schoolListColHtml);
+            })
+
 
 
 
