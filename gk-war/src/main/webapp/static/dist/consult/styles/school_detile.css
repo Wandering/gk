@@ -739,7 +739,7 @@ h1 {
 
 .info-content {
   height: 232px; }
-  .info-content img {
+  .info-content img.fl {
     width: 338px;
     height: 100%; }
   .info-content .info {

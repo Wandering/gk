@@ -734,7 +734,8 @@ a.next-btn:hover {
 .banner {
   width: 100%;
   height: 519px;
-  background: url("../images/play_banner.jpg") no-repeat left top;
+  background: url("../images/play_banner.jpg") no-repeat;
+  background-size: cover;
   position: relative; }
   .banner video {
     width: 760px;
@@ -742,7 +743,7 @@ a.next-btn:hover {
     position: absolute;
     left: 50%;
     margin-left: -380px;
-    top: 32px; }
+    top: 60px; }
 
 .mian-body h1 {
   font-size: 18px;

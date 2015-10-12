@@ -242,7 +242,7 @@ define(function (require) {
 
             var that = this;
             $.ajax({
-                type: 'post',
+                type: 'get',
                 url: '/majored/searchMajored.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
@@ -260,16 +260,43 @@ define(function (require) {
                 dataType: 'json',
                 success: function(data) {
                     if ('0000000' === data.rtnCode) {
-                        var schoolList = data.bizData.list;
+                        var schoolList = data.bizData;
                         if (schoolList && schoolList.length > 0) {
                             that.renderProfessionList(schoolList);
-                            if (pageNo == 1) {
-                                that.renderPage(1, data.bizData.count);
-                            }
                         } else {
-                            $('#profession_list').html('<p style="text-align: center">暂无信息！</p>');
+                            //$('#profession_list').html('<p style="text-align: center">暂无信息！</p>');
+                            var pageErrorTip = require('pageErrorTip');
+                            $('#profession_list').html(pageErrorTip('暂无相关数据'));
                             $('#page').html('');
                             $('.record').html('');
+                        }
+                    }
+                },
+                error: function(data) {
+                }
+            });
+
+            $.ajax({
+                type: 'get',
+                url: '/majored/searchMajoredCount.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    batchTypeId:batchTypeId,
+                    batchTypeName:batchTypeName,
+                    subjectTypeId:subjectTypeId,
+                    subjectTypeName:subjectTypeName,
+                    majoredTypeId:majoredTypeId,
+                    majoredTypeName:majoredTypeName,
+                    year: year,
+                    pageSize:10,
+                    pageNo:pageNo,
+                    searchName:search
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if ('0000000' === data.rtnCode) {
+                        if (pageNo == 1) {
+                            that.renderPage(1, data.bizData);
                         }
                     }
                 },

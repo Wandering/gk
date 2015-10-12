@@ -31,7 +31,7 @@
     </select>
 
     <select id="searchMajoredCount" parameterType="java.util.Map" resultType="java.lang.Integer">
-        select count(a.id) from gk_majored a  left join gk_enroll_plan  b  on a.id=b.majoredId  where 1=1
+        select count(a.id) from gk_enroll_plan b left join gk_majored a on a.id=b.majoredId where 1=1
             <if test="condition.subjectTypeName!=null and condition.subjectTypeName!=''">
             and a.subjectType =#{condition.subjectTypeName}
         </if>

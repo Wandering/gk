@@ -18,7 +18,7 @@ define(function (require) {
         getBasicInfo: function(code) {
             var that = this;
             $.ajax({
-                type: 'post',
+                type: 'get',
                 url: '/university/getUniversityDetail.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
@@ -76,7 +76,7 @@ define(function (require) {
         getSchoolInfo: function(code) {
             var that = this;
             $.ajax({
-                type: 'post',
+                type: 'get',
                 url: '/university/getEnrollInfo.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
@@ -239,7 +239,7 @@ define(function (require) {
             var that = this;
             var batch = getUrLinKey('batch');
             $.ajax({
-                type: 'post',
+                type: 'get',
                 url: '/university/getEnrollPlan.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {

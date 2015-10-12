@@ -10,7 +10,7 @@
 <%@ include file="/before/header-before.jsp"%>
 <div class="content">
     <div class="banner">
-        <div class="video mt60 ta">
+        <div class="video ta">
             <a href="" style="display:inline-block;width:760px;height:428px;position: relative;top: 32px" id="player"></a>
         </div>
     </div>

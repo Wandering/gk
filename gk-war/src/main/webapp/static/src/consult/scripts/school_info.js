@@ -116,7 +116,7 @@ define(function(require) {
             var that = this;
 
             $.ajax({
-                type: 'post',
+                type: 'get',
                 url: '/university/getUniversityList.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
@@ -142,7 +142,9 @@ define(function(require) {
                                 that.renderPage(1, data.bizData.count);
                             }
                         } else {
-                            $('#school_list').html('<p style="text-align: center">暂无信息！</p>');
+                            //$('#school_list').html('<p style="text-align: center">暂无信息！</p>');
+                            var pageErrorTip = require('pageErrorTip');
+                            $('#school_list').html(pageErrorTip('暂无相关数据'));
                             $('#page').html('');
                             $('.record').html('');
                         }
