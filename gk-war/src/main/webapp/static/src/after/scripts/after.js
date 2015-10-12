@@ -27,7 +27,7 @@ define(function (require) {
                 $('.error-tips').text('请填写验证码').fadeIn(1000).fadeOut(1000);
                 return false;
             }
-            $('#school-list-info').html('');
+
             $.ajax({
                 url: '/guide/batch.do',
                 type: 'GET',
@@ -40,16 +40,16 @@ define(function (require) {
                     "code": yzmDreamV
                 },
                 success: function (res) {
-                    console.log(res)
+                    console.log(res);
                     if (res.rtnCode == "0100006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
                         $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
                         return;
                     }
                     if (res.rtnCode == "0000000") {
+                        $('#school-list-info').html('');
                         var data = $.parseJSON(res.bizData);
                         $('#volunteer-flow1').hide();
                         $('#volunteer-flow2').show();
-                        //console.log(data)
                         $('#scoresNum').text(aggregateScoreV+"分");
                         $('#subType').text(subjectTypeV+"类");
                         $.each(data.data, function (i, v) {
