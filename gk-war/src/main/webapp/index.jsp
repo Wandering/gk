@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>首页</title>
-    <%--<%@ include file="common/meta.jsp" %>--%>
+    <%@ include file="common/meta.jsp" %>
     <link rel="stylesheet" href="/static/dist/index/styles/index.css"/>
 </head>
 <body>

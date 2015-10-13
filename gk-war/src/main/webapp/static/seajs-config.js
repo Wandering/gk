@@ -9,7 +9,6 @@ seajs.config({
         "laydate": "bower_components/laydate/laydate.js",
         "uploadify": "bower_components/uploadify/jquery.uploadify.min.js",
         "header-user":'src/common/scripts/header-user-base.js',
-        //"data_times": "bower_components/utils/getTimes.js"
         "getTime": "bower_components/utils/getTime",
         "backToTop": "bower_components/utils/backToTop",
         "bsModal": "bower_components/utils/bootstrap-modal",
