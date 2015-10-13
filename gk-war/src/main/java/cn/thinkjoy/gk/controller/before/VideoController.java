@@ -113,7 +113,6 @@ public class VideoController extends BaseController {
             videoSectionList.add(videoSection);
         }
         VideoCourse videoCourse =(VideoCourse) videoCourseService.findOne("id",courseId);
-        videoCourse.setId(videoCourse.getId());
         videoCourse.setHit(videoCourse.getHit() + 1);
         videoCourseService.update(videoCourse);
         Map<String,Object> returnMap= Maps.newHashMap();
