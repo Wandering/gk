@@ -30,6 +30,7 @@ define(function (require) {
         window.location.href='/before/teacher-lecture.jsp?classifyType=1&searchV='+ encodeURIComponent($('#searchVal').val());
     });
 
+
     // 获取科目
     function getSubjectList(){
         $.getJSON(

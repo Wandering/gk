@@ -12,9 +12,12 @@ define(function (require) {
         }
     });
 
+
+
     function addMenuActive() {
         var pathName = window.location.pathname.split('/');
         var pageName = pathName[pathName.length - 1];
+        console.log(pageName)
         if (!pageName) {
             $('.index').addClass('active');
             return;
@@ -28,12 +31,16 @@ define(function (require) {
                 $('.guide').addClass('active');
                 break;
             case 'gk_hot.jsp':
+            case 'consult.jsp':
+            case 'school_info.jsp':
+            case 'profession_info.jsp':
                 $('.gk_hot').addClass('active');
                 break;
             case 'before.jsp':
                 $('.before').addClass('active');
                 break;
             case 'after.jsp':
+            case 'forward.do':
                 $('.after').addClass('active');
                 break;
             default:

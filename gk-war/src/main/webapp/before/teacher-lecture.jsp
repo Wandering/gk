@@ -4,7 +4,6 @@
 <head>
     <title>名师讲堂</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/common/styles/comm.css"/>
     <link rel="stylesheet" href="/static/dist/before/styles/before.css"/>
 </head>
 <body>
