@@ -67,9 +67,9 @@ public class LoginController extends BaseController {
 
 			id = userAccountBean.getId();
 
-//			response.addCookie(CookieUtil.addCookie("gaokao360.net",CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
+			response.addCookie(CookieUtil.addCookie("gaokao360.net",CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
 
-			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
+//			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
 
 			setUserAccountPojo(userAccountBean);
 
@@ -91,7 +91,7 @@ public class LoginController extends BaseController {
 //		boolean status = true;
 		try {
 //			RedisUtil.getInstance().del(UserRedisConst.USER_KEY + getCookieValue());
-			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, null, CookieTimeConst.CLEAN_COOKIE));
+			response.addCookie(CookieUtil.addCookie("gaokao360.net",CookieConst.USER_COOKIE_NAME, "", CookieTimeConst.CLEAN_COOKIE));
 		}catch(Exception e){
 //			status = false;
 			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
