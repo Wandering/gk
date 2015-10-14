@@ -634,7 +634,7 @@ a.next-btn:hover {
 .container {
   height: 650px;
   width: 100%;
-  background: #26a56c url(../../login/images/login-bg.png) no-repeat; }
+  background: #cf5d4c url(../../login/images/login-bg.jpg) no-repeat center top; }
 
 .main {
   position: relative; }
@@ -649,7 +649,7 @@ a.next-btn:hover {
   .main .login-box {
     width: 303px;
     background-color: #fff;
-    border: 15px solid #4cb587;
+    border: 15px solid #d8796c;
     position: absolute;
     top: 107px;
     right: 30px;
@@ -669,7 +669,7 @@ a.next-btn:hover {
         box-sizing: border-box;
         padding: 10px 0 15px; }
       .main .login-box .login-title .active {
-        border-bottom: #57b62e 2px solid; }
+        border-bottom: #cf5c4c 2px solid; }
       .main .login-box .login-title .find-psd {
         width: 100%; }
     .main .login-box .find-psd-h40 {
@@ -700,7 +700,7 @@ a.next-btn:hover {
         line-height: 45px;
         border-radius: 3px; }
       .main .login-box .login-input .forget-psd {
-        color: #52d09c;
+        color: #cf5d4c;
         text-decoration: none;
         text-align: right;
         font-size: 12px;
@@ -720,7 +720,7 @@ a.next-btn:hover {
         width: 100%;
         height: 40px;
         line-height: 40px;
-        background-color: #52d09c;
+        background-color: #cf5d4c;
         -webkit-transition: all 0.8s;
                 transition: all 0.8s;
         color: #fff;
@@ -729,7 +729,7 @@ a.next-btn:hover {
         border-radius: 30px;
         cursor: pointer; }
         .main .login-box .login-input .btn-login:hover {
-          background-color: #2AD083; }
+          background-color: #cf5d4c; }
     .main .login-box .pdr100 {
       padding-right: 155px !important; }
     .main .login-box .register-input {
@@ -786,7 +786,7 @@ a.next-btn:hover {
         width: 100%;
         height: 40px;
         line-height: 40px;
-        background-color: #52d09c;
+        background-color: #cf5d4c;
         -webkit-transition: all 0.8s;
                 transition: all 0.8s;
         color: #fff;
@@ -795,9 +795,9 @@ a.next-btn:hover {
         border-radius: 30px;
         cursor: pointer; }
         .main .login-box .register-input .btn-login:hover, .main .login-box .register-input .btn-login-register:hover {
-          background-color: #2AD083; }
+          background-color: #cf5d4c; }
       .main .login-box .register-input .code-text {
-        background-color: #52d09c;
+        background-color: #cf5d4c;
         display: block;
         position: absolute;
         color: #fff;
