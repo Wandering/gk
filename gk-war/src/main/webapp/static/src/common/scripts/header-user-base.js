@@ -3,13 +3,39 @@
  */
 define(function (require, exports, modules) {
     var $ = require('$');
+    // 获取cookies
+    //function GetCookie(sMainName, sSubName) {
+    //    var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
+    //    return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
+    //}
+    //
+    //
 
-    function GetCookie(sMainName, sSubName) {
-        var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
-        return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
+
+    function getCookie(c_name)
+    {
+        if (document.cookie.length>0)
+        {
+            var c_start=document.cookie.indexOf(c_name + "=")
+            if (c_start!=-1)
+            {
+                c_start=c_start + c_name.length+1
+                var c_end=document.cookie.indexOf(";",c_start)
+                if (c_end==-1) c_end=document.cookie.length
+                return unescape(document.cookie.substring(c_start,c_end))
+            }
+        }
+        return ""
     }
+
+
+
+
+
+
     $(function () {
         //判断当前用户cookie是否存在
+        console.log()
         if (!GetCookie("gkuser") || GetCookie("gkuser") == '""') {
             console.log('没有登录');
             $('.menu').hide();
@@ -43,22 +69,6 @@ define(function (require, exports, modules) {
             $('.user-info-list').show();
         }
         //登出
-        $('.menu li:last-child').click(function (event) {
-            event.stopPropagation();
-            event.preventDefault();
-            $.ajax({
-                type: 'get',
-                url: '/login/logout.do',
-                success: function (res) {
-                    console.log(res);
-                    if (res.rtnCode == '0000000') {
-                        window.location.href = '/index.jsp';
-                    } else {
-                        //window.location.href = '/login/login.jsp';
-                        console.log(res.msg);
-                    }
-                }
-            });
-        });
+
     })
 });
