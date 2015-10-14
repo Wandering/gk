@@ -12,13 +12,13 @@
 <div class="content">
     <div class="w1000">
 
-        <div class="search-content ta mt20">
-                 <span>
-                     <input type="text" placeholder="请输入搜索关键字" id="keywords"/>
-                     <input type="button" value="搜索" id="search"/>
-                     <%--<a target="_blank" href="/question/ask.jsp">我要提问</a>--%>
-                </span>
-        </div>
+        <%--<div class="search-content ta mt20">--%>
+                 <%--<span>--%>
+                     <%--<input type="text" placeholder="请输入搜索关键字" id="keywords"/>--%>
+                     <%--<input type="button" value="搜索" id="search"/>--%>
+                     <%--&lt;%&ndash;<a target="_blank" href="/question/ask.jsp">我要提问</a>&ndash;%&gt;--%>
+                <%--</span>--%>
+        <%--</div>--%>
 
         <div class="main-body">
             <section class="section-article" id="section_article">
