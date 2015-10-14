@@ -704,7 +704,9 @@ ul.main-video-list {
       .volunteer-flow3-layer .volunteer-flow3-body .no-school p {
         margin: 0; }
     .volunteer-flow3-layer .volunteer-flow3-body .school-list {
-      padding: 20px; }
+      padding: 10px 20px;
+      height: 90px;
+      overflow: auto; }
       .volunteer-flow3-layer .volunteer-flow3-body .school-list div {
         margin: 0;
         line-height: 28px;

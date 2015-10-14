@@ -74,6 +74,7 @@ define(function (require) {
         $(this).addClass('active').siblings().removeClass('active');
         var fileurl = $(this).attr('fileurl');
         if(fileurl!="" || fileurl==null){
+            $(window).scrollTop(0);
             $('#player').attr('href', localhosts + fileurl);
             var api = flowplayer(
                 "player",
