@@ -34,6 +34,8 @@ include 'user-service'
 
 include 'gk-war'
 
+include 'gk-gx-war'
+
 include 'redis'
 
 include 'gk-service'
@@ -46,4 +48,7 @@ include 'web-common'
 
 include 'protocol-common'
 
+include 'gk-middle-war'
+
+include 'gk-user-war'
 
