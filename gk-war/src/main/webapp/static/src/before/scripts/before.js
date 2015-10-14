@@ -6,7 +6,7 @@ define(function (require) {
     var pageEroorTip = require('pageErrorTip');
 
     var UI = {
-        $tabsList: $('#tabs-list'),
+        $tabsList: $('.tabs-list'),
         $evaluatingSub: $('#evaluating-sub')
     };
     var pattern = /^[0-9]*[1-9][0-9]*$/;
