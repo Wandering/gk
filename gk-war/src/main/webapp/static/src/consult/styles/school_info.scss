@@ -167,6 +167,8 @@
     color: #000;
     font-size: 12px;
     cursor: pointer;
+    display: inline-block;
+    zoom: 1;
     &.active {
       color: #fff;
       background-color: #e24333;
@@ -174,3 +176,4 @@
     }
   }
 }
+

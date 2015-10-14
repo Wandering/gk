@@ -846,7 +846,9 @@ a.next-btn:hover {
     margin: 0 2px;
     color: #000;
     font-size: 12px;
-    cursor: pointer; }
+    cursor: pointer;
+    display: inline-block;
+    zoom: 1; }
     .page a.active {
       color: #fff;
       background-color: #e24333;
