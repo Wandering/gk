@@ -3,7 +3,7 @@
 .container {
   height: 650px;
   width: 100%;
-  background: #26a56c url(../../login/images/login-bg.png) no-repeat;
+  background: #cf5d4c url(../../login/images/login-bg.jpg) no-repeat center top;
 }
 
 .main {
@@ -22,7 +22,7 @@
     width: 303px;
     //    height: 420px;
     background-color: #fff;
-    border: 15px solid #4cb587;
+    border: 15px solid #d8796c;
     position: absolute;
     top: 107px;
     right: 30px;
@@ -45,7 +45,7 @@
         padding:10px 0 15px;
       }
       .active{
-        border-bottom:$mainGreen 2px solid;
+        border-bottom:#cf5c4c 2px solid;
       }
       .find-psd{
         width: 100%;
@@ -84,7 +84,7 @@
         border-radius: 3px;
       }
       .forget-psd{
-        color: #52d09c;
+        color: #cf5d4c;
         text-decoration: none;
         text-align: right;
         font-size: 12px;
@@ -106,7 +106,7 @@
         width: 100%;
         height: 40px;
         line-height: 40px;
-        background-color: #52d09c;
+        background-color: #cf5d4c;
         transition: all .8s;
         color: #fff;
         font-size: 18px;
@@ -114,7 +114,7 @@
         border-radius: 30px;
         cursor: pointer;
         &:hover{
-          background-color: #2AD083;
+          background-color: #cf5d4c;
         }
       }
     }
@@ -187,7 +187,7 @@
         width: 100%;
         height: 40px;
         line-height: 40px;
-        background-color: #52d09c;
+        background-color: #cf5d4c;
         transition: all .8s;
         color: #fff;
         font-size: 18px;
@@ -195,11 +195,11 @@
         border-radius: 30px;
         cursor: pointer;
         &:hover{
-          background-color: #2AD083;
+          background-color: #cf5d4c;
         }
       }
       .code-text{
-        background-color: #52d09c;
+        background-color: #cf5d4c;
         display: block;
         position: absolute;
         color: #fff;
