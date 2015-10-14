@@ -77,13 +77,15 @@ public class InfoController extends BaseController {
     @ResponseBody
     public String updateUserInfo(UserInfo userInfo){
         try {
-            String id=getCookieValue();
+            UserAccountPojo userAccountPojo = getUserAccountPojo();
 //            UserInfo userInfo=userInfoExService.findUserInfoById(Long.valueOf(id));
 
             Long birthdayDate = userInfo.getBirthdayDate();
             if(null!=birthdayDate){
                 userInfo.setBirthdayDate(birthdayDate*1000);
             }
+
+
 
             boolean flag = false;
 
@@ -93,6 +95,7 @@ public class InfoController extends BaseController {
 
             if(!StringUtils.isEmpty(icon)){
                 ssUserInfo.setIcon(icon);
+                userAccountPojo.setIcon(icon);
                 flag = true;
             }
 
@@ -100,6 +103,7 @@ public class InfoController extends BaseController {
 
             if(!StringUtils.isEmpty(name)){
                 ssUserInfo.setName(name);
+                userAccountPojo.setName(name);
                 flag = true;
             }
 
@@ -109,9 +113,11 @@ public class InfoController extends BaseController {
 
             userInfoService.update(userInfo);
 
+            setUserAccountPojo(userAccountPojo);
+
 //            userInfoExService.updateUserInfoById(userInfo);
         }catch (Exception e){
-            throw e;
+            throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
         }
         return "success";
     }
