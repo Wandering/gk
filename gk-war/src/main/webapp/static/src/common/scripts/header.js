@@ -2,6 +2,14 @@ define(function (require) {
     var $ = require('$');
     require('header-user');
 
+    $('#main-menu').on('mouseover','li.menu-item',function(){
+        $(this).addClass('active');
+    });
+    $('#main-menu').on('mouseout','li.menu-item',function(){
+        $(this).removeClass('active');
+    });
+
+
     $(document).scroll(function() {
         if ($(this).scrollTop() > 70) {
             if (!$('.header').hasClass('fix')) {
@@ -10,7 +18,10 @@ define(function (require) {
         } else {
             $('.header').removeClass('fix');
         }
+
     });
+
+
 
 
 
