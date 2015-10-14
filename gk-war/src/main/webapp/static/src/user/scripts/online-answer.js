@@ -77,7 +77,6 @@ define(function (require) {
                         } else {
                             $('#' + contentId).append(that.render(data.bizData));
                         }
-
                     } else {
                         if (that.startSize == 0) {
                             $('#' + contentId).html(that.getTipTmpl('暂时没有数据，请耐心等待哦'));
