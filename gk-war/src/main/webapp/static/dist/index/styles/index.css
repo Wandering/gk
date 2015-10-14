@@ -582,9 +582,8 @@ input, textarea {
   transition-delay: 0s; }
 
 .footer .bottom-nav {
-  padding-top: 50px;
   text-align: center;
-  height: 286px;
+  height: 100px;
   background-color: #494848;
   box-sizing: border-box; }
   .footer .bottom-nav ul {
