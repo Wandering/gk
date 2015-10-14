@@ -86,7 +86,6 @@ public class LoginController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	@ResponseBody
 	public String logout() throws Exception {
 //		boolean status = true;
 		try {
@@ -96,7 +95,7 @@ public class LoginController extends BaseController {
 //			status = false;
 			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
 		}
-		return "success";
+		return "index";
 	}
 
 }
