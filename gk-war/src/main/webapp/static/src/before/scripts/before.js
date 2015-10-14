@@ -47,6 +47,7 @@ define(function (require) {
                     for (var i = 0; i < dataJson.length; i++) {
                         var tabLi = dataJson[i].subjectName,
                             tabId = dataJson[i].subjectId;
+                        console.log(tabLi)
                         var subjectListHtml = '<li id="' + tabId + '">' + tabLi + '</li>';
                         $('.subjectList').append(subjectListHtml);
                     }
