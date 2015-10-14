@@ -112,6 +112,8 @@ public class InfoController extends BaseController {
                 userInfoApiService.updateUserInfo(ssUserInfo);
             }
 
+            userInfo.setId(userAccountPojo.getId());
+
             userInfoService.update(userInfo);
 
             setUserAccountPojo(userAccountPojo);
