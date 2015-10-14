@@ -9,22 +9,23 @@
 <div class="footer">
   <div class="bottom-nav">
     <div class="w1000">
-      <ul>
-        <li><a href="" class="nav-title">关于高考360</a></li>
-        <li><a href="">联系我们</a></li>
-        <li><a href="">使用协议</a></li>
-      </ul>
-      <ul>
-        <li><a href="" class="nav-title">帮助中心</a></li>
-        <li><a href="">常见问题</a></li>
-        <li><a href="">意见反馈</a></li>
-      </ul>
-      <ul>
-        <li><a href="" class="nav-title">关注我们</a></li>
-        <li><a href="">官方微信</a></li>
-        <li><a href="">新浪微博</a></li>
-      </ul>
-      <img src="/static/dist/common/images/logo.png" alt="logo" class="logo"/>
+      <%--<ul>--%>
+        <%--<li><a href="" class="nav-title">关于高考360</a></li>--%>
+        <%--<li><a href="">联系我们</a></li>--%>
+        <%--<li><a href="">使用协议</a></li>--%>
+      <%--</ul>--%>
+      <%--<ul>--%>
+        <%--<li><a href="" class="nav-title">帮助中心</a></li>--%>
+        <%--<li><a href="">常见问题</a></li>--%>
+        <%--<li><a href="">意见反馈</a></li>--%>
+      <%--</ul>--%>
+      <%--<ul>--%>
+        <%--<li><a href="" class="nav-title">关注我们</a></li>--%>
+        <%--<li><a href="">官方微信</a></li>--%>
+        <%--<li><a href="">新浪微博</a></li>--%>
+      <%--</ul>--%>
+      <img src="/static/dist/common/images/logo.png" alt="logo" class="footer-logo"/>
+      <img src="/static/dist/common/images/footer-ewm.jpg" class="footer-ewm"/>
     </div>
   </div>
   <div class="copy-right">

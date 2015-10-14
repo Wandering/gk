@@ -463,6 +463,7 @@ button.swiper-pagination-bullet {
 /*swipe幻灯片*/
   .wipe {
     width: 100%;
+    clear: both;
   }
 .swiper-slide {
   text-align: center;

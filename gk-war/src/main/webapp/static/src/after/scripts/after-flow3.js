@@ -1,5 +1,6 @@
 define(function (require) {
     var $ = require('$');
+    require('backToTop');
     $(function () {
         //
         var paramsJson = JSON.parse(params);
