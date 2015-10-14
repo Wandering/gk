@@ -12,7 +12,9 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.protocol.PageQuery;
 import cn.thinkjoy.gk.util.CookieUtil;
 import cn.thinkjoy.ss.api.IAnswerService;
+import cn.thinkjoy.ss.api.IUserAccountService;
 import cn.thinkjoy.ss.bean.QuestionDetailBean;
+import cn.thinkjoy.ss.bean.war.UserAccountBean;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +41,9 @@ public class AnswerController extends BaseController {
 
     @Autowired
     private IAnswerService answerService;
+
+    @Autowired
+    private IUserAccountService userAccountService;
 
     /**
      * 获取所有我的问题
@@ -89,7 +94,9 @@ public class AnswerController extends BaseController {
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
         }
 
-        String userId = CookieUtil.getCookieValue(request.getCookies(), CookieConst.SS_USER_COOKIE_NAME);
+        UserAccountBean userAccountBean = userAccountService.findUserAccountBeanByToken(userAccountPojo.getId().toString(),7);
+
+        String userId = userAccountBean.getId().toString();
 
         List<QuestionDetailBean> questionDetailBeans = answerService.findAnswerPage(keyword,isAnswer,Long.valueOf(userId), startSize, endSize);
 
