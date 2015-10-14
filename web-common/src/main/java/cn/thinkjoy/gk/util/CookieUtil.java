@@ -16,7 +16,22 @@ public class CookieUtil {
 	 */
 	public static final Cookie addCookie(String name, String value, int expiry){
 		Cookie cookie = new Cookie(name, value);
-//		cookie.setDomain("*");
+		cookie.setDomain("*");
+		cookie.setPath("/");
+		cookie.setMaxAge(expiry);
+		return cookie;
+	}
+
+	/**
+	 * 生成cookie
+	 * @param name cookie的名称
+	 * @param value cookie的值
+	 * @param expiry cookie的有效期
+	 * @return
+	 */
+	public static final Cookie addCookie(String domain, String name, String value, int expiry){
+		Cookie cookie = new Cookie(name, value);
+		cookie.setDomain(domain);
 		cookie.setPath("/");
 		cookie.setMaxAge(expiry);
 		return cookie;

@@ -67,7 +67,7 @@ public class LoginController extends BaseController {
 
 			id = userAccountBean.getId();
 
-			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
+			response.addCookie(CookieUtil.addCookie("gaokao360.net",CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
 
 			setUserAccountPojo(userAccountBean);
 
