@@ -48,7 +48,7 @@ define(function (require) {
             html.push('<span class="detile-title">' + list[i].title + '</span>');
             html.push(' <span class="fr">' + new Date(list[i].lastModDate).Format('yyyy-MM-dd hh:mm') + '</span>');
             html.push('</div>');
-            if(list[i].summary==""){
+            if(list[i].summary.trim()==""){
                 html.push('<div class="detile-info mt20 hide">');
             }else{
                 html.push('<div class="detile-info mt20">');

@@ -126,6 +126,9 @@ define(function (require) {
 
                         var path = getUrLinKey('path');
 
+                        console.log(path)
+
+
                         if ('online' === path) {
                             window.location.href = '/user/online-answer.jsp?method=ask';
                         }
