@@ -24,7 +24,8 @@
         <%--<li><a href="">官方微信</a></li>--%>
         <%--<li><a href="">新浪微博</a></li>--%>
       <%--</ul>--%>
-      <img src="/static/dist/common/images/logo.png" alt="logo" class="logo"/>
+      <img src="/static/dist/common/images/logo.png" alt="logo" class="footer-logo"/>
+      <img src="/static/dist/common/images/footer-ewm.jpg" class="footer-ewm"/>
     </div>
   </div>
   <div class="copy-right">
