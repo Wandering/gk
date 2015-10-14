@@ -87,8 +87,6 @@ public class AnswerController extends BaseController {
 //            }
 //        }
 
-        UserAccountPojo account = getUserAccountPojo();
-
         if(pageQuery==null){
             LOGGER.info("====notice findAllAnswer PARAM_ERROR ");
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
@@ -96,7 +94,7 @@ public class AnswerController extends BaseController {
 
         UserAccountBean userAccountBean = userAccountService.findUserAccountBeanByToken(userAccountPojo.getId().toString(),7);
 
-        String userId = userAccountBean.getId().toString();
+        long userId = userAccountBean.getId();
 
         List<QuestionDetailBean> questionDetailBeans = answerService.findAnswerPage(keyword,isAnswer,Long.valueOf(userId), startSize, endSize);
 
