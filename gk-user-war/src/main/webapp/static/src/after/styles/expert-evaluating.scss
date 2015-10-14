@@ -1,0 +1,238 @@
+@charset "utf-8";
+
+@import "../../common/styles/comm.scss";
+
+.mt20 {
+  margin-top: 20px;
+}
+
+.mt60 {
+  margin-top: 60px;
+}
+
+@mixin arrow-up {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid #f6f6f6;
+  position: relative;
+  top: -56px;
+}
+
+.detile-content {
+  padding-left: 20px;
+}
+
+.detile-header {
+  height: 20px;
+  font-size: 16px;
+}
+
+.order-number {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  border-radius: 10px;
+  background-color: #626161;
+  color: #dedede;
+}
+
+.detile-title {
+  color: #626161;
+  margin-left: 10px;
+}
+
+.detile-info {
+  background-color: #f6f6f6;
+  padding: 20px;
+  border: 1px solid #edecec;
+  line-height: 1.8;
+  &:before {
+    @include arrow-up;
+  }
+}
+
+.detile-content:last-child {
+  margin-bottom: 50px;
+}
+
+.search-result-num {
+  font-size: 20px;
+  color: #6f6d6d;
+
+  span {
+    font-size: 16px;
+    color: #6f6d6d;
+    margin-left: 20px;
+  }
+}
+
+.content {
+  .second-title {
+    font-size: 14px;
+    color: #858282;
+    text-align: center;
+    line-height: 50px;
+  }
+  .step-banner {
+    margin-top: 30px;
+    margin-bottom: 53px;
+    width: 1000px;
+    height: 73px;
+  }
+  table {
+    width: 100%;
+    margin-bottom: 45px;
+    .t-title {
+      line-height: 40px;
+      background-color: #f5f5f5;
+      color: #333;
+      font-size: 14px;
+      border: 1px solid $borderColor;
+      font-weight: bold;
+    }
+    .t-content {
+      line-height: 34px;
+      border: 1px solid $borderColor;
+      border-top: none;
+      text-align: left;
+      font-size: 14px;
+      text-indent: 40px;
+      p{
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+  .tip-board {
+    h2 {
+      font-size: 16px;
+      color: #8a6d3b;
+    }
+    background-color: #fcf8e3;
+    border-radius: 5px;
+    padding: 10px;
+    line-height: 12px;
+    font-size: 12px;
+    color: #8a6d45;
+    border: 1px solid #faecce;
+    margin-bottom: 40px;
+  }
+  .evaluate-count{
+    border-bottom: 1px solid $borderColor;
+    .eva-title{
+      font-size: 20px;
+      color: #52abd0;
+      margin-top: 25px;
+      line-height: 30px;
+    }
+    .row{
+      position: relative;
+      height: 200px;
+      .eva-left-bg{
+        margin: 0 30px 0;
+      }
+      .col-1-img{
+        position: absolute;
+        top:0;
+      }
+      .col-1{
+        position: absolute;
+        top: 0;
+        left: 80px;
+      }
+      .col-2{
+        position: absolute;
+        top: 48px;
+        left: 80px;
+      }
+      .col-3{
+        position: absolute;
+        top: 98px;
+        left: 80px;
+      }
+      .col-4{
+        position: absolute;
+        top: 150px;
+        left: 80px;
+      }
+      .eva{
+        position: absolute;
+        top: 60px;
+        right: 460px;
+        color: #74bbd9;
+        font-size: 20px;
+      }
+
+
+    }
+    .color-green{
+      color: #52d09c;
+    }
+    .color-red{
+      color: $mainRed;
+    }
+    .ml240{
+      margin-left: 240px;
+      display: inline-block;
+    }
+    .eva-text{
+      color: #555;
+      tab-index: 2em;
+      line-height: 22px;
+      border-top: 1px solid #e5e5e5;
+      overflow: hidden;
+      padding: 20px;
+    }
+    .navigation-box{
+      position: relative;
+      border: 2px dashed #dcdcdc;
+      height: 125px;
+      width: 100%;
+      margin: 65px auto 90px;
+      .tip{
+        color: $mainRed;
+        font-size: 14px;
+        line-height: 125px;
+        margin-left: 100px;
+      }
+      .btn{
+        border:1px solid $mainRed;
+        color: $mainRed;
+        width: 100px;
+        line-height: 40px;
+        border-radius: 3px;
+        text-align: center;
+        cursor: pointer;
+        &:hover{
+          background-color: $mainRed;
+          color: #fff;
+        }
+      }
+      .btn-next{
+        position: absolute;
+        top: 50px;
+        right: 200px;
+      }
+      .btn-before{
+        position: absolute;
+        top: 50px;
+        right: 60px;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
