@@ -483,7 +483,7 @@ input, textarea {
 
 .footer .bottom-nav {
   text-align: center;
-  height: 100px;
+  height: 163px;
   background-color: #494848;
   box-sizing: border-box; }
   .footer .bottom-nav ul {
@@ -502,12 +502,15 @@ input, textarea {
     display: inline-block;
     width: 178px;
     height: 43px;
-    margin-top: 31px; }
+    position: relative;
+    top: -10px; }
   .footer .bottom-nav .footer-ewm {
     display: inline-block;
     width: 86px;
     height: 113px;
-    margin: 29px 0 0 52px; }
+    position: relative;
+    top: 24px;
+    left: 30px; }
 
 .footer .copy-right {
   font-size: 12px;
@@ -1177,7 +1180,7 @@ input, textarea {
 
 .footer .bottom-nav {
   text-align: center;
-  height: 100px;
+  height: 163px;
   background-color: #494848;
   box-sizing: border-box; }
   .footer .bottom-nav ul {
@@ -1196,12 +1199,15 @@ input, textarea {
     display: inline-block;
     width: 178px;
     height: 43px;
-    margin-top: 31px; }
+    position: relative;
+    top: -10px; }
   .footer .bottom-nav .footer-ewm {
     display: inline-block;
     width: 86px;
     height: 113px;
-    margin: 29px 0 0 52px; }
+    position: relative;
+    top: 24px;
+    left: 30px; }
 
 .footer .copy-right {
   font-size: 12px;

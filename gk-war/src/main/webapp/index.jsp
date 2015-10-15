@@ -317,7 +317,6 @@
     </div>
 </div>
 <%@ include file="common/footer.jsp" %>
-<script type="text/javascript" src="/static/bower_components/utils/getTime.js"></script>
 <script>
     seajs.use("/static/src/index/scripts/index");
 </script>
