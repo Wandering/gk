@@ -16,16 +16,17 @@
 <style>
   /* slide */
   .slide-main{height:360px;position:relative;}
-  .prev,.next{display:block;width:44px;height:44px;position:absolute;z-index:222;top:150px;overflow:hidden;cursor:pointer;opacity:0.6;-moz-opacity:0.6;filter:alpha(opacity=60);_border:1px solid none;}
-  .prev{left:70px;}
-  .next{right:70px;}
-  .prev:hover,.next:hover,.nav-main a:hover,.nav-main a.cur{opacity:1;-moz-opacity:1;filter:alpha(opacity=100);}
-  .item{display:block;width:100%;height:5px;position:absolute;z-index:124;top:330px;left:0;text-align:center;}
-  .item a{display:inline-block;width:24px;height:5px;margin-right:11px;background:#333;opacity:0.6;-moz-opacity:0.6;filter:alpha(opacity=60);overflow:hidden;}
-  .item a.cur{background:#fff;}
-  .slide-box,.slide{display:block;width:100%;height:360px;overflow:hidden;}
-  .slide-box{position:relative;}
-  .slide{display:none;height:360px;background:#ff6900;position:relative;position:absolute;z-index:8;}
+  .slide-main .prev,.slide-main .next{display:block;width:44px;height:44px;position:absolute;z-index:222;top:150px;overflow:hidden;cursor:pointer;opacity:0.6;-moz-opacity:0.6;filter:alpha(opacity=60);_border:1px solid none;}
+  .slide-main .prev{left:70px;}
+  .slide-main .next{right:70px;}
+  .slide-main .prev:hover,.slide-main .next:hover,.slide-main .nav-main a:hover,.slide-main .nav-main a.cur{opacity:1;-moz-opacity:1;filter:alpha(opacity=100);}
+  .slide-main .item{display:block;width:100%;height:5px;position:absolute;z-index:124;top:330px;left:0;text-align:center;}
+  .slide-main .item a{display:inline-block;width:24px;height:5px;margin-right:11px;background:#333;opacity:0.6;-moz-opacity:0.6;filter:alpha(opacity=60);overflow:hidden;}
+  .slide-main .item a.cur{background:#fff;}
+  .slide-main .slide-box,.slide{display:block;width:100%;height:360px;overflow:hidden;}
+  .slide-main .slide-box{position:relative;
+    text-align: center;}
+  .slide-main .slide{display:none;height:360px;background:#ff6900;position:relative;position:absolute;z-index:8;}
   /*.slide a{display:block;width:100%;height:360px;cursor:pointer;}*/
   /*.obj-a,.obj-b,.obj-c,.obj-d,.obj-e,.obj-f{position:absolute;z-index:9;left:50%;}*/
   /*.obj-a,.obj-b{width:952px;margin-left:-476px;text-align:center;}*/
@@ -68,13 +69,13 @@ DD_belatedPNG.fix('.logo img,.prev img,.next img,img');
 <div class="slide-main" id="touchMain">
   <a class="prev" href="javascript:;" stat="prev1001"><img src="/static/src/common/images/l-btn.png" /></a>
   <div class="slide-box" id="slideContent">
-    <div class="slide" id="bgstylec" style="background: #000;">
+    <div class="slide" id="bgstylec" style="background: #ce4230;">
       <img src="/static/dist/common/images/banner-0.png" alt=""/>
     </div>
-    <div class="slide" id="bgstylea" style="background: #000;">
+    <div class="slide" id="bgstylea" style="background: #0d63b2;">
       <img src="/static/dist/common/images/banner-1.png" alt=""/>
     </div>
-    <div class="slide" id="bgstyleb" style="background: #000;">
+    <div class="slide" id="bgstyleb" style="background: #25b76f;">
       <img src="/static/dist/common/images/banner-2.png" alt=""/>
     </div>
   </div>
