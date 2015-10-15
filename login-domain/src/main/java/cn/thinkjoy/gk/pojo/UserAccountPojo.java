@@ -12,6 +12,7 @@ public class UserAccountPojo extends BaseDomain {
     private String account;
     private String password;
     private Integer userType;
+    private Integer areaId;
     private Integer vipStatus;
 
     public UserAccountPojo(){
