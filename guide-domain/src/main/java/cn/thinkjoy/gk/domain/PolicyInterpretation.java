@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
- * Project Name: jx-market
- * $Id:  PolicyInterpretation.java 2015-09-22 19:03:03 $
+ * Project Name: gk
+ * $Id:  PolicyInterpretation.java 2015-10-15 10:01:46 $
  */
 
 
@@ -26,9 +26,11 @@ public class PolicyInterpretation extends CreateBaseDomain{
     private String categoryName;
     /** 富文本内容 */
     private String content;
+    /** 区域Id */
+    private Long areaId;
 
-	public PolicyInterpretation(){
-	}
+    public PolicyInterpretation(){
+    }
     public void setProvinceId(Long value) {
         this.provinceId = value;
     }
@@ -57,35 +59,43 @@ public class PolicyInterpretation extends CreateBaseDomain{
     public String getContent() {
         return this.content;
     }
+    public void setAreaId(Long value) {
+        this.areaId = value;
+    }
 
-	public String toString() {
-		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-			.append("Id",getId())
-			.append("ProvinceId",getProvinceId())
-			.append("AdmissionBatchId",getAdmissionBatchId())
-			.append("CategoryName",getCategoryName())
-			.append("Content",getContent())
-			.append("Status",getStatus())
-			.append("Creator",getCreator())
-			.append("CreateDate",getCreateDate())
-			.append("LastModifier",getLastModifier())
-			.append("LastModDate",getLastModDate())
-			.toString();
-	}
-	
-	public int hashCode() {
-		return new HashCodeBuilder()
-			.append(getId())
-			.toHashCode();
-	}
-	
-	public boolean equals(Object obj) {
-		if(obj instanceof PolicyInterpretation == false) return false;
-		if(this == obj) return true;
-		PolicyInterpretation other = (PolicyInterpretation)obj;
-		return new EqualsBuilder()
-			.append(getId(),other.getId())
-			.isEquals();
-	}
+    public Long getAreaId() {
+        return this.areaId;
+    }
+
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+                .append("Id",getId())
+                .append("ProvinceId", getProvinceId())
+                .append("AdmissionBatchId",getAdmissionBatchId())
+                .append("CategoryName",getCategoryName())
+                .append("Content",getContent())
+                .append("Status",getStatus())
+                .append("Creator",getCreator())
+                .append("CreateDate",getCreateDate())
+                .append("LastModifier",getLastModifier())
+                .append("LastModDate",getLastModDate())
+                .append("AreaId",getAreaId())
+                .toString();
+    }
+
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getId())
+                .toHashCode();
+    }
+
+    public boolean equals(Object obj) {
+        if(obj instanceof PolicyInterpretation == false) return false;
+        if(this == obj) return true;
+        PolicyInterpretation other = (PolicyInterpretation)obj;
+        return new EqualsBuilder()
+                .append(getId(),other.getId())
+                .isEquals();
+    }
 }
 

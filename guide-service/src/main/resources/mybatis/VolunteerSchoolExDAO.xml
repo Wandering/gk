@@ -15,7 +15,8 @@
         createDate,
         lastModifier,
         lastModDate,
-        hits
+        hits,
+        areaId
     </sql>
 
     <select id="queryPage" resultType="VolunteerSchool">
@@ -30,7 +31,8 @@
         createDate,
         lastModifier,
         lastModDate,
-        hits
+        hits,
+        areaId
         FROM gk_volunteer_school
         <where>
 
@@ -73,6 +75,9 @@
             </if>
             <if test="condition.hits!=null">
                 ${condition.groupOp}   hits  ${condition.hits.op}  #{condition.hits.data}
+            </if>
+            <if test="condition.areaId!=null">
+                ${condition.groupOp}   areaId  ${condition.areaId.op}  #{condition.areaId.data}
             </if>
             <if test="condition.keyword!=null">
                 ${condition.groupOp}  ( title like CONCAT('%', #{condition.keyword} , '%')

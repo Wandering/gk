@@ -2,49 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.thinkjoy.gk.dao.IExaminationPaperDAO">
-<!--
-insert
-update
-updateNull
-deleteById
-deleteByCondition
-deleteByProperty
-fetch
-findOne
-findList
-findAll
-queryPage
-like
-queryList
-queryOne
-count
-selectMaxId
-updateOrSave
-selectOne
-selectList
--->
+    <!--
+    insert
+    update
+    updateNull
+    deleteById
+    deleteByCondition
+    deleteByProperty
+    fetch
+    findOne
+    findList
+    findAll
+    queryPage
+    like
+    queryList
+    queryOne
+    count
+    selectMaxId
+    updateOrSave
+    selectOne
+    selectList
+    -->
+
     <sql id="Base_Column_List">
-        id,
-        years,
-        sort,
-        m_beikaochongci_type_id,
-        m_beikaochongci_type,
-        subjectId,
-        paperName,
-        frontCover,
-        subContent,
-        price,
-        isAccept,
-        resources,
-        resourcesExt,
-        resourcesFilesize,
-        downloadsAutomatic,
-        downloadsManual,
-        createDate,
-        status,
-        creator,
-        lastModDate,
-        lastModifier
+        id as id ,
+        years as years ,
+        sort as sort ,
+        m_beikaochongci_type_id as mbeikaochongciTypeId ,
+        m_beikaochongci_type as mbeikaochongciType ,
+        subjectId as subjectId ,
+        paperName as paperName ,
+        frontCover as frontCover ,
+        subContent as subContent ,
+        price as price ,
+        isAccept as isAccept ,
+        resources as resources ,
+        resourcesExt as resourcesExt ,
+        resourcesFilesize as resourcesFilesize ,
+        downloadsAutomatic as downloadsAutomatic ,
+        downloadsManual as downloadsManual ,
+        createDate as createDate ,
+        status as status ,
+        creator as creator ,
+        lastModDate as lastModDate ,
+        lastModifier as lastModifier ,
+        areaId as areaId
     </sql>
     <insert id="insert" parameterType="ExaminationPaper">
         INSERT INTO gk_examination_paper (
@@ -67,7 +69,8 @@ selectList
         status,
         creator,
         lastModDate,
-        lastModifier
+        lastModifier,
+        areaId
         ) VALUES (
         #{years},
         #{sort},
@@ -88,10 +91,11 @@ selectList
         #{status},
         #{creator},
         #{lastModDate},
-        #{lastModifier}
+        #{lastModifier},
+        #{areaId}
         )
         <selectKey resultType="java.lang.Long" keyProperty="id">
-        SELECT LAST_INSERT_ID() AS ID
+            SELECT LAST_INSERT_ID() AS ID
         </selectKey>
     </insert>
 
@@ -158,6 +162,9 @@ selectList
             </if>
             <if test="lastModifier!=null">
                 lastModifier = #{lastModifier},
+            </if>
+            <if test="areaId!=null">
+                areaId = #{areaId},
             </if>
         </trim>
         WHERE
@@ -227,6 +234,9 @@ selectList
             <if test="map.lastModifier!=null">
                 lastModifier = #{map.lastModifier},
             </if>
+            <if test="map.areaId!=null">
+                areaId = #{map.areaId},
+            </if>
         </trim>
         WHERE
         id = #{map.id}
@@ -295,6 +305,9 @@ selectList
             <if test="update.lastModifier!=null">
                 lastModifier = #{update.lastModifier},
             </if>
+            <if test="update.areaId!=null">
+                areaId = #{update.areaId},
+            </if>
         </trim>
 
         <trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -361,52 +374,57 @@ selectList
             <if test="condition.lastModifier!=null">
                 AND lastModifier = #{condition.lastModifier}
             </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
         </trim>
     </update>
 
     <insert id="insertMap" >
         INSERT INTO gk_examination_paper (
-                years,
-                sort,
-                m_beikaochongci_type_id,
-                m_beikaochongci_type,
-                subjectId,
-                paperName,
-                frontCover,
-                subContent,
-                price,
-                isAccept,
-                resources,
-                resourcesExt,
-                resourcesFilesize,
-                downloadsAutomatic,
-                downloadsManual,
-                createDate,
-                status,
-                creator,
-                lastModDate,
-                lastModifier
+        years,
+        sort,
+        m_beikaochongci_type_id,
+        m_beikaochongci_type,
+        subjectId,
+        paperName,
+        frontCover,
+        subContent,
+        price,
+        isAccept,
+        resources,
+        resourcesExt,
+        resourcesFilesize,
+        downloadsAutomatic,
+        downloadsManual,
+        createDate,
+        status,
+        creator,
+        lastModDate,
+        lastModifier,
+        areaId
         ) VALUES (
-                    #{map.years},
-                    #{map.sort},
-                    #{map.mbeikaochongciTypeId},
-                    #{map.mbeikaochongciType},
-                    #{map.subjectId},
-                    #{map.paperName},
-                    #{map.frontCover},
-                    #{map.subContent},
-                    #{map.price},
-                    #{map.isAccept},
-                    #{map.resources},
-                    #{map.resourcesExt},
-                    #{map.resourcesFilesize},
-                    #{map.downloadsAutomatic},
-                    #{map.downloadsManual},
-                    #{map.createDate},
-                    #{map.status},
-                    #{map.creator},
-                    #{map.lastModDate},
-                    #{map.lastModifier}
+        #{map.years},
+        #{map.sort},
+        #{map.mbeikaochongciTypeId},
+        #{map.mbeikaochongciType},
+        #{map.subjectId},
+        #{map.paperName},
+        #{map.frontCover},
+        #{map.subContent},
+        #{map.price},
+        #{map.isAccept},
+        #{map.resources},
+        #{map.resourcesExt},
+        #{map.resourcesFilesize},
+        #{map.downloadsAutomatic},
+        #{map.downloadsManual},
+        #{map.createDate},
+        #{map.status},
+        #{map.creator},
+        #{map.lastModDate},
+        #{map.lastModifier},
+        #{map.areaId}
         )
     </insert>
 
@@ -434,9 +452,10 @@ selectList
             creator = #{creator},
             lastModDate = #{lastModDate},
             lastModifier = #{lastModifier},
+            areaId = #{areaId},
         </trim>
         WHERE
-        id = #{id} 
+        id = #{id}
     </update>
 
     <!-- 按Id删除 -->
@@ -514,6 +533,9 @@ selectList
             <if test="lastModifier!=null">
                 AND lastModifier = #{lastModifier}
             </if>
+            <if test="areaId!=null">
+                AND areaId = #{areaId}
+            </if>
         </trim>
     </delete>
 
@@ -529,9 +551,6 @@ selectList
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
-        <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
-        </if>
     </select>
 
     <select id="findOne" parameterType="java.util.Map" resultType="ExaminationPaper">
@@ -539,6 +558,9 @@ selectList
         <include refid="Base_Column_List" />
         FROM gk_examination_paper WHERE
         ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
         LIMIT 0,1
     </select>
 
@@ -572,74 +594,76 @@ selectList
             </if>
 
             <if test="condition.id!=null">
-                ${condition.groupOp}   id  ${condition.id.op}  #{condition.id.data}
+                ${condition.groupOp}   ${condition.id.field}  ${condition.id.op}  #{condition.id.data}
             </if>
             <if test="condition.years!=null">
-                ${condition.groupOp}   years  ${condition.years.op}  #{condition.years.data}
+                ${condition.groupOp}   ${condition.years.field}  ${condition.years.op}  #{condition.years.data}
             </if>
             <if test="condition.sort!=null">
-                ${condition.groupOp}   sort  ${condition.sort.op}  #{condition.sort.data}
+                ${condition.groupOp}   ${condition.sort.field}  ${condition.sort.op}  #{condition.sort.data}
             </if>
             <if test="condition.mbeikaochongciTypeId!=null">
-                ${condition.groupOp}   m_beikaochongci_type_id  ${condition.m_beikaochongci_type_id.op}  #{condition.m_beikaochongci_type_id.data}
+                ${condition.groupOp}   ${condition.mbeikaochongciTypeId.field}  ${condition.mbeikaochongciTypeId.op}  #{condition.mbeikaochongciTypeId.data}
             </if>
             <if test="condition.mbeikaochongciType!=null">
-                ${condition.groupOp}   m_beikaochongci_type  ${condition.m_beikaochongci_type.op}  #{condition.m_beikaochongci_type.data}
+                ${condition.groupOp}   ${condition.mbeikaochongciType.field}  ${condition.mbeikaochongciType.op}  #{condition.mbeikaochongciType.data}
             </if>
             <if test="condition.subjectId!=null">
-                ${condition.groupOp}   subjectId  ${condition.subjectId.op}  #{condition.subjectId.data}
+                ${condition.groupOp}   ${condition.subjectId.field}  ${condition.subjectId.op}  #{condition.subjectId.data}
             </if>
             <if test="condition.paperName!=null">
-                ${condition.groupOp}   paperName  ${condition.paperName.op}  #{condition.paperName.data}
+                ${condition.groupOp}   ${condition.paperName.field}  ${condition.paperName.op}  #{condition.paperName.data}
             </if>
             <if test="condition.frontCover!=null">
-                ${condition.groupOp}   frontCover  ${condition.frontCover.op}  #{condition.frontCover.data}
+                ${condition.groupOp}   ${condition.frontCover.field}  ${condition.frontCover.op}  #{condition.frontCover.data}
             </if>
             <if test="condition.subContent!=null">
-                ${condition.groupOp}   subContent  ${condition.subContent.op}  #{condition.subContent.data}
+                ${condition.groupOp}   ${condition.subContent.field}  ${condition.subContent.op}  #{condition.subContent.data}
             </if>
             <if test="condition.price!=null">
-                ${condition.groupOp}   price  ${condition.price.op}  #{condition.price.data}
+                ${condition.groupOp}   ${condition.price.field}  ${condition.price.op}  #{condition.price.data}
             </if>
             <if test="condition.isAccept!=null">
-                ${condition.groupOp}   isAccept  ${condition.isAccept.op}  #{condition.isAccept.data}
+                ${condition.groupOp}   ${condition.isAccept.field}  ${condition.isAccept.op}  #{condition.isAccept.data}
             </if>
             <if test="condition.resources!=null">
-                ${condition.groupOp}   resources  ${condition.resources.op}  #{condition.resources.data}
+                ${condition.groupOp}   ${condition.resources.field}  ${condition.resources.op}  #{condition.resources.data}
             </if>
             <if test="condition.resourcesExt!=null">
-                ${condition.groupOp}   resourcesExt  ${condition.resourcesExt.op}  #{condition.resourcesExt.data}
+                ${condition.groupOp}   ${condition.resourcesExt.field}  ${condition.resourcesExt.op}  #{condition.resourcesExt.data}
             </if>
             <if test="condition.resourcesFilesize!=null">
-                ${condition.groupOp}   resourcesFilesize  ${condition.resourcesFilesize.op}  #{condition.resourcesFilesize.data}
+                ${condition.groupOp}   ${condition.resourcesFilesize.field}  ${condition.resourcesFilesize.op}  #{condition.resourcesFilesize.data}
             </if>
             <if test="condition.downloadsAutomatic!=null">
-                ${condition.groupOp}   downloadsAutomatic  ${condition.downloadsAutomatic.op}  #{condition.downloadsAutomatic.data}
+                ${condition.groupOp}   ${condition.downloadsAutomatic.field}  ${condition.downloadsAutomatic.op}  #{condition.downloadsAutomatic.data}
             </if>
             <if test="condition.downloadsManual!=null">
-                ${condition.groupOp}   downloadsManual  ${condition.downloadsManual.op}  #{condition.downloadsManual.data}
+                ${condition.groupOp}   ${condition.downloadsManual.field}  ${condition.downloadsManual.op}  #{condition.downloadsManual.data}
             </if>
             <if test="condition.createDate!=null">
-                ${condition.groupOp}   createDate  ${condition.createDate.op}  #{condition.createDate.data}
+                ${condition.groupOp}   ${condition.createDate.field}  ${condition.createDate.op}  #{condition.createDate.data}
             </if>
             <if test="condition.status!=null">
-                ${condition.groupOp}   status  ${condition.status.op}  #{condition.status.data}
+                ${condition.groupOp}   ${condition.status.field}  ${condition.status.op}  #{condition.status.data}
             </if>
             <if test="condition.creator!=null">
-                ${condition.groupOp}   creator  ${condition.creator.op}  #{condition.creator.data}
+                ${condition.groupOp}   ${condition.creator.field}  ${condition.creator.op}  #{condition.creator.data}
             </if>
             <if test="condition.lastModDate!=null">
-                ${condition.groupOp}   lastModDate  ${condition.lastModDate.op}  #{condition.lastModDate.data}
+                ${condition.groupOp}   ${condition.lastModDate.field}  ${condition.lastModDate.op}  #{condition.lastModDate.data}
             </if>
             <if test="condition.lastModifier!=null">
-                ${condition.groupOp}   lastModifier  ${condition.lastModifier.op}  #{condition.lastModifier.data}
+                ${condition.groupOp}   ${condition.lastModifier.field}  ${condition.lastModifier.op}  #{condition.lastModifier.data}
+            </if>
+            <if test="condition.areaId!=null">
+                ${condition.groupOp}   ${condition.areaId.field}  ${condition.areaId.op}  #{condition.areaId.data}
             </if>
 
 
-    </where>
-
+        </where>
         <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
+            ORDER BY ${orderBy} ${sortBy}
         </if>
         <if test="offset != null">
             limit ${offset}, ${rows}
@@ -651,72 +675,75 @@ selectList
         <include refid="Base_Column_List" />
         FROM gk_examination_paper
         <trim prefix="WHERE" prefixOverrides="AND | OR">
-            <if test="id!=null">
-                AND id like CONCAT('%', #{id} , '%')
+            <if test="condition.id!=null">
+                AND id like CONCAT('%', #{condition.id} , '%')
             </if>
-            <if test="years!=null">
-                AND years like CONCAT('%', #{years} , '%')
+            <if test="condition.years!=null">
+                AND years like CONCAT('%', #{condition.years} , '%')
             </if>
-            <if test="sort!=null">
-                AND sort like CONCAT('%', #{sort} , '%')
+            <if test="condition.sort!=null">
+                AND sort like CONCAT('%', #{condition.sort} , '%')
             </if>
-            <if test="mbeikaochongciTypeId!=null">
-                AND m_beikaochongci_type_id like CONCAT('%', #{mbeikaochongciTypeId} , '%')
+            <if test="condition.mbeikaochongciTypeId!=null">
+                AND m_beikaochongci_type_id like CONCAT('%', #{condition.mbeikaochongciTypeId} , '%')
             </if>
-            <if test="mbeikaochongciType!=null">
-                AND m_beikaochongci_type like CONCAT('%', #{mbeikaochongciType} , '%')
+            <if test="condition.mbeikaochongciType!=null">
+                AND m_beikaochongci_type like CONCAT('%', #{condition.mbeikaochongciType} , '%')
             </if>
-            <if test="subjectId!=null">
-                AND subjectId like CONCAT('%', #{subjectId} , '%')
+            <if test="condition.subjectId!=null">
+                AND subjectId like CONCAT('%', #{condition.subjectId} , '%')
             </if>
-            <if test="paperName!=null">
-                AND paperName like CONCAT('%', #{paperName} , '%')
+            <if test="condition.paperName!=null">
+                AND paperName like CONCAT('%', #{condition.paperName} , '%')
             </if>
-            <if test="frontCover!=null">
-                AND frontCover like CONCAT('%', #{frontCover} , '%')
+            <if test="condition.frontCover!=null">
+                AND frontCover like CONCAT('%', #{condition.frontCover} , '%')
             </if>
-            <if test="subContent!=null">
-                AND subContent like CONCAT('%', #{subContent} , '%')
+            <if test="condition.subContent!=null">
+                AND subContent like CONCAT('%', #{condition.subContent} , '%')
             </if>
-            <if test="price!=null">
-                AND price like CONCAT('%', #{price} , '%')
+            <if test="condition.price!=null">
+                AND price like CONCAT('%', #{condition.price} , '%')
             </if>
-            <if test="isAccept!=null">
-                AND isAccept like CONCAT('%', #{isAccept} , '%')
+            <if test="condition.isAccept!=null">
+                AND isAccept like CONCAT('%', #{condition.isAccept} , '%')
             </if>
-            <if test="resources!=null">
-                AND resources like CONCAT('%', #{resources} , '%')
+            <if test="condition.resources!=null">
+                AND resources like CONCAT('%', #{condition.resources} , '%')
             </if>
-            <if test="resourcesExt!=null">
-                AND resourcesExt like CONCAT('%', #{resourcesExt} , '%')
+            <if test="condition.resourcesExt!=null">
+                AND resourcesExt like CONCAT('%', #{condition.resourcesExt} , '%')
             </if>
-            <if test="resourcesFilesize!=null">
-                AND resourcesFilesize like CONCAT('%', #{resourcesFilesize} , '%')
+            <if test="condition.resourcesFilesize!=null">
+                AND resourcesFilesize like CONCAT('%', #{condition.resourcesFilesize} , '%')
             </if>
-            <if test="downloadsAutomatic!=null">
-                AND downloadsAutomatic like CONCAT('%', #{downloadsAutomatic} , '%')
+            <if test="condition.downloadsAutomatic!=null">
+                AND downloadsAutomatic like CONCAT('%', #{condition.downloadsAutomatic} , '%')
             </if>
-            <if test="downloadsManual!=null">
-                AND downloadsManual like CONCAT('%', #{downloadsManual} , '%')
+            <if test="condition.downloadsManual!=null">
+                AND downloadsManual like CONCAT('%', #{condition.downloadsManual} , '%')
             </if>
-            <if test="createDate!=null">
-                AND createDate like CONCAT('%', #{createDate} , '%')
+            <if test="condition.createDate!=null">
+                AND createDate like CONCAT('%', #{condition.createDate} , '%')
             </if>
-            <if test="status!=null">
-                AND status like CONCAT('%', #{status} , '%')
+            <if test="condition.status!=null">
+                AND status like CONCAT('%', #{condition.status} , '%')
             </if>
-            <if test="creator!=null">
-                AND creator like CONCAT('%', #{creator} , '%')
+            <if test="condition.creator!=null">
+                AND creator like CONCAT('%', #{condition.creator} , '%')
             </if>
-            <if test="lastModDate!=null">
-                AND lastModDate like CONCAT('%', #{lastModDate} , '%')
+            <if test="condition.lastModDate!=null">
+                AND lastModDate like CONCAT('%', #{condition.lastModDate} , '%')
             </if>
-            <if test="lastModifier!=null">
-                AND lastModifier like CONCAT('%', #{lastModifier} , '%')
+            <if test="condition.lastModifier!=null">
+                AND lastModifier like CONCAT('%', #{condition.lastModifier} , '%')
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId like CONCAT('%', #{condition.areaId} , '%')
             </if>
         </trim>
         <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
+            ORDER BY ${orderBy} ${sortBy}
         </if>
     </select>
 
@@ -789,9 +816,12 @@ selectList
             <if test="condition.lastModifier!=null">
                 AND lastModifier = #{condition.lastModifier}
             </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
         </trim>
         <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
+            ORDER BY ${orderBy} ${sortBy}
         </if>
     </select>
 
@@ -863,81 +893,87 @@ selectList
             <if test="condition.lastModifier!=null">
                 AND lastModifier = #{condition.lastModifier}
             </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
         </trim>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
         limit 0,1
     </select>
 
     <select id="count" resultType="java.lang.Integer">
         SELECT count(id) FROM gk_examination_paper
-       <where>
-           <if test="id!=null">
-               ${groupOp} id ${id.op}  #{id.data}
-           </if>
-           <if test="years!=null">
-               ${groupOp} years ${years.op}  #{years.data}
-           </if>
-           <if test="sort!=null">
-               ${groupOp} sort ${sort.op}  #{sort.data}
-           </if>
-           <if test="mbeikaochongciTypeId!=null">
-               ${groupOp} m_beikaochongci_type_id ${m_beikaochongci_type_id.op}  #{m_beikaochongci_type_id.data}
-           </if>
-           <if test="mbeikaochongciType!=null">
-               ${groupOp} m_beikaochongci_type ${m_beikaochongci_type.op}  #{m_beikaochongci_type.data}
-           </if>
-           <if test="subjectId!=null">
-               ${groupOp} subjectId ${subjectId.op}  #{subjectId.data}
-           </if>
-           <if test="paperName!=null">
-               ${groupOp} paperName ${paperName.op}  #{paperName.data}
-           </if>
-           <if test="frontCover!=null">
-               ${groupOp} frontCover ${frontCover.op}  #{frontCover.data}
-           </if>
-           <if test="subContent!=null">
-               ${groupOp} subContent ${subContent.op}  #{subContent.data}
-           </if>
-           <if test="price!=null">
-               ${groupOp} price ${price.op}  #{price.data}
-           </if>
-           <if test="isAccept!=null">
-               ${groupOp} isAccept ${isAccept.op}  #{isAccept.data}
-           </if>
-           <if test="resources!=null">
-               ${groupOp} resources ${resources.op}  #{resources.data}
-           </if>
-           <if test="resourcesExt!=null">
-               ${groupOp} resourcesExt ${resourcesExt.op}  #{resourcesExt.data}
-           </if>
-           <if test="resourcesFilesize!=null">
-               ${groupOp} resourcesFilesize ${resourcesFilesize.op}  #{resourcesFilesize.data}
-           </if>
-           <if test="downloadsAutomatic!=null">
-               ${groupOp} downloadsAutomatic ${downloadsAutomatic.op}  #{downloadsAutomatic.data}
-           </if>
-           <if test="downloadsManual!=null">
-               ${groupOp} downloadsManual ${downloadsManual.op}  #{downloadsManual.data}
-           </if>
-           <if test="createDate!=null">
-               ${groupOp} createDate ${createDate.op}  #{createDate.data}
-           </if>
-           <if test="status!=null">
-               ${groupOp} status ${status.op}  #{status.data}
-           </if>
-           <if test="creator!=null">
-               ${groupOp} creator ${creator.op}  #{creator.data}
-           </if>
-           <if test="lastModDate!=null">
-               ${groupOp} lastModDate ${lastModDate.op}  #{lastModDate.data}
-           </if>
-           <if test="lastModifier!=null">
-               ${groupOp} lastModifier ${lastModifier.op}  #{lastModifier.data}
-           </if>
+        <where>
+            <if test="id!=null">
+                ${groupOp} ${id.field} ${id.op}  #{id.data}
+            </if>
+            <if test="years!=null">
+                ${groupOp} ${years.field} ${years.op}  #{years.data}
+            </if>
+            <if test="sort!=null">
+                ${groupOp} ${sort.field} ${sort.op}  #{sort.data}
+            </if>
+            <if test="mbeikaochongciTypeId!=null">
+                ${groupOp} ${mbeikaochongciTypeId.field} ${mbeikaochongciTypeId.op}  #{mbeikaochongciTypeId.data}
+            </if>
+            <if test="mbeikaochongciType!=null">
+                ${groupOp} ${mbeikaochongciType.field} ${mbeikaochongciType.op}  #{mbeikaochongciType.data}
+            </if>
+            <if test="subjectId!=null">
+                ${groupOp} ${subjectId.field} ${subjectId.op}  #{subjectId.data}
+            </if>
+            <if test="paperName!=null">
+                ${groupOp} ${paperName.field} ${paperName.op}  #{paperName.data}
+            </if>
+            <if test="frontCover!=null">
+                ${groupOp} ${frontCover.field} ${frontCover.op}  #{frontCover.data}
+            </if>
+            <if test="subContent!=null">
+                ${groupOp} ${subContent.field} ${subContent.op}  #{subContent.data}
+            </if>
+            <if test="price!=null">
+                ${groupOp} ${price.field} ${price.op}  #{price.data}
+            </if>
+            <if test="isAccept!=null">
+                ${groupOp} ${isAccept.field} ${isAccept.op}  #{isAccept.data}
+            </if>
+            <if test="resources!=null">
+                ${groupOp} ${resources.field} ${resources.op}  #{resources.data}
+            </if>
+            <if test="resourcesExt!=null">
+                ${groupOp} ${resourcesExt.field} ${resourcesExt.op}  #{resourcesExt.data}
+            </if>
+            <if test="resourcesFilesize!=null">
+                ${groupOp} ${resourcesFilesize.field} ${resourcesFilesize.op}  #{resourcesFilesize.data}
+            </if>
+            <if test="downloadsAutomatic!=null">
+                ${groupOp} ${downloadsAutomatic.field} ${downloadsAutomatic.op}  #{downloadsAutomatic.data}
+            </if>
+            <if test="downloadsManual!=null">
+                ${groupOp} ${downloadsManual.field} ${downloadsManual.op}  #{downloadsManual.data}
+            </if>
+            <if test="createDate!=null">
+                ${groupOp} ${createDate.field} ${createDate.op}  #{createDate.data}
+            </if>
+            <if test="status!=null">
+                ${groupOp} ${status.field} ${status.op}  #{status.data}
+            </if>
+            <if test="creator!=null">
+                ${groupOp} ${creator.field} ${creator.op}  #{creator.data}
+            </if>
+            <if test="lastModDate!=null">
+                ${groupOp} ${lastModDate.field} ${lastModDate.op}  #{lastModDate.data}
+            </if>
+            <if test="lastModifier!=null">
+                ${groupOp} ${lastModifier.field} ${lastModifier.op}  #{lastModifier.data}
+            </if>
+            <if test="areaId!=null">
+                ${groupOp} ${areaId.field} ${areaId.op}  #{areaId.data}
+            </if>
 
-       </where>
-    <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
-    </if>
+        </where>
     </select>
 
     <select id="selectMaxId" resultType="java.lang.Long">

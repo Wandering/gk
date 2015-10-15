@@ -1,5 +1,7 @@
 package cn.thinkjoy.gk.common;
 
+import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
+import cn.thinkjoy.gk.constant.CookieTimeConst;
 import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.constant.CookieConst;
@@ -66,6 +68,23 @@ public class BaseController{
 			}
 			RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 4L, TimeUnit.HOURS);
 		}
+	}
+
+	protected Long getAreaCookieValue() throws Exception {
+
+		String areaId = CookieUtil.getCookieValue(request.getCookies(), CookieConst.AREA_COOKIE_NAME);
+
+		if(StringUtils.isEmpty(areaId)){
+
+			areaId = "610000";
+
+			String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
+
+			response.addCookie(CookieUtil.addCookie(domain,CookieConst.AREA_COOKIE_NAME, areaId, CookieTimeConst.DEFAULT_COOKIE));
+		}
+
+		return Long.valueOf(areaId);
+
 	}
 
 }

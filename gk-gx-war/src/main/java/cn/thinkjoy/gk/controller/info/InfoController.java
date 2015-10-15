@@ -9,7 +9,6 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.service.IUserAccountService;
 import cn.thinkjoy.gk.service.IUserInfoExService;
-import cn.thinkjoy.gk.service.IUserInfoService;
 import com.jlusoft.microschool.core.utils.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -31,12 +30,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class InfoController extends BaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(InfoController.class);
-
-    @Autowired
-    private IUserInfoService userInfoService;
-
-    @Autowired
-    private cn.thinkjoy.ss.api.IUserInfoService userInfoApiService;
 
     @Autowired
     private IUserInfoExService userInfoExService;
@@ -71,53 +64,48 @@ public class InfoController extends BaseController {
 
     /**
      * 更改个人信息
+     * @param name
+     * @param countyId
+     * @param schoolName
+     * @param sex
+     * @param birthdayDate
+     * @param subjectType
+     * @param mail
+     * @param icon
+     * @param qq
      * @return
      */
     @RequestMapping(value = "updateUserInfo",method = RequestMethod.POST)
     @ResponseBody
-    public String updateUserInfo(UserInfo userInfo){
+    public String updateUserInfo(@RequestParam(value="name",required = false) String name,
+                                 @RequestParam(value="provinceId",required = false) String provinceId,
+                                 @RequestParam(value="cityId",required = false) String cityId,
+                                 @RequestParam(value="countyId",required = false) String countyId,
+                                 @RequestParam(value="schoolName",required = false) String schoolName,
+                                 @RequestParam(value="sex",required = false) int sex,
+                                 @RequestParam(value="birthdayDate",required = false) long birthdayDate,
+                                 @RequestParam(value="subjectType",required = false) int subjectType,
+                                 @RequestParam(value="mail",required = false) String mail,
+                                 @RequestParam(value="icon",required = false) String icon,
+                                 @RequestParam(value="qq",required = false) String qq
+                                 ){
         try {
-            UserAccountPojo userAccountPojo = getUserAccountPojo();
-//            UserInfo userInfo=userInfoExService.findUserInfoById(Long.valueOf(id));
-
-            Long birthdayDate = userInfo.getBirthdayDate();
-            if(null!=birthdayDate){
-                userInfo.setBirthdayDate(birthdayDate*1000);
-            }
-
-
-
-            boolean flag = false;
-
-            cn.thinkjoy.ss.domain.UserInfo ssUserInfo = new cn.thinkjoy.ss.domain.UserInfo();
-
-            String icon = userInfo.getIcon();
-
-            if(!StringUtils.isEmpty(icon)){
-                ssUserInfo.setIcon(icon);
-                userAccountPojo.setIcon(icon);
-                flag = true;
-            }
-
-            String name = userInfo.getName();
-
-            if(!StringUtils.isEmpty(name)){
-                ssUserInfo.setName(name);
-                userAccountPojo.setName(name);
-                flag = true;
-            }
-
-            if(flag){
-                userInfoApiService.updateUserInfo(ssUserInfo);
-            }
-
-            userInfoService.update(userInfo);
-
-            setUserAccountPojo(userAccountPojo);
-
-//            userInfoExService.updateUserInfoById(userInfo);
+            String id=getCookieValue();
+            UserInfo userInfo=userInfoExService.findUserInfoById(Long.valueOf(id));
+            userInfo.setName(name);
+            userInfo.setProvinceId(provinceId);
+            userInfo.setCityId(cityId);
+            userInfo.setCountyId(countyId);
+            userInfo.setSchoolName(schoolName);
+            userInfo.setSex(sex);
+            userInfo.setBirthdayDate(birthdayDate*1000);
+            userInfo.setSubjectType(subjectType);
+            userInfo.setMail(mail);
+            userInfo.setQq(qq);
+            userInfo.setIcon(icon);
+            userInfoExService.updateUserInfoById(userInfo);
         }catch (Exception e){
-            throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
+            throw e;
         }
         return "success";
     }

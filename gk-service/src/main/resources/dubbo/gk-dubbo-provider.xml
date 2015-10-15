@@ -12,8 +12,6 @@
 
     <dubbo:protocol name="dubbo" port="20880" />
 
-    <dubbo:reference id="iUserManagementFacade" interface="cn.thinkjoy.ucm.facade.IUserManagementFacade" check="false" retries="0" timeout="600000"/>
-
     <dubbo:reference id="answerService" interface="cn.thinkjoy.ss.api.IAnswerService" check="false" retries="0" timeout="600000"/>
 
     <dubbo:reference id="questionService" interface="cn.thinkjoy.ss.api.IQuestionService" check="false" retries="0" timeout="600000"/>

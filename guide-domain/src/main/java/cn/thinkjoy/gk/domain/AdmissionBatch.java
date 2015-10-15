@@ -22,6 +22,8 @@ public class AdmissionBatch extends BaseDomain{
     private String name;
 	/** 状态1显示0隐藏 */
 	private Integer status;
+	/** 区域Id */
+	private Long areaId;
 
 	public AdmissionBatch(){
 	}
@@ -40,12 +42,20 @@ public class AdmissionBatch extends BaseDomain{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	public void setAreaId(Long value) {
+		this.areaId = value;
+	}
+
+	public Long getAreaId() {
+		return this.areaId;
+	}
 
 	public String toString() {
 		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
 			.append("Id",getId())
 			.append("Name",getName())
 			.append("Status",getStatus())
+			.append("AreaId",getAreaId())
 			.toString();
 	}
 	
@@ -60,7 +70,7 @@ public class AdmissionBatch extends BaseDomain{
 		if(this == obj) return true;
 		AdmissionBatch other = (AdmissionBatch)obj;
 		return new EqualsBuilder()
-			.append(getId(),other.getId())
+			.append(getId(), other.getId())
 			.isEquals();
 	}
 }
