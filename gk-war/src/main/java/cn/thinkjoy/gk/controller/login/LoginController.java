@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.controller.login;
 
+import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.constant.*;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
@@ -67,7 +68,9 @@ public class LoginController extends BaseController {
 
 			id = userAccountBean.getId();
 
-			response.addCookie(CookieUtil.addCookie(DomainConst.GAOKAO360_NET,CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
+			String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
+
+			response.addCookie(CookieUtil.addCookie(domain,CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
 
 //			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
 
