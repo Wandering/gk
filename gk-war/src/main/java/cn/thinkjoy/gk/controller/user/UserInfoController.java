@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.controller.info;
+package cn.thinkjoy.gk.controller.user;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
@@ -10,7 +10,6 @@ import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.service.IUserAccountService;
 import cn.thinkjoy.gk.service.IUserInfoExService;
 import cn.thinkjoy.gk.service.IUserInfoService;
-import cn.thinkjoy.ss.api.IQuestionService;
 import com.jlusoft.microschool.core.utils.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -29,9 +28,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @Scope("prototype")
 @RequestMapping("/info")
-public class InfoController extends BaseController {
+public class UserInfoController extends BaseController {
 
-    private static final Logger LOGGER= LoggerFactory.getLogger(InfoController.class);
+    private static final Logger LOGGER= LoggerFactory.getLogger(UserInfoController.class);
 
     @Autowired
     private IUserInfoService userInfoService;
