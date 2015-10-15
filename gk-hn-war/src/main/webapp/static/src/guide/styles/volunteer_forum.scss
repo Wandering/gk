@@ -1,0 +1,98 @@
+@charset "utf-8";
+
+@import "../../common/styles/comm.scss";
+
+.mt20{
+  margin-top: 20px;
+}
+.mt60{
+  margin-top: 60px;
+}
+
+section:last-child {
+  margin-bottom: 50px;
+}
+
+@mixin arrow-up {
+  content: '';
+  width:0;
+  height:0;
+  border-left:20px solid transparent;
+  border-right:20px solid transparent;
+  border-bottom:20px solid #f6f6f6;
+  position: relative;
+  top: -56px;
+}
+
+.video{
+  video{
+    width: 100%;
+  }
+}
+
+.section-article{
+  margin-top: 50px;
+  width: 100%;
+  .detile-content{
+    padding-left: 20px;
+  }
+  .detile-header{
+    height: 20px;
+    font-size: 16px;
+    span.fr{
+      color: #b7b6b6;
+      font-size: 12px;
+    }
+  }
+  .order-number{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    border-radius: 10px;
+    background-color: #626161;
+    color: #dedede;
+  }
+  .detile-title{
+    color: #626161;
+    margin-left: 10px;
+  }
+  .detile-info{
+    background-color: #f6f6f6;
+    padding: 20px;
+    border: 1px solid #edecec;
+    line-height: 24px;
+    color: #606060;
+    font-size: 12px;
+    position: relative;
+    &:before{
+      //@include arrow-up;
+    }
+    img.triangle {
+      position: absolute;
+      top: -10px;
+      left: 20px;
+    }
+  }
+  h6{
+    height: 30px;
+    line-height: 30px;
+    padding-left: 30px;
+    background: url("../images/grade-icon.png") no-repeat left center;
+    color: #e24333;
+    font-size: 16px;
+    margin: 0;
+  }
+  p{
+    width: 100%;
+    line-height: 34px;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333333;
+
+    img{
+      width: 100%;
+    }
+  }
+}

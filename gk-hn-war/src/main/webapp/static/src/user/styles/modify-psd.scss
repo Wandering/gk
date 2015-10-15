@@ -1,0 +1,53 @@
+@charset "utf-8";
+@import "../../common/styles/comm";
+.personal-tab {
+  position: relative;
+  margin-top: 20px;
+  top: 1px;
+  .active {
+    a {
+      color: $mainRed !important;
+    }
+  }
+}
+.content{
+  font-size: 14px;
+  margin-top: 80px;
+  .input-item-comm{
+    margin: 25px 0;
+    .w-title{
+      width: 100px;
+      text-align: right;
+      display: inline-block;
+      margin-right: 25px;
+    }
+    .error-tips{
+      color: $mainRed;
+      font-size: 14px;
+      display: inline-block;
+      margin-left: 20px;
+    }
+    .error-bd{
+      border:1px solid $mainRed;
+    }
+  }
+  .comm-psd{
+    height: 35px;
+    width: 315px;
+    border:1px solid $borderColor;
+    border-radius: 3px;
+    padding:0 10px;
+  }
+  .btn-submit{
+    margin: 85px 0 85px 125px;
+    color: #fff;
+    background-color: $mainRed;
+    width: 300px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    border-radius: 3px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+}

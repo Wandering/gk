@@ -160,7 +160,7 @@
   .bottom-nav {
 //    padding-top: 50px;
     text-align: center;
-    height: 100px;
+    height: 163px;
     background-color: $secondColor;
     box-sizing: border-box;
     ul {
@@ -182,13 +182,16 @@
       display: inline-block;
       width: 178px;
       height: 43px;
-      margin-top: 31px;
+      position: relative;
+      top:-10px;
     }
     .footer-ewm {
       display: inline-block;
       width: 86px;
       height: 113px;
-      margin: 29px 0 0 52px;
+      position: relative;
+      top: 24px;
+      left: 30px;
     }
   }
   .copy-right {

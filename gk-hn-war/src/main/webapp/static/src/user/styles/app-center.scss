@@ -1,0 +1,45 @@
+@charset "utf-8";
+@import "../../common/styles/comm";
+
+.personal-tab {
+  position: relative;
+  margin-top: 20px;
+  top: 1px;
+  .active {
+    a {
+      color: $mainRed !important;
+    }
+  }
+}
+.content{
+  margin: 30px 0;
+  height: 560px;
+  border:1px solid $borderColor;
+  border-right: none;
+  border-bottom: none;
+  .row{
+    .col-3{
+      cursor: pointer;
+      padding-top:50px;
+      text-align: center;
+      float: left;
+      width: 33.333%;
+      height: 280px;
+      box-sizing: border-box;
+      border-right: 1px solid $borderColor;
+      border-bottom: 1px solid $borderColor;
+      .app-icon{
+        font-size: 18px;
+        color: #333333;
+      }
+      img{
+        transition: all .8s;
+        &:hover{
+          -webkit-transform:scale(1.3,1.3);
+          -moz-transform:scale(1.3,1.3);
+          -transform:scale(1.3,1.3);
+        }
+      }
+    }
+  }
+}
