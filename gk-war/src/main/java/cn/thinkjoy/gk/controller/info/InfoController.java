@@ -86,8 +86,6 @@ public class InfoController extends BaseController {
                 userInfo.setBirthdayDate(birthdayDate*1000);
             }
 
-
-
             boolean flag = false;
 
             cn.thinkjoy.ss.domain.UserInfo ssUserInfo = new cn.thinkjoy.ss.domain.UserInfo();
