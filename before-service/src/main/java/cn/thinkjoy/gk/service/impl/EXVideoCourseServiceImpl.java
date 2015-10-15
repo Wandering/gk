@@ -21,7 +21,7 @@ public class EXVideoCourseServiceImpl implements IEXVideoCourseService{
      * @return
      */
     @Override
-    public List<VideoCoursePojo> getVideoListByParams(Long subjectId,Integer classifyType,Integer sortType,String searchName,Integer offset,Integer rows) {
-        return iexVideoCourseDAO.getVideoListByParams(subjectId,classifyType,sortType,searchName,offset,rows);
+    public List<VideoCoursePojo> getVideoListByParams(Long subjectId,Integer classifyType,Integer sortType,String searchName,Integer offset,Integer rows,long areaId) {
+        return iexVideoCourseDAO.getVideoListByParams(subjectId,classifyType,sortType,searchName,offset,rows,areaId);
     }
 }

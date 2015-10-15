@@ -31,9 +31,11 @@ public class PolicyInterpretationController extends BaseController {
 
     @RequestMapping(value = "/admissionBatchs", method = RequestMethod.GET)
     @ResponseBody
-    public List<AdmissionBatch> getAdmissionBatchs() {
+    public List<AdmissionBatch> getAdmissionBatchs() throws Exception{
+        long areaId=getAreaCookieValue();
         Map<String, Object> conditions = Maps.newHashMap();
         conditions.put("status", 1);
+        conditions.put("areaId", areaId);
         List<AdmissionBatch> admissionBatchList = admissionBatchService.queryList(conditions, null, null);
         return admissionBatchList;
     }
@@ -48,10 +50,12 @@ public class PolicyInterpretationController extends BaseController {
 
     @RequestMapping(value = "/allCategories", method = RequestMethod.GET)
     @ResponseBody
-    public List<PolicyInterpretationCategory> getAllPolicyInterpretationCategory(@RequestParam("provinceId") long provinceId) {
+    public List<PolicyInterpretationCategory> getAllPolicyInterpretationCategory(@RequestParam("provinceId") long provinceId) throws Exception{
+        long areaId=getAreaCookieValue();
         List<PolicyInterpretationCategory> allCategory = Lists.newArrayList();
         Map<String, Object> conditions = Maps.newHashMap();
         conditions.put("status", 1);
+        conditions.put("areaId",areaId);
         List<AdmissionBatch> admissionBatchList = admissionBatchService.queryList(conditions, null, null);
         if (admissionBatchList != null) {
             for (AdmissionBatch batch: admissionBatchList) {
