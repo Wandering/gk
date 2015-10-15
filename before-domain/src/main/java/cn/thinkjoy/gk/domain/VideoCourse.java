@@ -1,9 +1,11 @@
 /*
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
- * Project Name: before
- * $Id:  VideoCourse.java 2015-09-23 10:30:50 $
+ * Project Name: gk
+ * $Id:  VideoCourse.java 2015-10-14 17:47:36 $
  */
+
+
 
 
 
@@ -15,25 +17,44 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import cn.thinkjoy.common.domain.CreateBaseDomain;
 
-public class VideoCourse extends CreateBaseDomain{
-    private Long classifyId;
-    private Long teacherId;
-    private Long subjectId;
-    private Integer managerId;
-    private String teacher;
-    private String title;
-    private String content;
-    private String frontCover;
-    private String subcontent;
-    private Integer hit;
-    private String years;
-    private String beikaochongciType;
-    private String courseSort;
-    private String frontcover1;
-    private Integer isAccept;
+import java.util.*;
 
-	public VideoCourse(){
-	}
+public class VideoCourse extends CreateBaseDomain{
+    /** 分类ID */
+    private Long classifyId;
+    /** 教师ID */
+    private Long teacherId;
+    /** 科目ID */
+    private Long subjectId;
+    /** managerId */
+    private Integer managerId;
+    /** 教师名称 */
+    private String teacher;
+    /** 视频标题 */
+    private String title;
+    /** 信息内容 */
+    private String content;
+    /** 信息封面 */
+    private String frontCover;
+    /** 简介 */
+    private String subcontent;
+    /** 点击次数 */
+    private Integer hit;
+    /** 年份 */
+    private String years;
+    /** 备考冲刺分类名称 */
+    private String beikaochongciType;
+    /** 排序 */
+    private String courseSort;
+    /** 信息封面 */
+    private String frontcover1;
+    /** 是否可以进入 */
+    private Integer isAccept;
+    /** 区域Id */
+    private Long areaId;
+
+    public VideoCourse(){
+    }
     public void setClassifyId(Long value) {
         this.classifyId = value;
     }
@@ -139,46 +160,54 @@ public class VideoCourse extends CreateBaseDomain{
     public Integer getIsAccept() {
         return this.isAccept;
     }
+    public void setAreaId(Long value) {
+        this.areaId = value;
+    }
 
-	public String toString() {
-		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-			.append("Id",getId())
-			.append("ClassifyId",getClassifyId())
-			.append("TeacherId",getTeacherId())
-			.append("SubjectId",getSubjectId())
-			.append("ManagerId",getManagerId())
-			.append("Teacher",getTeacher())
-			.append("Title",getTitle())
-			.append("Content",getContent())
-			.append("FrontCover",getFrontCover())
-			.append("Subcontent",getSubcontent())
-			.append("Hit",getHit())
-			.append("Years",getYears())
-			.append("BeikaochongciType",getBeikaochongciType())
-			.append("CourseSort",getCourseSort())
-			.append("Frontcover1",getFrontcover1())
-			.append("IsAccept",getIsAccept())
-			.append("CreateDate",getCreateDate())
-			.append("Status",getStatus())
-			.append("Creator",getCreator())
-			.append("LastModDate",getLastModDate())
-			.append("LastModifier",getLastModifier())
-			.toString();
-	}
-	
-	public int hashCode() {
-		return new HashCodeBuilder()
-			.append(getId())
-			.toHashCode();
-	}
-	
-	public boolean equals(Object obj) {
-		if(obj instanceof VideoCourse == false) return false;
-		if(this == obj) return true;
-		VideoCourse other = (VideoCourse)obj;
-		return new EqualsBuilder()
-			.append(getId(),other.getId())
-			.isEquals();
-	}
+    public Long getAreaId() {
+        return this.areaId;
+    }
+
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+                .append("Id",getId())
+                .append("ClassifyId", getClassifyId())
+                .append("TeacherId",getTeacherId())
+                .append("SubjectId",getSubjectId())
+                .append("ManagerId",getManagerId())
+                .append("Teacher",getTeacher())
+                .append("Title",getTitle())
+                .append("Content",getContent())
+                .append("FrontCover",getFrontCover())
+                .append("Subcontent",getSubcontent())
+                .append("Hit",getHit())
+                .append("Years",getYears())
+                .append("BeikaochongciType",getBeikaochongciType())
+                .append("CourseSort",getCourseSort())
+                .append("Frontcover1",getFrontcover1())
+                .append("IsAccept",getIsAccept())
+                .append("CreateDate",getCreateDate())
+                .append("Status",getStatus())
+                .append("Creator",getCreator())
+                .append("LastModDate",getLastModDate())
+                .append("LastModifier",getLastModifier())
+                .append("AreaId",getAreaId())
+                .toString();
+    }
+
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getId())
+                .toHashCode();
+    }
+
+    public boolean equals(Object obj) {
+        if(obj instanceof VideoCourse == false) return false;
+        if(this == obj) return true;
+        VideoCourse other = (VideoCourse)obj;
+        return new EqualsBuilder()
+                .append(getId(),other.getId())
+                .isEquals();
+    }
 }
 

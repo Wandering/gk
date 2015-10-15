@@ -13,6 +13,9 @@
         <if test="searchName != null">
            AND paperName LIKE  CONCAT('%', #{searchName} , '%')
         </if>
+        <if test="areaId != null">
+            AND areaId = #{areaId}
+        </if>
         <if test="sortType == 1">
             ORDER BY createDate DESC
         </if>

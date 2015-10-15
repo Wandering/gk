@@ -14,6 +14,9 @@
         provinceId = #{provinceId}
         AND
         status = 1
+        <if test="areaId != null">
+            AND areaId = #{areaId}
+        </if>
     </select>
 
 
