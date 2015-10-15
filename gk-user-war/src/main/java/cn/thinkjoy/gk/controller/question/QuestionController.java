@@ -65,7 +65,6 @@ public class QuestionController extends BaseController {
             endSize = 10;
         }
 
-
         Integer freeStatus = null;
 
 //        String word = null;
