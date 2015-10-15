@@ -44,7 +44,8 @@
         <li><a href="/user/online-answer.jsp">在线答疑</a></li>
         <li><a href="/user/expert-service.jsp">专家服务</a></li>
         <li><a href="/user/modify-psd.jsp">修改密码</a></li>
-        <li><a href="javascript:;">退出</a></li>
+        <%--<li><a href="javascript:;" id="logout-btn">退出</a></li>--%>
+        <li><a href="/login/logout.do">退出</a></li>
       </ul>
     </div>
   </div>
