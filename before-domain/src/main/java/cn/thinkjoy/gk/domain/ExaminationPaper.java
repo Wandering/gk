@@ -1,9 +1,11 @@
 /*
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
- * Project Name: before
- * $Id:  ExaminationPaper.java 2015-09-23 10:30:48 $
+ * Project Name: gk
+ * $Id:  ExaminationPaper.java 2015-10-15 11:37:03 $
  */
+
+
 
 
 
@@ -15,25 +17,44 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import cn.thinkjoy.common.domain.CreateBaseDomain;
 
-public class ExaminationPaper extends CreateBaseDomain{
-    private String years;
-    private Integer sort;
-    private Long mbeikaochongciTypeId;
-    private String mbeikaochongciType;
-    private Long subjectId;
-    private String paperName;
-    private String frontCover;
-    private String subContent;
-    private Double price;
-    private Integer isAccept;
-    private String resources;
-    private String resourcesExt;
-    private String resourcesFilesize;
-    private Integer downloadsAutomatic;
-    private Integer downloadsManual;
+import java.util.*;
 
-	public ExaminationPaper(){
-	}
+public class ExaminationPaper extends CreateBaseDomain{
+    /** 年份 */
+    private String years;
+    /** 排序 */
+    private Integer sort;
+    /** 备考冲刺分类ＩＤ */
+    private Long mbeikaochongciTypeId;
+    /** 备考冲刺分类名称 */
+    private String mbeikaochongciType;
+    /** 科目ＩＤ */
+    private Long subjectId;
+    /** 试卷名称 */
+    private String paperName;
+    /** 信息封面 */
+    private String frontCover;
+    /** 简介 */
+    private String subContent;
+    /** 价格 */
+    private Double price;
+    /** 是否进入 */
+    private Integer isAccept;
+    /** 站内资源 */
+    private String resources;
+    /** 资源扩展名 */
+    private String resourcesExt;
+    /** 资源大小 */
+    private String resourcesFilesize;
+    /** 下载次数 */
+    private Integer downloadsAutomatic;
+    /** 下载次数 */
+    private Integer downloadsManual;
+    /** 区域Id */
+    private Long areaId;
+
+    public ExaminationPaper(){
+    }
     public void setYears(String value) {
         this.years = value;
     }
@@ -139,46 +160,54 @@ public class ExaminationPaper extends CreateBaseDomain{
     public Integer getDownloadsManual() {
         return this.downloadsManual;
     }
+    public void setAreaId(Long value) {
+        this.areaId = value;
+    }
 
-	public String toString() {
-		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-			.append("Id",getId())
-			.append("Years",getYears())
-			.append("Sort",getSort())
-			.append("MbeikaochongciTypeId",getMbeikaochongciTypeId())
-			.append("MbeikaochongciType",getMbeikaochongciType())
-			.append("SubjectId",getSubjectId())
-			.append("PaperName",getPaperName())
-			.append("FrontCover",getFrontCover())
-			.append("SubContent",getSubContent())
-			.append("Price",getPrice())
-			.append("IsAccept",getIsAccept())
-			.append("Resources",getResources())
-			.append("ResourcesExt",getResourcesExt())
-			.append("ResourcesFilesize",getResourcesFilesize())
-			.append("DownloadsAutomatic",getDownloadsAutomatic())
-			.append("DownloadsManual",getDownloadsManual())
-			.append("CreateDate",getCreateDate())
-			.append("Status",getStatus())
-			.append("Creator",getCreator())
-			.append("LastModDate",getLastModDate())
-			.append("LastModifier",getLastModifier())
-			.toString();
-	}
-	
-	public int hashCode() {
-		return new HashCodeBuilder()
-			.append(getId())
-			.toHashCode();
-	}
-	
-	public boolean equals(Object obj) {
-		if(obj instanceof ExaminationPaper == false) return false;
-		if(this == obj) return true;
-		ExaminationPaper other = (ExaminationPaper)obj;
-		return new EqualsBuilder()
-			.append(getId(),other.getId())
-			.isEquals();
-	}
+    public Long getAreaId() {
+        return this.areaId;
+    }
+
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+                .append("Id",getId())
+                .append("Years", getYears())
+                .append("Sort",getSort())
+                .append("MbeikaochongciTypeId",getMbeikaochongciTypeId())
+                .append("MbeikaochongciType",getMbeikaochongciType())
+                .append("SubjectId",getSubjectId())
+                .append("PaperName",getPaperName())
+                .append("FrontCover",getFrontCover())
+                .append("SubContent",getSubContent())
+                .append("Price",getPrice())
+                .append("IsAccept",getIsAccept())
+                .append("Resources",getResources())
+                .append("ResourcesExt",getResourcesExt())
+                .append("ResourcesFilesize",getResourcesFilesize())
+                .append("DownloadsAutomatic",getDownloadsAutomatic())
+                .append("DownloadsManual",getDownloadsManual())
+                .append("CreateDate",getCreateDate())
+                .append("Status",getStatus())
+                .append("Creator",getCreator())
+                .append("LastModDate",getLastModDate())
+                .append("LastModifier",getLastModifier())
+                .append("AreaId",getAreaId())
+                .toString();
+    }
+
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getId())
+                .toHashCode();
+    }
+
+    public boolean equals(Object obj) {
+        if(obj instanceof ExaminationPaper == false) return false;
+        if(this == obj) return true;
+        ExaminationPaper other = (ExaminationPaper)obj;
+        return new EqualsBuilder()
+                .append(getId(),other.getId())
+                .isEquals();
+    }
 }
 

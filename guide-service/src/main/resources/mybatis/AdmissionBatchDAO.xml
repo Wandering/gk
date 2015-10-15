@@ -2,42 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.thinkjoy.gk.dao.IAdmissionBatchDAO">
-<!--
-insert
-update
-updateNull
-deleteById
-deleteByCondition
-deleteByProperty
-fetch
-findOne
-findList
-findAll
-queryPage
-like
-queryList
-queryOne
-count
-selectMaxId
-updateOrSave
-selectOne
-selectList
--->
+    <!--
+    insert
+    update
+    updateNull
+    deleteById
+    deleteByCondition
+    deleteByProperty
+    fetch
+    findOne
+    findList
+    findAll
+    queryPage
+    like
+    queryList
+    queryOne
+    count
+    selectMaxId
+    updateOrSave
+    selectOne
+    selectList
+    -->
+
     <sql id="Base_Column_List">
-        id,
-        name,
-        status
+        id as id ,
+        name as name ,
+        status as status ,
+        areaId as areaId
     </sql>
     <insert id="insert" parameterType="AdmissionBatch">
         INSERT INTO gk_admission_batch (
         name,
-        status
+        status,
+        areaId
         ) VALUES (
         #{name},
-        #{status}
+        #{status},
+        #{areaId}
         )
         <selectKey resultType="java.lang.Long" keyProperty="id">
-        SELECT LAST_INSERT_ID() AS ID
+            SELECT LAST_INSERT_ID() AS ID
         </selectKey>
     </insert>
 
@@ -50,6 +54,9 @@ selectList
             </if>
             <if test="status!=null">
                 status = #{status},
+            </if>
+            <if test="areaId!=null">
+                areaId = #{areaId},
             </if>
         </trim>
         WHERE
@@ -65,6 +72,9 @@ selectList
             <if test="map.status!=null">
                 status = #{map.status},
             </if>
+            <if test="map.areaId!=null">
+                areaId = #{map.areaId},
+            </if>
         </trim>
         WHERE
         id = #{map.id}
@@ -79,6 +89,9 @@ selectList
             <if test="update.status!=null">
                 status = #{update.status},
             </if>
+            <if test="update.areaId!=null">
+                areaId = #{update.areaId},
+            </if>
         </trim>
 
         <trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -91,16 +104,21 @@ selectList
             <if test="condition.status!=null">
                 AND status = #{condition.status}
             </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
         </trim>
     </update>
 
     <insert id="insertMap" >
         INSERT INTO gk_admission_batch (
-                name,
-                status
+        name,
+        status,
+        areaId
         ) VALUES (
-                    #{map.name},
-                    #{map.status}
+        #{map.name},
+        #{map.status},
+        #{map.areaId}
         )
     </insert>
 
@@ -110,9 +128,10 @@ selectList
         <trim prefix="SET" suffixOverrides=",">
             name = #{name},
             status = #{status},
+            areaId = #{areaId},
         </trim>
         WHERE
-        id = #{id} 
+        id = #{id}
     </update>
 
     <!-- 按Id删除 -->
@@ -135,6 +154,9 @@ selectList
             </if>
             <if test="status!=null">
                 AND status = #{status}
+            </if>
+            <if test="areaId!=null">
+                AND areaId = #{areaId}
             </if>
         </trim>
     </delete>
@@ -194,19 +216,22 @@ selectList
             </if>
 
             <if test="condition.id!=null">
-                ${condition.groupOp}   id  ${condition.id.op}  #{condition.id.data}
+                ${condition.groupOp}   ${condition.id.field}  ${condition.id.op}  #{condition.id.data}
             </if>
             <if test="condition.name!=null">
-                ${condition.groupOp}   name  ${condition.name.op}  #{condition.name.data}
+                ${condition.groupOp}   ${condition.name.field}  ${condition.name.op}  #{condition.name.data}
             </if>
             <if test="condition.status!=null">
-                ${condition.groupOp}   status  ${condition.status.op}  #{condition.status.data}
+                ${condition.groupOp}   ${condition.status.field}  ${condition.status.op}  #{condition.status.data}
+            </if>
+            <if test="condition.areaId!=null">
+                ${condition.groupOp}   ${condition.areaId.field}  ${condition.areaId.op}  #{condition.areaId.data}
             </if>
 
 
-    </where>
+        </where>
         <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
+            ORDER BY ${orderBy} ${sortBy}
         </if>
         <if test="offset != null">
             limit ${offset}, ${rows}
@@ -227,9 +252,12 @@ selectList
             <if test="condition.status!=null">
                 AND status like CONCAT('%', #{condition.status} , '%')
             </if>
+            <if test="condition.areaId!=null">
+                AND areaId like CONCAT('%', #{condition.areaId} , '%')
+            </if>
         </trim>
         <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
+            ORDER BY ${orderBy} ${sortBy}
         </if>
     </select>
 
@@ -248,9 +276,12 @@ selectList
             <if test="condition.status!=null">
                 AND status = #{condition.status}
             </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
         </trim>
         <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
+            ORDER BY ${orderBy} ${sortBy}
         </if>
     </select>
 
@@ -268,27 +299,33 @@ selectList
             <if test="condition.status!=null">
                 AND status = #{condition.status}
             </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
         </trim>
         <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
+            ORDER BY ${orderBy} ${sortBy}
         </if>
         limit 0,1
     </select>
 
     <select id="count" resultType="java.lang.Integer">
         SELECT count(id) FROM gk_admission_batch
-       <where>
-           <if test="id!=null">
-               ${groupOp} id ${id.op}  #{id.data}
-           </if>
-           <if test="name!=null">
-               ${groupOp} name ${name.op}  #{name.data}
-           </if>
-           <if test="status!=null">
-               ${groupOp} status ${status.op}  #{status.data}
-           </if>
+        <where>
+            <if test="id!=null">
+                ${groupOp} ${id.field} ${id.op}  #{id.data}
+            </if>
+            <if test="name!=null">
+                ${groupOp} ${name.field} ${name.op}  #{name.data}
+            </if>
+            <if test="status!=null">
+                ${groupOp} ${status.field} ${status.op}  #{status.data}
+            </if>
+            <if test="areaId!=null">
+                ${groupOp} ${areaId.field} ${areaId.op}  #{areaId.data}
+            </if>
 
-       </where>
+        </where>
     </select>
 
     <select id="selectMaxId" resultType="java.lang.Long">
