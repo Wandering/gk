@@ -24,8 +24,8 @@ public class EXPaperServiceImpl implements IEXPaperService{
      * @return
      */
     @Override
-    public List<ExaminationPaper> getPaperPage(Long subjectId,Integer sortType,String years,String searchName, Integer offSet, Integer pageSize) {
+    public List<ExaminationPaper> getPaperPage(Long subjectId,Integer sortType,String years,String searchName, Integer offSet, Integer pageSize,long areaId) {
 
-        return paperDAO.getPaperPage(subjectId,sortType,years,searchName,offSet,pageSize);
+        return paperDAO.getPaperPage(subjectId,sortType,years,searchName,offSet,pageSize,areaId);
     }
 }
