@@ -29,10 +29,12 @@
     </div>
   </div>
   <div class="copy-right">
-    <p class="w1000">联系信息:E-mail:cewfefe@163.com QQ:5454555 备案号:陕ICP备343454135-1号 [站长统计]</p>
+    <p class="w1000">联系信息:E-mail:cewfefe@163.com QQ:5454555 备案号:陕ICP备343454135-1号 [站长统计]
+      <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256565213'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1256565213%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+    </p>
   </div>
 </div>
-<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256565213'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1256565213%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
 <%--<a class="top" href="javascript:void(0)" onclick="window.scrollTo(0, 0)">--%>
   <%--<img src="/static/dist/common/images/icon-top.png" />--%>
 <%--</a>--%>

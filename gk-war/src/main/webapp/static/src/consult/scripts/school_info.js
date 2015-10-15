@@ -57,6 +57,7 @@ define(function(require) {
             });
         },
         renderSchool: function(data) {
+            console.log(data)
             var html = [],
                 i = 0,
                 len = data.length;
