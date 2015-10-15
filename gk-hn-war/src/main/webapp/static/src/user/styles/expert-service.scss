@@ -1,0 +1,105 @@
+@charset "utf-8";
+@import "../../common/styles/comm";
+
+.personal-tab {
+  position: relative;
+  margin-top: 20px;
+  .active {
+    a {
+      color: $mainRed !important;
+    }
+  }
+}
+
+.content {
+  min-height: 440px;
+  overflow: hidden;
+  .search-content {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: right;
+    span {
+      display: inline-block;
+      overflow: hidden;
+    }
+    input {
+      height: 40px;
+      line-height: 38px;
+      margin: 0;
+      padding: 0;
+      outline: none;
+      float: left;
+    }
+    a {
+      width: 128px;
+      height: 38px;
+      text-align: center;
+      line-height: 38px;
+      border-radius: 5px;
+      border: 1px solid #e24333;
+      background: #e24333;
+      float: left;
+      margin-left: 10px;
+      color: #fff;
+      font-size: 16px;
+    }
+    input[type="text"] {
+      width: 265px;
+      border: 1px solid #e24333;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      height: 38px;
+      padding-left: 10px;
+    }
+    input[type="button"] {
+      width: 90px;
+      background: #e24333 url('../../common/images/search-icon.png') no-repeat 15px center;
+      border: 1px solid #e24333;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      color: #fff;
+      padding-left: 10px;
+    }
+  }
+  .content-list {
+    border-top: 2px solid $borderColor;
+    padding-bottom: 80px;
+  }
+  .no-msg {
+    text-align: center;
+    padding-top: 150px;
+    p{
+      font-size: 16px;
+      color: #b0b0b0;
+    }
+  }
+  .row, .content-title-list {
+    display: block;
+    height: 45px;
+    line-height: 45px;
+    width: 100%;
+    border-bottom: 1px solid $borderColor;
+    .t-indent {
+      text-indent: 200px;
+      background-color: #f1f1f1;
+    }
+    .t-time {
+
+      background-color: #f1f1f1;
+    }
+    .col-3 {
+      float: left;
+      box-sizing: border-box;
+      width: 79.999%;
+      height: 45px;
+      overflow: hidden;
+    }
+    .col-1 {
+      text-align: center;
+      float: left;
+      box-sizing: border-box;
+      width: 19.999%;
+    }
+  }
+}
+
