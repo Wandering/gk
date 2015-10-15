@@ -10,8 +10,8 @@
 
     <import resource="classpath:springme.xml" />
 
-    <!--默认的redis配置，启动时会建立连接-->
-    <!--<import resource="classpath*:spring-redis.xml" />-->
+    <!-- 引入dubbo配置文件 请根据需要更改-->
+    <import resource="classpath:dubbo/gk-dubbo-provider.xml" />
 
     <bean id="redisUtil" class="cn.thinkjoy.gk.util.RedisUtil">
         <property name="redisRepository" ref="redisRepository"/>

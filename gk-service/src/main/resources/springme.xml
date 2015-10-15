@@ -29,9 +29,6 @@
     <context:component-scan base-package="cn.thinkjoy" />
     <aop:aspectj-autoproxy />
 
-    <!-- 引入dubbo配置文件 请根据需要更改-->
-    <import resource="classpath:dubbo/gk-dubbo-provider.xml" />
-
     <!-- 默认的redis配置，启动时会建立连接 -->
     <import resource="classpath*:spring-redis.xml" />
     <!-- ucm的配置文件，用于统一登录 -->
