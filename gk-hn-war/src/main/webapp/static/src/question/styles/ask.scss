@@ -1,0 +1,98 @@
+@charset "utf-8";
+
+@import "../../common/styles/comm.scss";
+@import "common";
+
+html,body{
+  height: 100%;
+}
+
+button{
+  border: none;
+  outline: none;
+}
+
+.ask-title{
+
+  margin-bottom: 50px;
+  input{
+    width: 980px;
+    border: 1px solid #e7e7e7;
+    padding: 10px;
+  }
+
+  textarea{
+    width:1000px;
+    height: 200px;
+    visibility: hidden;
+  }
+
+  button{
+    width: 122px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background-color: #e24d39;
+    color: #fff;
+    margin-top: 20px;
+  }
+}
+
+.custom-model{
+  background: rgba(0,0,0,.2);
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+
+  .custom-content{
+    width: 604px;
+    height: 286px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -302px;
+    margin-top: -143px;
+    background-color: #fff;
+    overflow: hidden;
+    border-radius: 5px;
+    
+    .custom-head{
+      width: 100%;
+      height: 65px;
+      line-height: 65px;
+      font-size: 24px;
+      text-align: center;
+      background-color: #f5f5f5;
+      border-bottom: 1px solid #d9d9d9;
+    }
+
+    .custom-body{
+      width: 100%;
+      height: 160px;
+      text-align: center;
+      .error-contnet{
+        padding: 10px 0;
+        text-align: center;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+    }
+
+    .custom-footer{
+      width: 100%;
+      height: 60px;
+      position: absolute;
+      left: 0;
+      bottom: 30px;
+      button{
+        width: 122px;
+        height: 40px;
+        background-color: #e24d39;
+        color: #fff;
+      }
+    }
+  }
+}
