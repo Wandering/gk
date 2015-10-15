@@ -481,7 +481,6 @@ input, textarea {
   bottom: 50px;
   z-index: 222; }
 
-/* submenu styles */
 .footer .bottom-nav {
   text-align: center;
   height: 100px;
@@ -506,8 +505,8 @@ input, textarea {
     margin-top: 31px; }
   .footer .bottom-nav .footer-ewm {
     display: inline-block;
-    width: 48px;
-    height: 48px;
+    width: 86px;
+    height: 113px;
     margin: 29px 0 0 52px; }
 
 .footer .copy-right {
