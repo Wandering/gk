@@ -93,7 +93,8 @@ public class LoginController extends BaseController {
 //		boolean status = true;
 		try {
 //			RedisUtil.getInstance().del(UserRedisConst.USER_KEY + getCookieValue());
-			response.addCookie(CookieUtil.addCookie(DomainConst.GAOKAO360_NET,CookieConst.USER_COOKIE_NAME, "", CookieTimeConst.CLEAN_COOKIE));
+			String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
+			response.addCookie(CookieUtil.addCookie(domain,CookieConst.USER_COOKIE_NAME, "", CookieTimeConst.CLEAN_COOKIE));
 		}catch(Exception e){
 //			status = false;
 			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
