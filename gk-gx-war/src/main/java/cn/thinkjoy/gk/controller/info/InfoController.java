@@ -10,6 +10,7 @@ import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.service.IUserAccountService;
 import cn.thinkjoy.gk.service.IUserInfoExService;
 import cn.thinkjoy.gk.service.IUserInfoService;
+import cn.thinkjoy.ss.api.IQuestionService;
 import com.jlusoft.microschool.core.utils.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -36,9 +37,6 @@ public class InfoController extends BaseController {
     private IUserInfoService userInfoService;
 
     @Autowired
-    private cn.thinkjoy.ss.api.IUserInfoService userInfoApiService;
-
-    @Autowired
     private IUserInfoExService userInfoExService;
 
     @Autowired
@@ -46,6 +44,9 @@ public class InfoController extends BaseController {
 
     @Autowired
     private IUserAccountService userAccountService;
+
+    @Autowired
+    private cn.thinkjoy.ss.api.IUserInfoService userInfoApiService;
 
     /**
      * 查询显示个人信息
@@ -110,6 +111,8 @@ public class InfoController extends BaseController {
             if(flag){
                 userInfoApiService.updateUserInfo(ssUserInfo);
             }
+
+            userInfo.setId(userAccountPojo.getId());
 
             userInfoService.update(userInfo);
 
