@@ -3,6 +3,7 @@ package cn.thinkjoy.gk.interceptor;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.constant.CookieConst;
 import cn.thinkjoy.gk.constant.CookieTimeConst;
+import cn.thinkjoy.gk.constant.DomainConst;
 import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
@@ -74,7 +75,7 @@ public class QuestionInterceptor extends HandlerInterceptorAdapter {
 					throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
 				}
 
-				response.addCookie(CookieUtil.addCookie(CookieConst.SS_USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
+//				response.addCookie(CookieUtil.addCookie(DomainConst.GAOKAO360_NET,CookieConst.SS_USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
 			} else {
 
 				String key = UserRedisConst.USER_KEY + value;
@@ -104,9 +105,9 @@ public class QuestionInterceptor extends HandlerInterceptorAdapter {
 
 				String ssValue = CookieUtil.getCookieValue(request.getCookies(), CookieConst.SS_USER_COOKIE_NAME);
 
-				if(StringUtils.isEmpty(ssValue)){
-					response.addCookie(CookieUtil.addCookie(CookieConst.SS_USER_COOKIE_NAME, String.valueOf(userAccountBean.getId()), CookieTimeConst.DEFAULT_COOKIE));
-				}
+//				if(StringUtils.isEmpty(ssValue)){
+//					response.addCookie(CookieUtil.addCookie(DomainConst.GAOKAO360_NET,CookieConst.SS_USER_COOKIE_NAME, String.valueOf(userAccountBean.getId()), CookieTimeConst.DEFAULT_COOKIE));
+//				}
 			}
 		}
 		return true;

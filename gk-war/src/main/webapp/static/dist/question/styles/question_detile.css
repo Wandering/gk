@@ -404,6 +404,14 @@ input, textarea {
     display: inline-block;
     position: relative;
     float: left; }
+    .header .main-menu > li ul.submenu {
+      position: absolute;
+      left: 0;
+      top: 50px;
+      z-index: 10;
+      background: #353535;
+      display: none;
+      overflow: hidden; }
     .header .main-menu > li a {
       display: inline-block;
       height: 50px;
@@ -417,6 +425,8 @@ input, textarea {
       .header .main-menu > li a.active {
         color: #fff;
         background-color: #e24333; }
+  .header .main-menu > li.active ul.submenu {
+    display: block; }
   .header .log-reg a {
     color: #b1b0b0 !important;
     text-decoration: none;
@@ -471,116 +481,6 @@ input, textarea {
   bottom: 50px;
   z-index: 222; }
 
-/* submenu styles */
-.submenu {
-  left: 0;
-  max-height: 0;
-  position: absolute;
-  top: 100%;
-  z-index: -5;
-  -webkit-perspective: 400px;
-  -ms-perspective: 400px;
-  -o-perspective: 400px;
-  perspective: 400px; }
-  .submenu li {
-    opacity: 0;
-    background-color: #353535;
-    -webkit-transform: rotateY(90deg);
-    -ms-transform: rotateY(90deg);
-    transform: rotateY(90deg);
-    -webkit-transition: opacity 0.4s, -webkit-transform 0.5s;
-    transition: opacity 0.4s, transform 0.5s; }
-    .submenu li a {
-      text-align: center;
-      line-height: 37px;
-      display: block;
-      width: 100px;
-      border-bottom: 1px solid #3e3e3e;
-      font-size: 16px;
-      cursor: pointer;
-      color: #b1b0b0;
-      text-decoration: none;
-      margin: 0 !important;
-      padding: 0 !important; }
-      .submenu li a:hover {
-        color: #fff;
-        background-color: #202020; }
-
-.main-menu > li:hover .submenu, .main-menu > li:focus .submenu {
-  max-height: 2000px;
-  z-index: 10; }
-
-.main-menu > li:hover .submenu > li, .main-menu > li:focus .submenu > li {
-  opacity: 1;
-  -webkit-transform: none;
-  -ms-transform: none;
-  transform: none; }
-
-/* CSS3 delays for transition effects */
-.main-menu > li:hover .submenu li:nth-child(1) {
-  -webkit-transition-delay: 0s;
-  transition-delay: 0s; }
-
-.main-menu > li:hover .submenu li:nth-child(2) {
-  -webkit-transition-delay: 50ms;
-  transition-delay: 50ms; }
-
-.main-menu > li:hover .submenu li:nth-child(3) {
-  -webkit-transition-delay: 100ms;
-  transition-delay: 100ms; }
-
-.main-menu > li:hover .submenu li:nth-child(4) {
-  -webkit-transition-delay: 150ms;
-  transition-delay: 150ms; }
-
-.main-menu > li:hover .submenu li:nth-child(5) {
-  -webkit-transition-delay: 200ms;
-  transition-delay: 200ms; }
-
-.main-menu > li:hover .submenu li:nth-child(6) {
-  -webkit-transition-delay: 250ms;
-  transition-delay: 250ms; }
-
-.main-menu > li:hover .submenu li:nth-child(7) {
-  -webkit-transition-delay: 300ms;
-  transition-delay: 300ms; }
-
-.main-menu > li:hover .submenu li:nth-child(8) {
-  -webkit-transition-delay: 350ms;
-  transition-delay: 350ms; }
-
-.submenu > li:nth-child(1) {
-  -webkit-transition-delay: 350ms;
-  transition-delay: 350ms; }
-
-.submenu > li:nth-child(2) {
-  -webkit-transition-delay: 300ms;
-  transition-delay: 300ms; }
-
-.submenu > li:nth-child(3) {
-  -webkit-transition-delay: 250ms;
-  transition-delay: 250ms; }
-
-.submenu > li:nth-child(4) {
-  -webkit-transition-delay: 200ms;
-  transition-delay: 200ms; }
-
-.submenu > li:nth-child(5) {
-  -webkit-transition-delay: 150ms;
-  transition-delay: 150ms; }
-
-.submenu > li:nth-child(6) {
-  -webkit-transition-delay: 100ms;
-  transition-delay: 100ms; }
-
-.submenu > li:nth-child(7) {
-  -webkit-transition-delay: 50ms;
-  transition-delay: 50ms; }
-
-.submenu > li:nth-child(8) {
-  -webkit-transition-delay: 0s;
-  transition-delay: 0s; }
-
 .footer .bottom-nav {
   text-align: center;
   height: 100px;
@@ -598,10 +498,16 @@ input, textarea {
       font-size: 16px;
       color: #fff;
       line-height: 30px; }
-  .footer .bottom-nav .logo {
-    display: block;
+  .footer .bottom-nav .footer-logo {
+    display: inline-block;
     width: 178px;
-    margin: 0 auto; }
+    height: 43px;
+    margin-top: 31px; }
+  .footer .bottom-nav .footer-ewm {
+    display: inline-block;
+    width: 86px;
+    height: 113px;
+    margin: 29px 0 0 52px; }
 
 .footer .copy-right {
   font-size: 12px;
@@ -1192,6 +1098,14 @@ input, textarea {
     display: inline-block;
     position: relative;
     float: left; }
+    .header .main-menu > li ul.submenu {
+      position: absolute;
+      left: 0;
+      top: 50px;
+      z-index: 10;
+      background: #353535;
+      display: none;
+      overflow: hidden; }
     .header .main-menu > li a {
       display: inline-block;
       height: 50px;
@@ -1205,6 +1119,8 @@ input, textarea {
       .header .main-menu > li a.active {
         color: #fff;
         background-color: #e24333; }
+  .header .main-menu > li.active ul.submenu {
+    display: block; }
   .header .log-reg a {
     color: #b1b0b0 !important;
     text-decoration: none;
@@ -1259,116 +1175,6 @@ input, textarea {
   bottom: 50px;
   z-index: 222; }
 
-/* submenu styles */
-.submenu {
-  left: 0;
-  max-height: 0;
-  position: absolute;
-  top: 100%;
-  z-index: -5;
-  -webkit-perspective: 400px;
-  -ms-perspective: 400px;
-  -o-perspective: 400px;
-  perspective: 400px; }
-  .submenu li {
-    opacity: 0;
-    background-color: #353535;
-    -webkit-transform: rotateY(90deg);
-    -ms-transform: rotateY(90deg);
-    transform: rotateY(90deg);
-    -webkit-transition: opacity 0.4s, -webkit-transform 0.5s;
-    transition: opacity 0.4s, transform 0.5s; }
-    .submenu li a {
-      text-align: center;
-      line-height: 37px;
-      display: block;
-      width: 100px;
-      border-bottom: 1px solid #3e3e3e;
-      font-size: 16px;
-      cursor: pointer;
-      color: #b1b0b0;
-      text-decoration: none;
-      margin: 0 !important;
-      padding: 0 !important; }
-      .submenu li a:hover {
-        color: #fff;
-        background-color: #202020; }
-
-.main-menu > li:hover .submenu, .main-menu > li:focus .submenu {
-  max-height: 2000px;
-  z-index: 10; }
-
-.main-menu > li:hover .submenu > li, .main-menu > li:focus .submenu > li {
-  opacity: 1;
-  -webkit-transform: none;
-  -ms-transform: none;
-  transform: none; }
-
-/* CSS3 delays for transition effects */
-.main-menu > li:hover .submenu li:nth-child(1) {
-  -webkit-transition-delay: 0s;
-  transition-delay: 0s; }
-
-.main-menu > li:hover .submenu li:nth-child(2) {
-  -webkit-transition-delay: 50ms;
-  transition-delay: 50ms; }
-
-.main-menu > li:hover .submenu li:nth-child(3) {
-  -webkit-transition-delay: 100ms;
-  transition-delay: 100ms; }
-
-.main-menu > li:hover .submenu li:nth-child(4) {
-  -webkit-transition-delay: 150ms;
-  transition-delay: 150ms; }
-
-.main-menu > li:hover .submenu li:nth-child(5) {
-  -webkit-transition-delay: 200ms;
-  transition-delay: 200ms; }
-
-.main-menu > li:hover .submenu li:nth-child(6) {
-  -webkit-transition-delay: 250ms;
-  transition-delay: 250ms; }
-
-.main-menu > li:hover .submenu li:nth-child(7) {
-  -webkit-transition-delay: 300ms;
-  transition-delay: 300ms; }
-
-.main-menu > li:hover .submenu li:nth-child(8) {
-  -webkit-transition-delay: 350ms;
-  transition-delay: 350ms; }
-
-.submenu > li:nth-child(1) {
-  -webkit-transition-delay: 350ms;
-  transition-delay: 350ms; }
-
-.submenu > li:nth-child(2) {
-  -webkit-transition-delay: 300ms;
-  transition-delay: 300ms; }
-
-.submenu > li:nth-child(3) {
-  -webkit-transition-delay: 250ms;
-  transition-delay: 250ms; }
-
-.submenu > li:nth-child(4) {
-  -webkit-transition-delay: 200ms;
-  transition-delay: 200ms; }
-
-.submenu > li:nth-child(5) {
-  -webkit-transition-delay: 150ms;
-  transition-delay: 150ms; }
-
-.submenu > li:nth-child(6) {
-  -webkit-transition-delay: 100ms;
-  transition-delay: 100ms; }
-
-.submenu > li:nth-child(7) {
-  -webkit-transition-delay: 50ms;
-  transition-delay: 50ms; }
-
-.submenu > li:nth-child(8) {
-  -webkit-transition-delay: 0s;
-  transition-delay: 0s; }
-
 .footer .bottom-nav {
   text-align: center;
   height: 100px;
@@ -1386,10 +1192,16 @@ input, textarea {
       font-size: 16px;
       color: #fff;
       line-height: 30px; }
-  .footer .bottom-nav .logo {
-    display: block;
+  .footer .bottom-nav .footer-logo {
+    display: inline-block;
     width: 178px;
-    margin: 0 auto; }
+    height: 43px;
+    margin-top: 31px; }
+  .footer .bottom-nav .footer-ewm {
+    display: inline-block;
+    width: 86px;
+    height: 113px;
+    margin: 29px 0 0 52px; }
 
 .footer .copy-right {
   font-size: 12px;

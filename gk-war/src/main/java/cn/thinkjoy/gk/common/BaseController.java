@@ -50,7 +50,7 @@ public class BaseController{
 		if(!RedisUtil.getInstance().exists(key)){
 			userAccountBean = userAccountExService.findUserAccountPojoById(id);
 			if(null!=userAccountBean){
-				RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 5L, TimeUnit.HOURS);
+				RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 4L, TimeUnit.HOURS);
 			}
 		} else{
 			userAccountBean = JSON.parseObject(RedisUtil.getInstance().get(key).toString(),UserAccountPojo.class);
@@ -61,7 +61,10 @@ public class BaseController{
 	protected void setUserAccountPojo(UserAccountPojo userAccountBean) throws Exception {
 		if(null!=userAccountBean){
 			String key = UserRedisConst.USER_KEY + userAccountBean.getId();
-			RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean));
+			if(RedisUtil.getInstance().exists(key)){
+				RedisUtil.getInstance().del(key);
+			}
+			RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 4L, TimeUnit.HOURS);
 		}
 	}
 

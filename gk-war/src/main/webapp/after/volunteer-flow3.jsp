@@ -462,7 +462,7 @@
                     可能被自己心仪的专业录取，同理，也试用二本和三本。
                 </div>
                 <div class="navigation-box">
-                    <span class="tip">正式填报志愿请登录网址：sn.gaokao360.net</span>
+                    <span class="tip">正式填报志愿请登录网址：<a target="_blank" href="http://sn.gaokao360.net">sn.gaokao360.net</a></span>
                     <div class="btn btn-before" id="prev-btn">返回上一步</div>
                     <div class="btn btn-next" id="print-btn">打印</div>
                 </div>

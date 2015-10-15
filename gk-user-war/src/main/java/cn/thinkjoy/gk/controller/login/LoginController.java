@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.controller.login;
 
+import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.constant.*;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
@@ -39,7 +40,7 @@ public class LoginController extends BaseController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public long login(@RequestParam(value="account",required=false) String account,
-						@RequestParam(value="password",required=false) String password) throws Exception {
+					  @RequestParam(value="password",required=false) String password) throws Exception {
 		long id = 0l;
 		try {
 			if (StringUtils.isEmpty(account)) {
@@ -67,7 +68,11 @@ public class LoginController extends BaseController {
 
 			id = userAccountBean.getId();
 
-			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
+			String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
+
+			response.addCookie(CookieUtil.addCookie(domain,CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
+
+//			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
 
 			setUserAccountPojo(userAccountBean);
 
@@ -84,17 +89,17 @@ public class LoginController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	@ResponseBody
 	public String logout() throws Exception {
 //		boolean status = true;
 		try {
 //			RedisUtil.getInstance().del(UserRedisConst.USER_KEY + getCookieValue());
-			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, null, CookieTimeConst.CLEAN_COOKIE));
+			String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
+			response.addCookie(CookieUtil.addCookie(domain,CookieConst.USER_COOKIE_NAME, "", CookieTimeConst.CLEAN_COOKIE));
 		}catch(Exception e){
 //			status = false;
 			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
 		}
-		return "success";
+		return "index";
 	}
 
 }
