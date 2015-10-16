@@ -48,7 +48,11 @@ define(function (require) {
             html.push('<span class="detile-title">' + list[i].title + '</span>');
             html.push(' <span class="fr">' + new Date(list[i].lastModDate).Format('yyyy-MM-dd hh:mm') + '</span>');
             html.push('</div>');
-            html.push('<div class="detile-info mt20">');
+            if(list[i].summary.trim()==""){
+                html.push('<div class="detile-info mt20 hide">');
+            }else{
+                html.push('<div class="detile-info mt20">');
+            }
             html.push('<img class="triangle" src="/static/dist/common/images/triangle.png" />');
             html.push(list[i].summary);
             html.push('</div>');

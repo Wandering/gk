@@ -11,25 +11,11 @@ define(function (require) {
     };
 
     var localhosts = 'http://www.gkzy114.com';
-
-    //var searchValUrl = window.location.search;
-    //var num = searchValUrl.indexOf("?");
-    //var searchVal = searchValUrl.substr(num+16);
-    //$('#searchVal').val(searchVal);
-
-
     var detailsUrl = decodeURIComponent(window.location.search);
     var classifyType = detailsUrl.substr(14, 1);
     var num = detailsUrl.indexOf('&');
     var searchV = detailsUrl.substr(num + 9);
-    console.log(classifyType)
-    console.log(searchV);
-
     $('#searchVal').val(searchV);
-
-
-
-
 
     // 搜索
     $('#search-btn').on('click',function(){
@@ -94,6 +80,7 @@ define(function (require) {
                 searchName:searchVals
             },
             function (result) {
+                console.log(result)
                 if (result.rtnCode == "0800001" || result.rtnCode == "1000004") {
                     UI.$listMsgItem.append('<p class="noContent">' + result.msg + '</p>');
                     UI.$nextPage.hide();
@@ -113,6 +100,9 @@ define(function (require) {
                         switch (subjectType){
                             case 1:
                                 subjectTypeTxt='语文';
+                                break;
+                            case 2:
+                                subjectTypeTxt='数学';
                                 break;
                             case 3:
                                 subjectTypeTxt='英语';
@@ -145,9 +135,12 @@ define(function (require) {
                 }
             });
     }
+
     // 初始化数据
     UI.$nextPage.on('click', function () {
         var pageNo = UI.$listMsgItem.attr('pageNo');
+        var selV = $('.subjectList').find('option:checked').val();
+        console.log(selV);
         $.ajax({
             url:'/vip/getAccount.do',
             type: 'GET',
@@ -161,10 +154,10 @@ define(function (require) {
                 if(result.rtnCode=="0000000"){
                     var vipStatus = result.bizData.vipStatus;
                     if(vipStatus==0){
-                        getList(pageNo, pageSize,"","2014",searchVals);
+                        getList(pageNo, pageSize,selV,"2014",searchVals);
                     }
                     if(vipStatus==1){
-                        getList(pageNo, pageSize,"","2015",searchVals);
+                        getList(pageNo, pageSize,selV,"2015",searchVals);
                     }
                 }
             }

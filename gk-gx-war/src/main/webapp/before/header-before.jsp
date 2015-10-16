@@ -11,8 +11,8 @@
     <a href="/index.jsp">
       <img src="/static/dist/common/images/logo-min.png" alt="高考360" class="logo fl"/>
     </a>
-    <ul class="main-menu fl" id="before-menu">
-      <li>
+    <ul class="main-menu fl" id="main-menu">
+      <li class="menu-item">
         <a href="/index.jsp">首页</a>
         <ul class="submenu">
           <li><a href="/guide/guide.jsp">高考政策</a></li>
@@ -21,10 +21,10 @@
           <li><a href="/after/after.jsp">考后报考</a></li>
         </ul>
       </li>
-      <li><a href="/before/teacher-lecture.jsp?classifyType=1&searchV=" beforeMenuType="1">名师讲堂</a></li>
-      <li><a href="/before/exam.jsp?classifyType=3&searchV=" beforeMenuType="3">真题密卷</a></li>
-      <li><a href="/before/mentality.jsp?classifyType=2&searchV=" beforeMenuType="2">高考心理</a></li>
-      <li><a href="/before/before.jsp?classifyType=4" id="volunteer-flow">院校推荐</a></li>
+      <li class="menu-item"><a href="/before/teacher-lecture.jsp?classifyType=1&searchV=" beforeMenuType="1">名师讲堂</a></li>
+      <li class="menu-item"><a href="/before/exam.jsp?classifyType=3&searchV=" beforeMenuType="3">真题密卷</a></li>
+      <li class="menu-item"><a href="/before/mentality.jsp?classifyType=2&searchV=" beforeMenuType="2">高考心理</a></li>
+      <li class="menu-item"><a href="/before/before.jsp?classifyType=4" id="volunteer-flow">院校推荐</a></li>
     </ul>
     <div class="log-reg hide">
       <a href="/login/login.jsp">登录/注册</a>

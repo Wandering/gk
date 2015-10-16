@@ -4,6 +4,7 @@
 
 define(function(require) {
     var $ = require('$');
+    require('backToTop');
     require('swiper');
 
     var School = {
@@ -56,6 +57,7 @@ define(function(require) {
             });
         },
         renderSchool: function(data) {
+            console.log(data)
             var html = [],
                 i = 0,
                 len = data.length;

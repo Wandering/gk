@@ -1,7 +1,3 @@
-/**
- * Created by kepeng on 15/9/25.
- */
-
 define(function (require) {
 
     function GetCookie(sMainName, sSubName) {
@@ -84,7 +80,6 @@ define(function (require) {
             }, 2000)
             return;
         }
-
         var text = editor.text().replace(/<[^>]+>/ig, '');
         if (!text) {
             $('#error').show().html('请输入问题描述！');
@@ -93,11 +88,9 @@ define(function (require) {
             }, 2000)
             return;
         }
-
-        console.log(content);
         var flag = false;
         if (!flag) {
-            flag = true
+            flag = true;
             $.ajax({
                 type: 'post',
                 url: '/question/insert.do',
@@ -116,16 +109,16 @@ define(function (require) {
                         $('#custom_body').html('<p class="error-contnet">提交成功！</p>');
                         $('#custom_model').fadeIn(500);
                         $('#custom_model').off('click');
-                        $('#custom_model').on('click', function(e) {
+                        $('#custom_model').on('model_buttonclick', function(e) {
                             e.stopPropagation();
                         });
                         $('#model_button').off('click');
                         $('#model_button').on('click', function(e) {
                             $('#custom_model').fadeOut(500);
+                            //window.location.href='/question/ask.jsp?path=online'
                         });
-
                         var path = getUrLinKey('path');
-
+                        console.log(path)
                         if ('online' === path) {
                             window.location.href = '/user/online-answer.jsp?method=ask';
                         }
@@ -137,10 +130,6 @@ define(function (require) {
                         $('#error_tip').html(data.msg + ",请<a target='_blank' href='/login/login.jsp'>登录</a>");
                         $('#error_tip').show();
                     }
-
-
-
-
                 },
                 error: function(data) {
                     flag = false;

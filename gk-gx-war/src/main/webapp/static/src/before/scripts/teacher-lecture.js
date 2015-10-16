@@ -30,6 +30,7 @@ define(function (require) {
         window.location.href='/before/teacher-lecture.jsp?classifyType=1&searchV='+ encodeURIComponent($('#searchVal').val());
     });
 
+
     // 获取科目
     function getSubjectList(){
         $.getJSON(
@@ -122,7 +123,8 @@ define(function (require) {
 
     UI.$nextPage.on('click', function () {
         var pageNo = UI.$listMsgItem.attr('pageNo');
-        getList(pageNo, pageSize,1,"",searchs);
+        var sortType = $('.subject-fun').find('option:checked').val();
+        getList(pageNo, pageSize,sortType,"",searchs);
     }).click();
     //
     //

@@ -4,6 +4,7 @@
 
 define(function (require) {
     var $ = require('$');
+    require('backToTop');
     require('swiper');
 
     function getUrLinKey(name) {
