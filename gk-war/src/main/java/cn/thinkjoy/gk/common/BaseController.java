@@ -76,7 +76,7 @@ public class BaseController{
 
 		if(StringUtils.isEmpty(areaId)){
 
-			areaId = "610000";
+			areaId = "0";
 
 			String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
 
