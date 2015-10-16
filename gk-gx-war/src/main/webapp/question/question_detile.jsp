@@ -25,10 +25,10 @@
             </section>
 
             <section class="ask-list">
-                <h3>最新问题</h3>
+                <h3>最新解答</h3>
                 <ul id="new">
                 </ul>
-                <h3>热门问题</h3>
+                <h3>热门解答</h3>
                 <ul id="hot">
                 </ul>
             </section>

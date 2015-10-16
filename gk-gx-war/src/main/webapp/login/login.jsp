@@ -16,7 +16,7 @@
 <div class="container">
     <div class="main w1000">
         <!--<img src="/static/dist/common/images/logo-min.png" class="login-logo"/>-->
-        <img src="/static/dist/login/images/login-font.png" class="login-bg-fonts"/>
+        <%--<img src="/static/dist/login/images/login-font.png" class="login-bg-fonts"/>--%>
 
         <div class="login-box">
             <div class="login-title">
