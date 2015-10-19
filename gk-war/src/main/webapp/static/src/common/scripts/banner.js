@@ -1,6 +1,5 @@
 define(function (require) {
     var $ = require('$');
-    //require('lrtk');
 
     var UA = window.navigator.userAgent,IsAndroid = (/Android|HTC/i.test(UA)),IsIPad = !IsAndroid && /iPad/i.test(UA),IsIPhone = !IsAndroid && /iPod|iPhone/i.test(UA),IsIOS = IsIPad || IsIPhone,clearAnimatea = null;
     var testStyle=document.createElement('div').style,

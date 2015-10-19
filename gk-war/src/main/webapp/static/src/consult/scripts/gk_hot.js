@@ -4,7 +4,6 @@
 
 define(function (require) {
     var $ = require('$');
-    require('swiper');
     require('backToTop');
 
     var getQueryStr = function(_url, _param) {

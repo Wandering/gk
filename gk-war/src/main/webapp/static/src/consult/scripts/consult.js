@@ -5,7 +5,6 @@
 define(function (require) {
     var $ = require('$');
     require('backToTop');
-    require('swiper');
 
     function GetCookie(sMainName, sSubName) {
         var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");

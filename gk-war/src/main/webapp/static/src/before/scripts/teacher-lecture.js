@@ -1,6 +1,5 @@
 define(function (require) {
     var $ = require('$');
-    require('swiper');
     require('backToTop');
     require('getTime');
 

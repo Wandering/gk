@@ -4,7 +4,7 @@
 <head>
     <title>志愿指导</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="http://cdn.gaokao360.net/global/after/styles/after.css"/>
+    <link rel="stylesheet" href="/static/global/after/styles/after.css"/>
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>

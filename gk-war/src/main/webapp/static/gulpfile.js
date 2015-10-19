@@ -54,7 +54,7 @@ gulp.task('scripts', function () {
         //.pipe(jshint('.jshintrc'))
         .pipe(jshint.reporter('default'))
         //.pipe(concat('main.js'))
-        .pipe(gulp.dest('sn'))
+        .pipe(gulp.dest('global'))
         .pipe(rename({suffix: '.min'}))
         .pipe(uglify())
         .pipe(gulp.dest('sn'))
