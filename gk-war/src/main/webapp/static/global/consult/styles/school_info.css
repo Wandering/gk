@@ -457,7 +457,7 @@ input, textarea {
       -webkit-border-radius: 50%; }
     .header .user-info-list .menu {
       display: none;
-      z-index: 9;
+      z-index: 220;
       position: absolute;
       background-color: #353535;
       top: 50px;
