@@ -1,7 +1,6 @@
 package cn.thinkjoy.gk.controller.appraisal;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.controller.appraisal.bean.AppraisalBean;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
