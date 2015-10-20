@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.util;
+package cn.thinkjoy.gk.constant;
 
 
 public class VerificationKeyConst {

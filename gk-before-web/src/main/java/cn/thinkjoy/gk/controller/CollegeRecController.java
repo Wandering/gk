@@ -1,11 +1,11 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseCommonController;
+import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.constant.VerificationKeyConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
-import cn.thinkjoy.gk.util.VerificationKeyConst;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @Scope("prototype")
 @RequestMapping("/before/collegeRecommend")
-public class CollegeRecController extends BaseCommonController {
+public class CollegeRecController extends BaseController {
 
     @RequestMapping(value = "getCollegeList",method = RequestMethod.GET)
     @ResponseBody

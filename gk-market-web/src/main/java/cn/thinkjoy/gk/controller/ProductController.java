@@ -6,7 +6,7 @@ package cn.thinkjoy.gk.controller;
 
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.controller.market.query.ProductQuery;
+import cn.thinkjoy.gk.query.ProductQuery;
 import cn.thinkjoy.gk.domain.Product;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IProductExService;

@@ -1,7 +1,7 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseCommonController;
+import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.domain.VideoCourse;
 import cn.thinkjoy.gk.domain.VideoSection;
 import cn.thinkjoy.gk.pojo.SubjectPojo;
@@ -30,7 +30,7 @@ import java.util.Map;
 @Controller
 @Scope("prototype")
 @RequestMapping("/before/video")
-public class VideoController extends BaseCommonController {
+public class VideoController extends BaseController {
     @Autowired
     private IEXSubjectService iexSubjectService;
     @Autowired

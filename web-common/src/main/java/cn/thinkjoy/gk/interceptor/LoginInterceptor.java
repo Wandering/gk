@@ -32,7 +32,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 		LOGGER.info("url:"+url);
 
-		String value = CookieUtil.getCookieValue(request.getCookies(), CookieConst.USER_COOKIE_NAME);
+		String value = CookieUtil.getCookieValue(request);
 
 		LOGGER.info("cookie:"+value);
 //		RedisUtil.getInstance().del(key);
