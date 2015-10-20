@@ -1,8 +1,6 @@
 package cn.thinkjoy.gk.util;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 public class IPUtil {
 	

@@ -1,8 +1,7 @@
 package cn.thinkjoy.gk.common;
 
-import cn.thinkjoy.gk.constant.CookieConst;
-import cn.thinkjoy.gk.constant.DomainConst;
 import cn.thinkjoy.gk.util.CookieUtil;
+import cn.thinkjoy.gk.util.DomainUtil;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,40 +20,22 @@ public class BaseCommonController {
 
 	@ModelAttribute
 	public void setReqAndRes(HttpServletRequest request,
-			HttpServletResponse response) {
+							 HttpServletResponse response) {
 		this.request = request;
 		this.response = response;
 		this.session = request.getSession();
 	}
 
 	public String getDomainValue(){
-		StringBuffer url = request.getRequestURL();
-		if(url.indexOf(DomainConst.SN_DOMAIN)>-1){
-			return DomainConst.SN_DOMAIN;
-		} else if(url.indexOf(DomainConst.HN_DOMAIN)>-1){
-			return DomainConst.HN_DOMAIN;
-		} else if(url.indexOf(DomainConst.GX_DOMAIN)>-1){
-			return DomainConst.GX_DOMAIN;
-		} else if(url.indexOf(DomainConst.HA_DOMAIN)>-1){
-			return DomainConst.HA_DOMAIN;
-		} else {
-			return null;
-		}
+		return DomainUtil.getDomainValue(request);
 	}
 
 	public String getCookieValue(){
-		String domainValue = getDomainValue();
+		return CookieUtil.getCookieValue(request);
+	}
 
-		if(domainValue.equals(DomainConst.SN_DOMAIN)){
-			return CookieUtil.getCookieValue(request.getCookies(), CookieConst.SN_USER_COOKIE_NAME);
-		} else if(domainValue.equals(DomainConst.HN_DOMAIN)){
-			return CookieUtil.getCookieValue(request.getCookies(), CookieConst.SN_USER_COOKIE_NAME);
-		} else if(domainValue.equals(DomainConst.GX_DOMAIN)){
-			return CookieUtil.getCookieValue(request.getCookies(), CookieConst.SN_USER_COOKIE_NAME);
-		} else if(domainValue.equals(DomainConst.HA_DOMAIN)){
-			return CookieUtil.getCookieValue(request.getCookies(), CookieConst.SN_USER_COOKIE_NAME);
-		}
-		return null;
+	public String getCookieName(){
+		return CookieUtil.getCookieName(request);
 	}
 
 }
