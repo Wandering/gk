@@ -3,6 +3,7 @@ package cn.thinkjoy.gk.controller;
 import cn.thinkjoy.common.domain.SearchField;
 import cn.thinkjoy.common.domain.view.BizData4Page;
 import cn.thinkjoy.gk.common.BaseCommonController;
+import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.domain.VolunteerSchool;
 import cn.thinkjoy.gk.domain.VolunteerSchoolCategory;
 import cn.thinkjoy.gk.service.IVolunteerSchoolCategoryService;
@@ -25,7 +26,7 @@ import java.util.Map;
 @Controller
 @Scope("prototype")
 @RequestMapping("volunteerSchool")
-public class VolunteerSchoolController extends BaseCommonController {
+public class VolunteerSchoolController extends BaseController {
 
     @Autowired
     private IVolunteerSchoolCategoryService volunteerSchoolCategoryService;
@@ -35,16 +36,19 @@ public class VolunteerSchoolController extends BaseCommonController {
     /** 志愿学堂分类 */
     @RequestMapping(value = "/categories", method = RequestMethod.GET)
     @ResponseBody
-    public List<VolunteerSchoolCategory> getCategorys() {
+    public List<VolunteerSchoolCategory> getCategorys() throws Exception{
+        long areaId=getAreaCookieValue();
         Map<String, Object> conditions = Maps.newHashMap();
         conditions.put("status", 1);
+        conditions.put("areaId", areaId);
         return volunteerSchoolCategoryService.queryList(conditions, null, null);
     }
     /** 志愿学堂文章列表 */
     @RequestMapping(value = "/articles", method = RequestMethod.GET)
     @ResponseBody
     public BizData4Page<VolunteerSchool> getArticles(HttpServletRequest request,
-                                                     @RequestParam("pn") int pn,@RequestParam("ps") int ps) {
+                                                     @RequestParam("pn") int pn,@RequestParam("ps") int ps) throws Exception{
+        long areaId=getAreaCookieValue();
         long cateId = ServletRequestUtils.getLongParameter(request, "cateId", 0);
         String keyword = request.getParameter("kw");
         if (pn == 0) pn = 1;
@@ -67,6 +71,10 @@ public class VolunteerSchoolController extends BaseCommonController {
         conditions.put(status.getField(), status);
 
         conditions.put("groupOp", "and");
+        status.setField("areaId");
+        status.setOp("=");
+        status.setData(String.valueOf(areaId));
+        conditions.put(status.getField(), status);
         return volunteerSchoolService.queryPageByDataPerm(null, conditions, pn, (pn-1) * ps, ps);
     }
 
@@ -101,7 +109,8 @@ public class VolunteerSchoolController extends BaseCommonController {
 
     @RequestMapping(value = "/ranks", method = RequestMethod.GET)
     @ResponseBody
-    public List<VolunteerSchool> articleRanks(HttpServletRequest request) {
+    public List<VolunteerSchool> articleRanks(HttpServletRequest request) throws Exception{
+        long areaId=getAreaCookieValue();
         long cateId = ServletRequestUtils.getLongParameter(request, "cateId", 0);
         int ps = ServletRequestUtils.getIntParameter(request, "ps", 3);
         Map<String, Object> conditions = Maps.newHashMap();
@@ -118,6 +127,10 @@ public class VolunteerSchoolController extends BaseCommonController {
         conditions.put(status.getField(), status);
 
         conditions.put("groupOp", "and");
+        status.setField("areaId");
+        status.setOp("=");
+        status.setData(String.valueOf(areaId));
+        conditions.put(status.getField(), status);
 
         BizData4Page<VolunteerSchool> page = volunteerSchoolService.queryPageByDataPerm("", conditions, 1, 0, ps, "hits", "desc");
 
