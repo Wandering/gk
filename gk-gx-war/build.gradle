@@ -7,4 +7,18 @@ dependencies {
 
     compile project(':gk-service')
 
+    compile project(':gk-before-web')
+
+    compile project(':gk-consult-web')
+
+    compile project(':gk-guide-web')
+
+    compile project(':gk-login-web')
+
+    compile project(':gk-user-web')
+
+    compile project(':gk-market-web')
+
+    compile project(':gk-market-web')
+
 }
