@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller.volunteer;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseCommonController;
+import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.pojo.UniversityDetailDto;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
@@ -29,7 +30,7 @@ import java.util.List;
 @Controller
 @Scope("prototype")
 @RequestMapping(value="/guide")
-public class GuideController extends BaseCommonController {
+public class GuideController extends BaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(GuideController.class);
 
