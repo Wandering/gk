@@ -1,9 +1,8 @@
-package cn.thinkjoy.gk.controller.appraisal;
+package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseCommonController;
-import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.controller.appraisal.bean.AppraisalBean;
+import cn.thinkjoy.gk.bean.AppraisalBean;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
@@ -26,7 +25,7 @@ import java.util.Map;
 @Controller
 @Scope("prototype")
 @RequestMapping(value="/appraisal")
-public class AppraisalController extends BaseController {
+public class AppraisalController extends BaseCommonController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(AppraisalController.class);
 

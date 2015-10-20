@@ -36,6 +36,4 @@ public class BaseController extends BaseCommonController{
 		}
 	}
 
-
-
 }

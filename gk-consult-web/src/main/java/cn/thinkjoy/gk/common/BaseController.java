@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.common;
 
+import cn.thinkjoy.gk.constant.SessionConst;
 import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IUserAccountExService;
@@ -36,6 +37,14 @@ public class BaseController extends BaseCommonController{
 		}
 	}
 
+	protected Long getAreaCookieValue() throws Exception {
+		Object areaId = session.getAttribute(SessionConst.AREA_SESSION_NAME);
+		if(null!=areaId){
+			areaId = "450000";
+			session.setAttribute(SessionConst.AREA_SESSION_NAME,areaId);
+		}
+		return Long.valueOf(areaId.toString());
 
+	}
 
 }

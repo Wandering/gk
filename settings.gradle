@@ -54,6 +54,8 @@ include 'gk-consult-web'
 
 include 'gk-guide-web'
 
+include 'gk-market-web'
+
 include 'gk-hn-war'
 
 include 'gk-gx-war'
@@ -61,4 +63,6 @@ include 'gk-gx-war'
 include 'gk-sn-war'
 
 include 'gk-ha-war'
+
+
 
