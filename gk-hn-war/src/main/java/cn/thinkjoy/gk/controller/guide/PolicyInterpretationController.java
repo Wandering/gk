@@ -1,6 +1,6 @@
 package cn.thinkjoy.gk.controller.guide;
 
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.domain.AdmissionBatch;
 import cn.thinkjoy.gk.domain.PolicyInterpretation;
 import cn.thinkjoy.gk.dto.PolicyInterpretationCategory;
@@ -22,7 +22,7 @@ import java.util.Map;
 @Controller
 @Scope("prototype")
 @RequestMapping("/policyInterpretation")
-public class PolicyInterpretationController extends BaseController {
+public class PolicyInterpretationController extends BaseCommonController {
 
     @Autowired
     private IAdmissionBatchService admissionBatchService;

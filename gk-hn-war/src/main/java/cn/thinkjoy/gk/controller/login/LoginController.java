@@ -4,10 +4,9 @@ import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.constant.*;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.CookieUtil;
-import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import com.jlusoft.microschool.core.utils.MD5Util;
 import org.slf4j.Logger;
@@ -21,12 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-
 @Controller
 @Scope("prototype")
 @RequestMapping("/login")
-public class LoginController extends BaseController {
+public class LoginController extends BaseCommonController {
 
 	private static final Logger LOGGER= LoggerFactory.getLogger(LoginController.class);
 

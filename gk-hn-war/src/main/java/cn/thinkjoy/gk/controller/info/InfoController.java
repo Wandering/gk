@@ -1,7 +1,7 @@
 package cn.thinkjoy.gk.controller.info;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.domain.UserInfo;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @Scope("prototype")
 @RequestMapping("/info")
-public class InfoController extends BaseController {
+public class InfoController extends BaseCommonController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(InfoController.class);
 

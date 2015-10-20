@@ -1,14 +1,12 @@
 package cn.thinkjoy.gk.controller.guide;
 
-import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.domain.SearchField;
 import cn.thinkjoy.common.domain.view.BizData4Page;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.domain.VolunteerSchool;
 import cn.thinkjoy.gk.domain.VolunteerSchoolCategory;
 import cn.thinkjoy.gk.service.IVolunteerSchoolCategoryService;
 import cn.thinkjoy.gk.service.IVolunteerSchoolService;
-import cn.thinkjoy.gk.util.RedisUtil;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +25,7 @@ import java.util.Map;
 @Controller
 @Scope("prototype")
 @RequestMapping("volunteerSchool")
-public class VolunteerSchoolController extends BaseController {
+public class VolunteerSchoolController extends BaseCommonController {
 
     @Autowired
     private IVolunteerSchoolCategoryService volunteerSchoolCategoryService;

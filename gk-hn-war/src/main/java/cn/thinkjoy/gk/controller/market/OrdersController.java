@@ -6,7 +6,7 @@ package cn.thinkjoy.gk.controller.market;
 
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.domain.Orders;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
@@ -39,7 +39,7 @@ import java.util.Map;
 @Controller
 @Scope("prototype")
 @RequestMapping(value="/orders")
-public class OrdersController extends BaseController{
+public class OrdersController extends BaseCommonController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(OrdersController.class);
 

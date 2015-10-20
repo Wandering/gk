@@ -32,17 +32,11 @@ include 'user-domain'
 
 include 'user-service'
 
-include 'gk-war'
-
-include 'gk-gx-war'
-
 include 'redis'
 
 include 'gk-service'
 
 include 'gk-domain'
-
-include 'question-war'
 
 include 'web-common'
 
@@ -53,4 +47,18 @@ include 'gk-middle-war'
 include 'gk-user-war'
 
 include 'gk-hn-war'
+
+include 'gk-question-war'
+
+include 'gk-login-war'
+
+include 'gk-before-war'
+
+include 'gk-consult-war'
+
+include 'gk-guide-war'
+
+include 'gk-gx-war'
+
+include 'gk-sn-war'
 

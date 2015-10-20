@@ -1,8 +1,7 @@
 package cn.thinkjoy.gk.controller.question;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.constant.CookieConst;
+import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.controller.question.bean.QuestionAnswerBean;
 import cn.thinkjoy.gk.controller.question.dto.AnswerDetailDto;
 import cn.thinkjoy.gk.controller.question.dto.QuestionContentDto;
@@ -11,7 +10,6 @@ import cn.thinkjoy.gk.controller.question.query.SendQuestionQuery;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.protocol.PageQuery;
-import cn.thinkjoy.gk.util.CookieUtil;
 import cn.thinkjoy.ss.api.IQuestionService;
 import cn.thinkjoy.ss.api.IUserAccountService;
 import cn.thinkjoy.ss.bean.QuestionDetailBean;
@@ -39,7 +37,7 @@ import java.util.List;
 @Controller
 @Scope("prototype")
 @RequestMapping(value="/question")
-public class QuestionController extends BaseController {
+public class QuestionController extends BaseCommonController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(QuestionController.class);
 

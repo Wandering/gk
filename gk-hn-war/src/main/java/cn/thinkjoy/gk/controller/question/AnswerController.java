@@ -1,8 +1,7 @@
 package cn.thinkjoy.gk.controller.question;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.constant.CookieConst;
+import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.controller.question.bean.QuestionAnswerBean;
 import cn.thinkjoy.gk.controller.question.dto.AnswerDetailDto;
 import cn.thinkjoy.gk.controller.question.dto.QuestionContentDto;
@@ -10,7 +9,6 @@ import cn.thinkjoy.gk.controller.question.dto.QuestionDetailDto;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.protocol.PageQuery;
-import cn.thinkjoy.gk.util.CookieUtil;
 import cn.thinkjoy.ss.api.IAnswerService;
 import cn.thinkjoy.ss.api.IUserAccountService;
 import cn.thinkjoy.ss.bean.QuestionDetailBean;
@@ -27,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +32,7 @@ import java.util.List;
 @Controller
 @Scope("prototype")
 @RequestMapping(value="/answer")
-public class AnswerController extends BaseController {
+public class AnswerController extends BaseCommonController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(AnswerController.class);
 

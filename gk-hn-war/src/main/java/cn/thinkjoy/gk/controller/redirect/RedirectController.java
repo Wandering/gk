@@ -1,6 +1,6 @@
 package cn.thinkjoy.gk.controller.redirect;
 
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.constant.ControllerReturnConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @Scope("prototype")
 @RequestMapping(value="/")
-public class RedirectController extends BaseController {
+public class RedirectController extends BaseCommonController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(RedirectController.class);
 

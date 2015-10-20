@@ -1,7 +1,7 @@
 package cn.thinkjoy.gk.controller.university;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.domain.UniversityDict;
 import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
@@ -31,7 +31,7 @@ import java.util.Map;
 @Controller("majoredController")
 @Scope("prototype")
 @RequestMapping("/majored")
-public class MajoredController extends BaseController {
+public class MajoredController extends BaseCommonController {
 
     public static  final Logger log= LoggerFactory.getLogger(MajoredController.class);
 

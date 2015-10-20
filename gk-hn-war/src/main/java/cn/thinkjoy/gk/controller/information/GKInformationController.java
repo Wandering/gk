@@ -1,7 +1,7 @@
 package cn.thinkjoy.gk.controller.information;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.domain.Information;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IInformationService;
@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "/gkinformation")
-public class GKInformationController extends BaseController{
+public class GKInformationController extends BaseCommonController {
     private static final Logger LOGGER = LoggerFactory.getLogger(GKInformationController.class);
     @Autowired
     private IInformationService informationService;

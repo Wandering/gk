@@ -1,6 +1,6 @@
 package cn.thinkjoy.gk.controller.banner;
 
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.domain.Banner;
 import cn.thinkjoy.gk.service.IBannerService;
 import org.apache.commons.lang.StringUtils;
@@ -21,14 +21,14 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "/banner")
-public class BannerController extends BaseController{
+public class BannerController extends BaseCommonController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseCommonController.class);
     @Autowired
     private IBannerService bannerService;
     /**
      *
-     * Í¨¹ýtypeÀàÐÍÄÃµ½Ìø×ªÒ³ÃæµÄurl
+     * Í¨ï¿½ï¿½typeï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½×ªÒ³ï¿½ï¿½ï¿½url
      * @return
      */
     @RequestMapping(value = "getBannerByType",method = RequestMethod.GET)

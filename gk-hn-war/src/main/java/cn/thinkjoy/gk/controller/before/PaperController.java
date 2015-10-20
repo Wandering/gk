@@ -1,7 +1,7 @@
 package cn.thinkjoy.gk.controller.before;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.domain.ExaminationPaper;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IEXPaperService;
@@ -23,7 +23,7 @@ import java.util.List;
 @Controller
 @Scope("prototype")
 @RequestMapping("/before/paper")
-public class PaperController extends BaseController {
+public class PaperController extends BaseCommonController {
     @Autowired
     private IExaminationPaperService iExaminationPaperService;
     @Autowired
