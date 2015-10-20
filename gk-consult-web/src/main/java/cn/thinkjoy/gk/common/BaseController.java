@@ -4,6 +4,7 @@ import cn.thinkjoy.gk.constant.SessionConst;
 import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IUserAccountExService;
+import cn.thinkjoy.gk.util.AreaCookieUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +41,10 @@ public class BaseController extends BaseCommonController{
 	protected Long getAreaCookieValue() throws Exception {
 		Object areaId = session.getAttribute(SessionConst.AREA_SESSION_NAME);
 		if(null!=areaId){
-			areaId = "450000";
+			areaId = AreaCookieUtil.getAreaCookieValue(request);
 			session.setAttribute(SessionConst.AREA_SESSION_NAME,areaId);
 		}
 		return Long.valueOf(areaId.toString());
-
 	}
 
 }

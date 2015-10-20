@@ -18,7 +18,7 @@ public class DomainUtil {
 		} else if(url.indexOf(DomainConst.HA_DOMAIN)>-1){
 			return DomainConst.HA_DOMAIN;
 		} else {
-			return null;
+			return DomainConst.SN_DOMAIN;
 		}
 	}
 
