@@ -6,7 +6,6 @@ import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.RedisUtil;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.concurrent.TimeUnit;
 
 public class BaseController extends BaseCommonController{
