@@ -1,6 +1,5 @@
 define(function (require) {
     var $ = require('$');
-    require('swiper');
     require('getTime');
     require('backToTop');
 
@@ -14,7 +13,7 @@ define(function (require) {
         //在线互动
         var more = $('.more');
         $('.ask-question').click(function () {
-            window.location.assign(url + '/question/ask.jsp');
+            window.location.assign(url + '/question/ask.jsp?path=online');
         });
         $('.go-search').click(function () {
             var searchText = $('.search-val').val();

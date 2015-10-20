@@ -4,7 +4,6 @@
 
 define(function (require) {
     var $ = require('$');
-    require('swiper');
     require('backToTop');
 
     var Tab = require('/static/src/guide/scripts/tab');
@@ -15,20 +14,25 @@ define(function (require) {
     function getTab() {
         $.get('/volunteerSchool/categories.do', function(data) {
             if ('0000000' === data.rtnCode) {
+                console.log(data)
                 Tab.init({
                     data:data.bizData,
                     contentId:'tab_title_content',
                     parentHandle:function(curObj) {
+                        console.log(curObj.name)
                         clearTimeout(timer);
                         timer = setTimeout(function() {
-                            if ('填报指南' === curObj.name) {
-                                nextBtn.hide();
-                                getArticleDetile(curObj.id);
-                            } else {
-                                nextBtn.removeClass('none').text('加载更多...');
-                                nextBtn.show();
-                                getArticleList(curObj, 1);
-                            }
+                            //if ('填报指南' === curObj.name) {
+                            //    nextBtn.hide();
+                            //    getArticleDetile(curObj.id);
+                            //} else {
+                            //    nextBtn.removeClass('none').text('加载更多...');
+                            //    nextBtn.show();
+                            //    getArticleList(curObj, 1);
+                            //}
+                            nextBtn.removeClass('none').text('加载更多...');
+                            nextBtn.show();
+                            getArticleList(curObj, 1);
                         }, 300)
                     }
                 });
@@ -48,7 +52,11 @@ define(function (require) {
             html.push('<span class="detile-title">' + list[i].title + '</span>');
             html.push(' <span class="fr">' + new Date(list[i].lastModDate).Format('yyyy-MM-dd hh:mm') + '</span>');
             html.push('</div>');
-            html.push('<div class="detile-info mt20">');
+            if(list[i].summary==null||list[i].summary.trim()==""){
+                html.push('<div class="detile-info mt20 hide">');
+            }else{
+                html.push('<div class="detile-info mt20">');
+            }
             html.push('<img class="triangle" src="/static/dist/common/images/triangle.png" />');
             html.push(list[i].summary);
             html.push('</div>');

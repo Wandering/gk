@@ -4,7 +4,7 @@
 
 define(function(require) {
     var $ = require('$');
-    require('swiper');
+    require('backToTop');
 
     var School = {
         curPage: 1,
@@ -56,6 +56,7 @@ define(function(require) {
             });
         },
         renderSchool: function(data) {
+            console.log(data)
             var html = [],
                 i = 0,
                 len = data.length;

@@ -4,7 +4,7 @@
 
 define(function (require) {
     var $ = require('$');
-    require('swiper');
+    require('backToTop');
 
     function getUrLinKey(name) {
         var reg = new RegExp("(^|\\?|&)" + name + "=([^&]*)(\\s|&|$)", "i");
@@ -67,7 +67,7 @@ define(function (require) {
                                             + '<li>学历层次：' + (obj.educatLevel || '') + '</li>'
                                             + '<li>院校特征：' + (obj.property || '') + '</li>'
                                             + '<li>院校类型：' + (obj.universityType || '') + '</li>'
-                                            + '<li class="' + urlClassName + '">院校网址：<a class="website" href="' + obj.url + '">' + (obj.url || '') + '</a></li>'
+                                            + '<li class="' + urlClassName + '">院校网址：<a class="website" target="_blank" href="' + obj.url + '">' + (obj.url || '') + '</a></li>'
                                             + '<li class="' + addressClassName + '">' + address + '</li>'
                                             + '<li class="' + phoneClassName + '">联系电话：<span>' + (obj.contactPhone || '') + '</span></li>'
                                         + '</ul>'

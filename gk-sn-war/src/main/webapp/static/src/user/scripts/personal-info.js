@@ -2,7 +2,15 @@
  * Created by pdeng on 15/9/24.
  */
 define(function (require) {
+    require('$');
     require('laydate');
+
+    function errorTips(txt) {
+        $('.error-tips').text(txt).fadeIn(1000).fadeOut(1000);
+    }
+
+
+
     Date.prototype.Format = function (fmt) {
         var o = {
             "M+": this.getMonth() + 1, //月份
@@ -262,25 +270,31 @@ define(function (require) {
         });
     }, 10);
 
+
+
     $('.btn-submit').click(function () {
         //修改信息
-        var sex = $('input[name="sex"]:checked').val();
-        var subject = $('input[name="subject"]:checked').val();
-        var school = $('.school').val();
-        var str = $('.birthdayDate').val();
-        var birthdayDate = Date.parse(new Date(str)) / 1000;
-        var name = $('.name').val().trim();
+        var sex = $('input[name="sex"]:checked').val()
+            , subject = $('input[name="subject"]:checked').val()
+            , school = $('.school').val().trim()
+            , str = $('.birthdayDate').val().trim()
+            , birthdayDate = Date.parse(new Date(str)) / 1000
+            , name = $('.name').val().trim();
 
         if (name.length == 0) {
-            $('.error-tips').text('用户名不能为空').fadeIn();
+            errorTips('用户名不能为空');
             return false;
         }
         if (name.length > 10) {
-            $('.error-tips').text('用户名不能大于10个字').fadeIn();
+            errorTips('用户名不能大于10个字');
+            return false;
+        }
+        if( school.length==0){
+            errorTips('学校名不能为空');
             return false;
         }
         if( school.length>20){
-            $('.error-tips').text('学校名不能大于20个字').fadeIn();
+            errorTips('学校名不能大于20个字');
             return false;
         }
         var qq = $('.qq').val().trim();
@@ -289,7 +303,7 @@ define(function (require) {
         if (qq.length != 0 || mail.length != 0) {
             var mail_reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
             if (!mail_reg.test(mail)) {
-                $('.error-tips').text('邮箱填写有误').fadeIn();
+                errorTips('邮箱填写有误');
                 return false;
             }
             var qq_reg = /^\s*[.0-9]{5,11}\s*$/;
@@ -317,6 +331,7 @@ define(function (require) {
                 qq: qq
             },
             success: function (res) {
+                console.log(res)
                 if (res.rtnCode == '0000000') {
                     $('.user-avatar').attr('src', img_url);
                     $('.error-tips').text('信息更新成功').fadeIn(1000).fadeOut(2000);

@@ -4,7 +4,7 @@
 
 define(function (require) {
     var $ = require('$');
-    require('swiper');
+    require('backToTop');
 
     function getUrLinKey(name) {
         var reg = new RegExp("(^|\\?|&)" + name + "=([^&]*)(\\s|&|$)", "i");

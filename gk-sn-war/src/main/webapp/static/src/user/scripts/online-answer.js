@@ -67,7 +67,7 @@ define(function (require) {
         },
         getData: function(url, contentId, isAnswer) {
             var that = this;
-            var keywords = $('#keywords').val();
+            var keywords = $('#keywords').val().trim();
             var xhr = $.get(url + 'startSize=' + this.startSize + '&endSize=' + this.endSize + '&isAnswer=' + isAnswer + '&keyword=' + keywords, function(data) {
                 if ('0000000' === data.rtnCode) {
                     if (data.bizData.length > 0) {
@@ -77,7 +77,6 @@ define(function (require) {
                         } else {
                             $('#' + contentId).append(that.render(data.bizData));
                         }
-
                     } else {
                         if (that.startSize == 0) {
                             $('#' + contentId).html(that.getTipTmpl('暂时没有数据，请耐心等待哦'));
@@ -127,7 +126,7 @@ define(function (require) {
 
         $('#keywords').keydown(function(e) {
             if (e.keyCode == 13) {
-                var search = $('#keywords').val();
+                var search = $('#keywords').val().trim();
                 if (search) {
                     var isAnswer =  $('.toggle-nav div.btn-selected').attr('data-isAnswer');
                     Question.startSize = 0;
