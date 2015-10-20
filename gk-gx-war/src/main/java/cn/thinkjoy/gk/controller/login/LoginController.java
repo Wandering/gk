@@ -72,7 +72,7 @@ public class LoginController extends BaseController {
 
 			String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
 
-			response.addCookie(CookieUtil.addCookie(domain,CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
+			response.addCookie(CookieUtil.addCookie(domain,getCookieName(), String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
 
 //			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
 
@@ -96,7 +96,7 @@ public class LoginController extends BaseController {
 		try {
 //			RedisUtil.getInstance().del(UserRedisConst.USER_KEY + getCookieValue());
 			String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
-			response.addCookie(CookieUtil.addCookie(domain,CookieConst.USER_COOKIE_NAME, "", CookieTimeConst.CLEAN_COOKIE));
+			response.addCookie(CookieUtil.addCookie(domain,getCookieName(), "", CookieTimeConst.CLEAN_COOKIE));
 		}catch(Exception e){
 //			status = false;
 			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());

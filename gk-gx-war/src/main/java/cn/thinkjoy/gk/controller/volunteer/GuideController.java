@@ -2,13 +2,12 @@ package cn.thinkjoy.gk.controller.volunteer;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.controller.appraisal.bean.AppraisalBean;
+import cn.thinkjoy.gk.constant.VerificationKeyConst;
 import cn.thinkjoy.gk.pojo.UniversityDetailDto;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IUniversityExService;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
-import cn.thinkjoy.gk.util.VerificationKeyConst;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
