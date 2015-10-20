@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.controller.question.query;
+package cn.thinkjoy.gk.query;
 
 
 

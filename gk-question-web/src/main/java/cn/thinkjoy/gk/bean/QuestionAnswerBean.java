@@ -1,8 +1,8 @@
-package cn.thinkjoy.gk.controller.question.bean;
+package cn.thinkjoy.gk.bean;
 
-import cn.thinkjoy.gk.controller.question.dto.AnswerDetailDto;
-import cn.thinkjoy.gk.controller.question.dto.QuestionDetailDto;
-import cn.thinkjoy.gk.controller.question.dto.QuestionDto;
+import cn.thinkjoy.gk.dto.AnswerDetailDto;
+import cn.thinkjoy.gk.dto.QuestionDetailDto;
+import cn.thinkjoy.gk.dto.QuestionDto;
 
 import java.util.List;
 

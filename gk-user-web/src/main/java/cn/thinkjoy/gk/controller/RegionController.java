@@ -31,9 +31,6 @@ public class RegionController {
 	@RequestMapping(value = "/getAllRegion" , method = RequestMethod.GET)
 	@ResponseBody
 	public List<ProvincePojo> getAllRegion() {
-
-
-
 		return regionService.getAllRegion();
 	}
 

@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.controller.question.dto;
+package cn.thinkjoy.gk.dto;
 
 import java.io.Serializable;
 
