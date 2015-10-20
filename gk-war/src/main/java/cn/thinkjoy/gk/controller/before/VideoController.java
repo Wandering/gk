@@ -47,17 +47,18 @@ public class VideoController extends BaseController {
      */
     @RequestMapping(value = "getVideoList",method = RequestMethod.GET)
     @ResponseBody
-    public List<VideoCoursePojo> getVideoList(){
+    public List<VideoCoursePojo> getVideoList() throws Exception{
         String pageNo = HttpUtil.getParameter(request,"pageNo","0");
         String pageSize = HttpUtil.getParameter(request,"pageSize","10");
         String classifyType = request.getParameter("classifyType");
         String subjectId = request.getParameter("subjectId");
         String sortType = HttpUtil.getParameter(request,"sortType","1");//默认按照创时间倒序排序
         String searchName = request.getParameter("searchName");
+        long areaId=getAreaCookieValue();
         if(StringUtils.isBlank(classifyType)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
-        List<VideoCoursePojo> videoCoursePojos = iexVideoCourseService.getVideoListByParams(StringUtils.isBlank(subjectId)? null : Long.valueOf(subjectId), Integer.valueOf(classifyType), Integer.parseInt(sortType),searchName, Integer.valueOf(pageNo) * Integer.valueOf(pageSize), Integer.valueOf(pageSize));
+        List<VideoCoursePojo> videoCoursePojos = iexVideoCourseService.getVideoListByParams(StringUtils.isBlank(subjectId)? null : Long.valueOf(subjectId), Integer.valueOf(classifyType), Integer.parseInt(sortType),searchName, Integer.valueOf(pageNo) * Integer.valueOf(pageSize), Integer.valueOf(pageSize),areaId);
         if(videoCoursePojos == null || videoCoursePojos.size() == 0){
             throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
         }
@@ -70,8 +71,9 @@ public class VideoController extends BaseController {
      */
     @RequestMapping(value = "getSubjectList",method = RequestMethod.GET)
     @ResponseBody
-    public List<SubjectPojo> getSubjectList(){
-        List<SubjectPojo> subjectPojos = iexSubjectService.getSubjectList();
+    public List<SubjectPojo> getSubjectList() throws Exception{
+        long areaId=getAreaCookieValue();
+        List<SubjectPojo> subjectPojos = iexSubjectService.getSubjectList(areaId);
         if(subjectPojos == null || subjectPojos.size() == 0){
             throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
         }
@@ -90,7 +92,7 @@ public class VideoController extends BaseController {
         try{
             user = getUserAccountPojo();
         }catch (Exception e){
-           throw  new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+            throw  new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
         }
         if(StringUtils.isBlank(courseId)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());

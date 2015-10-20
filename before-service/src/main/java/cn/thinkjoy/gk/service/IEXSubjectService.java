@@ -12,5 +12,5 @@ public interface IEXSubjectService {
      * 查询科目列表
      * @return
      */
-    List<SubjectPojo> getSubjectList();
+    List<SubjectPojo> getSubjectList(long areaId);
 }

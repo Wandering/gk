@@ -403,7 +403,9 @@ input, textarea {
   .header .main-menu > li {
     display: inline-block;
     position: relative;
-    float: left; }
+    float: left;
+    position: relative;
+    z-index: 99; }
     .header .main-menu > li ul.submenu {
       position: absolute;
       left: 0;
@@ -1100,7 +1102,9 @@ input, textarea {
   .header .main-menu > li {
     display: inline-block;
     position: relative;
-    float: left; }
+    float: left;
+    position: relative;
+    z-index: 99; }
     .header .main-menu > li ul.submenu {
       position: absolute;
       left: 0;

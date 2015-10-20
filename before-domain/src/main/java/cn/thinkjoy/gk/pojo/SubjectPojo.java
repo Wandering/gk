@@ -8,10 +8,20 @@ import java.io.Serializable;
 public class SubjectPojo implements Serializable{
     private Long subjectId;
     private String subjectName;
+    private long areaId;
 
-    public  SubjectPojo(Long subjectId,String subjectName){
+    public  SubjectPojo(Long subjectId,String subjectName,long areaId){
         this.subjectId = subjectId;
         this.subjectName = subjectName;
+        this.areaId = areaId;
+    }
+
+    public long getAreaId(){
+        return areaId;
+    }
+
+    public void setAreaId(long areaId){
+        this.areaId = areaId;
     }
 
     public Long getSubjectId() {

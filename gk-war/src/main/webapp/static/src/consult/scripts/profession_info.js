@@ -5,7 +5,6 @@
 define(function (require) {
     var $ = require('$');
     require('backToTop');
-    require('swiper');
 
     var getQueryStr = function(_url, _param) {
         var rs = new RegExp("(^|)" + _param + "=([^\&]*)(\&|$)", "g").exec(_url),

@@ -43,13 +43,13 @@
     margin-top: 5px;
     margin-right: 100px;
   }
-
-
   .main-menu > {
     li {
       display: inline-block;
       position: relative;
       float: left;
+      position: relative;
+      z-index: 99;
       ul.submenu{
         position: absolute;
         left:0;
@@ -118,7 +118,7 @@
     }
     .menu {
       display: none;
-      z-index: 9;
+      z-index: 220;
       position: absolute;
       background-color: #353535;
       top: 50px;

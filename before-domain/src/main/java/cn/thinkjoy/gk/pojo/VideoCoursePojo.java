@@ -18,6 +18,15 @@ public class VideoCoursePojo implements Serializable{
     private String years;//年份
     private String courseSort;//课程排名
     private String frontcover1;//封面二
+    private long areaId;
+
+    public long getAreaId(){
+        return areaId;
+    }
+
+    public void setAreaId(long areaId){
+        this.areaId=areaId;
+    }
 
     public Long getCourseId() {
         return courseId;

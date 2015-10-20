@@ -13,7 +13,8 @@
         a.frontcover1 AS frontCover,
         a.subcontent AS subcontent,
         a.hit AS hit,
-        a.years AS years
+        a.years AS years,
+        a.areaId AS areaId
     FROM
         gk_video_course a
     LEFT JOIN gk_video_classify b ON a.classifyId = b.id

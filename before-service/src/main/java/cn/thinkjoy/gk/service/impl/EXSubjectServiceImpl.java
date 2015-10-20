@@ -23,12 +23,12 @@ public class EXSubjectServiceImpl implements IEXSubjectService{
      * @return
      */
     @Override
-    public List<SubjectPojo> getSubjectList() {
-        List<Subject> subjects = subjectDAO.findAll();
+    public List<SubjectPojo> getSubjectList(long areaId) {
+        List<Subject> subjects = subjectDAO.findList("areaId",areaId);
         List<SubjectPojo> subjectPojos = new ArrayList<>();
         if(subjects != null && subjects.size() >0){
             for(Subject subject:subjects){
-                subjectPojos.add(new SubjectPojo(subject.getId(),subject.getSubjectName()));
+                subjectPojos.add(new SubjectPojo(subject.getId(),subject.getSubjectName(),areaId));
             }
         }
         return subjectPojos;

@@ -135,7 +135,6 @@
                     <span>在线互动</span>
                     <i class="fr arraw"></i>
                 </p>
-
                 <p class="fl w40"></p>
             </div>
             <h6 class="w1000 ta sub-title c888 mt20">每周5x8专业客服为您竭诚服务</h6>
@@ -147,13 +146,11 @@
                      <button class="ask-question">我要提问</button>
                 </span>
             </div>
-
             <ul class="tabs-list mt20" id="tabs-online">
                 <li class="active">最新解答</li>
-                <li>热门问题</li>
+                <li>热门解答</li>
                 <span class="more">更多</span>
             </ul>
-
             <div class="tab tab-0" id="tab_0">
                 <%--<div class="detile-content mt20">--%>
                     <%--<div class="detile-header">--%>
@@ -320,7 +317,6 @@
     </div>
 </div>
 <%@ include file="common/footer.jsp" %>
-<script type="text/javascript" src="/static/bower_components/utils/getTime.js"></script>
 <script>
     seajs.use("/static/src/index/scripts/index");
 </script>

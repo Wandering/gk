@@ -4,7 +4,6 @@
 
 define(function (require) {
     var $ = require('$');
-    require('swiper');
     require('backToTop');
 
     var Tab = require('/static/src/guide/scripts/tab');
@@ -48,7 +47,7 @@ define(function (require) {
             html.push('<span class="detile-title">' + list[i].title + '</span>');
             html.push(' <span class="fr">' + new Date(list[i].lastModDate).Format('yyyy-MM-dd hh:mm') + '</span>');
             html.push('</div>');
-            if(list[i].summary.trim()==""){
+            if(list[i].summary==null||list[i].summary.trim()==""){
                 html.push('<div class="detile-info mt20 hide">');
             }else{
                 html.push('<div class="detile-info mt20">');

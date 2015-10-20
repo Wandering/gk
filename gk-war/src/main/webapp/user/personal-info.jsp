@@ -51,7 +51,7 @@
                     </select>
                 </div>
                 <div class="group-comm">
-                    所在学校<input type="text" class="user-input-comm school" value=""/>
+                    所在学校<input type="text" class="user-input-comm school" id="school-name" value=""/>
                 </div>
                 <div class="group-comm">
                     出生日期<input onclick="laydate()" class="user-input-comm birthdayDate laydate-icon" />
