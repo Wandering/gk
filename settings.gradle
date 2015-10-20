@@ -42,9 +42,23 @@ include 'web-common'
 
 include 'protocol-common'
 
+include 'gk-user-web'
+
+include 'gk-question-web'
+
+include 'gk-login-web'
+
+include 'gk-before-web'
+
+include 'gk-consult-web'
+
+include 'gk-guide-web'
+
 include 'gk-hn-war'
 
 include 'gk-gx-war'
 
 include 'gk-sn-war'
+
+include 'gk-ha-war'
 
