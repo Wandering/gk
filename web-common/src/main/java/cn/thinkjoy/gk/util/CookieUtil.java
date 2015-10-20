@@ -1,7 +1,5 @@
 package cn.thinkjoy.gk.util;
 
-import org.apache.commons.lang.StringUtils;
-
 import javax.servlet.http.Cookie;
 
 
