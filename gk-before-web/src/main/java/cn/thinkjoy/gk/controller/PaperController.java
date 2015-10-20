@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseCommonController;
+import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.domain.ExaminationPaper;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IEXPaperService;
@@ -23,7 +24,7 @@ import java.util.List;
 @Controller
 @Scope("prototype")
 @RequestMapping("/before/paper")
-public class PaperController extends BaseCommonController {
+public class PaperController extends BaseController {
     @Autowired
     private IExaminationPaperService iExaminationPaperService;
     @Autowired
@@ -34,14 +35,15 @@ public class PaperController extends BaseCommonController {
      */
     @RequestMapping(value = "getPaperList",method = RequestMethod.GET)
     @ResponseBody
-    public List<ExaminationPaper> getPaperList(){
+    public List<ExaminationPaper> getPaperList() throws Exception{
         String pageNo = HttpUtil.getParameter(request, "pageNo", "0");
         String pageSize = HttpUtil.getParameter(request,"pageSize","10");
         String sortType = HttpUtil.getParameter(request,"sortType","1");
         String subjectId = request.getParameter("subjectId");
         String years = request.getParameter("years");
         String searchName = request.getParameter("searchName");
-        List<ExaminationPaper> papers = iexPaperService.getPaperPage(StringUtils.isBlank(subjectId)? null : Long.valueOf(subjectId),Integer.parseInt(sortType),years,searchName,Integer.parseInt(pageNo)*Integer.parseInt(pageSize),Integer.parseInt(pageSize));
+        long areaId=getAreaCookieValue();
+        List<ExaminationPaper> papers = iexPaperService.getPaperPage(StringUtils.isBlank(subjectId)? null : Long.valueOf(subjectId),Integer.parseInt(sortType),years,searchName,Integer.parseInt(pageNo)*Integer.parseInt(pageSize),Integer.parseInt(pageSize),areaId);
         if(papers == null || papers.size() == 0){
             throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
         }
