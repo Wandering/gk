@@ -34,7 +34,7 @@ public class VipController extends BaseController {
 
     @RequestMapping(value = "/upgradeVipByCard",method = RequestMethod.POST)
     @ResponseBody
-    public String upgradeVipByCard(CardPojo cardPojo) {
+    public String upgradeVipByCard(CardPojo cardPojo) throws Exception{
         UserAccountPojo userAccountPojo=super.getUserAccountPojo();
         if(null==userAccountPojo){
             throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
@@ -45,9 +45,11 @@ public class VipController extends BaseController {
             throw new BizException(ERRORCODE.VIP_EXIST.getCode(), ERRORCODE.VIP_EXIST.getMessage());
 
         }
+        long areaId=getAreaCookieValue();
         Map<String,Object> map=new HashMap<String, Object>();
         map.put("cardNumber",cardPojo.getCardNumber());
         map.put("password",cardPojo.getPassword());
+        map.put("areaId",areaId);
         Card card=(Card)cardService.queryOne(map);
         if(null==card ){
             throw new BizException(ERRORCODE.VIP_CARD_NOT_INVALID.getCode(), ERRORCODE.VIP_CARD_NOT_INVALID.getMessage());
