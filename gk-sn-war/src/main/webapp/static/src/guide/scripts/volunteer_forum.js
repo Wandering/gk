@@ -14,12 +14,10 @@ define(function (require) {
     function getTab() {
         $.get('/volunteerSchool/categories.do', function(data) {
             if ('0000000' === data.rtnCode) {
-                console.log(data)
                 Tab.init({
                     data:data.bizData,
                     contentId:'tab_title_content',
                     parentHandle:function(curObj) {
-                        console.log(curObj.name)
                         clearTimeout(timer);
                         timer = setTimeout(function() {
                             //if ('填报指南' === curObj.name) {
@@ -68,6 +66,7 @@ define(function (require) {
     function getArticleList(curObj, curPage) {
         $.get('/volunteerSchool/articles.do?cateId=' + curObj.id + '&pn=' + curPage + '&ps=8', function(data) {
             if ('0000000' === data.rtnCode) {
+                console.log(data);
                 var list = data.bizData.rows;
                 if (list.length <= 0) {
                     nextBtn.addClass('none').text('没有更多可加载！');
