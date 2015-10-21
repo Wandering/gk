@@ -10,6 +10,12 @@ define(function (require) {
     var localhosts = 'http://www.gkzy114.com';
 
 
+    function GetCookie(sMainName, sSubName) {
+        var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
+        return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
+    }
+
+
     // 获取章节列表
     function getList() {
         $.getJSON(
@@ -34,10 +40,10 @@ define(function (require) {
                             isAccept = dataJson[i].isAccept,
                             sectionName = dataJson[i].sectionName;
 
-                        var  listMsgHtml = '';
-                        if(isAccept==1){
+                        var listMsgHtml = '';
+                        if (isAccept == 1) {
                             listMsgHtml += '<a href="javascript:;" courseId="' + courseId + '" fileUrl="' + fileUrl + '">' + sectionName + '</a>';
-                        }else{
+                        } else {
                             listMsgHtml += '<a href="javascript:;" courseId="' + courseId + '" fileUrl="">' + sectionName + '</a>';
                         }
                         $('#episode-num').append(listMsgHtml);
@@ -45,20 +51,32 @@ define(function (require) {
                     $('#episode-num').find('a:eq(0)').click();
                     var firstFileurl = $('#episode-num').find('a:eq(0)').attr('fileurl');
                     console.log(firstFileurl);
-                    $('#player').attr('href', localhosts + firstFileurl);
-                    var api = flowplayer(
-                        "player",
-                        "/static/src/guide/scripts/flowplayer-3.2.18.swf",
-                        {
-                            clip: {
-                                autoPlay: false,       //是否自动播放，默认true
-                                autoBuffering: false     //是否自动缓冲视频，默认true
+
+                    if (!GetCookie("snuser") || GetCookie("snuser") == '""') {
+                        console.log('没有登录');
+                        var defualtVideoHtml = ''
+                            + '<div class="defualtVideo">'
+                            + '<img src="../images/"/>'
+                            + '<p><a href="">登录</a>后,才可以正常播放</p>'
+                            + '</div>';
+                        $('#logout').html(defualtVideoHtml)
+                    } else {
+                        $('#player').attr('href', localhosts + firstFileurl);
+                        var api = flowplayer(
+                            "player",
+                            "/static/src/guide/scripts/flowplayer-3.2.18.swf",
+                            {
+                                clip: {
+                                    autoPlay: false,       //是否自动播放，默认true
+                                    autoBuffering: false     //是否自动缓冲视频，默认true
+                                }
                             }
-                        }
-                    );
+                        );
+                    }
                 }
             });
     }
+
     getList();
 
     //$.get('/before/video/getVideoSectionList.do?courseId=' + courseId, function(data) {
@@ -73,14 +91,14 @@ define(function (require) {
     $('#episode-num').on('click', 'a', function () {
         $(this).addClass('active').siblings().removeClass('active');
         var fileurl = $(this).attr('fileurl');
-        if(fileurl!="" || fileurl==null){
+        if (fileurl != "" || fileurl == null) {
             $(window).scrollTop(0);
             $('#player').attr('href', localhosts + fileurl);
             var api = flowplayer(
                 "player",
                 "/static/src/guide/scripts/flowplayer-3.2.18.swf"
             );
-        }else{
+        } else {
             $('.error-tips').text('您还不是VIP用户,请升级为VIP后在观看。').fadeIn(1000).fadeOut(2000);
         }
     });
