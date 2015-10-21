@@ -71,10 +71,11 @@ public class VolunteerSchoolController extends BaseController {
         conditions.put(status.getField(), status);
 
         conditions.put("groupOp", "and");
-        status.setField("areaId");
-        status.setOp("=");
-        status.setData(String.valueOf(areaId));
-        conditions.put(status.getField(), status);
+        SearchField areaIdStatus = new SearchField();
+        areaIdStatus.setField("areaId");
+        areaIdStatus.setOp("=");
+        areaIdStatus.setData(String.valueOf(areaId));
+        conditions.put(areaIdStatus.getField(), areaIdStatus);
         return volunteerSchoolService.queryPageByDataPerm(null, conditions, pn, (pn-1) * ps, ps);
     }
 
@@ -127,10 +128,11 @@ public class VolunteerSchoolController extends BaseController {
         conditions.put(status.getField(), status);
 
         conditions.put("groupOp", "and");
-        status.setField("areaId");
-        status.setOp("=");
-        status.setData(String.valueOf(areaId));
-        conditions.put(status.getField(), status);
+        SearchField areaIdStatus = new SearchField();
+        areaIdStatus.setField("areaId");
+        areaIdStatus.setOp("=");
+        areaIdStatus.setData(String.valueOf(areaId));
+        conditions.put(areaIdStatus.getField(), areaIdStatus);
 
         BizData4Page<VolunteerSchool> page = volunteerSchoolService.queryPageByDataPerm("", conditions, 1, 0, ps, "hits", "desc");
 

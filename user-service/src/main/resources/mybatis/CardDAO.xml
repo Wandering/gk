@@ -2,18 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.thinkjoy.gk.dao.ICardDAO">
+    <!--
+    insert
+    update
+    updateNull
+    deleteById
+    deleteByCondition
+    deleteByProperty
+    fetch
+    findOne
+    findList
+    findAll
+    queryPage
+    like
+    queryList
+    queryOne
+    count
+    selectMaxId
+    updateOrSave
+    selectOne
+    selectList
+    -->
 
     <sql id="Base_Column_List">
-        id,
-        status,
-        creator,
-        createDate,
-        lastModifier,
-        lastModDate,
-        endDate,
-        cardNumber,
-        password,
-        userId
+        id as id ,
+        status as status ,
+        creator as creator ,
+        createDate as createDate ,
+        lastModifier as lastModifier ,
+        lastModDate as lastModDate ,
+        endDate as endDate ,
+        cardNumber as cardNumber ,
+        password as password ,
+        userId as userId ,
+        areaId as areaId
     </sql>
     <insert id="insert" parameterType="Card">
         INSERT INTO gk_card (
@@ -25,7 +47,8 @@
         endDate,
         cardNumber,
         password,
-        userId
+        userId,
+        areaId
         ) VALUES (
         #{status},
         #{creator},
@@ -35,10 +58,11 @@
         #{endDate},
         #{cardNumber},
         #{password},
-        #{userId}
+        #{userId},
+        #{areaId}
         )
         <selectKey resultType="java.lang.Long" keyProperty="id">
-        SELECT LAST_INSERT_ID() AS ID
+            SELECT LAST_INSERT_ID() AS ID
         </selectKey>
     </insert>
 
@@ -72,6 +96,9 @@
             </if>
             <if test="userId!=null">
                 userId = #{userId},
+            </if>
+            <if test="areaId!=null">
+                areaId = #{areaId},
             </if>
         </trim>
         WHERE
@@ -108,6 +135,9 @@
             <if test="map.userId!=null">
                 userId = #{map.userId},
             </if>
+            <if test="map.areaId!=null">
+                areaId = #{map.areaId},
+            </if>
         </trim>
         WHERE
         id = #{map.id}
@@ -143,6 +173,9 @@
             <if test="update.userId!=null">
                 userId = #{update.userId},
             </if>
+            <if test="update.areaId!=null">
+                areaId = #{update.areaId},
+            </if>
         </trim>
 
         <trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -176,30 +209,35 @@
             <if test="condition.userId!=null">
                 AND userId = #{condition.userId}
             </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
         </trim>
     </update>
 
     <insert id="insertMap" >
         INSERT INTO gk_card (
-                status,
-                creator,
-                createDate,
-                lastModifier,
-                lastModDate,
-                endDate,
-                cardNumber,
-                password,
-                userId
+        status,
+        creator,
+        createDate,
+        lastModifier,
+        lastModDate,
+        endDate,
+        cardNumber,
+        password,
+        userId,
+        areaId
         ) VALUES (
-                    #{map.status},
-                    #{map.creator},
-                    #{map.createDate},
-                    #{map.lastModifier},
-                    #{map.lastModDate},
-                    #{map.endDate},
-                    #{map.cardNumber},
-                    #{map.password},
-                    #{map.userId}
+        #{map.status},
+        #{map.creator},
+        #{map.createDate},
+        #{map.lastModifier},
+        #{map.lastModDate},
+        #{map.endDate},
+        #{map.cardNumber},
+        #{map.password},
+        #{map.userId},
+        #{map.areaId}
         )
     </insert>
 
@@ -216,9 +254,10 @@
             cardNumber = #{cardNumber},
             password = #{password},
             userId = #{userId},
+            areaId = #{areaId},
         </trim>
         WHERE
-        id = #{id} 
+        id = #{id}
     </update>
 
     <!-- 按Id删除 -->
@@ -263,6 +302,9 @@
             <if test="userId!=null">
                 AND userId = #{userId}
             </if>
+            <if test="areaId!=null">
+                AND areaId = #{areaId}
+            </if>
         </trim>
     </delete>
 
@@ -278,9 +320,6 @@
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
-        <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
-        </if>
     </select>
 
     <select id="findOne" parameterType="java.util.Map" resultType="Card">
@@ -288,6 +327,9 @@
         <include refid="Base_Column_List" />
         FROM gk_card WHERE
         ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
         LIMIT 0,1
     </select>
 
@@ -321,41 +363,43 @@
             </if>
 
             <if test="condition.id!=null">
-                ${condition.groupOp}   id  ${condition.id.op}  #{condition.id.data}
+                ${condition.groupOp}   ${condition.id.field}  ${condition.id.op}  #{condition.id.data}
             </if>
             <if test="condition.status!=null">
-                ${condition.groupOp}   status  ${condition.status.op}  #{condition.status.data}
+                ${condition.groupOp}   ${condition.status.field}  ${condition.status.op}  #{condition.status.data}
             </if>
             <if test="condition.creator!=null">
-                ${condition.groupOp}   creator  ${condition.creator.op}  #{condition.creator.data}
+                ${condition.groupOp}   ${condition.creator.field}  ${condition.creator.op}  #{condition.creator.data}
             </if>
             <if test="condition.createDate!=null">
-                ${condition.groupOp}   createDate  ${condition.createDate.op}  #{condition.createDate.data}
+                ${condition.groupOp}   ${condition.createDate.field}  ${condition.createDate.op}  #{condition.createDate.data}
             </if>
             <if test="condition.lastModifier!=null">
-                ${condition.groupOp}   lastModifier  ${condition.lastModifier.op}  #{condition.lastModifier.data}
+                ${condition.groupOp}   ${condition.lastModifier.field}  ${condition.lastModifier.op}  #{condition.lastModifier.data}
             </if>
             <if test="condition.lastModDate!=null">
-                ${condition.groupOp}   lastModDate  ${condition.lastModDate.op}  #{condition.lastModDate.data}
+                ${condition.groupOp}   ${condition.lastModDate.field}  ${condition.lastModDate.op}  #{condition.lastModDate.data}
             </if>
             <if test="condition.endDate!=null">
-                ${condition.groupOp}   endDate  ${condition.endDate.op}  #{condition.endDate.data}
+                ${condition.groupOp}   ${condition.endDate.field}  ${condition.endDate.op}  #{condition.endDate.data}
             </if>
             <if test="condition.cardNumber!=null">
-                ${condition.groupOp}   cardNumber  ${condition.cardNumber.op}  #{condition.cardNumber.data}
+                ${condition.groupOp}   ${condition.cardNumber.field}  ${condition.cardNumber.op}  #{condition.cardNumber.data}
             </if>
             <if test="condition.password!=null">
-                ${condition.groupOp}   password  ${condition.password.op}  #{condition.password.data}
+                ${condition.groupOp}   ${condition.password.field}  ${condition.password.op}  #{condition.password.data}
             </if>
             <if test="condition.userId!=null">
-                ${condition.groupOp}   userId  ${condition.userId.op}  #{condition.userId.data}
+                ${condition.groupOp}   ${condition.userId.field}  ${condition.userId.op}  #{condition.userId.data}
+            </if>
+            <if test="condition.areaId!=null">
+                ${condition.groupOp}   ${condition.areaId.field}  ${condition.areaId.op}  #{condition.areaId.data}
             </if>
 
 
-    </where>
-
+        </where>
         <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
+            ORDER BY ${orderBy} ${sortBy}
         </if>
         <if test="offset != null">
             limit ${offset}, ${rows}
@@ -367,39 +411,42 @@
         <include refid="Base_Column_List" />
         FROM gk_card
         <trim prefix="WHERE" prefixOverrides="AND | OR">
-            <if test="id!=null">
-                AND id like CONCAT('%', #{id} , '%')
+            <if test="condition.id!=null">
+                AND id like CONCAT('%', #{condition.id} , '%')
             </if>
-            <if test="status!=null">
-                AND status like CONCAT('%', #{status} , '%')
+            <if test="condition.status!=null">
+                AND status like CONCAT('%', #{condition.status} , '%')
             </if>
-            <if test="creator!=null">
-                AND creator like CONCAT('%', #{creator} , '%')
+            <if test="condition.creator!=null">
+                AND creator like CONCAT('%', #{condition.creator} , '%')
             </if>
-            <if test="createDate!=null">
-                AND createDate like CONCAT('%', #{createDate} , '%')
+            <if test="condition.createDate!=null">
+                AND createDate like CONCAT('%', #{condition.createDate} , '%')
             </if>
-            <if test="lastModifier!=null">
-                AND lastModifier like CONCAT('%', #{lastModifier} , '%')
+            <if test="condition.lastModifier!=null">
+                AND lastModifier like CONCAT('%', #{condition.lastModifier} , '%')
             </if>
-            <if test="lastModDate!=null">
-                AND lastModDate like CONCAT('%', #{lastModDate} , '%')
+            <if test="condition.lastModDate!=null">
+                AND lastModDate like CONCAT('%', #{condition.lastModDate} , '%')
             </if>
-            <if test="endDate!=null">
-                AND endDate like CONCAT('%', #{endDate} , '%')
+            <if test="condition.endDate!=null">
+                AND endDate like CONCAT('%', #{condition.endDate} , '%')
             </if>
-            <if test="cardNumber!=null">
-                AND cardNumber like CONCAT('%', #{cardNumber} , '%')
+            <if test="condition.cardNumber!=null">
+                AND cardNumber like CONCAT('%', #{condition.cardNumber} , '%')
             </if>
-            <if test="password!=null">
-                AND password like CONCAT('%', #{password} , '%')
+            <if test="condition.password!=null">
+                AND password like CONCAT('%', #{condition.password} , '%')
             </if>
-            <if test="userId!=null">
-                AND userId like CONCAT('%', #{userId} , '%')
+            <if test="condition.userId!=null">
+                AND userId like CONCAT('%', #{condition.userId} , '%')
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId like CONCAT('%', #{condition.areaId} , '%')
             </if>
         </trim>
         <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
+            ORDER BY ${orderBy} ${sortBy}
         </if>
     </select>
 
@@ -439,9 +486,12 @@
             <if test="condition.userId!=null">
                 AND userId = #{condition.userId}
             </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
         </trim>
         <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
+            ORDER BY ${orderBy} ${sortBy}
         </if>
     </select>
 
@@ -450,78 +500,84 @@
         <include refid="Base_Column_List" />
         FROM gk_card
         <trim prefix="WHERE" prefixOverrides="AND | OR">
-            <if test="id!=null">
-                AND id = #{id}
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
             </if>
-            <if test="status!=null">
-                AND status = #{status}
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
             </if>
-            <if test="creator!=null">
-                AND creator = #{creator}
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
             </if>
-            <if test="createDate!=null">
-                AND createDate = #{createDate}
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
             </if>
-            <if test="lastModifier!=null">
-                AND lastModifier = #{lastModifier}
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
             </if>
-            <if test="lastModDate!=null">
-                AND lastModDate = #{lastModDate}
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
             </if>
-            <if test="endDate!=null">
-                AND endDate = #{endDate}
+            <if test="condition.endDate!=null">
+                AND endDate = #{condition.endDate}
             </if>
-            <if test="cardNumber!=null">
-                AND cardNumber = #{cardNumber}
+            <if test="condition.cardNumber!=null">
+                AND cardNumber = #{condition.cardNumber}
             </if>
-            <if test="password!=null">
-                AND password = #{password}
+            <if test="condition.password!=null">
+                AND password = #{condition.password}
             </if>
-            <if test="userId!=null">
-                AND userId = #{userId}
+            <if test="condition.userId!=null">
+                AND userId = #{condition.userId}
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
             </if>
         </trim>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
         limit 0,1
     </select>
 
     <select id="count" resultType="java.lang.Integer">
         SELECT count(id) FROM gk_card
-       <where>
-           <if test="id!=null">
-               ${groupOp} id ${id.op}  #{id.data}
-           </if>
-           <if test="status!=null">
-               ${groupOp} status ${status.op}  #{status.data}
-           </if>
-           <if test="creator!=null">
-               ${groupOp} creator ${creator.op}  #{creator.data}
-           </if>
-           <if test="createDate!=null">
-               ${groupOp} createDate ${createDate.op}  #{createDate.data}
-           </if>
-           <if test="lastModifier!=null">
-               ${groupOp} lastModifier ${lastModifier.op}  #{lastModifier.data}
-           </if>
-           <if test="lastModDate!=null">
-               ${groupOp} lastModDate ${lastModDate.op}  #{lastModDate.data}
-           </if>
-           <if test="endDate!=null">
-               ${groupOp} endDate ${endDate.op}  #{endDate.data}
-           </if>
-           <if test="cardNumber!=null">
-               ${groupOp} cardNumber ${cardNumber.op}  #{cardNumber.data}
-           </if>
-           <if test="password!=null">
-               ${groupOp} password ${password.op}  #{password.data}
-           </if>
-           <if test="userId!=null">
-               ${groupOp} userId ${userId.op}  #{userId.data}
-           </if>
+        <where>
+            <if test="id!=null">
+                ${groupOp} ${id.field} ${id.op}  #{id.data}
+            </if>
+            <if test="status!=null">
+                ${groupOp} ${status.field} ${status.op}  #{status.data}
+            </if>
+            <if test="creator!=null">
+                ${groupOp} ${creator.field} ${creator.op}  #{creator.data}
+            </if>
+            <if test="createDate!=null">
+                ${groupOp} ${createDate.field} ${createDate.op}  #{createDate.data}
+            </if>
+            <if test="lastModifier!=null">
+                ${groupOp} ${lastModifier.field} ${lastModifier.op}  #{lastModifier.data}
+            </if>
+            <if test="lastModDate!=null">
+                ${groupOp} ${lastModDate.field} ${lastModDate.op}  #{lastModDate.data}
+            </if>
+            <if test="endDate!=null">
+                ${groupOp} ${endDate.field} ${endDate.op}  #{endDate.data}
+            </if>
+            <if test="cardNumber!=null">
+                ${groupOp} ${cardNumber.field} ${cardNumber.op}  #{cardNumber.data}
+            </if>
+            <if test="password!=null">
+                ${groupOp} ${password.field} ${password.op}  #{password.data}
+            </if>
+            <if test="userId!=null">
+                ${groupOp} ${userId.field} ${userId.op}  #{userId.data}
+            </if>
+            <if test="areaId!=null">
+                ${groupOp} ${areaId.field} ${areaId.op}  #{areaId.data}
+            </if>
 
-       </where>
-    <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
-    </if>
+        </where>
     </select>
 
     <select id="selectMaxId" resultType="java.lang.Long">

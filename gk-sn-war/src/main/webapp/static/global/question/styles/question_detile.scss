@@ -1,0 +1,62 @@
+@charset "utf-8";
+
+@import "../../common/styles/comm.scss";
+@import "common";
+@import "question";
+
+
+.main-body{
+  margin-top: 50px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.section-article{
+  width: 80%;
+  float: left;
+  margin-top: 0;
+}
+
+.ask-list{
+  width: 19%;
+  float: right;
+  border-left: 1px solid #F1F1F1;
+
+  h3{
+    width: 95%;
+    padding-left: 5%;
+    border-bottom: 1px solid #F1F1F1;
+    height: 34px;
+    line-height: 34px;
+    //margin: 30px 0 0 10px;
+    color: #333;
+  }
+
+  ul{
+    //margin-left: 10px;
+  }
+
+  li{
+    width: 95%;
+    padding-left: 5%;
+    list-style: inside disc;
+    margin: 15px 0;
+    font-size: 12px;
+    color: #444;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+.head-info {
+  p{
+    margin-top: 10px;
+  }
+}
+
+.ask-answer {
+  .head-img {
+    float: left;
+  }
+}
