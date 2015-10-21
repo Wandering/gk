@@ -4,22 +4,22 @@
     <a href="/index.jsp">
       <img src="/static/dist/common/images/logo-min.png" alt="高考360" class="logo fl"/>
     </a>
-    <ul class="main-menu fl">
-      <li><a class="index" href="/index.jsp">首页</a></li>
-      <li><a class="guide" href="/guide/guide.jsp">高考政策</a>
+    <ul class="main-menu fl" id="main-menu">
+      <li class="menu-item"><a class="index" href="/index.jsp">首页</a></li>
+      <li class="menu-item"><a class="guide" href="/guide/guide.jsp">高考政策</a>
         <ul class="submenu">
           <li><a href="/guide/guide.jsp">政策解读</a></li>
           <li><a href="/guide/volunteer_forum.jsp">志愿讲堂</a></li>
         </ul>
       </li>
-      <li><a class="gk_hot" href="/consult/gk_hot.jsp">高考资讯</a>
+      <li class="menu-item"><a class="gk_hot" href="/consult/gk_hot.jsp">高考资讯</a>
         <ul class="submenu">
           <li><a href="/consult/consult.jsp">专业测评</a></li>
           <li><a href="/consult/school_info.jsp">院校信息</a></li>
           <li><a href="/consult/profession_info.jsp">专业信息</a></li>
         </ul>
       </li>
-      <li><a class="before" href="/before/before.jsp">考前备考</a>
+      <li class="menu-item"><a class="before" href="/before/before.jsp">考前备考</a>
         <ul class="submenu">
           <li><a href="/before/teacher-lecture.jsp?classifyType=1&searchV=">名师讲堂</a></li>
           <li><a href="/before/exam.jsp?classifyType=3&searchV=">真题密卷</a></li>
@@ -27,12 +27,12 @@
           <li><a href="/before/before.jsp?classifyType=4">院校推荐</a></li>
         </ul>
       </li>
-      <li><a class="after" href="/after/after.jsp">考后报考</a></li>
+      <li class="menu-item"><a class="after" href="/after/after.jsp">考后报考</a></li>
     </ul>
-    <div class="log-reg hide">
+    <div class="log-reg hide" id="log-reg">
       <a href="/login/login.jsp">登录/注册</a>
     </div>
-    <div class="user-info-list fr hide">
+    <div class="user-info-list fr hide" id="login-user-info">
       <div class="user">
         <img src="" alt="avatar" class="user-avatar hide"/>
         <a href="javascript:" id="accountNum" class="username"></a>
@@ -44,7 +44,7 @@
         <li><a href="/user/online-answer.jsp">在线答疑</a></li>
         <li><a href="/user/expert-service.jsp">专家服务</a></li>
         <li><a href="/user/modify-psd.jsp">修改密码</a></li>
-        <li><a href="javascript:;">退出</a></li>
+        <li><a href="/login/logout.do">退出</a></li>
       </ul>
     </div>
   </div>
