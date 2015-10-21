@@ -15,6 +15,14 @@ define(function (require) {
         return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
     }
 
+    if (!GetCookie("snuser") || GetCookie("snuser") == '""') {
+        console.log('没有登录99');
+        var defualtVideoHtml = ''
+            + '<img src="http://cdn.gaokao360.net/static/global/before/images/defualt-video.jpg"/>'
+            + '<p><a target="_blank" href="/login/login.jsp">登录</a>后,才可以正常播放</p>'
+        $('#logoutStatus').show().html(defualtVideoHtml)
+    }
+
 
     // 获取章节列表
     function getList() {
@@ -52,15 +60,8 @@ define(function (require) {
                     var firstFileurl = $('#episode-num').find('a:eq(0)').attr('fileurl');
                     console.log(firstFileurl);
 
-                    if (!GetCookie("snuser") || GetCookie("snuser") == '""') {
-                        console.log('没有登录');
-                        var defualtVideoHtml = ''
-                            + '<div class="defualtVideo">'
-                            + '<img src="../images/"/>'
-                            + '<p><a href="">登录</a>后,才可以正常播放</p>'
-                            + '</div>';
-                        $('#logout').html(defualtVideoHtml)
-                    } else {
+                    if (GetCookie("snuser")) {
+                        console.log('登录');
                         $('#player').attr('href', localhosts + firstFileurl);
                         var api = flowplayer(
                             "player",

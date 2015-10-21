@@ -107,8 +107,26 @@
   border-radius: 3px;
   width:500px;
 }
-
-
-
+#logoutStatus{
+  display: none;
+  position: relative;
+  top: 40px;
+  width: 759px;
+  height: 427px;
+  margin: 0 auto;
+  text-align: center;
+}
+#logoutStatus p{
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  left:0;
+  top:215px;
+  color: #585858;
+  font-size: 22px;
+}
+#logoutStatus p a{
+  color: #e24333;
+}
 
 
