@@ -45,7 +45,7 @@ public class UploadController extends BaseController{
 	 */
 	@RequestMapping(value = "/upload",method = RequestMethod.POST)
 	@ResponseBody
-	public String upload(@RequestParam(value = "files[]", required = false) MultipartFile[] fileUploads,@RequestParam(value = "params", required = false)String params) throws Exception {
+	public String upload(@RequestParam(value = "files", required = false) MultipartFile[] fileUploads,@RequestParam(value = "params", required = false)String params) throws Exception {
 //		String cookieValue = CookieUtil.getCookieValue(request.getCookies(), CookieConst.ADMINUSER_COOKIE_NAME);
 //		if(StringUtils.isEmpty(cookieValue)){
 //			throw new BizException(ERRORCODE.UPLOAD_ERROR_0.getCode(),ERRORCODE.UPLOAD_ERROR_0.getMessage());
