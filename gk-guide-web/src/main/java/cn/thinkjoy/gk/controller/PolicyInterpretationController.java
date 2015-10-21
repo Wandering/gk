@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.gk.common.BaseCommonController;
+import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.domain.AdmissionBatch;
 import cn.thinkjoy.gk.domain.PolicyInterpretation;
 import cn.thinkjoy.gk.dto.PolicyInterpretationCategory;
@@ -22,7 +23,7 @@ import java.util.Map;
 @Controller
 @Scope("prototype")
 @RequestMapping("/policyInterpretation")
-public class PolicyInterpretationController extends BaseCommonController {
+public class PolicyInterpretationController extends BaseController {
 
     @Autowired
     private IAdmissionBatchService admissionBatchService;
@@ -31,9 +32,11 @@ public class PolicyInterpretationController extends BaseCommonController {
 
     @RequestMapping(value = "/admissionBatchs", method = RequestMethod.GET)
     @ResponseBody
-    public List<AdmissionBatch> getAdmissionBatchs() {
+    public List<AdmissionBatch> getAdmissionBatchs() throws Exception{
+        long areaId=getAreaCookieValue();
         Map<String, Object> conditions = Maps.newHashMap();
         conditions.put("status", 1);
+        conditions.put("areaId",areaId);
         List<AdmissionBatch> admissionBatchList = admissionBatchService.queryList(conditions, null, null);
         return admissionBatchList;
     }
@@ -48,10 +51,12 @@ public class PolicyInterpretationController extends BaseCommonController {
 
     @RequestMapping(value = "/allCategories", method = RequestMethod.GET)
     @ResponseBody
-    public List<PolicyInterpretationCategory> getAllPolicyInterpretationCategory(@RequestParam("provinceId") long provinceId) {
+    public List<PolicyInterpretationCategory> getAllPolicyInterpretationCategory(@RequestParam("provinceId") long provinceId) throws Exception{
+        long areaId=getAreaCookieValue();
         List<PolicyInterpretationCategory> allCategory = Lists.newArrayList();
         Map<String, Object> conditions = Maps.newHashMap();
         conditions.put("status", 1);
+        conditions.put("areaId", areaId);
         List<AdmissionBatch> admissionBatchList = admissionBatchService.queryList(conditions, null, null);
         if (admissionBatchList != null) {
             for (AdmissionBatch batch: admissionBatchList) {

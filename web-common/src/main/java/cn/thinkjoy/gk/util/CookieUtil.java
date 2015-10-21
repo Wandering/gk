@@ -60,7 +60,6 @@ public class CookieUtil {
 
 	public static String getCookieValue(HttpServletRequest request){
 		String domainValue = DomainUtil.getDomainValue(request);
-
 		if(domainValue.equals(DomainConst.SN_DOMAIN)){
 			return CookieUtil.getCookieValue(request.getCookies(), CookieConst.SN_USER_COOKIE_NAME);
 		} else if(domainValue.equals(DomainConst.HN_DOMAIN)){
@@ -70,13 +69,11 @@ public class CookieUtil {
 		} else if(domainValue.equals(DomainConst.HA_DOMAIN)){
 			return CookieUtil.getCookieValue(request.getCookies(), CookieConst.HA_USER_COOKIE_NAME);
 		}
-
 		return null;
 	}
 
 	public static String getCookieName(HttpServletRequest request){
 		String domainValue = DomainUtil.getDomainValue(request);
-
 		if(domainValue.equals(DomainConst.SN_DOMAIN)){
 			return CookieConst.SN_USER_COOKIE_NAME;
 		} else if(domainValue.equals(DomainConst.HN_DOMAIN)){
