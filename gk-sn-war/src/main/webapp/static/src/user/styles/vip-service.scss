@@ -170,10 +170,12 @@
     }
   }
 }
+
 .error-tips{
   position: absolute;
   width: 405px;
-  left:35px;
+  left:0;
+  top: 10px;
   padding: 10px;
   text-align: center;
   margin-bottom: 10px;

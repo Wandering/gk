@@ -4,7 +4,7 @@ define(function (require) {
         var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
         return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
     }
-    if (!GetCookie("gkuser") || GetCookie("gkuser") == '""') {
+    if (!GetCookie("snuser") || GetCookie("snuser") == '""') {
         window.location.href = '/login/login.jsp';
     }
 

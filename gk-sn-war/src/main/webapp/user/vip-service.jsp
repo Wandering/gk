@@ -4,7 +4,7 @@
 <head>
     <title>vip服务</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/user/styles/vip-service.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/user/styles/vip-service.css"/>
 </head>
 <body>
 <%@include file="/common/header.jsp"%>
@@ -44,6 +44,7 @@
                 <img src="/static/dist/user/images/online-card-img.png" class="pay-title"/>
 
                 <div class="pay-box">
+                    <div class="error-tips hide"></div>
                     <p>充值账号：<span class="accountNum"></span></p>
                     <div class="input-box">
                         <img src="/static/dist/user/images/icon-card-pay.png" alt=""/>
@@ -54,7 +55,7 @@
                         密码：<input type="text" id="pay-password"  class="input-pay-comm"/>
                     </div>
                 </div>
-                <div class="error-tips hide"></div>
+
                 <div class="btn-upgrade btn-green" id="accountBtn">升级</div>
             </div>
         </div>
