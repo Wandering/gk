@@ -57,7 +57,7 @@ gulp.task('scripts', function () {
         .pipe(gulp.dest('global'))
         .pipe(rename({suffix: '.min'}))
         .pipe(uglify())
-        .pipe(gulp.dest('sn'))
+        .pipe(gulp.dest('global'))
         .pipe(notify({message: 'Scripts task complete'}));
 });
 
@@ -74,9 +74,9 @@ gulp.task('scripts', function () {
 //});
 
 gulp.task('images', function () {
-    return gulp.src('src/**/*')
-        .pipe(cache(imagemin({optimizationLevel: 3, progressive: true, interlaced: true})))
-        .pipe(gulp.dest('global'))
+    return gulp.src(['src/**/*.png','src/**/*.jpg','src/**/*.gif'])
+        //.pipe(cache(imagemin({optimizationLevel: 3, progressive: true, interlaced: true})))
+        .pipe(gulp.dest('global/'))
         .pipe(notify({message: 'Images task complete'}));
 });
 
