@@ -43,7 +43,27 @@ public enum ERRORCODE {
 	CREATE_VERIFY_CODE_ERROR("1000003","生成验证码发生错误!"),
 	NO_LOGIN("1000004","请先登录后再进行操作"),
 	VERIFY_CODE_ERROR("0100005", "验证码错误!"),
-	NOT_IS_VIP_ERROR("0100006", "非VIP用户!");
+	NOT_IS_VIP_ERROR("0100006", "非VIP用户!"),
+
+
+	UPLOAD_ERROR_0("1100001", "非法上传!"),
+
+	UPLOAD_ERROR_405("1100002", "请上传文件!"),
+
+	UPLOAD_ERROR_400("1100003", "文件超过大小限制!"),
+
+	UPLOAD_ERROR_401("1100004", "零字节的文件!"),
+
+	UPLOAD_ERROR_402("1100005", "无效的文件类型!"),
+
+	UPLOAD_ERROR_500("1100006", "服务端发生错误!");
+
+
+
+
+
+
+
 
 
 
