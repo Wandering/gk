@@ -4,7 +4,7 @@
 <head>
     <title>在线互动</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/question/styles/question.css" />
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/question/styles/question.min.css" />
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
@@ -44,9 +44,8 @@
     </div>
 </div>
 <%@ include file="/common/footer.jsp"%>
-<script type="text/javascript" src="/static/bower_components/utils/getTime.js"></script>
 <script type="text/javascript">
-    seajs.use("${ctx}/static/src/question/scripts/question");
+    seajs.use(["http://cdn.gaokao360.net/static/global/question/scripts/question","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
 </script>
 </body>
 </html>

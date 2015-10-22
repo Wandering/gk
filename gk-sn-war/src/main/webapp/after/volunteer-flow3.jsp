@@ -4,8 +4,8 @@
 <head>
    <title>志愿指导</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/after/styles/after.css"/>
-    <link rel="stylesheet" href="/static/dist/after/styles/expert-evaluating.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/after/styles/after.min.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/after/styles/expert-evaluating.min.css"/>
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
@@ -597,7 +597,7 @@
 
 <%@ include file="/common/footer.jsp"%>
 <script>
-    seajs.use("/static/src/after/scripts/after-flow3");
+    seajs.use("http://cdn.gaokao360.net/static/global/after/scripts/after-flow3.min");
     var params = decodeURIComponent('${params}');
 </script>
 

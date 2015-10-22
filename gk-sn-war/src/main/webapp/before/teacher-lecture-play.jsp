@@ -25,9 +25,9 @@
     </div>
 </div>
 <%@ include file="/common/footer.jsp"%>
-<script type="text/javascript" src="/static/src/guide/scripts/flowplayer-3.2.13.min.js"></script>
+<script type="text/javascript" src="http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.13.min.js"></script>
 <script>
-    seajs.use("/static/src/before/scripts/teacher-lecture-play");
+    seajs.use("http://cdn.gaokao360.net/static/global/before/scripts/teacher-lecture-play.min");
 </script>
 </body>
 </html>

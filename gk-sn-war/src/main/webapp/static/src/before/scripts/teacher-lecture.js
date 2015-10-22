@@ -1,7 +1,6 @@
 define(function (require) {
     var $ = require('$');
     require('backToTop');
-    require('getTime');
 
     var UI = {
         $listMsgItem: $('#list-msg-item'),

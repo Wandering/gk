@@ -17,7 +17,7 @@
 
 
 <script>
-    seajs.use("/static/src/before/scripts/exam-play");
+    seajs.use("http://cdn.gaokao360.net/static/global/before/scripts/exam-play.min");
 </script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <head>
     <title>考前备考</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/before/styles/before.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/before/styles/before.min.css"/>
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
@@ -464,7 +464,7 @@
 </div>
 <%@ include file="/common/footer.jsp"%>
 <script>
-    seajs.use("/static/src/before/scripts/before");
+    seajs.use(["http://cdn.gaokao360.net/static/src/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
 </script>
 </body>
 </html>

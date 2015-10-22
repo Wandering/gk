@@ -4,7 +4,7 @@
 <head>
     <title>专业基本信息</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/consult/styles/profession_detile.css" />
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/consult/styles/profession_detile.min.css" />
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
@@ -37,7 +37,7 @@
 
 <%@ include file="/common/footer.jsp"%>
 <script type="text/javascript">
-    seajs.use("${ctx}/static/src/consult/scripts/profession_detile");
+    seajs.use("http://cdn.gaokao360.net/static/global/consult/scripts/profession_detile");
 </script>
 </body>
 </html>

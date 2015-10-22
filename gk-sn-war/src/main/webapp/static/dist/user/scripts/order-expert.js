@@ -1,7 +1,6 @@
 define(function (require) {
     var $ = require('$');
     //require('laydate');
-    require('swiper');
 
 
     $('.btn-submit').click(function () {

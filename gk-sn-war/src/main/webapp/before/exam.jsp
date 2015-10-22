@@ -4,7 +4,7 @@
 <head>
     <title>真题密卷</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/before/styles/before.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/before/styles/before.min.css"/>
 </head>
 <body>
 <%@ include file="/before/header-before.jsp"%>
@@ -54,7 +54,7 @@
 </div>
 <%@ include file="/common/footer.jsp"%>
 <script>
-    seajs.use("/static/src/before/scripts/exam");
+    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/exam.min",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
 </script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <head>
     <%@include file="/common/meta.jsp" %>
     <title>应用中心</title>
-    <link rel="stylesheet" href="/static/dist/user/styles/app-center.min.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/user/styles/app-center.min.css"/>
 </head>
 <body>
 <%@include file="/common/header.jsp"%>
@@ -63,7 +63,7 @@
 </div>
 <%@include file="/common/footer.jsp"%>
 <script>
-    seajs.use("/static/src/user/scripts/app-center");
+    seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/app-center.min");
 </script>
 </body>
 </html>

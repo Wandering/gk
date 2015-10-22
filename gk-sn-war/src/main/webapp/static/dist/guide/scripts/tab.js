@@ -23,6 +23,7 @@ define(function(require, exports, module) {
             var parentHtml = [];
             parentHtml.push('<ul class="tabs-list mt60">');
             for (var i = 0, len = this.data.length; i < len; i++) {
+                console.log(this.data[i].id  + "==" + this.data[i].name)
                 parentHtml.push('<li data-id="' + this.data[i].id + '">' + this.data[i].name + '</li>');
             }
             parentHtml.push('</ul>');
@@ -65,6 +66,7 @@ define(function(require, exports, module) {
             var childrenHtml = [];
             childrenHtml.push('<ul class="tabs-sub-list mt20">');
             for (var i = 0, len = data.length; i < len; i++) {
+
                 childrenHtml.push('<li data-id="' + data[i].id + '">' + data[i].categoryName + '</li>');
             }
             childrenHtml.push('</ul>');

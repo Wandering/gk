@@ -40,5 +40,5 @@
   </div>
 </div>
 <script>
-  seajs.use("/static/src/before/scripts/header-before");
+  seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/header-before.min","http://cdn.gaokao360.net/static/global/common/scripts/header-user-base"]);
 </script>

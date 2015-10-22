@@ -1,6 +1,5 @@
 define(function (require) {
     var $ = require('$');
-    require('swiper');
     require('getTime');
     require('backToTop');
 
@@ -14,7 +13,7 @@ define(function (require) {
         //在线互动
         var more = $('.more');
         $('.ask-question').click(function () {
-            window.location.assign(url + '/question/ask.jsp');
+            window.location.assign(url + '/question/ask.jsp?path=online');
         });
         $('.go-search').click(function () {
             var searchText = $('.search-val').val();
@@ -77,7 +76,8 @@ define(function (require) {
             dataType: 'json',
             type: 'get',
             data: {
-                "pageNo": 0
+                "pageNo": 0,
+                "pageSize": 6
             },
             success: function (res) {
                 var dataJson = res.bizData;

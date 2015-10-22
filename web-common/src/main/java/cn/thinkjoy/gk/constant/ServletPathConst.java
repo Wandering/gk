@@ -38,5 +38,7 @@ public class ServletPathConst {
 
 
         JSP_URLS.put("/guide/guide.jsp","");
+        JSP_URLS.put("/user/personal-info.jsp","");
+
     }
 }

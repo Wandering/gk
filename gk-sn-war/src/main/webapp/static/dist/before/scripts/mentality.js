@@ -1,8 +1,6 @@
 define(function (require) {
     var $ = require('$');
-    require('swiper');
     require('backToTop');
-    require('getTime');
 
     var UI = {
         $listMsgItem: $('#list-msg-item'),
@@ -52,7 +50,7 @@ define(function (require) {
             {
                 pageNo: pageNo,
                 pageSize: pageSize,
-                classifyType:1,
+                classifyType:2,
                 sortType:sortType,
                 subjectId:subjectId,
                 searchName:searchVals

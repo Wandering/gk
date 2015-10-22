@@ -4,7 +4,7 @@
 
 define(function (require) {
     var $ = require('$');
-    require('swiper');
+    require('backToTop');
 
     var getQueryStr = function(_url, _param) {
         var rs = new RegExp("(^|)" + _param + "=([^\&]*)(\&|$)", "g").exec(_url),
@@ -19,9 +19,11 @@ define(function (require) {
         curPage:1,
         totalPage:0,
         data:[],
+        years: [],
         render: function() {
             this.renderCommon('batch', this.data);
             this.renderCommon('classify', this.getClassify());
+            this.renderCommon('year', this.getYear());
             //var batch = [], classify = [], profession = [];
             //var i = 0, len = data.length;
             //
@@ -46,9 +48,29 @@ define(function (require) {
             //$('#batch').html(batch.join(''));
             //$('#classify').html(classify.join(''));
             //$('#profession').html(profession.join(''));
+            this.addHandleYear();
             this.addEventHandle();
             this.addEventForClassify();
             this.getProfession(1);
+        },
+        getYear: function() {
+            var year = this.years;
+            var str = [];
+            for (var i = 0; i < year.length; i++) {
+                str.push({
+                    id: year[i],
+                    name: year[i]
+                });
+            }
+            return str;
+        },
+        addHandleYear: function() {
+            var that = this;
+            $('#year a').on('click', function(e) {
+                that.curPage = 1;
+                $(this).addClass('active').siblings().removeClass('active');
+                that.getProfession(1);
+            });
         },
         getClassify: function(id) {
             var i = 0, len = this.data.length;
@@ -107,6 +129,7 @@ define(function (require) {
                 //if ($(this).hasClass('active')) {
                 //    return;
                 //}
+                that.curPage = 1;
                 $(this).addClass('active').siblings().removeClass('active');
                 var id = $(this).attr('data-id');
                 if (id) {
@@ -142,6 +165,7 @@ define(function (require) {
                 //if ($(this).hasClass('active')) {
                 //    return;
                 //}
+                that.curPage = 1;
                 $(this).addClass('active').siblings().removeClass('active');
                 var id = $(this).attr('data-id');
                 $('#profession').html('');
@@ -169,7 +193,7 @@ define(function (require) {
                 //    that.getProfession(1);
                 //    return;
                 //}
-
+                that.curPage = 1;
                 $(this).addClass('active').siblings().removeClass('active');
                 that.getProfession(1);
             });
@@ -180,6 +204,7 @@ define(function (require) {
                 if ('0000000' === data.rtnCode) {
                     if (data.bizData.batchType) {
                         that.data = data.bizData.batchType;
+                        that.years = data.bizData.years;
                         that.render();
                     }
                 }
@@ -213,9 +238,11 @@ define(function (require) {
 
             var search = $('#search').val();
 
+            var year = $('#year a.active').attr('data-id') || '';
+
             var that = this;
             $.ajax({
-                type: 'post',
+                type: 'get',
                 url: '/majored/searchMajored.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
@@ -225,6 +252,7 @@ define(function (require) {
                     subjectTypeName:subjectTypeName,
                     majoredTypeId:majoredTypeId,
                     majoredTypeName:majoredTypeName,
+                    year: year,
                     pageSize:10,
                     pageNo:pageNo,
                     searchName:search
@@ -232,16 +260,43 @@ define(function (require) {
                 dataType: 'json',
                 success: function(data) {
                     if ('0000000' === data.rtnCode) {
-                        var schoolList = data.bizData.list;
+                        var schoolList = data.bizData;
                         if (schoolList && schoolList.length > 0) {
                             that.renderProfessionList(schoolList);
-                            if (pageNo == 1) {
-                                that.renderPage(1, data.bizData.count);
-                            }
                         } else {
-                            $('#profession_list').html('<p style="text-align: center">暂无信息！</p>');
+                            //$('#profession_list').html('<p style="text-align: center">暂无信息！</p>');
+                            var pageErrorTip = require('pageErrorTip');
+                            $('#profession_list').html(pageErrorTip('暂无相关数据'));
                             $('#page').html('');
                             $('.record').html('');
+                        }
+                    }
+                },
+                error: function(data) {
+                }
+            });
+
+            $.ajax({
+                type: 'get',
+                url: '/majored/searchMajoredCount.do',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {
+                    batchTypeId:batchTypeId,
+                    batchTypeName:batchTypeName,
+                    subjectTypeId:subjectTypeId,
+                    subjectTypeName:subjectTypeName,
+                    majoredTypeId:majoredTypeId,
+                    majoredTypeName:majoredTypeName,
+                    year: year,
+                    pageSize:10,
+                    pageNo:pageNo,
+                    searchName:search
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if ('0000000' === data.rtnCode) {
+                        if (pageNo == 1) {
+                            that.renderPage(1, data.bizData);
                         }
                     }
                 },

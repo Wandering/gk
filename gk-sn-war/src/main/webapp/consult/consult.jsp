@@ -4,7 +4,7 @@
 <head>
     <title>专业测评</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/consult/styles/consult.css" />
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/consult/styles/consult.css" />
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
@@ -45,9 +45,9 @@
 </div>
 
 <%@ include file="/common/footer.jsp"%>
-<script type="text/javascript" src="/static/src/guide/scripts/flowplayer-3.2.13.min.js"></script>
+<script type="text/javascript" src="http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.13.min.js"></script>
 <script type="text/javascript">
-    seajs.use("${ctx}/static/src/consult/scripts/consult");
+    seajs.use("http://cdn.gaokao360.net/static/global/consult/scripts/consult.min");
 </script>
 </body>
 </html>

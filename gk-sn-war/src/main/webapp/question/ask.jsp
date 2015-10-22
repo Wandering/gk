@@ -4,8 +4,8 @@
 <head>
     <title>提问页面 </title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/question/styles/ask.css" />
-    <link rel="stylesheet" href="/static/bower_components/kindeditor/themes/default/default.css" />
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/question/styles/ask.min.css" />
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/bower_components/kindeditor/themes/default/default.css" />
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
@@ -49,7 +49,7 @@
 <script src="/static/bower_components/kindeditor/kindeditor.js"></script>
 <script src="/static/bower_components/kindeditor/lang/zh-CN.js"></script>
 <script type="text/javascript">
-    seajs.use("${ctx}/static/src/question/scripts/ask");
+    seajs.use("http://cdn.gaokao360.net/static/global/question/scripts/ask.min");
 </script>
 </body>
 </html>

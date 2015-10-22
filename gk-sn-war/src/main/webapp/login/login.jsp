@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <title>登陆</title>
     <%@include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/login/styles/login.min.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/login/styles/login.min.css"/>
 
 </head>
 <body>
@@ -56,7 +56,7 @@
     <img src="/static/dist/common/images/login-logo.png" alt="logo360" class="bottom-logo"/>
 </div>
 <script>
-    seajs.use("${ctx}/static/src/login/scripts/login");
+    seajs.use("http://cdn.gaokao360.net/static/global/login/scripts/login.min");
 </script>
 </body>
 </html>

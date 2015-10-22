@@ -4,7 +4,7 @@
 <head>
     <%@include file="/common/meta.jsp"%>
     <title>专家服务</title>
-    <link rel="stylesheet" href="/static/dist/user/styles/expert-service.min.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/user/styles/expert-service.min.css"/>
 </head>
 <body>
 <%@include file="/common/header.jsp"%>
@@ -41,7 +41,7 @@
 </div>
 <%@include file="/common/footer.jsp"%>
 <script>
-    seajs.use("/static/src/user/scripts/expert-service");
+    seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/expert-service.min");
 </script>
 </body>
 </html>

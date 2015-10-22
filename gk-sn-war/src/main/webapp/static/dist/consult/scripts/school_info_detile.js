@@ -4,7 +4,7 @@
 
 define(function (require) {
     var $ = require('$');
-    require('swiper');
+    require('backToTop');
 
     function getUrLinKey(name) {
         var reg = new RegExp("(^|\\?|&)" + name + "=([^&]*)(\\s|&|$)", "i");
@@ -13,10 +13,12 @@ define(function (require) {
     }
 
     var Info = {
+        batchData:[],
+        batchName: [],
         getBasicInfo: function(code) {
             var that = this;
             $.ajax({
-                type: 'post',
+                type: 'get',
                 url: '/university/getUniversityDetail.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
@@ -26,9 +28,14 @@ define(function (require) {
                 success: function(data) {
                     if ('0000000' === data.rtnCode) {
                         that.renderInfo(data.bizData);
+                    } else {
+                        var pageErrorTip = require('pageErrorTip');
+                        $('#info_content').html(pageErrorTip('数据维护中'));
                     }
                 },
                 error: function(data) {
+                    var pageErrorTip = require('pageErrorTip');
+                    $('#info_content').html(pageErrorTip('数据维护中'));
                 }
             });
         },
@@ -60,7 +67,7 @@ define(function (require) {
                                             + '<li>学历层次：' + (obj.educatLevel || '') + '</li>'
                                             + '<li>院校特征：' + (obj.property || '') + '</li>'
                                             + '<li>院校类型：' + (obj.universityType || '') + '</li>'
-                                            + '<li class="' + urlClassName + '">院校网址：<a class="website" href="' + obj.url + '">' + (obj.url || '') + '</a></li>'
+                                            + '<li class="' + urlClassName + '">院校网址：<a class="website" target="_blank" href="' + obj.url + '">' + (obj.url || '') + '</a></li>'
                                             + '<li class="' + addressClassName + '">' + address + '</li>'
                                             + '<li class="' + phoneClassName + '">联系电话：<span>' + (obj.contactPhone || '') + '</span></li>'
                                         + '</ul>'
@@ -69,7 +76,7 @@ define(function (require) {
         getSchoolInfo: function(code) {
             var that = this;
             $.ajax({
-                type: 'post',
+                type: 'get',
                 url: '/university/getEnrollInfo.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
@@ -86,9 +93,11 @@ define(function (require) {
             });
         },
         renderSchool: function(data) {
+            this.batchData = data;
             var tab = [];
             var tabContent = [];
             for (var i = 0, len = data.length; i < len; i++) {
+                var batchNameTmp = [];
                 if (data[i].title.indexOf('年')) {
                     var year = data[i].title.substring(0, 4);
                     tab.push('<li>' + data[i].title.replace(year, year + '年') + '</li>');
@@ -113,6 +122,10 @@ define(function (require) {
                                     + '</thead>'
                                     + '<tbody>');
                 for (var j = 0, infolen = infos.length; j < infolen; j++) {
+                    var tmpNameStr = batchNameTmp.join('&');
+                    if (tmpNameStr.indexOf(infos[j].batch) < 0) {
+                        batchNameTmp.push(infos[j].batch);
+                    }
                     tabContent.push('<tr>'
                                     + '<td>' + (infos[j].subjectName || '') + '</td>'
                                     + '<td>' + (infos[j].planNumber || '') + '</td>'
@@ -128,19 +141,97 @@ define(function (require) {
                 tabContent.push('</tbody>'
                         + '</table>'
                     + '</div>');
+                this.batchName.push(batchNameTmp);
             }
-
             $('#tabs_list_last').html(tab.join(''));
-            $('#last_content').html(tabContent.join(''));
             $('#tabs_list_last li').first().addClass('active');
+            if (this.renderBatch(this.batchName[0])) {
+                $('#select_batch').html(this.renderBatch(this.batchName[0]));
+                $('#select_batch button').first().addClass('active');
+                this.getSchoolByBatch();
+                this.addHandleBatch();
+            } else {
+                $('#last_content').html(tabContent.join(''));
+            }
             $('#school_table_0').show();
             this.addSchoolEventHandle();
         },
+        addHandleBatch: function() {
+            var that = this;
+            $('#select_batch button').off('click');
+            $('#select_batch button').on('click', function(e) {
+                $(this).addClass('active').siblings().removeClass('active');
+                that.getSchoolByBatch();
+            });
+        },
+        getSchoolByBatch: function() {
+            var batchName = $('#select_batch button.active').text();
+            var arry = [];
+            var index = $('#tabs_list_last li.active').index();
+            var infos = this.batchData[index].infos;
+            for (var i = 0; i < infos.length; i++) {
+                if (batchName === infos[i].batch) {
+                    arry.push(infos[i]);
+                }
+            }
+            var tabContent = [];
+            tabContent.push('<div style="display:none" class="school-table mt20" id="school_table_' + index + '">'
+                + '<table border="0" cellpadding="0" cellspacing="0">'
+                + '<thead>'
+                + '<tr>'
+                + '<th></th>'
+                + '<th>计划数</th>'
+                + '<th>录取数</th>'
+                + '<th>最高分</th>'
+                + '<th>最高位次</th>'
+                + '<th>最低分</th>'
+                + '<th>最低位次</th>'
+                + '<th>平均分</th>'
+                + '<th>平均分位次</th>'
+                + '</tr>'
+                + '</thead>'
+                + '<tbody>');
+            for (var j = 0, infolen = arry.length; j < infolen; j++) {
+                tabContent.push('<tr>'
+                    + '<td>' + (arry[j].subjectName || '') + '</td>'
+                    + '<td>' + (arry[j].planNumber || '') + '</td>'
+                    + '<td>' + (arry[j].enrollNumber || '') + '</td>'
+                    + '<td>' + (arry[j].highestScore || '') + '</td>'
+                    + '<td>' + (arry[j].highestRank || '') + '</td>'
+                    + '<td>' + (arry[j].lowestScore || '') + '</td>'
+                    + '<td>' + (arry[j].lowestRank || '') + '</td>'
+                    + '<td>' + (arry[j].averageScore || '') + '</td>'
+                    + '<td>' + (arry[j].averageRank || '') + '</td>'
+                    + '</tr>');
+            }
+            tabContent.push('</tbody>'
+                + '</table>'
+                + '</div>');
+            $('#last_content').html(tabContent.join(''));
+            $('#school_table_' + index).show();
+        },
+        renderBatch: function(data) {
+            if (data.length < 2) {
+                return '';
+            }
+            var str = [];
+            for (var i = 0; i < data.length; i++) {
+                str.push('<button>' + data[i] + '</button>');
+            }
+            return str.join('');
+        },
         addSchoolEventHandle: function() {
+            var that = this;
             $('#tabs_list_last li').on('mouseover', function() {
                 if (!$(this).hasClass('active')) {
                     $(this).addClass('active').siblings().removeClass('active');
                     $('#school_table_' + $(this).index()).show().siblings().hide();
+                    if (that.renderBatch(that.batchName[$(this).index()])) {
+                        $('#select_batch').html(that.renderBatch(that.batchName[$(this).index()]));
+                        $('#select_batch button').first().addClass('active');
+                        that.getSchoolByBatch();
+                        that.addHandleBatch();
+                    }
                 }
             });
         },
@@ -148,7 +239,7 @@ define(function (require) {
             var that = this;
             var batch = getUrLinKey('batch');
             $.ajax({
-                type: 'post',
+                type: 'get',
                 url: '/university/getEnrollPlan.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {

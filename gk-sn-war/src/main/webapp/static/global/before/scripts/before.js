@@ -1,6 +1,6 @@
 define(function (require) {
     var $ = require('$');
-    require('getTime');
+    var require('getTime');
     require('backToTop');
     var pageEroorTip = require('pageErrorTip');
 
