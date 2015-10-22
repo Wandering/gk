@@ -46,7 +46,7 @@
             </a>
             <a target="_blank" href="/before/mentality.jsp?classifyType=2&searchV=" class="name">高考心理</a>
             <span class="num">3</span>
-            <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
+            <p class="txt">专家告诉您如何调整，以最好的状态应对高考</p>
         </li>
         <li class="item">
             <a href="javascript:;" id="volunteer-flow1">

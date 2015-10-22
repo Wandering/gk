@@ -77,7 +77,7 @@ define(function (require) {
                     "code": yzmDreamV
                 },
                 success: function (res) {
-
+                    console.log(res)
                     if (res.rtnCode == "0100006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
                         errorTips(res.msg);
                         return false;

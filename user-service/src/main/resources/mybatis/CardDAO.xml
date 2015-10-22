@@ -500,38 +500,35 @@
         <include refid="Base_Column_List" />
         FROM gk_card
         <trim prefix="WHERE" prefixOverrides="AND | OR">
-            <if test="condition.id!=null">
-                AND id = #{condition.id}
+            <if test="id!=null">
+                AND id = #{id}
             </if>
-            <if test="condition.status!=null">
-                AND status = #{condition.status}
+            <if test="status!=null">
+                AND status = #{status}
             </if>
-            <if test="condition.creator!=null">
-                AND creator = #{condition.creator}
+            <if test="creator!=null">
+                AND creator = #{creator}
             </if>
-            <if test="condition.createDate!=null">
-                AND createDate = #{condition.createDate}
+            <if test="createDate!=null">
+                AND createDate = #{createDate}
             </if>
-            <if test="condition.lastModifier!=null">
-                AND lastModifier = #{condition.lastModifier}
+            <if test="lastModifier!=null">
+                AND lastModifier = #{lastModifier}
             </if>
-            <if test="condition.lastModDate!=null">
-                AND lastModDate = #{condition.lastModDate}
+            <if test="lastModDate!=null">
+                AND lastModDate = #{lastModDate}
             </if>
-            <if test="condition.endDate!=null">
-                AND endDate = #{condition.endDate}
+            <if test="endDate!=null">
+                AND endDate = #{endDate}
             </if>
-            <if test="condition.cardNumber!=null">
-                AND cardNumber = #{condition.cardNumber}
+            <if test="cardNumber!=null">
+                AND cardNumber = #{cardNumber}
             </if>
-            <if test="condition.password!=null">
-                AND password = #{condition.password}
+            <if test="password!=null">
+                AND password = #{password}
             </if>
-            <if test="condition.userId!=null">
-                AND userId = #{condition.userId}
-            </if>
-            <if test="condition.areaId!=null">
-                AND areaId = #{condition.areaId}
+            <if test="userId!=null">
+                AND userId = #{userId}
             </if>
         </trim>
         <if test="orderBy!=null">

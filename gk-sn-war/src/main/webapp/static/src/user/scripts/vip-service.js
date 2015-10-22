@@ -71,8 +71,16 @@ define(function (require) {
             $('.error-tips').text("卡号不能为空").fadeIn(1000).fadeOut(1000);
             return;
         }
+        if($('#pay-card').val().trim().length != 10){
+            $('.error-tips').text("请输入正确的卡号").fadeIn(1000).fadeOut(1000);
+            return;
+        }
         if($('#pay-password').val().trim()==""){
             $('.error-tips').text("卡密码不能为空").fadeIn(1000).fadeOut(1000);
+            return;
+        }
+        if($('#pay-password').val().trim().length!=9){
+            $('.error-tips').text("请输入正确的卡密码").fadeIn(1000).fadeOut(1000);
             return;
         }
 
