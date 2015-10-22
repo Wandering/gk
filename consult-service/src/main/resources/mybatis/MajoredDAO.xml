@@ -9,8 +9,8 @@
     </select>
 
     <select id="searchMajored" parameterType="java.util.Map" resultType="SubjectDto">
-        select b.majoredId as code,b.majoredName as name,b.enrollNumber as planNumber,
-        b.schoolLength,b.foreignLanguage as foreginLanguage,b.feeStandard,b.universityCode,b.universityName
+        select b.majoredId as id,b.majoredName as name,b.enrollNumber as planNumber,
+        b.schoolLength,b.foreignLanguage as foreginLanguage,b.feeStandard,b.universityId,b.universityName
         from gk_majored a  left join gk_enroll_plan  b  on a.id=b.majoredId  where 1=1
         <if test="condition.subjectTypeName!=null and condition.subjectTypeName!=''">
              and a.subjectType=#{condition.subjectTypeName}
@@ -50,15 +50,15 @@
         </if>
     </select>
 
-    <select id="getMajoredByCode" parameterType="java.lang.String" resultType="MajoredDto">
+    <select id="getMajoredById" parameterType="java.lang.String" resultType="MajoredDto">
         select  name,educationLevel,subjectType,majoredType,degree,similarMajored,mainCourse,workGuide
-         from gk_majored where 1=1 and id=#{code}
+         from gk_majored where 1=1 and id=#{id}
     </select>
 
 
-    <select id="getUniversityByCode" parameterType="java.lang.String" resultType="java.util.Map">
-        select  code,name
-        from gk_enroll_plan where 1=1 and batch=#{batchName} and majoredId=#{code}
+    <select id="getUniversityById" parameterType="java.lang.String" resultType="java.util.Map">
+        select  id,name
+        from gk_enroll_plan where 1=1 and batch=#{batchName} and majoredId=#{id}
     </select>
 
 
@@ -67,8 +67,8 @@
     FROM gk_enroll_plan
     <where>
         1=1
-        <if test="code!=null">
-            and universityCode = #{code}
+        <if test="id!=null">
+            and universityId = #{id}
         </if>
         <if test="batch!=null">
             and batch = #{batch}
