@@ -10,6 +10,8 @@ public class ServletPathConst {
 
     public static Map<String,String> MAPPING_URLS = new HashMap<String,String>();
 
+    public static Map<String,String> JSP_URLS = new HashMap<String,String>();
+
     static{
         MAPPING_URLS.put("/question/insert.do","");
         MAPPING_URLS.put("/answer/findMyQuestion.do","");
@@ -33,5 +35,8 @@ public class ServletPathConst {
         MAPPING_URLS.put("/guide/batch.do","");
         MAPPING_URLS.put("/guide/school.do","");
         MAPPING_URLS.put("/guide/report.do","");
+
+
+        JSP_URLS.put("/guide/guide.jsp","");
     }
 }
