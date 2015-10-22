@@ -82,6 +82,7 @@
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="/static/bower_components/uploadify/jquery.uploadify.js"></script>
 <script>
+//    seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/personal-info.min");
     seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/personal-info.min");
 </script>
 </body>
