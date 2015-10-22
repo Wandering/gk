@@ -29,7 +29,7 @@ public interface IUniversityDAO extends IBaseDAO<University>{
 
     List<PlanInfo> getPlanInfosByYear(Map<String, Object> params);
 
-    String getUniversityIntro(@Param("universityId")String id);
+    String getUniversityIntro(@Param("id")String id);
 
     String getUniversityEnrollIntro(@Param("id")String id);
 }
