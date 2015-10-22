@@ -150,7 +150,7 @@
 
             <ul class="tabs-list mt20" id="tabs-online">
                 <li class="active">最新解答</li>
-                <li>热门问题</li>
+                <li>热门解答</li>
                 <span class="more">更多</span>
             </ul>
 
