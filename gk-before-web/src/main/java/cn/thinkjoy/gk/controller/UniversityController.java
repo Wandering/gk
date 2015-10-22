@@ -191,9 +191,9 @@ public class UniversityController extends BaseCommonController {
     @ResponseBody
     public UniversityDto getUniversityDetail(){
         UniversityDto universityDto=new UniversityDto();
-        String schoolCode=request.getParameter("code");
+        String schoolId=request.getParameter("id");
         String batch =request.getParameter("batch");
-        universityDto=iUniversityService.getUniversityDetail(schoolCode,batch);
+        universityDto=iUniversityService.getUniversityDetail(schoolId,batch);
         return universityDto;
     }
 
