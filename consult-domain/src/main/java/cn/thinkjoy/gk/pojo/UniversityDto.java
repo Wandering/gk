@@ -6,7 +6,7 @@ package cn.thinkjoy.gk.pojo;
 public class UniversityDto {
 
 
-    private Integer code;
+    private String id;
     private String name;
     private String subjection;
     private String educatLevel;
@@ -18,12 +18,12 @@ public class UniversityDto {
     private String provinceName;
     private String url;
 
-    public Integer getCode() {
-        return code;
+    public String getId() {
+        return id;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

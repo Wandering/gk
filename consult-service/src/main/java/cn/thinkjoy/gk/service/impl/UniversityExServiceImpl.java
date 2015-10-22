@@ -24,13 +24,13 @@ public class UniversityExServiceImpl implements IUniversityExService{
     private IUniversityExDAO universityExDAO;
 
     @Override
-    public UniversityDetailDto getUniversityDetail(String schoolCode, String batch, Integer type,Integer year) {
+    public UniversityDetailDto getUniversityDetail(String schoolId, String batch, Integer type,Integer year) {
 
         UniversityDetailDto universityDetailDto = null;
 
         Map<String,Object> params = new HashMap<>();
 
-        params.put("code",schoolCode);
+        params.put("id",schoolId);
         params.put("batch",batch);
         params.put("year",year);
 
@@ -45,19 +45,19 @@ public class UniversityExServiceImpl implements IUniversityExService{
     }
 
     @Override
-    public List<UniversityDetailDto> getUniversityDetailByCodes(List<String> schoolCodes, String batch, Integer type, Integer year) {
+    public List<UniversityDetailDto> getUniversityDetailByIds(List<String> schoolIds, String batch, Integer type, Integer year) {
         List<UniversityDetailDto> universityDetailDtos = null;
 
         Map<String,Object> params = new HashMap<>();
 
-        params.put("codes",schoolCodes);
+        params.put("ids",schoolIds);
         params.put("batch",batch);
         params.put("year",year);
 
         if(type==0){
-            universityDetailDtos = universityExDAO.getWSUniversityDetailByCodes(params);
+            universityDetailDtos = universityExDAO.getWSUniversityDetailByIds(params);
         }else if(type==1){
-            universityDetailDtos = universityExDAO.getLGUniversityDetailByCodes(params);
+            universityDetailDtos = universityExDAO.getLGUniversityDetailByIds(params);
         }
 
         return universityDetailDtos;

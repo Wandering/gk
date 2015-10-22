@@ -262,12 +262,12 @@ public class GuideController extends BaseController {
 
         JSONArray data = obj.getJSONArray("data");
 
-        List<String> codes = new ArrayList<>();
+        List<String> ids = new ArrayList<>();
         for(int i=0;i<data.size();i++){
-            codes.add(data.getJSONObject(i).getString("m_university_code"));
+            ids.add(data.getJSONObject(i).getString("m_university_code"));
         }
 
-        List<UniversityDetailDto> universityDetailDtos =universityExService.getUniversityDetailByCodes(codes,batch,type,year);
+        List<UniversityDetailDto> universityDetailDtos =universityExService.getUniversityDetailByIds(ids,batch,type,year);
 
         JSONArray enrollArray = new JSONArray();
 
@@ -290,7 +290,7 @@ public class GuideController extends BaseController {
                 universityDetailDto.setEnrollIntro("计划招生超过实际招生数!");
             }
 
-            enrollObj.put("code",universityDetailDto.getCode());
+            enrollObj.put("code",universityDetailDto.getId());
             enrollObj.put("name",universityDetailDto.getName());
             enrollObj.put("enrollIntro",universityDetailDto.getEnrollIntro());
 

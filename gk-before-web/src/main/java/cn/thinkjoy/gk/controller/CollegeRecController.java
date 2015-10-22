@@ -27,11 +27,11 @@ public class CollegeRecController extends BaseController {
     public String GetCollegeList(@RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore,
                                    @RequestParam(value="m_batch",required=false) String m_batch,
                                            @RequestParam(value="m_kelei",required=false) String m_kelei,
-                                           @RequestParam(value="code",required=false) String code){
+                                           @RequestParam(value="id",required=false) String id){
         if(StringUtils.isBlank(m_aggregateScore)
                 || StringUtils.isBlank(m_batch)
                 || StringUtils.isBlank(m_kelei)
-                || StringUtils.isBlank(code)){
+                || StringUtils.isBlank(id)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
 
@@ -49,13 +49,13 @@ public class CollegeRecController extends BaseController {
 
         Long value = userAccountPojo.getId();
 
-        Object resultCode = session.getAttribute(VerificationKeyConst.COLLEGE_RECOMMENDATION+value);
+        Object resultId = session.getAttribute(VerificationKeyConst.COLLEGE_RECOMMENDATION+value);
 
-        if(resultCode==null){
+        if(resultId==null){
             throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
 
-        if(!resultCode.toString().equals(code.toUpperCase())){
+        if(!resultId.toString().equals(id.toUpperCase())){
             throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
 

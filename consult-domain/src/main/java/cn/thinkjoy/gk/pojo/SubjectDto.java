@@ -10,7 +10,7 @@ public class SubjectDto {
     private String schoolLength;
     private String foreginLanguage;
     private String feeStandard;
-    private Integer universityCode;
+    private Integer universityId;
     private String universityName;
 
     public String getCode() {
@@ -61,12 +61,12 @@ public class SubjectDto {
         this.feeStandard = feeStandard;
     }
 
-    public Integer getUniversityCode() {
-        return universityCode;
+    public Integer getUniversityId() {
+        return universityId;
     }
 
-    public void setUniversityCode(Integer universityCode) {
-        this.universityCode = universityCode;
+    public void setUniversityId(Integer universityId) {
+        this.universityId = universityId;
     }
 
     public String getUniversityName() {

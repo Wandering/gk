@@ -20,7 +20,7 @@ public interface IUniversityExDAO{
 
     UniversityDetailDto getLGUniversityDetail(Map<String,Object> params);
 
-    List<UniversityDetailDto> getWSUniversityDetailByCodes(Map<String,Object> params);
+    List<UniversityDetailDto> getWSUniversityDetailByIds(Map<String,Object> params);
 
-    List<UniversityDetailDto> getLGUniversityDetailByCodes(Map<String,Object> params);
+    List<UniversityDetailDto> getLGUniversityDetailByIds(Map<String,Object> params);
 }

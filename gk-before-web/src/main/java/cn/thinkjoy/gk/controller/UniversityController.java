@@ -276,13 +276,13 @@ public class UniversityController extends BaseCommonController {
      */
     @RequestMapping(value = "/universityDetail",method = RequestMethod.GET)
     @ResponseBody
-    public UniversityDetailDto universityDetail(@RequestParam(value="code",required=false) String code,
+    public UniversityDetailDto universityDetail(@RequestParam(value="id",required=false) String id,
                                                 @RequestParam(value="type",required=false) Integer type,
                                                 @RequestParam(value="year",required=false) Integer year,
                                                 @RequestParam(value="batch",required=false) String batch){
 
 
-        if(StringUtils.isBlank(code)
+        if(StringUtils.isBlank(id)
                 ||StringUtils.isBlank(batch)
                 ||null==type
                 ||null==year){
@@ -299,7 +299,7 @@ public class UniversityController extends BaseCommonController {
 
         UniversityDetailDto universityDetailDto = null;
         try{
-            universityDetailDto = universityExService.getUniversityDetail(code,batch,type,year);
+            universityDetailDto = universityExService.getUniversityDetail(id,batch,type,year);
         }catch(Exception e){
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
         }
