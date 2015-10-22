@@ -57,11 +57,11 @@ public class ExUniversityServiceImpl implements IExUniversityService {
     }
 
     @Override
-    public List<EnrollInfo> getEnrollInfoByYear(Integer year,String schoolId) {
+    public List<EnrollInfo> getEnrollInfoByYear(Integer year,String universityId) {
         Map<String, Object> params = new HashMap<>();
 
         params.put("year",year);
-        params.put("id",schoolId);
+        params.put("universityId",universityId);
 
         return iUniversityDAO.getEnrollInfoByYear(params);
     }
