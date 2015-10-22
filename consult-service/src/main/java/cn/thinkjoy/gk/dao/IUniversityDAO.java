@@ -23,13 +23,13 @@ public interface IUniversityDAO extends IBaseDAO<University>{
 
     Integer getUniversityCount(@Param("universityQuery")Map<String, Object> universityQuery);
 
-    UniversityDto getUniversityDetail(@Param("code")String schoolCode,@Param("batch")String batch);
+    UniversityDto getUniversityDetail(@Param("id")String id,@Param("batch")String batch);
 
     List<EnrollInfo> getEnrollInfoByYear(Map<String, Object> params);
 
     List<PlanInfo> getPlanInfosByYear(Map<String, Object> params);
 
-    String getUniversityIntro(@Param("code")String schoolCode);
+    String getUniversityIntro(@Param("id")String id);
 
-    String getUniversityEnrollIntro(@Param("code")String schoolCode);
+    String getUniversityEnrollIntro(@Param("id")String id);
 }
