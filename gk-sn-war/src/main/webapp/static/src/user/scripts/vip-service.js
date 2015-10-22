@@ -72,7 +72,7 @@ define(function (require) {
             return;
         }
         if($('#pay-card').val().trim().length != 10){
-            $('.error-tips').text("请输入正确的考号").fadeIn(1000).fadeOut(1000);
+            $('.error-tips').text("请输入正确的卡号").fadeIn(1000).fadeOut(1000);
             return;
         }
         if($('#pay-password').val().trim()==""){
