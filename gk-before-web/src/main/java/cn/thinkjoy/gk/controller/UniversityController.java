@@ -204,11 +204,11 @@ public class UniversityController extends BaseCommonController {
     @RequestMapping(value = "/getEnrollInfo",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> getEnrollInfo(){
-        String schoolCode=request.getParameter("code");
+        String schoolId=request.getParameter("id");
         Map<String,Object> map=new HashMap<String, Object>();
         List<EnrollResponseDto>  enrollResponseDtoList=new ArrayList<EnrollResponseDto>();
-        List<EnrollInfo>  lastenrollInfos=iUniversityService.getEnrollInfoByYear(2014,schoolCode);
-        List<EnrollInfo>  enrollInfos=iUniversityService.getEnrollInfoByYear(2013,schoolCode);
+        List<EnrollInfo>  lastenrollInfos=iUniversityService.getEnrollInfoByYear(2014,schoolId);
+        List<EnrollInfo>  enrollInfos=iUniversityService.getEnrollInfoByYear(2013,schoolId);
         EnrollResponseDto lastEnrollResponseDto=new EnrollResponseDto();
         lastEnrollResponseDto.setTitle("2013招生情况");
         lastEnrollResponseDto.setInfos(lastenrollInfos);
@@ -228,7 +228,7 @@ public class UniversityController extends BaseCommonController {
     @RequestMapping(value = "/getEnrollPlan",method = RequestMethod.GET)
     @ResponseBody
     public EntrollPlanDto getEnrollPlan(){
-        String schoolCode=request.getParameter("code");
+        String schoolId=request.getParameter("id");
         String batch=request.getParameter("batch");
         EntrollPlanDto entrollPlanDto=new EntrollPlanDto();
         List<EntrollPlan> entrollPlans=new ArrayList<EntrollPlan>();
@@ -246,8 +246,8 @@ public class UniversityController extends BaseCommonController {
         }
         EntrollPlan entrollPlan=new EntrollPlan();
         EntrollPlan lastEntrollPlan=new EntrollPlan();
-        List<PlanInfo> planInfos=iUniversityService.getPlanInfosByYear(2015,schoolCode,batch);
-        List<PlanInfo> lastPlanInfos=iUniversityService.getPlanInfosByYear(2014,schoolCode,batch);
+        List<PlanInfo> planInfos=iUniversityService.getPlanInfosByYear(2015,schoolId,batch);
+        List<PlanInfo> lastPlanInfos=iUniversityService.getPlanInfosByYear(2014,schoolId,batch);
         entrollPlan.setTitle("2015年招生计划");
         entrollPlan.setPlanInfos(planInfos);
         lastEntrollPlan.setTitle("2014年招生计划");
@@ -255,11 +255,11 @@ public class UniversityController extends BaseCommonController {
         /**
          * 招生简介
          */
-        String entroIntro=iUniversityService.getUniversityEnrollIntro(schoolCode);
+        String entroIntro=iUniversityService.getUniversityEnrollIntro(schoolId);
         /**
          * 大学介绍
          */
-        String  universityIntro=iUniversityService.getUniversityIntro(schoolCode);
+        String  universityIntro=iUniversityService.getUniversityIntro(schoolId);
         entrollPlans.add(entrollPlan);
         entrollPlans.add(lastEntrollPlan);
         entrollPlanDto.setEntroIntro(entroIntro);
