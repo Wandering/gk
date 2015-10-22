@@ -77,7 +77,7 @@
     float: left;
     width: 336px;
     height: 45px;
-    background: url("../../../dist/after/images/next-btn.png");
+    background: url("../../after/images/next-btn.png");
     color: #fff; }
   .form-control-btn .btn:hover {
     text-decoration: underline; }
@@ -334,22 +334,22 @@
         .volunteer-flow3-layer .specialty-body .info-explain ul li .starA-icon,
         .specialty-layer .volunteer-flow3-body .info-explain ul li .starA-icon,
         .specialty-layer .specialty-body .info-explain ul li .starA-icon {
-          background: url("../../../dist/after/images/startA-icon.png") no-repeat; }
+          background: url("../../after/images/startA-icon.png") no-repeat; }
         .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li .starB-icon,
         .volunteer-flow3-layer .specialty-body .info-explain ul li .starB-icon,
         .specialty-layer .volunteer-flow3-body .info-explain ul li .starB-icon,
         .specialty-layer .specialty-body .info-explain ul li .starB-icon {
-          background: url("../../../dist/after/images/startB-icon.png") no-repeat; }
+          background: url("../../after/images/startB-icon.png") no-repeat; }
         .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li .starC-icon,
         .volunteer-flow3-layer .specialty-body .info-explain ul li .starC-icon,
         .specialty-layer .volunteer-flow3-body .info-explain ul li .starC-icon,
         .specialty-layer .specialty-body .info-explain ul li .starC-icon {
-          background: url("../../../dist/after/images/startC-icon.png") no-repeat; }
+          background: url("../../after/images/startC-icon.png") no-repeat; }
         .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li .starD-icon,
         .volunteer-flow3-layer .specialty-body .info-explain ul li .starD-icon,
         .specialty-layer .volunteer-flow3-body .info-explain ul li .starD-icon,
         .specialty-layer .specialty-body .info-explain ul li .starD-icon {
-          background: url("../../../dist/after/images/startD-icon.png") no-repeat; }
+          background: url("../../after/images/startD-icon.png") no-repeat; }
     .volunteer-flow3-layer .volunteer-flow3-body .info-result,
     .volunteer-flow3-layer .specialty-body .info-result,
     .specialty-layer .volunteer-flow3-body .info-result,
@@ -420,7 +420,7 @@
             .volunteer-flow3-layer .specialty-body .info-result ul .starA .title .starA-icon,
             .specialty-layer .volunteer-flow3-body .info-result ul .starA .title .starA-icon,
             .specialty-layer .specialty-body .info-result ul .starA .title .starA-icon {
-              background: url("../../../dist/after/images/startA-icon.png") no-repeat; }
+              background: url("../../after/images/startA-icon.png") no-repeat; }
         .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starB,
         .volunteer-flow3-layer .specialty-body .info-result ul .starB,
         .specialty-layer .volunteer-flow3-body .info-result ul .starB,
@@ -450,7 +450,7 @@
             .volunteer-flow3-layer .specialty-body .info-result ul .starC .title .starC-icon,
             .specialty-layer .volunteer-flow3-body .info-result ul .starC .title .starC-icon,
             .specialty-layer .specialty-body .info-result ul .starC .title .starC-icon {
-              background: url("../../../dist/after/images/startC-icon.png") no-repeat; }
+              background: url("../../after/images/startC-icon.png") no-repeat; }
         .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starD,
         .volunteer-flow3-layer .specialty-body .info-result ul .starD,
         .specialty-layer .volunteer-flow3-body .info-result ul .starD,
@@ -465,7 +465,7 @@
             .volunteer-flow3-layer .specialty-body .info-result ul .starD .title .starD-icon,
             .specialty-layer .volunteer-flow3-body .info-result ul .starD .title .starD-icon,
             .specialty-layer .specialty-body .info-result ul .starD .title .starD-icon {
-              background: url("../../../dist/after/images/startD-icon.png") no-repeat; }
+              background: url("../../after/images/startD-icon.png") no-repeat; }
     .volunteer-flow3-layer .volunteer-flow3-body .no-school,
     .volunteer-flow3-layer .specialty-body .no-school,
     .specialty-layer .volunteer-flow3-body .no-school,

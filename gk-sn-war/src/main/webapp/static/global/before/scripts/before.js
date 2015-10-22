@@ -1,6 +1,5 @@
 define(function (require) {
     var $ = require('$');
-    var require('getTime');
     require('backToTop');
     var pageEroorTip = require('pageErrorTip');
 
@@ -158,12 +157,13 @@ define(function (require) {
                         var paperName = dataJson[i].paperName,
                             createDate = dataJson[i].createDate,
                             resources = dataJson[i].resources;
+                        var date = new Date(createDate).Format('yyyy-MM-dd');
                         var listMsgHtml = ''
                             + '<li class="item">'
                             + '<a target="_blank" href="' + localhosts + resources + '">'
                             + '<span class="subject-n"><strong>' + subject + '</strong></span>'
                             + '<span class="subject-t">' + paperName + '</span>'
-                            + '<span class="subject-d">上传时间：' + getTime(createDate) + '</span>'
+                            + '<span class="subject-d">上传时间：' + date + '</span>'
                             + '</a>'
                             + '</li>';
                         $(obj).append(listMsgHtml).fadeIn(500);

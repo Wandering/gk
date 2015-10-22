@@ -4,7 +4,7 @@
 <head>
     <title>vip服务</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/user/styles/vip-service.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/user/styles/vip-service.min.css"/>
 </head>
 <body>
 <%@include file="/common/header.jsp"%>

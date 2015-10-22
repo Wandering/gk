@@ -4,7 +4,7 @@
 <head>
     <title>考前备考</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/guide/styles/volunteer_forum_play.css" />
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/guide/styles/volunteer_forum_play.min.css" />
 </head>
 <body>
 <%@ include file="/before/header-before.jsp"%>

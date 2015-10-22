@@ -1,12 +1,13 @@
 define(function (require) {
     var $ = require('$');
-    require('getTime');
+    //require('getTime');
     require('backToTop');
 
     function GetCookie(sMainName, sSubName) {
         var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
         return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
     }
+
 
     var url = 'http://' + window.location.host;
     $(function () {

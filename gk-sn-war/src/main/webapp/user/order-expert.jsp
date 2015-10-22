@@ -84,8 +84,8 @@
         </div>
         <div class="error-tips hide"></div>
         <div class="btn-box">
-            <div class="btn btn-submit">提交</div>
-            <div class="btn btn-submit">重置</div>
+            <div class="btn btn-submit" id="submit-btn">提交</div>
+            <div class="btn btn-submit" id="reset-btn">重置</div>
         </div>
     </div>
 </div>
@@ -93,7 +93,7 @@
 
 <%@include file="/common/footer.jsp" %>
 <script>
-    seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/order-expert");
+    seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/order-expert.min");
 </script>
 
 </body>

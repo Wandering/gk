@@ -1,6 +1,5 @@
 define(function (require) {
     var $ = require('$');
-    require('header-user');
 
     var detailsUrl = window.location.search;
     var classifyType = detailsUrl.substr(14, 1);

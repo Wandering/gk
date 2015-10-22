@@ -12,17 +12,6 @@
 
 <div class="content">
     <div class="w1000">
-
-        <%--<section class="section-article">--%>
-            <%--<div class="search-content ta">--%>
-                 <%--<span>--%>
-                     <%--<input type="text" placeholder=""/>--%>
-                     <%--<input type="button" value="搜索"/>--%>
-                     <%--<button>我要提问</button>--%>
-                <%--</span>--%>
-            <%--</div>--%>
-        <%--</section>--%>
-
         <h1 class="search-result-num">提问</h1>
         <div class="ask-title">
             <p style="display: none;color: #f00;margin: 20px 0" id="error"></p>

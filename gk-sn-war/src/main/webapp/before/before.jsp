@@ -464,7 +464,7 @@
 </div>
 <%@ include file="/common/footer.jsp"%>
 <script>
-    seajs.use(["http://cdn.gaokao360.net/static/src/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
 </script>
 </body>
 </html>

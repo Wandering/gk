@@ -4,7 +4,7 @@
 <head>
     <title>专业测评</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/consult/styles/consult.css" />
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/consult/styles/consult.min.css" />
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>

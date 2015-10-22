@@ -1,7 +1,6 @@
 define(function (require) {
     var $ = require('$');
     require('backToTop');
-    require('getTime');
 
 
     var UI = {
@@ -48,7 +47,6 @@ define(function (require) {
             type: 'GET',
             dataType: 'JSON',
             success: function (result) {
-                console.log(result);
                 var years = '';
                 if(result.rtnCode=="0000000"){
                     var vipStatus = result.bizData.vipStatus;
@@ -116,12 +114,13 @@ define(function (require) {
                                 subjectTypeTxt='其他';
                         }
 
+                        var date = new Date(createDate).Format('yyyy-MM-dd');
                         var listMsgHtml = ''
                             +'<li class="item">'
                             +'<a target="_blank" href="/before/exam-play.jsp?url='+ localhosts + resources +'">'
                             +'<span class="subject-n"><strong>'+ subjectTypeTxt +'</strong></span>'
                             +'<span class="subject-t">'+ paperName +'</span>'
-                            +'<span class="subject-d">上传时间：'+ getTime(createDate) +'</span>'
+                            +'<span class="subject-d">上传时间：'+ date +'</span>'
                             +'</a>'
                             +'</li>';
                         UI.$listMsgItem.append(listMsgHtml);

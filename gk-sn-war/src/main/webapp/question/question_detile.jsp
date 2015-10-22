@@ -12,14 +12,6 @@
 <div class="content">
     <div class="w1000">
 
-        <%--<div class="search-content ta mt20">--%>
-                 <%--<span>--%>
-                     <%--<input type="text" placeholder="请输入专业名称进行搜索"/>--%>
-                     <%--<input type="button" value="搜索"/>--%>
-                     <%--<button>我要提问</button>--%>
-                <%--</span>--%>
-        <%--</div>--%>
-
         <div class="main-body">
             <section class="section-article" id="section_article">
             </section>
