@@ -5,6 +5,7 @@ import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.constant.CookieConst;
 import cn.thinkjoy.gk.constant.CookieTimeConst;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IUserAccountExService;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@Scope("prototype")
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/login")
 public class LoginController extends BaseController {
 

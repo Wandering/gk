@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.dao.ex.IAppointmentExDAO;
 import cn.thinkjoy.gk.domain.Appointment;
 import cn.thinkjoy.gk.pojo.AppointmentPojo;
@@ -17,8 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
-@Controller("AppointmentController")
-@Scope("prototype")
+@Controller
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/appointment")
 public class AppointmentController extends BaseController {
     private static final Logger LOGGER= LoggerFactory.getLogger(AppointmentController.class);

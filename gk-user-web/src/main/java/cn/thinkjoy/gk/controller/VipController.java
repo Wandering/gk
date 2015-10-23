@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Card;
 import cn.thinkjoy.gk.domain.UserVip;
 import cn.thinkjoy.gk.pojo.CardPojo;
@@ -21,8 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller("VipController")
-@Scope("prototype")
+@Controller
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/vip")
 public class VipController extends BaseController {
 

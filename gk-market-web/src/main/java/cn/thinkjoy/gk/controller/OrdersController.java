@@ -7,6 +7,7 @@ package cn.thinkjoy.gk.controller;
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.query.OrdersQuery;
 import cn.thinkjoy.gk.domain.Orders;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
@@ -37,7 +38,7 @@ import java.util.Map;
  * Created by clei on 15/4/7.
  */
 @Controller
-@Scope("prototype")
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value="/orders")
 public class OrdersController extends BaseController {
 

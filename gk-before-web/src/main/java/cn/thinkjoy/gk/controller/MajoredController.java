@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseCommonController;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.UniversityDict;
 import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
@@ -28,8 +29,8 @@ import java.util.Map;
 /**
  * Created by wpliu on 15/9/25.
  */
-@Controller("majoredController")
-@Scope("prototype")
+@Controller
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/majored")
 public class MajoredController extends BaseCommonController {
 

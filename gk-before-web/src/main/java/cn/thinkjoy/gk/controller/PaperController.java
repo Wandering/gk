@@ -3,6 +3,7 @@ package cn.thinkjoy.gk.controller;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.ExaminationPaper;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IEXPaperService;
@@ -22,7 +23,7 @@ import java.util.List;
  * Created by yhwang on 15/9/23.
  */
 @Controller
-@Scope("prototype")
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/before/paper")
 public class PaperController extends BaseController {
     @Autowired

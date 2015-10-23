@@ -6,6 +6,7 @@ import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.constant.CookieConst;
 import cn.thinkjoy.gk.constant.CookieTimeConst;
 import cn.thinkjoy.gk.constant.RedisConst;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IUserAccountExService;
@@ -30,7 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * 注册
  */
 @Controller
-@Scope("prototype")
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/register")
 public class RegisterController extends BaseController {
 

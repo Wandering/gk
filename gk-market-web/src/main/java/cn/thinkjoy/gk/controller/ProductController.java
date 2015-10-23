@@ -6,6 +6,7 @@ package cn.thinkjoy.gk.controller;
 
 
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.query.ProductQuery;
 import cn.thinkjoy.gk.domain.Product;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
@@ -29,7 +30,7 @@ import java.util.List;
  * 商品
  */
 @Controller
-@Scope("prototype")
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value="/product")
 public class ProductController {
 

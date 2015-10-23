@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.controller;
 
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Orders;
 import cn.thinkjoy.gk.service.IOrdersService;
 import com.alibaba.fastjson.JSON;
@@ -23,7 +24,7 @@ import java.util.Map;
  * Created by jzli on 15/6/3.
  */
 @Controller
-@Scope("prototype")
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping("")
 public class PayCallbackController {
 
