@@ -42,6 +42,7 @@ public class LoginController extends BaseController {
 	public long login(@RequestParam(value="account",required=false) String account,
 					  @RequestParam(value="password",required=false) String password) throws Exception {
 		long id = 0l;
+		long areaId=getAreaCookieValue();
 		try {
 			if (StringUtils.isEmpty(account)) {
 				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
@@ -52,7 +53,7 @@ public class LoginController extends BaseController {
 
 
 
-			UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
+			UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account,areaId);
 
 			if (userAccountBean == null) {
 				throw new BizException(ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getCode(),ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getMessage());

@@ -318,7 +318,7 @@
                 ${condition.groupOp}   ${condition.lastModifier.field}  ${condition.lastModifier.op}  #{condition.lastModifier.data}
             </if>
             <if test="condition.areaId!=null">
-                ${condition.groupOp}   ${condition.areaId.field}  ${condition.areaId.op}  #{condition.areaId.data}
+                ${condition.groupOp}   ${condition.areaId.field}  in (#{condition.areaId.data},'0')
             </if>
 
 
@@ -394,7 +394,7 @@
                 AND lastModifier = #{condition.lastModifier}
             </if>
             <if test="condition.areaId!=null">
-                AND areaId = #{condition.areaId}
+                AND areaId in ( #{condition.areaId},'0')
             </if>
         </trim>
         <if test="orderBy!=null">
@@ -429,7 +429,7 @@
                 AND lastModifier = #{condition.lastModifier}
             </if>
             <if test="condition.areaId!=null">
-                AND areaId = #{condition.areaId}
+                AND areaId in ( #{condition.areaId},'0')
             </if>
         </trim>
         <if test="orderBy!=null">
@@ -463,7 +463,7 @@
                 ${groupOp} ${lastModifier.field} ${lastModifier.op}  #{lastModifier.data}
             </if>
             <if test="areaId!=null">
-                ${groupOp} ${areaId.field} ${areaId.op}  #{areaId.data}
+                ${groupOp} ${areaId.field} in ( #{areaId.data},'0')
             </if>
 
         </where>

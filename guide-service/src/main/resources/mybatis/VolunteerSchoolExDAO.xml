@@ -77,7 +77,7 @@
                 ${condition.groupOp}   hits  ${condition.hits.op}  #{condition.hits.data}
             </if>
             <if test="condition.areaId!=null">
-                ${condition.groupOp}   areaId  ${condition.areaId.op}  #{condition.areaId.data}
+                ${condition.groupOp}   areaId  in ( #{condition.areaId.data},'0')
             </if>
             <if test="condition.keyword!=null">
                 ${condition.groupOp}  ( title like CONCAT('%', #{condition.keyword} , '%')

@@ -28,7 +28,7 @@
             AND a.title LIKE  CONCAT('%', #{searchName} , '%')
         </if>
         <if test="areaId != null">
-            AND a.areaId = #{areaId}
+            AND a.areaId in ( #{areaId},'0')
         </if>
         <if test="sortType == 1">
             ORDER BY a.createDate DESC

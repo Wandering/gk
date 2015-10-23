@@ -225,7 +225,7 @@
                 ${condition.groupOp}   ${condition.status.field}  ${condition.status.op}  #{condition.status.data}
             </if>
             <if test="condition.areaId!=null">
-                ${condition.groupOp}   ${condition.areaId.field}  ${condition.areaId.op}  #{condition.areaId.data}
+                ${condition.groupOp}   ${condition.areaId.field}  in ( #{condition.areaId.data},'0')
             </if>
 
 
@@ -277,7 +277,7 @@
                 AND status = #{condition.status}
             </if>
             <if test="condition.areaId!=null">
-                AND areaId = #{condition.areaId}
+                AND areaId in ( #{condition.areaId},'0')
             </if>
         </trim>
         <if test="orderBy!=null">
@@ -300,7 +300,7 @@
                 AND status = #{condition.status}
             </if>
             <if test="condition.areaId!=null">
-                AND areaId = #{condition.areaId}
+                AND areaId in ( #{condition.areaId},'0')
             </if>
         </trim>
         <if test="orderBy!=null">

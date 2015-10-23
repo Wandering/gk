@@ -27,6 +27,9 @@
             <if test="account!=null">
                 and acc.account = #{account}
             </if>
+            <if test="areaId!=null">
+                and acc.areaId = #{areaId}
+            </if>
         </where>
     </select>
 
@@ -46,6 +49,9 @@
             </if>
             <if test="account!=null">
                 and acc.account = #{account}
+            </if>
+            <if test="areaId!=null">
+                and acc.areaId = #{areaId}
             </if>
         </where>
     </select>

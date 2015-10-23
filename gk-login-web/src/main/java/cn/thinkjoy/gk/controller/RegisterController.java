@@ -53,7 +53,7 @@ public class RegisterController extends BaseController {
                                   @RequestParam(value="captcha",required = false) String captcha,
                                   @RequestParam(value="password",required = false) String password)
             throws Exception{
-
+        long areaId=getAreaCookieValue();
         try{
             if (StringUtils.isEmpty(account)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
@@ -64,7 +64,7 @@ public class RegisterController extends BaseController {
             if (StringUtils.isEmpty(password)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入密码!");
             }
-            UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
+            UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account,areaId);
             if (userAccountBean!=null){
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号已被注册!");
             }
@@ -80,6 +80,7 @@ public class RegisterController extends BaseController {
             userAccount.setLastModDate(System.currentTimeMillis());
             userAccount.setUserType(0);
             userAccount.setStatus(0);
+            userAccount.setAreaId(areaId);
             try{
                 boolean flag=userAccountExService.insertUserAccount(userAccount);
                 if (!flag){
@@ -89,7 +90,7 @@ public class RegisterController extends BaseController {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"账户注册失败");
             }
 
-            userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
+            userAccountBean = userAccountExService.findUserAccountPojoByPhone(account,areaId);
 
             long id = userAccountBean.getId();
 
@@ -120,6 +121,7 @@ public class RegisterController extends BaseController {
                                    @RequestParam(value="captcha",required = false) String captcha,
                                    @RequestParam(value="password",required = false) String password)
             throws Exception{
+        long areaId=getAreaCookieValue();
         try{
             if (StringUtils.isEmpty(account)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
@@ -130,7 +132,7 @@ public class RegisterController extends BaseController {
             if (StringUtils.isEmpty(password)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入密码!");
             }
-            UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
+            UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account,areaId);
             if (userAccountBean==null){
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号尚未注册!");
             }
@@ -168,12 +170,13 @@ public class RegisterController extends BaseController {
     @RequestMapping(value = "/confirmAccount",method = RequestMethod.POST)
     @ResponseBody
     public String confirmAccount(@RequestParam(value = "account",required = true) String account,
-                                 @RequestParam(value = "type", required = true) int type){
+                                 @RequestParam(value = "type", required = true) int type) throws Exception{
         try {
             if (StringUtils.isEmpty(account)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
             }
-            UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
+            long areaId=getAreaCookieValue();
+            UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account,areaId);
             if (type==0){
                 if (userAccountBean!=null){
                     throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号已经注册!");

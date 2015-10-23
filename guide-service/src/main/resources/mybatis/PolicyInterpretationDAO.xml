@@ -393,7 +393,7 @@
                 ${condition.groupOp}   ${condition.lastModDate.field}  ${condition.lastModDate.op}  #{condition.lastModDate.data}
             </if>
             <if test="condition.areaId!=null">
-                ${condition.groupOp}   ${condition.areaId.field}  ${condition.areaId.op}  #{condition.areaId.data}
+                ${condition.groupOp}   ${condition.areaId.field}  in ( #{condition.areaId.data},'0')
             </if>
 
 
@@ -487,7 +487,7 @@
                 AND lastModDate = #{condition.lastModDate}
             </if>
             <if test="condition.areaId!=null">
-                AND areaId = #{condition.areaId}
+                AND areaId in (#{condition.areaId},'0')
             </if>
         </trim>
         <if test="orderBy!=null">
@@ -531,7 +531,7 @@
                 AND lastModDate = #{condition.lastModDate}
             </if>
             <if test="condition.areaId!=null">
-                AND areaId = #{condition.areaId}
+                AND areaId in ( #{condition.areaId},'0')
             </if>
         </trim>
         <if test="orderBy!=null">

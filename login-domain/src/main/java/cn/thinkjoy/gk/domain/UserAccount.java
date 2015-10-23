@@ -25,10 +25,21 @@ public class UserAccount extends BaseDomain{
     private String account;
     private String password;
     private Integer userType;
+	/** 区域Id */
+	private Long areaId;
 
 	public UserAccount(){
 	}
-    public void setAccount(String value) {
+
+	public Long getAreaId() {
+		return areaId;
+	}
+
+	public void setAreaId(Long areaId) {
+		this.areaId = areaId;
+	}
+
+	public void setAccount(String value) {
         this.account = value;
     }
 
