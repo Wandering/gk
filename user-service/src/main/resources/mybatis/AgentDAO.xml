@@ -492,7 +492,7 @@
                 AND address = #{condition.address}
             </if>
             <if test="condition.areaId!=null">
-                AND areaId = #{condition.areaId}
+                AND areaId in ( #{condition.areaId},'0')
             </if>
         </trim>
         <if test="orderBy!=null">
