@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.controller;
 
 
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.pojo.ProvincePojo;
 import cn.thinkjoy.gk.service.IRegionService;
 import org.slf4j.Logger;
@@ -16,7 +17,7 @@ import java.util.List;
 
 
 @Controller
-@Scope("prototype")
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/region")
 public class RegionController {
 

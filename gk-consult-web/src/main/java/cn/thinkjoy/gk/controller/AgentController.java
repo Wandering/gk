@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller;
 
 
 import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Agent;
 import cn.thinkjoy.gk.pojo.AgentPojo;
 import cn.thinkjoy.gk.service.IAgentService;
@@ -19,7 +20,7 @@ import java.util.List;
 
 
 @Controller
-@Scope("prototype")
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/agent")
 public class AgentController extends BaseController{
 

@@ -3,6 +3,7 @@ package cn.thinkjoy.gk.controller;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.constant.CaptchaConst;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.constant.VerificationKeyConst;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.CaptchaUtil;
@@ -18,7 +19,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
 @Controller
-@Scope("prototype")
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/verifyCode")
 public class VerificationCodeController extends BaseController {
 

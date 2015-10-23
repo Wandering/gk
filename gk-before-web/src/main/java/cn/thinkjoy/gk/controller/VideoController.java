@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.VideoCourse;
 import cn.thinkjoy.gk.domain.VideoSection;
 import cn.thinkjoy.gk.pojo.SubjectPojo;
@@ -28,16 +29,18 @@ import java.util.Map;
  * Created by yhwang on 15/9/23.
  */
 @Controller
-@Scope("prototype")
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/before/video")
 public class VideoController extends BaseController {
     @Autowired
     private IEXSubjectService iexSubjectService;
+
     @Autowired
     private IEXVideoCourseService iexVideoCourseService;
 
     @Autowired
     private IVideoSectionService videoSectionService;
+
     @Autowired
     private IVideoCourseService videoCourseService;
 

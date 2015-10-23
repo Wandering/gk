@@ -1,7 +1,7 @@
 package cn.thinkjoy.gk.controller;
 
-import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.AdmissionBatch;
 import cn.thinkjoy.gk.domain.PolicyInterpretation;
 import cn.thinkjoy.gk.dto.PolicyInterpretationCategory;
@@ -21,7 +21,7 @@ import java.util.Map;
  * 政策解读
  */
 @Controller
-@Scope("prototype")
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/policyInterpretation")
 public class PolicyInterpretationController extends BaseController {
 

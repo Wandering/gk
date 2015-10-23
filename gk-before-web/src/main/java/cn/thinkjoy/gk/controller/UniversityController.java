@@ -6,6 +6,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseCommonController;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.domain.UniversityDict;
 import cn.thinkjoy.gk.pojo.*;
@@ -33,8 +34,8 @@ import java.util.Map;
  * 学院信息控制类
  *
  */
-@Controller("universityController")
-@Scope("prototype")
+@Controller
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/university")
 public class UniversityController extends BaseCommonController {
 

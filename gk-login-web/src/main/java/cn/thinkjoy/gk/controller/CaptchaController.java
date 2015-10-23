@@ -5,6 +5,7 @@ import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.constant.CaptchaTimeConst;
 import cn.thinkjoy.gk.constant.RedisConst;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.CaptchaUtil;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.concurrent.TimeUnit;
 
 @Controller
-@Scope("prototype")
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/captcha")
 public class CaptchaController extends BaseController {
 
