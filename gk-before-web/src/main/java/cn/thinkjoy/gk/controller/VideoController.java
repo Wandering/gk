@@ -34,11 +34,13 @@ import java.util.Map;
 public class VideoController extends BaseController {
     @Autowired
     private IEXSubjectService iexSubjectService;
+
     @Autowired
     private IEXVideoCourseService iexVideoCourseService;
 
     @Autowired
     private IVideoSectionService videoSectionService;
+
     @Autowired
     private IVideoCourseService videoCourseService;
 
