@@ -48,7 +48,6 @@ gulp.task('styles', function () {
 //        .pipe(notify({message: 'Scripts task complete'}));
 //});
 
-
 gulp.task('scripts', function () {
     return gulp.src('src/**/*.js')
         //.pipe(jshint('.jshintrc'))
@@ -100,10 +99,10 @@ gulp.task('default', ['clean'], function () {
 gulp.task('watch', function () {
 
     // 看守所有.scss档
-    gulp.watch('src/**/*.scss', ['styles']);
+    //gulp.watch('src/**/*.scss', ['styles']);
 
     // 看守所有.js档
-    //gulp.watch('src/**/*.js', ['scripts']);
+    gulp.watch('src/**/*.js', ['scripts']);
 
     // 看守所有图片档
     //gulp.watch('src/**/*', ['images']);

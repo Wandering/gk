@@ -23,6 +23,11 @@ define(function (require, exports, module) {
         console.log(new Date(timestamp));
         return new Date(timestamp).Format(str || 'yyyy-MM-dd');  //yyyy-MM-dd
     }
+
+    function getTime1(timestamp, str) {
+        return new Date(timestamp).Format(str || 'MM-dd');  //yyyy-MM-dd
+    }
+
     module.exports = function(timestamp, str) {
         getTime(timestamp, str);
     };

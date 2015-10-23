@@ -1,7 +1,6 @@
 define(function (require) {
     var $ = require('$');
-    require('swiper');
-    require('getTime');
+    //require('getTime');
     require('backToTop');
 
     function GetCookie(sMainName, sSubName) {
@@ -9,12 +8,13 @@ define(function (require) {
         return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
     }
 
+
     var url = 'http://' + window.location.host;
     $(function () {
         //在线互动
         var more = $('.more');
         $('.ask-question').click(function () {
-            window.location.assign(url + '/question/ask.jsp');
+            window.location.assign(url + '/question/ask.jsp?path=online');
         });
         $('.go-search').click(function () {
             var searchText = $('.search-val').val();
@@ -77,7 +77,8 @@ define(function (require) {
             dataType: 'json',
             type: 'get',
             data: {
-                "pageNo": 0
+                "pageNo": 0,
+                "pageSize": 6
             },
             success: function (res) {
                 var dataJson = res.bizData;

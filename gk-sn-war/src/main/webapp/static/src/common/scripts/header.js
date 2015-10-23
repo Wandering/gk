@@ -1,6 +1,5 @@
 define(function (require) {
     var $ = require('$');
-    require('header-user');
 
     $('#main-menu').on('mouseover','li.menu-item',function(){
         $(this).addClass('active');
@@ -28,7 +27,6 @@ define(function (require) {
     function addMenuActive() {
         var pathName = window.location.pathname.split('/');
         var pageName = pathName[pathName.length - 1];
-        console.log(pageName)
         if (!pageName) {
             $('.index').addClass('active');
             return;

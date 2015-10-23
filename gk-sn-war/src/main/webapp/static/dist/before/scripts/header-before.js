@@ -1,6 +1,6 @@
 define(function (require) {
     var $ = require('$');
-    require('header-user');
+
     var detailsUrl = window.location.search;
     var classifyType = detailsUrl.substr(14, 1);
     if(classifyType==1){
@@ -18,7 +18,12 @@ define(function (require) {
         $('html,body').animate({scrollTop: ($('#main-volunteer-box').offset().top)}, 800);
     });
 
-
+    $('#main-menu').on('mouseover','li.menu-item',function(){
+        $(this).addClass('active');
+    });
+    $('#main-menu').on('mouseout','li.menu-item',function(){
+        $(this).removeClass('active');
+    });
 
     $(document).scroll(function() {
         if ($(this).scrollTop() > 70) {

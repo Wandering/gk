@@ -22,7 +22,7 @@
   }
 </style>
 <!--[if lte IE 6]>
-<script type="text/javascript" src="/static/bower_components/banner/belatedPNG.js"></script>
+<script type="text/javascript" src="http://cdn.gaokao360.net/static/global/bower_components/banner/belatedPNG.js"></script>
 <script type="text/javascript">
 var __IE6=true;
 DD_belatedPNG.fix('.logo img,.prev img,.next img,img');
@@ -49,5 +49,5 @@ DD_belatedPNG.fix('.logo img,.prev img,.next img,img');
 </div>
 <!-- 代码 结束 -->
 <script>
-  seajs.use("/static/src/common/scripts/banner");
+  seajs.use("http://cdn.gaokao360.net/static/global/common/scripts/banner.min");
 </script>

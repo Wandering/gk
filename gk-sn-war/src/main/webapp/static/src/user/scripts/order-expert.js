@@ -3,7 +3,7 @@ define(function (require) {
     //require('laydate');
 
 
-    $('.btn-submit').click(function () {
+    $('#submit-btn').click(function () {
         //验证
         var s = $('.data-start').val();
         var e = $('.data-end').val();
@@ -68,4 +68,8 @@ define(function (require) {
             }
         })
     });
+
+    $('#reset-btn').on('click',function(){
+        $('.content').find('input,textarea').val('');
+    })
 });

@@ -4,7 +4,6 @@
 
 define(function (require) {
     var $ = require('$');
-    require('swiper');
     require('backToTop');
 
     var Tab = require('/static/src/guide/scripts/tab');
@@ -21,14 +20,17 @@ define(function (require) {
                     parentHandle:function(curObj) {
                         clearTimeout(timer);
                         timer = setTimeout(function() {
-                            if ('填报指南' === curObj.name) {
-                                nextBtn.hide();
-                                getArticleDetile(curObj.id);
-                            } else {
-                                nextBtn.removeClass('none').text('加载更多...');
-                                nextBtn.show();
-                                getArticleList(curObj, 1);
-                            }
+                            //if ('填报指南' === curObj.name) {
+                            //    nextBtn.hide();
+                            //    getArticleDetile(curObj.id);
+                            //} else {
+                            //    nextBtn.removeClass('none').text('加载更多...');
+                            //    nextBtn.show();
+                            //    getArticleList(curObj, 1);
+                            //}
+                            nextBtn.removeClass('none').text('加载更多...');
+                            nextBtn.show();
+                            getArticleList(curObj, 1);
                         }, 300)
                     }
                 });
@@ -37,16 +39,22 @@ define(function (require) {
     }
 
     function renderList(list, page) {
-        var code = $('.tabs-list li.active').attr('data-id');
+        var activeLi = $('.tabs-list li.active');
+        var code = activeLi.attr('data-id');
+        var menuName = activeLi.text();
         var html = [];
         for (var i = 0, len = list.length; i < len; i++) {
-            html.push('<a target="_blank" href="/consult/gk_hot_detile.jsp?id=' + list[i].id + '&code=' + code + '"><div class="detile-content mt20">');
+            html.push('<a target="_blank" href="/consult/gk_hot_detile.jsp?menuName=' + menuName + '&id=' + list[i].id + '&code=' + code + '"><div class="detile-content mt20">');
             html.push('<div class="detile-header">');
             html.push('<span class="order-number">' + (i + (page - 1) * 8 + 1) + '</span>');
             html.push('<span class="detile-title">' + list[i].title + '</span>');
             html.push(' <span class="fr">' + new Date(list[i].lastModDate).Format('yyyy-MM-dd hh:mm') + '</span>');
             html.push('</div>');
-            html.push('<div class="detile-info mt20">');
+            if(list[i].summary==null||list[i].summary.trim()==""){
+                html.push('<div class="detile-info mt20 hide">');
+            }else{
+                html.push('<div class="detile-info mt20">');
+            }
             html.push('<img class="triangle" src="/static/dist/common/images/triangle.png" />');
             html.push(list[i].summary);
             html.push('</div>');
@@ -58,6 +66,7 @@ define(function (require) {
     function getArticleList(curObj, curPage) {
         $.get('/volunteerSchool/articles.do?cateId=' + curObj.id + '&pn=' + curPage + '&ps=8', function(data) {
             if ('0000000' === data.rtnCode) {
+                console.log(data);
                 var list = data.bizData.rows;
                 if (list.length <= 0) {
                     nextBtn.addClass('none').text('没有更多可加载！');

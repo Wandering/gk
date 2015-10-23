@@ -51,7 +51,7 @@
 </div>
 
 <script>
-  seajs.use("/static/src/common/scripts/header");
+  seajs.use(["http://cdn.gaokao360.net/static/global/common/scripts/header.min","http://cdn.gaokao360.net/static/global/common/scripts/header-user-base"]);
 </script>
 
 

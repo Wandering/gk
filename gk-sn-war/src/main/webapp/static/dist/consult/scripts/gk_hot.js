@@ -4,7 +4,6 @@
 
 define(function (require) {
     var $ = require('$');
-    require('swiper');
     require('backToTop');
 
     var getQueryStr = function(_url, _param) {
@@ -23,7 +22,7 @@ define(function (require) {
             for (var i = 0, len = data.length; i < len; i++) {
                 html.push('<div class="detile-content mt20">');
                 html.push('<div class="detile-header">');
-                var num = i + 1 + 4 * (pageNO - 1);
+                var num = i + 1 + 10 * (pageNO - 1);
                 html.push('<span class="order-number">' + num + '</span>');
                 html.push('<span class="detile-title"><a href="/consult/gk_hot_detile.jsp?method=hot&id=' + data[i].id + '">' + data[i].hotInformation + '</a></span>');
                 var date = new Date(data[i].lastModDate).Format('yyyy-MM-dd hh:mm');

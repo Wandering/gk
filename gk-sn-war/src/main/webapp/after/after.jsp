@@ -4,8 +4,7 @@
 <head>
     <title>志愿指导</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/common/styles/comm.css"/>
-    <link rel="stylesheet" href="/static/dist/after/styles/after.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/after/styles/after.min.css"/>
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
@@ -98,7 +97,7 @@
 </div>
 <%@ include file="/common/footer.jsp"%>
 <script>
-    seajs.use("/static/src/after/scripts/after");
+    seajs.use("http://cdn.gaokao360.net/static/global/after/scripts/after.min");
 
 
 </script>

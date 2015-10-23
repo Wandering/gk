@@ -4,8 +4,8 @@
 <head>
    <title>志愿指导</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/after/styles/after.css"/>
-    <link rel="stylesheet" href="/static/dist/after/styles/expert-evaluating.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/after/styles/after.min.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/after/styles/expert-evaluating.min.css"/>
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
@@ -462,7 +462,7 @@
                     可能被自己心仪的专业录取，同理，也试用二本和三本。
                 </div>
                 <div class="navigation-box">
-                    <span class="tip">正式填报志愿请登录网址：sn.gaokao360.net</span>
+                    <span class="tip">正式填报志愿请登录网址：<a target="_blank" href="http://sn.gaokao360.net">sn.gaokao360.net</a></span>
                     <div class="btn btn-before" id="prev-btn">返回上一步</div>
                     <div class="btn btn-next" id="print-btn">打印</div>
                 </div>
@@ -597,7 +597,7 @@
 
 <%@ include file="/common/footer.jsp"%>
 <script>
-    seajs.use("/static/src/after/scripts/after-flow3");
+    seajs.use("http://cdn.gaokao360.net/static/global/after/scripts/after-flow3.min");
     var params = decodeURIComponent('${params}');
 </script>
 

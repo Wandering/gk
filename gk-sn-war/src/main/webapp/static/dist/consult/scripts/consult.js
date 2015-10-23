@@ -4,7 +4,7 @@
 
 define(function (require) {
     var $ = require('$');
-    require('swiper');
+    require('backToTop');
 
     function GetCookie(sMainName, sSubName) {
         var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
@@ -25,6 +25,14 @@ define(function (require) {
         $('#search').on('click', function(e) {
             var val = $('#keywords').val();
             window.location.href = '/consult/profession_info.jsp?val=' + val;
+        });
+        $('#keywords').keydown(function(e) {
+            if (e.keyCode == 13) {
+                var val = $('#keywords').val();
+                if (val) {
+                    window.location.href = '/consult/profession_info.jsp?val=' + val;
+                }
+            }
         });
 
         $('.into-evalution a').on('click',function(e) {

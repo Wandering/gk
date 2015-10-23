@@ -37,6 +37,16 @@ public class ServletPathConst {
         MAPPING_URLS.put("/guide/report.do","");
 
 
-        JSP_URLS.put("/guide/guide.jsp","");
+//        JSP_URLS.put("/guide/guide.jsp","");
+        JSP_URLS.put("/user/personal-info.jsp","");
+        JSP_URLS.put("/user/modify-psd.jsp","");
+        JSP_URLS.put("/user/app-center.jsp","");
+        JSP_URLS.put("/user/online-answer.jsp","");
+        JSP_URLS.put("/user/expert-service.jsp","");
+        JSP_URLS.put("/question/ask.jsp?path=online","");
+        JSP_URLS.put("/forward.do","");
+        JSP_URLS.put("/user/online-answer.jsp?method=ask","");
+//        JSP_URLS.put("/question/question_detile.jsp","");
+
     }
 }
