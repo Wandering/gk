@@ -1,21 +1,9 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
-<%--<div class="wipe">--%>
-  <%--<div class="swiper-container">--%>
-    <%--<div class="swiper-wrapper">--%>
-      <%--<div class="swiper-slide slide-1"><img src="/static/dist/common/images/banner-0.png" alt=""/></div>--%>
-      <%--<div class="swiper-slide slide-2"><img src="/static/dist/common/images/banner-1.png" alt=""/></div>--%>
-      <%--<div class="swiper-slide slide-3"><img src="/static/dist/common/images/banner-2.png" alt=""/></div>--%>
-      <%--&lt;%&ndash;<div class="swiper-slide slide-3"><img src="/static/dist/common/images/banner.png" alt="" class="banner-toggle"/></div>&ndash;%&gt;--%>
-    <%--</div>--%>
-    <%--<div class="swiper-pagination"></div>--%>
-    <%--<div class="swiper-button-prev"></div>--%>
-    <%--<div class="swiper-button-next"></div>--%>
-  <%--</div>--%>
-<%--</div>--%>
-
 <style>
   /* slide */
-  .slide-main{height:360px;position:relative;}
+  .slide-main{height:360px;position:relative;
+    z-index: 88;
+    clear: both;}
   .slide-main .prev,.slide-main .next{display:block;width:44px;height:44px;position:absolute;z-index:222;top:150px;overflow:hidden;cursor:pointer;opacity:0.6;-moz-opacity:0.6;filter:alpha(opacity=60);_border:1px solid none;}
   .slide-main .prev{left:70px;}
   .slide-main .next{right:70px;}
@@ -24,42 +12,17 @@
   .slide-main .item a{display:inline-block;width:24px;height:5px;margin-right:11px;background:#333;opacity:0.6;-moz-opacity:0.6;filter:alpha(opacity=60);overflow:hidden;}
   .slide-main .item a.cur{background:#fff;}
   .slide-main .slide-box,.slide{display:block;width:100%;height:360px;overflow:hidden;}
-  .slide-main .slide-box{position:relative;
-    text-align: center;}
+  .slide-main .slide-box{position:relative;}
   .slide-main .slide{display:none;height:360px;background:#ff6900;position:relative;position:absolute;z-index:8;}
-  /*.slide a{display:block;width:100%;height:360px;cursor:pointer;}*/
-  /*.obj-a,.obj-b,.obj-c,.obj-d,.obj-e,.obj-f{position:absolute;z-index:9;left:50%;}*/
-  /*.obj-a,.obj-b{width:952px;margin-left:-476px;text-align:center;}*/
-  /*.obj-a{display:block;height:352px;top:100px;}*/
-  /*.obj-b{top:406px;height:100px;}*/
-  /*.obj-c{display:block;height:582px;top:0;margin-left:-540px;}*/
-  /*.obj-d{top:228px;height:164px;}*/
-  /*.obj-d p{display:block;padding-top:20px;font-size:16px;color:#fff;clear:both;}*/
-  /*.obj-e{width:366px;height:170px;margin-left:-460px;top:223px;z-index:12;}*/
-  /*.obj-f{width:692px;height:394px;top:158px;margin-left:-180px;}*/
-  /*.banAnimate .obj-a{display:block;animation-name:baoAni;-webkit-animation:baoAni 0.4s linear 0s normal none;-moz-animation:baoAni 0.4s linear 0s normal none;animation:baoAni 0.4s linear 0s normal none;}*/
-  /*@-webkit-keyframes baoAni{from{opacity:0;left:60%;} to{opacity:1;left:50%;} }*/
-  /*@-moz-keyframes baoAni{from{opacity:0;left:60%;} to{opacity:1;left:50%;} }*/
-  /*@keyframes baoAni{from{opacity:0;left:60%;} to{opacity:1;left:50%;} }*/
-  /*.banAnimate .obj-b{display:block;animation-name:saAni;-webkit-animation:saAni 0.4s linear 0s normal none;-moz-animation:saAni 0.4s linear 0s normal none;animation:saAni 0.4s linear 0s normal none;}*/
-  /*@-webkit-keyframes saAni{from{opacity:0;-webkit-transform:scale(0,0);} to{opacity:1;-webkit-transform:scale(1,1);} }*/
-  /*@-moz-keyframes saAni{from{opacity:0;-moz-transform:scale(0,0);} to{opacity:1;-moz-transform:scale(1,1);} }*/
-  /*@keyframes saAni{from{opacity:0;transform:scale(0,0);} to{opacity:1;transform:scale(1,1);} }*/
-  /*.watch-code.code-show{display:block;animation-name:scode;-webkit-animation:scode 0.3s linear 0s normal none;-moz-animation:scode 0.3s linear 0s normal none;animation:scode 0.3s linear 0s normal none;}*/
-  /*@-webkit-keyframes scode{from{opacity:0;-webkit-transform:scale(1,0);transform-origin:left bottom;} to{opacity:1;-webkit-transform:scale(1,1); transform-origin: left bottom;} }*/
-  /*@-moz-keyframes scode{from{opacity:0;-moz-transform:scale(1,0); transform-origin:left bottom;} to{opacity:1;-moz-transform:scale(1,1);transform-origin:bottom bottom;} }*/
-  /*@keyframes scode{from{opacity:0;transform:scale(1,0);transform-origin:left bottom;} to{opacity:1;transform:scale(1,1);transform-origin: left bottom;} }*/
-  /*.banAnimate .obj-c,.banAnimate .obj-e{display:block;animation-name:saAnic;-webkit-animation:saAnic 0.3s linear 0s normal none;-moz-animation:saAnic 0.3s linear 0s normal none;animation:saAnic 0.3s linear 0s normal none;}*/
-  /*@-webkit-keyframes saAnic{from{opacity:0;left:47%;} to{opacity:1;left:50%;} }*/
-  /*@-moz-keyframes saAnic{from{opacity:0;left:47%;} to{opacity:1;left:50%;} }*/
-  /*@keyframes saAnic{from{opacity:0;left:47%;} to{opacity:1;left:50%;} }*/
-  /*.banAnimate .obj-d,.banAnimate .obj-f{display:block;animation-name:saAnid;-webkit-animation:saAnid 0.3s linear 0s normal none;-moz-animation:saAnid 0.3s linear 0s normal none;animation:saAnid 0.3s linear 0s normal none;}*/
-  /*@-webkit-keyframes saAnid{from{opacity:0;left:53%;} to{opacity:1;left:50%;} }*/
-  /*@-moz-keyframes saAnid{from{opacity:0;left:53%;} to{opacity:1;left:50%;} }*/
-  /*@keyframes saAnid{from{opacity:0;left:53%;} to{opacity:1;left:50%;} }*/
+  .slide-main .slide img{
+    width: 1000px;
+    height: 360px;
+    margin: 0 auto;
+    display: block;
+  }
 </style>
 <!--[if lte IE 6]>
-<script type="text/javascript" src="/static/bower_components/banner/belatedPNG.js"></script>
+<script type="text/javascript" src="http://cdn.gaokao360.net/static/global/bower_components/banner/belatedPNG.js"></script>
 <script type="text/javascript">
 var __IE6=true;
 DD_belatedPNG.fix('.logo img,.prev img,.next img,img');
@@ -86,5 +49,5 @@ DD_belatedPNG.fix('.logo img,.prev img,.next img,img');
 </div>
 <!-- 代码 结束 -->
 <script>
-  seajs.use("/static/src/common/scripts/banner");
+  seajs.use("http://cdn.gaokao360.net/static/global/common/scripts/banner.min");
 </script>

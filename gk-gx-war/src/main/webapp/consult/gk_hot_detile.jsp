@@ -4,7 +4,7 @@
 <head>
     <title>详情页</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/consult/styles/gk_hot_detile.css" />
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/consult/styles/gk_hot_detile.min.css" />
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
@@ -31,9 +31,8 @@
 </div>
 
 <%@ include file="/common/footer.jsp"%>
-<script type="text/javascript" src="/static/bower_components/utils/getTime.js"></script>
 <script type="text/javascript">
-    seajs.use("${ctx}/static/src/consult/scripts/gk_hot_detile");
+    seajs.use(["http://cdn.gaokao360.net/static/global/consult/scripts/gk_hot_detile.min",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
 </script>
 </body>
 </html>

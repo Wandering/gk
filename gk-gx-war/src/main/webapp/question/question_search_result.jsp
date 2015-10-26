@@ -4,7 +4,7 @@
 <head>
     <title>搜索结果页 </title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/question/styles/search_result.css" />
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/question/styles/search_result.min.css" />
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
@@ -30,7 +30,7 @@
 
 <%@ include file="/common/footer.jsp"%>
 <script type="text/javascript">
-    seajs.use("${ctx}/static/src/question/scripts/question_search_result");
+    seajs.use("http://cdn.gaokao360.net/static/global/question/scripts/question_search_result.min");
 </script>
 </body>
 </html>

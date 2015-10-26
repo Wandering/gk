@@ -4,7 +4,7 @@
 <head>
     <title>考前备考</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/before/styles/before.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/before/styles/before.min.css"/>
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
@@ -46,7 +46,7 @@
             </a>
             <a target="_blank" href="/before/mentality.jsp?classifyType=2&searchV=" class="name">高考心理</a>
             <span class="num">3</span>
-            <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
+            <p class="txt">专家告诉您如何调整，以最好的状态应对高考</p>
         </li>
         <li class="item">
             <a href="javascript:;" id="volunteer-flow1">
@@ -464,7 +464,7 @@
 </div>
 <%@ include file="/common/footer.jsp"%>
 <script>
-    seajs.use("/static/src/before/scripts/before");
+    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
 </script>
 </body>
 </html>

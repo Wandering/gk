@@ -4,7 +4,7 @@
 <head>
     <title>vip服务</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/user/styles/vip-service.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/user/styles/vip-service.min.css"/>
 </head>
 <body>
 <%@include file="/common/header.jsp"%>
@@ -44,6 +44,7 @@
                 <img src="/static/dist/user/images/online-card-img.png" class="pay-title"/>
 
                 <div class="pay-box">
+                    <div class="error-tips hide"></div>
                     <p>充值账号：<span class="accountNum"></span></p>
                     <div class="input-box">
                         <img src="/static/dist/user/images/icon-card-pay.png" alt=""/>
@@ -54,7 +55,7 @@
                         密码：<input type="text" id="pay-password"  class="input-pay-comm"/>
                     </div>
                 </div>
-                <div class="error-tips hide"></div>
+
                 <div class="btn-upgrade btn-green" id="accountBtn">升级</div>
             </div>
         </div>
@@ -64,72 +65,7 @@
     <p class="link-tel-title">全国服务商联系方式及地址 </p>
     <ul class="tab-info ">
         <div class="tel-content-box">
-            <div class="row" id='address-box'>
-                <%--<div class="col-3">--%>
-                <%--<p class="area-name">陕西省延安市</p>--%>
-
-                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
-                <%--陕西省延安市--%>
-                <%--</p>--%>
-                <%--</div>--%>
-                <%--<div class="col-3">--%>
-                <%--<p class="area-name">陕西省延安市</p>--%>
-
-                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
-                <%--陕西省延安市--%>
-                <%--</p>--%>
-                <%--</div>--%>
-                <%--<div class="col-3">--%>
-                <%--<p class="area-name">陕西省延安市</p>--%>
-
-                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
-                <%--陕西省延安市--%>
-                <%--</p>--%>
-                <%--</div>--%>
-                <%--<div class="col-3">--%>
-                <%--<p class="area-name">陕西省延安市</p>--%>
-
-                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
-                <%--陕西省延安市--%>
-                <%--</p>--%>
-                <%--</div>--%>
-                <%--<div class="col-3">--%>
-                <%--<p class="area-name">陕西省延安市</p>--%>
-
-                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
-                <%--陕西省延安市--%>
-                <%--</p>--%>
-                <%--</div>--%>
-                <%--<div class="col-3">--%>
-                <%--<p class="area-name">陕西省延安市</p>--%>
-
-                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
-                <%--陕西省延安市--%>
-                <%--</p>--%>
-                <%--</div>--%>
-                <%--<div class="col-3">--%>
-                <%--<p class="area-name">陕西省延安市</p>--%>
-
-                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
-                <%--陕西省延安市--%>
-                <%--</p>--%>
-                <%--</div>--%>
-                <%--<div class="col-3">--%>
-                <%--<p class="area-name">陕西省延安市</p>--%>
-
-                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
-                <%--陕西省延安市--%>
-                <%--</p>--%>
-                <%--</div>--%>
-                <%--<div class="col-3">--%>
-                <%--<p class="area-name">陕西省延安市</p>--%>
-
-                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
-                <%--陕西省延安市--%>
-                <%--</p>--%>
-                <%--</div>--%>
-
-            </div>
+            <div class="row" id='address-box'></div>
         </div>
     </ul>
 </div>
@@ -137,7 +73,7 @@
 
 <%@include file="/common/footer.jsp"%>
 <script>
-    seajs.use("/static/src/user/scripts/vip-service");
+    seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/vip-service.min");
 </script>
 
 </body>

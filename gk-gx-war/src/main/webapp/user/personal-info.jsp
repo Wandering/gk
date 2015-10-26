@@ -4,10 +4,10 @@
 <head>
     <%@include file="/common/meta.jsp"%>
     <title>个人信息</title>
-    <link rel="stylesheet" href="/static/dist/user/styles/personal-info.min.css"/>
-    <link rel="stylesheet" href="/static/bower_components/laydate/need/laydate.css"/>
-    <link rel="stylesheet" href="/static/bower_components/laydate/skins/dahong/laydate.css"/>
-    <link rel="stylesheet" href="/static/bower_components/uploadify/uploadify.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/user/styles/personal-info.min.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/bower_components/laydate/need/laydate.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/bower_components/laydate/skins/dahong/laydate.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/bower_components/uploadify/uploadify.css"/>
 </head>
 <body>
 <%@include file="/common/header.jsp"%>
@@ -51,7 +51,7 @@
                     </select>
                 </div>
                 <div class="group-comm">
-                    所在学校<input type="text" class="user-input-comm school" id="school-name" value=""/>
+                    所在学校<input type="text" class="user-input-comm school" value=""/>
                 </div>
                 <div class="group-comm">
                     出生日期<input onclick="laydate()" class="user-input-comm birthdayDate laydate-icon" />
@@ -82,7 +82,8 @@
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="/static/bower_components/uploadify/jquery.uploadify.js"></script>
 <script>
-    seajs.use("/static/src/user/scripts/personal-info");
+    seajs.use("/static/global/user/scripts/personal-info");
+//    seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/personal-info");
 </script>
 </body>
 </html>
