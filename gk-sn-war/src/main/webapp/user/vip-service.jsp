@@ -19,7 +19,7 @@
     </ul>
     <div class="content">
         <div class="banner-box">
-            <img src="http://cdn.gaokao360.net/static/global/user/images/vip-service-banner.png" class="banner-img"/>
+            <img src="http://cdn.gaokao360.net/static/global/user/images/vip-service-banner.jpg" class="banner-img"/>
         </div>
     </div>
 </div>

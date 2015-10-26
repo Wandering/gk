@@ -250,7 +250,7 @@
     <div class="school-eval w1000" style="padding:40px 0 0;">
         <div class="eval-left yztj-fl" >
             <div class="img">
-                <img src="/static/src/before/images/zd-pic.png" alt=""/>
+                <img src="http://cdn.gaokao360.net/static/global/before/images/zd-pic.png" alt=""/>
                 <strong>院校推荐、志愿指导</strong>
                 <p>依据总分、位次获取推荐院校及志愿指导</p>
             </div>
