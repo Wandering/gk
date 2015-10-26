@@ -46,7 +46,6 @@ define(function (require) {
             if (index == 0) {
                 window.location.assign(url + '/consult/gk_hot.jsp');
             } else if(index == 1) {
-                console.log(1)
                 if (!GetCookie("snuser") || GetCookie("snuser") == '""') {
                     window.location.href = '/login/login.jsp';
                 } else {

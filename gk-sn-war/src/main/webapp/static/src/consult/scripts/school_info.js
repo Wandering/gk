@@ -56,7 +56,7 @@ define(function(require) {
             });
         },
         renderSchool: function(data) {
-            console.log(data)
+            console.log(data[0].id)
             var html = [],
                 i = 0,
                 len = data.length;

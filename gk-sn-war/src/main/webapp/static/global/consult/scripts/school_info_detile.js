@@ -22,10 +22,11 @@ define(function (require) {
                 url: '/university/getUniversityDetail.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
-                    code:code
+                    id:code
                 },
                 dataType: 'json',
                 success: function(data) {
+                    console.log(data)
                     if ('0000000' === data.rtnCode) {
                         that.renderInfo(data.bizData);
                     } else {
@@ -80,10 +81,11 @@ define(function (require) {
                 url: '/university/getEnrollInfo.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
-                    code:code
+                    id:code
                 },
                 dataType: 'json',
                 success: function(data) {
+                    console.log(data)
                     if ('0000000' === data.rtnCode) {
                         that.renderSchool(data.bizData.enrollInfo);
                     }
@@ -243,7 +245,7 @@ define(function (require) {
                 url: '/university/getEnrollPlan.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
-                    code: code,
+                    id: code,
                     batch: batch
                 },
                 dataType: 'json',
