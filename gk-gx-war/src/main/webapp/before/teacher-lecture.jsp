@@ -4,7 +4,7 @@
 <head>
     <title>名师讲堂</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/before/styles/before.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/before/styles/before.min.css"/>
 </head>
 <body>
 <%@ include file="/before/header-before.jsp"%>
@@ -58,7 +58,7 @@
 
 <%@ include file="/common/footer.jsp"%>
 <script>
-    seajs.use("/static/src/before/scripts/teacher-lecture");
+    seajs.use("http://cdn.gaokao360.net/static/global/before/scripts/teacher-lecture.min");
 </script>
 </body>
 </html>

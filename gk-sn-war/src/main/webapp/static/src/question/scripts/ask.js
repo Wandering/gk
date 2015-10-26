@@ -1,13 +1,5 @@
 define(function (require) {
 
-    function GetCookie(sMainName, sSubName) {
-        var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
-        return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
-    }
-    if (!GetCookie("snuser") || GetCookie("snuser") == '""') {
-        window.location.href = '/login/login.jsp';
-    }
-
     function getUrLinKey(name) {
         var reg = new RegExp("(^|\\?|&)" + name + "=([^&]*)(\\s|&|$)", "i");
         if (reg.test(window.location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));

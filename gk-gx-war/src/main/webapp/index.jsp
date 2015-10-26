@@ -4,7 +4,7 @@
 <head>
     <title>首页</title>
     <%@ include file="common/meta.jsp" %>
-    <link rel="stylesheet" href="/static/dist/index/styles/index.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/index/styles/index.min.css"/>
 </head>
 <body>
 <%@ include file="common/header.jsp" %>
@@ -31,7 +31,7 @@
                 <ul class="flow-main-list">
                     <li class="item">
                         <a target="_blank" href="/guide/guide.jsp">
-                            <img src="/static/dist/index/images/flow-img1.png" alt=""/>
+                            <img src="http://cdn.gaokao360.net/static/global/index/images/flow-img1.png" alt=""/>
                         </a>
                         <a target="_blank" href="/guide/guide.jsp" class="name">政策解读</a>
                         <span class="num">1</span>
@@ -39,7 +39,7 @@
                     </li>
                     <li class="item">
                         <a target="_blank" href="/guide/volunteer_forum.jsp">
-                            <img src="/static/dist/index/images/flow-img2.png" alt=""/>
+                            <img src="http://cdn.gaokao360.net/static/global/index/images/flow-img2.png" alt=""/>
                         </a>
                         <a target="_blank" href="/guide/volunteer_forum.jsp" class="name">志愿讲堂</a>
                         <span class="num">2</span>
@@ -48,7 +48,7 @@
                     </li>
                     <li class="item">
                         <a href="/consult/school_info.jsp">
-                            <img src="/static/dist/index/images/flow-img3.png" alt=""/>
+                            <img src="http://cdn.gaokao360.net/static/global/index/images/flow-img3.png" alt=""/>
                         </a>
                         <a href="/consult/school_info.jsp" class="name">院校信息</a>
                         <span class="num">3</span>
@@ -56,7 +56,7 @@
                     </li>
                     <li class="item">
                         <a target="_blank" href="/consult/profession_info.jsp">
-                            <img src="/static/dist/index/images/flow-img4.png" alt=""/>
+                            <img src="http://cdn.gaokao360.net/static/global/index/images/flow-img4.png" alt=""/>
                         </a>
                         <a target="_blank" href="/consult/profession_info.jsp" class="name">专业选择</a>
                         <span class="num">4</span>
@@ -64,7 +64,7 @@
                     </li>
                     <li class="item">
                         <a target="_blank" href="/after/after.jsp">
-                            <img src="/static/dist/index/images/flow-img5.png" alt=""/>
+                            <img src="http://cdn.gaokao360.net/static/global/index/images/flow-img5.png" alt=""/>
                         </a>
                         <a target="_blank" href="/after/after.jsp" class="name">志愿指导</a>
                         <span class="num">5</span>
@@ -135,6 +135,7 @@
                     <span>在线互动</span>
                     <i class="fr arraw"></i>
                 </p>
+
                 <p class="fl w40"></p>
             </div>
             <h6 class="w1000 ta sub-title c888 mt20">每周5x8专业客服为您竭诚服务</h6>
@@ -146,43 +147,16 @@
                      <button class="ask-question">我要提问</button>
                 </span>
             </div>
+
             <ul class="tabs-list mt20" id="tabs-online">
                 <li class="active">最新解答</li>
                 <li>热门解答</li>
                 <span class="more">更多</span>
             </ul>
-            <div class="tab tab-0" id="tab_0">
-                <%--<div class="detile-content mt20">--%>
-                    <%--<div class="detile-header">--%>
-                        <%--<span class="order-number">1</span>--%>
-                        <%--<span class="detile-title">军队、武警部队院校招生，国防生体格检查标准</span>--%>
-                    <%--</div>--%>
-                    <%--<div class="detile-info mt20">--%>
-                        <%--徐老师，正高级教师，任教于西北工业大学附属中学，高中语文教研组长。西安市教育学会特聘研究员。陕西省教学能手，陕西省首批学科带头--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="detile-content mt20">--%>
-                    <%--<div class="detile-header">--%>
-                        <%--<span class="order-number">2</span>--%>
-                        <%--<span class="detile-title">军队、武警部队院校招生，国防生体格检查标准</span>--%>
-                    <%--</div>--%>
-                    <%--<div class="detile-info mt20">--%>
-                        <%--徐老师，正高级教师，任教于西北工业大学附属中学，高中语文教研组长。西安市教育学会特聘研究员。陕西省教学能手，陕西省首批学科带头--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            </div>
 
-            <div class="tab tab-1 hide" id="tab_1">
-                <%--<div class="detile-content mt20">--%>
-                    <%--<div class="detile-header">--%>
-                        <%--<span class="order-number">1</span>--%>
-                        <%--<span class="detile-title">正高级教师，国防生体格检查标准</span>--%>
-                    <%--</div>--%>
-                    <%--<div class="detile-info mt20">--%>
-                        <%--徐老师徐老师，正高级教师，任教于西北工业大学附属中学，徐老师，正高级教师，任教于西北工业大学附属中学正高级教师，任教于西北工业大学附属中学，高中语文教研组长。西安市教育学会特聘研究员。陕西省教学能手，陕西省首批学科带头--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            </div>
+            <div class="tab tab-0" id="tab_0"></div>
+
+            <div class="tab tab-1 hide" id="tab_1"></div>
         </section>
     </div>
 
@@ -211,85 +185,10 @@
                     <li>各地招办联系方式</li>
                     <span class="more" id="hot-info">更多</span>
                 </ul>
-                <ul class="tab-info hot-list mt20">
-                    <%--<li>--%>
-                        <%--<div class="icon ta">--%>
-                            <%--<span>4月25日</span>--%>
-                        <%--</div>--%>
-                        <%--<div class="title-info">--%>
-                            <%--<h3>2016年贵州高考：千万别错过了这些时间点！</h3>--%>
-                            <%--<h6>虽然离高考还有九个多月，不过，想要在明年6月的高考中想要在明年6月的高考中</h6>--%>
-                        <%--</div>--%>
-                    <%--</li>--%>
-                </ul>
+                <ul class="tab-info hot-list mt20"></ul>
                 <ul class="tab-info hide">
                     <div class="tel-content-box">
-                        <div class="row" id='address-box'>
-                            <%--<div class="col-3">--%>
-                                <%--<p class="area-name">陕西省延安市</p>--%>
-
-                                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
-                                    <%--陕西省延安市--%>
-                                <%--</p>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-3">--%>
-                                <%--<p class="area-name">陕西省延安市</p>--%>
-
-                                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
-                                    <%--陕西省延安市--%>
-                                <%--</p>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-3">--%>
-                                <%--<p class="area-name">陕西省延安市</p>--%>
-
-                                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
-                                    <%--陕西省延安市--%>
-                                <%--</p>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-3">--%>
-                                <%--<p class="area-name">陕西省延安市</p>--%>
-
-                                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
-                                    <%--陕西省延安市--%>
-                                <%--</p>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-3">--%>
-                                <%--<p class="area-name">陕西省延安市</p>--%>
-
-                                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
-                                    <%--陕西省延安市--%>
-                                <%--</p>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-3">--%>
-                                <%--<p class="area-name">陕西省延安市</p>--%>
-
-                                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
-                                    <%--陕西省延安市--%>
-                                <%--</p>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-3">--%>
-                                <%--<p class="area-name">陕西省延安市</p>--%>
-
-                                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
-                                    <%--陕西省延安市--%>
-                                <%--</p>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-3">--%>
-                                <%--<p class="area-name">陕西省延安市</p>--%>
-
-                                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
-                                    <%--陕西省延安市--%>
-                                <%--</p>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-3">--%>
-                                <%--<p class="area-name">陕西省延安市</p>--%>
-
-                                <%--<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">4008-005-0001</span>--%>
-                                    <%--陕西省延安市--%>
-                                <%--</p>--%>
-                            <%--</div>--%>
-
-                        </div>
+                        <div class="row" id='address-box'></div>
                     </div>
                 </ul>
             </section>
@@ -311,14 +210,14 @@
                 <p class="fl w40 w35"></p>
             </div>
             <div class="calendar">
-                <img src="/static/dist/index/images/calendar_img.png"/>
+                <img src="http://cdn.gaokao360.net/static/global/index/images/calendar_img.png"/>
             </div>
         </section>
     </div>
 </div>
 <%@ include file="common/footer.jsp" %>
 <script>
-    seajs.use("/static/src/index/scripts/index");
+    seajs.use(["http://cdn.gaokao360.net/static/global/index/scripts/index.min","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
 </script>
 </body>
 </html>

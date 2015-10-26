@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
@@ -11,6 +12,7 @@ import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.constant.Const;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.param.FileUploadParam;
+import cn.thinkjoy.gk.protocol.DateStyle;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.runnable.UploadRunnable;
 import cn.thinkjoy.gk.util.CookieUtil;
@@ -45,7 +47,8 @@ public class UploadController extends BaseController{
 	 */
 	@RequestMapping(value = "/upload",method = RequestMethod.POST)
 	@ResponseBody
-	public String upload(@RequestParam(value = "files", required = false) MultipartFile[] fileUploads,@RequestParam(value = "params", required = false)String params) throws Exception {
+	public List<FileUploadVO> upload(@RequestParam(value = "files", required = false) MultipartFile[] fileUploads,
+						 @RequestParam(value = "params", required = false)String params) throws Exception {
 //		String cookieValue = CookieUtil.getCookieValue(request.getCookies(), CookieConst.ADMINUSER_COOKIE_NAME);
 //		if(StringUtils.isEmpty(cookieValue)){
 //			throw new BizException(ERRORCODE.UPLOAD_ERROR_0.getCode(),ERRORCODE.UPLOAD_ERROR_0.getMessage());
@@ -57,10 +60,16 @@ public class UploadController extends BaseController{
 		}
 		long stratTime = System.currentTimeMillis();
 
+		List<FileUploadVO> fileUploadVOs = new ArrayList<FileUploadVO>();
+
 		if(null!=fileUploads&&fileUploads.length>0){
-			List<FileUploadVO> fileUploadVOs = new ArrayList<FileUploadVO>();
+
 			JSONArray initArray = new JSONArray();
+
+			String date = DateUtil.DateToString(new Date(), DateStyle.YYYY_MM_DD);
 			for(MultipartFile fileUpload:fileUploads){
+
+				FileUploadVO fileUploadVO = new FileUploadVO();
 
 				String fileUploadFileName = fileUpload.getOriginalFilename();
 				// 文件类型
@@ -71,12 +80,25 @@ public class UploadController extends BaseController{
 				// 验证文件
 				UploadUtil.checkImageFile(fileSize, uploadFileType);
 
-				String filePath = Const.FILE_IMAGES_DIR+obj.getString(Const.UPLOAD_DIR);
-				String systemFileName= obj.getString(Const.UPLOAD_NAME)+ "." + Const.IMAGE_UPLOADFILETYPE;
+				String filePath = Const.FILE_UPLOAD_DIR+date+"/"+uploadFileType;
+
+				String systemFileName= UUID.randomUUID().toString()+ "." + uploadFileType;
 				// 本机文件地址
-				UploadUtil.fileUpload(new File(filePath,systemFileName), fileUpload);
+//				UploadUtil.fileUpload(new File(filePath,systemFileName), fileUpload);
 
 				fileUpload.transferTo(new File(filePath+systemFileName));
+
+				fileUploadVO.setName(systemFileName);
+
+				fileUploadVO.setSize(fileSize);
+
+				fileUploadVO.setName(fileUploadFileName);
+				fileUploadVO.setSystem_name(systemFileName);
+				fileUploadVO.setType(uploadFileType);
+//				fileUploadVO.setPath(DoMainConst.P_URL+doMainBasePath);
+
+				fileUploadVOs.add(fileUploadVO);
+
 				if(null!=obj){
 					if(obj.containsKey(Const.INIT)){
 						initArray = JSONArray.parseArray(obj.getString(Const.INIT));
@@ -102,22 +124,12 @@ public class UploadController extends BaseController{
 					}
 				}
 			}
-
-			FileUploadVO fileUploadVO = new FileUploadVO();
-
-//			fileUploadVO.setSize(fileSize);
-//			fileUploadVO.setName(fileUploadFileName);
-//			fileUploadVO.setSystem_name(systemFileName);
-//			fileUploadVO.setType(uploadFileType);
-//			fileUploadVO.setPath(DoMainConst.P_URL+doMainBasePath);
-//			fileUploadVO.setStatus(status);
-			fileUploadVOs.add(fileUploadVO);
 		}else{
 			throw new BizException(ERRORCODE.UPLOAD_ERROR_405.getCode(),ERRORCODE.UPLOAD_ERROR_405.getMessage());
 		}
 
 		long resultTime = System.currentTimeMillis() - stratTime;
-		LOGGER.info("执行时间:" + DateUtil.DateToString(new Date(resultTime), "yyyy-MM-dd HH:mm:ss"));
-		return null;
+		LOGGER.info("执行时间:" + DateUtil.DateToString(new Date(resultTime), DateStyle.YYYY_MM_DD_HH_MM_SS_EN));
+		return fileUploadVOs;
 	}
 }

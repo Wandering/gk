@@ -46,15 +46,12 @@ define(function (require) {
             if (index == 0) {
                 window.location.assign(url + '/consult/gk_hot.jsp');
             } else if(index == 1) {
-                if (!GetCookie("snuser") || GetCookie("snuser") == '""') {
-                    window.location.href = '/login/login.jsp';
-                } else {
-                    window.location.assign(url + '/user/vip-service.jsp');
-                }
+                window.location.assign(url + '/user/vip-service.jsp');
             }
         });
         $.get('/agent/getAgent.do', function (res) {
             if (res.rtnCode == '0000000') {
+                console.log(res)
                 var dataJson = res.bizData;
                 dataJson.length > 9 ? dataJson.length = 9 : '';
                 var addressHtml = ''

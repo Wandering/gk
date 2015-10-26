@@ -4,8 +4,7 @@
 <head>
     <title>志愿指导</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/common/styles/comm.css"/>
-    <link rel="stylesheet" href="/static/dist/after/styles/after.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/after/styles/after.min.css"/>
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
@@ -26,7 +25,7 @@
 <div class="w1000 main-volunteer">
     <div class="fl">
         <div class="img">
-            <img src="/static/dist/after/images/zd-pic.png" alt=""/>
+            <img src="http://cdn.gaokao360.net/static/global/after/images/zd-pic.png" alt=""/>
             <strong>院校推荐、志愿指导</strong>
             <p>依据总分、位次获取推荐院校及志愿指导</p>
         </div>

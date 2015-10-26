@@ -4,8 +4,8 @@
 <head>
    <title>志愿指导</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/after/styles/after.css"/>
-    <link rel="stylesheet" href="/static/dist/after/styles/expert-evaluating.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/after/styles/after.min.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/after/styles/expert-evaluating.min.css"/>
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
@@ -323,7 +323,7 @@
             <p class="second-title">独创分差位次修正算法，为您科学推荐报考院校。原来填报志愿可以如此简单！</p>
         </div>
         <div class="w1000">
-            <img src="/static/dist/after/images/step-banner.png" class="step-banner"/>
+            <img src="http://cdn.gaokao360.net/static/global/after/images/step-banner.png" class="step-banner"/>
             <table border="1" cellspacing="0">
                 <tr class="t-title">
                     <th>姓名</th>
@@ -414,7 +414,7 @@
                 <h3 class="eva-title">志愿梯度合理性评估</h3>
                 <div class="row">
                     <div class="col-1-img">
-                        <img src="/static/dist/after/images/eva-left-line1.png" class="eva-left-bg"/>
+                        <img src="http://cdn.gaokao360.net/static/global/after/images/eva-left-line1.png" class="eva-left-bg"/>
                     </div>
                     <div class="school-list-col"></div>
                     <div class="eva" id="eva"></div>
@@ -424,7 +424,7 @@
                 <h3 class="eva-title color-green">去年招生情况</h3>
                 <div class="row">
                     <div class="col-1-img">
-                        <img src="/static/dist/after/images/eva-left-line2.png" class="eva-left-bg"/>
+                        <img src="http://cdn.gaokao360.net/static/global/after/images/eva-left-line2.png" class="eva-left-bg"/>
                     </div>
                     <div id="enrollmentSchool" class="enrollmentSchool"></div>
                     <div id="enrollment"></div>
@@ -434,7 +434,7 @@
                 <h3 class="eva-title color-red">志愿完整度评估</h3>
                 <div class="row">
                     <div class="col-1-img">
-                        <img src="/static/dist/after/images/eva-left-line3.png" class="eva-left-bg"/>
+                        <img src="http://cdn.gaokao360.net/static/global/after/images/eva-left-line3.png" class="eva-left-bg"/>
                     </div>
                     <div class="school-list-col"></div>
                     <div id="integrity"></div>
@@ -444,7 +444,7 @@
                 <h3 class="eva-title color-red">志愿专业是否服从调剂</h3>
                 <div class="row">
                     <div class="col-1-img">
-                        <img src="/static/dist/after/images/eva-left-line3.png" class="eva-left-bg"/>
+                        <img src="http://cdn.gaokao360.net/static/global/after/images/eva-left-line3.png" class="eva-left-bg"/>
                     </div>
                     <div class="school-list-col"></div>
                     <div id="exchange"></div>
@@ -597,7 +597,7 @@
 
 <%@ include file="/common/footer.jsp"%>
 <script>
-    seajs.use("/static/src/after/scripts/after-flow3");
+    seajs.use("http://cdn.gaokao360.net/static/global/after/scripts/after-flow3.min");
     var params = decodeURIComponent('${params}');
 </script>
 

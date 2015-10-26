@@ -30,19 +30,19 @@ DD_belatedPNG.fix('.logo img,.prev img,.next img,img');
 <![endif]-->
 <!-- 代码 开始 -->
 <div class="slide-main" id="touchMain">
-  <a class="prev" href="javascript:;" stat="prev1001"><img src="/static/src/common/images/l-btn.png" /></a>
+  <a class="prev" href="javascript:;" stat="prev1001"><img src="http://cdn.gaokao360.net/static/global/common/images/l-btn.png" /></a>
   <div class="slide-box" id="slideContent">
     <div class="slide" id="bgstylec" style="background: #ce4230;">
-      <img src="/static/dist/common/images/banner-0.png" alt=""/>
+      <img src="http://cdn.gaokao360.net/static/global/common/images/banner-0.png" alt=""/>
     </div>
     <div class="slide" id="bgstylea" style="background: #0d63b2;">
-      <img src="/static/dist/common/images/banner-1.png" alt=""/>
+      <img src="http://cdn.gaokao360.net/static/global/common/images/banner-1.png" alt=""/>
     </div>
     <div class="slide" id="bgstyleb" style="background: #25b76f;">
-      <img src="/static/dist/common/images/banner-2.png" alt=""/>
+      <img src="http://cdn.gaokao360.net/static/global/common/images/banner-2.png" alt=""/>
     </div>
   </div>
-  <a class="next" href="javascript:;" stat="next1002"><img src="/static/src/common/images/r-btn.png" /></a>
+  <a class="next" href="javascript:;" stat="next1002"><img src="http://cdn.gaokao360.net/static/global/common/images/r-btn.png" /></a>
   <div class="item">
     <a class="cur" stat="item1001" href="javascript:;"></a><a href="javascript:;" stat="item1002"></a><a href="javascript:;" stat="item1003"></a>
   </div>

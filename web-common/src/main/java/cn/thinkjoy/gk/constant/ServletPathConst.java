@@ -46,6 +46,7 @@ public class ServletPathConst {
         JSP_URLS.put("/question/ask.jsp?path=online","");
         JSP_URLS.put("/forward.do","");
         JSP_URLS.put("/user/online-answer.jsp?method=ask","");
+        JSP_URLS.put("/user/vip-service.jsp","");
 //        JSP_URLS.put("/question/question_detile.jsp","");
 
     }

@@ -31,7 +31,7 @@
                 <ul class="flow-main-list">
                     <li class="item">
                         <a target="_blank" href="/guide/guide.jsp">
-                            <img src="/static/dist/index/images/flow-img1.png" alt=""/>
+                            <img src="http://cdn.gaokao360.net/static/global/index/images/flow-img1.png" alt=""/>
                         </a>
                         <a target="_blank" href="/guide/guide.jsp" class="name">政策解读</a>
                         <span class="num">1</span>
@@ -39,7 +39,7 @@
                     </li>
                     <li class="item">
                         <a target="_blank" href="/guide/volunteer_forum.jsp">
-                            <img src="/static/dist/index/images/flow-img2.png" alt=""/>
+                            <img src="http://cdn.gaokao360.net/static/global/index/images/flow-img2.png" alt=""/>
                         </a>
                         <a target="_blank" href="/guide/volunteer_forum.jsp" class="name">志愿讲堂</a>
                         <span class="num">2</span>
@@ -48,7 +48,7 @@
                     </li>
                     <li class="item">
                         <a href="/consult/school_info.jsp">
-                            <img src="/static/dist/index/images/flow-img3.png" alt=""/>
+                            <img src="http://cdn.gaokao360.net/static/global/index/images/flow-img3.png" alt=""/>
                         </a>
                         <a href="/consult/school_info.jsp" class="name">院校信息</a>
                         <span class="num">3</span>
@@ -56,7 +56,7 @@
                     </li>
                     <li class="item">
                         <a target="_blank" href="/consult/profession_info.jsp">
-                            <img src="/static/dist/index/images/flow-img4.png" alt=""/>
+                            <img src="http://cdn.gaokao360.net/static/global/index/images/flow-img4.png" alt=""/>
                         </a>
                         <a target="_blank" href="/consult/profession_info.jsp" class="name">专业选择</a>
                         <span class="num">4</span>
@@ -64,7 +64,7 @@
                     </li>
                     <li class="item">
                         <a target="_blank" href="/after/after.jsp">
-                            <img src="/static/dist/index/images/flow-img5.png" alt=""/>
+                            <img src="http://cdn.gaokao360.net/static/global/index/images/flow-img5.png" alt=""/>
                         </a>
                         <a target="_blank" href="/after/after.jsp" class="name">志愿指导</a>
                         <span class="num">5</span>
@@ -210,14 +210,15 @@
                 <p class="fl w40 w35"></p>
             </div>
             <div class="calendar">
-                <img src="/static/dist/index/images/calendar_img.png"/>
+                <img src="http://cdn.gaokao360.net/static/global/index/images/calendar_img.png"/>
             </div>
         </section>
     </div>
 </div>
 <%@ include file="common/footer.jsp" %>
 <script>
-    seajs.use(["http://cdn.gaokao360.net/static/global/index/scripts/index.min","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
+//    seajs.use(["http://cdn.gaokao360.net/static/global/index/scripts/index.min","http://cdn.gaokao360.net/static/global/index/scripts/index-user.min","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
+    seajs.use(["/static/src/index/scripts/index","/static/src/index/scripts/index-user","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
 </script>
 </body>
 </html>

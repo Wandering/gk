@@ -10,7 +10,7 @@
 <div class="header">
     <div class="w1000">
         <a href="">
-            <img src="/static/dist/common/images/logo-min.png" alt="高考360" class="logo fl"/>
+            <img src="http://cdn.gaokao360.net/static/global/common/images/logo-min.png" alt="高考360" class="logo fl"/>
         </a>
         <ul class="main-menu fl">
             <li><a href="">首页</a></li>
@@ -21,7 +21,7 @@
         </ul>
         <div class="user-info-list fr">
             <div class="user">
-                <img src="/static/dist/common/images/avatar.png" alt="avatar" class="user-avatar"/>
+                <img src="http://cdn.gaokao360.net/static/global/common/images/avatar.png" alt="avatar" class="user-avatar"/>
                 <a href="">韩小寒</a>
             </div>
             <ul class="menu hide">
@@ -83,7 +83,7 @@
                 <li><a href="">官方微信</a></li>
                 <li><a href="">新浪微博</a></li>
             </ul>
-            <img src="/static/dist/common/images/logo.png" alt="logo" class="logo"/>
+            <img src="http://cdn.gaokao360.net/static/global/common/images/logo.png" alt="logo" class="logo"/>
         </div>
     </div>
     <div class="copy-right">

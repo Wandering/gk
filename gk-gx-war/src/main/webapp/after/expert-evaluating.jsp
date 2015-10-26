@@ -4,7 +4,7 @@
 <head>
     <title>专家评测</title>
     <%@ include file="/common/meta.jsp" %>
-    <link rel="stylesheet" href="/static/dist/after/styles/expert-evaluating.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/after/styles/expert-evaluating.min.css"/>
 </head>
 <body>
 <%@ include file="/common/header.jsp" %>
@@ -25,7 +25,7 @@
         <p class="second-title">独创分差位次修正算法，为您科学推荐报考院校。原来填报志愿可以如此简单！</p>
     </div>
     <div class="w1000">
-        <img src="/static/dist/after/images/step-banner.png" class="step-banner"/>
+        <img src="http://cdn.gaokao360.net/static/global/after/images/step-banner.png" class="step-banner"/>
         <table border="1" cellspacing="0">
             <tr class="t-title">
                 <th>姓名</th>
@@ -192,7 +192,7 @@
             <h3 class="eva-title">志愿梯度合理性评估</h3>
             <div class="row">
                 <div class="col-1-img">
-                    <img src="/static/dist/after/images/eva-left-line1.png" class="eva-left-bg"/>
+                    <img src="http://cdn.gaokao360.net/static/global/after/images/eva-left-line1.png" class="eva-left-bg"/>
                 </div>
                 <div class="col-1">
                     西安交通大学
@@ -213,7 +213,7 @@
             <h3 class="eva-title color-green">志愿梯度合理性评估</h3>
             <div class="row">
                 <div class="col-1-img">
-                    <img src="/static/dist/after/images/eva-left-line2.png" class="eva-left-bg"/>
+                    <img src="http://cdn.gaokao360.net/static/global/after/images/eva-left-line2.png" class="eva-left-bg"/>
                 </div>
                 <div class="col-1">
                     西安交通大学
@@ -237,7 +237,7 @@
             <h3 class="eva-title color-red">志愿梯度合理性评估</h3>
             <div class="row">
                 <div class="col-1-img">
-                    <img src="/static/dist/after/images/eva-left-line3.png" class="eva-left-bg"/>
+                    <img src="http://cdn.gaokao360.net/static/global/after/images/eva-left-line3.png" class="eva-left-bg"/>
                 </div>
                 <div class="col-1">
                     西安交通大学
@@ -280,7 +280,7 @@
 
 <%@ include file="/common/footer.jsp" %>
 <script type="text/javascript">
-    seajs.use("${ctx}/static/src/after/scripts/expert-evaluating");
+    seajs.use("http://cdn.gaokao360.net/static/global/after/scripts/expert-evaluating.min");
 </script>
 </body>
 </html>

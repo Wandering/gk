@@ -4,7 +4,7 @@
 <head>
     <title>院校信息详情页</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/consult/styles/school_detile.css" />
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/consult/styles/school_detile.min.css" />
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
@@ -44,7 +44,8 @@
 
 <%@ include file="/common/footer.jsp"%>
 <script type="text/javascript">
-    seajs.use("${ctx}/static/src/consult/scripts/school_info_detile");
+//    seajs.use("/static/src/consult/scripts/school_info_detile");
+    seajs.use("http://cdn.gaokao360.net/static/global/consult/scripts/school_info_detile.min");
 </script>
 </body>
 </html>

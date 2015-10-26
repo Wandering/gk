@@ -1,10 +1,15 @@
 package cn.thinkjoy.gk.controller;
 
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.domain.UserExam;
 import cn.thinkjoy.gk.domain.UserInfo;
+import cn.thinkjoy.gk.pojo.UserAccountPojo;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.*;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +33,49 @@ public class UserExamController extends BaseController {
     private IUserExamService userExamService;
 
     /**
-     * 查询显示个人信息
+     * 更新个人考试成绩信息
      * @return
      */
-    @RequestMapping(value = "getUserInfo",method = RequestMethod.GET)
+    @RequestMapping(value = "updateUserExam",method = RequestMethod.POST)
     @ResponseBody
-    public UserInfo getUserInfo() {
-//        String id=getCookieValue();
-//        UserInfo userInfo=userInfoExService.findUserInfoById(Long.valueOf(id));
-//        return userInfo;
-        return null;
+    public boolean getUserInfo(UserExam userExam) {
+
+        String id=getCookieValue();
+
+        if(StringUtils.isEmpty(id)){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+
+        userExam.setId(Long.valueOf(id));
+
+        boolean flag = false;
+        try {
+            userExamService.update(userExam);
+            flag = true;
+        }catch(Exception e){
+            throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
+        }
+
+        return flag;
+    }
+
+    /**
+     * 获取用户考试信息
+     * @return
+     */
+    @RequestMapping(value = "findUserExam",method = RequestMethod.GET)
+    @ResponseBody
+    public UserExam findUserExam() {
+
+        String id=getCookieValue();
+
+        if(StringUtils.isEmpty(id)){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+
+        UserExam userExam = (UserExam)userExamService.findOne("id", id);
+
+        return userExam;
     }
 
 }
