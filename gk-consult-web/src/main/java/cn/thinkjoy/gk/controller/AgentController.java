@@ -6,6 +6,7 @@ import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Agent;
 import cn.thinkjoy.gk.pojo.AgentPojo;
 import cn.thinkjoy.gk.service.IAgentService;
+import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -36,7 +38,10 @@ public class AgentController extends BaseController{
 	@ResponseBody
 	public List<AgentPojo> getAgent() throws Exception{
 		long areaId = getAreaCookieValue();
-		List<Agent> list=  agentService.findList("areaId",areaId);
+		Map<String, Object> conditions = Maps.newHashMap();
+		conditions.put("status", 1);
+		conditions.put("areaId", areaId);
+		List<Agent> list=  agentService.queryList(conditions, null, null);
 		List<AgentPojo> agentPojos=new ArrayList<AgentPojo>();
 		for(Agent agent:list){
 			AgentPojo agentPojo=new AgentPojo();
