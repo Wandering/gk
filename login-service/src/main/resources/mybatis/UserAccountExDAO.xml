@@ -13,7 +13,7 @@
           acc.status,
           acc.userType,
           exam.isReported,
-          exam.isSurvey
+          exam.isSurvey,
           vip.status as vipStatus
         FROM gk_user_account acc
         left join gk_user_vip vip on acc.id = vip.id

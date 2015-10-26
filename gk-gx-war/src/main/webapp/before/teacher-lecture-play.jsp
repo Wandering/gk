@@ -27,7 +27,7 @@
 <%@ include file="/common/footer.jsp"%>
 <script type="text/javascript" src="http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.13.min.js"></script>
 <script>
-    seajs.use("http://cdn.gaokao360.net/static/global/before/scripts/teacher-lecture-play.min");
+    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/teacher-lecture-play.min","http://cdn.gaokao360.net/static/gx/before/scripts/teacher-lecture-play-user.min"]);
 </script>
 </body>
 </html>
