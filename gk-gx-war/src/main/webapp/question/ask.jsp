@@ -35,8 +35,8 @@
         </div>
     </div>
 </div>
-<script src="/static/bower_components/kindeditor/kindeditor.js"></script>
-<script src="/static/bower_components/kindeditor/lang/zh-CN.js"></script>
+<script src="http://cdn.gaokao360.net/static/bower_components/kindeditor/kindeditor.js"></script>
+<script src="http://cdn.gaokao360.net/static/bower_components/kindeditor/lang/zh-CN.js"></script>
 <script type="text/javascript">
     seajs.use("http://cdn.gaokao360.net/static/global/question/scripts/ask.min");
 </script>

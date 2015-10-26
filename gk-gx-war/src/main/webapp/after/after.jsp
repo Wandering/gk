@@ -29,7 +29,7 @@
 <div class="w1000 main-volunteer">
     <div class="fl">
         <div class="img">
-            <img src="/static/dist/after/images/zd-pic.png" alt=""/>
+            <img src="http://cdn.gaokao360.net/static/global/after/images/zd-pic.png" alt=""/>
             <strong>院校推荐、志愿指导</strong>
             <p>依据总分、位次获取推荐院校及志愿指导</p>
         </div>
