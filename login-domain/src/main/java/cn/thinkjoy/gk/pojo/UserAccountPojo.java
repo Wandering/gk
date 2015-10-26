@@ -14,6 +14,7 @@ public class UserAccountPojo extends BaseDomain {
     private Integer userType;
     private Integer areaId;
     private Integer vipStatus;
+    private Integer score;
 
     public UserAccountPojo(){
     }
@@ -72,5 +73,21 @@ public class UserAccountPojo extends BaseDomain {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public Integer getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(Integer areaId) {
+        this.areaId = areaId;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
     }
 }

@@ -61,15 +61,11 @@ public final class Const {
 	/**
 	 * 文件上传目录
 	 */
-	public static final String  FILE_UPLOAD_DIR = "/yuleing/upload";
-	/**
-	 * 头像存放目录
-	 */
-	public static final String  FILE_IMAGES_DIR = "/yuleing/images";
+	public static final String  FILE_UPLOAD_DIR = "/gaokao/upload/";
 	/**
 	 * 城市图片存放目录
 	 */
-	public static final String  FILE_CITY_DIR = "/yuleing/area/city";
+	public static final String  FILE_CITY_DIR = "/gaokao/area/city/";
 	/**
 	 * 文件宽度
 	 */
@@ -78,14 +74,6 @@ public final class Const {
 	 * 文件高度
 	 */
 	public static final Map<String,Integer> heights = new HashMap<String, Integer>();
-	/**
-	 * 初始化文件系统名称
-	 */
-	public static final String SYSTEM_NAME = "system_name";
-	/**
-	 * 初始化文件存放目录
-	 */
-	public static final String UPLOAD_DIR = "upload_dir";
 	/**
 	 * 初始化文件存放目录
 	 */
