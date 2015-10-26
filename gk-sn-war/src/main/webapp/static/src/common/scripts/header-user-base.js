@@ -29,7 +29,7 @@ define(function (require, exports, modules) {
                         $('.username').text(name);
                         var userImg;
                         if (userData.icon == null || userData.icon == '') {
-                            userImg = '/static/dist/common/images/icon_default.png';
+                            userImg = 'http://cdn.gaokao360.net/static/global/common/images/icon_default.png';
                         } else {
                             userImg = userData.icon
                         }
