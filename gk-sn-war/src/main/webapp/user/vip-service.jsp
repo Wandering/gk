@@ -19,7 +19,7 @@
     </ul>
     <div class="content">
         <div class="banner-box">
-            <img src="/static/dist/user/images/vip-service-banner.png" class="banner-img"/>
+            <img src="http://cdn.gaokao360.net/static/global/user/images/vip-service-banner.png" class="banner-img"/>
         </div>
     </div>
 </div>
@@ -29,29 +29,29 @@
     <div class="choose-pay-box">
         <div class="w1000">
             <div class="box-left">
-                <img src="/static/dist/user/images/online-pay-img.png" class="pay-title"/>
+                <img src="http://cdn.gaokao360.net/static/global/user/images/online-pay-img.png" class="pay-title"/>
 
                 <div class="pay-box">
                     <p class="pay-li">充值账号：<span class="accountNum"></span></p>
 
                     <p>支付金额： <span class="pay-money">498</span> 元</p>
 
-                    <p>付款方式：</p><img src="/static/dist/user/images/icon-pay-zfb.png" class="pay-ab"/>
+                    <p>付款方式：</p><img src="http://cdn.gaokao360.net/static/global/user/images/icon-pay-zfb.png" class="pay-ab"/>
                 </div>
                 <div class="btn-upgrade btn-red" id="createOrderBtn">升级</div>
             </div>
             <div class="box-right">
-                <img src="/static/dist/user/images/online-card-img.png" class="pay-title"/>
+                <img src="http://cdn.gaokao360.net/static/global/user/images/online-card-img.png" class="pay-title"/>
 
                 <div class="pay-box">
                     <div class="error-tips hide"></div>
                     <p>充值账号：<span class="accountNum"></span></p>
                     <div class="input-box">
-                        <img src="/static/dist/user/images/icon-card-pay.png" alt=""/>
+                        <img src="http://cdn.gaokao360.net/static/global/user/images/icon-card-pay.png" alt=""/>
                         卡号：<input type="text" id="pay-card" class="input-pay-comm"/>
                     </div>
                     <div class="input-box">
-                        <img src="/static/dist/user/images/icon-pay-lock.png" alt=""/>
+                        <img src="http://cdn.gaokao360.net/static/global/user/images/icon-pay-lock.png" alt=""/>
                         密码：<input type="text" id="pay-password"  class="input-pay-comm"/>
                     </div>
                 </div>

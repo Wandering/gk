@@ -26,7 +26,7 @@
     <ul class="flow-main-list">
         <li class="item">
             <a target="_blank" href="/before/teacher-lecture.jsp?classifyType=1&searchV=">
-                <img src="/static/dist/before/images/flow-img1.png" alt=""/>
+                <img src="http://cdn.gaokao360.net/static/global/before/images/flow-img1.png" alt=""/>
             </a>
             <a target="_blank" href="/before/teacher-lecture.jsp?classifyType=1&searchV=" class="name">名师讲堂</a>
             <span class="num">1</span>
@@ -34,7 +34,7 @@
         </li>
         <li class="item">
             <a target="_blank" href="/before/exam.jsp?classifyType=3&searchV=">
-                <img src="/static/dist/before/images/ztmj.png" alt=""/>
+                <img src="http://cdn.gaokao360.net/static/global/before/images/ztmj.png" alt=""/>
             </a>
             <a target="_blank" href="/before/exam.jsp?classifyType=3&searchV=" class="name">真题密卷</a>
             <span class="num">2</span>
@@ -42,7 +42,7 @@
         </li>
         <li class="item">
             <a target="_blank" href="/before/mentality.jsp?classifyType=2&searchV=">
-                <img src="/static/dist/before/images/gkxl.png" alt=""/>
+                <img src="http://cdn.gaokao360.net/static/global/before/images/gkxl.png" alt=""/>
             </a>
             <a target="_blank" href="/before/mentality.jsp?classifyType=2&searchV=" class="name">高考心理</a>
             <span class="num">3</span>
@@ -50,7 +50,7 @@
         </li>
         <li class="item">
             <a href="javascript:;" id="volunteer-flow1">
-                <img src="/static/dist/before/images/yxtj.png" alt=""/>
+                <img src="http://cdn.gaokao360.net/static/global/before/images/yxtj.png" alt=""/>
             </a>
             <a href="javascript:;" class="name" id="volunteer-flow">院校推荐</a>
             <span class="num">4</span>
@@ -206,7 +206,7 @@
             <p>院校评测使用的分数，位次数据，招生计划为往年数据，结果仅供参考，且系统推荐学校有限制，若要使用最新，更全面，更多推荐学校，请升级为VIP。</p>
         </div>
         <div class="eval-left">
-            <img src="/static/dist/before/images/bottom-banner.jpg" />
+            <img src="http://cdn.gaokao360.net/static/global/before/images/bottom-banner.jpg" />
             <h3>为我推荐院校</h3>
             <h6>直接系统告诉我可以报的院校名称，容我考虑考虑</h6>
         </div>
@@ -303,7 +303,7 @@
             <p>院校评测使用的分数，位次数据，招生计划为往年数据，结果仅供参考，且系统推荐学校有限制，若要使用最新，更全面，更多推荐学校，请升级为VIP。</p>
         </div>
         <div class="eval-left">
-            <img src="/static/dist/before/images/bottom-banner.jpg" />
+            <img src="http://cdn.gaokao360.net/static/global/before/images/bottom-banner.jpg" />
             <h3>获得位次</h3>
             <h6>我想通过分数让平台为我估测我的位次。</h6>
         </div>

@@ -22,19 +22,19 @@
         <div class="row">
             <div class="col-3">
                 <a href="/guide/volunteer_forum.jsp" target="_blank">
-                    <img src="/static/dist/user/images/app-center-icon1.png"/>
+                    <img src="http://cdn.gaokao360.net/static/global/user/images/app-center-icon1.png"/>
                 </a>
                 <p class="app-icon"><a href="/guide/volunteer_forum.jsp" target="_blank">志愿学堂</a></p>
             </div>
             <div class="col-3">
                 <a href="/consult/school_info.jsp" target="_blank">
-                    <img src="/static/dist/user/images/app-center-icon2.png"/>
+                    <img src="http://cdn.gaokao360.net/static/global/user/images/app-center-icon2.png"/>
                 </a>
                 <p class="app-icon"><a href="/consult/school_info.jsp" target="_blank">院校信息</a></p>
             </div>
             <div class="col-3">
                 <a href="/before/before.jsp">
-                    <img src="/static/dist/user/images/app-center-icon3.png"/>
+                    <img src="http://cdn.gaokao360.net/static/global/user/images/app-center-icon3.png"/>
                 </a>
                 <p class="app-icon">高考备考</p>
             </div>
@@ -42,19 +42,19 @@
         <div class="row">
             <div class="col-3">
                 <a href="/consult/consult.jsp">
-                    <img src="/static/dist/user/images/app-center-icon4.png"/>
+                    <img src="http://cdn.gaokao360.net/static/global/user/images/app-center-icon4.png"/>
                 </a>
                 <p class="app-icon">测评专业</p>
             </div>
             <div class="col-3">
                 <a href="">
-                    <img src="/static/dist/user/images/app-center-icon5.png"/>
+                    <img src="http://cdn.gaokao360.net/static/global/user/images/app-center-icon5.png"/>
                 </a>
                 <p class="app-icon">模拟填报</p>
             </div>
             <div class="col-3">
                 <a href="/after/after.jsp">
-                    <img src="/static/dist/user/images/app-center-icon6.png"/>
+                    <img src="http://cdn.gaokao360.net/static/global/user/images/app-center-icon6.png"/>
                 </a>
                 <p class="app-icon">志愿指导</p>
             </div>
