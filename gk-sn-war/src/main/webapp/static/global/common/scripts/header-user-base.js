@@ -1,6 +1,3 @@
-/**
- * Created by pdeng on 15/9/26.
- */
 define(function (require, exports, modules) {
     var $ = require('$');
 
