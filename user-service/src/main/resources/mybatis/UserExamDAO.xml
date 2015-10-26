@@ -300,11 +300,7 @@ selectList
             </if>
 
 
-    </where>
-
-        <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
-        </if>
+        </where>
         <if test="offset != null">
             limit ${offset}, ${rows}
         </if>

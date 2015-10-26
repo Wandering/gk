@@ -15,15 +15,6 @@ public class FileUploadVO implements Serializable{
 	private String type; //文件类型
 	private Integer size; //文件大小
 	private String path; //文件路径
-	private Integer status; //文件上传状态(0成功1失败)
-	
-	public Integer getStatus() {
-		return status;
-	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
 	
 	public String getName() {
 		return name;
