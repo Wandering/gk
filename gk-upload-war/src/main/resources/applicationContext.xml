@@ -8,21 +8,21 @@
                      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
                      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="order" value="1" />
-        <property name="ignoreUnresolvablePlaceholders" value="true" />
-    </bean>
+    <!--<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+        <!--<property name="order" value="1" />-->
+        <!--<property name="ignoreUnresolvablePlaceholders" value="true" />-->
+    <!--</bean>-->
 
-    <bean id="zkResource" class="cn.thinkjoy.cloudstack.sz.ZookeeperResource" />
-    <bean id="zkPropConfigurer" class="cn.thinkjoy.cloudstack.sz.ZookeeperConfigurer">
-        <property name="order" value="2" />
-        <property name="ignoreUnresolvablePlaceholders" value="true" />
-        <property name="location">
-            <ref bean="zkResource" />
-        </property>
-    </bean>
+    <!--<bean id="zkResource" class="cn.thinkjoy.cloudstack.sz.ZookeeperResource" />-->
+    <!--<bean id="zkPropConfigurer" class="cn.thinkjoy.cloudstack.sz.ZookeeperConfigurer">-->
+        <!--<property name="order" value="2" />-->
+        <!--<property name="ignoreUnresolvablePlaceholders" value="true" />-->
+        <!--<property name="location">-->
+            <!--<ref bean="zkResource" />-->
+        <!--</property>-->
+    <!--</bean>-->
 
-    <import resource="classpath*:spring-redis.xml" />
+    <!--<import resource="classpath*:spring-redis.xml" />-->
 
 </beans>
 
