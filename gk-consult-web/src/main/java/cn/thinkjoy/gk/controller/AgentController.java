@@ -39,7 +39,6 @@ public class AgentController extends BaseController{
 	public List<AgentPojo> getAgent() throws Exception{
 		long areaId = getAreaCookieValue();
 		Map<String, Object> conditions = Maps.newHashMap();
-		conditions.put("status", 1);
 		conditions.put("areaId", areaId);
 		List<Agent> list=  agentService.queryList(conditions, null, null);
 		List<AgentPojo> agentPojos=new ArrayList<AgentPojo>();

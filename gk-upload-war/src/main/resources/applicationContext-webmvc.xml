@@ -20,7 +20,7 @@
                      http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 
     <!-- @Controller, @Service, @Configuration, etc. -->
-    <context:component-scan base-package="cn.thinkjoy" />
+    <context:component-scan base-package="cn.thinkjoy.gk.controller" />
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/" />
