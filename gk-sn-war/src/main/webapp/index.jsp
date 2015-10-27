@@ -3,6 +3,9 @@
 <html>
 <head>
     <title>首页</title>
+    <meta charset="utf-8"/>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
     <%@ include file="common/meta.jsp" %>
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/index/styles/index.min.css"/>
 </head>

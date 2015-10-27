@@ -8,6 +8,7 @@ import cn.thinkjoy.gk.param.FileUploadParam;
 import cn.thinkjoy.gk.protocol.DateStyle;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.runnable.UploadRunnable;
+import cn.thinkjoy.gk.util.CheckUtil;
 import cn.thinkjoy.gk.util.DateUtil;
 import cn.thinkjoy.gk.util.UploadUtil;
 import cn.thinkjoy.gk.vo.FileUploadVO;
@@ -66,7 +67,7 @@ public class FileController extends BaseController{
 				int fileSize = (int) fileUpload.getSize();
 
 				// 验证文件
-				UploadUtil.checkFile(fileSize, uploadFileType);
+				CheckUtil.checkFile(fileSize, uploadFileType);
 
 				String filePath = Const.IMAGE_UPLOAD_DIR+date+"/"+uploadFileType;
 
