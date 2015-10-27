@@ -1,7 +1,3 @@
-/**
- * Created by kepeng on 15/9/24.
- */
-
 define(function (require) {
     var $ = require('$');
     require('backToTop');
@@ -109,13 +105,6 @@ define(function (require) {
                 name: activeLi.html()
             }
             getArticleList(curObj, parseInt($(this).attr('data-page')) + 1);
-        });
-
-        var api = flowplayer("player", "http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.18.swf", {
-            clip: {
-                autoPlay: false,       //是否自动播放，默认true
-                autoBuffering: false     //是否自动缓冲视频，默认true
-            }
         });
     });
 });

@@ -6,7 +6,7 @@ seajs.config({
         "$": "bower_components/jquery/dist/jquery.js",
         "laydate": "bower_components/laydate/laydate.js",
         "uploadify": "bower_components/uploadify/jquery.uploadify.min.js",
-        //"header-user":'src/common/scripts/header-user-base.js',
+        "header-user":'src/common/scripts/header-user-base.js',
         "getTime": "bower_components/utils/getTime",
         "backToTop": "bower_components/utils/backToTop",
         "pageErrorTip": "bower_components/utils/pageErrorTip",

@@ -61,7 +61,7 @@ define(function (require) {
                     var telphone = v.telphone;
                     addressHtml+= '<div class="col-3">'
                         + '<p class="area-name">' + address + '</p>'
-                        + '<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">' + telphone + '</span>'+ name + '</p>'
+                        + '<p class="tel-num"><img src="http://cdn.gaokao360.net/static/global/user/images/icon-tel-area.png"><span class="tel">' + telphone + '</span>'+ name + '</p>'
                         + '</div>';
                     $('#address-box').html(addressHtml);
                 });
@@ -145,7 +145,7 @@ define(function (require) {
                     + '<span class="fr">' + time + '</span>'
                     + '</div>'
                     + '<div class="detile-info mt20">'
-                    + '<img class="triangle" src="/static/dist/common/images/triangle.png" />'
+                    + '<img class="triangle" src="http://cdn.gaokao360.net/static/global/common/images/triangle.png" />'
                     + content.join('')
                     + '</div>'
                     + '</div>');
