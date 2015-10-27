@@ -35,7 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @Scope(SpringMVCConst.SCOPE)
-@RequestMapping("/")
+@RequestMapping("/upload")
 public class UploadController extends BaseController{
 
 	private static final Logger LOGGER= LoggerFactory.getLogger(UploadController.class);
@@ -45,9 +45,9 @@ public class UploadController extends BaseController{
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/upload",method = RequestMethod.POST)
+	@RequestMapping(value = "/file",method = RequestMethod.POST)
 	@ResponseBody
-	public List<FileUploadVO> upload(@RequestParam(value = "files", required = false) MultipartFile[] fileUploads,
+	public List<FileUploadVO> upload(@RequestParam(value = "files[]", required = false) MultipartFile[] fileUploads,
 						 @RequestParam(value = "params", required = false)String params) throws Exception {
 //		String cookieValue = CookieUtil.getCookieValue(request.getCookies(), CookieConst.ADMINUSER_COOKIE_NAME);
 //		if(StringUtils.isEmpty(cookieValue)){
@@ -84,9 +84,9 @@ public class UploadController extends BaseController{
 
 				String systemFileName= UUID.randomUUID().toString()+ "." + uploadFileType;
 				// 本机文件地址
-//				UploadUtil.fileUpload(new File(filePath,systemFileName), fileUpload);
+				UploadUtil.fileUpload(new File(filePath,systemFileName), fileUpload);
 
-				fileUpload.transferTo(new File(filePath+systemFileName));
+//				fileUpload.transferTo(new File(filePath+systemFileName));
 
 				fileUploadVO.setName(systemFileName);
 

@@ -50,12 +50,14 @@ public class UploadUtil {
 			createFolder(destFile.getParent());
 
 			FileUtils.copyInputStreamToFile(uploadFile.getInputStream(), destFile);
-			
+
+//			uploadFile.transferTo(destFile);
+
 			status = 0;
 			
 		} catch (Exception e) {
 			throw e;
-		} 
+		}
 		return status;
 	}
 	

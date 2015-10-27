@@ -7,7 +7,7 @@ define(function (require, exports, modules) {
     }
     $(function () {
         //判断当前用户cookie是否存在
-        if (!GetCookie("snuser") || GetCookie("snuser") == '""') {
+        if (!GetCookie("gxuser") || GetCookie("gxuser") == '""') {
             console.log('没有登录');
             $('.menu').hide();
             $('.log-reg').show();
