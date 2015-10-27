@@ -10,7 +10,6 @@ define(function (require) {
             getSchool(paramsJson, "", "");
         });
 
-        getSchool(paramsJson, "", "");
 
         $('#volunteer-flow3-layer').on('click', '.close-btn', function () {
             $('#volunteer-flow3-layer,.tansLayer').hide();
@@ -135,13 +134,13 @@ define(function (require) {
                 type: 'GET',
                 dataType: 'JSON',
                 data: {
-                    code: code,
+                    id: code,
                     type: type,
                     year: years,
                     batch: m_batch
                 },
                 success: function (res) {
-                    //console.log(res);
+                    console.log(res);
                     var data = res.bizData;
                     if ('0000000' === res.rtnCode) {
                         var dicName = '';

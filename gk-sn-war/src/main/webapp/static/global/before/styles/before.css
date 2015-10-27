@@ -280,7 +280,7 @@ ul.main-video-list {
     float: left;
     width: 336px;
     height: 45px;
-    background: url("../../../dist/after/images/next-btn.png");
+    background: url("../../after/images/next-btn.png");
     color: #fff; }
   .form-control-btn .btn:hover {
     text-decoration: underline; }
@@ -582,7 +582,7 @@ ul.main-video-list {
       font-size: 0;
       line-height: 0; }
   .volunteer-flow3-layer .tips {
-    margin: 0 30px; }
+    margin: 0 30px 10px; }
   .volunteer-flow3-layer .volunteer-flow3-body {
     padding: 0 30px;
     overflow: hidden; }
@@ -630,13 +630,13 @@ ul.main-video-list {
           display: inline-block;
           color: #666; }
         .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li .starA-icon {
-          background: url("../../../dist/after/images/startA-icon.png") no-repeat; }
+          background: url("../../after/images/startA-icon.png") no-repeat; }
         .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li .starB-icon {
-          background: url("../../../dist/after/images/startB-icon.png") no-repeat; }
+          background: url("../../after/images/startB-icon.png") no-repeat; }
         .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li .starC-icon {
-          background: url("../../../dist/after/images/startC-icon.png") no-repeat; }
+          background: url("../../after/images/startC-icon.png") no-repeat; }
         .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li .starD-icon {
-          background: url("../../../dist/after/images/startD-icon.png") no-repeat; }
+          background: url("../../after/images/startD-icon.png") no-repeat; }
     .volunteer-flow3-layer .volunteer-flow3-body .info-result {
       overflow: hidden;
       height: 208px;
@@ -671,31 +671,33 @@ ul.main-video-list {
                 font-size: 0;
                 line-height: 0;
                 display: inline-block;
-                background-size: 100px auto; }
+                background-size: 100px auto;
+                position: relative;
+                top: 3px; }
         .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starA {
           border: 1px solid #e24d39; }
           .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starA .title {
             background: #e24d39; }
             .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starA .title .starA-icon {
-              background: url("../../../dist/after/images/startA-icon.png") no-repeat; }
+              background: url("../../after/images/startA-icon.png") no-repeat; }
         .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starB {
           border: 1px solid #f0ad4e; }
           .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starB .title {
             background: #f0ad4e; }
             .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starB .title .starB-icon {
-              background: url("../../../dist/after/images/startB-icon.png") no-repeat; }
+              background: url("../../after/images/startB-icon.png") no-repeat; }
         .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starC {
           border: 1px solid #52d09c; }
           .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starC .title {
             background: #52d09c; }
             .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starC .title .starC-icon {
-              background: url("../../../dist/after/images/startC-icon.png") no-repeat; }
+              background: url("../../after/images/startC-icon.png") no-repeat; }
         .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starD {
           border: 1px solid #52abd0; }
           .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starD .title {
             background: #52abd0; }
             .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starD .title .starD-icon {
-              background: url("../../../dist/after/images/startD-icon.png") no-repeat; }
+              background: url("../../after/images/startD-icon.png") no-repeat; }
     .volunteer-flow3-layer .volunteer-flow3-body .no-school {
       padding: 10px 20px;
       font-size: 14px;
@@ -719,12 +721,11 @@ ul.main-video-list {
 .tips {
   border: 1px solid #faebcc;
   background: #fcf8e3;
-  padding: 10px 18px 0px;
+  padding: 0 18px;
   color: #8a6d45;
   overflow: hidden;
   border-radius: 3px; }
   .tips strong {
-    display: block;
     font-size: 16px; }
   .tips p {
     font-size: 12px; }

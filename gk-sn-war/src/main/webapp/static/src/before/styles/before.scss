@@ -338,7 +338,7 @@ section:last-child {
     float: left;
     width: 336px;
     height: 45px;
-    background: url('../../../dist/after/images/next-btn.png');
+    background: url('../../after/images/next-btn.png');
     color: #fff;
   }
   .btn:hover {
@@ -729,7 +729,7 @@ section:last-child {
     }
   }
   .tips {
-    margin: 0 30px;
+    margin: 0 30px 10px;
   }
   .volunteer-flow3-body {
     padding: 0 30px;
@@ -784,16 +784,16 @@ section:last-child {
             color: #666;
           }
           .starA-icon {
-            background: url('../../../dist/after/images/startA-icon.png') no-repeat;
+            background: url('../../after/images/startA-icon.png') no-repeat;
           }
           .starB-icon {
-            background: url('../../../dist/after/images/startB-icon.png') no-repeat;
+            background: url('../../after/images/startB-icon.png') no-repeat;
           }
           .starC-icon {
-            background: url('../../../dist/after/images/startC-icon.png') no-repeat;
+            background: url('../../after/images/startC-icon.png') no-repeat;
           }
           .starD-icon {
-            background: url('../../../dist/after/images/startD-icon.png') no-repeat;
+            background: url('../../after/images/startD-icon.png') no-repeat;
           }
         }
       }
@@ -835,6 +835,8 @@ section:last-child {
                 display: inline-block;
                 -webkit-background-size: 100px auto;
                 background-size: 100px auto;
+                position: relative;
+                top: 3px;
               }
             }
           }
@@ -844,7 +846,7 @@ section:last-child {
           .title {
             background: #e24d39;
             .starA-icon {
-              background: url('../../../dist/after/images/startA-icon.png') no-repeat;
+              background: url('../../after/images/startA-icon.png') no-repeat;
             }
 
           }
@@ -854,7 +856,7 @@ section:last-child {
           .title {
             background: #f0ad4e;
             .starB-icon {
-              background: url('../../../dist/after/images/startB-icon.png') no-repeat;
+              background: url('../../after/images/startB-icon.png') no-repeat;
             }
 
           }
@@ -864,7 +866,7 @@ section:last-child {
           .title {
             background: #52d09c;
             .starC-icon {
-              background: url('../../../dist/after/images/startC-icon.png') no-repeat;
+              background: url('../../after/images/startC-icon.png') no-repeat;
             }
 
           }
@@ -874,7 +876,7 @@ section:last-child {
           .title {
             background: #52abd0;
             .starD-icon {
-              background: url('../../../dist/after/images/startD-icon.png') no-repeat;
+              background: url('../../after/images/startD-icon.png') no-repeat;
             }
           }
         }
@@ -912,12 +914,11 @@ section:last-child {
 .tips {
   border: 1px solid #faebcc;
   background: #fcf8e3;
-  padding: 10px 18px 0px;
+  padding: 0 18px;
   color: #8a6d45;
   overflow: hidden;
   border-radius: 3px;
   strong {
-    display: block;
     font-size: 16px;
   }
   p {

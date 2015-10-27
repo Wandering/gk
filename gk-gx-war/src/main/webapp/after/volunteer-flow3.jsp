@@ -84,8 +84,8 @@
                             <section class="section-article">
                                 <div class="search-content ta">
                                      <span>
-                                         <input type="text" dataType="1" class="open-flow3" placeholder="请输入院校名称"/>
-                                         <input type="button" dataType="1"  class="open-flow3" value="选择院校"/>
+                                         <input type="text" dataType="2" class="open-flow3" placeholder="请输入院校名称"/>
+                                         <input type="button" dataType="2"  class="open-flow3" value="选择院校"/>
                                     </span>
                                 </div>
                             </section>
@@ -336,8 +336,8 @@
                             <section class="section-article">
                                 <div class="search-content ta">
                                      <span>
-                                         <input type="text" dataType="1" class="open-flow3" placeholder="请输入院校名称"/>
-                                         <input type="button" dataType="1"  class="open-flow3" value="选择院校"/>
+                                         <input type="text" dataType="3" class="open-flow3" placeholder="请输入院校名称"/>
+                                         <input type="button" dataType="3"  class="open-flow3" value="选择院校"/>
                                     </span>
                                 </div>
                             </section>
@@ -353,8 +353,8 @@
                             <section class="section-article">
                                 <div class="search-content ta">
                                      <span>
-                                         <input type="text" dataType="1" class="open-flow3" placeholder="请输入院校名称"/>
-                                         <input type="button" dataType="1"  class="open-flow3" value="选择院校"/>
+                                         <input type="text" dataType="4" class="open-flow3" placeholder="请输入院校名称"/>
+                                         <input type="button" dataType="4"  class="open-flow3" value="选择院校"/>
                                     </span>
                                 </div>
                             </section>
@@ -605,8 +605,8 @@
                             <section class="section-article">
                                 <div class="search-content ta">
                                      <span>
-                                         <input type="text" dataType="1" class="open-flow3" placeholder="请输入院校名称"/>
-                                         <input type="button" dataType="1"  class="open-flow3" value="选择院校"/>
+                                         <input type="text" dataType="5" class="open-flow3" placeholder="请输入院校名称"/>
+                                         <input type="button" dataType="5"  class="open-flow3" value="选择院校"/>
                                     </span>
                                 </div>
                             </section>
@@ -622,8 +622,8 @@
                             <section class="section-article">
                                 <div class="search-content ta">
                                      <span>
-                                         <input type="text" dataType="1" class="open-flow3" placeholder="请输入院校名称"/>
-                                         <input type="button" dataType="1"  class="open-flow3" value="选择院校"/>
+                                         <input type="text" dataType="6" class="open-flow3" placeholder="请输入院校名称"/>
+                                         <input type="button" dataType="6"  class="open-flow3" value="选择院校"/>
                                     </span>
                                 </div>
                             </section>
@@ -1042,14 +1042,14 @@
 
 
 
-<div class="tansLayer" style="display: block;"></div>
-<div class="volunteer-flow3-layer"  id="volunteer-flow3-layer" style="display: block;">
+<div class="tansLayer" style="display: none;"></div>
+<div class="volunteer-flow3-layer"  id="volunteer-flow3-layer" style="display: none;">
     <div class="top-close">
         <a href="javascript:;" class="close-btn close-flow3-layer">x</a>
     </div>
     <div class="tips" style="width: 900px;">
 
-        <p><strong>温馨提示：</strong>依据平行志愿规则，系统推荐遵循分数最大化，为您推荐一下A、B、C、D四档院校；考生可根据个性化需求调整院校顺位。</p>
+        <p><strong>温馨提示：</strong>依据平行志愿规则，系统推荐遵循分数最大化，为您推荐一下A、B、C、D、E、F四档院校；考生可根据个性化需求调整院校顺位。</p>
     </div>
     <div class="volunteer-flow3-body">
         <div class="search-box">

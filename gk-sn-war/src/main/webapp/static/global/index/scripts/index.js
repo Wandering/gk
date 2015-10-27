@@ -96,8 +96,6 @@ define(function (require) {
                 $('.hot-list').html(template);
             }
         })
-
-
     });
 
     //在线互动获取数据
