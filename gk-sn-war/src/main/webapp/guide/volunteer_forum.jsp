@@ -37,8 +37,15 @@
 </div>
 
 <%@ include file="/common/footer.jsp"%>
+<script src="http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.13.min.js"></script>
 <script type="text/javascript">
-    seajs.use(["http://cdn.gaokao360.net/static/global/guide/scripts/volunteer_forum",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js',"http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.13.min.js"]);
+    seajs.use(["http://cdn.gaokao360.net/static/global/guide/scripts/volunteer_forum",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+    var api = flowplayer("player", "http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.18.swf", {
+        clip: {
+            autoPlay: false,       //是否自动播放，默认true
+            autoBuffering: false     //是否自动缓冲视频，默认true
+        }
+    });
 </script>
 </body>
 </html>

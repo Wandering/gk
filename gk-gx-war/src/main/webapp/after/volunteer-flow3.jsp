@@ -27,18 +27,41 @@
     <div class="w1000 main-volunteer">
         <div class="error-tips hide"></div>
         <div class="volunteer-flow3">
+            <style>
+                .volunteer-flow3-table .txt{
+                    text-align: center;
+                    height: 35px;
+                    line-height: 35px;
+                }
+                .volunteer-flow3-table .specialty-list{
+                    width: 420px;
+                    margin: 0 auto;
+                    padding: 5px 0 15px;
+                    height: 300px;
+                }
+                .volunteer-flow3-table .specialty-list2{
+                    width: 420px;
+                    margin: 0 auto;
+                    padding: 5px 0 15px;
+                }
+                .volunteer-flow3-table .area-tips{
+                    padding: 20px 0;
+                    line-height: 24px;
+                    color: #666;
+                }
+                .volunteer-flow3-table .radio-sel label{
+                    margin: 0 10px;
+                }
+            </style>
             <table class="volunteer-flow3-table">
                 <thead>
                 <tr>
-                    <th></th>
-                    <th>院校</th>
-                    <th>专业</th>
-                    <th>是否服从其他专业</th>
+                    <th>A志愿</th>
+                    <th>B志愿</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td class="item1">A志愿</td>
                     <td class="item2">
                         <div class="">
                             <section class="section-article">
@@ -56,72 +79,67 @@
                             <div class="result-info-details" id="result-info1"></div>
                         </div>
                     </td>
-                    <td class="item3">
-                        <ul class="specialty hide" id="specialty1">
-                            <li>
-                                <span class="num">1.</span>
-                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
-                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
-                            </li>
-                            <li>
-                                <span class="num">2.</span>
-                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
-                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
-                            </li>
-                            <li>
-                                <span class="num">3.</span>
-                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
-                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
-                            </li>
-                            <li>
-                                <span class="num">4.</span>
-                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
-                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
-                            </li>
-                            <li>
-                                <span class="num">5.</span>
-                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
-                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
-                            </li>
-                            <li>
-                                <span class="num">6.</span>
-                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
-                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
-                            </li>
-                        </ul>
-                    </td>
-                    <td class="item4">
-                        <div class="">
-                            <label>
-                                <input type="radio" checked name="isFun1" value="是" id=""/> 是
-                            </label>
-                            <p>（建议服从）</p>
-                            <label>
-                                <input type="radio" name="isFun1" value="否" id=""/> 否
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="item1">B志愿</td>
                     <td class="item2">
                         <div class="">
                             <section class="section-article">
                                 <div class="search-content ta">
                                      <span>
-                                         <input type="text" dataType="2" class="open-flow3" placeholder="请输入院校名称"/>
-                                         <input type="button" dataType="2"  class="open-flow3" value="选择院校"/>
+                                         <input type="text" dataType="1" class="open-flow3" placeholder="请输入院校名称"/>
+                                         <input type="button" dataType="1"  class="open-flow3" value="选择院校"/>
                                     </span>
                                 </div>
                             </section>
-                            <div class="tips"  id="tips2">
+                            <div class="tips" id="tips2">
                                 <strong>温馨提示：</strong>
                                 <p>请准确无误的填写考号、分数及位次；所录入的信息一旦提交将不可更改。</p>
                             </div>
                             <div class="result-info-details" id="result-info2"></div>
                         </div>
                     </td>
+                </tr>
+                <tr>
+                    <td class="txt">专业选择</td>
+                    <td class="txt">专业选择</td>
+                </tr>
+                <tr>
                     <td class="item3">
+                        <div class="specialty-list">
+                            <ul class="specialty hide" id="specialty1">
+                                <li>
+                                    <span class="num">1.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">2.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">3.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">4.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">5.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">6.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="item3">
+                        <div class="specialty-list">
                         <ul class="specialty hide" id="specialty2">
                             <li>
                                 <span class="num">1.</span>
@@ -154,146 +172,688 @@
                                 <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
                             </li>
                         </ul>
-                    </td>
-                    <td class="item4">
-                        <div class="">
-                            <label>
-                                <input type="radio" checked name="isFun2" value="是" id=""/> 是
-                            </label>
-                            <p>（建议服从）</p>
-                            <label>
-                                <input type="radio" name="isFun2" value="否" id=""/> 否
-                            </label>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td class="item1">C志愿</td>
+                    <td class="txt">专业调剂</td>
+                    <td class="txt">专业调剂</td>
+                </tr>
+                <tr>
+                    <td class="txt">
+                        <div class="radio-sel">
+                            <label><input type="radio" checked name="isFun1" id=""/> 全部服从</label>
+                            <label><input type="radio" name="isFun1" id=""/> 全部不服从</label>
+                            <label><input type="radio" name="isFun1" id=""/> 部分服从</label>
+                        </div>
+                    </td>
+                    <td class="txt">
+                        <div class="radio-sel">
+                            <label><input type="radio" checked name="isFun2" id=""/> 全部服从</label>
+                            <label><input type="radio" name="isFun2" id=""/> 全部不服从</label>
+                            <label><input type="radio" name="isFun2" id=""/> 部分服从</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item4">
+                       <div class="specialty-list2">
+                           <div class="area-tips" id="area-tips1">
+                               广西本区院校可选择服从部分专业调剂<br/>
+                               可从院校中选择10个可调剂的专业<br/>
+                               区外院校不可选择服从部分专业调剂<br/>
+                           </div>
+                           <ul class="specialty hide" id="specialty11">
+                               <li>
+                                   <span class="num">1.</span>
+                                   <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                   <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                               </li>
+                               <li>
+                                   <span class="num">2.</span>
+                                   <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                   <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                               </li>
+                               <li>
+                                   <span class="num">3.</span>
+                                   <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                   <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                               </li>
+                               <li>
+                                   <span class="num">4.</span>
+                                   <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                   <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                               </li>
+                               <li>
+                                   <span class="num">5.</span>
+                                   <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                   <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                               </li>
+                               <li>
+                                   <span class="num">6.</span>
+                                   <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                   <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                               </li>
+                               <li>
+                                   <span class="num">7.</span>
+                                   <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                   <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                               </li>
+                               <li>
+                                   <span class="num">8.</span>
+                                   <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                   <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                               </li>
+                               <li>
+                                   <span class="num">9.</span>
+                                   <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                   <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                               </li>
+                               <li>
+                                   <span class="num">10.</span>
+                                   <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                   <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                               </li>
+                           </ul>
+                       </div>
+                    </td>
+                    <td class="item4">
+                        <div class="specialty-list2">
+                            <div class="area-tips" id="area-tips2">
+                                广西本区院校可选择服从部分专业调剂<br/>
+                                可从院校中选择10个可调剂的专业<br/>
+                                区外院校不可选择服从部分专业调剂<br/>
+                            </div>
+                            <ul class="specialty hide" id="specialty22">
+                                <li>
+                                    <span class="num">1.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">2.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">3.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">4.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">5.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">6.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">7.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">8.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">9.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">10.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table class="volunteer-flow3-table">
+                <thead>
+                <tr>
+                    <th>C志愿</th>
+                    <th>D志愿</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
                     <td class="item2">
                         <div class="">
                             <section class="section-article">
                                 <div class="search-content ta">
                                      <span>
-                                         <input type="text" dataType="3"  class="open-flow3" placeholder="请输入院校名称"/>
-                                         <input type="button" dataType="3"  class="open-flow3" value="选择院校"/>
+                                         <input type="text" dataType="1" class="open-flow3" placeholder="请输入院校名称"/>
+                                         <input type="button" dataType="1"  class="open-flow3" value="选择院校"/>
                                     </span>
                                 </div>
                             </section>
-                            <div class="tips"  id="tips3">
+                            <div class="tips" id="tips3">
                                 <strong>温馨提示：</strong>
                                 <p>请准确无误的填写考号、分数及位次；所录入的信息一旦提交将不可更改。</p>
                             </div>
                             <div class="result-info-details" id="result-info3"></div>
                         </div>
                     </td>
-                    <td class="item3">
-                        <ul class="specialty hide" id="specialty3">
-                            <li>
-                                <span class="num">1.</span>
-                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
-                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
-                            </li>
-                            <li>
-                                <span class="num">2.</span>
-                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
-                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
-                            </li>
-                            <li>
-                                <span class="num">3.</span>
-                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
-                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
-                            </li>
-                            <li>
-                                <span class="num">4.</span>
-                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
-                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
-                            </li>
-                            <li>
-                                <span class="num">5.</span>
-                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
-                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
-                            </li>
-                            <li>
-                                <span class="num">6.</span>
-                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
-                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
-                            </li>
-                        </ul>
-                    </td>
-                    <td class="item4">
-                        <div class="">
-                            <label>
-                                <input type="radio" checked name="isFun3" value="是" id=""/> 是
-                            </label>
-                            <p>（建议服从）</p>
-                            <label>
-                                <input type="radio" name="isFun3" value="否" id=""/> 否
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="item1">D志愿</td>
                     <td class="item2">
                         <div class="">
                             <section class="section-article">
                                 <div class="search-content ta">
                                      <span>
-                                         <input type="text" dataType="4"  class="open-flow3" placeholder="请输入院校名称"/>
-                                         <input type="button" dataType="4"  class="open-flow3" value="选择院校"/>
+                                         <input type="text" dataType="1" class="open-flow3" placeholder="请输入院校名称"/>
+                                         <input type="button" dataType="1"  class="open-flow3" value="选择院校"/>
                                     </span>
                                 </div>
                             </section>
-                            <div class="tips"  id="tips4">
+                            <div class="tips" id="tips4">
                                 <strong>温馨提示：</strong>
                                 <p>请准确无误的填写考号、分数及位次；所录入的信息一旦提交将不可更改。</p>
                             </div>
                             <div class="result-info-details" id="result-info4"></div>
                         </div>
                     </td>
+                </tr>
+                <tr>
+                    <td class="txt">专业选择</td>
+                    <td class="txt">专业选择</td>
+                </tr>
+                <tr>
                     <td class="item3">
-                        <ul class="specialty hide" id="specialty4">
-                            <li>
-                                <span class="num">1.</span>
-                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
-                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
-                            </li>
-                            <li>
-                                <span class="num">2.</span>
-                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
-                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
-                            </li>
-                            <li>
-                                <span class="num">3.</span>
-                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
-                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
-                            </li>
-                            <li>
-                                <span class="num">4.</span>
-                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
-                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
-                            </li>
-                            <li>
-                                <span class="num">5.</span>
-                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
-                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
-                            </li>
-                            <li>
-                                <span class="num">6.</span>
-                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
-                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
-                            </li>
-                        </ul>
+                        <div class="specialty-list">
+                            <ul class="specialty hide" id="specialty3">
+                                <li>
+                                    <span class="num">1.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">2.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">3.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">4.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">5.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">6.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="item3">
+                        <div class="specialty-list">
+                            <ul class="specialty hide" id="specialty4">
+                                <li>
+                                    <span class="num">1.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">2.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">3.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">4.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">5.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">6.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="txt">专业调剂</td>
+                    <td class="txt">专业调剂</td>
+                </tr>
+                <tr>
+                    <td class="txt">
+                        <div class="radio-sel">
+                            <label><input type="radio" checked name="isFun3" id=""/> 全部服从</label>
+                            <label><input type="radio" name="isFun3" id=""/> 全部不服从</label>
+                            <label><input type="radio" name="isFun3" id=""/> 部分服从</label>
+                        </div>
+                    </td>
+                    <td class="txt">
+                        <div class="radio-sel">
+                            <label><input type="radio" checked name="isFun4" id=""/> 全部服从</label>
+                            <label><input type="radio" name="isFun4" id=""/> 全部不服从</label>
+                            <label><input type="radio" name="isFun4" id=""/> 部分服从</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item4">
+                        <div class="specialty-list2">
+                            <div class="area-tips" id="area-tips3">
+                                广西本区院校可选择服从部分专业调剂<br/>
+                                可从院校中选择10个可调剂的专业<br/>
+                                区外院校不可选择服从部分专业调剂<br/>
+                            </div>
+                            <ul class="specialty hide" id="specialty33">
+                                <li>
+                                    <span class="num">1.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">2.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">3.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">4.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">5.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">6.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">7.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">8.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">9.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">10.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                            </ul>
+                        </div>
                     </td>
                     <td class="item4">
+                        <div class="specialty-list2">
+                            <div class="area-tips" id="area-tips4">
+                                广西本区院校可选择服从部分专业调剂<br/>
+                                可从院校中选择10个可调剂的专业<br/>
+                                区外院校不可选择服从部分专业调剂<br/>
+                            </div>
+                            <ul class="specialty hide" id="specialty44">
+                                <li>
+                                    <span class="num">1.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">2.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">3.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">4.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">5.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">6.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">7.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">8.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">9.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">10.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table class="volunteer-flow3-table">
+                <thead>
+                <tr>
+                    <th>E志愿</th>
+                    <th>F志愿</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="item2">
                         <div class="">
-                            <label>
-                                <input type="radio" checked name="isFun4" value="是" id=""/> 是
-                            </label>
-                            <p>（建议服从）</p>
-                            <label>
-                                <input type="radio" name="isFun4" value="否" id=""/> 否
-                            </label>
+                            <section class="section-article">
+                                <div class="search-content ta">
+                                     <span>
+                                         <input type="text" dataType="1" class="open-flow3" placeholder="请输入院校名称"/>
+                                         <input type="button" dataType="1"  class="open-flow3" value="选择院校"/>
+                                    </span>
+                                </div>
+                            </section>
+                            <div class="tips" id="tips5">
+                                <strong>温馨提示：</strong>
+                                <p>请准确无误的填写考号、分数及位次；所录入的信息一旦提交将不可更改。</p>
+                            </div>
+                            <div class="result-info-details" id="result-info5"></div>
+                        </div>
+                    </td>
+                    <td class="item2">
+                        <div class="">
+                            <section class="section-article">
+                                <div class="search-content ta">
+                                     <span>
+                                         <input type="text" dataType="1" class="open-flow3" placeholder="请输入院校名称"/>
+                                         <input type="button" dataType="1"  class="open-flow3" value="选择院校"/>
+                                    </span>
+                                </div>
+                            </section>
+                            <div class="tips" id="tips6">
+                                <strong>温馨提示：</strong>
+                                <p>请准确无误的填写考号、分数及位次；所录入的信息一旦提交将不可更改。</p>
+                            </div>
+                            <div class="result-info-details" id="result-info6"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="txt">专业选择</td>
+                    <td class="txt">专业选择</td>
+                </tr>
+                <tr>
+                    <td class="item3">
+                        <div class="specialty-list">
+                            <ul class="specialty hide" id="specialty5">
+                                <li>
+                                    <span class="num">1.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">2.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">3.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">4.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">5.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">6.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="item3">
+                        <div class="specialty-list">
+                            <ul class="specialty hide" id="specialty6">
+                                <li>
+                                    <span class="num">1.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">2.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">3.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">4.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">5.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">6.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="txt">专业调剂</td>
+                    <td class="txt">专业调剂</td>
+                </tr>
+                <tr>
+                    <td class="txt">
+                        <div class="radio-sel">
+                            <label><input type="radio" checked name="isFun5" id=""/> 全部服从</label>
+                            <label><input type="radio" name="isFun5" id=""/> 全部不服从</label>
+                            <label><input type="radio" name="isFun5" id=""/> 部分服从</label>
+                        </div>
+                    </td>
+                    <td class="txt">
+                        <div class="radio-sel">
+                            <label><input type="radio" checked name="isFun6" id=""/> 全部服从</label>
+                            <label><input type="radio" name="isFun6" id=""/> 全部不服从</label>
+                            <label><input type="radio" name="isFun6" id=""/> 部分服从</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item4">
+                        <div class="specialty-list2">
+                            <div class="area-tips" id="area-tips5">
+                                广西本区院校可选择服从部分专业调剂<br/>
+                                可从院校中选择10个可调剂的专业<br/>
+                                区外院校不可选择服从部分专业调剂<br/>
+                            </div>
+                            <ul class="specialty hide" id="specialty55">
+                                <li>
+                                    <span class="num">1.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">2.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">3.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">4.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">5.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">6.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">7.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">8.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">9.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">10.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="item4">
+                        <div class="specialty-list2">
+                            <div class="area-tips" id="area-tips6">
+                                广西本区院校可选择服从部分专业调剂<br/>
+                                可从院校中选择10个可调剂的专业<br/>
+                                区外院校不可选择服从部分专业调剂<br/>
+                            </div>
+                            <ul class="specialty hide" id="specialty66">
+                                <li>
+                                    <span class="num">1.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">2.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">3.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">4.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">5.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">6.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">7.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">8.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">9.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">10.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                            </ul>
                         </div>
                     </td>
                 </tr>
@@ -306,6 +866,8 @@
         </div>
     </div>
 </div>
+
+
 <div id="main2" style="display: none;">
     <div class="content">
         <div class="w1000">
@@ -480,14 +1042,14 @@
 
 
 
-<div class="tansLayer" style="display: none;"></div>
-<div class="volunteer-flow3-layer"  id="volunteer-flow3-layer" style="display: none;">
+<div class="tansLayer" style="display: block;"></div>
+<div class="volunteer-flow3-layer"  id="volunteer-flow3-layer" style="display: block;">
     <div class="top-close">
         <a href="javascript:;" class="close-btn close-flow3-layer">x</a>
     </div>
     <div class="tips" style="width: 900px;">
-        <strong>温馨提示：</strong>
-        <p>依据平行志愿规则，系统推荐遵循分数最大化，为您推荐一下A、B、C、D四档院校；考生可根据个性化需求调整院校顺位。</p>
+
+        <p><strong>温馨提示：</strong>依据平行志愿规则，系统推荐遵循分数最大化，为您推荐一下A、B、C、D四档院校；考生可根据个性化需求调整院校顺位。</p>
     </div>
     <div class="volunteer-flow3-body">
         <div class="search-box">
@@ -518,8 +1080,8 @@
                 </li>
             </ul>
         </div>
-        <div class="info-result">
-            <ul>
+        <div class="info-result" style="width:938px;overflow-x: scroll;">
+            <ul style="width:1380px;">
                 <li class="starA">
                     <div class="title">
                         <span class="">A档（冲）</span>
@@ -542,27 +1104,49 @@
                     </div>
                     <div class="school-list hide" id="school-list1"  dataType="B"></div>
                 </li>
-                <li class="starC">
+                <li class="starB">
                     <div class="title">
-                        <span>C档（保）</span>
-                        <p>录取指数: <i class="starC-icon"></i></p>
+                        <span>C档（稳）</span>
+                        <p>录取指数: <i class="starB-icon"></i></p>
                     </div>
                     <div class="no-school hide" id="no-school2">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
                         <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
-                    <div class="school-list hide" id="school-list2"  dataType="C"></div>
+                    <div class="school-list hide" id="school-list2"  dataType="B"></div>
                 </li>
-                <li class="starD">
+                <li class="starC">
                     <div class="title">
-                        <span>D档（垫）</span>
-                        <p>录取指数: <i class="starD-icon"></i></p>
+                        <span>D档（保）</span>
+                        <p>录取指数: <i class="starC-icon"></i></p>
                     </div>
                     <div class="no-school hide" id="no-school3">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
                         <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
-                    <div class="school-list hide" id="school-list3"  dataType="D"></div>
+                    <div class="school-list hide" id="school-list3"  dataType="C"></div>
+                </li>
+                <li class="starC">
+                    <div class="title">
+                        <span>E档（保）</span>
+                        <p>录取指数: <i class="starC-icon"></i></p>
+                    </div>
+                    <div class="no-school hide" id="no-school4">
+                        <p>① 本录取指数下、没有合理院校可推荐；</p>
+                        <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
+                    </div>
+                    <div class="school-list hide" id="school-list4"  dataType="C"></div>
+                </li>
+                <li class="starD">
+                    <div class="title">
+                        <span>F档（垫）</span>
+                        <p>录取指数: <i class="starD-icon"></i></p>
+                    </div>
+                    <div class="no-school hide" id="no-school5">
+                        <p>① 本录取指数下、没有合理院校可推荐；</p>
+                        <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
+                    </div>
+                    <div class="school-list hide" id="school-list5"  dataType="D"></div>
                 </li>
             </ul>
         </div>
@@ -597,7 +1181,8 @@
 
 <%@ include file="/common/footer.jsp"%>
 <script>
-    seajs.use("http://cdn.gaokao360.net/static/global/after/scripts/after-flow3.min");
+//    seajs.use("http://cdn.gaokao360.net/static/global/after/scripts/after-flow3.min");
+    seajs.use("/static/src/after/scripts/after-flow3");
     var params = decodeURIComponent('${params}');
 </script>
 

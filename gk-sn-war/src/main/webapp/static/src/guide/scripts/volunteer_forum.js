@@ -1,12 +1,8 @@
-/**
- * Created by kepeng on 15/9/24.
- */
-
 define(function (require) {
     var $ = require('$');
     require('backToTop');
 
-    var Tab = require('/static/src/guide/scripts/tab');
+    var Tab = require('http://cdn.gaokao360.net/static/global/guide/scripts/tab.min');
 
     var timer = null;
 
@@ -55,7 +51,7 @@ define(function (require) {
             }else{
                 html.push('<div class="detile-info mt20">');
             }
-            html.push('<img class="triangle" src="/static/dist/common/images/triangle.png" />');
+            html.push('<img class="triangle" src="http://cdn.gaokao360.net/static/global/common/images/triangle.png" />');
             html.push(list[i].summary);
             html.push('</div>');
             html.push('</div></a>');
@@ -109,13 +105,6 @@ define(function (require) {
                 name: activeLi.html()
             }
             getArticleList(curObj, parseInt($(this).attr('data-page')) + 1);
-        });
-
-        var api = flowplayer("player", "/static/src/guide/scripts/flowplayer-3.2.18.swf", {
-            clip: {
-                autoPlay: false,       //是否自动播放，默认true
-                autoBuffering: false     //是否自动缓冲视频，默认true
-            }
         });
     });
 });

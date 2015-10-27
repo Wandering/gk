@@ -15,7 +15,7 @@ import cn.thinkjoy.gk.param.FileUploadParam;
 import cn.thinkjoy.gk.protocol.DateStyle;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.runnable.UploadRunnable;
-import cn.thinkjoy.gk.util.CookieUtil;
+import cn.thinkjoy.gk.util.CheckUtil;
 import cn.thinkjoy.gk.util.DateUtil;
 import cn.thinkjoy.gk.util.UploadUtil;
 import cn.thinkjoy.gk.vo.FileUploadVO;
@@ -36,24 +36,20 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/upload")
-public class UploadController extends BaseController{
+public class ImageController extends BaseController{
 
-	private static final Logger LOGGER= LoggerFactory.getLogger(UploadController.class);
+	private static final Logger LOGGER= LoggerFactory.getLogger(ImageController.class);
 
 	/**
 	 * 后台上传文件
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/file",method = RequestMethod.POST)
+	@RequestMapping(value = "/image",method = RequestMethod.POST)
 	@ResponseBody
-	public List<FileUploadVO> upload(@RequestParam(value = "files[]", required = false) MultipartFile[] fileUploads,
+	public List<FileUploadVO> image(@RequestParam(value = "files", required = false) MultipartFile[] fileUploads,
 						 @RequestParam(value = "params", required = false)String params) throws Exception {
-//		String cookieValue = CookieUtil.getCookieValue(request.getCookies(), CookieConst.ADMINUSER_COOKIE_NAME);
-//		if(StringUtils.isEmpty(cookieValue)){
-//			throw new BizException(ERRORCODE.UPLOAD_ERROR_0.getCode(),ERRORCODE.UPLOAD_ERROR_0.getMessage());
-//			return null;
-//		}
+
 		JSONObject obj = null;
 		if(!StringUtils.isEmpty(params)){
 			obj = JSON.parseObject(params);
@@ -78,9 +74,9 @@ public class UploadController extends BaseController{
 				int fileSize = (int) fileUpload.getSize();
 
 				// 验证文件
-				UploadUtil.checkImageFile(fileSize, uploadFileType);
+				CheckUtil.checkImageFile(fileSize, uploadFileType);
 
-				String filePath = Const.FILE_UPLOAD_DIR+date+"/"+uploadFileType;
+				String filePath = Const.IMAGE_UPLOAD_DIR+date+"/"+uploadFileType;
 
 				String systemFileName= UUID.randomUUID().toString()+ "." + uploadFileType;
 				// 本机文件地址
@@ -114,7 +110,7 @@ public class UploadController extends BaseController{
 						initArray = JSONArray.parseArray(obj.getString(Const.NO_INIT));
 						FileUploadParam fileUploadParam = null;
 						for(int i=0;i<initArray.size();i++){
-							fileUploadParam = (FileUploadParam)JSONObject.parseObject(initArray.getString(i), FileUploadParam.class);
+							fileUploadParam = JSONObject.parseObject(initArray.getString(i), FileUploadParam.class);
 							UploadRunnable r = new UploadRunnable(filePath, systemFileName,fileUploadParam);
 							Thread t = new Thread(r);
 							t.start();

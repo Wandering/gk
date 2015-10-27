@@ -23,6 +23,10 @@ public final class Const {
 	 */
 	public static final String[] FILE_TYPES = properties.get("FILE_TYPES").toString().split(",");
 	/**
+	 * 允许上传的文件类型
+	 */
+	public static final String[] VIDEO_TYPES = properties.get("VIDEO_TYPES").toString().split(",");
+	/**
 	 * 图片水印文字字体
 	 */
 	public static final String[] FONT_NAME = {"TimesRoman","Courier","Arial","黑体"};
@@ -61,7 +65,15 @@ public final class Const {
 	/**
 	 * 文件上传目录
 	 */
-	public static final String  FILE_UPLOAD_DIR = "/gaokao/upload/";
+	public static final String  FILE_UPLOAD_DIR = "/gaokao/upload/files/";
+	/**
+	 * 文件上传目录
+	 */
+	public static final String  IMAGE_UPLOAD_DIR = "/gaokao/upload/images/";
+	/**
+	 * 文件上传目录
+	 */
+	public static final String  VIDEO_UPLOAD_DIR = "/gaokao/upload/videos/";
 	/**
 	 * 城市图片存放目录
 	 */

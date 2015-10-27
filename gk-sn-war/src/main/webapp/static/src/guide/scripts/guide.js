@@ -6,7 +6,7 @@ define(function (require) {
     var $ = require('$');
     require('backToTop');
 
-    var Tab = require('/static/src/guide/scripts/tab');
+    var Tab = require('http://cdn.gaokao360.net/static/global/guide/scripts/tab.min');
 
     var timer = null;
 
