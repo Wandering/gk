@@ -2,13 +2,12 @@
 .tips {
   border: 1px solid #faebcc;
   background: #fcf8e3;
-  padding: 20px 18px 10px;
+  padding: 0 18px;
   color: #8a6d45;
   overflow: hidden;
   border-radius: 3px;
   width: 964px; }
   .tips strong {
-    display: block;
     font-size: 16px; }
   .tips p {
     font-size: 12px; }
@@ -237,9 +236,9 @@
   position: fixed;
   top: 50%;
   width: 1000px;
-  height: 590px;
+  height: 530px;
   margin: -295px 0 0 -500px;
-  z-index: 10;
+  z-index: 120;
   background: #fff;
   border-radius: 3px; }
   .volunteer-flow3-layer .top-close,
@@ -301,7 +300,7 @@
     .specialty-layer .volunteer-flow3-body .info-explain,
     .specialty-layer .specialty-body .info-explain {
       overflow: hidden;
-      height: 87px;
+      height: 76px;
       border: 1px solid #ccc;
       border-top: none;
       padding: 0 20px; }
@@ -311,7 +310,7 @@
       .specialty-layer .specialty-body .info-explain strong {
         font-size: 16px;
         color: #444;
-        margin: 20px 0 0;
+        margin: 10px 0 0;
         display: block; }
       .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li,
       .volunteer-flow3-layer .specialty-body .info-explain ul li,
@@ -355,7 +354,7 @@
     .specialty-layer .volunteer-flow3-body .info-result,
     .specialty-layer .specialty-body .info-result {
       overflow: hidden;
-      height: 285px;
+      height: 261px;
       border: 1px solid #ccc;
       border-top: none;
       padding: 20px 0 0; }
@@ -405,7 +404,9 @@
                 font-size: 0;
                 line-height: 0;
                 display: inline-block;
-                background-size: 100px auto; }
+                background-size: 100px auto;
+                position: relative;
+                top: 3px; }
         .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starA,
         .volunteer-flow3-layer .specialty-body .info-result ul .starA,
         .specialty-layer .volunteer-flow3-body .info-result ul .starA,
@@ -435,7 +436,7 @@
             .volunteer-flow3-layer .specialty-body .info-result ul .starB .title .starB-icon,
             .specialty-layer .volunteer-flow3-body .info-result ul .starB .title .starB-icon,
             .specialty-layer .specialty-body .info-result ul .starB .title .starB-icon {
-              background: url("../../../dist/after/images/startB-icon.png") no-repeat; }
+              background: url("../../after/images/startB-icon.png") no-repeat; }
         .volunteer-flow3-layer .volunteer-flow3-body .info-result ul .starC,
         .volunteer-flow3-layer .specialty-body .info-result ul .starC,
         .specialty-layer .volunteer-flow3-body .info-result ul .starC,
