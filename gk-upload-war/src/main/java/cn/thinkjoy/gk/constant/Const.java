@@ -61,7 +61,15 @@ public final class Const {
 	/**
 	 * 文件上传目录
 	 */
-	public static final String  FILE_UPLOAD_DIR = "/gaokao/upload/";
+	public static final String  FILE_UPLOAD_DIR = "/gaokao/upload/files/";
+	/**
+	 * 文件上传目录
+	 */
+	public static final String  IMAGE_UPLOAD_DIR = "/gaokao/upload/images/";
+	/**
+	 * 文件上传目录
+	 */
+	public static final String  VIDEO_UPLOAD_DIR = "/gaokao/upload/videos/";
 	/**
 	 * 城市图片存放目录
 	 */
