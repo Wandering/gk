@@ -1,21 +1,13 @@
 package cn.thinkjoy.gk.controller;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
-
 import cn.thinkjoy.gk.constant.Const;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.param.FileUploadParam;
 import cn.thinkjoy.gk.protocol.DateStyle;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.runnable.UploadRunnable;
-import cn.thinkjoy.gk.util.CookieUtil;
 import cn.thinkjoy.gk.util.DateUtil;
 import cn.thinkjoy.gk.util.UploadUtil;
 import cn.thinkjoy.gk.vo.FileUploadVO;
@@ -33,12 +25,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/upload")
-public class UploadController extends BaseController{
+public class FileController extends BaseController{
 
-	private static final Logger LOGGER= LoggerFactory.getLogger(UploadController.class);
+	private static final Logger LOGGER= LoggerFactory.getLogger(FileController.class);
 
 	/**
 	 * 后台上传文件
@@ -47,7 +45,7 @@ public class UploadController extends BaseController{
 	 */
 	@RequestMapping(value = "/file",method = RequestMethod.POST)
 	@ResponseBody
-	public List<FileUploadVO> upload(@RequestParam(value = "files[]", required = false) MultipartFile[] fileUploads,
+	public List<FileUploadVO> file(@RequestParam(value = "files[]", required = false) MultipartFile[] fileUploads,
 						 @RequestParam(value = "params", required = false)String params) throws Exception {
 //		String cookieValue = CookieUtil.getCookieValue(request.getCookies(), CookieConst.ADMINUSER_COOKIE_NAME);
 //		if(StringUtils.isEmpty(cookieValue)){
@@ -80,7 +78,7 @@ public class UploadController extends BaseController{
 				// 验证文件
 				UploadUtil.checkImageFile(fileSize, uploadFileType);
 
-				String filePath = Const.FILE_UPLOAD_DIR+date+"/"+uploadFileType;
+				String filePath = Const.IMAGE_UPLOAD_DIR+date+"/"+uploadFileType;
 
 				String systemFileName= UUID.randomUUID().toString()+ "." + uploadFileType;
 				// 本机文件地址
