@@ -6,14 +6,15 @@
     </a>
     <ul class="main-menu fl" id="main-menu">
       <li class="menu-item"><a class="index" href="/index.jsp">首页</a></li>
-      <li class="menu-item"><a class="guide" href="/guide/guide.jsp">高考政策</a>
+      <li class="menu-item"><a class="guide" href="javascript:;">高考政策</a>
         <ul class="submenu">
           <li><a href="/guide/guide.jsp">政策解读</a></li>
           <li><a href="/guide/volunteer_forum.jsp">志愿讲堂</a></li>
         </ul>
       </li>
-      <li class="menu-item"><a class="gk_hot" href="/consult/gk_hot.jsp">高考资讯</a>
+      <li class="menu-item"><a class="gk_hot" href="javascript:;">高考资讯</a>
         <ul class="submenu">
+          <li><a href="/consult/gk_hot.jsp">高考热点</a></li>
           <li><a href="/consult/consult.jsp">专业测评</a></li>
           <li><a href="/consult/school_info.jsp">院校信息</a></li>
           <li><a href="/consult/profession_info.jsp">专业信息</a></li>

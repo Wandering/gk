@@ -27,6 +27,187 @@
     <div class="w1000 main-volunteer">
         <div class="error-tips hide"></div>
         <div class="volunteer-flow3">
+            <style>
+                .volunteer-flow3-table .txt{
+                    text-align: center;
+                    height: 35px;
+                    line-height: 35px;
+                }
+                .volunteer-flow3-table .specialty-list{
+                    width: 420px;
+                    margin: 0 auto;
+                    padding: 5px 0 15px;
+                }
+            </style>
+            <table class="volunteer-flow3-table">
+                <thead>
+                <tr>
+                    <th>A志愿</th>
+                    <th>B志愿</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="item2">
+                        <div class="">
+                            <section class="section-article">
+                                <div class="search-content ta">
+                                     <span>
+                                         <input type="text" dataType="1" class="open-flow3" placeholder="请输入院校名称"/>
+                                         <input type="button" dataType="1"  class="open-flow3" value="选择院校"/>
+                                    </span>
+                                </div>
+                            </section>
+                            <div class="tips" id="tips1">
+                                <strong>温馨提示：</strong>
+                                <p>请准确无误的填写考号、分数及位次；所录入的信息一旦提交将不可更改。</p>
+                            </div>
+                            <div class="result-info-details" id="result-info1"></div>
+                        </div>
+                    </td>
+                    <td class="item2">
+                        <div class="">
+                            <section class="section-article">
+                                <div class="search-content ta">
+                                     <span>
+                                         <input type="text" dataType="1" class="open-flow3" placeholder="请输入院校名称"/>
+                                         <input type="button" dataType="1"  class="open-flow3" value="选择院校"/>
+                                    </span>
+                                </div>
+                            </section>
+                            <div class="tips" id="tips2">
+                                <strong>温馨提示：</strong>
+                                <p>请准确无误的填写考号、分数及位次；所录入的信息一旦提交将不可更改。</p>
+                            </div>
+                            <div class="result-info-details" id="result-info2"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="txt">专业选择</td>
+                    <td class="txt">专业选择</td>
+                </tr>
+                <tr>
+                    <td class="item3">
+                        <div class="specialty-list">
+                            <ul class="specialty " id="specialty1">
+                                <li>
+                                    <span class="num">1.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">2.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">3.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">4.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">5.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                                <li>
+                                    <span class="num">6.</span>
+                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                    <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="item3">
+                        <ul class="specialty hide" id="specialty2">
+                            <li>
+                                <span class="num">1.</span>
+                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                            </li>
+                            <li>
+                                <span class="num">2.</span>
+                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                            </li>
+                            <li>
+                                <span class="num">3.</span>
+                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                            </li>
+                            <li>
+                                <span class="num">4.</span>
+                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                            </li>
+                            <li>
+                                <span class="num">5.</span>
+                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                            </li>
+                            <li>
+                                <span class="num">6.</span>
+                                <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
+                                <span class="sel-num"><a href="javascript:;" class="specialty-click">选择专业</a></span>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item3">
+                        <div class="">
+                            <label><input type="radio" checked name="isFun1" id=""/>全部服从专业调剂</label>
+                            <label><input type="radio" name="isFun1" id=""/>全部不服从专业调剂</label>
+                            <label><input type="radio" name="isFun1" id=""/>部分服从专业调剂</label>
+                        </div>
+                    </td>
+                    <td class="item3">
+                        <div class="">
+                            <label><input type="radio" checked name="isFun2" id=""/>全部服从专业调剂</label>
+                            <label><input type="radio" name="isFun2" id=""/>全部不服从专业调剂</label>
+                            <label><input type="radio" name="isFun2" id=""/>部分服从专业调剂</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item3">
+                        <div class="">
+                            <label><input type="radio" checked name="isFun1" id=""/>全部服从专业调剂</label>
+                            <label><input type="radio" name="isFun1" id=""/>全部不服从专业调剂</label>
+                            <label><input type="radio" name="isFun1" id=""/>部分服从专业调剂</label>
+                        </div>
+                    </td>
+                    <td class="item3">
+                        <div class="">
+                            <label><input type="radio" checked name="isFun2" id=""/>全部服从专业调剂</label>
+                            <label><input type="radio" name="isFun2" id=""/>全部不服从专业调剂</label>
+                            <label><input type="radio" name="isFun2" id=""/>部分服从专业调剂</label>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <table class="volunteer-flow3-table">
                 <thead>
                 <tr>
