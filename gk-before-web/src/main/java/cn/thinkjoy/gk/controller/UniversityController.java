@@ -6,6 +6,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseCommonController;
+import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.domain.UniversityDict;
@@ -37,7 +38,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/university")
-public class UniversityController extends BaseCommonController {
+public class UniversityController extends BaseController {
 
     public static final Logger LOGGER= LoggerFactory.getLogger(UniversityController.class);
 
@@ -204,12 +205,14 @@ public class UniversityController extends BaseCommonController {
      */
     @RequestMapping(value = "/getEnrollInfo",method = RequestMethod.GET)
     @ResponseBody
-    public Map<String,Object> getEnrollInfo(){
+    public Map<String,Object> getEnrollInfo()throws Exception{
+//        long areaId=getAreaCookieValue();
+        long areaId=450000L;
         String schoolId=request.getParameter("id");
         Map<String,Object> map=new HashMap<String, Object>();
         List<EnrollResponseDto>  enrollResponseDtoList=new ArrayList<EnrollResponseDto>();
-        List<EnrollInfo>  lastenrollInfos=iUniversityService.getEnrollInfoByYear(2014,schoolId);
-        List<EnrollInfo>  enrollInfos=iUniversityService.getEnrollInfoByYear(2013,schoolId);
+        List<EnrollInfo>  lastenrollInfos=iUniversityService.getEnrollInfoByYear(2014,schoolId,areaId);
+        List<EnrollInfo>  enrollInfos=iUniversityService.getEnrollInfoByYear(2013,schoolId,areaId);
         EnrollResponseDto lastEnrollResponseDto=new EnrollResponseDto();
         lastEnrollResponseDto.setTitle("2013招生情况");
         lastEnrollResponseDto.setInfos(lastenrollInfos);
@@ -228,9 +231,10 @@ public class UniversityController extends BaseCommonController {
      */
     @RequestMapping(value = "/getEnrollPlan",method = RequestMethod.GET)
     @ResponseBody
-    public EntrollPlanDto getEnrollPlan(){
+    public EntrollPlanDto getEnrollPlan() throws Exception{
         String schoolId=request.getParameter("id");
         String batch=request.getParameter("batch");
+        long areaId=getAreaCookieValue();
         EntrollPlanDto entrollPlanDto=new EntrollPlanDto();
         List<EntrollPlan> entrollPlans=new ArrayList<EntrollPlan>();
         switch (batch){
@@ -247,8 +251,8 @@ public class UniversityController extends BaseCommonController {
         }
         EntrollPlan entrollPlan=new EntrollPlan();
         EntrollPlan lastEntrollPlan=new EntrollPlan();
-        List<PlanInfo> planInfos=iUniversityService.getPlanInfosByYear(2015,schoolId,batch);
-        List<PlanInfo> lastPlanInfos=iUniversityService.getPlanInfosByYear(2014,schoolId,batch);
+        List<PlanInfo> planInfos=iUniversityService.getPlanInfosByYear(2015,schoolId,batch,areaId);
+        List<PlanInfo> lastPlanInfos=iUniversityService.getPlanInfosByYear(2014,schoolId,batch,areaId);
         entrollPlan.setTitle("2015年招生计划");
         entrollPlan.setPlanInfos(planInfos);
         lastEntrollPlan.setTitle("2014年招生计划");

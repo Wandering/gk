@@ -1138,19 +1138,22 @@ selectList
         select * from (
         select '文科' as subjectName, wsPlanNumber as planNumber,wsEnrollNumber as enrollNumber,wsHighestScore as highestScore,
         wsHighestRank as highestRank,wsLowestScore as lowestScore,wsLowestRank as lowestRank,wsAverageScore as averageScore,
-          wsAverageRank as averageRank,batch
+          wsAverageRank as averageRank,batch,areaId
          from gk_enroll_report where universityId=#{universityId} and year=#{year}
 
         union all
         select '理工' as subjectName, lgPlanNumber as planNumber,lgEnrollNumber as enrollNumber,lgHighestScore as highestScore,
         lgHighestRank as highestRank,lgLowestScore as lowestScore,lgLowestRank as lowestRank,lgAverageScore as averageScore,
-          lgAverageRank as averageRank,batch
+          lgAverageRank as averageRank,batch,areaId
          from gk_enroll_report where universityId=#{universityId} and year=#{year}
         ) a
         <where>
             1=1
             <if test="batch !=null and batch !=''">
                 and batch=#{batch}
+            </if>
+            <if test="areaId !=null and batch !=''">
+                and areaId=#{areaId}
             </if>
         </where>
     </select>
@@ -1161,6 +1164,9 @@ selectList
          and universityId=#{universityId} and year=#{year}
           <if test="batch !=null and batch !=''">
                and batch=#{batch}
+          </if>
+          <if test="areaId !=null and areaId !=''">
+               and areaId=#{areaId}
           </if>
     </select>
 

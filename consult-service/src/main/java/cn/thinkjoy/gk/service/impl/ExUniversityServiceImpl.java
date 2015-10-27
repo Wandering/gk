@@ -57,11 +57,12 @@ public class ExUniversityServiceImpl implements IExUniversityService {
     }
 
     @Override
-    public List<EnrollInfo> getEnrollInfoByYear(Integer year,String universityId) {
+    public List<EnrollInfo> getEnrollInfoByYear(Integer year,String universityId,long areaId) {
         Map<String, Object> params = new HashMap<>();
 
         params.put("year",year);
         params.put("universityId",universityId);
+        params.put("areaId",areaId);
 
         return iUniversityDAO.getEnrollInfoByYear(params);
     }
@@ -72,13 +73,14 @@ public class ExUniversityServiceImpl implements IExUniversityService {
     }
 
     @Override
-    public List<PlanInfo> getPlanInfosByYear(Integer year,String universityId,String batch) {
+    public List<PlanInfo> getPlanInfosByYear(Integer year,String universityId,String batch,long areaId) {
 
         Map<String, Object> params = new HashMap<>();
 
         params.put("year",year);
         params.put("universityId",universityId);
         params.put("batch",batch);
+        params.put("areaId",areaId);
 
         return iUniversityDAO.getPlanInfosByYear(params);
     }
