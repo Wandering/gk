@@ -114,7 +114,7 @@ public class UploadController extends BaseController{
 						initArray = JSONArray.parseArray(obj.getString(Const.NO_INIT));
 						FileUploadParam fileUploadParam = null;
 						for(int i=0;i<initArray.size();i++){
-							fileUploadParam = (FileUploadParam)JSONObject.parseObject(initArray.getString(i), FileUploadParam.class);
+							fileUploadParam = JSONObject.parseObject(initArray.getString(i), FileUploadParam.class);
 							UploadRunnable r = new UploadRunnable(filePath, systemFileName,fileUploadParam);
 							Thread t = new Thread(r);
 							t.start();

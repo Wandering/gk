@@ -56,6 +56,7 @@ public class UploadUtil {
 			status = 0;
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw e;
 		}
 		return status;

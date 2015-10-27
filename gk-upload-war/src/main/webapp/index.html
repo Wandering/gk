@@ -9,12 +9,12 @@
 	var options = { 
 	        //target:        '#uploadForm',   // target element(s) to be updated with server response 
 	        beforeSubmit:  showRequest,  // pre-submit callback 
-	        success: showResponse // post-submit callback
+	        success: showResponse, // post-submit callback
 	 		
 	        // other available options: 
 	        //url:       url         // override for form's 'action' attribute 
 	        //type:     'get'        // 'get' or 'post', override for form's 'method' attribute 
-	        //dataType:  'jsonp',        // 'xml', 'script', or 'json' (expected server response type)
+	        dataType:  'json'        // 'xml', 'script', or 'json' (expected server response type)
 	        //jsonp:'jsoncallback'
 	        //clearForm: true        // clear all form fields after successful submit 
 	        //resetForm: true        // reset the form after successful submit 
@@ -45,7 +45,7 @@
 	// post-submit callback 
 	function showResponse(responseText, statusText)  { 
 		
-		responseText = decodeURIComponent(responseText);
+		responseText = JSON.stringify(responseText);
 		
 		//alert(responseText);
 		console.log(responseText);
