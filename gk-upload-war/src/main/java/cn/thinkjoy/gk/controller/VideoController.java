@@ -8,8 +8,10 @@ import cn.thinkjoy.gk.param.FileUploadParam;
 import cn.thinkjoy.gk.protocol.DateStyle;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.runnable.UploadRunnable;
+import cn.thinkjoy.gk.util.CheckUtil;
 import cn.thinkjoy.gk.util.DateUtil;
 import cn.thinkjoy.gk.util.UploadUtil;
+import cn.thinkjoy.gk.util.VideoUtil;
 import cn.thinkjoy.gk.vo.FileUploadVO;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -66,13 +68,17 @@ public class VideoController extends BaseController{
 				int fileSize = (int) fileUpload.getSize();
 
 				// 验证文件
-				UploadUtil.checkImageFile(fileSize, uploadFileType);
+				CheckUtil.checkVideoFile(fileSize, uploadFileType);
 
-				String filePath = Const.IMAGE_UPLOAD_DIR+date+"/"+uploadFileType;
+				String filePath = Const.VIDEO_UPLOAD_DIR+date+"/"+uploadFileType;
 
-				String systemFileName= UUID.randomUUID().toString()+ "." + uploadFileType;
+				String uuid = UUID.randomUUID().toString();
+
+				String systemFileName= uuid+ "." + uploadFileType;
 				// 本机文件地址
 				UploadUtil.fileUpload(new File(filePath,systemFileName), fileUpload);
+
+				VideoUtil.process(filePath+systemFileName,filePath+uuid+".mp4");
 
 //				fileUpload.transferTo(new File(filePath+systemFileName));
 

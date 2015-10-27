@@ -23,6 +23,10 @@ public final class Const {
 	 */
 	public static final String[] FILE_TYPES = properties.get("FILE_TYPES").toString().split(",");
 	/**
+	 * 允许上传的文件类型
+	 */
+	public static final String[] VIDEO_TYPES = properties.get("VIDEO_TYPES").toString().split(",");
+	/**
 	 * 图片水印文字字体
 	 */
 	public static final String[] FONT_NAME = {"TimesRoman","Courier","Arial","黑体"};

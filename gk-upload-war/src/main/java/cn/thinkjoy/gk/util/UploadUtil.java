@@ -120,64 +120,6 @@ public class UploadUtil {
 		}
 		return map;
 	}
-	
-	/**
-	 * 校验文件
-	 */
-	public static void checkFile(Integer fileSize,String fileType) throws Exception {
-		if(fileSize<=0){
-			throw new BizException(ERRORCODE.UPLOAD_ERROR_401.getCode(),ERRORCODE.UPLOAD_ERROR_401.getMessage());
-		}else if (!ckeckFileSize(fileSize)) {
-			throw new BizException(ERRORCODE.UPLOAD_ERROR_400.getCode(),ERRORCODE.UPLOAD_ERROR_400.getMessage());
-		} else if (!checkType(fileType)) {
-			throw new BizException(ERRORCODE.UPLOAD_ERROR_402.getCode(),ERRORCODE.UPLOAD_ERROR_402.getMessage());
-		}
-	}
-	
-	/**
-	 * 校验文件
-	 */
-	public static void checkImageFile(Integer fileSize,String imageType) throws Exception {
-		if(fileSize<=0){
-			throw new BizException(ERRORCODE.UPLOAD_ERROR_401.getCode(),ERRORCODE.UPLOAD_ERROR_401.getMessage());
-		}else if (!ckeckImageSize(fileSize)) {
-			throw new BizException(ERRORCODE.UPLOAD_ERROR_400.getCode(),ERRORCODE.UPLOAD_ERROR_400.getMessage());
-		} else if (!checkImageType(imageType)) {
-			throw new BizException(ERRORCODE.UPLOAD_ERROR_402.getCode(),ERRORCODE.UPLOAD_ERROR_402.getMessage());
-		}
-	}
-
-	/**
-	 * 检查图片类型
-	 */
-	private static boolean checkImageType(String imageType) {
-		boolean flag = false;
-		if (!"".equals(imageType)) {
-
-			for (String s : Const.IMAGE_TYPES) {
-				if (s.equals(imageType.toLowerCase())) {
-					flag = true;
-				}
-			}
-		}
-		return flag;
-	}
-	
-	/**
-	 * 检查文件类型
-	 */
-	private static boolean checkType(String type) {
-		boolean flag = false;
-		if (!"".equals(type)) {
-			for (String s : Const.FILE_TYPES) {
-				if (s.equals(type)) {
-					flag = true;
-					break;
-				}
-			}
-		}
-		return flag;
-	}
 
 	/**
 	 * 获取项目HHTP绝对路径
@@ -208,40 +150,6 @@ public class UploadUtil {
 			throw e;
 		}
 		return status;
-	}
-	
-	/**
-	 * 验证文件大小
-	 */
-	private static boolean ckeckFileSize(int fileSize) throws Exception {
-		boolean flag = true;
-		try{
-			int fileUploadSize = ConvertUtil.stringToInteger(properties.get("FILE_UPLOAD_SIZE").toString());
-			if (fileSize > fileUploadSize) {
-				flag = false;
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-			throw e;
-		}
-		return flag;
-	}
-	
-	/**
-	 * 验证图片大小
-	 */
-	private static boolean ckeckImageSize(int imageSize) throws Exception {
-		boolean flag = true;
-		try{
-			int imageUploadSize = ConvertUtil.stringToInteger(properties.get("IMAGE_UPLOAD_SIZE").toString());
-			if (imageSize > imageUploadSize) {
-				flag = false;
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-			throw e;
-		}
-		return flag;
 	}
 	
 }
