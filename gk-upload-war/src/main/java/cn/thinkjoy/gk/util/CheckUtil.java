@@ -55,7 +55,7 @@ public class CheckUtil {
 	public static void checkVideoFile(Integer fileSize,String videoType) throws Exception {
 		if(fileSize<=0){
 			throw new BizException(ERRORCODE.UPLOAD_ERROR_401.getCode(),ERRORCODE.UPLOAD_ERROR_401.getMessage());
-		}else if (!checkImageSize(fileSize)) {
+		}else if (!checkVideoSize(fileSize)) {
 			throw new BizException(ERRORCODE.UPLOAD_ERROR_400.getCode(),ERRORCODE.UPLOAD_ERROR_400.getMessage());
 		} else if (!checkVideoType(videoType)) {
 			throw new BizException(ERRORCODE.UPLOAD_ERROR_402.getCode(),ERRORCODE.UPLOAD_ERROR_402.getMessage());
