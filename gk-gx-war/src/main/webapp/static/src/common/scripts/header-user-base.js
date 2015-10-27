@@ -8,6 +8,7 @@ define(function (require, exports, modules) {
     $(function () {
         //判断当前用户cookie是否存在
         if (!GetCookie("gxuser") || GetCookie("gxuser") == '""') {
+        //if (!GetCookie("snuser") || GetCookie("snuser") == '""') {
             console.log('没有登录11');
             $('.menu').hide();
             $('#log-reg').show();
