@@ -150,7 +150,7 @@ public class UploadUtil {
 	/**
 	 * 检查图片类型
 	 */
-	public static boolean checkImageType(String imageType) {
+	private static boolean checkImageType(String imageType) {
 		boolean flag = false;
 		if (!"".equals(imageType)) {
 

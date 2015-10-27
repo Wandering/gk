@@ -46,13 +46,9 @@ public class ImageController extends BaseController{
 	 */
 	@RequestMapping(value = "/image",method = RequestMethod.POST)
 	@ResponseBody
-	public List<FileUploadVO> image(@RequestParam(value = "files[]", required = false) MultipartFile[] fileUploads,
+	public List<FileUploadVO> image(@RequestParam(value = "files", required = false) MultipartFile[] fileUploads,
 						 @RequestParam(value = "params", required = false)String params) throws Exception {
-//		String cookieValue = CookieUtil.getCookieValue(request.getCookies(), CookieConst.ADMINUSER_COOKIE_NAME);
-//		if(StringUtils.isEmpty(cookieValue)){
-//			throw new BizException(ERRORCODE.UPLOAD_ERROR_0.getCode(),ERRORCODE.UPLOAD_ERROR_0.getMessage());
-//			return null;
-//		}
+
 		JSONObject obj = null;
 		if(!StringUtils.isEmpty(params)){
 			obj = JSON.parseObject(params);

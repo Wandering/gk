@@ -45,24 +45,14 @@ public class VideoController extends BaseController{
 	 */
 	@RequestMapping(value = "/video",method = RequestMethod.POST)
 	@ResponseBody
-	public List<FileUploadVO> video(@RequestParam(value = "files[]", required = false) MultipartFile[] fileUploads,
+	public List<FileUploadVO> video(@RequestParam(value = "files", required = false) MultipartFile[] fileUploads,
 						 @RequestParam(value = "params", required = false)String params) throws Exception {
-//		String cookieValue = CookieUtil.getCookieValue(request.getCookies(), CookieConst.ADMINUSER_COOKIE_NAME);
-//		if(StringUtils.isEmpty(cookieValue)){
-//			throw new BizException(ERRORCODE.UPLOAD_ERROR_0.getCode(),ERRORCODE.UPLOAD_ERROR_0.getMessage());
-//			return null;
-//		}
-		JSONObject obj = null;
-		if(!StringUtils.isEmpty(params)){
-			obj = JSON.parseObject(params);
-		}
+
 		long stratTime = System.currentTimeMillis();
 
 		List<FileUploadVO> fileUploadVOs = new ArrayList<FileUploadVO>();
 
 		if(null!=fileUploads&&fileUploads.length>0){
-
-			JSONArray initArray = new JSONArray();
 
 			String date = DateUtil.DateToString(new Date(), DateStyle.YYYY_MM_DD);
 			for(MultipartFile fileUpload:fileUploads){
@@ -97,30 +87,6 @@ public class VideoController extends BaseController{
 
 				fileUploadVOs.add(fileUploadVO);
 
-				if(null!=obj){
-					if(obj.containsKey(Const.INIT)){
-						initArray = JSONArray.parseArray(obj.getString(Const.INIT));
-						FileUploadParam fileUploadParam = null;
-						for(int i=0;i<initArray.size();i++){
-							fileUploadParam = JSONObject.parseObject(initArray.getString(i), FileUploadParam.class);
-							UploadUtil.createCondenseAndWatermark(filePath, systemFileName,fileUploadParam);
-						}
-						initArray.clear();
-					}
-
-					if(obj.containsKey(Const.NO_INIT)){
-						initArray = JSONArray.parseArray(obj.getString(Const.NO_INIT));
-						FileUploadParam fileUploadParam = null;
-						for(int i=0;i<initArray.size();i++){
-							fileUploadParam = JSONObject.parseObject(initArray.getString(i), FileUploadParam.class);
-							UploadRunnable r = new UploadRunnable(filePath, systemFileName,fileUploadParam);
-							Thread t = new Thread(r);
-							t.start();
-						}
-						initArray.clear();
-						initArray = null;
-					}
-				}
 			}
 		}else{
 			throw new BizException(ERRORCODE.UPLOAD_ERROR_405.getCode(),ERRORCODE.UPLOAD_ERROR_405.getMessage());
