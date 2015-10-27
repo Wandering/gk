@@ -486,8 +486,7 @@
         <a href="javascript:;" class="close-btn close-flow3-layer">x</a>
     </div>
     <div class="tips" style="width: 900px;">
-        <strong>温馨提示：</strong>
-        <p>依据平行志愿规则，系统推荐遵循分数最大化，为您推荐一下A、B、C、D四档院校；考生可根据个性化需求调整院校顺位。</p>
+        <p><strong>温馨提示：</strong>依据平行志愿规则，系统推荐遵循分数最大化，为您推荐一下A、B、C、D四档院校；考生可根据个性化需求调整院校顺位。</p>
     </div>
     <div class="volunteer-flow3-body">
         <div class="search-box">
