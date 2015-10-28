@@ -28,7 +28,11 @@ define(function (require) {
                 var date = new Date(data[i].lastModDate).Format('yyyy-MM-dd hh:mm');
                 html.push('<span class="fr">' + date + '</span>');
                 html.push('</div>');
-                html.push('<div class="detile-info mt20">');
+                if(data[i].informationSubContent==null||data[i].informationSubContent.trim()==""){
+                    html.push('<div class="detile-info mt20 hide">');
+                }else{
+                    html.push('<div class="detile-info mt20">');
+                }
                 html.push('<img class="triangle" src="http://cdn.gaokao360.net/static/global/common/images/triangle.png" />');
                 html.push(data[i].informationSubContent);
                 html.push('</div>');

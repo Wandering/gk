@@ -139,7 +139,7 @@ define(function (require) {
                     html.push('<div class="detile-content mt20">'
                     + '<div class="detile-header">'
                     + '<span class="order-number">' + (i + 1) + '</span>'
-                    + '<span class="detile-title"><a href="/question/question_detile.jsp?id=' + question.questionId + '">' + title + '</a></span>'
+                    + '<span class="detile-title"><a href="/question/question_detail.jsp?id=' + question.questionId + '">' + title + '</a></span>'
                     + '<span class="fr">' + time + '</span>'
                     + '</div>'
                     + '<div class="detile-info mt20">'

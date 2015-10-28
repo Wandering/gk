@@ -47,7 +47,7 @@ define(function (require) {
             var personListData = res.bizData;
             var avatar;
             if (personListData.icon == '' || personListData.icon == null) {
-                avatar = '/static/dist/common/images/icon_default.png';
+                avatar = 'http://cdn.gaokao360.net/static/global/common/images/icon_default.png';
             } else {
                 avatar = personListData.icon
             }
@@ -182,7 +182,7 @@ define(function (require) {
         var errorCodes = ["-100", "-110", "-120", "-130"];
         var errorMsgs = ["文件数量不能超过(5)", "文件超过大小限制(10MB)", "零字节的文件", "无效的文件类型"];
         $("#uploadify").uploadify({
-            'swf': "/static/bower_components/uploadify/uploadify.swf",
+            'swf': "http://cdn.gaokao360.net/static/bower_components/uploadify/uploadify.swf",
             'fileObjName': 'file',
             'uploader': "http://pre.file.xy189.cn/file/upload/savefile.shtml",
             'auto': true,

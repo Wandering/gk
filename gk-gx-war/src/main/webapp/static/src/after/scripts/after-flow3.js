@@ -62,12 +62,17 @@ define(function (require) {
                         var datatypeId = $('#volunteer-flow3-layer').attr('datatype');
 
                         $('.school-list').html('');
+
                         $.each(listData.data, function (i, v) {
+
                             if (listData.data[i].data.length == 0) {
                                 $('.no-school').show();
                                 $('.school-list').hide();
                             }
                             if (listData.data[i].data.length > 0 && i < 6) {
+                                if(listData.data[i].description!=null){
+                                    $('#school-list' + i).append('<div style="color:#c00">'+listData.data[i].description+'</div>');
+                                }
                                 $('#no-school' + i).hide();
                                 $('#school-list' + i).show();
                                 $.each(listData.data[i].data, function (j, m) {
@@ -140,17 +145,18 @@ define(function (require) {
                     batch: m_batch
                 },
                 success: function (res) {
-                    console.log(res);
+
                     var data = res.bizData;
+                    console.log(data);
                     if ('0000000' === res.rtnCode) {
                         var dicName = '';
-                        if (data.dictName) {
-                            dicName = data.dictName;
-                        }
+
                         var infoHtml = ''
-                            + '<p>'
-                            + '院校特征：' + dicName + '<br/>'
-                            + '院校隶属：' + data.subjection + '<br/>'
+                            + '<p>';
+                        if (data.dictName) {
+                            infoHtml+= '院校特征：' + data.dictName + '<br/>';
+                        }
+                        infoHtml+= '院校隶属：' + data.subjection + '<br/>'
                             + '院校类型：' + data.type + '<br/>'
                             + '2014年最低投档分：' + data.lowestScore + '<br/>'
                             + '2014年最低位次：' + data.lowestRanking + ' <br/>'
@@ -177,8 +183,24 @@ define(function (require) {
 
 
         //专业调剂
+        function getLabel(n) {
+            $('input[name="isFun' + n + '"]').on('click', function () {
+                if($(this).hasClass('partChecked')){
+                    $('#area-tips'+n).hide();
+                    $('#specialty' + n + n).show();
+                }else{
+                    $('#area-tips'+n).show();
+                    $('#specialty' + n + n).hide();
+                }
 
-
+            })
+        }
+        getLabel(1);
+        getLabel(2);
+        getLabel(3);
+        getLabel(4);
+        getLabel(5);
+        getLabel(6);
 
 
         // 获取专业
@@ -250,30 +272,30 @@ define(function (require) {
         // 下一步
         $('#volunteer-flow3-btn').on('click', function () {
             $('.school-list-col,.enrollmentSchool,#exchange,#integrity,#eva,#enrollment').html('');
-            //if ($('#result-info1').text() == "") {
-            //    $('.error-tips2').text("请在A志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if ($('#result-info2').text() == "") {
-            //    $('.error-tips2').text("请在B志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if ($('#result-info3').text() == "") {
-            //    $('.error-tips2').text("请在C志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if ($('#result-info4').text() == "") {
-            //    $('.error-tips2').text("请在D志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if ($('#result-info5').text() == "") {
-            //    $('.error-tips2').text("请在E志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if ($('#result-info6').text() == "") {
-            //    $('.error-tips2').text("请在F志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
+            if ($('#result-info1').text() == "") {
+                $('.error-tips2').text("请在A志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if ($('#result-info2').text() == "") {
+                $('.error-tips2').text("请在B志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if ($('#result-info3').text() == "") {
+                $('.error-tips2').text("请在C志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if ($('#result-info4').text() == "") {
+                $('.error-tips2').text("请在D志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if ($('#result-info5').text() == "") {
+                $('.error-tips2').text("请在E志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if ($('#result-info6').text() == "") {
+                $('.error-tips2').text("请在F志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
             $('#main1').hide();
             $('#main2').show();
             // 学校信息

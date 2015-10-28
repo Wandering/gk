@@ -184,14 +184,14 @@
                         <div class="radio-sel">
                             <label><input type="radio" checked name="isFun1" id=""/> 全部服从</label>
                             <label><input type="radio" name="isFun1" id=""/> 全部不服从</label>
-                            <label><input type="radio" name="isFun1" id=""/> 部分服从</label>
+                            <label><input type="radio" name="isFun1" class="partChecked" id=""/> 部分服从</label>
                         </div>
                     </td>
                     <td class="txt">
                         <div class="radio-sel">
                             <label><input type="radio" checked name="isFun2" id=""/> 全部服从</label>
                             <label><input type="radio" name="isFun2" id=""/> 全部不服从</label>
-                            <label><input type="radio" name="isFun2" id=""/> 部分服从</label>
+                            <label><input type="radio" name="isFun2" class="partChecked" id=""/> 部分服从</label>
                         </div>
                     </td>
                 </tr>

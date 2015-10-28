@@ -155,7 +155,6 @@ define(function (require) {
                         }
                         var infoHtml = ''
                             + '<p>'
-                            + '院校代码：' + data.code + '  <br/>'
                             + '院校特征：' + dicName + '<br/>'
                             + '院校隶属：' + data.subjection + '<br/>'
                             + '院校类型：' + data.type + '<br/>'
@@ -187,6 +186,8 @@ define(function (require) {
             var code = parents.attr('code');
             var year = parents.attr('year');
             console.log(m_batch + "=" + code + "=" + year)
+            $('#specialty-content').html('');
+            $('#specialty-layer,.tansLayer').show();
             $.ajax({
                 url: '/majored/majorList.do',
                 type: 'GET',
@@ -200,8 +201,6 @@ define(function (require) {
                     console.log(res);
                     var data = res.bizData;
                     if ('0000000' === res.rtnCode) {
-                        $('#specialty-content').html('');
-                        $('#specialty-layer,.tansLayer').show();
                         $.each(data, function (i, v) {
                             var specialtyTotal = data.length;
                             var name = v.name;
@@ -225,6 +224,12 @@ define(function (require) {
                 }
             });
         });
+
+
+
+
+
+
 
 
         $('#specialty-layer').on('click', 'label', function () {
