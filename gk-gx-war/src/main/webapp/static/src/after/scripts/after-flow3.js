@@ -70,8 +70,8 @@ define(function (require) {
                                 $('.school-list').hide();
                             }
                             if (listData.data[i].data.length > 0 && i < 6) {
-                                if(listData.data[i].description!=null){
-                                    $('#school-list' + i).append('<div style="color:#c00">'+listData.data[i].description+'</div>');
+                                if (listData.data[i].description != null) {
+                                    $('#school-list' + i).append('<div style="color:#c00">' + listData.data[i].description + '</div>');
                                 }
                                 $('#no-school' + i).hide();
                                 $('#school-list' + i).show();
@@ -120,7 +120,7 @@ define(function (require) {
             var datatypeid = $(this).attr('datatypeid');
             var m_university_name = $(this).attr('m_university_name');
             var years = 2014;
-            console.log(code + "+" + type + "+" + m_batch +"+"+m_batch_id +"+" + datatypeid + "+" + m_university_name)
+            console.log(code + "+" + type + "+" + m_batch + "+" + m_batch_id + "+" + datatypeid + "+" + m_university_name)
             var star = '';
             var starType = $(this).parents('.school-list').attr('dataType');
             if (starType == "A") {
@@ -154,26 +154,36 @@ define(function (require) {
                         var infoHtml = ''
                             + '<p>';
                         if (data.dictName) {
-                            infoHtml+= '院校特征：' + data.dictName + '<br/>';
+                            infoHtml += '院校特征：' + data.dictName + '<br/>';
                         }
-                        infoHtml+= '院校隶属：' + data.subjection + '<br/>'
-                            + '院校类型：' + data.type + '<br/>'
-                            + '2014年最低投档分：' + data.lowestScore + '<br/>'
-                            + '2014年最低位次：' + data.lowestRanking + ' <br/>'
-                            + '2014年录取平均分：' + data.averageScore + ' <br/>'
-                            + '2014年平均分位次：' + data.averageScoresRanking + ' <br/>'
-                            + '历年招生情况：' + data.enrollIntro + ' <br/>'
-                            + '录取指数：' + star
-                            + '</p>';
+                        infoHtml += '院校隶属：' + data.subjection + '<br/>'
+                        + '院校类型：' + data.type + '<br/>'
+                        + '2014年最低投档分：' + data.lowestScore + '<br/>'
+                        + '2014年最低位次：' + data.lowestRanking + ' <br/>'
+                        + '2014年录取平均分：' + data.averageScore + ' <br/>'
+                        + '2014年平均分位次：' + data.averageScoresRanking + ' <br/>'
+                        + '历年招生情况：' + data.enrollIntro + ' <br/>'
+                        + '录取指数：' + star
+                        + '</p>';
                         $('.open-flow3[type="text"][dataType="' + datatypeid + '"]').val(m_university_name).attr({
                             'code': data.code,
                             'm_batch': m_batch,
                             'm_batch_id': m_batch_id
                         });
+                        if (data.provinceName == "广西") {
+                            $('input.partChecked[name="isFun' + datatypeid + '"]').parent().show();
+                            $('#area-tips'+datatypeid).show();
+                        } else {
+                            $('input.partChecked[name="isFun' + datatypeid + '"]').parent().hide();
+                            $('#area-tips'+datatypeid).hide();
+                        }
                         $('#result-info' + datatypeid).html(infoHtml);
                         $('#tips' + datatypeid).hide();
                         $('#volunteer-flow3-layer,.tansLayer').hide();
                         $('#specialty' + datatypeid).show()
+                            .attr({'m_batch': m_batch, 'code': code, 'year': years})
+                            .find('input').val('');
+                        $('#specialtyPart' + datatypeid)
                             .attr({'m_batch': m_batch, 'code': code, 'year': years})
                             .find('input').val('');
                     }
@@ -185,16 +195,14 @@ define(function (require) {
         //专业调剂
         function getLabel(n) {
             $('input[name="isFun' + n + '"]').on('click', function () {
-                if($(this).hasClass('partChecked')){
-                    $('#area-tips'+n).hide();
+                if ($(this).hasClass('partChecked')) {
                     $('#specialtyPart' + n).show();
-                }else{
-                    $('#area-tips'+n).show();
+                } else {
                     $('#specialtyPart' + n).hide();
                 }
-
             })
         }
+
         getLabel(1);
         getLabel(2);
         getLabel(3);
@@ -211,7 +219,7 @@ define(function (require) {
             var m_batch = parents.attr('m_batch');
             var code = parents.attr('code');
             var year = parents.attr('year');
-            console.log(m_batch + "=" + code + "=" + year)
+            console.log(boxId + "=" + index + "="+m_batch + "=" + code + "=" + year)
             $('#specialty-content').html('');
             $('#specialty-layer,.tansLayer').show();
             $.ajax({
@@ -273,30 +281,30 @@ define(function (require) {
         // 下一步
         $('#volunteer-flow3-btn').on('click', function () {
             $('.school-list-col,.enrollmentSchool,#exchange,#integrity,#eva,#enrollment').html('');
-            //if ($('#result-info1').text() == "") {
-            //    $('.error-tips2').text("请在A志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if ($('#result-info2').text() == "") {
-            //    $('.error-tips2').text("请在B志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if ($('#result-info3').text() == "") {
-            //    $('.error-tips2').text("请在C志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if ($('#result-info4').text() == "") {
-            //    $('.error-tips2').text("请在D志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if ($('#result-info5').text() == "") {
-            //    $('.error-tips2').text("请在E志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
-            //if ($('#result-info6').text() == "") {
-            //    $('.error-tips2').text("请在F志愿中选择学校").fadeIn(1000).fadeOut(1000);
-            //    return false;
-            //}
+            if ($('#result-info1').text() == "") {
+                $('.error-tips2').text("请在A志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if ($('#result-info2').text() == "") {
+                $('.error-tips2').text("请在B志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if ($('#result-info3').text() == "") {
+                $('.error-tips2').text("请在C志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if ($('#result-info4').text() == "") {
+                $('.error-tips2').text("请在D志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if ($('#result-info5').text() == "") {
+                $('.error-tips2').text("请在E志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
+            if ($('#result-info6').text() == "") {
+                $('.error-tips2').text("请在F志愿中选择学校").fadeIn(1000).fadeOut(1000);
+                return false;
+            }
             $('#main1').hide();
             $('#main2').show();
             // 学校信息
@@ -309,11 +317,23 @@ define(function (require) {
             // 专业信息
             function getSpecialtyList(n) {
                 $('#specialty-list-info' + n).html('');
+                $('#partSel'+n).html('');
+
+
                 $.each($('#specialty' + n).find('input'), function (i, v) {
                     var specialtyListInfo = '<p>' + (i + 1) + '.' + $(v).val() + '</p>';
                     //console.log((i+1) + "." + $(v).val());
                     $('#specialty-list-info' + n).append(specialtyListInfo)
                 });
+
+
+                $.each($('#specialtyPart' + n).find('input'), function (i, v) {
+                    var partSel = '<p>' + (i + 1) + '.' + $(v).val() + '</p>';
+                    //console.log((i+1) + "." + $(v).val());
+                    $('#partSel' + n).append(partSel)
+                });
+
+
                 $.each($('#specialty' + n), function (i, v) {
                     console.log($(this).find('input').attr('specialtytotaln'))
                     //console.log($(this).find('input.write').length)

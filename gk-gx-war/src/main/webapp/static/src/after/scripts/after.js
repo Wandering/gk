@@ -22,24 +22,6 @@ define(function (require) {
             $('.error-tips').text(txt).fadeIn(1000).fadeOut(1000);
         }
 
-
-        $.ajax({
-            url: '/exam/findUserExam.do',
-            type: 'GET',
-            dataType: 'JSON',
-            data: {
-
-            },
-            success: function (res) {
-                console.log(res)
-
-
-            }
-        });
-
-
-
-
         function GetCookie(sMainName, sSubName) {
             var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
             return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
@@ -55,10 +37,12 @@ define(function (require) {
                     data: {},
                     success: function (res) {
                         console.log(res.bizData.isReported)
-                        if(res.bizData.isReported==0){
-                           $('#aggregateScore-input').removeAttr('readonly');
-                        }else{
-                            $('#aggregateScore-input').attr('readonly','readonly');
+                        if (res.bizData.isReported == 0) {
+                            $('#aggregateScore-input').removeAttr('readonly');
+                            $('#ranking-input').removeAttr('readonly');
+                        } else {
+                            $('#aggregateScore-input').attr('readonly', 'readonly');
+                            $('#ranking-input').attr('readonly', 'readonly');
                         }
                     }
                 });
@@ -177,17 +161,38 @@ define(function (require) {
                 type: 'POST',
                 dataType: 'JSON',
                 data: {
-                   "scores" : aggregateScoreV ,
-                    "batch": rankingV,
+                    "scores": aggregateScoreV,
+                    "ranking": rankingV,
                     "isReported": 1
                 },
                 success: function (res) {
-                    console.log(res)
+
+                    if(res.rtnCode==0000000){
+                        console.log('成功')
+                    }
 
 
                 }
             });
         });
+
+
+        $.ajax({
+            url: '/exam/findUserExam.do',
+            type: 'GET',
+            dataType: 'JSON',
+            data: {},
+            success: function (res) {
+                console.log(res)
+                var scores = res.bizData.scores;
+                var ranking = res.bizData.ranking;
+                $('#aggregateScore-input').val(scores)
+                $('#ranking-input').val(ranking)
+
+
+            }
+        });
+
 
         $('#prev-btn').on('click', function () {
             $('#volunteer-flow1').show();

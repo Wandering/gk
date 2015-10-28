@@ -6,6 +6,14 @@
     <%@ include file="/common/meta.jsp"%>
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/after/styles/after.min.css"/>
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/after/styles/expert-evaluating.min.css"/>
+    <style>
+        .content .evaluate-count .row{
+            height: 330px;
+        }
+        .partCheckedLabel{
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
@@ -185,21 +193,21 @@
                         <div class="radio-sel">
                             <label><input type="radio" checked name="isFun1" value="全部服从" id=""/> 全部服从</label>
                             <label><input type="radio" name="isFun1" value="全部不服从" id=""/> 全部不服从</label>
-                            <label><input type="radio" name="isFun1" value="部分服从" class="partChecked" id=""/> 部分服从</label>
+                            <label class="partCheckedLabel"><input type="radio" name="isFun1" value="部分服从" class="partChecked" id=""/> 部分服从</label>
                         </div>
                     </td>
                     <td class="txt">
                         <div class="radio-sel">
                             <label><input type="radio" checked name="isFun2" value="全部服从" id=""/> 全部服从</label>
                             <label><input type="radio" name="isFun2" value="全部不服从" id=""/> 全部不服从</label>
-                            <label><input type="radio" name="isFun2" value="部分服从" class="partChecked" id=""/> 部分服从</label>
+                            <label class="partCheckedLabel"><input type="radio" name="isFun2" value="部分服从" class="partChecked" id=""/> 部分服从</label>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td class="item4">
                        <div class="specialty-list2">
-                           <div class="area-tips" id="area-tips1">
+                           <div class="area-tips hide" id="area-tips1">
                                广西本区院校可选择服从部分专业调剂<br/>
                                可从院校中选择10个可调剂的专业<br/>
                                区外院校不可选择服从部分专业调剂<br/>
@@ -260,7 +268,7 @@
                     </td>
                     <td class="item4">
                         <div class="specialty-list2">
-                            <div class="area-tips" id="area-tips2">
+                            <div class="area-tips hide" id="area-tips2">
                                 广西本区院校可选择服从部分专业调剂<br/>
                                 可从院校中选择10个可调剂的专业<br/>
                                 区外院校不可选择服从部分专业调剂<br/>
@@ -454,21 +462,21 @@
                         <div class="radio-sel">
                             <label><input type="radio" checked name="isFun3" value="全部服从" id=""/> 全部服从</label>
                             <label><input type="radio" name="isFun3" value="全部不服从" id=""/> 全部不服从</label>
-                            <label><input type="radio" name="isFun3" value="部分服从" id=""/> 部分服从</label>
+                            <label class="partCheckedLabel"><input type="radio" name="isFun3" value="部分服从" class="partChecked" id=""/> 部分服从</label>
                         </div>
                     </td>
                     <td class="txt">
                         <div class="radio-sel">
                             <label><input type="radio" checked name="isFun4" value="全部服从" id=""/> 全部服从</label>
                             <label><input type="radio" name="isFun4" value="全部不服从" id=""/> 全部不服从</label>
-                            <label><input type="radio" name="isFun4" value="部分服从" id=""/> 部分服从</label>
+                            <label class="partCheckedLabel"><input type="radio" name="isFun4" value="部分服从" class="partChecked" id=""/> 部分服从</label>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td class="item4">
                         <div class="specialty-list2">
-                            <div class="area-tips" id="area-tips3">
+                            <div class="area-tips hide" id="area-tips3">
                                 广西本区院校可选择服从部分专业调剂<br/>
                                 可从院校中选择10个可调剂的专业<br/>
                                 区外院校不可选择服从部分专业调剂<br/>
@@ -529,7 +537,7 @@
                     </td>
                     <td class="item4">
                         <div class="specialty-list2">
-                            <div class="area-tips" id="area-tips4">
+                            <div class="area-tips hide" id="area-tips4">
                                 广西本区院校可选择服从部分专业调剂<br/>
                                 可从院校中选择10个可调剂的专业<br/>
                                 区外院校不可选择服从部分专业调剂<br/>
@@ -723,21 +731,21 @@
                         <div class="radio-sel">
                             <label><input type="radio" checked name="isFun5" value="全部服从" id=""/> 全部服从</label>
                             <label><input type="radio" name="isFun5" value="全部不服从" id=""/> 全部不服从</label>
-                            <label><input type="radio" name="isFun5" value="部分服从" id=""/> 部分服从</label>
+                            <label  class="partCheckedLabel"><input type="radio" name="isFun5" value="部分服从" class="partChecked" id=""/> 部分服从</label>
                         </div>
                     </td>
                     <td class="txt">
                         <div class="radio-sel">
                             <label><input type="radio" checked name="isFun6"  value="全部服从" id=""/> 全部服从</label>
                             <label><input type="radio" name="isFun6" value="全部不服从" id=""/> 全部不服从</label>
-                            <label><input type="radio" name="isFun6" value="部分服从" id=""/> 部分服从</label>
+                            <label  class="partCheckedLabel"><input type="radio" name="isFun6" value="部分服从" class="partChecked" id=""/> 部分服从</label>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td class="item4">
                         <div class="specialty-list2">
-                            <div class="area-tips" id="area-tips5">
+                            <div class="area-tips hide" id="area-tips5">
                                 广西本区院校可选择服从部分专业调剂<br/>
                                 可从院校中选择10个可调剂的专业<br/>
                                 区外院校不可选择服从部分专业调剂<br/>
@@ -798,7 +806,7 @@
                     </td>
                     <td class="item4">
                         <div class="specialty-list2">
-                            <div class="area-tips" id="area-tips6">
+                            <div class="area-tips hide" id="area-tips6">
                                 广西本区院校可选择服从部分专业调剂<br/>
                                 可从院校中选择10个可调剂的专业<br/>
                                 区外院校不可选择服从部分专业调剂<br/>
