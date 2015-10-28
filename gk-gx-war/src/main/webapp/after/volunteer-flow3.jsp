@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/after/styles/expert-evaluating.min.css"/>
 </head>
 <body>
+
 <%@ include file="/common/header.jsp"%>
 <div id="main1">
     <div class="w1000">
@@ -182,16 +183,16 @@
                 <tr>
                     <td class="txt">
                         <div class="radio-sel">
-                            <label><input type="radio" checked name="isFun1" id=""/> 全部服从</label>
-                            <label><input type="radio" name="isFun1" id=""/> 全部不服从</label>
-                            <label><input type="radio" name="isFun1" class="partChecked" id=""/> 部分服从</label>
+                            <label><input type="radio" checked name="isFun1" value="全部服从" id=""/> 全部服从</label>
+                            <label><input type="radio" name="isFun1" value="全部不服从" id=""/> 全部不服从</label>
+                            <label><input type="radio" name="isFun1" value="部分服从" class="partChecked" id=""/> 部分服从</label>
                         </div>
                     </td>
                     <td class="txt">
                         <div class="radio-sel">
-                            <label><input type="radio" checked name="isFun2" id=""/> 全部服从</label>
-                            <label><input type="radio" name="isFun2" id=""/> 全部不服从</label>
-                            <label><input type="radio" name="isFun2" class="partChecked" id=""/> 部分服从</label>
+                            <label><input type="radio" checked name="isFun2" value="全部服从" id=""/> 全部服从</label>
+                            <label><input type="radio" name="isFun2" value="全部不服从" id=""/> 全部不服从</label>
+                            <label><input type="radio" name="isFun2" value="部分服从" class="partChecked" id=""/> 部分服从</label>
                         </div>
                     </td>
                 </tr>
@@ -451,16 +452,16 @@
                 <tr>
                     <td class="txt">
                         <div class="radio-sel">
-                            <label><input type="radio" checked name="isFun3" id=""/> 全部服从</label>
-                            <label><input type="radio" name="isFun3" id=""/> 全部不服从</label>
-                            <label><input type="radio" name="isFun3" id=""/> 部分服从</label>
+                            <label><input type="radio" checked name="isFun3" value="全部服从" id=""/> 全部服从</label>
+                            <label><input type="radio" name="isFun3" value="全部不服从" id=""/> 全部不服从</label>
+                            <label><input type="radio" name="isFun3" value="部分服从" id=""/> 部分服从</label>
                         </div>
                     </td>
                     <td class="txt">
                         <div class="radio-sel">
-                            <label><input type="radio" checked name="isFun4" id=""/> 全部服从</label>
-                            <label><input type="radio" name="isFun4" id=""/> 全部不服从</label>
-                            <label><input type="radio" name="isFun4" id=""/> 部分服从</label>
+                            <label><input type="radio" checked name="isFun4" value="全部服从" id=""/> 全部服从</label>
+                            <label><input type="radio" name="isFun4" value="全部不服从" id=""/> 全部不服从</label>
+                            <label><input type="radio" name="isFun4" value="部分服从" id=""/> 部分服从</label>
                         </div>
                     </td>
                 </tr>
@@ -720,16 +721,16 @@
                 <tr>
                     <td class="txt">
                         <div class="radio-sel">
-                            <label><input type="radio" checked name="isFun5" id=""/> 全部服从</label>
-                            <label><input type="radio" name="isFun5" id=""/> 全部不服从</label>
-                            <label><input type="radio" name="isFun5" id=""/> 部分服从</label>
+                            <label><input type="radio" checked name="isFun5" value="全部服从" id=""/> 全部服从</label>
+                            <label><input type="radio" name="isFun5" value="全部不服从" id=""/> 全部不服从</label>
+                            <label><input type="radio" name="isFun5" value="部分服从" id=""/> 部分服从</label>
                         </div>
                     </td>
                     <td class="txt">
                         <div class="radio-sel">
-                            <label><input type="radio" checked name="isFun6" id=""/> 全部服从</label>
-                            <label><input type="radio" name="isFun6" id=""/> 全部不服从</label>
-                            <label><input type="radio" name="isFun6" id=""/> 部分服从</label>
+                            <label><input type="radio" checked name="isFun6"  value="全部服从" id=""/> 全部服从</label>
+                            <label><input type="radio" name="isFun6" value="全部不服从" id=""/> 全部不服从</label>
+                            <label><input type="radio" name="isFun6" value="部分服从" id=""/> 部分服从</label>
                         </div>
                     </td>
                 </tr>
@@ -1060,7 +1061,7 @@
                 <h3 class="eva-title">志愿梯度合理性评估</h3>
                 <div class="row">
                     <div class="col-1-img">
-                        <img src="http://cdn.gaokao360.net/static/global/after/images/eva-left-line1.png" class="eva-left-bg"/>
+                        <img src="http://cdn.gaokao360.net/static/gx/after/images/eva-left-line1.png" class="eva-left-bg"/>
                     </div>
                     <div class="school-list-col"></div>
                     <div class="eva" id="eva"></div>
@@ -1070,7 +1071,7 @@
                 <h3 class="eva-title color-green">去年招生情况</h3>
                 <div class="row">
                     <div class="col-1-img">
-                        <img src="http://cdn.gaokao360.net/static/global/after/images/eva-left-line2.png" class="eva-left-bg"/>
+                        <img src="http://cdn.gaokao360.net/static/gx/after/images/eva-left-line2.png" class="eva-left-bg"/>
                     </div>
                     <div id="enrollmentSchool" class="enrollmentSchool"></div>
                     <div id="enrollment"></div>
@@ -1080,7 +1081,7 @@
                 <h3 class="eva-title color-red">志愿完整度评估</h3>
                 <div class="row">
                     <div class="col-1-img">
-                        <img src="http://cdn.gaokao360.net/static/global/after/images/eva-left-line3.png" class="eva-left-bg"/>
+                        <img src="http://cdn.gaokao360.net/static/gx/after/images/eva-left-line3.png" class="eva-left-bg"/>
                     </div>
                     <div class="school-list-col"></div>
                     <div id="integrity"></div>
@@ -1090,7 +1091,7 @@
                 <h3 class="eva-title color-red">志愿专业是否服从调剂</h3>
                 <div class="row">
                     <div class="col-1-img">
-                        <img src="http://cdn.gaokao360.net/static/global/after/images/eva-left-line3.png" class="eva-left-bg"/>
+                        <img src="http://cdn.gaokao360.net/static/gx/after/images/eva-left-line3.png" class="eva-left-bg"/>
                     </div>
                     <div class="school-list-col"></div>
                     <div id="exchange"></div>

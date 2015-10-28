@@ -120,7 +120,7 @@ define(function (require) {
             var datatypeid = $(this).attr('datatypeid');
             var m_university_name = $(this).attr('m_university_name');
             var years = 2014;
-            //console.log($(this).parents('.school-list').attr('dataType'))
+            console.log(code + "+" + type + "+" + m_batch +"+"+m_batch_id +"+" + datatypeid + "+" + m_university_name)
             var star = '';
             var starType = $(this).parents('.school-list').attr('dataType');
             if (starType == "A") {
@@ -212,6 +212,8 @@ define(function (require) {
             var code = parents.attr('code');
             var year = parents.attr('year');
             console.log(m_batch + "=" + code + "=" + year)
+            $('#specialty-content').html('');
+            $('#specialty-layer,.tansLayer').show();
             $.ajax({
                 url: '/majored/majorList.do',
                 type: 'GET',
@@ -225,8 +227,7 @@ define(function (require) {
                     console.log(res);
                     var data = res.bizData;
                     if ('0000000' === res.rtnCode) {
-                        $('#specialty-content').html('');
-                        $('#specialty-layer,.tansLayer').show();
+
                         $.each(data, function (i, v) {
                             var specialtyTotal = data.length;
                             var name = v.name;
@@ -272,30 +273,30 @@ define(function (require) {
         // 下一步
         $('#volunteer-flow3-btn').on('click', function () {
             $('.school-list-col,.enrollmentSchool,#exchange,#integrity,#eva,#enrollment').html('');
-            if ($('#result-info1').text() == "") {
-                $('.error-tips2').text("请在A志愿中选择学校").fadeIn(1000).fadeOut(1000);
-                return false;
-            }
-            if ($('#result-info2').text() == "") {
-                $('.error-tips2').text("请在B志愿中选择学校").fadeIn(1000).fadeOut(1000);
-                return false;
-            }
-            if ($('#result-info3').text() == "") {
-                $('.error-tips2').text("请在C志愿中选择学校").fadeIn(1000).fadeOut(1000);
-                return false;
-            }
-            if ($('#result-info4').text() == "") {
-                $('.error-tips2').text("请在D志愿中选择学校").fadeIn(1000).fadeOut(1000);
-                return false;
-            }
-            if ($('#result-info5').text() == "") {
-                $('.error-tips2').text("请在E志愿中选择学校").fadeIn(1000).fadeOut(1000);
-                return false;
-            }
-            if ($('#result-info6').text() == "") {
-                $('.error-tips2').text("请在F志愿中选择学校").fadeIn(1000).fadeOut(1000);
-                return false;
-            }
+            //if ($('#result-info1').text() == "") {
+            //    $('.error-tips2').text("请在A志愿中选择学校").fadeIn(1000).fadeOut(1000);
+            //    return false;
+            //}
+            //if ($('#result-info2').text() == "") {
+            //    $('.error-tips2').text("请在B志愿中选择学校").fadeIn(1000).fadeOut(1000);
+            //    return false;
+            //}
+            //if ($('#result-info3').text() == "") {
+            //    $('.error-tips2').text("请在C志愿中选择学校").fadeIn(1000).fadeOut(1000);
+            //    return false;
+            //}
+            //if ($('#result-info4').text() == "") {
+            //    $('.error-tips2').text("请在D志愿中选择学校").fadeIn(1000).fadeOut(1000);
+            //    return false;
+            //}
+            //if ($('#result-info5').text() == "") {
+            //    $('.error-tips2').text("请在E志愿中选择学校").fadeIn(1000).fadeOut(1000);
+            //    return false;
+            //}
+            //if ($('#result-info6').text() == "") {
+            //    $('.error-tips2').text("请在F志愿中选择学校").fadeIn(1000).fadeOut(1000);
+            //    return false;
+            //}
             $('#main1').hide();
             $('#main2').show();
             // 学校信息
@@ -314,7 +315,7 @@ define(function (require) {
                     $('#specialty-list-info' + n).append(specialtyListInfo)
                 });
                 $.each($('#specialty' + n), function (i, v) {
-                    //console.log($(this).find('input').attr('specialtytotaln'))
+                    console.log($(this).find('input').attr('specialtytotaln'))
                     //console.log($(this).find('input.write').length)
                     var specialtytotaln = $(this).find('input').attr('specialtytotaln');
                     var specialtyLength = $(this).find('input.write').length;
@@ -338,6 +339,7 @@ define(function (require) {
             getSpecialtyList(5);
             getSpecialtyList(6);
             var isFun1 = $('input[name="isFun1"]:checked').val();
+            console.log(isFun1)
             $('#isFunRadio1').html(isFun1)
             var isFun2 = $('input[name="isFun2"]:checked').val();
             $('#isFunRadio2').html(isFun2)
@@ -461,6 +463,7 @@ define(function (require) {
             $.each($('.isFunRadio'), function (i, v) {
                 var isF = '';
                 var isFt = $(v).text();
+                console.log(isFt)
                 if (isFt == "是") {
                     isF += "志愿专业服从调剂";
                 } else {
