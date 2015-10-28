@@ -37,12 +37,13 @@ public class VideoUtil {
 //		commend.add(outputFile);
 		//高精度
 		commend.add("ffmpeg");
+		commend.add("-y");
 		commend.add("-i");
 		commend.add(inputFile);
 		commend.add("-ab");
 		commend.add("128");
 		commend.add("-acodec");
-		commend.add("libmp3lame");
+		commend.add("libmp3lame");  //音频
 		commend.add("-ac");
 		commend.add("1");
 		commend.add("-ar");
@@ -50,8 +51,7 @@ public class VideoUtil {
 		commend.add("-r");
 		commend.add("29.97");
 		commend.add("-qscale");
-		commend.add("6");
-		commend.add("-y");
+		commend.add("4");
 		commend.add(outputFile);
 		StringBuffer test=new StringBuffer();
 		for(int i=0;i<commend.size();i++) {
