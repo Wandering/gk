@@ -250,14 +250,18 @@ define(function (require) {
                     $('#batchV').text(batchV);
                     $('#subjectTypeV').text(subjectTypeV);
                     var data = $.parseJSON(res.bizData);
-                    var dataJson = data.result.data;
-
-                    console.log(dataJson)
+                    console.log(data)
+                    var dataJson = data.data.result.data;
+                    console.log(dataJson.length)
 
                     if (!dataJson) {
                         errorTips(res.msg);
                         return false;
                     }
+                    if(dataJson.length==0){
+                        $('.no-school').show();
+                    }
+
                     for (var i = 0; i < dataJson.length; i++) {
                         if (dataJson[i].status == 0) {
                             $('#no-school' + i).show();
@@ -374,7 +378,14 @@ define(function (require) {
                             + '<span class="num"><strong>' + m_averagescores + '</strong>分</span>'
                             + '</li>'
                             + '</ul>';
-                        $('#dream-list').append(dreamSchoolList);
+
+                        if(m_averagescores!=null || m_lowestscore != null){
+                            $('#dream-list').append(dreamSchoolList);
+                        }
+                        if($('#dream-list').find('li').length==0){
+                            $('#dream-list').html('<p style="text-align: center;padding: 30px 0;">'+ dreamSchoolV + dreamSubjectTypeV +'类2014年未招生</p>');
+                        }
+
                     }
 
                 }
@@ -426,6 +437,7 @@ define(function (require) {
                     $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
                     return;
                 }
+                console.log(res.bizData)
                 if (res.rtnCode == "0000000") {
                     $('#precedence-list').html('');
                     $('#precedence-school-layer,.tansLayer').show();
@@ -442,7 +454,13 @@ define(function (require) {
                         + '<span class="num"><b>' + (data.m_lg_ranking || '') + '</b>位</span>'
                         + '</li>'
                         + '</ul>';
-                    $('#precedence-list').append(dreamSchoolList);
+                    if(data.m_ws_ranking!=0 || data.m_lg_ranking != 0){
+                        $('#precedence-list').append(dreamSchoolList);
+                    }
+
+                    if($('#precedence-list').find('li').length==0){
+                        $('#precedence-list').html('<p style="text-align: center;padding: 30px 0;">暂无数据,请检查输入信息</p>');
+                    }
 
                     $('#confirm').on('click', function (e) {
                         $('#precedence-school-layer,.tansLayer').hide();

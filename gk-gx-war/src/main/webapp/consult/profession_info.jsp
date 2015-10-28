@@ -61,6 +61,7 @@
 
 <%@ include file="/common/footer.jsp"%>
 <script type="text/javascript">
+//    seajs.use("/static/src/consult/scripts/profession_info");
     seajs.use("http://cdn.gaokao360.net/static/global/consult/scripts/profession_info.min");
 </script>
 </body>
