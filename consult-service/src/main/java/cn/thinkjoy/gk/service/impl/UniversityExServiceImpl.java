@@ -24,7 +24,7 @@ public class UniversityExServiceImpl implements IUniversityExService{
     private IUniversityExDAO universityExDAO;
 
     @Override
-    public UniversityDetailDto getUniversityDetail(String schoolCode, String batch, Integer type,Integer year) {
+    public UniversityDetailDto getUniversityDetail(String schoolCode, String batch, Integer type,Integer year,long areaId) {
 
         UniversityDetailDto universityDetailDto = null;
 
@@ -33,6 +33,7 @@ public class UniversityExServiceImpl implements IUniversityExService{
         params.put("code",schoolCode);
         params.put("batch",batch);
         params.put("year",year);
+        params.put("areaId",areaId);
 
         if(type==0){
             universityDetailDto = universityExDAO.getWSUniversityDetail(params);
