@@ -69,7 +69,7 @@ public class FileController extends BaseController{
 				// 验证文件
 				CheckUtil.checkFile(fileSize, uploadFileType);
 
-				String filePath = Const.IMAGE_UPLOAD_DIR+date+"/"+uploadFileType;
+				String filePath = Const.FILE_UPLOAD_DIR+date+"/"+uploadFileType;
 
 				String systemFileName= UUID.randomUUID().toString()+ "." + uploadFileType;
 				// 本机文件地址
