@@ -19,9 +19,7 @@ import java.util.*;
 
 public class UserExam extends BaseDomain{
     private Integer scores;
-    private Integer subjectType;
-    private Long num;
-    private Integer batch;
+    private Integer ranking;
     private Integer isSurvey;
     private Integer isReported;
 
@@ -34,27 +32,15 @@ public class UserExam extends BaseDomain{
     public Integer getScores() {
         return this.scores;
     }
-    public void setSubjectType(Integer value) {
-        this.subjectType = value;
+
+    public Integer getRanking() {
+        return ranking;
     }
 
-    public Integer getSubjectType() {
-        return this.subjectType;
-    }
-    public void setNum(Long value) {
-        this.num = value;
+    public void setRanking(Integer ranking) {
+        this.ranking = ranking;
     }
 
-    public Long getNum() {
-        return this.num;
-    }
-    public void setBatch(Integer value) {
-        this.batch = value;
-    }
-
-    public Integer getBatch() {
-        return this.batch;
-    }
     public void setIsSurvey(Integer value) {
         this.isSurvey = value;
     }
@@ -74,9 +60,6 @@ public class UserExam extends BaseDomain{
 		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
 			.append("Id",getId())
 			.append("Scores",getScores())
-			.append("SubjectType",getSubjectType())
-			.append("Num",getNum())
-			.append("Batch",getBatch())
 			.append("IsSurvey",getIsSurvey())
 			.append("IsReported",getIsReported())
 			.toString();
