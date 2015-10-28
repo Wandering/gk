@@ -58,7 +58,7 @@ define(function (require) {
                     }
                 }
                 if (text.length > 0) {
-                    html.push('<li><a target="_blank" href="/question/question_detile.jsp?id=' + question.questionId + '">' + text.join('') + '</a></li>');
+                    html.push('<li><a target="_blank" href="/question/question_detail.jsp?id=' + question.questionId + '">' + text.join('') + '</a></li>');
                 }
             }
 

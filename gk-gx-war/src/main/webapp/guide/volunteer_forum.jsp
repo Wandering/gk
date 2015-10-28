@@ -20,7 +20,7 @@
             </p>
             <p class="fl w40"></p>
         </div>
-        <h6 class="w1000 ta sub-title c888 mt20">全面介绍广西省高考志愿填报的基础知识、规则及方法，帮您掌握志愿填报的方法和技巧走出填报误区。</h6>
+        <h6 class="w1000 ta sub-title c888 mt20">全面介绍广西高考志愿填报的基础知识、规则及方法，帮您掌握志愿填报的方法和技巧走出填报误区。</h6>
 
 
         <div id="tab_title_content">

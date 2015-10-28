@@ -24,7 +24,7 @@ define(function(require) {
             for (; i < len; i++) {
                 var question = data[i].question;
                 if (question) {
-                    html.push('<a href="/question/question_detile.jsp?id=' + question.questionId + '"><section class="ask-answer mt20">');
+                    html.push('<a href="/question/question_detail.jsp?id=' + question.questionId + '"><section class="ask-answer mt20">');
                     html.push('<div class="ask mt20">');
                     html.push('<div class="head-img">');
                     var src = question.userIcon || '/static/src/common/images/user_default.png';
