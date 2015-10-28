@@ -45,7 +45,7 @@ define(function (require) {
                 success: function (res) {
                     if (res.rtnCode == '0000000') {
                         if(res.bizData.length == '0'){
-                            $('.content-list').addClass('no-msg').html('<img src="/static/dist/common/images/no-data-logo.png" /><p class="ta">暂时没有数据，请耐心等待哦</p>').fadeIn();
+                            $('.content-list').addClass('no-msg').html('<img src="http://cdn.gaokao360.net/static/global/common/images/no-data-logo.png" /><p class="ta">暂时没有数据，请耐心等待哦</p>').fadeIn();
                             //return false;
                         }
                         var template = '';
