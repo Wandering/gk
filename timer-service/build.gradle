@@ -48,6 +48,6 @@ dependencies {
         exclude group: 'net.sf.json-lib'
     }
 
-    compile project(':timerjob-domain')
+    compile project(':timer-domain')
 
 }

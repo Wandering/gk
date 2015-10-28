@@ -1,27 +1,32 @@
 /*
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
- * Project Name: shishuo
- * $Id:  QuestionServiceImpl.java 2015-07-13 09:45:17 $
+ * Project Name: gk
+ * $Id:  TimerjobServiceImpl.java 2015-10-28 11:39:07 $
  */
 package cn.thinkjoy.gk.service.impl;
 
+import cn.thinkjoy.common.domain.BaseDomain;
 import cn.thinkjoy.common.dao.IBaseDAO;
+import cn.thinkjoy.gk.dao.ITimerjobDAO;
+import cn.thinkjoy.gk.domain.Timerjob;
+import cn.thinkjoy.gk.service.ITimerjobService;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
-import cn.thinkjoy.gk.dao.IQuestionDAO;
-import cn.thinkjoy.gk.domain.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
 
-@Service("QuestionServiceImpl")
-public class QuestionServiceImpl extends AbstractPageService<IBaseDAO<Question>, Question> implements cn.thinkjoy.common.service.IBaseService<IBaseDAO<Question>, Question>, cn.thinkjoy.common.service.IPageService<IBaseDAO<Question>, Question> {
+
+@Service("TimerjobServiceImpl")
+public class TimerjobServiceImpl extends AbstractPageService<IBaseDAO<Timerjob>, Timerjob> implements ITimerjobService<IBaseDAO<Timerjob>,Timerjob>{
     @Autowired
-    private IQuestionDAO questionDAO;
+    private ITimerjobDAO timerjobDAO;
 
     @Override
-    public IBaseDAO<Question> getDao() {
-        return questionDAO;
+    public IBaseDAO<Timerjob> getDao() {
+        return timerjobDAO;
     }
 
 //    @Override
@@ -75,8 +80,8 @@ public class QuestionServiceImpl extends AbstractPageService<IBaseDAO<Question>,
 //    }
 //
 //    @Override
-//    public List<Question> findAll() {
-//        return questionDAO.findAll();
+//    public List<Timerjob> findAll() {
+//        return timerjobDAO.findAll();
 //    }
 //
 //    @Override
@@ -130,8 +135,8 @@ public class QuestionServiceImpl extends AbstractPageService<IBaseDAO<Question>,
 //    }
 //
 //    @Override
-//    protected QuestionDAO getDao() {
-//        return questionDAO;
+//    protected TimerjobDAO getDao() {
+//        return timerjobDAO;
 //    }
 //
 //    @Override
