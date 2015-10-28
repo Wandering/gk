@@ -88,7 +88,7 @@ public class FileController extends BaseController{
 		}
 
 		long resultTime = System.currentTimeMillis() - stratTime;
-		LOGGER.info("执行时间:" + DateUtil.DateToString(new Date(resultTime), DateStyle.YYYY_MM_DD_HH_MM_SS_EN));
+		LOGGER.info("执行时间:" + resultTime);
 		return fileUploadVOs;
 	}
 }
