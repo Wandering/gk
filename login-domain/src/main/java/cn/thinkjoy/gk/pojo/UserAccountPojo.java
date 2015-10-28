@@ -14,7 +14,8 @@ public class UserAccountPojo extends BaseDomain {
     private Integer userType;
     private Integer areaId;
     private Integer vipStatus;
-    private Integer score;
+    private Integer isReported;
+    private Integer isSurvey;
 
     public UserAccountPojo(){
     }
@@ -83,11 +84,19 @@ public class UserAccountPojo extends BaseDomain {
         this.areaId = areaId;
     }
 
-    public Integer getScore() {
-        return score;
+    public Integer getIsReported() {
+        return isReported;
     }
 
-    public void setScore(Integer score) {
-        this.score = score;
+    public void setIsReported(Integer isReported) {
+        this.isReported = isReported;
+    }
+
+    public Integer getIsSurvey() {
+        return isSurvey;
+    }
+
+    public void setIsSurvey(Integer isSurvey) {
+        this.isSurvey = isSurvey;
     }
 }
