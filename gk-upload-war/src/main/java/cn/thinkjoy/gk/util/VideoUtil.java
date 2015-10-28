@@ -45,7 +45,7 @@ public class VideoUtil {
 		commend.add("-acodec");
 		commend.add("libmp3lame");  //音频
 		commend.add("-ac");
-		commend.add("1");
+		commend.add("2");
 		commend.add("-ar");
 		commend.add("22050");
 		commend.add("-r");
@@ -84,8 +84,8 @@ public class VideoUtil {
 		//视频截图
 		commend.add("ffmpeg");
 		commend.add("-i");
-		commend.add(inputFile);
 		commend.add("-y");
+		commend.add(inputFile);
 		commend.add("-f");
 		commend.add("image2");
 		commend.add("-ss");
