@@ -35,6 +35,8 @@ public class ServletPathConst {
         MAPPING_URLS.put("/guide/batch.do","");
         MAPPING_URLS.put("/guide/school.do","");
         MAPPING_URLS.put("/guide/report.do","");
+        MAPPING_URLS.put("/exam/updateUserExam.do","");
+        MAPPING_URLS.put("/exam/findUserExam.do","");
 
 
 //        JSP_URLS.put("/guide/guide.jsp","");

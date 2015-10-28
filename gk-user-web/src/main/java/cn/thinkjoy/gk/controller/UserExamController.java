@@ -38,7 +38,7 @@ public class UserExamController extends BaseController {
      */
     @RequestMapping(value = "updateUserExam",method = RequestMethod.POST)
     @ResponseBody
-    public boolean getUserInfo(UserExam userExam) {
+    public boolean getUserInfo(UserExam userExam) throws Exception{
 
         String id=getCookieValue();
 
@@ -53,6 +53,7 @@ public class UserExamController extends BaseController {
             userExamService.update(userExam);
             flag = true;
         }catch(Exception e){
+            e.printStackTrace();
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
         }
 
@@ -65,7 +66,7 @@ public class UserExamController extends BaseController {
      */
     @RequestMapping(value = "findUserExam",method = RequestMethod.GET)
     @ResponseBody
-    public UserExam findUserExam() {
+    public UserExam findUserExam() throws Exception{
 
         String id=getCookieValue();
 
