@@ -207,7 +207,7 @@
                 <p class="fl w40 w35"></p>
             </div>
             <div class="calendar">
-                <img src="http://cdn.gaokao360.net/static/global/index/images/calendar_img.png"/>
+                <img src="http://cdn.gaokao360.net/static/gx/index/images/calendar_img.png"/>
             </div>
         </section>
     </div>

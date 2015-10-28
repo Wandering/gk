@@ -145,9 +145,9 @@ define(function (require) {
                     batch: m_batch
                 },
                 success: function (res) {
-
+                    console.log(res);
                     var data = res.bizData;
-                    console.log(data);
+
                     if ('0000000' === res.rtnCode) {
                         var dicName = '';
 
