@@ -33,7 +33,7 @@ define(function (require) {
     });
 
 
-    var localhosts = 'http://www.gkzy114.com';
+    //var localhosts = 'http://www.gkzy114.com';
 
     // 获取科目
     function getSubjectList() {

@@ -88,7 +88,7 @@ define(function (require) {
                         if (dataJson[i].frontCover == null || dataJson[i].frontCover == "") {
                             videoUrl = 'http://cdn.gaokao360.net/static/global/common/images/video-default.png';
                         } else {
-                            videoUrl = localhosts + dataJson[i].frontCover;
+                            videoUrl = dataJson[i].frontCover;
                         }
 
                         var tmpContent = subcontent;

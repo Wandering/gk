@@ -425,6 +425,8 @@ define(function (require) {
 
                 }
             ];
+
+            console.log(data)
             var related = {
                 "m_batch_id": m_batch_id,
                 "m_batch": m_batch

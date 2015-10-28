@@ -8,7 +8,7 @@ define(function (require) {
         $nextPage: $('#nextPage')
     };
 
-    var localhosts = 'http://www.gkzy114.com';
+    //var localhosts = 'http://www.gkzy114.com';
     var detailsUrl = decodeURIComponent(window.location.search);
     var classifyType = detailsUrl.substr(14, 1);
     var num = detailsUrl.indexOf('&');

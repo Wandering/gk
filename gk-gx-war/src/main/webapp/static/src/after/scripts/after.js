@@ -38,8 +38,8 @@ define(function (require) {
                     success: function (res) {
                         console.log(res.bizData.isReported)
                         if (res.bizData.isReported == 0) {
-                            $('#aggregateScore-input').removeAttr('readonly');
-                            $('#ranking-input').removeAttr('readonly');
+                            $('#aggregateScore-input').removeAttr('readonly').val('');
+                            $('#ranking-input').removeAttr('readonly').val('');
                         } else {
                             $('#aggregateScore-input').attr('readonly', 'readonly');
                             $('#ranking-input').attr('readonly', 'readonly');
@@ -184,19 +184,11 @@ define(function (require) {
             data: {},
             success: function (res) {
                 console.log(res)
+                console.log(res.bizData.isReported)
                 var scores = res.bizData.scores;
                 var ranking = res.bizData.ranking;
-                $('#aggregateScore-input').val(scores)
-                $('#ranking-input').val(ranking)
-
-                if (res.bizData.isReported == 0) {
-                    $('#aggregateScore-input').removeAttr('readonly');
-                    $('#ranking-input').removeAttr('readonly');
-                } else {
-                    $('#aggregateScore-input').attr('readonly', 'readonly');
-                    $('#ranking-input').attr('readonly', 'readonly');
-                }
-
+                $('#aggregateScore-input').val(scores);
+                $('#ranking-input').val(ranking);
             }
         });
 

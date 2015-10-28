@@ -33,7 +33,7 @@ define(function (require) {
     });
 
 
-    var localhosts = 'http://www.gkzy114.com';
+    //var localhosts = 'http://www.gkzy114.com';
 
     // 获取科目
     function getSubjectList() {
@@ -88,7 +88,7 @@ define(function (require) {
                         if (dataJson[i].frontCover == null || dataJson[i].frontCover == "") {
                             videoUrl = 'http://cdn.gaokao360.net/static/global/common/images/video-default.png';
                         } else {
-                            videoUrl = localhosts + dataJson[i].frontCover;
+                            videoUrl =  dataJson[i].frontCover;
                         }
 
                         var tmpContent = subcontent;
@@ -160,7 +160,7 @@ define(function (require) {
                         var date = new Date(createDate).Format('yyyy-MM-dd');
                         var listMsgHtml = ''
                             + '<li class="item">'
-                            + '<a target="_blank" href="' + localhosts + resources + '">'
+                            + '<a target="_blank" href="' + resources + '">'
                             + '<span class="subject-n"><strong>' + subject + '</strong></span>'
                             + '<span class="subject-t">' + paperName + '</span>'
                             + '<span class="subject-d">上传时间：' + date + '</span>'
@@ -366,6 +366,7 @@ define(function (require) {
                         var m_averagescores = data.data[i].m_averagescores;
                         var m_batch = data.data[i].m_batch;
                         var m_lowestscore = data.data[i].m_lowestscore;
+                        console.log(m_averagescores + "=" + m_batch + "=" + m_lowestscore)
                         var dreamSchoolList = ''
                             + '<ul>'
                             + '<li class="pc">' + m_batch + '</li>'
@@ -384,6 +385,7 @@ define(function (require) {
                         }
                     }
                     if($('#dream-list').find('li').length==0){
+                        alert(2)
                         $('#dream-list').html('<p style="text-align: center;padding: 30px 0;">'+ dreamSchoolV + dreamSubjectTypeV +'类2014年未招生</p>');
                     }
 
