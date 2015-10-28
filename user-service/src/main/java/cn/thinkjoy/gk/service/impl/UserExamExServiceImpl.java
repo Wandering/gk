@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-@Service("UserExamServiceImpl")
+@Service("UserExamExServiceImpl")
 public class UserExamExServiceImpl implements IUserExamExService{
 
     @Autowired
