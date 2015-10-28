@@ -284,7 +284,7 @@ public class UniversityController extends BaseController {
     public UniversityDetailDto universityDetail(@RequestParam(value="code",required=false) String code,
                                                 @RequestParam(value="type",required=false) Integer type,
                                                 @RequestParam(value="year",required=false) Integer year,
-                                                @RequestParam(value="batch",required=false) String batch){
+                                                @RequestParam(value="batch",required=false) String batch) throws Exception{
 
 
         if(StringUtils.isBlank(code)
@@ -301,10 +301,10 @@ public class UniversityController extends BaseController {
 //        } catch (UnsupportedEncodingException e) {
 //            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
 //        }
-
+        long areaId=getAreaCookieValue();
         UniversityDetailDto universityDetailDto = null;
         try{
-            universityDetailDto = universityExService.getUniversityDetail(code,batch,type,year);
+            universityDetailDto = universityExService.getUniversityDetail(code,batch,type,year,areaId);
         }catch(Exception e){
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
         }

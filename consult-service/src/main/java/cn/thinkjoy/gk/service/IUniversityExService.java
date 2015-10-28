@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface IUniversityExService{
 
-    UniversityDetailDto getUniversityDetail(String schoolCode,String batch,Integer type,Integer year);
+    UniversityDetailDto getUniversityDetail(String schoolCode,String batch,Integer type,Integer year,long areaId);
 
     List<UniversityDetailDto> getUniversityDetailByIds(List<String> schoolCodes,String batch,Integer type,Integer year);
 
