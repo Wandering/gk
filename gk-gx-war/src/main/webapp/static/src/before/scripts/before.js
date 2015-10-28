@@ -250,7 +250,7 @@ define(function (require) {
                     $('#batchV').text(batchV);
                     $('#subjectTypeV').text(subjectTypeV);
                     var data = $.parseJSON(res.bizData);
-                    var dataJson = data.data.result.data;
+                    var dataJson = data.result.data;
 
                     console.log(dataJson)
 

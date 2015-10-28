@@ -8,6 +8,7 @@
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
+
 <div class="w1000">
     <div class="content-title">
         <p class="fl w40"></p>
@@ -485,8 +486,8 @@
 </div>
 <%@ include file="/common/footer.jsp"%>
 <script>
-    seajs.use(["/static/src/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
-//    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+//    seajs.use(["/static/src/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
 </script>
 </body>
 </html>
