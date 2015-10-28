@@ -28,7 +28,7 @@
         <property name="defaultEncoding" value="UTF-8"/>
         <!-- set the max upload size1MB   1048576     -->
         <property name="maxUploadSize">
-            <value>502428800</value>
+            <value>1024288000</value>
         </property>
         <property name="maxInMemorySize">
             <value>2048</value>
