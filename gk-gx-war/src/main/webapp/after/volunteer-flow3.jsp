@@ -204,7 +204,7 @@
                                可从院校中选择10个可调剂的专业<br/>
                                区外院校不可选择服从部分专业调剂<br/>
                            </div>
-                           <ul class="specialty hide" id="specialty11">
+                           <ul class="specialty hide" id="specialtyPart1">
                                <li>
                                    <span class="num">1.</span>
                                    <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
@@ -265,7 +265,7 @@
                                 可从院校中选择10个可调剂的专业<br/>
                                 区外院校不可选择服从部分专业调剂<br/>
                             </div>
-                            <ul class="specialty hide" id="specialty22">
+                            <ul class="specialty hide" id="specialtyPart2">
                                 <li>
                                     <span class="num">1.</span>
                                     <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
@@ -473,7 +473,7 @@
                                 可从院校中选择10个可调剂的专业<br/>
                                 区外院校不可选择服从部分专业调剂<br/>
                             </div>
-                            <ul class="specialty hide" id="specialty33">
+                            <ul class="specialty hide" id="specialtyPart3">
                                 <li>
                                     <span class="num">1.</span>
                                     <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
@@ -534,7 +534,7 @@
                                 可从院校中选择10个可调剂的专业<br/>
                                 区外院校不可选择服从部分专业调剂<br/>
                             </div>
-                            <ul class="specialty hide" id="specialty44">
+                            <ul class="specialty hide" id="specialtyPart4">
                                 <li>
                                     <span class="num">1.</span>
                                     <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
@@ -742,7 +742,7 @@
                                 可从院校中选择10个可调剂的专业<br/>
                                 区外院校不可选择服从部分专业调剂<br/>
                             </div>
-                            <ul class="specialty hide" id="specialty55">
+                            <ul class="specialty hide" id="specialtyPart5">
                                 <li>
                                     <span class="num">1.</span>
                                     <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>
@@ -803,7 +803,7 @@
                                 可从院校中选择10个可调剂的专业<br/>
                                 区外院校不可选择服从部分专业调剂<br/>
                             </div>
-                            <ul class="specialty hide" id="specialty66">
+                            <ul class="specialty hide" id="specialtyPart6">
                                 <li>
                                     <span class="num">1.</span>
                                     <span class="input"><input type="text" class="specialty-click" name="" id=""/></span>

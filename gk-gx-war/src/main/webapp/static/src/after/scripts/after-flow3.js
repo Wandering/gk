@@ -187,10 +187,10 @@ define(function (require) {
             $('input[name="isFun' + n + '"]').on('click', function () {
                 if($(this).hasClass('partChecked')){
                     $('#area-tips'+n).hide();
-                    $('#specialty' + n + n).show();
+                    $('#specialtyPart' + n).show();
                 }else{
                     $('#area-tips'+n).show();
-                    $('#specialty' + n + n).hide();
+                    $('#specialtyPart' + n).hide();
                 }
 
             })
