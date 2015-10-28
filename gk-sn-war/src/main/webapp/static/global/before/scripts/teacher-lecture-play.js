@@ -7,7 +7,7 @@ define(function (require) {
     var courseId = detailsUrl.substr(num + 10);
     (classifyType == 1) ? (window.document.title = "名师学堂详情") : (window.document.title = "高考心理详情");
 
-    var localhosts = 'http://www.gkzy114.com';
+    //var localhosts = 'http://www.gkzy114.com';
 
 
     // 获取章节列表
@@ -48,7 +48,7 @@ define(function (require) {
 
                     if (GetCookie("snuser")) {
                         console.log('登录');
-                        $('#player').attr('href', localhosts + firstFileurl);
+                        $('#player').attr('href',  firstFileurl);
                         var api = flowplayer(
                             "player",
                             "/static/src/guide/scripts/flowplayer-3.2.18.swf",
@@ -80,7 +80,7 @@ define(function (require) {
         var fileurl = $(this).attr('fileurl');
         if (fileurl != "" || fileurl == null) {
             $(window).scrollTop(0);
-            $('#player').attr('href', localhosts + fileurl);
+            $('#player').attr('href', fileurl);
             var api = flowplayer(
                 "player",
                 "http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.18.swf"

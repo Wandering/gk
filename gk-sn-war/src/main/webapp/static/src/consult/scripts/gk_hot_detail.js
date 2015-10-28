@@ -19,10 +19,8 @@ define(function (require) {
         }
         return "";
     };
-
     var method = getUrLinKey('method');
     var menuName = decodeURIComponent(getQueryStr(window.location.href, 'menuName'));
-
     function getArticleDetile(id) {
         var url = '/volunteerSchool/article.do';
         if ('hot' === method) {
@@ -65,7 +63,7 @@ define(function (require) {
                         html.push('<h3>' + (menuName || '高考热点') + '</h3>');
                         html.push('<ul>');
                         for (var i = 0, len = biz.length; i < len; i++) {
-                            html.push('<li><a target="_blank" href="/consult/gk_hot_detile.jsp?method=hot&id=' + biz[i].id + '">' + biz[i].hotInformation + '</a></li>');
+                            html.push('<li><a target="_blank" href="/consult/gk_hot_detail.jsp?method=hot&id=' + biz[i].id + '">' + biz[i].hotInformation + '</a></li>');
                         }
                         html.push('</ul>');
                         $('#ask_list').html(html.join(''));
@@ -83,7 +81,7 @@ define(function (require) {
                             html.push('<h3>' + (menuName || '高考热点') + '</h3>');
                             html.push('<ul>');
                             for (var i = 0, len = biz.length; i < len; i++) {
-                                html.push('<li><a target="_blank" href="/consult/gk_hot_detile.jsp?id=' + biz[i].id + '">' + biz[i].title + '</a></li>');
+                                html.push('<li><a target="_blank" href="/consult/gk_hot_detail.jsp?id=' + biz[i].id + '">' + biz[i].title + '</a></li>');
                             }
                             html.push('</ul>');
                             $('#ask_list').html(html.join(''));

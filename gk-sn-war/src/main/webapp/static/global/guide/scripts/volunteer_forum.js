@@ -40,7 +40,7 @@ define(function (require) {
         var menuName = activeLi.text();
         var html = [];
         for (var i = 0, len = list.length; i < len; i++) {
-            html.push('<a target="_blank" href="/consult/gk_hot_detile.jsp?menuName=' + menuName + '&id=' + list[i].id + '&code=' + code + '"><div class="detile-content mt20">');
+            html.push('<a target="_blank" href="/consult/gk_hot_detail.jsp?menuName=' + menuName + '&id=' + list[i].id + '&code=' + code + '"><div class="detile-content mt20">');
             html.push('<div class="detile-header">');
             html.push('<span class="order-number">' + (i + (page - 1) * 8 + 1) + '</span>');
             html.push('<span class="detile-title">' + list[i].title + '</span>');

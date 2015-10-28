@@ -85,7 +85,6 @@ define(function (require) {
                 },
                 dataType: 'json',
                 success: function(data) {
-                    console.log(data)
                     if ('0000000' === data.rtnCode) {
                         that.renderSchool(data.bizData.enrollInfo);
                     }
@@ -276,6 +275,7 @@ define(function (require) {
                 + '</thead>'
                 + '<tbody>');
             for (var j = 0, infolen = infos.length; j < infolen; j++) {
+
                 tabContent.push('<tr>'
                     + '<td width="50%" class="name">' + (infos[j].majoredName || '') + '</td>'
                     + '<td width="10%">' + (infos[j].batch || '') + '</td>'
@@ -293,7 +293,9 @@ define(function (require) {
             var data = ret.enrollPlan;
             var tab = [];
             var tabContent = [];
+            // 暂时去掉2015招生计划
             for (var i = 0, len = data.length; i < len; i++) {
+                console.log(data[i].title)
                 var paramName = 'enrollData' + i;
                 tab.push('<li data-saveData="' + paramName + '">' + data[i].title + '</li>');
                 var infos = data[i].planInfos;
@@ -303,11 +305,26 @@ define(function (require) {
                 tabContent.push('</div>');
             }
 
+
+            //var paramName = 'enrollData1';
+            //tab.push('<li data-saveData="' + paramName + '">' + data[1].title + '</li>');
+            //var infos = data[1].planInfos;
+            //this[paramName] = infos;
+            //tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + 1 + '">');
+            //tabContent.push(this.renderEnrollTable(infos));
+            //tabContent.push('</div>');
+
+
+
+
+
             tab.push('<li>招生章程</li>');
             tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + i + '">' + (ret.entroIntro || '') + '</div>');
             i++;
             tab.push('<li>院校简介</li>');
             tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + i + '">' + (ret.universityIntro || '') + '</div>');
+
+            console.log(tab);
 
             $('#tabs_list_enroll').html(tab.join(''));
             $('#enroll_content').html(tabContent.join(''));

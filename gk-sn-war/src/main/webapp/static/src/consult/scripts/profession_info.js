@@ -323,7 +323,7 @@ define(function (require) {
             for (; i < len; i++) {
                 var trClass = i % 2 != 0 ? 'active' : '';
                 html.push('<tr class="' + trClass + '">'
-                    + '<td class="name"><a style="color: #555" href="/consult/profession_detile.jsp?id=' + data[i].universityId + '">' + (data[i].name || '') + '</a></td>'
+                    + '<td class="name"><a style="color: #555" href="/consult/profession_detail.jsp?id=' + data[i].universityId + '">' + (data[i].name || '') + '</a></td>'
                     + '<td>' + (data[i].planNumber || '') + '</td>'
                     + '<td>' + (data[i].schoolLength || '') + '</td>'
                     + '<td>' + (data[i].foreginLanguage || '') + '</td>'

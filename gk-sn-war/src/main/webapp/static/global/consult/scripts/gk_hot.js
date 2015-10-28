@@ -24,7 +24,7 @@ define(function (require) {
                 html.push('<div class="detile-header">');
                 var num = i + 1 + 10 * (pageNO - 1);
                 html.push('<span class="order-number">' + num + '</span>');
-                html.push('<span class="detile-title"><a href="/consult/gk_hot_detile.jsp?method=hot&id=' + data[i].id + '">' + data[i].hotInformation + '</a></span>');
+                html.push('<span class="detile-title"><a href="/consult/gk_hot_detail.jsp?method=hot&id=' + data[i].id + '">' + data[i].hotInformation + '</a></span>');
                 var date = new Date(data[i].lastModDate).Format('yyyy-MM-dd hh:mm');
                 html.push('<span class="fr">' + date + '</span>');
                 html.push('</div>');
