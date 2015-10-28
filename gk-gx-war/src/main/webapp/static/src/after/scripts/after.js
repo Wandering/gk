@@ -189,6 +189,13 @@ define(function (require) {
                 $('#aggregateScore-input').val(scores)
                 $('#ranking-input').val(ranking)
 
+                if (res.bizData.isReported == 0) {
+                    $('#aggregateScore-input').removeAttr('readonly');
+                    $('#ranking-input').removeAttr('readonly');
+                } else {
+                    $('#aggregateScore-input').attr('readonly', 'readonly');
+                    $('#ranking-input').attr('readonly', 'readonly');
+                }
 
             }
         });
