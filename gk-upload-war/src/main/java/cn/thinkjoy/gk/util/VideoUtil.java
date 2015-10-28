@@ -1,9 +1,14 @@
 package cn.thinkjoy.gk.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.InputStream;
 import java.util.List;
 
 public class VideoUtil {
+
+	private static final Logger LOGGER= LoggerFactory.getLogger(VideoUtil.class);
 
 	/**
 	 *  ffmepg: 能解析的格式：（asx，asf，mpg，wmv，3gp，mp4，mov，avi，flv等）
@@ -16,7 +21,7 @@ public class VideoUtil {
 			System.out.println(inputFile + " is not file");
 			return false;
 		}
-		List<String> commend = new java.util.ArrayList<String>();
+		List<String> commands = new java.util.ArrayList<String>();
 		//低精度
 //		commend.add("ffmpeg");
 //		commend.add("-i");
@@ -36,31 +41,31 @@ public class VideoUtil {
 //		commend.add("-y");
 //		commend.add(outputFile);
 		//高精度
-		commend.add("ffmpeg");
-		commend.add("-y");
-		commend.add("-i");
-		commend.add(inputFile);
-		commend.add("-ab");
-		commend.add("128");
-		commend.add("-acodec");
-		commend.add("libmp3lame");  //音频
-		commend.add("-ac");
-		commend.add("2");
-		commend.add("-ar");
-		commend.add("22050");
-		commend.add("-r");
-		commend.add("29.97");
-		commend.add("-qscale");
-		commend.add("4");
-		commend.add(outputFile);
-		StringBuffer test=new StringBuffer();
-		for(int i=0;i<commend.size();i++) {
-			test.append(commend.get(i) + " ");
+		commands.add("ffmpeg");
+		commands.add("-y");
+		commands.add("-i");
+		commands.add(inputFile);
+		commands.add("-ab");
+		commands.add("128");
+		commands.add("-acodec");
+		commands.add("libmp3lame");  //音频
+		commands.add("-ac");
+		commands.add("2");
+		commands.add("-ar");
+		commands.add("22050");
+		commands.add("-r");
+		commands.add("29.97");
+		commands.add("-qscale");
+		commands.add("4");
+		commands.add(outputFile);
+		StringBuffer command=new StringBuffer();
+		for(int i=0;i<commands.size();i++) {
+			command.append(commands.get(i) + " ");
 		}
-		System.out.println(test);
+		LOGGER.info(command.toString());
 		try {
 			ProcessBuilder builder = new ProcessBuilder();
-			builder.command(commend);
+			builder.command(commands);
 			builder.start();
 			return true;
 		} catch (Exception e) {
@@ -80,30 +85,30 @@ public class VideoUtil {
 			System.out.println(inputFile + " is not file");
 			return false;
 		}
-		List<String> commend = new java.util.ArrayList<String>();
+		List<String> commands = new java.util.ArrayList<String>();
 		//视频截图
-		commend.add("ffmpeg");
-		commend.add("-i");
-		commend.add("-y");
-		commend.add(inputFile);
-		commend.add("-f");
-		commend.add("image2");
-		commend.add("-ss");
-		commend.add("8");
-		commend.add("-t");
-		commend.add("0.001");
-		commend.add("-s");
-		commend.add(UploadPropertiesUtil.getInstance().getProperty("VIDEO_SCREENSHOTS"));
-		commend.add(outputFile);
-		StringBuffer test=new StringBuffer();
-		for(int i=0;i<commend.size();i++) {
-			test.append(commend.get(i) + " ");
+		commands.add("ffmpeg");
+		commands.add("-i");
+		commands.add("-y");
+		commands.add(inputFile);
+		commands.add("-f");
+		commands.add("image2");
+		commands.add("-ss");
+		commands.add("8");
+		commands.add("-t");
+		commands.add("0.001");
+		commands.add("-s");
+		commands.add(UploadPropertiesUtil.getInstance().getProperty("VIDEO_SCREENSHOTS"));
+		commands.add(outputFile);
+		StringBuffer command =new StringBuffer();
+		for(int i=0;i<commands.size();i++) {
+			command.append(commands.get(i) + " ");
 		}
-		System.out.println(test);
+		LOGGER.info(command.toString());
 		try {
 			ProcessBuilder builder = new ProcessBuilder();
 
-			builder.command(commend);
+			builder.command(commands);
 
 			builder.redirectErrorStream(true);
 
