@@ -32,6 +32,10 @@ include 'question-domain'
 
 include 'question-service'
 
+include 'timer-domain'
+
+include 'timer-service'
+
 include 'user-domain'
 
 include 'user-service'
