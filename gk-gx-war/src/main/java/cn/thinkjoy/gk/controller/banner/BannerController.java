@@ -1,12 +1,14 @@
 package cn.thinkjoy.gk.controller.banner;
 
 import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Banner;
 import cn.thinkjoy.gk.service.IBannerService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +22,7 @@ import java.util.List;
  * Created by ZL on 2015/9/23.
  */
 @Controller
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/banner")
 public class BannerController extends BaseController{
 
@@ -28,7 +31,7 @@ public class BannerController extends BaseController{
     private IBannerService bannerService;
     /**
      *
-     * 通过type类型拿到跳转页面的url
+     *
      * @return
      */
     @RequestMapping(value = "getBannerByType",method = RequestMethod.GET)

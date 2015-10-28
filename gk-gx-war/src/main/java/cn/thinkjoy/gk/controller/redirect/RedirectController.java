@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller.redirect;
 
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.constant.ControllerReturnConst;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
-@Scope("prototype")
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value="/")
 public class RedirectController extends BaseController {
 

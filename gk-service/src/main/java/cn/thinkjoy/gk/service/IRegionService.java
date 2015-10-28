@@ -1,6 +1,5 @@
 package cn.thinkjoy.gk.service;
 
-import cn.thinkjoy.gk.domain.Information;
 import cn.thinkjoy.gk.pojo.ProvincePojo;
 
 import java.util.List;
@@ -10,5 +9,4 @@ import java.util.List;
  */
 public interface IRegionService {
     public List<ProvincePojo> getAllRegion();
-
 }
