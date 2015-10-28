@@ -14,7 +14,7 @@ import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.param.FileUploadParam;
 import cn.thinkjoy.gk.protocol.DateStyle;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.runnable.UploadRunnable;
+import cn.thinkjoy.gk.runnable.ImageRunnable;
 import cn.thinkjoy.gk.util.CheckUtil;
 import cn.thinkjoy.gk.util.DateUtil;
 import cn.thinkjoy.gk.util.UploadUtil;
@@ -111,7 +111,7 @@ public class ImageController extends BaseController{
 						FileUploadParam fileUploadParam = null;
 						for(int i=0;i<initArray.size();i++){
 							fileUploadParam = JSONObject.parseObject(initArray.getString(i), FileUploadParam.class);
-							UploadRunnable r = new UploadRunnable(filePath, systemFileName,fileUploadParam);
+							ImageRunnable r = new ImageRunnable(filePath, systemFileName,fileUploadParam);
 							Thread t = new Thread(r);
 							t.start();
 						}

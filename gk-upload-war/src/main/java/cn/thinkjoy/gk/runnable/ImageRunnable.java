@@ -6,7 +6,7 @@ import cn.thinkjoy.gk.param.FileUploadParam;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.UploadUtil;
 
-public class UploadRunnable implements Runnable {
+public class ImageRunnable implements Runnable {
 
 	// 系统文件名称
 	private String systemFileNames;
@@ -14,8 +14,8 @@ public class UploadRunnable implements Runnable {
 	private String filePaths;
 
 	private FileUploadParam fileUploadParam;
-	
-	public UploadRunnable(String filePaths,String systemFileNames,FileUploadParam fileUploadParam) {
+
+	public ImageRunnable(String filePaths, String systemFileNames, FileUploadParam fileUploadParam) {
 		super();
 		this.systemFileNames = systemFileNames;
 		this.filePaths = filePaths;
