@@ -382,10 +382,9 @@ define(function (require) {
                         if(m_averagescores!=null || m_lowestscore != null){
                             $('#dream-list').append(dreamSchoolList);
                         }
-                        if($('#dream-list').find('li').length==0){
-                            $('#dream-list').html('<p style="text-align: center;padding: 30px 0;">'+ dreamSchoolV + dreamSubjectTypeV +'类2014年未招生</p>');
-                        }
-
+                    }
+                    if($('#dream-list').find('li').length==0){
+                        $('#dream-list').html('<p style="text-align: center;padding: 30px 0;">'+ dreamSchoolV + dreamSubjectTypeV +'类2014年未招生</p>');
                     }
 
                 }

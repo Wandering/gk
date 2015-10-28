@@ -62,12 +62,17 @@ define(function (require) {
                         var datatypeId = $('#volunteer-flow3-layer').attr('datatype');
 
                         $('.school-list').html('');
+
                         $.each(listData.data, function (i, v) {
+
                             if (listData.data[i].data.length == 0) {
                                 $('.no-school').show();
                                 $('.school-list').hide();
                             }
                             if (listData.data[i].data.length > 0 && i < 6) {
+                                if(listData.data[i].description!=null){
+                                    $('#school-list' + i).append('<div style="color:#c00">'+listData.data[i].description+'</div>');
+                                }
                                 $('#no-school' + i).hide();
                                 $('#school-list' + i).show();
                                 $.each(listData.data[i].data, function (j, m) {
@@ -140,17 +145,18 @@ define(function (require) {
                     batch: m_batch
                 },
                 success: function (res) {
-                    console.log(res);
+
                     var data = res.bizData;
+                    console.log(data);
                     if ('0000000' === res.rtnCode) {
                         var dicName = '';
-                        if (data.dictName) {
-                            dicName = data.dictName;
-                        }
+
                         var infoHtml = ''
-                            + '<p>'
-                            + '院校特征：' + dicName + '<br/>'
-                            + '院校隶属：' + data.subjection + '<br/>'
+                            + '<p>';
+                        if (data.dictName) {
+                            infoHtml+= '院校特征：' + data.dictName + '<br/>';
+                        }
+                        infoHtml+= '院校隶属：' + data.subjection + '<br/>'
                             + '院校类型：' + data.type + '<br/>'
                             + '2014年最低投档分：' + data.lowestScore + '<br/>'
                             + '2014年最低位次：' + data.lowestRanking + ' <br/>'
