@@ -19,7 +19,9 @@ import cn.thinkjoy.common.domain.BaseDomain;
 
 import java.util.*;
 
-public class Timerjob extends BaseDomain<Long>{
+public class Timerjob extends BaseDomain{
+
+    private Integer status;
     /**  */
     private Long createTime;
     /**  */
@@ -45,6 +47,15 @@ public class Timerjob extends BaseDomain<Long>{
 
 	public Timerjob(){
 	}
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public void setCreateTime(Long value) {
         this.createTime = value;
     }
