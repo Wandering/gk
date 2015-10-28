@@ -166,7 +166,7 @@ define(function (require) {
                         + '录取指数：' + star
                         + '</p>';
                         $('.open-flow3[type="text"][dataType="' + datatypeid + '"]').val(m_university_name).attr({
-                            'code': data.code,
+                            'code': data.id,
                             'm_batch': m_batch,
                             'm_batch_id': m_batch_id
                         });
@@ -369,7 +369,7 @@ define(function (require) {
             $('#isFunRadio4').html(isFun4)
             var isFun5 = $('input[name="isFun5"]:checked').val();
             $('#isFunRadio5').html(isFun5)
-            var isFun6 = $('input[name="isFun4"]:checked').val();
+            var isFun6 = $('input[name="isFun6"]:checked').val();
             $('#isFunRadio6').html(isFun6)
 
             //合理性分析
@@ -426,7 +426,6 @@ define(function (require) {
                 }
             ];
 
-            console.log(data)
             var related = {
                 "m_batch_id": m_batch_id,
                 "m_batch": m_batch
@@ -455,8 +454,7 @@ define(function (require) {
                     batch: m_batch
                 },
                 success: function (res) {
-                    console.log(res);
-
+                    $('#enrollment').html('');
                     if (res.rtnCode == "0000000") {
                         var dataJson = $.parseJSON(res.bizData).report;
                         var description = dataJson.description;
@@ -467,8 +465,9 @@ define(function (require) {
                         });
 
                         var dataEnroll = $.parseJSON(res.bizData).enroll;
+                        console.log(dataEnroll);
                         $.each(dataEnroll, function (i, v) {
-                            console.log(v);
+
                             var enrollIntro = v.enrollIntro;
                             var name = v.name;
                             var enrollmentSchoolHtml = '<div class="col-list">' + name + '</div>';
