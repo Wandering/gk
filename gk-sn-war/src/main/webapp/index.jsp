@@ -220,8 +220,8 @@
 </div>
 <%@ include file="common/footer.jsp" %>
 <script>
-//    seajs.use(["http://cdn.gaokao360.net/static/global/index/scripts/index.min","http://cdn.gaokao360.net/static/global/index/scripts/index-user.min","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
-    seajs.use(["/static/src/index/scripts/index","/static/src/index/scripts/index-user","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
+    seajs.use(["http://cdn.gaokao360.net/static/global/index/scripts/index.min","http://cdn.gaokao360.net/static/global/index/scripts/index-user.min","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
+//    seajs.use(["/static/src/index/scripts/index","/static/src/index/scripts/index-user","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
 </script>
 </body>
 </html>

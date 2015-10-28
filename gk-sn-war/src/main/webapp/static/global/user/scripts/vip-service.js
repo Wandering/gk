@@ -119,7 +119,7 @@ define(function (require) {
                 var telphone = v.telphone;
                 addressHtml+= '<div class="col-3">'
                 + '<p class="area-name">' + address + '</p>'
-                + '<p class="tel-num"><img src="/static/dist/user/images/icon-tel-area.png"><span class="tel">' + telphone + '</span>'+ name + '</p>'
+                + '<p class="tel-num"><img src="http://cdn.gaokao360.net/static/global/user/images/icon-tel-area.png"><span class="tel">' + telphone + '</span>'+ name + '</p>'
                 + '</div>';
                 $('#address-box').html(addressHtml);
             });

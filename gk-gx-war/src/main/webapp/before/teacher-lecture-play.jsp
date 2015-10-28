@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/guide/styles/volunteer_forum_play.min.css" />
 </head>
 <body>
-<%@ include file="/before/header-before.jsp"%>
+<%@ include file="/common/header.jsp"%>
 <div class="content">
     <div class="banner">
         <div class="video ta">

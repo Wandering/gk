@@ -250,7 +250,9 @@ define(function (require) {
                     $('#batchV').text(batchV);
                     $('#subjectTypeV').text(subjectTypeV);
                     var data = $.parseJSON(res.bizData);
-                    var dataJson = data.result.data;
+                    var dataJson = data.data.result.data;
+
+                    console.log(dataJson)
 
                     if (!dataJson) {
                         errorTips(res.msg);
@@ -354,6 +356,7 @@ define(function (require) {
                     $('#dreamScoreInfo').text(dreamScoreV);
                     $('#dreamSubjectTypeInfo').text(dreamSubjectTypeV);
                     $('#dreamSchoolInfo').text(dreamSchoolV);
+                    $('#m_years').text(data.related.m_years)
 
                     for (var i = 0; i < data.data.length; i++) {
                         var m_averagescores = data.data[i].m_averagescores;

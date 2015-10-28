@@ -86,7 +86,7 @@ define(function (require) {
                         var detailsUrl = '/before/teacher-lecture-play.jsp?classifyType=' + classifyType + '&courseId=' + courseId;
                         var videoUrl = '';
                         if (dataJson[i].frontCover == null || dataJson[i].frontCover == "") {
-                            videoUrl = '/static/dist/common/images/video-default.png';
+                            videoUrl = 'http://cdn.gaokao360.net/static/global/common/images/video-default.png';
                         } else {
                             videoUrl = localhosts + dataJson[i].frontCover;
                         }

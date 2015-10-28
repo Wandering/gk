@@ -46,6 +46,9 @@ define(function (require) {
                 $('.gk_hot').addClass('active');
                 break;
             case 'before.jsp':
+            case 'teacher-lecture.jsp':
+            case 'exam.jsp':
+            case 'mentality.jsp':
                 $('.before').addClass('active');
                 break;
             case 'after.jsp':
