@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.quartz;
 
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class CompanyTaskQuartz{
 //			} catch (Exception e1) {
 //				new YuleException(e1);
 //			}
-			throw new BizException(e);
+			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
 		} finally{
 			System.gc();
 		}

@@ -3,9 +3,9 @@ package cn.thinkjoy.gk.util;
 import java.util.Calendar;
 import java.util.Date;
 
+import cn.thinkjoy.gk.protocol.DateStyle;
 import org.apache.commons.lang.time.DateUtils;
 
-import com.yule.enumerate.DateStyle;
 
 public class CalendarUtil {
 

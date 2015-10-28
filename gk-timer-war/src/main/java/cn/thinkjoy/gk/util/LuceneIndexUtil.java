@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -15,8 +17,6 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
-
-import com.yule.common.exception.YuleException;
 
 public class LuceneIndexUtil {
 	
@@ -76,8 +76,6 @@ public class LuceneIndexUtil {
 	
 	/**
      * 创建索引
-     * 
-     * @param doc
      * @throws Exception
      */
     public boolean isLocked(String indexPath) throws Exception{
@@ -100,7 +98,7 @@ public class LuceneIndexUtil {
      * @param doc
      * @throws Exception
      */
-    public boolean createIndex(Document doc) {
+    public boolean createIndex(Document doc) throws Exception {
         List<Document> docs = new ArrayList<Document>();
         docs.add(doc);
         return createIndex(docs);
@@ -112,7 +110,8 @@ public class LuceneIndexUtil {
      * @param docs
      * @throws Exception
      */
-    public boolean createIndex(List<Document> docs) {
+    public boolean createIndex(List<Document> docs) throws Exception{
+        boolean flag = false;
         try {
             for (Document doc : docs) {
             	this.indexWriter.addDocument(doc);
@@ -122,10 +121,9 @@ public class LuceneIndexUtil {
             //优化压缩段，大规模添加数据的时候建议，少使用本方法，会影响性能
             this.indexWriter.forceMerge(1); // forceMerge代替optimize
             //log.info("lucene create success.");
-            return true;
+            flag =  true;
         } catch (Exception e) {
-            new YuleException("lucene create failure.", e);
-            return false;
+            throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
         } finally {
             if (getIndexWriter() != null) {
                 try {
@@ -135,6 +133,7 @@ public class LuceneIndexUtil {
                 }
             }
         }
+        return flag;
     }
     
     /**
@@ -149,14 +148,14 @@ public class LuceneIndexUtil {
      * @param doc
      * @return
      */
-    public boolean updateIndex(String field, String value, Document doc) {
+    public boolean updateIndex(String field, String value, Document doc) throws Exception{
+        boolean flag = false;
         try {
         	this.indexWriter.updateDocument(new Term(field, value), doc);
             //log.info("lucene update success.");
-            return true;
+            flag = true;
         } catch (Exception e) {
-            new YuleException("lucene update failure.", e);
-            return false;
+            throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
         }finally{
             if(this.indexWriter!=null){
                 try {
@@ -166,6 +165,7 @@ public class LuceneIndexUtil {
                 }  
             }
         }
+        return flag;
     }
     
     /**
@@ -173,17 +173,16 @@ public class LuceneIndexUtil {
      * 
      * @param field Document的Field(类似数据库的字段)
      * @param value Field中的一个关键词
-     * @param doc
      * @return
      */
-    public boolean deleteIndex(String field, String value) {
+    public boolean deleteIndex(String field, String value) throws Exception{
+        boolean flag = false;
         try {
         	this.indexWriter.deleteDocuments(new Term(field, value));
             //log.info("lucene delete success.");
-            return true;
+            flag = true;
         } catch (Exception e) {
-            new YuleException("lucene delete failure.", e);
-            return false;
+            throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
         }finally{
             if(this.indexWriter!=null){
                 try {
@@ -193,6 +192,7 @@ public class LuceneIndexUtil {
                 }  
             }
         }
+        return flag;
     }
     
     /**
@@ -200,14 +200,14 @@ public class LuceneIndexUtil {
      * 
      * @return
      */
-    public boolean deleteAllIndex() {
+    public boolean deleteAllIndex() throws Exception{
+        boolean flag = false;
         try {
         	this.indexWriter.deleteAll();
             //log.info("lucene delete all success.");
-            return true;
+            flag =  true;
         } catch (Exception e) {
-            new YuleException("lucene delete all failure.", e);
-            return false;
+            new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
         }finally{
             if(getIndexWriter()!=null){
                 try {
@@ -217,6 +217,7 @@ public class LuceneIndexUtil {
                 }  
             }
         }
+        return flag;
     }
     
 
