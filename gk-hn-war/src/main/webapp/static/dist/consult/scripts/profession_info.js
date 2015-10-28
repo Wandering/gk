@@ -272,7 +272,7 @@ define(function (require) {
                     + '<td>' + (data[i].foreginLanguage || '') + '</td>'
                     + '<td>' + (data[i].feeStandard || '') + '</td>'
                     + '<td>'
-                    + '<a target="_blank" href="/consult/school_detile.jsp?id=' + data[i].universityCode + '">' + (data[i].universityName || '') + '</a>'
+                    + '<a target="_blank" href="/consult/school_detail.jsp?id=' + data[i].universityCode + '">' + (data[i].universityName || '') + '</a>'
                     + '</td>'
                     + '</tr>');
             }

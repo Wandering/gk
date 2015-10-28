@@ -4,7 +4,7 @@
 <head>
     <title>院校信息详情页</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/consult/styles/school_detile.css" />
+    <link rel="stylesheet" href="/static/dist/consult/styles/school_detail.css" />
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>

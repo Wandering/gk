@@ -2,7 +2,7 @@
 <div class="header">
   <div class="w1000">
     <a href="/index.jsp">
-      <img src="http://cdn.gaokao360.net/static/global/common/images/logo-min.png" alt="高考360" class="logo fl"/>
+      <img src="http://cdn.gaokao360.net/static/gx/common/images/gx-logo.png" alt="高考360" class="logo fl"/>
     </a>
     <ul class="main-menu fl" id="main-menu">
       <li class="menu-item"><a class="index" href="/index.jsp">首页</a></li>

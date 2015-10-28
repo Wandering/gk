@@ -104,7 +104,7 @@ define(function (require) {
                     html.push('<ul>');
 
                     for (var j = 0, jlen = universityLs.length; j < jlen; j++) {
-                        html.push('<li><a href="/consult/school_detile.jsp?id=' + universityLs[j].code + '">' + universityLs[j].name + '</a></li>');
+                        html.push('<li><a href="/consult/school_detail.jsp?id=' + universityLs[j].code + '">' + universityLs[j].name + '</a></li>');
                     }
 
                     html.push('</ul>');

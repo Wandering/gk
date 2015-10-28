@@ -52,7 +52,7 @@ define(function (require) {
                     + '</div>');
                 if (content.length > 0) {
                    html.push('<div class="detail-info">'
-                       + '<img class="triangle" src="/static/dist/common/images/triangle.png" />'
+                       + '<img class="triangle" src="http://cdn.gaokao360.net/static/global/common/images/triangle.png" />'
                        + content.join('')
                        + '</div>');
                 }
@@ -92,7 +92,7 @@ define(function (require) {
             });
         },
         getTipTmpl: function(msg) {
-            return '<div class="error-tip-new"><img src="/static/dist/common/images/no-data-logo.png" /><p class="ta">' + msg + '</p></div>'
+            return '<div class="error-tip-new"><img src="http://cdn.gaokao360.net/static/global/common/images/no-data-logo.png" /><p class="ta">' + msg + '</p></div>'
         },
         addNextPageHandle: function() {
             this.startSize += 5;

@@ -2,7 +2,7 @@
 <div class="footer">
   <div class="bottom-nav">
     <div class="w1000">
-      <img src="http://cdn.gaokao360.net/static/global/common/images/logo.png" alt="logo" class="footer-logo"/>
+      <img src="http://cdn.gaokao360.net/static/gx/common/images/gx-logo.png" alt="logo" class="footer-logo"/>
       <img src="http://cdn.gaokao360.net/static/global/common/images/footer-ewm.jpg" class="footer-ewm"/>
     </div>
   </div>

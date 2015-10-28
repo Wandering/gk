@@ -43,6 +43,7 @@ define(function (require) {
             case 'consult.jsp':
             case 'school_info.jsp':
             case 'profession_info.jsp':
+            case 'school_detail.jsp':
                 $('.gk_hot').addClass('active');
                 break;
             case 'before.jsp':
