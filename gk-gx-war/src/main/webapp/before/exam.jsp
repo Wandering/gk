@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/before/styles/before.min.css"/>
 </head>
 <body>
-<%@ include file="/before/header-before.jsp"%>
+<%@ include file="/common/header.jsp"%>
 
 <div class="w1000">
     <div class="content-title">

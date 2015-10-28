@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IGkinformationGkhotDAO">
+     <select id="getAllInformation" resultType="GkinformationGkhot">
+         SELECT id,createDate,lastModDate,hotInformation,informationSubContent FROM gk_gkinformation_gkhot
+         WHERE  status<![CDATA[<>]]>  -1
+            AND areaId = #{areaId}
+         ORDER BY createDate DESC
+         limit ${offset}, ${rows}
+     </select>
+
+    <select id="getInformationByKey" parameterType="java.util.Map" resultType="GkinformationGkhot">
+        SELECT id,createDate,lastModDate,hotInformation,informationSubContent FROM gk_gkinformation_gkhot
+        WHERE status = 0
+          AND areaId = #{areaId}
+          AND hotInformation LIKE CONCAT('%', #{key} , '%')  ORDER BY createDate DESC
+        limit ${offset}, ${rows}
+    </select>
+
+    <select id="getInformationContentById" parameterType="java.lang.Integer" resultType="GkinformationGkhot">
+        SELECT createDate,lastModDate,hotInformation,informationContent FROM gk_gkinformation_gkhot
+        WHERE status = 0 AND id=#{id}
+    </select>
+
+    <select id="getHotInformation" parameterType="java.util.Map" resultType="GkinformationGkhot">
+        SELECT id,createDate,lastModDate,hotInformation,informationContent FROM gk_gkinformation_gkhot
+        WHERE status = 0
+          AND areaId = #{areaId}
+        ORDER BY hotCount DESC
+        limit ${offset},${rows}
+    </select>
+
+    <update id="updateHotCount" parameterType="java.lang.Integer" >
+         UPDATE gk_gkinformation_gkhot
+         SET hotCount = hotCount + 1
+         WHERE id=#{id}
+    </update>
+
+    <insert id="saveGkinformationGkhot" parameterType="GkinformationGkhot">
+        INSERT INTO gk_gkinformation_gkhot
+        (
+          status,
+          creator,
+          createDate,
+          lastModifier,
+          lastModDate,
+          hotInformation,
+          informationSubContent,
+          informationContent,
+          hotCount,
+          areaId
+        )
+        VALUES
+        (
+          #{status},
+          #{creator},
+          #{createDate},
+          #{lastModifier},
+          #{lastModDate},
+          #{hotInformation},
+          #{informationSubContent},
+          #{informationContent},
+          #{hotCount},
+          #{areaId}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+</mapper>
+

@@ -29,7 +29,7 @@ define(function (require) {
                 html.push('<span class="fr">' + date + '</span>');
                 html.push('</div>');
                 html.push('<div class="detile-info mt20">');
-                html.push('<img class="triangle" src="/static/dist/common/images/triangle.png" />');
+                html.push('<img class="triangle" src="http://cdn.gaokao360.net/static/global/common/images/triangle.png" />');
                 html.push(data[i].informationSubContent);
                 html.push('</div>');
                 html.push('</div>');

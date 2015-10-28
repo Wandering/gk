@@ -83,7 +83,7 @@ define(function (require) {
             $('#player').attr('href', localhosts + fileurl);
             var api = flowplayer(
                 "player",
-                "/static/src/guide/scripts/flowplayer-3.2.18.swf"
+                "http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.18.swf"
             );
         } else {
             $('.error-tips').text('您还不是VIP用户,请升级为VIP后在观看。').fadeIn(1000).fadeOut(2000);

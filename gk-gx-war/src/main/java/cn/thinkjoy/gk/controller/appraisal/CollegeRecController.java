@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller.appraisal;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.constant.VerificationKeyConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Created by yhwang on 15/9/28.
  */
 @Controller
-@Scope("prototype")
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/before/collegeRecommend")
 public class CollegeRecController extends BaseController {
 

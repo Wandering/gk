@@ -123,54 +123,54 @@
 
 <!--style给定宽度可以影响编辑器的最终宽度-->
 <script type="text/plain" id="myEditor" style="width:1000px;height:240px;">
-    <p>这里我可以写一些输入提示</p>
+    <p>这里我可以写一些输入提示dd</p>
 </script>
 
 
 <div class="clear"></div>
 <div id="btns">
-  <table>
-    <tr>
-      <td>
-        <button class="btn" unselected="on" onclick="getAllHtml()">获得整个html的内容</button>&nbsp;
-        <button class="btn" onclick="getContent()">获得内容</button>&nbsp;
-        <button class="btn" onclick="setContent()">写入内容</button>&nbsp;
-        <button class="btn" onclick="setContent(true)">追加内容</button>&nbsp;
-        <button class="btn" onclick="getContentTxt()">获得纯文本</button>&nbsp;
-        <button class="btn" onclick="getPlainTxt()">获得带格式的纯文本</button>&nbsp;
-        <button class="btn" onclick="hasContent()">判断是否有内容</button>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <button class="btn" onclick="setFocus()">编辑器获得焦点</button>&nbsp;
-        <button class="btn" onmousedown="isFocus();return false;">编辑器是否获得焦点</button>&nbsp;
-        <button class="btn" onclick="doBlur()">编辑器取消焦点</button>&nbsp;
-        <button class="btn" onclick="insertHtml()">插入给定的内容</button>&nbsp;
-        <button class="btn" onclick="getContentTxt()">获得纯文本</button>&nbsp;
-        <button class="btn" id="enable" onclick="setEnabled()">可以编辑</button>&nbsp;
-        <button class="btn" onclick="setDisabled()">不可编辑</button>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <button class="btn" onclick="UM.getEditor('myEditor').setHide()">隐藏编辑器</button>&nbsp;
-        <button class="btn" onclick="UM.getEditor('myEditor').setShow()">显示编辑器</button>&nbsp;
-        <button class="btn" onclick="UM.getEditor('myEditor').setHeight(300)">设置编辑器的高度为300</button>&nbsp;
-        <button class="btn" onclick="UM.getEditor('myEditor').setWidth(1200)">设置编辑器的宽度为1200</button>
-      </td>
-    </tr>
+  <%--<table>--%>
+    <%--<tr>--%>
+      <%--<td>--%>
+        <%--<button class="btn" unselected="on" onclick="getAllHtml()">获得整个html的内容</button>&nbsp;--%>
+        <%--<button class="btn" onclick="getContent()">获得内容</button>&nbsp;--%>
+        <%--<button class="btn" onclick="setContent()">写入内容</button>&nbsp;--%>
+        <%--<button class="btn" onclick="setContent(true)">追加内容</button>&nbsp;--%>
+        <%--<button class="btn" onclick="getContentTxt()">获得纯文本</button>&nbsp;--%>
+        <%--<button class="btn" onclick="getPlainTxt()">获得带格式的纯文本</button>&nbsp;--%>
+        <%--<button class="btn" onclick="hasContent()">判断是否有内容</button>--%>
+      <%--</td>--%>
+    <%--</tr>--%>
+    <%--<tr>--%>
+      <%--<td>--%>
+        <%--<button class="btn" onclick="setFocus()">编辑器获得焦点</button>&nbsp;--%>
+        <%--<button class="btn" onmousedown="isFocus();return false;">编辑器是否获得焦点</button>&nbsp;--%>
+        <%--<button class="btn" onclick="doBlur()">编辑器取消焦点</button>&nbsp;--%>
+        <%--<button class="btn" onclick="insertHtml()">插入给定的内容</button>&nbsp;--%>
+        <%--<button class="btn" onclick="getContentTxt()">获得纯文本</button>&nbsp;--%>
+        <%--<button class="btn" id="enable" onclick="setEnabled()">可以编辑</button>&nbsp;--%>
+        <%--<button class="btn" onclick="setDisabled()">不可编辑</button>--%>
+      <%--</td>--%>
+    <%--</tr>--%>
+    <%--<tr>--%>
+      <%--<td>--%>
+        <%--<button class="btn" onclick="UM.getEditor('myEditor').setHide()">隐藏编辑器</button>&nbsp;--%>
+        <%--<button class="btn" onclick="UM.getEditor('myEditor').setShow()">显示编辑器</button>&nbsp;--%>
+        <%--<button class="btn" onclick="UM.getEditor('myEditor').setHeight(300)">设置编辑器的高度为300</button>&nbsp;--%>
+        <%--<button class="btn" onclick="UM.getEditor('myEditor').setWidth(1200)">设置编辑器的宽度为1200</button>--%>
+      <%--</td>--%>
+    <%--</tr>--%>
 
-  </table>
+  <%--</table>--%>
 </div>
-<table>
-  <tr>
-    <td>
-      <button class="btn" onclick="createEditor()"/>创建编辑器</button>
-      <button class="btn" onclick="deleteEditor()"/>删除编辑器</button>
-    </td>
-  </tr>
-</table>
+<%--<table>--%>
+  <%--<tr>--%>
+    <%--<td>--%>
+      <%--<button class="btn" onclick="createEditor()"/>创建编辑器</button>--%>
+      <%--<button class="btn" onclick="deleteEditor()"/>删除编辑器</button>--%>
+    <%--</td>--%>
+  <%--</tr>--%>
+<%--</table>--%>
 
 
 <%--<form action="testController/test.do" method="get">--%>

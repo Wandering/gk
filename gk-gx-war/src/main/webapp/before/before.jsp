@@ -343,7 +343,7 @@
             <p>所测评的目标院校是：<strong id="dreamSchoolInfo"></strong></p>
         </div>
         <div class="evaluating-result">
-            <p class="tips">依据2015年的录取情况、在陕西省填报该院校您需要以下分数(在陕）：</p>
+            <p class="tips">依据<span id="m_years"></span>年的录取情况、在广西填报该院校您需要以下分数(在广）：</p>
             <div class="evaluating-result-num" id="dream-list"></div>
         </div>
         <div style="text-align: center">
@@ -364,7 +364,7 @@
             <p>您本次录入的分数是：<strong><span id="precedenceScoreInfo"></span>分</strong></p>
         </div>
         <div class="evaluating-result">
-            <p class="tips">依据<span id="current-year"></span>年的录取情况、在陕西省你的分数预估在以下位次:</p>
+            <p class="tips">依据<span id="current-year"></span>年的录取情况、在广西你的分数预估在以下位次:</p>
             <div class="evaluating-result-num" id="precedence-list"></div>
         </div>
         <div style="text-align: center">
@@ -381,8 +381,7 @@
     </div>
 
     <div class="tips">
-        <strong>温馨提示：</strong>
-        <p>本页推荐结果、依据您的分数（模考成绩）进行评估获得。如果您想获得更为精确的志愿指导，请使用我们为您提供的志愿指导服务。</p>
+        <p><strong>温馨提示：</strong>本页推荐结果、依据您的分数（模考成绩）进行评估获得。如果您想获得更为精确的志愿指导，请使用我们为您提供的志愿指导服务。</p>
     </div>
     <div class="volunteer-flow3-body">
         <div class="info-explain">
@@ -402,8 +401,8 @@
                 </li>
             </ul>
         </div>
-        <div class="info-result">
-            <ul>
+        <div class="info-result"  style="width:938px;overflow-x: scroll;">
+            <ul style="width:1380px;">
                 <li class="starA">
                     <div class="title">
                         <span class="">A档（冲）</span>
@@ -426,10 +425,10 @@
                     </div>
                     <div class="school-list hide" id="school-list1"></div>
                 </li>
-                <li class="starC">
+                <li class="starB">
                     <div class="title">
-                        <span>C档（保）</span>
-                        <p>录取指数: <i class="starC-icon"></i></p>
+                        <span>C档（稳）</span>
+                        <p>录取指数: <i class="starB-icon"></i></p>
                     </div>
                     <div class="no-school hide" id="no-school2">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
@@ -437,16 +436,38 @@
                     </div>
                     <div class="school-list hide" id="school-list2"></div>
                 </li>
-                <li class="starD">
+                <li class="starC">
                     <div class="title">
-                        <span>D档（垫）</span>
-                        <p>录取指数: <i class="starD-icon"></i></p>
+                        <span>D档（保）</span>
+                        <p>录取指数: <i class="starC-icon"></i></p>
                     </div>
                     <div class="no-school hide" id="no-school3">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
                         <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
                     <div class="school-list hide" id="school-list3"></div>
+                </li>
+                <li class="starC">
+                    <div class="title">
+                        <span>E档（保）</span>
+                        <p>录取指数: <i class="starC-icon"></i></p>
+                    </div>
+                    <div class="no-school hide" id="no-school4">
+                        <p>① 本录取指数下、没有合理院校可推荐；</p>
+                        <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
+                    </div>
+                    <div class="school-list hide" id="school-list4"></div>
+                </li>
+                <li class="starD">
+                    <div class="title">
+                        <span>F档（垫）</span>
+                        <p>录取指数: <i class="starD-icon"></i></p>
+                    </div>
+                    <div class="no-school hide" id="no-school5">
+                        <p>① 本录取指数下、没有合理院校可推荐；</p>
+                        <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
+                    </div>
+                    <div class="school-list hide" id="school-list5"></div>
                 </li>
             </ul>
         </div>
@@ -464,8 +485,8 @@
 </div>
 <%@ include file="/common/footer.jsp"%>
 <script>
-//    seajs.use(["/static/src/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
-    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+    seajs.use(["/static/src/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+//    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
 </script>
 </body>
 </html>
