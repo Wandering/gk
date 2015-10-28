@@ -26,25 +26,19 @@ selectList
     <sql id="Base_Column_List">
         id,
         scores,
-        subjectType,
-        num,
-        batch,
+        ranking,
         isSurvey,
         isReported
     </sql>
     <insert id="insert" parameterType="UserExam">
         INSERT INTO gk_user_exam (
         scores,
-        subjectType,
-        num,
-        batch,
+        ranking,
         isSurvey,
         isReported
         ) VALUES (
         #{scores},
-        #{subjectType},
-        #{num},
-        #{batch},
+        #{ranking},
         #{isSurvey},
         #{isReported}
         )
@@ -60,14 +54,8 @@ selectList
             <if test="scores!=null">
                 scores = #{scores},
             </if>
-            <if test="subjectType!=null">
-                subjectType = #{subjectType},
-            </if>
-            <if test="num!=null">
-                num = #{num},
-            </if>
-            <if test="batch!=null">
-                batch = #{batch},
+            <if test="ranking!=null">
+                ranking = #{ranking},
             </if>
             <if test="isSurvey!=null">
                 isSurvey = #{isSurvey},
@@ -86,14 +74,8 @@ selectList
             <if test="map.scores!=null">
                 scores = #{map.scores},
             </if>
-            <if test="map.subjectType!=null">
-                subjectType = #{map.subjectType},
-            </if>
-            <if test="map.num!=null">
-                num = #{map.num},
-            </if>
-            <if test="map.batch!=null">
-                batch = #{map.batch},
+            <if test="map.ranking!=null">
+                ranking = #{map.ranking},
             </if>
             <if test="map.isSurvey!=null">
                 isSurvey = #{map.isSurvey},
@@ -112,14 +94,8 @@ selectList
             <if test="update.scores!=null">
                 scores = #{update.scores},
             </if>
-            <if test="update.subjectType!=null">
-                subjectType = #{update.subjectType},
-            </if>
-            <if test="update.num!=null">
-                num = #{update.num},
-            </if>
-            <if test="update.batch!=null">
-                batch = #{update.batch},
+            <if test="update.ranking!=null">
+                ranking = #{update.ranking},
             </if>
             <if test="update.isSurvey!=null">
                 isSurvey = #{update.isSurvey},
@@ -136,14 +112,8 @@ selectList
             <if test="condition.scores!=null">
                 AND scores = #{condition.scores}
             </if>
-            <if test="condition.subjectType!=null">
-                AND subjectType = #{condition.subjectType}
-            </if>
-            <if test="condition.num!=null">
-                AND num = #{condition.num}
-            </if>
-            <if test="condition.batch!=null">
-                AND batch = #{condition.batch}
+            <if test="condition.ranking!=null">
+                AND ranking = #{condition.ranking}
             </if>
             <if test="condition.isSurvey!=null">
                 AND isSurvey = #{condition.isSurvey}
@@ -157,16 +127,12 @@ selectList
     <insert id="insertMap" >
         INSERT INTO gk_user_exam (
                 scores,
-                subjectType,
-                num,
-                batch,
+                ranking,
                 isSurvey,
                 isReported
         ) VALUES (
                     #{map.scores},
-                    #{map.subjectType},
-                    #{map.num},
-                    #{map.batch},
+                    #{map.ranking},
                     #{map.isSurvey},
                     #{map.isReported}
         )
@@ -177,9 +143,7 @@ selectList
         UPDATE gk_user_exam
         <trim prefix="SET" suffixOverrides=",">
             scores = #{scores},
-            subjectType = #{subjectType},
-            num = #{num},
-            batch = #{batch},
+            ranking = #{ranking},
             isSurvey = #{isSurvey},
             isReported = #{isReported},
         </trim>
@@ -205,14 +169,8 @@ selectList
             <if test="scores!=null">
                 AND scores = #{scores}
             </if>
-            <if test="subjectType!=null">
-                AND subjectType = #{subjectType}
-            </if>
-            <if test="num!=null">
-                AND num = #{num}
-            </if>
-            <if test="batch!=null">
-                AND batch = #{batch}
+            <if test="ranking!=null">
+                AND ranking = #{ranking}
             </if>
             <if test="isSurvey!=null">
                 AND isSurvey = #{isSurvey}
@@ -283,14 +241,8 @@ selectList
             <if test="condition.scores!=null">
                 ${condition.groupOp}   scores  ${condition.scores.op}  #{condition.scores.data}
             </if>
-            <if test="condition.subjectType!=null">
-                ${condition.groupOp}   subjectType  ${condition.subjectType.op}  #{condition.subjectType.data}
-            </if>
-            <if test="condition.num!=null">
-                ${condition.groupOp}   num  ${condition.num.op}  #{condition.num.data}
-            </if>
-            <if test="condition.batch!=null">
-                ${condition.groupOp}   batch  ${condition.batch.op}  #{condition.batch.data}
+            <if test="condition.ranking!=null">
+                ${condition.groupOp}   ranking  ${condition.ranking.op}  #{condition.ranking.data}
             </if>
             <if test="condition.isSurvey!=null">
                 ${condition.groupOp}   isSurvey  ${condition.isSurvey.op}  #{condition.isSurvey.data}
@@ -317,14 +269,8 @@ selectList
             <if test="scores!=null">
                 AND scores like CONCAT('%', #{scores} , '%')
             </if>
-            <if test="subjectType!=null">
-                AND subjectType like CONCAT('%', #{subjectType} , '%')
-            </if>
-            <if test="num!=null">
-                AND num like CONCAT('%', #{num} , '%')
-            </if>
-            <if test="batch!=null">
-                AND batch like CONCAT('%', #{batch} , '%')
+            <if test="ranking!=null">
+                AND ranking like CONCAT('%', #{ranking} , '%')
             </if>
             <if test="isSurvey!=null">
                 AND isSurvey like CONCAT('%', #{isSurvey} , '%')
@@ -350,14 +296,8 @@ selectList
             <if test="condition.scores!=null">
                 AND scores = #{condition.scores}
             </if>
-            <if test="condition.subjectType!=null">
-                AND subjectType = #{condition.subjectType}
-            </if>
-            <if test="condition.num!=null">
-                AND num = #{condition.num}
-            </if>
-            <if test="condition.batch!=null">
-                AND batch = #{condition.batch}
+            <if test="condition.ranking!=null">
+                AND ranking = #{condition.ranking}
             </if>
             <if test="condition.isSurvey!=null">
                 AND isSurvey = #{condition.isSurvey}
@@ -382,14 +322,8 @@ selectList
             <if test="scores!=null">
                 AND scores = #{scores}
             </if>
-            <if test="subjectType!=null">
-                AND subjectType = #{subjectType}
-            </if>
-            <if test="num!=null">
-                AND num = #{num}
-            </if>
-            <if test="batch!=null">
-                AND batch = #{batch}
+            <if test="ranking!=null">
+                AND ranking = #{ranking}
             </if>
             <if test="isSurvey!=null">
                 AND isSurvey = #{isSurvey}
@@ -410,14 +344,8 @@ selectList
            <if test="scores!=null">
                ${groupOp} scores ${scores.op}  #{scores.data}
            </if>
-           <if test="subjectType!=null">
-               ${groupOp} subjectType ${subjectType.op}  #{subjectType.data}
-           </if>
-           <if test="num!=null">
-               ${groupOp} num ${num.op}  #{num.data}
-           </if>
-           <if test="batch!=null">
-               ${groupOp} batch ${batch.op}  #{batch.data}
+           <if test="ranking!=null">
+               ${groupOp} ranking ${ranking.op}  #{ranking.data}
            </if>
            <if test="isSurvey!=null">
                ${groupOp} isSurvey ${isSurvey.op}  #{isSurvey.data}
