@@ -12,6 +12,7 @@ import cn.thinkjoy.gk.util.CheckUtil;
 import cn.thinkjoy.gk.util.DateUtil;
 import cn.thinkjoy.gk.util.UploadUtil;
 import cn.thinkjoy.gk.vo.FileUploadVO;
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
@@ -40,8 +41,7 @@ public class VideoController extends BaseController{
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/video",method = RequestMethod.POST)
-	@ResponseBody
-	public List<FileUploadVO> video(@RequestParam(value = "files", required = false) MultipartFile[] fileUploads,
+	public String video(@RequestParam(value = "files", required = false) MultipartFile[] fileUploads,
 						 @RequestParam(value = "params", required = false)String params) throws Exception {
 
 		long stratTime = System.currentTimeMillis();
@@ -96,6 +96,7 @@ public class VideoController extends BaseController{
 
 		long resultTime = System.currentTimeMillis() - stratTime;
 		LOGGER.info("执行时间:" + resultTime);
-		return fileUploadVOs;
+		outputResult(JSON.toJSONString(fileUploadVOs));
+		return null;
 	}
 }

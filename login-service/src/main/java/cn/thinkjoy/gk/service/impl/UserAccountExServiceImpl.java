@@ -8,6 +8,7 @@ package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.gk.dao.*;
 import cn.thinkjoy.gk.domain.UserAccount;
+import cn.thinkjoy.gk.domain.UserExam;
 import cn.thinkjoy.gk.domain.UserInfo;
 import cn.thinkjoy.gk.domain.UserVip;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
@@ -32,6 +33,9 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
 
     @Autowired
     private IUserInfoDAO userInfoDAO;
+
+    @Autowired
+    private IUserExamDAO userExamDAO;
 
     @Autowired
     private IUserInfoExDAO userInfoExDAO;
@@ -73,20 +77,25 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
     @Override
     public boolean insertUserAccount(UserAccount userAccount) {
         boolean flag = false;
+        long id = userAccount.getId();
         try{
             userAccountDAO.insert(userAccount);
             UserInfo userInfo = new UserInfo();
-            userInfo.setId(userAccount.getId());
+            userInfo.setId(id);
             String account = userAccount.getAccount();
             userInfo.setName("gk-" + account.substring(0,3)+"****"+account.substring(account.length()-4,account.length()));
             userInfo.setToken(UUID.randomUUID().toString());
             userInfoExDAO.insertUserInfo(userInfo);
             UserVip userVip = new UserVip();
-            userVip.setId(userAccount.getId());
+            userVip.setId(id);
             userVip.setStatus(0);
             userVip.setCreateDate(System.currentTimeMillis());
             userVip.setEndDate(System.currentTimeMillis());
             userVipDAO.insert(userVip);
+
+            UserExam userExam = new UserExam();
+            userExam.setId(id);
+            userExamDAO.insert(userExam);
             flag = true;
         }catch(Exception e){
             e.printStackTrace();
