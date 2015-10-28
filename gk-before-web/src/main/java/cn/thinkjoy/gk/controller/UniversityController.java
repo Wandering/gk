@@ -206,8 +206,8 @@ public class UniversityController extends BaseController {
     @RequestMapping(value = "/getEnrollInfo",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> getEnrollInfo()throws Exception{
-//        long areaId=getAreaCookieValue();
-        long areaId=450000L;
+        long areaId=getAreaCookieValue();
+//        long areaId=450000L;
         String schoolId=request.getParameter("id");
         Map<String,Object> map=new HashMap<String, Object>();
         List<EnrollResponseDto>  enrollResponseDtoList=new ArrayList<EnrollResponseDto>();
@@ -215,10 +215,10 @@ public class UniversityController extends BaseController {
         List<EnrollInfo>  enrollInfos=iUniversityService.getEnrollInfoByYear(2013,schoolId,areaId);
         EnrollResponseDto lastEnrollResponseDto=new EnrollResponseDto();
         lastEnrollResponseDto.setTitle("2013招生情况");
-        lastEnrollResponseDto.setInfos(lastenrollInfos);
+        lastEnrollResponseDto.setInfos(enrollInfos);
         EnrollResponseDto enrollResponseDto=new EnrollResponseDto();
         enrollResponseDto.setTitle("2014招生情况");
-        enrollResponseDto.setInfos(enrollInfos);
+        enrollResponseDto.setInfos(lastenrollInfos);
         enrollResponseDtoList.add(enrollResponseDto);
         enrollResponseDtoList.add(lastEnrollResponseDto);
         map.put("enrollInfo",enrollResponseDtoList);
@@ -281,13 +281,13 @@ public class UniversityController extends BaseController {
      */
     @RequestMapping(value = "/universityDetail",method = RequestMethod.GET)
     @ResponseBody
-    public UniversityDetailDto universityDetail(@RequestParam(value="id",required=false) String id,
+    public UniversityDetailDto universityDetail(@RequestParam(value="code",required=false) String code,
                                                 @RequestParam(value="type",required=false) Integer type,
                                                 @RequestParam(value="year",required=false) Integer year,
                                                 @RequestParam(value="batch",required=false) String batch){
 
 
-        if(StringUtils.isBlank(id)
+        if(StringUtils.isBlank(code)
                 ||StringUtils.isBlank(batch)
                 ||null==type
                 ||null==year){
@@ -304,7 +304,7 @@ public class UniversityController extends BaseController {
 
         UniversityDetailDto universityDetailDto = null;
         try{
-            universityDetailDto = universityExService.getUniversityDetail(id,batch,type,year);
+            universityDetailDto = universityExService.getUniversityDetail(code,batch,type,year);
         }catch(Exception e){
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
         }

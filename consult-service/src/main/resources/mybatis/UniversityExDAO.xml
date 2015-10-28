@@ -20,6 +20,9 @@
             <if test="batch!=null">
                 and b.batch = #{batch}
             </if>
+            <if test="code!=null">
+                and a.code = #{code}
+            </if>
         </where>
     </select>
 
