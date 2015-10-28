@@ -234,8 +234,7 @@ public class UniversityController extends BaseController {
     public EntrollPlanDto getEnrollPlan() throws Exception{
         String schoolId=request.getParameter("id");
         String batch=request.getParameter("batch");
-//       TODO long areaId=getAreaCookieValue();
-        long areaId=450000L;
+        long areaId=getAreaCookieValue();
         EntrollPlanDto entrollPlanDto=new EntrollPlanDto();
         List<EntrollPlan> entrollPlans=new ArrayList<EntrollPlan>();
         switch (batch){
