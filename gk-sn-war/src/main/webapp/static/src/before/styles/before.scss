@@ -34,9 +34,14 @@ ul.main-video-list {
     margin-right: 23px;
     .img,
     img {
-      width: 233px;
+      display: block;
+      margin: 0 auto;
       height: 174px;
       overflow: hidden;
+    }
+    img {
+      border: 1px solid #ccc;
+      height: 172px;
     }
     .info {
       width: 233px;

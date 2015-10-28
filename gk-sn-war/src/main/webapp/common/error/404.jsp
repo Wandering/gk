@@ -10,15 +10,16 @@
 <head>
     <title></title>
   <style type="text/css">
-    h1{
-      text-align: center;
-      color: red;
-      margin-top: 15%;
-      font-size: 48px;
+    #page404{
+      width: 560px;
+      height: 510px;
+      margin: 0 auto;
     }
   </style>
 </head>
 <body>
-<h1>404</h1>
+<div id="page404">
+  <a href="/index.jsp"></a>
+</div>
 </body>
 </html>

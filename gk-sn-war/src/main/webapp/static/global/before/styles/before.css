@@ -30,9 +30,13 @@ ul.main-video-list {
     margin-right: 23px; }
     ul.main-video-list li.item .img,
     ul.main-video-list li.item img {
-      width: 233px;
+      display: block;
+      margin: 0 auto;
       height: 174px;
       overflow: hidden; }
+    ul.main-video-list li.item img {
+      border: 1px solid #ccc;
+      height: 172px; }
     ul.main-video-list li.item .info {
       width: 233px;
       line-height: 22px;

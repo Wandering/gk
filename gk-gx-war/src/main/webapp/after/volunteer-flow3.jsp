@@ -917,58 +917,142 @@
 
                 <p>版权：本版权归属陕西省高考360志愿指导平台。未经授权不得拷贝，引用报告中的相关信息。</p>
             </div>
+
             <table border="1" cellspacing="0">
                 <tr class="t-title">
-                    <th colspan="2">院校</th>
-                    <th>专业</th>
-                    <th>是否服从其它专业调试</th>
+                    <th width="50%">A志愿</th>
+                    <th width="50%">B志愿</th>
                 </tr>
                 <tr class="t-content">
-                    <td width="15%"><b>A志愿</b></td>
-                    <td width="45%">
+                    <td>
                         <div id="print-result-info1" class="print-result-info"></div>
                     </td>
-                    <td width="30%">
-                        <div class="specialty-list-info" id="specialty-list-info1"></div>
-                    </td>
-                    <td width="10%">
-                        <div id="isFunRadio1" class="isFunRadio"></div>
-                    </td>
-                </tr>
-                <tr class="t-content">
-                    <td><b>B志愿</b></td>
                     <td>
                         <div id="print-result-info2" class="print-result-info"></div>
                     </td>
+                </tr>
+                <tr class="t-content">
+                    <td class="tc">专业选择</td>
+                    <td class="tc">专业选择</td>
+                </tr>
+                <tr class="t-content">
+                    <td>
+                        <div class="specialty-list-info" id="specialty-list-info1"></div>
+                    </td>
                     <td>
                         <div class="specialty-list-info" id="specialty-list-info2"></div>
+                    </td>
+                </tr>
+                <tr class="t-content">
+                    <td class="tc">专业调剂</td>
+                    <td class="tc">专业调剂</td>
+                </tr>
+                <tr class="t-content">
+                    <td>
+                        <div id="isFunRadio1" class="isFunRadio"></div>
                     </td>
                     <td>
                         <div id="isFunRadio2" class="isFunRadio"></div>
                     </td>
                 </tr>
                 <tr class="t-content">
-                    <td><b>C志愿</b></td>
+                    <td>
+                        <div id="partSel1"></div>
+                    </td>
+                    <td>
+                        <div id="partSel2"></div>
+                    </td>
+                </tr>
+            </table>
+            <table border="1" cellspacing="0">
+                <tr class="t-title">
+                    <th width="50%">C志愿</th>
+                    <th width="50%">D志愿</th>
+                </tr>
+                <tr class="t-content">
                     <td>
                         <div id="print-result-info3" class="print-result-info"></div>
                     </td>
                     <td>
-                        <div class="specialty-list-info" id="specialty-list-info3"></div>
-                    </td>
-                    <td>
-                        <div id="isFunRadio3" class="isFunRadio"></div>
+                        <div id="print-result-info4" class="print-result-info"></div>
                     </td>
                 </tr>
                 <tr class="t-content">
-                    <td><b>D志愿</b></td>
+                    <td class="tc">专业选择</td>
+                    <td class="tc">专业选择</td>
+                </tr>
+                <tr class="t-content">
                     <td>
-                        <div id="print-result-info4" class="print-result-info"></div>
+                        <div class="specialty-list-info" id="specialty-list-info3"></div>
                     </td>
                     <td>
                         <div class="specialty-list-info" id="specialty-list-info4"></div>
                     </td>
+                </tr>
+                <tr class="t-content">
+                    <td class="tc">专业调剂</td>
+                    <td class="tc">专业调剂</td>
+                </tr>
+                <tr class="t-content">
+                    <td>
+                        <div id="isFunRadio3" class="isFunRadio"></div>
+                    </td>
                     <td>
                         <div id="isFunRadio4" class="isFunRadio"></div>
+                    </td>
+                </tr>
+                <tr class="t-content">
+                    <td>
+                        <div id="partSel3"></div>
+                    </td>
+                    <td>
+                        <div id="partSel4"></div>
+                    </td>
+                </tr>
+            </table>
+            <table border="1" cellspacing="0">
+                <tr class="t-title">
+                    <th width="50%">E志愿</th>
+                    <th width="50%">F志愿</th>
+                </tr>
+                <tr class="t-content">
+                    <td>
+                        <div id="print-result-info5" class="print-result-info"></div>
+                    </td>
+                    <td>
+                        <div id="print-result-info6" class="print-result-info"></div>
+                    </td>
+                </tr>
+                <tr class="t-content">
+                    <td class="tc">专业选择</td>
+                    <td class="tc">专业选择</td>
+                </tr>
+                <tr class="t-content">
+                    <td>
+                        <div class="specialty-list-info" id="specialty-list-info5"></div>
+                    </td>
+                    <td>
+                        <div class="specialty-list-info" id="specialty-list-info6"></div>
+                    </td>
+                </tr>
+                <tr class="t-content">
+                    <td class="tc">专业调剂</td>
+                    <td class="tc">专业调剂</td>
+                </tr>
+                <tr class="t-content">
+                    <td>
+                        <div id="isFunRadio5" class="isFunRadio"></div>
+                    </td>
+                    <td>
+                        <div id="isFunRadio6" class="isFunRadio"></div>
+                    </td>
+                </tr>
+                <tr class="t-content">
+                    <td>
+                        <div id="partSel5"></div>
+                    </td>
+                    <td>
+                        <div id="partSel6"></div>
                     </td>
                 </tr>
             </table>
@@ -1024,7 +1108,7 @@
                     可能被自己心仪的专业录取，同理，也试用二本和三本。
                 </div>
                 <div class="navigation-box">
-                    <span class="tip">正式填报志愿请登录网址：<a target="_blank" href="http://sn.gaokao360.net">sn.gaokao360.net</a></span>
+                    <span class="tip">正式填报志愿请登录网址：<a target="_blank" href="http://gx.gaokao360.net">gx.gaokao360.net</a></span>
                     <div class="btn btn-before" id="prev-btn">返回上一步</div>
                     <div class="btn btn-next" id="print-btn">打印</div>
                 </div>
