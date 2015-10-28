@@ -24,13 +24,13 @@ public class UniversityExServiceImpl implements IUniversityExService{
     private IUniversityExDAO universityExDAO;
 
     @Override
-    public UniversityDetailDto getUniversityDetail(String schoolId, String batch, Integer type,Integer year) {
+    public UniversityDetailDto getUniversityDetail(String schoolCode, String batch, Integer type,Integer year) {
 
         UniversityDetailDto universityDetailDto = null;
 
         Map<String,Object> params = new HashMap<>();
 
-        params.put("id",schoolId);
+        params.put("code",schoolCode);
         params.put("batch",batch);
         params.put("year",year);
 

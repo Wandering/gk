@@ -134,7 +134,7 @@ define(function (require) {
                 type: 'GET',
                 dataType: 'JSON',
                 data: {
-                    id: code,
+                    code: code,
                     type: type,
                     year: years,
                     batch: m_batch
@@ -149,7 +149,6 @@ define(function (require) {
                         }
                         var infoHtml = ''
                             + '<p>'
-                            + '院校代码：' + data.code + '  <br/>'
                             + '院校特征：' + dicName + '<br/>'
                             + '院校隶属：' + data.subjection + '<br/>'
                             + '院校类型：' + data.type + '<br/>'
