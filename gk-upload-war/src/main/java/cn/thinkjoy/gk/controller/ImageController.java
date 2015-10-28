@@ -14,7 +14,7 @@ import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.param.FileUploadParam;
 import cn.thinkjoy.gk.protocol.DateStyle;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.runnable.UploadRunnable;
+import cn.thinkjoy.gk.runnable.ImageRunnable;
 import cn.thinkjoy.gk.util.CheckUtil;
 import cn.thinkjoy.gk.util.DateUtil;
 import cn.thinkjoy.gk.util.UploadUtil;
@@ -111,7 +111,7 @@ public class ImageController extends BaseController{
 						FileUploadParam fileUploadParam = null;
 						for(int i=0;i<initArray.size();i++){
 							fileUploadParam = JSONObject.parseObject(initArray.getString(i), FileUploadParam.class);
-							UploadRunnable r = new UploadRunnable(filePath, systemFileName,fileUploadParam);
+							ImageRunnable r = new ImageRunnable(filePath, systemFileName,fileUploadParam);
 							Thread t = new Thread(r);
 							t.start();
 						}
@@ -125,7 +125,7 @@ public class ImageController extends BaseController{
 		}
 
 		long resultTime = System.currentTimeMillis() - stratTime;
-		LOGGER.info("执行时间:" + DateUtil.DateToString(new Date(resultTime), DateStyle.YYYY_MM_DD_HH_MM_SS_EN));
+		LOGGER.info("执行时间:" + resultTime);
 		return fileUploadVOs;
 	}
 }

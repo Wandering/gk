@@ -4,22 +4,16 @@ import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.constant.Const;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
-import cn.thinkjoy.gk.param.FileUploadParam;
 import cn.thinkjoy.gk.protocol.DateStyle;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.runnable.UploadRunnable;
 import cn.thinkjoy.gk.util.CheckUtil;
 import cn.thinkjoy.gk.util.DateUtil;
 import cn.thinkjoy.gk.util.UploadUtil;
 import cn.thinkjoy.gk.vo.FileUploadVO;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -69,7 +63,7 @@ public class FileController extends BaseController{
 				// 验证文件
 				CheckUtil.checkFile(fileSize, uploadFileType);
 
-				String filePath = Const.IMAGE_UPLOAD_DIR+date+"/"+uploadFileType;
+				String filePath = Const.FILE_UPLOAD_DIR+date+"/"+uploadFileType;
 
 				String systemFileName= UUID.randomUUID().toString()+ "." + uploadFileType;
 				// 本机文件地址
@@ -94,7 +88,7 @@ public class FileController extends BaseController{
 		}
 
 		long resultTime = System.currentTimeMillis() - stratTime;
-		LOGGER.info("执行时间:" + DateUtil.DateToString(new Date(resultTime), DateStyle.YYYY_MM_DD_HH_MM_SS_EN));
+		LOGGER.info("执行时间:" + resultTime);
 		return fileUploadVOs;
 	}
 }

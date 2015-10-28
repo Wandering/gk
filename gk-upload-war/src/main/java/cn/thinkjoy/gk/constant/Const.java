@@ -65,19 +65,19 @@ public final class Const {
 	/**
 	 * 文件上传目录
 	 */
-	public static final String  FILE_UPLOAD_DIR = "/gaokao/upload/files/";
+	public static final String  FILE_UPLOAD_DIR = "/data/gaokao/upload/files/";
 	/**
 	 * 文件上传目录
 	 */
-	public static final String  IMAGE_UPLOAD_DIR = "/gaokao/upload/images/";
+	public static final String  IMAGE_UPLOAD_DIR = "/data/gaokao/upload/images/";
 	/**
 	 * 文件上传目录
 	 */
-	public static final String  VIDEO_UPLOAD_DIR = "/gaokao/upload/videos/";
+	public static final String  VIDEO_UPLOAD_DIR = "/data/gaokao/upload/videos/";
 	/**
 	 * 城市图片存放目录
 	 */
-	public static final String  FILE_CITY_DIR = "/gaokao/area/city/";
+	public static final String  FILE_CITY_DIR = "/data/gaokao/area/city/";
 	/**
 	 * 文件宽度
 	 */

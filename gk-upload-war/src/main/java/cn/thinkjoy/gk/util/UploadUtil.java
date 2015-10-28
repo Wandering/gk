@@ -49,9 +49,9 @@ public class UploadUtil {
 			
 			createFolder(destFile.getParent());
 
-			FileUtils.copyInputStreamToFile(uploadFile.getInputStream(), destFile);
+//			FileUtils.copyInputStreamToFile(uploadFile.getInputStream(), destFile);
 
-//			uploadFile.transferTo(destFile);
+			uploadFile.transferTo(destFile);
 
 			status = 0;
 			

@@ -4,29 +4,23 @@ import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.constant.Const;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
-import cn.thinkjoy.gk.param.FileUploadParam;
 import cn.thinkjoy.gk.protocol.DateStyle;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.runnable.UploadRunnable;
+import cn.thinkjoy.gk.runnable.ImageRunnable;
+import cn.thinkjoy.gk.runnable.VideoRunnable;
 import cn.thinkjoy.gk.util.CheckUtil;
 import cn.thinkjoy.gk.util.DateUtil;
 import cn.thinkjoy.gk.util.UploadUtil;
-import cn.thinkjoy.gk.util.VideoUtil;
 import cn.thinkjoy.gk.vo.FileUploadVO;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,7 +72,9 @@ public class VideoController extends BaseController{
 				// 本机文件地址
 				UploadUtil.fileUpload(new File(filePath,systemFileName), fileUpload);
 
-				VideoUtil.process(filePath+systemFileName,filePath+uuid+".mp4");
+				VideoRunnable videoRunnable = new VideoRunnable(filePath, systemFileName,uuid);
+				Thread t = new Thread(videoRunnable);
+				t.start();
 
 //				fileUpload.transferTo(new File(filePath+systemFileName));
 
@@ -99,7 +95,7 @@ public class VideoController extends BaseController{
 		}
 
 		long resultTime = System.currentTimeMillis() - stratTime;
-		LOGGER.info("执行时间:" + DateUtil.DateToString(new Date(resultTime), DateStyle.YYYY_MM_DD_HH_MM_SS_EN));
+		LOGGER.info("执行时间:" + resultTime);
 		return fileUploadVOs;
 	}
 }
