@@ -206,8 +206,8 @@ public class UniversityController extends BaseController {
     @RequestMapping(value = "/getEnrollInfo",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> getEnrollInfo()throws Exception{
-//        long areaId=getAreaCookieValue();
-        long areaId=450000L;
+        long areaId=getAreaCookieValue();
+//        long areaId=450000L;
         String schoolId=request.getParameter("id");
         Map<String,Object> map=new HashMap<String, Object>();
         List<EnrollResponseDto>  enrollResponseDtoList=new ArrayList<EnrollResponseDto>();
@@ -215,10 +215,10 @@ public class UniversityController extends BaseController {
         List<EnrollInfo>  enrollInfos=iUniversityService.getEnrollInfoByYear(2013,schoolId,areaId);
         EnrollResponseDto lastEnrollResponseDto=new EnrollResponseDto();
         lastEnrollResponseDto.setTitle("2013招生情况");
-        lastEnrollResponseDto.setInfos(lastenrollInfos);
+        lastEnrollResponseDto.setInfos(enrollInfos);
         EnrollResponseDto enrollResponseDto=new EnrollResponseDto();
         enrollResponseDto.setTitle("2014招生情况");
-        enrollResponseDto.setInfos(enrollInfos);
+        enrollResponseDto.setInfos(lastenrollInfos);
         enrollResponseDtoList.add(enrollResponseDto);
         enrollResponseDtoList.add(lastEnrollResponseDto);
         map.put("enrollInfo",enrollResponseDtoList);
