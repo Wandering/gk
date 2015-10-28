@@ -186,6 +186,8 @@ define(function (require) {
             var code = parents.attr('code');
             var year = parents.attr('year');
             console.log(m_batch + "=" + code + "=" + year)
+            $('#specialty-content').html('');
+            $('#specialty-layer,.tansLayer').show();
             $.ajax({
                 url: '/majored/majorList.do',
                 type: 'GET',
@@ -199,8 +201,6 @@ define(function (require) {
                     console.log(res);
                     var data = res.bizData;
                     if ('0000000' === res.rtnCode) {
-                        $('#specialty-content').html('');
-                        $('#specialty-layer,.tansLayer').show();
                         $.each(data, function (i, v) {
                             var specialtyTotal = data.length;
                             var name = v.name;
@@ -224,6 +224,12 @@ define(function (require) {
                 }
             });
         });
+
+
+
+
+
+
 
 
         $('#specialty-layer').on('click', 'label', function () {
