@@ -745,7 +745,8 @@ a.next-btn:hover {
     line-height: 30px; }
   .content .evaluate-count .row {
     position: relative;
-    height: 200px; }
+    height: 200px;
+    clear: both; }
     .content .evaluate-count .row .eva-left-bg {
       margin: 0 30px 0; }
     .content .evaluate-count .row .col-1-img {

@@ -51,7 +51,7 @@ define(function (require) {
                     }
                     if (res.rtnCode == "0000000") {
                         var data = $.parseJSON(res.bizData);
-                        //console.log(data)
+                        console.log(data)
                         var m_batch_id = data.related.m_batch_id;
                         var m_batch = data.related.m_batch;
                         var listData = data.data.result;
@@ -120,6 +120,7 @@ define(function (require) {
             var m_batch_id = $(this).attr('m_batch_id');
             var datatypeid = $(this).attr('datatypeid');
             var m_university_name = $(this).attr('m_university_name');
+            console.log(code + "+" + type + "+" + m_batch + "+" + m_batch_id + "+" + datatypeid + "+" + m_university_name)
             var years = 2014;
             //console.log($(this).parents('.school-list').attr('dataType'))
             var star = '';
@@ -146,7 +147,8 @@ define(function (require) {
                     batch: m_batch
                 },
                 success: function (res) {
-                    //console.log(res);
+                    console.log(res);
+                    console.log(1);
                     var data = res.bizData;
                     if ('0000000' === res.rtnCode) {
                         var dicName = '';

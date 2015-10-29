@@ -10,6 +10,19 @@ define(function (require) {
     //var localhosts = 'http://www.gkzy114.com';
 
 
+    function GetCookie(sMainName, sSubName) {
+        var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
+        return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
+    }
+    if (GetCookie("snuser")) {
+        $('#logoutStatus').hide();
+        $('#player').show();
+    } else {
+        $('#logoutStatus').show();
+        $('#player').hide();
+    }
+
+
     // 获取章节列表
     function getList() {
         $.getJSON(
@@ -45,21 +58,17 @@ define(function (require) {
                     $('#episode-num').find('a:eq(0)').click();
                     var firstFileurl = $('#episode-num').find('a:eq(0)').attr('fileurl');
                     console.log(firstFileurl);
-
-                    if (GetCookie("snuser")) {
-                        console.log('登录');
-                        $('#player').attr('href',  firstFileurl);
-                        var api = flowplayer(
-                            "player",
-                            "/static/src/guide/scripts/flowplayer-3.2.18.swf",
-                            {
-                                clip: {
-                                    autoPlay: false,       //是否自动播放，默认true
-                                    autoBuffering: false     //是否自动缓冲视频，默认true
-                                }
+                    $('#player').attr('href',  firstFileurl);
+                    var api = flowplayer(
+                        "player",
+                        "http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.18.swf",
+                        {
+                            clip: {
+                                autoPlay: false,       //是否自动播放，默认true
+                                autoBuffering: false     //是否自动缓冲视频，默认true
                             }
-                        );
-                    }
+                        }
+                    );
                 }
             });
     }

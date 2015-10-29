@@ -10,5 +10,7 @@ define(function (require) {
             + '<img src="http://cdn.gaokao360.net/static/global/before/images/defualt-video.jpg"/>'
             + '<p><a target="_blank" href="/login/login.jsp">登录</a>后,才可以正常播放</p>'
         $('#logoutStatus').show().html(defualtVideoHtml)
+    }else{
+        $('#logoutStatus').hide();
     }
 });

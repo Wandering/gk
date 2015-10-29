@@ -14,12 +14,12 @@ define(function (require) {
         var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
         return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
     }
-    if (GetCookie("snuser")) {
+    if (GetCookie("gxuser")) {
         $('#logoutStatus').hide();
-        $('#player').show();
+        $('#videoHtml').show();
     } else {
         $('#logoutStatus').show();
-        $('#player').hide();
+        $('#videoHtml').hide();
     }
 
 
@@ -58,23 +58,18 @@ define(function (require) {
                     $('#episode-num').find('a:eq(0)').click();
                     var firstFileurl = $('#episode-num').find('a:eq(0)').attr('fileurl');
                     console.log(firstFileurl);
-                    $('#player').attr('href',  firstFileurl);
-                    var api = flowplayer(
-                        "player",
-                        "http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.18.swf",
-                        {
-                            clip: {
-                                autoPlay: false,       //是否自动播放，默认true
-                                autoBuffering: false     //是否自动缓冲视频，默认true
-                            }
-                        }
-                    );
+
+                    var videoHtml = ''
+                        + '<video class="video" poster="//media.html5media.info/poster.jpg" width="759" height="427" controls preload>'
+                        + '<source src="' + firstFileurl + '" media="only screen and (min-device-width: 568px)"></source>'
+                        + '</video>';
+                    $('#videoHtml').html(videoHtml);
+
                 }
             });
     }
 
     getList();
-
     //$.get('/before/video/getVideoSectionList.do?courseId=' + courseId, function(data) {
     //    if ('0000000' === data.rtnCode) {
     //        var videoCourse = data.bizData.videoCourse;
@@ -89,11 +84,13 @@ define(function (require) {
         var fileurl = $(this).attr('fileurl');
         if (fileurl != "" || fileurl == null) {
             $(window).scrollTop(0);
-            $('#player').attr('href', fileurl);
-            var api = flowplayer(
-                "player",
-                "http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.18.swf"
-            );
+
+            var videoHtml = ''
+                + '<video class="video" poster="//media.html5media.info/poster.jpg" width="618" height="347" controls preload>'
+                + '<source src="' + fileurl + '" media="only screen and (min-device-width: 568px)"></source>'
+                + '</video>';
+            $('#videoHtml').html(videoHtml);
+
         } else {
             $('.error-tips').text('您还不是VIP用户,请升级为VIP后在观看。').fadeIn(1000).fadeOut(2000);
         }
