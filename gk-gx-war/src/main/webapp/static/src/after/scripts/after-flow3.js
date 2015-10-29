@@ -443,6 +443,9 @@ define(function (require) {
                 "data": data,
                 "related": related
             };
+
+            console.log(JSON.stringify(params))
+
             $.ajax({
                 url: '/guide/report.do',
                 type: 'GET',
