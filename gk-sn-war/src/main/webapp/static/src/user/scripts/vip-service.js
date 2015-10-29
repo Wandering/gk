@@ -1,6 +1,10 @@
 define(function (require) {
+
     var $ = require('$');
+
     require('header-user');
+
+    require('http://cdn.gaokao360.net/static/plugins/pingpp/pingpp-pc');
 
 
     // 获取商品信息
@@ -19,7 +23,6 @@ define(function (require) {
                     validValue = result.bizData.validValue,
                     vipCode = result.bizData.code;
 
-
                 //创建订单
                 $('#createOrderBtn').on('click', function () {
                     var products = [];
@@ -34,8 +37,8 @@ define(function (require) {
                     };
                     pay["products"] = JSON.stringify(products);
                     var extra = {};
-                    extra["result_url"] = "http://ep.zhiless.com/";
-                    pay["channel"] = 'alipay_wap';
+                    extra["success_url"] = "http://sn.gaokao.net/";
+                    pay["channel"] = 'alipay_pc_direct';
                     pay["extra"] = JSON.stringify(extra);
                     console.log(pay)
                     $.ajax({
@@ -43,8 +46,26 @@ define(function (require) {
                         type: 'POST',
                         dataType: 'JSON',
                         data: pay,
-                        success: function (res) {
-                            console.log(res);
+                        success: function (result) {
+                            console.log(result);
+                            if (result.rtnCode === '0000000') {
+                                var charge = result.bizData;
+                                pingppPc.createPayment(charge, function (result, error) {
+                                    console.log("result:" + result);
+                                    console.log("error:" + error);
+                                    var first = "http://";
+                                    if (result == "success") {
+                                        // 微信公众账号支付的结果会在这里返回
+                                        //window.location.href = first + window.location.host + '/success.jsp';
+                                    } else if (result == "fail") {
+                                        // charge 不正确或者微信公众账号支付失败时会在此处返回
+                                        //window.location.href = first+window.location.host + '/fail.jsp';
+                                    } else if (result == "cancel") {
+                                        // 微信公众账号支付取消支付
+                                        //window.location.href = first+window.location.host + '/index.jsp';
+                                    }
+                                });
+                            }
                         }
                     });
                 })
