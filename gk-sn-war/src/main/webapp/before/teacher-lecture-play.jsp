@@ -12,7 +12,10 @@
 <div class="content">
     <div class="banner">
         <div class="video ta">
-            <div id="logoutStatus"></div>
+            <div id="logoutStatus">
+                <img src="http://cdn.gaokao360.net/static/global/before/images/defualt-video.jpg"/>
+                <p><a target="_blank" href="/login/login.jsp">登录</a>后,才可以正常播放</p>
+            </div>
             <a href="" style="display:inline-block;width:760px;height:428px;position: relative;top: 32px" id="player"></a>
         </div>
     </div>
@@ -28,8 +31,8 @@
 <%@ include file="/common/footer.jsp"%>
 <script type="text/javascript" src="http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.13.min.js"></script>
 <script>
-    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/teacher-lecture-play.min","http://cdn.gaokao360.net/static/global/before/scripts/teacher-lecture-play-user.min"]);
-//    seajs.use(["/static/src/before/scripts/teacher-lecture-play","/static/src/before/scripts/teacher-lecture-play-user"]);
+    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/teacher-lecture-play.min"]);
+//    seajs.use(["/static/src/before/scripts/teacher-lecture-play"]);
 </script>
 </body>
 </html>

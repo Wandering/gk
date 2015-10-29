@@ -1,6 +1,6 @@
 seajs.config({
     // 基础路径
-    base: "/static/",
+    base: "http://cdn.gaokao360.net/static/",
     // 别名配置
     alias: {
         "$": "bower_components/jquery/dist/jquery.js",
