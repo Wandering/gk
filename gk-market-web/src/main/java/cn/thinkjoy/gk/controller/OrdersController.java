@@ -114,7 +114,8 @@ public class OrdersController extends BaseController {
         order.setStatus(0);
         order.setPayStatus(0);
         order.setDescription(ordersQuery.getExtra());
-        order.setChannel(ordersQuery.getChannel());
+//        order.setChannel(ordersQuery.getChannel());
+        order.setChannel("alipay_pc_direct");
         try {
             ordersService.insert(order);
             LOGGER.info("creaate order :" + orderNo);
