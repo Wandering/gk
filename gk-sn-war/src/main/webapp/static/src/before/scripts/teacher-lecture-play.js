@@ -51,7 +51,7 @@ define(function (require) {
                         $('#player').attr('href',  firstFileurl);
                         var api = flowplayer(
                             "player",
-                            "/static/src/guide/scripts/flowplayer-3.2.18.swf",
+                            "http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.18.swf",
                             {
                                 clip: {
                                     autoPlay: false,       //是否自动播放，默认true
