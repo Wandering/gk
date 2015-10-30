@@ -72,13 +72,15 @@ public class PayCallbackController {
 //                        vipService.orderVip(Long.valueOf(payResult.getOrderNo()), userId, "VIP10001", month);
                     Calendar c = Calendar.getInstance();
                     try{
-                        UserVip uv = (UserVip)userVipService.findOne("id", userId);
-                        Long endDate = uv.getEndDate();
-                        if(null==endDate){
-                            endDate = System.currentTimeMillis();
-                        }
-                        c.setTimeInMillis(endDate.longValue());
+//                        UserVip uv = (UserVip)userVipService.findOne("id", userId);
+//                        Long endDate = uv.getEndDate();
+//                        if(null==endDate){
+//                            endDate = System.currentTimeMillis();
+//                        }
+                        c.setTimeInMillis(System.currentTimeMillis());
                         c.add(Calendar.YEAR,1);
+                        c.set(Calendar.MONTH, 8);
+                        c.set(Calendar.DAY_OF_MONTH, 1);
                         UserVip userVip = new UserVip();
                         userVip.setId(userId);
                         userVip.setStatus(1);

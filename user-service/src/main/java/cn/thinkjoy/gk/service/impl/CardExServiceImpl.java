@@ -28,21 +28,21 @@ public class CardExServiceImpl implements ICardExService {
     private ICardDAO cardDAO;
 
     @Override
-    public boolean updateUserVip(Long cardId, Long userId) {
+    public boolean updateUserVip(Long cardId, Long userId,Long endDate) {
         boolean flag = false;
-        Calendar c = Calendar.getInstance();
+//        Calendar c = Calendar.getInstance();
         try{
-            UserVip uv = userVipDAO.findOne("id", userId);
-            Long endDate = uv.getEndDate();
-            if(null==endDate){
-                endDate = System.currentTimeMillis();
-            }
-            c.setTimeInMillis(endDate.longValue());
-            c.add(Calendar.YEAR,1);
+//            UserVip uv = userVipDAO.findOne("id", userId);
+//            Long endDate = uv.getEndDate();
+//            if(null==endDate){
+//                endDate = System.currentTimeMillis();
+//            }
+//            c.setTimeInMillis(endDate.longValue());
+//            c.add(Calendar.YEAR,1);
             UserVip userVip = new UserVip();
             userVip.setId(userId);
             userVip.setStatus(1);
-            userVip.setEndDate(c.getTimeInMillis());
+            userVip.setEndDate(endDate);
             userVipDAO.update(userVip);
             Card card = new Card();
             card.setId(cardId);
