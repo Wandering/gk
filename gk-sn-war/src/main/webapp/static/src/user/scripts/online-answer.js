@@ -69,8 +69,9 @@ define(function (require) {
             var keywords = $('#keywords').val().trim();
             var xhr = $.get(url + 'startSize=' + this.startSize + '&endSize=' + this.endSize + '&isAnswer=' + isAnswer + '&keyword=' + keywords, function(data) {
                 if ('0000000' === data.rtnCode) {
+                    console.log(data.bizData.length)
                     if (data.bizData.length > 0) {
-                        if(data.bizData.length>5){
+                        if(data.bizData.length>4){
                             that.next.show();
                         }else{
                             that.next.hide();

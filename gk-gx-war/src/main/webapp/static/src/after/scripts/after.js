@@ -36,7 +36,8 @@ define(function (require) {
                     dataType: 'JSON',
                     data: {},
                     success: function (res) {
-                        console.log(res.bizData.isReported)
+                        console.log(res)
+                        console.log(res.bizData.isReported + "===")
                         if (res.bizData.isReported == 0) {
                             $('#aggregateScore-input').removeAttr('readonly').val('');
                             $('#ranking-input').removeAttr('readonly').val('');
@@ -183,8 +184,8 @@ define(function (require) {
             dataType: 'JSON',
             data: {},
             success: function (res) {
-                console.log(res)
-                console.log(res.bizData.isReported)
+                //console.log(res)
+                //console.log(res.bizData.isReported)
                 var scores = res.bizData.scores;
                 var ranking = res.bizData.ranking;
                 $('#aggregateScore-input').val(scores);

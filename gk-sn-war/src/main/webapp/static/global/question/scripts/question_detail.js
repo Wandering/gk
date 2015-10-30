@@ -1,7 +1,3 @@
-/**
- * Created by kepeng on 15/9/25.
- */
-
 define(function (require) {
     var $ = require('$');
 
@@ -11,6 +7,7 @@ define(function (require) {
         return "";
     }
 
+    console.log(22)
     var Question = {
         renderAsk: function(data) {
             var html = [];
@@ -19,7 +16,7 @@ define(function (require) {
                 html.push('<section class="ask-answer mt20">');
                 html.push('<div class="ask mt20">');
                 html.push('<div class="head-img">');
-                html.push('<img src="' + (question.userIcon || '/static/src/common/images/user_default.png') + '" />');
+                html.push('<img src="' + (question.userIcon || 'http://cdn.gaokao360.net/static/global/common/images/user_default.png') + '" />');
                 html.push('</div>');
                 html.push('<div class="head-info">');
                 html.push('<h6>来自 ' + (question.userName || '') + new Date(question.createTime).Format('yyyy-MM-dd hh:mm') + '</h6>');
@@ -70,7 +67,7 @@ define(function (require) {
             html.push('<li>');
             html.push('<div class="left">');
             html.push('<div class="head-img">');
-            html.push('<img src="' + (answer.userIcon || '/static/src/common/images/user_default.png') + '" />');
+            html.push('<img src="' + (answer.userIcon || 'http://cdn.gaokao360.net/static/global/common/images/user_default.png') + '" />');
             html.push('<i class="star"></i>');
             html.push('</div>');
             html.push('<span>' + (answer.userName || '') + '</span>');

@@ -9,6 +9,6 @@ package cn.thinkjoy.gk.service;
 
 public interface ICardExService{
 
-    boolean updateUserVip(Long cardId,Long userId);
+    boolean updateUserVip(Long cardId,Long userId,Long endDate);
 
 }

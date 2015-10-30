@@ -4,6 +4,9 @@
 <meta name="description" content="高考360专注高考志愿填报咨询指导，针对不同地区的考生提供特殊的知道填报技巧，为高考考生提供智能填报系统。" />
 <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<link rel="dns-prefetch" href="//cdn.gaokao360.net">
+<link rel="shortcut icon" href="http://cdn.gaokao360.net/static/global/common/images/icon.ico"/>
+
 <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/common/styles/comm.min.css"/>
 <script src="http://cdn.gaokao360.net/static/bower_components/seajs/dist/sea.js"></script>
 <script src="http://cdn.gaokao360.net/static/bower_components/seajs-preload/dist/seajs-preload.js"></script>
@@ -12,6 +15,7 @@
 <script src="http://cdn.gaokao360.net/static/bower_components/lib/html5shiv.js"></script>
 <script src="http://cdn.gaokao360.net/static/bower_components/lib/respond.min.js"></script>
 <![endif]-->
+
 
 
 
