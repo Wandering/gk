@@ -350,22 +350,52 @@ define(function (require) {
                     return false;
                 }
 
+
                 if (res.rtnCode == "0000000") {
-                    $('#dream-list').html('');
+
                     if(data.data.length==0){
                         errorTips('暂无数据,请检查输入信息');
                         return false;
                     }
+
                     $('#dream-school-layer,.tansLayer').show();
                     $('#dreamScoreInfo').text(dreamScoreV);
                     $('#dreamSubjectTypeInfo').text(dreamSubjectTypeV);
                     $('#dreamSchoolInfo').text(dreamSchoolV);
                     $('#m_years').text(data.related.m_years)
 
+                    console.log(333)
+                    console.log(data.data)
+                    console.log(data.data.length)
+
+
+                    var m_averageScores = data.data.m_averageScores;
+                    var m_batch = data.data.m_batch;
+                    var m_lowestScore = data.data.m_lowestScore;
+                    console.log(m_averageScores + "=" + m_batch + "=" + m_lowestScore)
+                    var dreamSchoolList = ''
+                        + '<ul>'
+                        + '<li class="pc">' + m_batch + '</li>'
+                        + '<li class="result1">'
+                        + '<span class="t">所需最低分数</span>'
+                        + '<span class="num"><strong>' + m_lowestScore + '</strong>分</span>'
+                        + '</li>'
+                        + '<li class="result2">'
+                        + '<span class="t">所需平均分数</span>'
+                        + '<span class="num"><strong>' + m_averageScores + '</strong>分</span>'
+                        + '</li>'
+                        + '</ul>';
+
+                    $('#dream-list').append(dreamSchoolList);
+
+
+
+
                     for (var i = 0; i < data.data.length; i++) {
-                        var m_averagescores = data.data[i].m_averagescores;
+                        console.log(224)
+                        var m_averagescores = data.data[i].m_averageScores;
                         var m_batch = data.data[i].m_batch;
-                        var m_lowestscore = data.data[i].m_lowestscore;
+                        var m_lowestscore = data.data[i].m_lowestScore;
                         console.log(m_averagescores + "=" + m_batch + "=" + m_lowestscore)
                         var dreamSchoolList = ''
                             + '<ul>'
@@ -380,14 +410,17 @@ define(function (require) {
                             + '</li>'
                             + '</ul>';
 
-                        if(m_averagescores!=null || m_lowestscore != null){
-                            $('#dream-list').append(dreamSchoolList);
-                        }
+                        $('#dream-list').append(dreamSchoolList);
+
+
+                        //if(m_averagescores!=null || m_lowestscore != null){
+                        //    $('#dream-list').append(dreamSchoolList);
+                        //}
+                        //if($('#dream-list').find('li').length==0){
+                        //    $('#dream-list').html('<p style="text-align: center;padding: 30px 0;">'+ dreamSchoolV + dreamSubjectTypeV +'类2014年未招生</p>');
+                        //}
                     }
-                    if($('#dream-list').find('li').length==0){
-                        alert(2)
-                        $('#dream-list').html('<p style="text-align: center;padding: 30px 0;">'+ dreamSchoolV + dreamSubjectTypeV +'类2014年未招生</p>');
-                    }
+
 
                 }
             }

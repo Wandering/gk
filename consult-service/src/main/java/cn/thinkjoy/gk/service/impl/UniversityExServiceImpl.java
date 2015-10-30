@@ -46,19 +46,20 @@ public class UniversityExServiceImpl implements IUniversityExService{
     }
 
     @Override
-    public List<UniversityDetailDto> getUniversityDetailByIds(List<String> schoolIds, String batch, Integer type, Integer year) {
+    public List<UniversityDetailDto> getUniversityDetailByCodes(List<String> schoolCodes, String batch, Integer type, Integer year,long areaId) {
         List<UniversityDetailDto> universityDetailDtos = null;
 
         Map<String,Object> params = new HashMap<>();
 
-        params.put("ids",schoolIds);
+        params.put("codes",schoolCodes);
         params.put("batch",batch);
         params.put("year",year);
+        params.put("areaId",areaId);
 
         if(type==0){
-            universityDetailDtos = universityExDAO.getWSUniversityDetailByIds(params);
+            universityDetailDtos = universityExDAO.getWSUniversityDetailByCodes(params);
         }else if(type==1){
-            universityDetailDtos = universityExDAO.getLGUniversityDetailByIds(params);
+            universityDetailDtos = universityExDAO.getLGUniversityDetailByCodes(params);
         }
 
         return universityDetailDtos;

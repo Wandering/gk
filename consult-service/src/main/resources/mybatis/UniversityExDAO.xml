@@ -58,7 +58,7 @@
     </select>
 
 
-    <select id="getWSUniversityDetailByIds" resultType="UniversityDetailDto">
+    <select id="getWSUniversityDetailByCodes" resultType="UniversityDetailDto">
         SELECT a.id ,a.name,a.subjection,a.type,b.lgPlanNumber planNum,b.lgEnrollNumber enrollNum,
         b.lgLowestScore lowestScore ,b.lgLowestRank lowestRanking,b.lgAverageScore averageScore,b.lgAverageRank averageScoresRanking,
         (select c.name from gk_university_dict c where c.dictId = a.property and c.type = 'FEATURE' ) dictName
@@ -69,19 +69,22 @@
             <if test="year!=null">
                 and b.year = #{year}
             </if>
-            <if test="ids!=null">
-                and a.id in
-                <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+            <if test="codes!=null">
+                and a.code in
+                <foreach collection="codes" item="item" index="index" open="(" separator="," close=")">
                     #{item}
                 </foreach>
             </if>
             <if test="batch!=null">
                 and b.batch = #{batch}
+            </if>
+            <if test="areaId!=null">
+                and b.areaId = #{areaId}
             </if>
         </where>
     </select>
 
-    <select id="getLGUniversityDetailByIds" resultType="UniversityDetailDto">
+    <select id="getLGUniversityDetailByCodes" resultType="UniversityDetailDto">
         SELECT a.id ,a.name,a.subjection,a.type,b.lgPlanNumber planNum,b.lgEnrollNumber enrollNum,
         b.lgLowestScore lowestScore ,b.lgLowestRank lowestRanking,b.lgAverageScore averageScore,b.lgAverageRank averageScoresRanking,
         (select c.name from gk_university_dict c where c.dictId = a.property and c.type = 'FEATURE' ) dictName
@@ -92,14 +95,17 @@
             <if test="year!=null">
                 and b.year = #{year}
             </if>
-            <if test="ids!=null">
-                and a.id in
-                <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+            <if test="codes!=null">
+                and a.code in
+                <foreach collection="codes" item="item" index="index" open="(" separator="," close=")">
                     #{item}
                 </foreach>
             </if>
             <if test="batch!=null">
                 and b.batch = #{batch}
+            </if>
+            <if test="areaId!=null">
+                and b.areaId = #{areaId}
             </if>
         </where>
     </select>

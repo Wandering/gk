@@ -23,6 +23,7 @@ define(function (require) {
     }
 
 
+
     // 获取章节列表
     function getList() {
         $.getJSON(
@@ -32,7 +33,7 @@ define(function (require) {
             },
             function (result) {
                 if (result.rtnCode == "0800001") {
-                    $(obj).append('<p class="noContent">' + result.msg + '</p>');
+                    $('#player').append('<p class="noContent" style="width:100%">' + result.msg + '</p>');
                 }
                 if (result.rtnCode == "0000000") {
                     var dataJson = result.bizData.videoSectionList;

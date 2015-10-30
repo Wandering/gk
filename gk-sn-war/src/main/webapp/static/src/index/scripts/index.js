@@ -88,7 +88,7 @@ define(function (require) {
                     '<span>' + getTime1(v.lastModDate) + '</span> ' +
                     '</div> ' +
                     '<div class="title-info"> ' +
-                    '<h3><a href="/consult/gk_hot_detile.jsp?method=hot&id=' + v.id + '">' + v.hotInformation + '</a></h3>' +
+                    '<h3><a href="/consult/gk_hot_detail.jsp?method=hot&id=' + v.id + '">' + v.hotInformation + '</a></h3>' +
                     '<h6>' + v.informationSubContent + '</h6> ' +
                     '</div>' +
                     '</li>'

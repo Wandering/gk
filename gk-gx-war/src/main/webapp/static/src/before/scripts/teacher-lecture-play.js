@@ -60,7 +60,7 @@ define(function (require) {
                     console.log(firstFileurl);
 
                     var videoHtml = ''
-                        + '<video class="video" poster="//media.html5media.info/poster.jpg" width="759" height="427" controls preload>'
+                        + '<video class="video" poster="http://cdn.gaokao360.net/static/gx/before/images/poster.png" width="759" height="427" controls preload>'
                         + '<source src="' + firstFileurl + '" media="only screen and (min-device-width: 568px)"></source>'
                         + '</video>';
                     $('#videoHtml').html(videoHtml);
@@ -86,7 +86,7 @@ define(function (require) {
             $(window).scrollTop(0);
 
             var videoHtml = ''
-                + '<video class="video" poster="//media.html5media.info/poster.jpg" width="618" height="347" controls preload>'
+                + '<video class="video" poster="http://cdn.gaokao360.net/static/gx/before/images/poster.png" width="618" height="347" controls preload>'
                 + '<source src="' + fileurl + '" media="only screen and (min-device-width: 568px)"></source>'
                 + '</video>';
             $('#videoHtml').html(videoHtml);
