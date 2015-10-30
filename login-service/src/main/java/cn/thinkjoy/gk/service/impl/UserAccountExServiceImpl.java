@@ -90,9 +90,8 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
             userVip.setId(id);
             userVip.setStatus(0);
             userVip.setCreateDate(System.currentTimeMillis());
-            userVip.setEndDate(System.currentTimeMillis());
+//            userVip.setEndDate(System.currentTimeMillis());
             userVipDAO.insert(userVip);
-
             UserExam userExam = new UserExam();
             userExam.setId(id);
             userExamDAO.insert(userExam);

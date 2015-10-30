@@ -25,11 +25,9 @@ public class CollegeRecController extends BaseController {
     @RequestMapping(value = "getCollegeList",method = RequestMethod.GET)
     @ResponseBody
     public String GetCollegeList(@RequestParam(value="m_aggregateScore",required=false) String m_aggregateScore,
-                                   @RequestParam(value="m_batch",required=false) String m_batch,
                                            @RequestParam(value="m_kelei",required=false) String m_kelei,
                                            @RequestParam(value="code",required=false) String code){
         if(StringUtils.isBlank(m_aggregateScore)
-                || StringUtils.isBlank(m_batch)
                 || StringUtils.isBlank(m_kelei)
                 || StringUtils.isBlank(code)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
@@ -65,7 +63,7 @@ public class CollegeRecController extends BaseController {
 
         String url = null;
         try {
-            url ="http://sn.gaokao360.gkzy114.com/index.php?s=Restful/CollegeReco/GetCollegeList/m_aggregateScore/"+m_aggregateScore+"/m_batch/"+m_batch+"/m_kelei/"+m_kelei;
+            url ="http://sn.gaokao360.gkzy114.com/index.php?s=Restful/CollegeReco/GetCollegeList/m_aggregateScore/"+m_aggregateScore+"/m_kelei/"+m_kelei;
 
         }catch (Exception e){
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
