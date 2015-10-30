@@ -145,9 +145,9 @@ define(function (require) {
                     batch: m_batch
                 },
                 success: function (res) {
-                    console.log(res);
                     var data = res.bizData;
 
+                    console.log(data)
                     if ('0000000' === res.rtnCode) {
                         var dicName = '';
 
@@ -166,7 +166,7 @@ define(function (require) {
                         + '录取指数：' + star
                         + '</p>';
                         $('.open-flow3[type="text"][dataType="' + datatypeid + '"]').val(m_university_name).attr({
-                            'code': data.id,
+                            'code': code,
                             'm_batch': m_batch,
                             'm_batch_id': m_batch_id
                         });
