@@ -249,6 +249,7 @@ define(function (require) {
                 if (res.rtnCode == '0000000') {
                     $('.user-avatar').attr('src', img_url);
                     $('.error-tips').text('信息更新成功').fadeIn(1000).fadeOut(2000);
+                    window.location.href="/user/personal-info.jsp";
                 } else {
                     $('.content').text(res.msg);
                 }
