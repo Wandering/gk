@@ -262,12 +262,13 @@ public class GuideController extends BaseController {
 
         JSONArray data = obj.getJSONArray("data");
 
-        List<String> ids = new ArrayList<>();
+        List<String> codes = new ArrayList<>();
         for(int i=0;i<data.size();i++){
-            ids.add(data.getJSONObject(i).getString("m_university_code"));
+            codes.add(data.getJSONObject(i).getString("m_university_code"));
         }
 
-        List<UniversityDetailDto> universityDetailDtos =universityExService.getUniversityDetailByIds(ids,batch,type,year);
+        long areaId=getAreaCookieValue();
+        List<UniversityDetailDto> universityDetailDtos =universityExService.getUniversityDetailByCodes(codes, batch, type, year,areaId);
 
         JSONArray enrollArray = new JSONArray();
 
