@@ -1,7 +1,3 @@
-/**
- * Created by kepeng on 15/9/25.
- */
-
 define(function (require) {
     var $ = require('$');
 
@@ -11,6 +7,7 @@ define(function (require) {
         return "";
     }
 
+    console.log(22)
     var Question = {
         renderAsk: function(data) {
             var html = [];
