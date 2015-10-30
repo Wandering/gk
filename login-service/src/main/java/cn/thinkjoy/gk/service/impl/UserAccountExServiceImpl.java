@@ -94,6 +94,8 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
             userVipDAO.insert(userVip);
             UserExam userExam = new UserExam();
             userExam.setId(id);
+            userExam.setIsReported(0);
+            userExam.setIsSurvey(0);
             userExamDAO.insert(userExam);
             flag = true;
         }catch(Exception e){
