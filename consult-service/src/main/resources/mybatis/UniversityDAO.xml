@@ -1121,12 +1121,18 @@ selectList
 
 
 
-    <select id="getUniversityDetail" parameterType="java.lang.String" resultType="UniversityDto">
+    <select id="getUniversityDetail" parameterType="java.util.Map" resultType="UniversityDto">
         select a.id as id,a.name,a.subjection,c.name as educatLevel,a.type as universityType,b.name as property,a.address,a.contactPhone,
        '' as universityImage,a.provinceName,a.url from gk_university a left join gk_university_dict  b on b.type='FEATURE' and b.dictId=a.property
 
          left join gk_university_dict c on c.dictId=a.educationLevel and c.type='EDULEVEL'
-        where 1=1 and a.id=#{id}
+        where 1=1
+         <if test="id!=null and id != ''">
+              and a.id=#{id}
+         </if>
+         <if test="code!=null and code != ''">
+              and a.code=#{code}
+         </if>
          <if test="batch!=null and batch != ''">
               and a.batchType=#{batch}
          </if>

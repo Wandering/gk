@@ -16,6 +16,7 @@ import cn.thinkjoy.gk.query.UniversityQuery;
 import cn.thinkjoy.gk.service.*;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -186,7 +187,7 @@ public class UniversityController extends BaseController {
     }
 
     /**
-     * 获取大学详情
+     * 根据Id获取大学详情
      * @return
      */
     @RequestMapping(value = "/getUniversityDetail",method = RequestMethod.GET)
@@ -194,8 +195,13 @@ public class UniversityController extends BaseController {
     public UniversityDto getUniversityDetail(){
         UniversityDto universityDto=new UniversityDto();
         String schoolId=request.getParameter("id");
+        String code=request.getParameter("code");
         String batch =request.getParameter("batch");
-        universityDto=iUniversityService.getUniversityDetail(schoolId,batch);
+        Map<String,Object> map= new HashMap<String, Object>();
+        map.put("id",schoolId);
+        map.put("code",schoolId);
+        map.put("batch",batch);
+        universityDto=iUniversityService.getUniversityDetail(map);
         return universityDto;
     }
 
