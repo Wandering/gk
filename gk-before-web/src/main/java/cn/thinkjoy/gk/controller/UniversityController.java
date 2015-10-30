@@ -199,7 +199,7 @@ public class UniversityController extends BaseController {
         String batch =request.getParameter("batch");
         Map<String,Object> map= new HashMap<String, Object>();
         map.put("id",schoolId);
-        map.put("code",schoolId);
+        map.put("code",code);
         map.put("batch",batch);
         universityDto=iUniversityService.getUniversityDetail(map);
         return universityDto;
