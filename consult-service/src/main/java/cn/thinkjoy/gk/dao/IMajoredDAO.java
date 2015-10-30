@@ -20,7 +20,7 @@ public interface IMajoredDAO {
 
     Integer searchMajoredCount(@Param("condition")MajoredQuery query);
 
-    MajoredDto getMajoredByCode(@Param("code")String majoredCode);
+    MajoredDto getMajoredById(@Param("id")String majoredId);
 
     List<Map<String,Object>> getUniversityByCode(@Param("code")String majoredCode, @Param("batchName")String name);
 

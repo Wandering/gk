@@ -150,7 +150,7 @@ public class MajoredController extends BaseCommonController {
     public MajoredDto getMajoredInfo(){
         MajoredDto majoredDto=new MajoredDto();
         String majoredCode=request.getParameter("code");
-        majoredDto=iMajoredService.getMajoredByCode(majoredCode);
+        majoredDto=iMajoredService.getMajoredById(majoredCode);
         return  majoredDto;
     }
 
@@ -164,7 +164,7 @@ public class MajoredController extends BaseCommonController {
         MajoredDetailDto majoredDetailDto=new MajoredDetailDto();
         MajoredDto majoredDto=new MajoredDto();
         String majoredCode=request.getParameter("code");
-        majoredDto=iMajoredService.getMajoredByCode(majoredCode);
+        majoredDto=iMajoredService.getMajoredById(majoredCode);
         majoredDetailDto.setMainCourse(majoredDto.getMainCourse());
         majoredDetailDto.setSimilarMajor(majoredDto.getSimilarMajored());
         majoredDetailDto.setWorkGuide(majoredDto.getWorkGuide());
