@@ -43,7 +43,7 @@ public enum ERRORCODE {
 	CREATE_VERIFY_CODE_ERROR("1000003","生成验证码发生错误!"),
 	NO_LOGIN("1000004","请先登录后再进行操作"),
 	VERIFY_CODE_ERROR("0100005", "验证码错误!"),
-	NOT_IS_VIP_ERROR("0100006", "升级成VIP用户才可使用该功能，快点升级VIP用户去吧！!"),
+	NOT_IS_VIP_ERROR("0100006", "升级成VIP用户才可使用该功能，快点升级VIP用户去吧！"),
 
 
 	UPLOAD_ERROR_0("1100001", "非法上传!"),
