@@ -20,7 +20,7 @@ public interface IMajoredService {
 
     Integer searchMajoredCount(MajoredQuery query);
 
-    MajoredDto getMajoredByCode(String majoredCode);
+    MajoredDto getMajoredById(String majoredId);
 
     List<Map<String,Object>> getUniversityByCode(String majoredCode, String name);
 

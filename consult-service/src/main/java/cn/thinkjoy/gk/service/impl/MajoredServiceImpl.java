@@ -38,8 +38,8 @@ public class MajoredServiceImpl implements IMajoredService {
     }
 
     @Override
-    public MajoredDto getMajoredByCode(String majoredCode) {
-        return majoredDAO.getMajoredByCode(majoredCode);
+    public MajoredDto getMajoredById(String majoredCode) {
+        return majoredDAO.getMajoredById(majoredCode);
     }
 
     @Override
