@@ -24,7 +24,7 @@ public interface IExUniversityService {
 
     Integer getUniversityCount(Map<String,Object> universityQuery);
 
-    UniversityDto getUniversityDetail(String schoolId,String batch);
+    UniversityDto getUniversityDetail(Map<String, Object> params);
 
     List<EnrollInfo> getEnrollInfoByYear(Integer year,String schoolId,long areaId);
 
