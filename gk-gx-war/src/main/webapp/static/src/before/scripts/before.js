@@ -232,7 +232,6 @@ define(function (require) {
             dataType: 'JSON',
             data: {
                 "m_aggregateScore": scoreV,
-                //"m_batch": batchV,
                 "m_kelei": subjectTypeV,
                 "code": yzmDreamV
             },
@@ -267,10 +266,11 @@ define(function (require) {
                             $('#no-school' + i).show();
                         } else {
                             var schoolData = dataJson[i].data;
+
                             for (var j = 0; j < schoolData.length; j++) {
                                 var m_university_code = schoolData[j].m_university_code;
                                 var m_university_name = schoolData[j].m_university_name;
-                                var schoolList = '<div><a target="_blank" href="/consult/school_detail.jsp?id=' + m_university_code + '">' + m_university_name + '</a></div>';
+                                var schoolList = '<div><a target="_blank" href="/consult/school_detail.jsp?code=' + m_university_code + '">' + m_university_name + '</a></div>';
                                 $('#school-list' + i).append(schoolList).show();
                             }
                         }

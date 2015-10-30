@@ -51,6 +51,7 @@ define(function (require) {
             case 'teacher-lecture.jsp':
             case 'exam.jsp':
             case 'mentality.jsp':
+            case 'teacher-lecture-play.jsp':
                 $('.before').addClass('active');
                 break;
             case 'after.jsp':
