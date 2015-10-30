@@ -63,7 +63,7 @@ public class VipController extends BaseController {
         c.add(Calendar.YEAR, 1);
         c.set(Calendar.MONTH, 8);
         c.set(Calendar.DAY_OF_MONTH, 1);
-        if(card.getEndDate()<=c.getTimeInMillis()){
+        if(card.getEndDate()>=c.getTimeInMillis()){
             throw new BizException(ERRORCODE.VIP_CARD_NOT_INVALID.getCode(), ERRORCODE.VIP_CARD_NOT_INVALID.getMessage());
         }
         cardExService.updateUserVip(card.getId(),userAccountPojo.getId());
