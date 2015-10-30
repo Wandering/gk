@@ -300,6 +300,7 @@ define(function (require) {
 
     // 院校测评
     UI.$evaluatingSub.on('click', function () {
+        $('#dream-list').html('');
         var dreamScoreV = $('#dream-score-input').val().trim()
             , dreamSchoolV = $('#dream-school-input').val().trim()
             , dreamSubjectTypeV = $('input[name="dreamSubjectType"]:checked').val()

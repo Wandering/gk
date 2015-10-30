@@ -52,7 +52,7 @@ define(function (require) {
                         $('#error_tip').html('<span style="color: #000">' + data.msg + ',请</span><a target="_blank" href="/login/login.jsp">登录</a>');
                         $('#error_tip').show();
                     }else {
-                        $('#error_tip').html('您的使用次数已经达到上限（1）次！');
+                        $('#error_tip').html(data.msg);
                         $('#error_tip').show();
                     }
                 });

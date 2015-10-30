@@ -355,7 +355,7 @@
             <p>您本次录入的分数是：<strong><span id="precedenceScoreInfo"></span>分</strong></p>
         </div>
         <div class="evaluating-result">
-            <p class="tips">依据<span id="current-year"></span>年的录取情况、在陕西省你的分数预估在以下位次:</p>
+            <p class="tips">依据<span id="current-year"></span>的录取情况、在陕西省你的分数预估在以下位次:</p>
             <div class="evaluating-result-num" id="precedence-list"></div>
         </div>
         <div style="text-align: center">
