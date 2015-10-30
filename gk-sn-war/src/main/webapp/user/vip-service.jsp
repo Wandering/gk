@@ -73,6 +73,7 @@
 
 <%@include file="/common/footer.jsp"%>
 <script>
+    seajs.use('http://cdn.gaokao360.net/static/plugins/pingpp/pingpp-pc');
     seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/vip-service.min");
 </script>
 
