@@ -36,14 +36,18 @@ define(function (require) {
                     dataType: 'JSON',
                     data: {},
                     success: function (res) {
-                        console.log(res.bizData.isReported)
-                        if (res.bizData.isReported == 0) {
-                            $('#aggregateScore-input').removeAttr('readonly').val('');
-                            $('#ranking-input').removeAttr('readonly').val('');
-                        } else {
-                            $('#aggregateScore-input').attr('readonly', 'readonly');
-                            $('#ranking-input').attr('readonly', 'readonly');
+                        console.log(res)
+                        if(res.rtnCode=="0000000" && res.bizData.isReported!=null){
+                            if (res.bizData.isReported == 0) {
+                                $('#aggregateScore-input').removeAttr('readonly').val('');
+                                $('#ranking-input').removeAttr('readonly').val('');
+                            } else {
+                                $('#aggregateScore-input').attr('readonly', 'readonly');
+                                $('#ranking-input').attr('readonly', 'readonly');
+                            }
                         }
+
+
                     }
                 });
             }
