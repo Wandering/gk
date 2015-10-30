@@ -286,7 +286,7 @@ define(function (require) {
                     $('#specialty-list-info'+n).append(specialtyListInfo)
                 });
                 $.each($('#specialty'+n),function(i,v){
-                    //console.log($(this).find('input').attr('specialtytotaln'))
+                    console.log($(this).find('input').attr('specialtytotaln'))
                     //console.log($(this).find('input.write').length)
                     var specialtytotaln = $(this).find('input').attr('specialtytotaln');
                     var specialtyLength = $(this).find('input.write').length;
@@ -397,10 +397,10 @@ define(function (require) {
                             var schoolListColHtml = '<div class="col-list">'+ v.m_university_name +'</div>';
                             $('.school-list-col').append(schoolListColHtml);
                         });
-
                         var dataEnroll =$.parseJSON(res.bizData).enroll;
+                        console.log($.parseJSON(res.bizData));
                         $.each(dataEnroll,function(i,v){
-                            console.log(v);
+
                             var enrollIntro = v.enrollIntro;
                             var name = v.name;
                             var enrollmentSchoolHtml = '<div class="col-list">'+ name +'</div>';

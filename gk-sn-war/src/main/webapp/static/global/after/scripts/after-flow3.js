@@ -167,7 +167,7 @@ define(function (require) {
                             + '历年招生情况：' + data.enrollIntro + ' <br/>'
                             + '录取指数：' + star
                             + '</p>';
-                        $('.open-flow3[type="text"][dataType="' + datatypeid + '"]').val(m_university_name).attr({'code':data.code,'m_batch':m_batch,'m_batch_id':m_batch_id});
+                        $('.open-flow3[type="text"][dataType="' + datatypeid + '"]').val(m_university_name).attr({'code':code,'m_batch':m_batch,'m_batch_id':m_batch_id});
                         $('#result-info' + datatypeid).html(infoHtml);
                         $('#tips' + datatypeid).hide();
                         $('#volunteer-flow3-layer,.tansLayer').hide();
@@ -286,7 +286,7 @@ define(function (require) {
                     $('#specialty-list-info'+n).append(specialtyListInfo)
                 });
                 $.each($('#specialty'+n),function(i,v){
-                    //console.log($(this).find('input').attr('specialtytotaln'))
+                    console.log($(this).find('input').attr('specialtytotaln'))
                     //console.log($(this).find('input.write').length)
                     var specialtytotaln = $(this).find('input').attr('specialtytotaln');
                     var specialtyLength = $(this).find('input.write').length;
@@ -397,10 +397,10 @@ define(function (require) {
                             var schoolListColHtml = '<div class="col-list">'+ v.m_university_name +'</div>';
                             $('.school-list-col').append(schoolListColHtml);
                         });
-
                         var dataEnroll =$.parseJSON(res.bizData).enroll;
+                        console.log($.parseJSON(res.bizData));
                         $.each(dataEnroll,function(i,v){
-                            console.log(v);
+
                             var enrollIntro = v.enrollIntro;
                             var name = v.name;
                             var enrollmentSchoolHtml = '<div class="col-list">'+ name +'</div>';
