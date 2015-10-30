@@ -263,15 +263,15 @@
                 <input type="text" class="score-input" id="score-input" placeholder="请输入分数"/>
             </div>
 
-            <div class="category mt10">
-                <span class="t">选择批次：</span>
-                <div class="group-radio pl">
-                    <label><input type="radio" name="batch" value="一批本科" />一批本科</label>
-                    <label><input type="radio" name="batch" value="二批本科" />二批本科</label>
-                    <label><input type="radio" name="batch" value="三批本科" />三批本科</label>
-                    <label><input type="radio" name="batch" value="高职（专科）" />高职（专科）</label>
-                </div>
-            </div>
+            <%--<div class="category mt10">--%>
+                <%--<span class="t">选择批次：</span>--%>
+                <%--<div class="group-radio pl">--%>
+                    <%--<label><input type="radio" name="batch" value="一批本科" />一批本科</label>--%>
+                    <%--<label><input type="radio" name="batch" value="二批本科" />二批本科</label>--%>
+                    <%--<label><input type="radio" name="batch" value="三批本科" />三批本科</label>--%>
+                    <%--<label><input type="radio" name="batch" value="高职（专科）" />高职（专科）</label>--%>
+                <%--</div>--%>
+            <%--</div>--%>
             <div class="category mt10">
                 <span class="t">选择文理科：</span>
                 <div class="group-radio">
