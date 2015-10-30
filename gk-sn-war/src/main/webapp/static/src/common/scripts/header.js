@@ -37,6 +37,7 @@ define(function (require) {
                 break;
             case 'guide.jsp':
             case 'volunteer_forum.jsp':
+            case 'gk_hot_detail.jsp':
                 $('.guide').addClass('active');
                 break;
             case 'gk_hot.jsp':
@@ -50,6 +51,7 @@ define(function (require) {
             case 'teacher-lecture.jsp':
             case 'exam.jsp':
             case 'mentality.jsp':
+            case 'teacher-lecture-play.jsp':
                 $('.before').addClass('active');
                 break;
             case 'after.jsp':

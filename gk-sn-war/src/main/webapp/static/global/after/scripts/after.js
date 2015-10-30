@@ -22,6 +22,37 @@ define(function (require) {
             $('.error-tips').text(txt).fadeIn(1000).fadeOut(1000);
         }
 
+        function GetCookie(sMainName, sSubName) {
+            var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
+            return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
+        }
+
+        $(function () {
+            //判断当前用户cookie是否存在
+            if (GetCookie("snuser")) {
+                $.ajax({
+                    url: '/info/getUserAccount.do',
+                    type: 'GET',
+                    dataType: 'JSON',
+                    data: {},
+                    success: function (res) {
+                        console.log(res)
+                        if(res.rtnCode=="0000000" && res.bizData.isReported!=null){
+                            if (res.bizData.isReported == 0) {
+                                $('#aggregateScore-input').removeAttr('readonly').val('');
+                                $('#ranking-input').removeAttr('readonly').val('');
+                            } else {
+                                $('#aggregateScore-input').attr('readonly', 'readonly');
+                                $('#ranking-input').attr('readonly', 'readonly');
+                            }
+                        }
+
+
+                    }
+                });
+            }
+        });
+
 
         // 志愿指导第一步
         UI.volunteerBtn.on('click', function () {
@@ -129,6 +160,39 @@ define(function (require) {
 
                 }
             });
+            $.ajax({
+                url: '/exam/updateUserExam.do',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    "scores": aggregateScoreV,
+                    "ranking": rankingV,
+                    "isReported": 1
+                },
+                success: function (res) {
+
+                    if(res.rtnCode==0000000){
+                        console.log('成功')
+                    }
+
+
+                }
+            });
+        });
+
+        $.ajax({
+            url: '/exam/findUserExam.do',
+            type: 'GET',
+            dataType: 'JSON',
+            data: {},
+            success: function (res) {
+                console.log(res)
+                console.log(res.bizData.isReported)
+                var scores = res.bizData.scores;
+                var ranking = res.bizData.ranking;
+                $('#aggregateScore-input').val(scores);
+                $('#ranking-input').val(ranking);
+            }
         });
 
         $('#prev-btn').on('click', function () {

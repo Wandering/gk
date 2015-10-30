@@ -214,10 +214,7 @@ define(function (require) {
             errorTips('请输入3位数字分数');
             return false;
         }
-        if (batchV == undefined) {
-            errorTips('请选择批次');
-            return false;
-        }
+
         if (subjectTypeV == undefined) {
             errorTips('请选择文理科');
             return false;
@@ -232,7 +229,6 @@ define(function (require) {
             dataType: 'JSON',
             data: {
                 "m_aggregateScore": scoreV,
-                "m_batch": batchV,
                 "m_kelei": subjectTypeV,
                 "code": yzmDreamV
             },
@@ -264,7 +260,7 @@ define(function (require) {
                             for (var j = 0; j < schoolData.length; j++) {
                                 var m_university_code = schoolData[j].m_university_code;
                                 var m_university_name = schoolData[j].m_university_name;
-                                var schoolList = '<div><a target="_blank" href="/consult/school_detail.jsp?id=' + m_university_code + '">' + m_university_name + '</a></div>';
+                                var schoolList = '<div><a target="_blank" href="/consult/school_detail.jsp?code=' + m_university_code + '">' + m_university_name + '</a></div>';
                                 $('#school-list' + i).append(schoolList).show();
                             }
                         }
