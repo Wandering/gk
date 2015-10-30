@@ -697,13 +697,13 @@ a.next-btn:hover {
   margin-bottom: 50px; }
   .episode-num a {
     display: inline-block;
-    width: 80px;
     height: 40px;
     text-align: center;
     line-height: 40px;
     margin: 20px 10px 0 0;
     background-color: #e5e5e5;
     color: #fff;
+    padding: 0 10px;
     cursor: pointer; }
     .episode-num a.active {
       background-color: #e24333; }

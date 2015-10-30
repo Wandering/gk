@@ -1,6 +1,5 @@
 define(function (require) {
     var $ = require('$');
-    require('header-user');
 
     function getUrLinKey(name) {
         var reg = new RegExp("(^|\\?|&)" + name + "=([^&]*)(\\s|&|$)", "i");
