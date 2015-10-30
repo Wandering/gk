@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -77,8 +78,10 @@ public class PayCallbackController {
 //                        if(null==endDate){
 //                            endDate = System.currentTimeMillis();
 //                        }
-                        c.setTimeInMillis(System.currentTimeMillis());
-                        c.add(Calendar.YEAR,1);
+                        int month = c.get(Calendar.MONTH) + 1;
+                        if(month>=9) {
+                            c.add(Calendar.YEAR, 1);
+                        }
                         c.set(Calendar.MONTH, 8);
                         c.set(Calendar.DAY_OF_MONTH, 1);
                         UserVip userVip = new UserVip();
@@ -114,7 +117,9 @@ public class PayCallbackController {
 
     public static void main(String[] args) {
         Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(System.currentTimeMillis());
+
+//        System.out.println(month);
+//        c.setTimeInMillis(System.currentTimeMillis());
         c.add(Calendar.YEAR, 1);
         c.set(Calendar.MONTH,8);
         c.set(Calendar.DAY_OF_MONTH,1);
