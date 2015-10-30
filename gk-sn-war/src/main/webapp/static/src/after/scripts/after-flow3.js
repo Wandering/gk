@@ -364,6 +364,7 @@ define(function (require) {
                     "m_batch": m_batch
                 };
 
+
             var typeT = '';
             var type = paramsJson.m_kelei;
             if(type=="文史"){
