@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <title>登陆</title>
+    <title>登录</title>
     <%@include file="/common/meta.jsp"%>
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/login/styles/login.min.css"/>
 
