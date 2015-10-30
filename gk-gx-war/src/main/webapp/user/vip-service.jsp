@@ -73,7 +73,8 @@
 
 <%@include file="/common/footer.jsp"%>
 <script>
-    seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/vip-service.min");
+//    seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/vip-service.min");
+    seajs.use("/static/src/user/scripts/vip-service");
 </script>
 
 </body>
