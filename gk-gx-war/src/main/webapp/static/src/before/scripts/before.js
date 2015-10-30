@@ -214,10 +214,10 @@ define(function (require) {
             errorTips('请输入3位数字分数');
             return false;
         }
-        if (batchV == undefined) {
-            errorTips('请选择批次');
-            return false;
-        }
+        //if (batchV == undefined) {
+        //    errorTips('请选择批次');
+        //    return false;
+        //}
         if (subjectTypeV == undefined) {
             errorTips('请选择文理科');
             return false;
@@ -232,7 +232,7 @@ define(function (require) {
             dataType: 'JSON',
             data: {
                 "m_aggregateScore": scoreV,
-                "m_batch": batchV,
+                //"m_batch": batchV,
                 "m_kelei": subjectTypeV,
                 "code": yzmDreamV
             },

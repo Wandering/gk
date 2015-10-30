@@ -924,7 +924,7 @@
 
                 <p>说明：填报志愿是一个动态变化的过程，本报告仅作为填报志愿参考，请综合各种信息填报志愿。</p>
 
-                <p>版权：本版权归属陕西省高考360志愿指导平台。未经授权不得拷贝，引用报告中的相关信息。</p>
+                <p>版权：本版权归属广西省高考360志愿指导平台。未经授权不得拷贝，引用报告中的相关信息。</p>
             </div>
 
             <table border="1" cellspacing="0">
@@ -1274,8 +1274,8 @@
 
 <%@ include file="/common/footer.jsp"%>
 <script>
-//    seajs.use("http://cdn.gaokao360.net/static/global/after/scripts/after-flow3.min");
-    seajs.use("/static/src/after/scripts/after-flow3");
+    seajs.use("http://cdn.gaokao360.net/static/gx/after/scripts/after-flow3.min");
+//    seajs.use("/static/src/after/scripts/after-flow3");
     var params = decodeURIComponent('${params}');
 </script>
 

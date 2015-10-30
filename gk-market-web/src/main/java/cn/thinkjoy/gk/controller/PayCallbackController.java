@@ -2,7 +2,11 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Orders;
+import cn.thinkjoy.gk.domain.UserVip;
+import cn.thinkjoy.gk.protocol.DateStyle;
 import cn.thinkjoy.gk.service.IOrdersService;
+import cn.thinkjoy.gk.service.IUserVipService;
+import cn.thinkjoy.gk.util.DateUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
@@ -17,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +37,9 @@ public class PayCallbackController {
 
     @Autowired
     private IOrdersService ordersService;
+
+    @Autowired
+    private IUserVipService userVipService;
 
     @RequestMapping("/payCallback")
     public void payCallback(HttpServletRequest request, HttpServletResponse response) {
@@ -50,7 +58,7 @@ public class PayCallbackController {
 
             JSONObject payResult = JSON.parseObject(builder.toString());
 
-            LOGGER.info("====pay /orders/createOrder payResult: "+payResult);
+            LOGGER.info("====pay /payCallback payResult: "+payResult);
 
             if( payResult !=null ) {
                 Map<String,Object> dataMap = new HashMap();
@@ -62,13 +70,24 @@ public class PayCallbackController {
                     long userId = payResult.getLong("userId");
 //                        int month = Integer.parseInt(payResult.getMonth());
 //                        vipService.orderVip(Long.valueOf(payResult.getOrderNo()), userId, "VIP10001", month);
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.add(Calendar.MONTH, payResult.getIntValue("validValue"));
+                    Calendar c = Calendar.getInstance();
                     try{
+                        UserVip uv = (UserVip)userVipService.findOne("id", userId);
+                        Long endDate = uv.getEndDate();
+                        if(null==endDate){
+                            endDate = System.currentTimeMillis();
+                        }
+                        c.setTimeInMillis(endDate.longValue());
+                        c.add(Calendar.YEAR,1);
+                        UserVip userVip = new UserVip();
+                        userVip.setId(userId);
+                        userVip.setStatus(1);
+                        userVip.setEndDate(c.getTimeInMillis());
+                        userVipService.update(userVip);
 //                        boolean flag = userVipService.updateUserVip(userId, 1, calendar.getTimeInMillis());
 //                        LOGGER.info("====pay /orders/createOrder updatePresell result : "+flag);
                     } catch (Exception e) {
-                        LOGGER.info("====pay /orders/createOrder updatePresell error : "+e.getMessage());
+                        LOGGER.info("====pay /payCallback updatePresell error : "+e.getMessage());
                     }
 
                     order.setPayStatus(1);
@@ -88,6 +107,17 @@ public class PayCallbackController {
         } catch (IOException e) {
             LOGGER.error("", e);
         }
+
+    }
+
+    public static void main(String[] args) {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(System.currentTimeMillis());
+        c.add(Calendar.YEAR, 1);
+        c.set(Calendar.MONTH,8);
+        c.set(Calendar.DAY_OF_MONTH,1);
+        System.out.println(DateUtil.DateToString(new Date(System.currentTimeMillis()), DateStyle.YYYY_MM_DD_HH_MM_SS_EN));
+        System.out.println(DateUtil.DateToString(new Date(c.getTimeInMillis()), DateStyle.YYYY_MM_DD_HH_MM_SS_EN));
 
     }
 }
