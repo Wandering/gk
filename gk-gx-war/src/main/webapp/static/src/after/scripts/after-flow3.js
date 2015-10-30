@@ -431,6 +431,7 @@ define(function (require) {
                 "m_batch": m_batch
             };
 
+
             var typeT = '';
             var type = paramsJson.m_kelei;
             if (type == "文史") {
@@ -443,7 +444,6 @@ define(function (require) {
                 "data": data,
                 "related": related
             };
-
             console.log(JSON.stringify(params))
 
             $.ajax({

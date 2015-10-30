@@ -44,7 +44,7 @@ define(function (require) {
                     ask = ask.substring(0, 50);
                 }
 
-                html.push('<a href="/question/question_detile.jsp?id=' + question.questionId + '"><div class="detail-content">'
+                html.push('<a href="/question/question_detail.jsp?id=' + question.questionId + '"><div class="detail-content">'
                     + '<div class="detail-header">'
                     + '<span class="order-number">' + (i + 1 + this.startSize) + '、</span>'
                     + '<span class="detail-title">' + ask + '</span>'
@@ -71,7 +71,12 @@ define(function (require) {
             var xhr = $.get(url + 'startSize=' + this.startSize + '&endSize=' + this.endSize + '&isAnswer=' + isAnswer + '&keyword=' + keywords, function(data) {
                 if ('0000000' === data.rtnCode) {
                     if (data.bizData.length > 0) {
-                        that.next.show();
+                        if(data.bizData.length>5){
+                            that.next.show();
+                        }else{
+                            that.next.hide();
+                        }
+
                         if (that.startSize == 0) {
                             $('#' + contentId).html(that.render(data.bizData));
                         } else {
