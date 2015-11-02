@@ -33,7 +33,7 @@ define(function (require) {
             });
         },
         renderInfo: function(obj) {
-            $('#info_content').html('<img class="fl" src="' + (obj.universityImage || 'http://cdn.gaokao360.net/static/global/src/common/images/kqbk_banner_default.png') + '" />'
+            $('#info_content').html('<img class="fl" src="' + (obj.universityImage || 'http://cdn.gaokao360.net/static/global/common/images/kqbk_banner_default.png') + '" />'
                                     + '<div class="info">'
                                         + '<ul>'
                                             + '<li class="school-name">' + obj.name + '</li>'

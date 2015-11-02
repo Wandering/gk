@@ -73,7 +73,7 @@ gulp.task('scripts', function () {
 //});
 
 gulp.task('images', function () {
-    return gulp.src(['src/**/*.png','src/**/*.jpg','src/**/*.gif'])
+    return gulp.src(['src/**/*.png','src/**/*.jpg','src/**/*.gif','src/**/*.ico'])
         //.pipe(cache(imagemin({optimizationLevel: 3, progressive: true, interlaced: true})))
         .pipe(gulp.dest('global/'))
         .pipe(notify({message: 'Images task complete'}));
