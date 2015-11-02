@@ -1,9 +1,9 @@
 package cn.thinkjoy.gk.interceptor;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.constant.CookieConst;
-import cn.thinkjoy.gk.constant.UserRedisConst;
+import cn.thinkjoy.gk.constant.AllowConst;
 import cn.thinkjoy.gk.constant.ServletPathConst;
+import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.util.CookieUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import org.slf4j.Logger;
@@ -14,38 +14,36 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
-public class LoginInterceptor extends HandlerInterceptorAdapter {
+public class UploadInterceptor extends HandlerInterceptorAdapter {
 
-	private static final Logger LOGGER= LoggerFactory.getLogger(LoginInterceptor.class);
+	private static final Logger LOGGER= LoggerFactory.getLogger(UploadInterceptor.class);
 
-	public LoginInterceptor() { }
+	public UploadInterceptor() { }
 
 
     @Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
+
 		String url = request.getServletPath();
-		if(!ServletPathConst.MAPPING_URLS.contains(url)){
-			return true;
+
+		if(!AllowConst.MAPPING_URLS.contains(url)){
+			throw new BizException("1000001","非法操作!");
 		}
-//		System.out.println("===========HandlerInterceptor1 preHandle");
 
-		LOGGER.info("url:"+url);
+		List<String> urls = new ArrayList<>();
 
-		String value = CookieUtil.getCookieValue(request);
+		for(String u : urls){
 
-		LOGGER.info("cookie:"+value);
-//		RedisUtil.getInstance().del(key);
-		String key = UserRedisConst.USER_KEY+value;
+			response.addHeader("Access-Control-Allow-Origin",u);
 
-		boolean redisFlag = RedisUtil.getInstance().exists(key);
-
-		LOGGER.info("redis is exists:"+ redisFlag);
-
-		if (StringUtils.isEmpty(value)||!redisFlag) {
-//			request.getRequestDispatcher().forward(request, response);
-			throw new BizException("1000004","请先登录后再进行操作");
 		}
+
+		response.addHeader("Access-Control-Allow-Headers","X-Requested-With");
+
+		response.addHeader("Access-Control-Allow-Headers","GET,POST,OPTIONS");
 
 		return true;
 	}

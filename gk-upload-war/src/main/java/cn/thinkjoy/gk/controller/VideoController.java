@@ -2,12 +2,11 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.constant.Const;
+import cn.thinkjoy.gk.constant.UploadConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.constant.VideoConst;
 import cn.thinkjoy.gk.protocol.DateStyle;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.runnable.ImageRunnable;
 import cn.thinkjoy.gk.runnable.VideoRunnable;
 import cn.thinkjoy.gk.util.CheckUtil;
 import cn.thinkjoy.gk.util.DateUtil;
@@ -66,7 +65,7 @@ public class VideoController extends BaseController{
 				// 验证文件
 				CheckUtil.checkVideoFile(fileSize, uploadFileType);
 
-				String filePath = Const.VIDEO_UPLOAD_DIR+date+"/"+uploadFileType;
+				String filePath = UploadConst.VIDEO_UPLOAD_DIR+date+"/"+uploadFileType;
 
 				String uuid = UUID.randomUUID().toString();
 

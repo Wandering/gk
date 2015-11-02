@@ -10,14 +10,13 @@ import java.util.Properties;
 import javax.imageio.ImageIO;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.constant.Const;
+import cn.thinkjoy.gk.constant.UploadConst;
 import cn.thinkjoy.gk.param.FileUploadParam;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.Thumbnails.Builder;
 import net.coobird.thumbnailator.geometry.Positions;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -32,7 +31,7 @@ public class UploadUtil {
 		try{
 			String name = fileUploadParam.getName();
 			// 生成移动端大图
-			updateSize(new File(filePath+fileName),new File(filePath+name+fileName), Const.widths.get(name), Const.heights.get(name),fileUploadParam.getIs_watermark(),fileUploadParam.isKeep());
+			updateSize(new File(filePath+fileName),new File(filePath+name+fileName), UploadConst.widths.get(name), UploadConst.heights.get(name),fileUploadParam.getIs_watermark(),fileUploadParam.isKeep());
 		}catch(Exception e){
 			new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
 			throw e;
