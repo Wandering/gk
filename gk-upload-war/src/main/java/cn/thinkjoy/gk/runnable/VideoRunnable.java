@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.runnable;
 
+import cn.thinkjoy.gk.constant.VideoConst;
 import cn.thinkjoy.gk.util.VideoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +26,13 @@ public class VideoRunnable implements Runnable {
 	public void run() {
 		try {
 			LOGGER.info("调用创建视频转码");
-			VideoUtil.process(filePath + "/" + fileName, filePath + "/" + systemFileName + ".mp4");
+			LOGGER.info("转码开始!");
+			VideoUtil.process(filePath + "/" + fileName, filePath + "/" + systemFileName + "."+ VideoConst.TYPE);
+			LOGGER.info("转码完成!");
 		} catch (Exception e) {
+			LOGGER.info("转码错误!");
 //			new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
 			e.printStackTrace();
-		} finally{
-			System.gc();
 		}
 	}
 }

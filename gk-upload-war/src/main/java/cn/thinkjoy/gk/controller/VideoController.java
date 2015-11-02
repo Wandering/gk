@@ -4,6 +4,7 @@ import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.constant.Const;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.constant.VideoConst;
 import cn.thinkjoy.gk.protocol.DateStyle;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.runnable.ImageRunnable;
@@ -69,12 +70,15 @@ public class VideoController extends BaseController{
 				String uuid = UUID.randomUUID().toString();
 
 				String systemFileName= uuid+ "." + uploadFileType;
+
 				// 本机文件地址
 				UploadUtil.fileUpload(new File(filePath,systemFileName), fileUpload);
 
-				VideoRunnable videoRunnable = new VideoRunnable(filePath, systemFileName,uuid);
-				Thread t = new Thread(videoRunnable);
-				t.start();
+				if(!VideoConst.TYPE.equals(uploadFileType)){
+					VideoRunnable videoRunnable = new VideoRunnable(filePath, systemFileName,uuid);
+					Thread t = new Thread(videoRunnable);
+					t.start();
+				}
 
 //				fileUpload.transferTo(new File(filePath+systemFileName));
 
