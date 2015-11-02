@@ -9,7 +9,7 @@ import java.util.UUID;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
 
-import cn.thinkjoy.gk.constant.Const;
+import cn.thinkjoy.gk.constant.UploadConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.param.FileUploadParam;
 import cn.thinkjoy.gk.protocol.DateStyle;
@@ -63,6 +63,7 @@ public class ImageController extends BaseController{
 			JSONArray initArray = new JSONArray();
 
 			String date = DateUtil.DateToString(new Date(), DateStyle.YYYY_MM_DD);
+
 			for(MultipartFile fileUpload:fileUploads){
 
 				FileUploadVO fileUploadVO = new FileUploadVO();
@@ -76,7 +77,7 @@ public class ImageController extends BaseController{
 				// 验证文件
 				CheckUtil.checkImageFile(fileSize, uploadFileType);
 
-				String filePath = Const.IMAGE_UPLOAD_DIR+date+"/"+uploadFileType;
+				String filePath = UploadConst.IMAGE_UPLOAD_DIR+date+"/"+uploadFileType;
 
 				String systemFileName= UUID.randomUUID().toString()+ "." + uploadFileType;
 				// 本机文件地址
@@ -96,8 +97,8 @@ public class ImageController extends BaseController{
 				fileUploadVOs.add(fileUploadVO);
 
 				if(null!=obj){
-					if(obj.containsKey(Const.INIT)){
-						initArray = JSONArray.parseArray(obj.getString(Const.INIT));
+					if(obj.containsKey(UploadConst.INIT)){
+						initArray = JSONArray.parseArray(obj.getString(UploadConst.INIT));
 						FileUploadParam fileUploadParam = null;
 						for(int i=0;i<initArray.size();i++){
 							fileUploadParam = JSONObject.parseObject(initArray.getString(i), FileUploadParam.class);
@@ -106,8 +107,8 @@ public class ImageController extends BaseController{
 						initArray.clear();
 					}
 
-					if(obj.containsKey(Const.NO_INIT)){
-						initArray = JSONArray.parseArray(obj.getString(Const.NO_INIT));
+					if(obj.containsKey(UploadConst.NO_INIT)){
+						initArray = JSONArray.parseArray(obj.getString(UploadConst.NO_INIT));
 						FileUploadParam fileUploadParam = null;
 						for(int i=0;i<initArray.size();i++){
 							fileUploadParam = JSONObject.parseObject(initArray.getString(i), FileUploadParam.class);

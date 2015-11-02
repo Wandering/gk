@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 
 public class BaseController extends BaseCommonController{
 
+
+
     protected void outputResult(String text) throws Exception{
         response.setContentType("text");
         response.setCharacterEncoding("utf-8");

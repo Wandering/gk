@@ -1,21 +1,10 @@
 package cn.thinkjoy.gk.util;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.constant.Const;
-import cn.thinkjoy.gk.param.FileUploadParam;
+import cn.thinkjoy.gk.constant.UploadConst;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.Thumbnails.Builder;
-import net.coobird.thumbnailator.geometry.Positions;
-import org.apache.commons.io.FileUtils;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 
@@ -69,7 +58,7 @@ public class CheckUtil {
 		boolean flag = false;
 		if (!"".equals(imageType)) {
 
-			for (String s : Const.IMAGE_TYPES) {
+			for (String s : UploadConst.IMAGE_TYPES) {
 				if (s.equals(imageType.toLowerCase())) {
 					flag = true;
 				}
@@ -85,7 +74,7 @@ public class CheckUtil {
 		boolean flag = false;
 		if (!"".equals(videoType)) {
 
-			for (String s : Const.VIDEO_TYPES) {
+			for (String s : UploadConst.VIDEO_TYPES) {
 				if (s.equals(videoType.toLowerCase())) {
 					flag = true;
 				}
@@ -100,7 +89,7 @@ public class CheckUtil {
 	private static boolean checkFileType(String type) {
 		boolean flag = false;
 		if (!"".equals(type)) {
-			for (String s : Const.FILE_TYPES) {
+			for (String s : UploadConst.FILE_TYPES) {
 				if (s.equals(type)) {
 					flag = true;
 					break;

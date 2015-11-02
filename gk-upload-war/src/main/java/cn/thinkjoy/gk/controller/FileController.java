@@ -2,7 +2,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.constant.Const;
+import cn.thinkjoy.gk.constant.UploadConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.protocol.DateStyle;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
@@ -42,9 +42,6 @@ public class FileController extends BaseController{
 	@ResponseBody
 	public List<FileUploadVO> file(@RequestParam(value = "files", required = false) MultipartFile[] fileUploads,
 						 @RequestParam(value = "params", required = false)String params) throws Exception {
-
-		response.addHeader("Access-Control-Allow-Origin","*");
-
 		long stratTime = System.currentTimeMillis();
 
 		List<FileUploadVO> fileUploadVOs = new ArrayList<FileUploadVO>();
@@ -65,7 +62,7 @@ public class FileController extends BaseController{
 				// 验证文件
 				CheckUtil.checkFile(fileSize, uploadFileType);
 
-				String filePath = Const.FILE_UPLOAD_DIR+date+"/"+uploadFileType;
+				String filePath = UploadConst.FILE_UPLOAD_DIR+date+"/"+uploadFileType;
 
 				String systemFileName= UUID.randomUUID().toString()+ "." + uploadFileType;
 				// 本机文件地址

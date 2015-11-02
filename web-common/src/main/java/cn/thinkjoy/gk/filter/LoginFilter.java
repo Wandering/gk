@@ -31,7 +31,7 @@ public class LoginFilter implements Filter {
         HttpServletResponse hresponse = (HttpServletResponse) response;
 
         String url = hrequest.getServletPath();
-        if(!ServletPathConst.JSP_URLS.containsKey(url)){
+        if(!ServletPathConst.JSP_URLS.contains(url)){
             chain.doFilter(request, response);
         }else {
 
