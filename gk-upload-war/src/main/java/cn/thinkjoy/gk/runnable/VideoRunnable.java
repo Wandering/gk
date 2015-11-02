@@ -25,7 +25,7 @@ public class VideoRunnable implements Runnable {
 	public void run() {
 		try {
 			LOGGER.info("调用创建视频转码");
-			VideoUtil.process(filePath + fileName, filePath + systemFileName + ".mp4");
+			VideoUtil.process(filePath + "/" + fileName, filePath + "/" + systemFileName + ".mp4");
 		} catch (Exception e) {
 //			new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
 			e.printStackTrace();
