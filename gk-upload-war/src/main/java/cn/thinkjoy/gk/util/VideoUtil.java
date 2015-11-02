@@ -67,6 +67,7 @@ public class VideoUtil {
 			ProcessBuilder builder = new ProcessBuilder();
 			builder.command(commands);
 			builder.start();
+			LOGGER.info("转码开始!");
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,8 +1,12 @@
 package cn.thinkjoy.gk.runnable;
 
 import cn.thinkjoy.gk.util.VideoUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class VideoRunnable implements Runnable {
+
+	private static final Logger LOGGER= LoggerFactory.getLogger(VideoRunnable.class);
 
 	// 文件路径
 	private String filePath;
@@ -20,12 +24,12 @@ public class VideoRunnable implements Runnable {
 
 	public void run() {
 		try {
-			//logger.info("调用创建缩略图和水印方法FileUploadUtil.createThumbnailAndWatermark");
+			LOGGER.info("调用创建视频转码");
 			VideoUtil.process(filePath + fileName, filePath + systemFileName + ".mp4");
 		} catch (Exception e) {
 //			new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
 			e.printStackTrace();
-		}finally{
+		} finally{
 			System.gc();
 		}
 	}
