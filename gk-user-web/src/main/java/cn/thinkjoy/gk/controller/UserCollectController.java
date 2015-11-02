@@ -10,6 +10,7 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IUserCollectExService;
 import cn.thinkjoy.gk.service.IUserCollectService;
 import com.google.common.collect.Maps;
+import org.omg.CORBA.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,9 +85,15 @@ public class UserCollectController extends BaseController{
         return flag;
     }
 
+    /**
+     * 查询当前用户的收藏院校
+     * @param offset
+     * @param rows
+     * @return
+     */
     @RequestMapping(value = "/getUserCollectPojoList",method = RequestMethod.GET)
     @ResponseBody
-    public List<UserCollectPojo> getUserCollectPojoList(){
+    public List<UserCollectPojo> getUserCollectPojoList(@RequestParam(value ="offset",required = false)int offset, @RequestParam(value = "rows",required = false)int rows){
         UserAccountPojo userAccountPojo=getUserAccountPojo();
         if(null==userAccountPojo ||  null==userAccountPojo.getId()){
             throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
@@ -94,6 +101,8 @@ public class UserCollectController extends BaseController{
         long userId=userAccountPojo.getId();
         Map<String,Object> param= Maps.newHashMap();
         param.put("userId",userId);
+        param.put("offset",offset);
+        param.put("rows",rows);
         List<UserCollectPojo> userCollectPojoList=userCollectExService.getUserCollectPojoList(param);
         return userCollectPojoList;
     }
