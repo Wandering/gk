@@ -5,8 +5,12 @@ import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.param.FileUploadParam;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.UploadUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ImageRunnable implements Runnable {
+
+	private static final Logger LOGGER= LoggerFactory.getLogger(VideoRunnable.class);
 
 	// 系统文件名称
 	private String systemFileNames;
@@ -24,7 +28,7 @@ public class ImageRunnable implements Runnable {
 
 	public void run() {
 		try {
-			//logger.info("调用创建缩略图和水印方法FileUploadUtil.createThumbnailAndWatermark");
+			LOGGER.info("调用创建缩略图和水印");
 			UploadUtil.createCondenseAndWatermark(filePaths, systemFileNames, fileUploadParam);
 		} catch (Exception e) {
 			new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
