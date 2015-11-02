@@ -42,6 +42,7 @@ public class VideoController extends BaseController{
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/video",method = RequestMethod.POST)
+	@ResponseBody
 	public String video(@RequestParam(value = "files", required = false) MultipartFile[] fileUploads,
 						 @RequestParam(value = "params", required = false)String params) throws Exception {
 
@@ -81,11 +82,8 @@ public class VideoController extends BaseController{
 				}
 
 //				fileUpload.transferTo(new File(filePath+systemFileName));
-
 				fileUploadVO.setName(systemFileName);
-
 				fileUploadVO.setSize(fileSize);
-
 				fileUploadVO.setName(fileUploadFileName);
 				fileUploadVO.setSystem_name(systemFileName);
 				fileUploadVO.setType(uploadFileType);
