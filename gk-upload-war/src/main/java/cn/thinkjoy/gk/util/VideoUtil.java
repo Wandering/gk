@@ -17,6 +17,8 @@ public class VideoUtil {
 	 * @return
 	 */
 	public static boolean process(String inputFile,String outputFile) {
+		LOGGER.info("视频源地址:"+inputFile);
+		LOGGER.info("视频转码地址:"+outputFile);
 		if (!CheckUtil.checkFileExists(inputFile)) {
 			System.out.println(inputFile + " is not file");
 			return false;

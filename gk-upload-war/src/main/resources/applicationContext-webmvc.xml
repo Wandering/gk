@@ -20,7 +20,9 @@
                      http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 
     <!-- @Controller, @Service, @Configuration, etc. -->
-    <context:component-scan base-package="cn.thinkjoy.gk.controller" />
+    <context:component-scan base-package="cn.thinkjoy.gk.controller;cn.thinkjoy.common.restful" />
+
+    <!--<bean class="cn.thinkjoy.common.restful.BizExceptionHandler" />-->
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/" />
@@ -56,11 +58,11 @@
             </list>
         </property>
 
-        <property name="features">
-            <array value-type="com.alibaba.fastjson.serializer.SerializerFeature">
-                <value>DisableCircularReferenceDetect</value>
-            </array>
-        </property>
+        <!--<property name="features">-->
+            <!--<array value-type="com.alibaba.fastjson.serializer.SerializerFeature">-->
+                <!--<value>DisableCircularReferenceDetect</value>-->
+            <!--</array>-->
+        <!--</property>-->
     </bean>
 
 </beans>

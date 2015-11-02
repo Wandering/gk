@@ -43,6 +43,8 @@ public class FileController extends BaseController{
 	public List<FileUploadVO> file(@RequestParam(value = "files", required = false) MultipartFile[] fileUploads,
 						 @RequestParam(value = "params", required = false)String params) throws Exception {
 
+		response.addHeader("Access-Control-Allow-Origin","*");
+
 		long stratTime = System.currentTimeMillis();
 
 		List<FileUploadVO> fileUploadVOs = new ArrayList<FileUploadVO>();

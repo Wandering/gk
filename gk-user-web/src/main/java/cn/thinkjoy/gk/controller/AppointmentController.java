@@ -3,7 +3,6 @@ package cn.thinkjoy.gk.controller;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
-import cn.thinkjoy.gk.dao.ex.IAppointmentExDAO;
 import cn.thinkjoy.gk.domain.Appointment;
 import cn.thinkjoy.gk.pojo.AppointmentPojo;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
