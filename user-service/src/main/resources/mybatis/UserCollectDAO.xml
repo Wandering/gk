@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IUserCollectDAO">
+<!--
+insert
+update
+updateNull
+deleteById
+deleteByCondition
+deleteByProperty
+fetch
+findOne
+findList
+findAll
+queryPage
+like
+queryList
+queryOne
+count
+selectMaxId
+updateOrSave
+selectOne
+selectList
+-->
+
+    <sql id="Base_Column_List">
+        id as id ,
+        createDate as createDate ,
+        userId as userId ,
+        universityId as universityId 
+    </sql>
+    <insert id="insert" parameterType="UserCollect">
+        INSERT INTO gk_user_collect (
+        createDate,
+        userId,
+        universityId
+        ) VALUES (
+        #{createDate},
+        #{userId},
+        #{universityId}
+        )
+            <selectKey resultType="java.lang.Long" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+            </selectKey>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="UserCollect">
+        UPDATE gk_user_collect
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createDate!=null">
+                createDate = #{createDate},
+            </if>
+            <if test="userId!=null">
+                userId = #{userId},
+            </if>
+            <if test="universityId!=null">
+                universityId = #{universityId},
+            </if>
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateMap">
+        UPDATE gk_user_collect
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.createDate!=null">
+                createDate = #{map.createDate},
+            </if>
+            <if test="map.userId!=null">
+                userId = #{map.userId},
+            </if>
+            <if test="map.universityId!=null">
+                universityId = #{map.universityId},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE gk_user_collect
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.createDate!=null">
+                createDate = #{update.createDate},
+            </if>
+            <if test="update.userId!=null">
+                userId = #{update.userId},
+            </if>
+            <if test="update.universityId!=null">
+                universityId = #{update.universityId},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.userId!=null">
+                AND userId = #{condition.userId}
+            </if>
+            <if test="condition.universityId!=null">
+                AND universityId = #{condition.universityId}
+            </if>
+        </trim>
+    </update>
+
+    <insert id="insertMap" >
+        INSERT INTO gk_user_collect (
+                createDate,
+                userId,
+                universityId
+        ) VALUES (
+                    #{map.createDate},
+                    #{map.userId},
+                    #{map.universityId}
+        )
+    </insert>
+
+
+    <update id="updateNull" parameterType="UserCollect">
+        UPDATE gk_user_collect
+        <trim prefix="SET" suffixOverrides=",">
+            createDate = #{createDate},
+            userId = #{userId},
+            universityId = #{universityId},
+        </trim>
+        WHERE
+        id = #{id} 
+    </update>
+
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM gk_user_collect
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </delete>
+
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM gk_user_collect
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="createDate!=null">
+                AND createDate = #{createDate}
+            </if>
+            <if test="userId!=null">
+                AND userId = #{userId}
+            </if>
+            <if test="universityId!=null">
+                AND universityId = #{universityId}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM gk_user_collect WHERE
+        ${property} = #{value}
+    </delete>
+
+    <select id="fetch" parameterType="java.lang.Long" resultType="UserCollect">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_user_collect
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="UserCollect">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_user_collect WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="UserCollect">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_user_collect WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="UserCollect">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_user_collect
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="UserCollect">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_user_collect
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.id!=null">
+                ${condition.groupOp}   ${condition.id.field}  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.createDate!=null">
+                ${condition.groupOp}   ${condition.createDate.field}  ${condition.createDate.op}  #{condition.createDate.data}
+            </if>
+            <if test="condition.userId!=null">
+                ${condition.groupOp}   ${condition.userId.field}  ${condition.userId.op}  #{condition.userId.data}
+            </if>
+            <if test="condition.universityId!=null">
+                ${condition.groupOp}   ${condition.universityId.field}  ${condition.universityId.op}  #{condition.universityId.data}
+            </if>
+
+
+    </where>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="UserCollect">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_user_collect
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id like CONCAT('%', #{condition.id} , '%')
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate like CONCAT('%', #{condition.createDate} , '%')
+            </if>
+            <if test="condition.userId!=null">
+                AND userId like CONCAT('%', #{condition.userId} , '%')
+            </if>
+            <if test="condition.universityId!=null">
+                AND universityId like CONCAT('%', #{condition.universityId} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="UserCollect">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_user_collect
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.userId!=null">
+                AND userId = #{condition.userId}
+            </if>
+            <if test="condition.universityId!=null">
+                AND universityId = #{condition.universityId}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="UserCollect">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_user_collect
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.userId!=null">
+                AND userId = #{condition.userId}
+            </if>
+            <if test="condition.universityId!=null">
+                AND universityId = #{condition.universityId}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(id) FROM gk_user_collect
+       <where>
+           <if test="id!=null">
+               ${groupOp} ${id.field} ${id.op}  #{id.data}
+           </if>
+           <if test="createDate!=null">
+               ${groupOp} ${createDate.field} ${createDate.op}  #{createDate.data}
+           </if>
+           <if test="userId!=null">
+               ${groupOp} ${userId.field} ${userId.op}  #{userId.data}
+           </if>
+           <if test="universityId!=null">
+               ${groupOp} ${universityId.field} ${universityId.op}  #{universityId.data}
+           </if>
+
+       </where>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Long">
+        SELECT
+        MAX(id)
+        FROM gk_user_collect
+    </select>
+
+</mapper>
+

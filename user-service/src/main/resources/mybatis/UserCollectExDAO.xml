@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.thinkjoy.gk.dao.ex.IUserCollectExDAO">
+    <select id="getUserCollectPojoList" parameterType="java.util.Map" resultType="UserCollectPojo">
+        SELECT cc.id as id,cc.userId as userId,cc.universityId as universityId,cc.createDate as createDate,uu.name as universityName
+        FROM gk_user_collect cc
+        LEFT JOIN gk_university uu ON cc.universityId = uu.id
+        <where>
+            AND cc.userId = #{userId}
+        </where>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+</mapper>
