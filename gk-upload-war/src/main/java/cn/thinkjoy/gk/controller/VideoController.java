@@ -74,7 +74,7 @@ public class VideoController extends BaseController{
 				// 本机文件地址
 				UploadUtil.fileUpload(new File(filePath,systemFileName), fileUpload);
 
-				if(!VideoConst.TYPE.equals(uploadFileType)){
+				if(!VideoConst.TYPE.equals(uploadFileType)) {
 					VideoRunnable videoRunnable = new VideoRunnable(filePath, systemFileName,uuid);
 					Thread t = new Thread(videoRunnable);
 					t.start();
