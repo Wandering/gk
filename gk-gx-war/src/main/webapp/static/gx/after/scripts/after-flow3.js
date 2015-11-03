@@ -6,7 +6,7 @@ define(function (require) {
         var paramsJson = JSON.parse(params);
         $('.volunteer-flow3-table').on('click', '.open-flow3', function () {
             $('.tansLayer,.volunteer-flow3-layer').show();
-            $('#volunteer-flow3-layer').attr('dataType', $(this).attr('dataType'))
+            $('#volunteer-flow3-layer').attr('dataType', $(this).attr('dataType'));
             getSchool(paramsJson, "", "");
         });
 
@@ -44,6 +44,7 @@ define(function (require) {
                         return;
                     }
                     if (res.rtnCode == "0000000") {
+                        $('.school-list').html('');
                         var data = $.parseJSON(res.bizData);
                         console.log(data)
                         var m_batch_id = data.related.m_batch_id;
@@ -61,7 +62,7 @@ define(function (require) {
                         }
                         var datatypeId = $('#volunteer-flow3-layer').attr('datatype');
 
-                        $('.school-list').html('');
+
 
                         $.each(listData.data, function (i, v) {
 
@@ -221,8 +222,7 @@ define(function (require) {
             var m_batch = parents.attr('m_batch');
             var code = parents.attr('code');
             var year = parents.attr('year');
-            console.log(boxId + "=" + index + "="+m_batch + "=" + code + "=" + year)
-            $('#specialty-content').html('');
+            console.log(boxId + "=" + index + "="+m_batch + "=" + code + "=" + year);
             $('#specialty-layer,.tansLayer').show();
             $.ajax({
                 url: '/majored/majorList.do',
@@ -237,7 +237,7 @@ define(function (require) {
                     console.log(res);
                     var data = res.bizData;
                     if ('0000000' === res.rtnCode) {
-
+                        $('#specialty-content').html('');
                         $.each(data, function (i, v) {
                             var specialtyTotal = data.length;
                             var name = v.name;

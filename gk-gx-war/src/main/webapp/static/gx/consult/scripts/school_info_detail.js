@@ -15,6 +15,7 @@ define(function (require) {
     var Info = {
         batchData:[],
         batchName: [],
+        // 院校基本信息
         getBasicInfo: function(code) {
             var that = this;
             $.ajax({
@@ -26,7 +27,6 @@ define(function (require) {
                 },
                 dataType: 'json',
                 success: function(data) {
-                    console.log(data)
                     if ('0000000' === data.rtnCode) {
                         that.renderInfo(data.bizData);
                     } else {
@@ -98,7 +98,6 @@ define(function (require) {
             var tab = [];
             var tabContent = [];
             for (var i = 0, len = data.length; i < len; i++) {
-                console.log(data.length)
                 var batchNameTmp = [];
                 if (data[i].title.indexOf('年')) {
                     var year = data[i].title.substring(0, 4);
@@ -185,7 +184,7 @@ define(function (require) {
                 + '<tr>'
                 + '<th></th>'
                 + '<th>计划数</th>'
-                + '<th>录取数</th>'
+                //+ '<th>录取数</th>'
                 + '<th>最高分</th>'
                 + '<th>最高位次</th>'
                 + '<th>最低分</th>'
@@ -199,7 +198,7 @@ define(function (require) {
                 tabContent.push('<tr>'
                     + '<td>' + (arry[j].subjectName || '') + '</td>'
                     + '<td>' + (arry[j].planNumber || '') + '</td>'
-                    + '<td>' + (arry[j].enrollNumber || '') + '</td>'
+                    //+ '<td>' + (arry[j].enrollNumber || '') + '</td>'
                     + '<td>' + (arry[j].highestScore || '') + '</td>'
                     + '<td>' + (arry[j].highestRank || '') + '</td>'
                     + '<td>' + (arry[j].lowestScore || '') + '</td>'
@@ -261,6 +260,7 @@ define(function (require) {
             });
         },
         renderEnrollTable: function(infos) {
+            console.log(infos)
             var tabContent = [];
             tabContent.push('<table border="0" cellpadding="0" cellspacing="0">'
                 + '<thead>'
@@ -269,8 +269,8 @@ define(function (require) {
                 + '<th>批次</th>'
                 + '<th>科类</th>'
                 + '<th>计划人数</th>'
-                + '<th>学制</th>'
-                + '<th>收费标准</th>'
+                //+ '<th>学制</th>'
+                //+ '<th>收费标准</th>'
                 + '</tr>'
                 + '</thead>'
                 + '<tbody>');
@@ -281,8 +281,8 @@ define(function (require) {
                     + '<td width="10%">' + (infos[j].batch || '') + '</td>'
                     + '<td width="10%">' + (infos[j].subject || '') + '</td>'
                     + '<td width="10%">' + (infos[j].planNumber || '') + '</td>'
-                    + '<td width="10%">' + (infos[j].schoolLength || '') + '</td>'
-                    + '<td width="10%">' + (infos[j].feeStandard || '') + '</td>'
+                    //+ '<td width="10%">' + (infos[j].schoolLength || '') + '</td>'
+                    //+ '<td width="10%">' + (infos[j].feeStandard || '') + '</td>'
                     + '</tr>');
             }
             tabContent.push('</tbody>'
@@ -295,14 +295,15 @@ define(function (require) {
             var tabContent = [];
             // 暂时去掉2015招生计划
             for (var i = 0, len = data.length; i < len; i++) {
-                console.log(data[i].title)
-                var paramName = 'enrollData' + i;
-                tab.push('<li data-saveData="' + paramName + '">' + data[i].title + '</li>');
-                var infos = data[i].planInfos;
-                this[paramName] = infos;
-                tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + i + '">');
-                tabContent.push(this.renderEnrollTable(infos));
-                tabContent.push('</div>');
+                if(data[i].title!="2015年招生计划"){
+                    var paramName = 'enrollData' + i;
+                    tab.push('<li data-saveData="' + paramName + '">' + data[i].title + '</li>');
+                    var infos = data[i].planInfos;
+                    this[paramName] = infos;
+                    tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + i + '">');
+                    tabContent.push(this.renderEnrollTable(infos));
+                    tabContent.push('</div>');
+                }
             }
 
 
@@ -331,7 +332,7 @@ define(function (require) {
             $('#tabs_list_enroll li').first().addClass('active');
             var text = $('#tabs_list_enroll li.active').text();
             this.setCategory(text);
-            $('#enroll_table_0').show();
+            $('#enroll_table_1').show();
             this.addEnrollEventHandle();
             this.categoryHandle();
         },
@@ -346,7 +347,7 @@ define(function (require) {
                     var text = $(this).text();
                     var index = $(this).index();
                     that.setCategory(text, $(this));
-                    $('#enroll_table_' + index).show().siblings().hide();
+                    $('#enroll_table_' + (index+1)).show().siblings().hide();
                 }
             });
         },

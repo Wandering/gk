@@ -25,7 +25,6 @@ define(function(require, exports, module) {
             for (var i = 0, len = this.data.length; i < len; i++) {
                 if(this.data[i].name !== "志愿讲堂"){
                     console.log(this.data[i].id  + "==" + this.data[i].name);
-                    console.log()
                     parentHtml.push('<li data-id="' + this.data[i].id + '">' + this.data[i].name + '</li>');
                 }
             }

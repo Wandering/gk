@@ -62,7 +62,7 @@
     </div>
 </div>
 <div class="section w1000">
-    <p class="link-tel-title">全国服务商联系方式及地址 </p>
+    <p class="link-tel-title">各地招办联系方式 </p>
     <ul class="tab-info ">
         <div class="tel-content-box">
             <div class="row" id='address-box'></div>
