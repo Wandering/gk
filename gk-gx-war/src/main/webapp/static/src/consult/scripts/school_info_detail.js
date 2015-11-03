@@ -15,6 +15,7 @@ define(function (require) {
     var Info = {
         batchData:[],
         batchName: [],
+        // 院校基本信息
         getBasicInfo: function(code) {
             var that = this;
             $.ajax({
@@ -26,7 +27,6 @@ define(function (require) {
                 },
                 dataType: 'json',
                 success: function(data) {
-                    console.log(data)
                     if ('0000000' === data.rtnCode) {
                         that.renderInfo(data.bizData);
                     } else {
