@@ -184,7 +184,7 @@ define(function (require) {
                 + '<tr>'
                 + '<th></th>'
                 + '<th>计划数</th>'
-                + '<th>录取数</th>'
+                //+ '<th>录取数</th>'
                 + '<th>最高分</th>'
                 + '<th>最高位次</th>'
                 + '<th>最低分</th>'
@@ -198,7 +198,7 @@ define(function (require) {
                 tabContent.push('<tr>'
                     + '<td>' + (arry[j].subjectName || '') + '</td>'
                     + '<td>' + (arry[j].planNumber || '') + '</td>'
-                    + '<td>' + (arry[j].enrollNumber || '') + '</td>'
+                    //+ '<td>' + (arry[j].enrollNumber || '') + '</td>'
                     + '<td>' + (arry[j].highestScore || '') + '</td>'
                     + '<td>' + (arry[j].highestRank || '') + '</td>'
                     + '<td>' + (arry[j].lowestScore || '') + '</td>'
@@ -269,8 +269,8 @@ define(function (require) {
                 + '<th>批次</th>'
                 + '<th>科类</th>'
                 + '<th>计划人数</th>'
-                + '<th>学制</th>'
-                + '<th>收费标准</th>'
+                //+ '<th>学制</th>'
+                //+ '<th>收费标准</th>'
                 + '</tr>'
                 + '</thead>'
                 + '<tbody>');
@@ -281,8 +281,8 @@ define(function (require) {
                     + '<td width="10%">' + (infos[j].batch || '') + '</td>'
                     + '<td width="10%">' + (infos[j].subject || '') + '</td>'
                     + '<td width="10%">' + (infos[j].planNumber || '') + '</td>'
-                    + '<td width="10%">' + (infos[j].schoolLength || '') + '</td>'
-                    + '<td width="10%">' + (infos[j].feeStandard || '') + '</td>'
+                    //+ '<td width="10%">' + (infos[j].schoolLength || '') + '</td>'
+                    //+ '<td width="10%">' + (infos[j].feeStandard || '') + '</td>'
                     + '</tr>');
             }
             tabContent.push('</tbody>'
@@ -304,9 +304,6 @@ define(function (require) {
                     tabContent.push(this.renderEnrollTable(infos));
                     tabContent.push('</div>');
                 }
-
-
-
             }
 
 
