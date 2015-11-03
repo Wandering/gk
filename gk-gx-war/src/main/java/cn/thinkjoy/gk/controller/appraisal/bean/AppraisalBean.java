@@ -5,13 +5,13 @@ package cn.thinkjoy.gk.controller.appraisal.bean;
  */
 public class AppraisalBean {
 
-    private final Integer affiliateId=7;
+    private final Integer affiliateId=2;
 
     private final String accessKey="8F14E45FCEEA167A5A36DEDD4BEA2543";
 
-    private final String version="V1";
+    private final String version="V12";
 
-    private final String item = "d35542a5a91dc85f9fa5ed23bc6afc4f";
+    private final String item = "810457431018a6dd2ae80cde555d89175919b75968947a2acf010737a0c18fe4";
 
     private final String api = "getDirectTestUrl";
 
