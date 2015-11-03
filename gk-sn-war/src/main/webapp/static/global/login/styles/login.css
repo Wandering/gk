@@ -637,6 +637,12 @@ a.next-btn:hover {
     font-size: 16px;
     color: #b0b0b0; }
 
+.loading-img {
+  width: 32px;
+  height: 32px;
+  display: block;
+  margin: 0 auto; }
+
 .container {
   height: 650px;
   width: 100%;

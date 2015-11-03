@@ -528,7 +528,9 @@
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
                         <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
-                    <div class="school-list hide" id="school-list0" dataType="A"></div>
+                    <div class="school-list" id="school-list0" dataType="A">
+                        <img class="loading-img" src="http://cdn.gaokao360.net/static/global/common/images/loading.gif" />
+                    </div>
                 </li>
                 <li class="starB">
                     <div class="title">
@@ -539,7 +541,9 @@
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
                         <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
-                    <div class="school-list hide" id="school-list1"  dataType="B"></div>
+                    <div class="school-list" id="school-list1"  dataType="B">
+                        <img class="loading-img" src="http://cdn.gaokao360.net/static/global/common/images/loading.gif" />
+                    </div>
                 </li>
                 <li class="starC">
                     <div class="title">
@@ -550,7 +554,9 @@
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
                         <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
-                    <div class="school-list hide" id="school-list2"  dataType="C"></div>
+                    <div class="school-list" id="school-list2"  dataType="C">
+                        <img class="loading-img" src="http://cdn.gaokao360.net/static/global/common/images/loading.gif" />
+                    </div>
                 </li>
                 <li class="starD">
                     <div class="title">
@@ -561,7 +567,9 @@
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
                         <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
-                    <div class="school-list hide" id="school-list3"  dataType="D"></div>
+                    <div class="school-list" id="school-list3"  dataType="D">
+                        <img class="loading-img" src="http://cdn.gaokao360.net/static/global/common/images/loading.gif" />
+                    </div>
                 </li>
             </ul>
         </div>
@@ -589,7 +597,11 @@
                     <th>收费标准</th>
                 </tr>
             </thead>
-            <tbody id="specialty-content"></tbody>
+            <tbody id="specialty-content">
+            <tr>
+                <td colspan="6"><img class="loading-img" src="http://cdn.gaokao360.net/static/global/common/images/loading.gif" /></td>
+            </tr>
+            </tbody>
         </table>
     </div>
 </div>
