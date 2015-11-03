@@ -10,7 +10,6 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IUserCollectExService;
 import cn.thinkjoy.gk.service.IUserCollectService;
 import com.google.common.collect.Maps;
-import org.omg.CORBA.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +92,7 @@ public class UserCollectController extends BaseController{
      */
     @RequestMapping(value = "/getUserCollectPojoList",method = RequestMethod.GET)
     @ResponseBody
-    public List<UserCollectPojo> getUserCollectPojoList(@RequestParam(value ="offset",required = false)int offset, @RequestParam(value = "rows",required = false)int rows){
+    public List<UserCollectPojo> getUserCollectPojoList(@RequestParam(value ="offset",required = false)Integer offset, @RequestParam(value = "rows",required = false)Integer rows){
         UserAccountPojo userAccountPojo=getUserAccountPojo();
         if(null==userAccountPojo ||  null==userAccountPojo.getId()){
             throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());

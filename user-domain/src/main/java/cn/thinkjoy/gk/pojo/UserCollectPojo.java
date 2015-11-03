@@ -29,6 +29,14 @@ public class UserCollectPojo{
 
 	/** 收藏院校名称 */
 	private String universityName;
+	/** 所在地区 */
+	private String provinceName;
+	/** 院校类型 */
+	private String universityType;
+	/** 院校隶属 */
+	private String subjection;
+	/** 院校特征 */
+	private String propertyName;
 
 	public UserCollectPojo(){
 	}
@@ -39,6 +47,38 @@ public class UserCollectPojo{
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getProvinceName() {
+		return provinceName;
+	}
+
+	public void setProvinceName(String provinceName) {
+		this.provinceName = provinceName;
+	}
+
+	public String getUniversityType() {
+		return universityType;
+	}
+
+	public void setUniversityType(String universityType) {
+		this.universityType = universityType;
+	}
+
+	public String getSubjection() {
+		return subjection;
+	}
+
+	public void setSubjection(String subjection) {
+		this.subjection = subjection;
+	}
+
+	public String getPropertyName() {
+		return propertyName;
+	}
+
+	public void setPropertyName(String propertyName) {
+		this.propertyName = propertyName;
 	}
 
 	public String getUniversityName() {
