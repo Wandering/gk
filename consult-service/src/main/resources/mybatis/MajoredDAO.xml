@@ -9,7 +9,7 @@
     </select>
 
     <select id="searchMajored" parameterType="java.util.Map" resultType="SubjectDto">
-        select b.majoredId as id,b.majoredName as name,b.enrollNumber as planNumber,
+        select a.id as majoredId,b.majoredName as name,b.enrollNumber as planNumber,
         b.schoolLength,b.foreignLanguage as foreginLanguage,b.feeStandard,b.universityId,b.universityName
         from gk_majored a  left join gk_enroll_plan  b  on a.id=b.majoredId  where 1=1
         <if test="condition.subjectTypeName!=null and condition.subjectTypeName!=''">
@@ -51,7 +51,7 @@
     </select>
 
     <select id="getMajoredById" parameterType="java.lang.String" resultType="MajoredDto">
-        select  name,educationLevel,subjectType,majoredType,degree,similarMajored,mainCourse,workGuide
+        select  id as majoredId, name,educationLevel,subjectType,majoredType,degree,similarMajored,mainCourse,workGuide
          from gk_majored where 1=1 and id=#{id}
     </select>
 

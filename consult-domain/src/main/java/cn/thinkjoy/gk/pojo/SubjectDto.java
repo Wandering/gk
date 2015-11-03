@@ -5,6 +5,8 @@ package cn.thinkjoy.gk.pojo;
  */
 public class SubjectDto {
     private String code;
+    /** 专业ID */
+    private int majoredId;
     private String name;
     private Integer planNumber;
     private String schoolLength;
@@ -12,6 +14,14 @@ public class SubjectDto {
     private String feeStandard;
     private Integer universityId;
     private String universityName;
+
+    public int getMajoredId() {
+        return majoredId;
+    }
+
+    public void setMajoredId(int majoredId) {
+        this.majoredId = majoredId;
+    }
 
     public String getCode() {
         return code;
