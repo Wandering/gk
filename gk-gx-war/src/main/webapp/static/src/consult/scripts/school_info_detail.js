@@ -98,7 +98,6 @@ define(function (require) {
             var tab = [];
             var tabContent = [];
             for (var i = 0, len = data.length; i < len; i++) {
-                console.log(data.length)
                 var batchNameTmp = [];
                 if (data[i].title.indexOf('年')) {
                     var year = data[i].title.substring(0, 4);
@@ -261,6 +260,7 @@ define(function (require) {
             });
         },
         renderEnrollTable: function(infos) {
+            console.log(infos)
             var tabContent = [];
             tabContent.push('<table border="0" cellpadding="0" cellspacing="0">'
                 + '<thead>'
@@ -295,14 +295,18 @@ define(function (require) {
             var tabContent = [];
             // 暂时去掉2015招生计划
             for (var i = 0, len = data.length; i < len; i++) {
-                console.log(data[i].title)
-                var paramName = 'enrollData' + i;
-                tab.push('<li data-saveData="' + paramName + '">' + data[i].title + '</li>');
-                var infos = data[i].planInfos;
-                this[paramName] = infos;
-                tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + i + '">');
-                tabContent.push(this.renderEnrollTable(infos));
-                tabContent.push('</div>');
+                if(data[i].title!="2015年招生计划"){
+                    var paramName = 'enrollData' + i;
+                    tab.push('<li data-saveData="' + paramName + '">' + data[i].title + '</li>');
+                    var infos = data[i].planInfos;
+                    this[paramName] = infos;
+                    tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + i + '">');
+                    tabContent.push(this.renderEnrollTable(infos));
+                    tabContent.push('</div>');
+                }
+
+
+
             }
 
 
@@ -331,7 +335,7 @@ define(function (require) {
             $('#tabs_list_enroll li').first().addClass('active');
             var text = $('#tabs_list_enroll li.active').text();
             this.setCategory(text);
-            $('#enroll_table_0').show();
+            $('#enroll_table_1').show();
             this.addEnrollEventHandle();
             this.categoryHandle();
         },
@@ -346,7 +350,7 @@ define(function (require) {
                     var text = $(this).text();
                     var index = $(this).index();
                     that.setCategory(text, $(this));
-                    $('#enroll_table_' + index).show().siblings().hide();
+                    $('#enroll_table_' + (index+1)).show().siblings().hide();
                 }
             });
         },
