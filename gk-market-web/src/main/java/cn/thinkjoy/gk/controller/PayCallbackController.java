@@ -59,7 +59,7 @@ public class PayCallbackController {
 
             JSONObject payResult = JSON.parseObject(builder.toString());
 
-            LOGGER.info("====pay /payCallback payResult: "+payResult);
+            LOGGER.info("====pay /payCallback· payResult: "+payResult);
 
             if( payResult !=null ) {
                 Map<String,Object> dataMap = new HashMap();

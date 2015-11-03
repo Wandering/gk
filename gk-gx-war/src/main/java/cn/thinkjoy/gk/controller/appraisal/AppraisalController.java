@@ -64,7 +64,7 @@ public class AppraisalController extends BaseController {
 
         StringBuffer returnStr = new StringBuffer("");
         try {
-            String result = HttpRequestUtil.doHttpPost("http://openapi.lstest.com/gkzyv11/", params);
+            String result = HttpRequestUtil.doHttpPost("http://open.lstest.com/default/", params);
 
             if(StringUtils.isEmpty(result)){
                 throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
