@@ -7,7 +7,7 @@ public class AppraisalBean {
 
     private final Integer affiliateId=2;
 
-    private final String accessKey="8F14E45FCEEA167A5A36DEDD4BEA2543";
+    private final String accessKey="8F14E45FCEEA167A5A36DEDD4BEA2544";
 
     private final String version="V12";
 
