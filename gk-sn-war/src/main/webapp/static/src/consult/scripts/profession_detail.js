@@ -120,7 +120,7 @@ define(function (require) {
         "subjectType": "工科",
         "majoredType": "轻工类",
         "degree": "工学学士",
-        "universityImage": "http://himg.bdimg.com/sys/portrait/item/c68b4a737048696265726e6174655374d718.jpg",
+        "universityImage": "http://himg.bdimg.com/sys/portrait/item/c68b4a737048696265726e6174655374d718.jpg"
     }
 
     var testData = {
