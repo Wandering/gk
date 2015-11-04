@@ -115,7 +115,7 @@ public class OrdersController extends BaseController {
         order.setPayStatus(0);
         order.setDescription(ordersQuery.getExtra());
 //        order.setChannel(ordersQuery.getChannel());
-        order.setChannel("alipay_pc_direct");
+        order.setChannel(ordersQuery.getChannel());
         try {
             ordersService.insert(order);
             LOGGER.info("creaate order :" + orderNo);
@@ -176,7 +176,7 @@ public class OrdersController extends BaseController {
             if(StringUtils.isNotBlank(payResult)){
                 JSONObject obj = JSON.parseObject(payResult);
                 return obj.getString("bizData");
-            }else {
+            } else {
                 return null;
             }
         }catch (Exception e){
