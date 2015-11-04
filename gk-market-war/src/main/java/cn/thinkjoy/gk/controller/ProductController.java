@@ -48,7 +48,7 @@ public class ProductController {
      */
     @RequestMapping(value = "findProductPage", method = RequestMethod.GET)
     @ResponseBody
-    public List<Product> findProductPage(ProductQuery productQuery,HttpServletResponse response) {
+    public List<Product> findProductPage(ProductQuery productQuery) {
 
 //        response.setHeader("Access-Control-Allow-Origin","http://test.zhiless.com:8088");
 //        response.setHeader("Access-Control-Allow-Headers", "X-Requested-With");

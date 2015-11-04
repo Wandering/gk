@@ -23,7 +23,7 @@
     <context:component-scan base-package="cn.thinkjoy.gk.controller;cn.thinkjoy.common.restful" />
 
     <mvc:interceptors >
-        <bean class="cn.thinkjoy.gk.interceptor.UploadInterceptor"></bean>
+        <!--<bean class="cn.thinkjoy.gk.interceptor.UploadInterceptor"></bean>-->
         <bean class="cn.thinkjoy.gk.interceptor.AllowInterceptor"></bean>
         <!--<mvc:interceptor>-->
         <!--<mvc:mapping path="/index.do"/>-->
