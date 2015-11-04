@@ -89,3 +89,25 @@ section:last-child {
     color: #e24333;
   }
 }
+
+//地区批次线
+#area-scores-table{
+  width: 100%;
+  margin: 30px auto;
+}
+#area-scores-table th,
+#area-scores-table td{
+  border: 1px solid #f1f1f1;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+}
+#area-scores-table td{
+  font-weight: normal;
+}
+#area-scores-table td.fwb{
+  font-weight: bold;
+}
+#area-scores-table th{
+  background: #f5f5f5;
+}
