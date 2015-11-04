@@ -22,13 +22,13 @@
     <!-- @Controller, @Service, @Configuration, etc. -->
     <context:component-scan base-package="cn.thinkjoy" />
 
-    <mvc:interceptors >
-        <bean class="cn.thinkjoy.gk.interceptor.LoginInterceptor"></bean>
-        <bean class="cn.thinkjoy.gk.interceptor.AllowInterceptor"></bean>
+    <!--<mvc:interceptors >-->
+        <!--<bean class="cn.thinkjoy.gk.interceptor.LoginInterceptor"></bean>-->
+        <!--<bean class="cn.thinkjoy.gk.interceptor.AllowInterceptor"></bean>-->
         <!--<mvc:interceptor>-->
             <!--<mvc:mapping path="/index.do"/>-->
         <!--</mvc:interceptor>-->
-    </mvc:interceptors>
+    <!--</mvc:interceptors>-->
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/" />
