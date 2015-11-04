@@ -60,9 +60,7 @@ public class OrdersController extends BaseController {
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
         }
 
-        String url = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
-
-        response.addHeader("Access-Control-Allow-Origin",url);
+        response.addHeader("Access-Control-Allow-Origin","*");
 
         response.addHeader("Access-Control-Allow-Headers","X-Requested-With");
 

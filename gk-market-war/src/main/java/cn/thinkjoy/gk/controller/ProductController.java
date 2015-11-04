@@ -81,9 +81,7 @@ public class ProductController extends BaseController{
             throw new BizException(ERRORCODE.AUTHENTICATION_FAIL.getCode(), ERRORCODE.AUTHENTICATION_FAIL.getMessage());
         }
 
-        String url = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
-
-        response.addHeader("Access-Control-Allow-Origin",url);
+        response.addHeader("Access-Control-Allow-Origin","*");
 
         response.addHeader("Access-Control-Allow-Headers","X-Requested-With");
 
