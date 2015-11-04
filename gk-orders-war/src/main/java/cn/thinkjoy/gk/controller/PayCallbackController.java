@@ -3,10 +3,8 @@ package cn.thinkjoy.gk.controller;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Orders;
 import cn.thinkjoy.gk.domain.UserVip;
-import cn.thinkjoy.gk.protocol.DateStyle;
 import cn.thinkjoy.gk.service.IOrdersService;
 import cn.thinkjoy.gk.service.IUserVipService;
-import cn.thinkjoy.gk.util.DateUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
@@ -20,9 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -115,16 +111,16 @@ public class PayCallbackController {
 
     }
 
-    public static void main(String[] args) {
-        Calendar c = Calendar.getInstance();
-
-//        System.out.println(month);
-//        c.setTimeInMillis(System.currentTimeMillis());
-        c.add(Calendar.YEAR, 1);
-        c.set(Calendar.MONTH,8);
-        c.set(Calendar.DAY_OF_MONTH,1);
-        System.out.println(DateUtil.DateToString(new Date(System.currentTimeMillis()), DateStyle.YYYY_MM_DD_HH_MM_SS_EN));
-        System.out.println(DateUtil.DateToString(new Date(c.getTimeInMillis()), DateStyle.YYYY_MM_DD_HH_MM_SS_EN));
-
-    }
+//    public static void main(String[] args) {
+//        Calendar c = Calendar.getInstance();
+//
+////        System.out.println(month);
+////        c.setTimeInMillis(System.currentTimeMillis());
+//        c.add(Calendar.YEAR, 1);
+//        c.set(Calendar.MONTH,8);
+//        c.set(Calendar.DAY_OF_MONTH,1);
+//        System.out.println(DateUtil.DateToString(new Date(System.currentTimeMillis()), DateStyle.YYYY_MM_DD_HH_MM_SS_EN));
+//        System.out.println(DateUtil.DateToString(new Date(c.getTimeInMillis()), DateStyle.YYYY_MM_DD_HH_MM_SS_EN));
+//
+//    }
 }
