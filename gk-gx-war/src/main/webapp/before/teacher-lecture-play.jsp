@@ -8,6 +8,10 @@
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
+
+<link href="http://vjs.zencdn.net/5.1.0/video-js.css" rel="stylesheet">
+
+
 <div class="content">
     <div class="banner">
         <div class="video ta">
