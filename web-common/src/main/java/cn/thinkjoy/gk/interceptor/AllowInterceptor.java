@@ -28,13 +28,11 @@ public class AllowInterceptor extends HandlerInterceptorAdapter {
 
 			throw new BizException("1000001","非法操作!");
 		}
-
 		response.addHeader("Access-Control-Allow-Origin",url);
 
 		response.addHeader("Access-Control-Allow-Headers","X-Requested-With");
 
 		response.addHeader("Access-Control-Allow-Headers","GET,POST,OPTIONS");
-
 		return true;
 	}
 
