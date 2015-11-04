@@ -18,6 +18,7 @@
           <li><a href="/consult/consult.jsp">专业测评</a></li>
           <li><a href="/consult/school_info.jsp">院校信息</a></li>
           <li><a href="/consult/profession_info.jsp">专业信息</a></li>
+          <li><a href="/consult/area-scores.jsp">地区批次线</a></li>
         </ul>
       </li>
       <li class="menu-item"><a class="before" href="/before/before.jsp">考前备考</a>
