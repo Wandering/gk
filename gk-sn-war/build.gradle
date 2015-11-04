@@ -15,6 +15,8 @@ dependencies {
 
     compile project(':gk-user-web')
 
+    compile project(':gk-market-web')
+
     compile project(':gk-question-web')
 
 }

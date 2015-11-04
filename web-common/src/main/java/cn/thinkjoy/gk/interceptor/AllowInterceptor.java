@@ -22,24 +22,17 @@ public class AllowInterceptor extends HandlerInterceptorAdapter {
     @Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 
-		String url = request.getServletPath();
+		String url = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
 
 		if(!AllowConst.MAPPING_URLS.contains(url)){
+
 			throw new BizException("1000001","非法操作!");
 		}
-
-		List<String> urls = new ArrayList<>();
-
-		for(String u : urls){
-
-			response.addHeader("Access-Control-Allow-Origin",u);
-
-		}
+		response.addHeader("Access-Control-Allow-Origin",url);
 
 		response.addHeader("Access-Control-Allow-Headers","X-Requested-With");
 
 		response.addHeader("Access-Control-Allow-Headers","GET,POST,OPTIONS");
-
 		return true;
 	}
 

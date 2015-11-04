@@ -6,7 +6,6 @@ define(function (require) {
 
     require('http://cdn.gaokao360.net/static/plugins/pingpp/pingpp-pc');
 
-
     // 获取商品信息
     $.ajax({
         url:'/product/findProduct.do',
