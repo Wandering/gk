@@ -176,7 +176,7 @@ public class OrdersController extends BaseController {
             if(StringUtils.isNotBlank(payResult)){
                 JSONObject obj = JSON.parseObject(payResult);
                 return obj.getString("bizData");
-            }else {
+            } else {
                 return null;
             }
         }catch (Exception e){
