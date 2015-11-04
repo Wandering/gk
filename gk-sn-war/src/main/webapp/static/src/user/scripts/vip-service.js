@@ -7,9 +7,11 @@ define(function (require) {
     require('http://cdn.gaokao360.net/static/plugins/pingpp/pingpp-pc');
 
 
+    var marketDomain = "http://market.gk360.thinkjoy.com.cn";
+
     // 获取商品信息
     $.ajax({
-        url:'/product/findProduct.do',
+        url:marketDomain+'/product/findProduct.do',
         type: 'GET',
         dataType: 'JSON',
         data: {
@@ -42,7 +44,7 @@ define(function (require) {
                     pay["extra"] = JSON.stringify(extra);
                     console.log(pay)
                     $.ajax({
-                        url: '/orders/createOrders.do',
+                        url: marketDomain+'/orders/createOrders.do',
                         type: 'POST',
                         dataType: 'JSON',
                         data: pay,
