@@ -21,5 +21,4 @@ dependencies {
 
     compile project(':gk-question-web')
 
-
 }
