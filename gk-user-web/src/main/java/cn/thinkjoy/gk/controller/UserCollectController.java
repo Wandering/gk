@@ -106,4 +106,23 @@ public class UserCollectController extends BaseController{
         return userCollectPojoList;
     }
 
+    /**
+     * 判断指定用户是否收藏指定学校，0为否，1为是
+     * @param universityId
+     * @return
+     */
+    @RequestMapping(value = "/isUniversityCollect",method = RequestMethod.GET)
+    @ResponseBody
+    public int isUniversityCollect(@RequestParam(value = "universityId")String universityId){
+        UserAccountPojo userAccountPojo=getUserAccountPojo();
+        if(null==userAccountPojo ||  null==userAccountPojo.getId()){
+            throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
+        }
+        long userId=userAccountPojo.getId();
+        Map<String,Object> param=Maps.newHashMap();
+        param.put("userId",userId);
+        param.put("universityId",universityId);
+        return userCollectExService.isUniversityCollect(param);
+    }
+
 }

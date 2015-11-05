@@ -232,7 +232,7 @@ public class UniversityController extends BaseController {
     }
 
     /**
-     *获取院校招生情况
+     *获取院校招生计划
      * @return
      */
     @RequestMapping(value = "/getEnrollPlan",method = RequestMethod.GET)
