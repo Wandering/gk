@@ -39,7 +39,7 @@ public class PayCallbackController {
     @Autowired
     private IUserVipService userVipService;
 
-    @RequestMapping(value = "createOrders", method = RequestMethod.POST)
+    @RequestMapping(value = "payCallback", method = RequestMethod.POST)
     public void payCallback(HttpServletRequest request, HttpServletResponse response) {
         String result = "fail";
         try {
