@@ -16,6 +16,7 @@
     "jquery": "~2.1.4",
     "swiper": "~3.1.2",
     "seajs": "~3.0.0",
-    "seajs-preload": "*"
+    "seajs-preload": "*",
+    "video.js": "~5.1.0"
   }
 }
