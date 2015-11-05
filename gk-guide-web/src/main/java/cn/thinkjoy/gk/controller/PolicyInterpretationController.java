@@ -37,7 +37,7 @@ public class PolicyInterpretationController extends BaseController {
         Map<String, Object> conditions = Maps.newHashMap();
         conditions.put("status", 1);
         conditions.put("areaId",areaId);
-        List<AdmissionBatch> admissionBatchList = admissionBatchService.queryList(conditions, null, null);
+        List<AdmissionBatch> admissionBatchList = admissionBatchService.queryList(conditions, "sort", "asc");
         return admissionBatchList;
     }
 
@@ -57,7 +57,7 @@ public class PolicyInterpretationController extends BaseController {
         Map<String, Object> conditions = Maps.newHashMap();
         conditions.put("status", 1);
         conditions.put("areaId", areaId);
-        List<AdmissionBatch> admissionBatchList = admissionBatchService.queryList(conditions, null, null);
+        List<AdmissionBatch> admissionBatchList = admissionBatchService.queryList(conditions, "sort", "asc");
         if (admissionBatchList != null) {
             for (AdmissionBatch batch: admissionBatchList) {
                 PolicyInterpretationCategory category = new PolicyInterpretationCategory();

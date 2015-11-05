@@ -24,6 +24,8 @@ public class AdmissionBatch extends BaseDomain{
 	private Integer status;
 	/** 区域Id */
 	private Long areaId;
+	/** 排序 */
+	private Integer sort;
 
 	public AdmissionBatch(){
 	}
@@ -50,12 +52,21 @@ public class AdmissionBatch extends BaseDomain{
 		return this.areaId;
 	}
 
+	public Integer getSort() {
+		return sort;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
+
 	public String toString() {
 		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
 			.append("Id",getId())
 			.append("Name",getName())
 			.append("Status",getStatus())
 			.append("AreaId",getAreaId())
+			.append("Sort",getSort())
 			.toString();
 	}
 	
