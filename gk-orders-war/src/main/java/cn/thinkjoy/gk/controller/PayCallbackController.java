@@ -65,8 +65,11 @@ public class PayCallbackController extends BaseController{
             LOGGER.info("====pay /payCallback· payResult: "+payResult);
 
             if( payResult !=null ) {
+
+                long orderNo = payResult.getLong("orderNo");
+
                 Map<String,Object> dataMap = new HashMap();
-                dataMap.put("orderNo", payResult.getString("orderNo"));
+                dataMap.put("orderNo", orderNo);
                 Orders order =(Orders) ordersService.queryOne(dataMap);
 
                 if(order !=null&&order.getPayStatus()==0){
@@ -99,8 +102,15 @@ public class PayCallbackController extends BaseController{
                         LOGGER.info("====pay /payCallback updatePresell error : "+e.getMessage());
                     }
 
-                    order.setPayStatus(1);
-                    ordersService.update(order);//更新状态
+                    Orders update = new Orders();
+
+                    update.setId(orderNo);
+
+                    update.setPayStatus(1);
+
+                    update.setStatus(1);
+
+                    ordersService.update(update);//更新状态
 
                     UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoById(userId);
 
