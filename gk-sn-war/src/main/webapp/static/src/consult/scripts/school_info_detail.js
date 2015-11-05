@@ -1,7 +1,3 @@
-/**
- * Created by kepeng on 15/9/25.
- */
-
 define(function (require) {
     var $ = require('$');
     require('backToTop');
@@ -11,6 +7,7 @@ define(function (require) {
         if (reg.test(window.location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
         return "";
     }
+
 
     var Info = {
         batchData:[],
@@ -23,7 +20,7 @@ define(function (require) {
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 dataType: 'json',
                 success: function(data) {
-                    console.log(data.bizData.id)
+                    console.log(data)
                     var schoolId = data.bizData.id;
                     if ('0000000' === data.rtnCode) {
                         that.renderInfo(data.bizData);
@@ -58,7 +55,16 @@ define(function (require) {
                 urlClassName = 'integet-line';
             }
 
-            $('#info_content').html('<img class="fl" src="' + (obj.universityImage || 'http://cdn.gaokao360.net/static/global/common/images/kqbk_banner_default.png') + '" />'
+
+
+
+
+
+
+
+            $('#info_content').html(
+                '<a href="javascript:;" class="collect"><span>收藏</span><i></i></a>'
+                                    +'<img class="fl" src="' + (obj.universityImage || 'http://cdn.gaokao360.net/static/global/common/images/kqbk_banner_default.png') + '" />'
                                     + '<div class="info">'
                                         + '<ul>'
                                             + '<li class="school-name">' + (obj.name || '') + '</li>'

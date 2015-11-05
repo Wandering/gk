@@ -8,12 +8,37 @@
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
+<style>
+    .info-content{
+        height: 232px;
+        position: relative;
+    }
+    .info-content .collect{
+        position: absolute;
+        top:0;
+        right:0;
+    }
 
+    .info-content .collect i{
+        display: inline-block;
+        width: 17px;
+        height: 17px;
+        background:url('../static/src/consult/images/collect-icon.png') no-repeat;
+        position: relative;
+        left:0;
+        top: 5px;
+        margin: 0 0 0 6px;
+    }
+    .info-content .collect:hover i{
+        background:url('../static/src/consult/images/collect-icon.png') no-repeat 0 -21px;
+    }
+</style>
 <div class="content">
     <div class="w1000">
         <div class="basic-info">
             <h1>院校基本信息</h1>
             <div class="info-content" id="info_content">
+
             </div>
         </div>
 
