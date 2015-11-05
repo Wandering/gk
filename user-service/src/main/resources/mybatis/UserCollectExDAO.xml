@@ -21,4 +21,9 @@
             limit ${offset}, ${rows}
         </if>
     </select>
+
+    <select id="isUniversityCollect" parameterType="java.util.Map" resultType="int">
+        SELECT COUNT(*) FROM gk_user_collect
+         WHERE userId = #{userId} AND universityId = #{universityId}
+    </select>
 </mapper>

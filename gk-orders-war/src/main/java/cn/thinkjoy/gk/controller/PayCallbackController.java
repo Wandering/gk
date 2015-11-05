@@ -1,9 +1,12 @@
 package cn.thinkjoy.gk.controller;
 
+import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Orders;
 import cn.thinkjoy.gk.domain.UserVip;
+import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IOrdersService;
+import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.service.IUserVipService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -13,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +32,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("")
-public class PayCallbackController {
+public class PayCallbackController extends BaseController{
 
     private static final Logger LOGGER= LoggerFactory.getLogger(PayCallbackController.class);
 
@@ -36,9 +40,12 @@ public class PayCallbackController {
     private IOrdersService ordersService;
 
     @Autowired
+    private IUserAccountExService userAccountExService;
+
+    @Autowired
     private IUserVipService userVipService;
 
-    @RequestMapping("/payCallback")
+    @RequestMapping(value = "payCallback", method = RequestMethod.POST)
     public void payCallback(HttpServletRequest request, HttpServletResponse response) {
         String result = "fail";
         try {
@@ -74,6 +81,7 @@ public class PayCallbackController {
 //                        if(null==endDate){
 //                            endDate = System.currentTimeMillis();
 //                        }
+                        // 如果当前月份大于9月就获取明年9月1日的日期  小于9月 就获取今年9月1日的日期
                         int month = c.get(Calendar.MONTH) + 1;
                         if(month>=9) {
                             c.add(Calendar.YEAR, 1);
@@ -93,6 +101,13 @@ public class PayCallbackController {
 
                     order.setPayStatus(1);
                     ordersService.update(order);//更新状态
+
+                    UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoById(userId);
+
+                    userAccountBean.setVipStatus(1);
+
+                    setUserAccountPojo(userAccountBean);
+
                     result = "success";
                 } else {
                     result = "repeat";
@@ -100,6 +115,8 @@ public class PayCallbackController {
             }
 
         } catch (IOException e) {
+            LOGGER.error("error",e);
+        } catch (Exception e) {
             LOGGER.error("error",e);
         }
 

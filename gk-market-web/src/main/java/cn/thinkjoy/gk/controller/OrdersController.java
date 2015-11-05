@@ -60,12 +60,6 @@ public class OrdersController extends BaseController {
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
         }
 
-        response.addHeader("Access-Control-Allow-Origin","*");
-
-        response.addHeader("Access-Control-Allow-Headers","X-Requested-With");
-
-        response.addHeader("Access-Control-Allow-Headers","GET,POST,OPTIONS");
-
         UserAccountPojo userAccountPojo = getUserAccountPojo();
 
         if(userAccountPojo==null){
@@ -108,7 +102,7 @@ public class OrdersController extends BaseController {
 //        }
 
         Orders order = new Orders();
-        order.setUserId(Long.valueOf(1));
+        order.setUserId(userId);
 //        order.setUserId(Long.valueOf(userId));
         order.setOrderNo(orderNo);
         order.setDetail(products);
@@ -124,9 +118,9 @@ public class OrdersController extends BaseController {
         order.setChannel(ordersQuery.getChannel());
         try {
             ordersService.insert(order);
-            LOGGER.info("creaate order :" + orderNo);
+            LOGGER.info("create orders :" + orderNo);
 
-            String payResult  = createPay(ordersQuery,orderNo,order,validValue.longValue());
+            String payResult  = createPay(ordersQuery, orderNo, order, userAccountPojo.getAccount());
 
             LOGGER.info("====pay /orders/createOrder payResult: "+payResult);
 
@@ -141,7 +135,7 @@ public class OrdersController extends BaseController {
         }
     }
 
-    public String createPay(OrdersQuery orderQuery,String orderNo,Orders order,Long validTime) throws Exception{
+    public String createPay(OrdersQuery orderQuery,String orderNo,Orders order,String account) throws Exception{
         String moduleKey = DynConfigClientFactory.getClient().getConfig("common", "moduleKey");
 
         String url = DynConfigClientFactory.getClient().getConfig("common", "payUrl");
@@ -171,7 +165,7 @@ public class OrdersController extends BaseController {
         metadata.put("orderNo",orderNo);
 //        metadata.put("month", calculateMonth(body.toString().substring(0,body.toString().length()-1)));
         metadata.put("userId", order.getUserId());
-        metadata.put("validTime",validTime);
+        metadata.put("account",account);
         chargeParams.put("metadata", JSON.toJSONString(metadata));
         chargeParams.put("moduleKey",moduleKey);
         try {
