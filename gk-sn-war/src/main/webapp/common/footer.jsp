@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="copy-right">
-    <p class="w1000">联系信息：400-6699-580 Email:gk360@thinkjoy.cn 备案号:<a target="_blank" href="http://www.miitbeian.gov.cn/">陕ICP备 1401330号-10</a></p>
+    <p class="w1000">联系信息：400-6699-580 Email:gk360@thinkjoy.cn <a href="http://sn.gaokao360.net/common/duty.jsp">免责声明</a> 备案号:<a target="_blank" href="http://www.miitbeian.gov.cn/">陕ICP备 1401330号-10</a></p>
   </div>
 </div>
 <div style="display: none;">

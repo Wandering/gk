@@ -27,8 +27,6 @@ public class BannerController extends BaseCommonController {
     @Autowired
     private IBannerService bannerService;
     /**
-     *
-     * ͨ��type�����õ���תҳ���url
      * @return
      */
     @RequestMapping(value = "getBannerByType",method = RequestMethod.GET)

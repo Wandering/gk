@@ -72,3 +72,5 @@ include 'gk-timer-war'
 
 include 'gk-upload-war'
 
+include 'gk-orders-war'
+

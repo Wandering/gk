@@ -6,6 +6,7 @@ package cn.thinkjoy.gk.controller;
 
 
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.query.ProductQuery;
 import cn.thinkjoy.gk.domain.Product;
@@ -32,7 +33,7 @@ import java.util.List;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value="/product")
-public class ProductController {
+public class ProductController extends BaseController{
 
     private static final Logger LOGGER= LoggerFactory.getLogger(ProductController.class);
 
@@ -48,7 +49,7 @@ public class ProductController {
      */
     @RequestMapping(value = "findProductPage", method = RequestMethod.GET)
     @ResponseBody
-    public List<Product> findProductPage(ProductQuery productQuery,HttpServletResponse response) {
+    public List<Product> findProductPage(ProductQuery productQuery) {
 
 //        response.setHeader("Access-Control-Allow-Origin","http://test.zhiless.com:8088");
 //        response.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
@@ -56,11 +57,6 @@ public class ProductController {
 //        response.setHeader("Access-Control-Max-Age", "1800");
 //        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 //        response.addHeader("Access-Control-Allow-Credentials", "true");
-
-        if(StringUtils.isEmpty(productQuery)) {
-            LOGGER.info("====product /findProductPage AUTHENTICATION_FAIL ");
-            throw new BizException(ERRORCODE.AUTHENTICATION_FAIL.getCode(), ERRORCODE.AUTHENTICATION_FAIL.getMessage());
-        }
 
         if(productQuery==null) {
             LOGGER.info("====product /findProductPage PARAM_ERROR ");

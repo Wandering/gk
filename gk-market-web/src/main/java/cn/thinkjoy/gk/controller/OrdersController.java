@@ -115,12 +115,12 @@ public class OrdersController extends BaseController {
         order.setPayStatus(0);
         order.setDescription(ordersQuery.getExtra());
 //        order.setChannel(ordersQuery.getChannel());
-        order.setChannel("alipay_pc_direct");
+        order.setChannel(ordersQuery.getChannel());
         try {
             ordersService.insert(order);
             LOGGER.info("creaate order :" + orderNo);
 
-            String payResult  = createPay(ordersQuery,orderNo,order,validValue.longValue());
+            String payResult  = createPay(ordersQuery, orderNo, order, userAccountPojo.getAccount());
 
             LOGGER.info("====pay /orders/createOrder payResult: "+payResult);
 
@@ -135,7 +135,7 @@ public class OrdersController extends BaseController {
         }
     }
 
-    public String createPay(OrdersQuery orderQuery,String orderNo,Orders order,Long validTime) throws Exception{
+    public String createPay(OrdersQuery orderQuery,String orderNo,Orders order,String account) throws Exception{
         String moduleKey = DynConfigClientFactory.getClient().getConfig("common", "moduleKey");
 
         String url = DynConfigClientFactory.getClient().getConfig("common", "payUrl");
@@ -165,7 +165,7 @@ public class OrdersController extends BaseController {
         metadata.put("orderNo",orderNo);
 //        metadata.put("month", calculateMonth(body.toString().substring(0,body.toString().length()-1)));
         metadata.put("userId", order.getUserId());
-        metadata.put("validTime",validTime);
+        metadata.put("account",account);
         chargeParams.put("metadata", JSON.toJSONString(metadata));
         chargeParams.put("moduleKey",moduleKey);
         try {
@@ -176,7 +176,7 @@ public class OrdersController extends BaseController {
             if(StringUtils.isNotBlank(payResult)){
                 JSONObject obj = JSON.parseObject(payResult);
                 return obj.getString("bizData");
-            }else {
+            } else {
                 return null;
             }
         }catch (Exception e){

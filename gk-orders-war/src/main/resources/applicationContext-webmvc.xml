@@ -20,17 +20,15 @@
                      http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 
     <!-- @Controller, @Service, @Configuration, etc. -->
-    <context:component-scan base-package="cn.thinkjoy.gk.controller;cn.thinkjoy.common.restful" />
+    <context:component-scan base-package="cn.thinkjoy" />
 
-    <mvc:interceptors >
-        <!--<bean class="cn.thinkjoy.gk.interceptor.UploadInterceptor"></bean>-->
-        <bean class="cn.thinkjoy.gk.interceptor.AllowInterceptor"></bean>
+    <!--<mvc:interceptors >-->
+        <!--<bean class="cn.thinkjoy.gk.interceptor.LoginInterceptor"></bean>-->
+        <!--<bean class="cn.thinkjoy.gk.interceptor.AllowInterceptor"></bean>-->
         <!--<mvc:interceptor>-->
-        <!--<mvc:mapping path="/index.do"/>-->
+            <!--<mvc:mapping path="/index.do"/>-->
         <!--</mvc:interceptor>-->
-    </mvc:interceptors>
-
-    <!--<bean class="cn.thinkjoy.common.restful.BizExceptionHandler" />-->
+    <!--</mvc:interceptors>-->
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/" />
@@ -66,12 +64,11 @@
             </list>
         </property>
 
-        <!--<property name="features">-->
-            <!--<array value-type="com.alibaba.fastjson.serializer.SerializerFeature">-->
-                <!--<value>DisableCircularReferenceDetect</value>-->
-            <!--</array>-->
-        <!--</property>-->
+        <property name="features">
+            <array value-type="com.alibaba.fastjson.serializer.SerializerFeature">
+                <value>DisableCircularReferenceDetect</value>
+            </array>
+        </property>
     </bean>
 
 </beans>
-

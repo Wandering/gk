@@ -26,7 +26,6 @@ public class RedirectController extends BaseCommonController {
     @RequestMapping(value = "/redirect",method = RequestMethod.GET)
     public String redirect(@RequestParam(value="params",required=false) String params,
                            @RequestParam(value="url",required=false) String url) throws Exception{
-
 //        UserAccountPojo userAccountPojo = getUserAccountPojo();
 //
 //        if(userAccountPojo==null){
