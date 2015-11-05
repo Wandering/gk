@@ -15,20 +15,20 @@ define(function (require) {
     var Info = {
         batchData:[],
         batchName: [],
-        getBasicInfo: function(code) {
+        getBasicInfo: function(parameterId,code) {
             var that = this;
             $.ajax({
                 type: 'get',
-                url: '/university/getUniversityDetail.do',
+                url: '/university/getUniversityDetail.do?'+parameterId +'=' + code,
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
-                data: {
-                    id:code
-                },
                 dataType: 'json',
                 success: function(data) {
-                    console.log(data)
+                    console.log(data.bizData.id)
+                    var schoolId = data.bizData.id;
                     if ('0000000' === data.rtnCode) {
                         that.renderInfo(data.bizData);
+                        Info.getEnroll(schoolId);
+                        Info.getSchoolInfo(schoolId);
                     } else {
                         var pageErrorTip = require('pageErrorTip');
                         $('#info_content').html(pageErrorTip('数据维护中'));
@@ -54,7 +54,6 @@ define(function (require) {
 
             var url = '院校网址：' + (obj.url || '');
             var urlClassName = '';
-            console.log(url.length);
             if (url.length > 20) {
                 urlClassName = 'integet-line';
             }
@@ -85,7 +84,7 @@ define(function (require) {
                 },
                 dataType: 'json',
                 success: function(data) {
-                    console.log(data)
+                    //console.log(data)
                     if ('0000000' === data.rtnCode) {
                         that.renderSchool(data.bizData.enrollInfo);
                     }
@@ -476,9 +475,13 @@ define(function (require) {
     };
 
     $(document).ready(function() {
-        var code = getUrLinKey('id');
-        Info.getBasicInfo(code);
-        Info.getSchoolInfo(code);
-        Info.getEnroll(code);
+        var code = getUrLinKey('code');
+        var id = getUrLinKey('id');
+        if(code){
+            Info.getBasicInfo('code',code);
+        }else if(id){
+            Info.getBasicInfo('id',id);
+        }
+
     });
 });

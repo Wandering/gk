@@ -259,7 +259,9 @@ define(function (require) {
                 },
                 dataType: 'json',
                 success: function(data) {
+                    console.log(data)
                     if ('0000000' === data.rtnCode) {
+
                         var schoolList = data.bizData;
                         if (schoolList && schoolList.length > 0) {
                             that.renderProfessionList(schoolList);
