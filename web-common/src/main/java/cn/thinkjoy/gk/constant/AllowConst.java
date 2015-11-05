@@ -19,6 +19,8 @@ public class AllowConst {
         MAPPING_URLS.add("http://gx.gk360.thinkjoy.com.cn/");
         MAPPING_URLS.add("http://sn.thinkjoy.com:8080/");
         MAPPING_URLS.add("http://gx.thinkjoy.com:8080/");
+        MAPPING_URLS.add("http://pay.thinkjoy.cn/");
+        MAPPING_URLS.add("http://test.pay.thinkjoy.cn/");
     }
 
 }

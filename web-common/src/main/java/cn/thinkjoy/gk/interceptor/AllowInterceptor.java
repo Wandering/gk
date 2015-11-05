@@ -24,6 +24,8 @@ public class AllowInterceptor extends HandlerInterceptorAdapter {
 
 		String url = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
 
+		LOGGER.info("当前访问url:"+url);
+
 		if(!AllowConst.MAPPING_URLS.contains(url)){
 
 			throw new BizException("1000001","非法操作!");
