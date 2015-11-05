@@ -6,6 +6,7 @@ import cn.thinkjoy.gk.domain.Orders;
 import cn.thinkjoy.gk.domain.UserVip;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IOrdersService;
+import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.service.IUserVipService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -37,6 +38,9 @@ public class PayCallbackController extends BaseController{
 
     @Autowired
     private IOrdersService ordersService;
+
+    @Autowired
+    private IUserAccountExService userAccountExService;
 
     @Autowired
     private IUserVipService userVipService;
@@ -77,6 +81,7 @@ public class PayCallbackController extends BaseController{
 //                        if(null==endDate){
 //                            endDate = System.currentTimeMillis();
 //                        }
+                        // 如果当前月份大于9月就获取明年9月1日的日期  小于9月 就获取今年9月1日的日期
                         int month = c.get(Calendar.MONTH) + 1;
                         if(month>=9) {
                             c.add(Calendar.YEAR, 1);
@@ -97,9 +102,12 @@ public class PayCallbackController extends BaseController{
                     order.setPayStatus(1);
                     ordersService.update(order);//更新状态
 
-                    UserAccountPojo userAccountPojo = getUserAccountPojo();
+                    UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoById(userId);
 
-                    userAccountPojo.setVipStatus(1);
+                    userAccountBean.setVipStatus(1);
+
+                    setUserAccountPojo(userAccountBean);
+
                     result = "success";
                 } else {
                     result = "repeat";
@@ -107,6 +115,8 @@ public class PayCallbackController extends BaseController{
             }
 
         } catch (IOException e) {
+            LOGGER.error("error",e);
+        } catch (Exception e) {
             LOGGER.error("error",e);
         }
 
