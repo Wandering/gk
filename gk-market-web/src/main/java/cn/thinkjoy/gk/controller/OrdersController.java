@@ -102,7 +102,7 @@ public class OrdersController extends BaseController {
 //        }
 
         Orders order = new Orders();
-        order.setUserId(Long.valueOf(1));
+        order.setUserId(userId);
 //        order.setUserId(Long.valueOf(userId));
         order.setOrderNo(orderNo);
         order.setDetail(products);
@@ -118,7 +118,7 @@ public class OrdersController extends BaseController {
         order.setChannel(ordersQuery.getChannel());
         try {
             ordersService.insert(order);
-            LOGGER.info("creaate order :" + orderNo);
+            LOGGER.info("create orders :" + orderNo);
 
             String payResult  = createPay(ordersQuery, orderNo, order, userAccountPojo.getAccount());
 
