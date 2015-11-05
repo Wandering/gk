@@ -81,12 +81,6 @@ public class ProductController extends BaseController{
             throw new BizException(ERRORCODE.AUTHENTICATION_FAIL.getCode(), ERRORCODE.AUTHENTICATION_FAIL.getMessage());
         }
 
-        response.addHeader("Access-Control-Allow-Origin","*");
-
-        response.addHeader("Access-Control-Allow-Headers","X-Requested-With");
-
-        response.addHeader("Access-Control-Allow-Headers","GET,POST,OPTIONS");
-
         Product product = (Product)productService.findOne("code",code);
 
         return product;

@@ -60,12 +60,6 @@ public class OrdersController extends BaseController {
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
         }
 
-        response.addHeader("Access-Control-Allow-Origin","*");
-
-        response.addHeader("Access-Control-Allow-Headers","X-Requested-With");
-
-        response.addHeader("Access-Control-Allow-Headers","GET,POST,OPTIONS");
-
         UserAccountPojo userAccountPojo = getUserAccountPojo();
 
         if(userAccountPojo==null){
