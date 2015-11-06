@@ -40,8 +40,11 @@ define(function (require) {
                                     $('#info_content').one('click','#collect',function(){
                                         var $this = $(this);
                                         //saveUserCollect(schoolId);
+
+
+
                                         $.get('/userCollection/saveUserCollect.do?universityId='+schoolId, function (data) {
-                                            console.log(data)
+                                            console.log(data);
                                             if(data.rtnCode=="0000000"){
                                                 if(data.bizData){
                                                     $('#collect').addClass('active').find('span').text('已收藏');

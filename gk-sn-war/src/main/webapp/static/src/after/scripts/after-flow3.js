@@ -4,6 +4,13 @@ define(function (require) {
     $(function () {
         //
         var paramsJson = JSON.parse(params);
+
+
+
+
+
+
+
         console.log(paramsJson)
         $('.volunteer-flow3-table').on('click', '.open-flow3', function () {
             $('.tansLayer,.volunteer-flow3-layer').show();
@@ -52,7 +59,7 @@ define(function (require) {
                     }
                     if (res.rtnCode == "0000000") {
                         var data = $.parseJSON(res.bizData);
-                        console.log(data)
+                        //console.log(data)
                         var m_batch_id = data.related.m_batch_id;
                         var m_batch = data.related.m_batch;
                         var listData = data.data.result;

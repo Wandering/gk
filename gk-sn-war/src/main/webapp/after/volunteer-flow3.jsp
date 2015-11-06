@@ -495,9 +495,9 @@
                 <option value="">所有省</option>
             </select>
             <input type="text" name="" class="search-input" id="specialty-input" placeholder="请输入专业名称查询" />
-            <%--<label>--%>
-                <%--<input type="checkbox" name="" id=""/>从我收藏的院校中获得推荐--%>
-            <%--</label>--%>
+            <label>
+                <input type="checkbox" name="" id=""/>从我收藏的院校中获得推荐
+            </label>
             <input type="button" class="search-btn" id="specialty-search-btn" value="查询"/>
         </div>
         <div class="info-explain">
@@ -608,8 +608,8 @@
 
 <%@ include file="/common/footer.jsp"%>
 <script>
-//    seajs.use("/static/src/after/scripts/after-flow3");
-    seajs.use("http://cdn.gaokao360.net/static/global/after/scripts/after-flow3.min");
+    seajs.use("/static/src/after/scripts/after-flow3");
+//    seajs.use("http://cdn.gaokao360.net/static/global/after/scripts/after-flow3.min");
     var params = decodeURIComponent('${params}');
 </script>
 

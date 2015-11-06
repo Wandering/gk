@@ -9,17 +9,11 @@
 <html>
 <head>
     <title></title>
-  <style type="text/css">
-    #page404{
-      width: 560px;
-      height: 510px;
-      margin: 0 auto;
-    }
-  </style>
+    <%@ include file="/common/meta.jsp"%>
 </head>
 <body>
 <div id="page404">
-  <a href="/index.jsp"></a>
+    <a href="/index.jsp" id="index-links">首页</a>
 </div>
 </body>
 </html>

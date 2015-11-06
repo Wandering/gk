@@ -7,7 +7,8 @@
 <link rel="dns-prefetch" href="//cdn.gaokao360.net">
 <link rel="shortcut icon" href="http://cdn.gaokao360.net/static/global/common/images/icon.ico"/>
 
-<link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/common/styles/comm.min.css"/>
+<link rel="stylesheet" href="/static/global/common/styles/comm.css"/>
+<%--<link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/common/styles/comm.min.css"/>--%>
 <script src="http://cdn.gaokao360.net/static/bower_components/seajs/dist/sea.js"></script>
 <script src="http://cdn.gaokao360.net/static/bower_components/seajs-preload/dist/seajs-preload.js"></script>
 <script src="http://cdn.gaokao360.net/static/bower_components/seajs/seajs-config.js"></script>

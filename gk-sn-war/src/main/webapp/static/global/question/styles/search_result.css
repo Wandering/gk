@@ -643,6 +643,19 @@ a.next-btn:hover {
   display: block;
   margin: 0 auto; }
 
+#page404 {
+  width: 560px;
+  height: 510px;
+  margin: -280px 0 0 -280px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: url("../../common/images/404.jpg") no-repeat; }
+  #page404 #index-links {
+    width: 120px;
+    height: 40px;
+    background: #000; }
+
 * {
   margin: 0;
   padding: 0; }
