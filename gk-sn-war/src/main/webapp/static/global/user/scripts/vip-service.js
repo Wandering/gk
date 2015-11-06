@@ -6,7 +6,6 @@ define(function (require) {
 
     require('http://cdn.gaokao360.net/static/plugins/pingpp/pingpp-pc');
 
-
     // 获取商品信息
     $.ajax({
         url:'/product/findProduct.do',
@@ -37,10 +36,9 @@ define(function (require) {
                     };
                     pay["products"] = JSON.stringify(products);
                     var extra = {};
-                    extra["success_url"] = "http://sn.gaokao.net/";
+                    extra["success_url"] = "http://sn.gaokao.net/payCallback.do";
                     pay["channel"] = 'alipay_pc_direct';
                     pay["extra"] = JSON.stringify(extra);
-                    console.log(pay)
                     $.ajax({
                         url: '/orders/createOrders.do',
                         type: 'POST',

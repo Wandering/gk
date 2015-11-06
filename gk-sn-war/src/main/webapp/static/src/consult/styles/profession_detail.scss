@@ -18,6 +18,12 @@ h1{
 
 .info-content{
   height: 232px;
+  position: relative;
+  .collect{
+    position: absolute;
+    top:0;
+    right:0;
+  }
   img{
     width: 338px;
     height: 100%;

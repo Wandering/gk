@@ -25,75 +25,99 @@
         <tr>
             <th>年份</th>
             <th>种类</th>
-            <th colspan="4">各批次控制线</th>
+            <th>本科一批</th>
+            <th>本科二批</th>
+            <th>本科三批</th>
+            <th>高专高职</th>
+            <th>普通本科艺术类</th>
+            <th>高职高专艺术类</th>
+            <th>体育类</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td rowspan="3" class="fwb">2015年</td>
-            <td></td>
-            <td>本科一批</td>
-            <td>本科二批</td>
-            <td>本科三批</td>
-            <td>高专高职</td>
-        </tr>
-        <tr>
+            <td rowspan="2" class="fwb">2015年</td>
             <td>文科</td>
-            <td>633</td>
-            <td>633</td>
-            <td>633</td>
-            <td>633</td>
+            <td>510</td>
+            <td>467</td>
+            <td>382</td>
+            <td>220</td>
+            <td>304</td>
+            <td>154</td>
+            <td></td>
         </tr>
         <tr>
             <td>理科</td>
-            <td>633</td>
-            <td>633</td>
-            <td>633</td>
-            <td>633</td>
+            <td>480</td>
+            <td>440</td>
+            <td>350</td>
+            <td>200</td>
+            <td>286</td>
+            <td>140</td>
+            <td>278</td>
         </tr>
         <tr>
-            <td rowspan="3" class="fwb">2014年</td>
-            <td></td>
-            <td>本科一批</td>
-            <td>本科二批</td>
-            <td>本科三批</td>
-            <td>高专高职</td>
-        </tr>
-        <tr>
+            <td rowspan="2" class="fwb">2014年</td>
             <td>文科</td>
-            <td>633</td>
-            <td>633</td>
-            <td>633</td>
-            <td>633</td>
+            <td>548</td>
+            <td>492</td>
+            <td>387</td>
+            <td>273</td>
+            <td>320</td>
+            <td>191</td>
+            <td></td>
         </tr>
         <tr>
             <td>理科</td>
-            <td>633</td>
-            <td>633</td>
-            <td>633</td>
-            <td>633</td>
+            <td>503</td>
+            <td>452</td>
+            <td>342</td>
+            <td>256</td>
+            <td>294</td>
+            <td>179</td>
+            <td>286</td>
         </tr>
         <tr>
-            <td rowspan="3" class="fwb">2013年</td>
-            <td></td>
-            <td>本科一批</td>
-            <td>本科二批</td>
-            <td>本科三批</td>
-            <td>高专高职</td>
-        </tr>
-        <tr>
+            <td rowspan="2" class="fwb">2013年</td>
             <td>文科</td>
-            <td>633</td>
-            <td>633</td>
-            <td>633</td>
-            <td>633</td>
+            <td>540</td>
+            <td>486</td>
+            <td>386</td>
+            <td>200</td>
+            <td>316</td>
+            <td>140</td>
+            <td></td>
         </tr>
         <tr>
             <td>理科</td>
-            <td>633</td>
-            <td>633</td>
-            <td>633</td>
-            <td>633</td>
+            <td>485</td>
+            <td>435</td>
+            <td>330</td>
+            <td>150</td>
+            <td>283</td>
+            <td>105</td>
+            <td>280</td>
+        </tr>
+        <tr>
+            <td rowspan="2" class="fwb">2012年</td>
+            <td>文科</td>
+            <td>556</td>
+            <td>497</td>
+            <td>377</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>理科</td>
+            <td>517</td>
+            <td>461</td>
+            <td>331</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
         </tr>
         </tbody>
 
@@ -101,11 +125,6 @@
 </div>
 
 <%@ include file="/common/footer.jsp" %>
-<script type="text/javascript"
-        src="http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.13.min.js"></script>
-<script type="text/javascript">
-    seajs.use("http://cdn.gaokao360.net/static/global/consult/scripts/consult.min");
-</script>
 </body>
 </html>
 

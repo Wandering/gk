@@ -656,7 +656,12 @@ h1 {
   font-weight: 400; }
 
 .info-content {
-  height: 232px; }
+  height: 232px;
+  position: relative; }
+  .info-content .collect {
+    position: absolute;
+    top: 0;
+    right: 0; }
   .info-content img {
     width: 338px;
     height: 100%; }

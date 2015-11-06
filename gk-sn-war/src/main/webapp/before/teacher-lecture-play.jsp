@@ -8,6 +8,9 @@
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
+
+
+
 <div class="content">
     <div class="banner">
         <div class="video ta">
