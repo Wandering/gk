@@ -15,82 +15,6 @@ define(function (require) {
     }
 
 
-    function saveUserCollect(schoolId){
-        $.get('/userCollection/saveUserCollect.do?universityId='+schoolId, function (data) {
-            if(data.rtnCode=="0000000"){
-                $('#collect').addClass('active').find('span').text('取消收藏');
-            }
-        });
-    }
-    function deleteUserCollect(schoolId){
-        $.get('/userCollection/deleteUserCollect.do?universityId='+schoolId,function(data){
-            if(data.rtnCode == '0000000'){
-                $('#collect').removeClass('active').find('span').text('收藏');
-            }
-        })
-    }
-
-
-    function getIsCollect(schoolId){
-        $.get('/userCollection/isUniversityCollect.do?universityId=' + schoolId,
-            function (data) {
-                if (data.rtnCode = "0000000") {
-                    var isCollect = data.bizData;
-                    if (isCollect == 0) {
-                        $('#collect').removeClass('active').find('span').text('收藏');
-                    } else {
-                        $('#collect').addClass('active').find('span').text('取消收藏');
-                    }
-                    $('#info_content').on('click','#collect',function(){
-                        if($('#collect').find('span').text()=='收藏'){
-                            saveUserCollect(schoolId);
-                        }else{
-                            deleteUserCollect(schoolId);
-                        }
-                    });
-
-
-                    //if($('#collect').){
-                    //    console.log("没有收藏1");
-                    //    $('#info_content').on('click','#collect',function(){
-                    //        saveUserCollect(isCollect);
-                    //    });
-                    //}else{
-                    //    console.log("已经收藏1")
-                    //    $('#info_content').on('click','#collect',function(){
-                    //        deleteUserCollect(isCollect);
-                    //    })
-                    //}
-
-
-
-
-
-
-
-
-                    //$('#info_content').on('click', '#collect', function () {
-                    //    var $this = $(this);
-                    //    $.get('/userCollection/saveUserCollect.do?universityId=' + schoolId, function (data) {
-                    //        //console.log(data);
-                    //        if (data.rtnCode == "0000000") {
-                    //            if (data.bizData) {
-                    //                $('#collect').addClass('active').find('span').text('已收藏');
-                    //                console.log(88)
-                    //            }
-                    //        }
-                    //    });
-                    //});
-
-
-
-                }
-            });
-    }
-
-
-
-
     var Info = {
         batchData: [],
         batchName: [],
@@ -105,13 +29,8 @@ define(function (require) {
                     //console.log(data)
                     var schoolId = data.bizData.id;
                     if (GetCookie("snuser")) {
-
-                        console.log(schoolId+'==')
-                        getIsCollect(schoolId);
-
-
+                        Info.getIsCollect(schoolId);
                     }
-
                     if ('0000000' === data.rtnCode) {
                         that.renderInfo(data.bizData);
                         Info.getEnroll(schoolId);
@@ -461,6 +380,40 @@ define(function (require) {
             } else {
                 $('#enroll_table_' + menuId).html('<p style="padding: 20px 0; text-align: center">没有符合相关的信息！</p>');
             }
+        },
+        saveUserCollect: function (schoolId) {
+            $.get('/userCollection/saveUserCollect.do?universityId=' + schoolId, function (data) {
+                if (data.rtnCode == "0000000") {
+                    $('#collect').addClass('active').find('span').text('取消收藏');
+                }
+            });
+        },
+        deleteUserCollect: function (schoolId) {
+            $.get('/userCollection/deleteUserCollect.do?universityId=' + schoolId, function (data) {
+                if (data.rtnCode == '0000000') {
+                    $('#collect').removeClass('active').find('span').text('收藏');
+                }
+            })
+        },
+        getIsCollect: function (schoolId) {
+            $.get('/userCollection/isUniversityCollect.do?universityId=' + schoolId,
+                function (data) {
+                    if (data.rtnCode = "0000000") {
+                        var isCollect = data.bizData;
+                        if (isCollect == 0) {
+                            $('#collect').removeClass('active').find('span').text('收藏');
+                        } else {
+                            $('#collect').addClass('active').find('span').text('取消收藏');
+                        }
+                        $('#info_content').on('click', '#collect', function () {
+                            if ($('#collect').find('span').text() == '收藏') {
+                                Info.saveUserCollect(schoolId);
+                            } else {
+                                Info.deleteUserCollect(schoolId);
+                            }
+                        });
+                    }
+                });
         }
     };
 
@@ -578,7 +531,6 @@ define(function (require) {
         } else if (id) {
             Info.getBasicInfo('id', id);
         }
-
 
 
     });
