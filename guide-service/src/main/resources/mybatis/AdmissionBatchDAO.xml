@@ -28,17 +28,20 @@
         id as id ,
         name as name ,
         status as status ,
-        areaId as areaId
+        areaId as areaId ,
+        sort as sort
     </sql>
     <insert id="insert" parameterType="AdmissionBatch">
         INSERT INTO gk_admission_batch (
         name,
         status,
-        areaId
+        areaId,
+        sort
         ) VALUES (
         #{name},
         #{status},
-        #{areaId}
+        #{areaId},
+        #{sort}
         )
         <selectKey resultType="java.lang.Long" keyProperty="id">
             SELECT LAST_INSERT_ID() AS ID
@@ -58,6 +61,9 @@
             <if test="areaId!=null">
                 areaId = #{areaId},
             </if>
+            <if test="sort!=null">
+                sort = #{sort},
+            </if>
         </trim>
         WHERE
         id = #{id}
@@ -74,6 +80,9 @@
             </if>
             <if test="map.areaId!=null">
                 areaId = #{map.areaId},
+            </if>
+            <if test="map.sort!=null">
+                sort = #{map.sort},
             </if>
         </trim>
         WHERE
@@ -92,6 +101,9 @@
             <if test="update.areaId!=null">
                 areaId = #{update.areaId},
             </if>
+            <if test="update.sort!=null">
+                sort = #{update.sort},
+            </if>
         </trim>
 
         <trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -107,6 +119,9 @@
             <if test="condition.areaId!=null">
                 AND areaId = #{condition.areaId}
             </if>
+            <if test="condition.sort!=null">
+                AND sort = #{condition.sort}
+            </if>
         </trim>
     </update>
 
@@ -114,11 +129,13 @@
         INSERT INTO gk_admission_batch (
         name,
         status,
-        areaId
+        areaId,
+        sort
         ) VALUES (
         #{map.name},
         #{map.status},
-        #{map.areaId}
+        #{map.areaId},
+        #{map.sort}
         )
     </insert>
 
@@ -129,6 +146,7 @@
             name = #{name},
             status = #{status},
             areaId = #{areaId},
+            sort = #{sort},
         </trim>
         WHERE
         id = #{id}
@@ -157,6 +175,9 @@
             </if>
             <if test="areaId!=null">
                 AND areaId = #{areaId}
+            </if>
+            <if test="sort!=null">
+                AND sort = #{sort}
             </if>
         </trim>
     </delete>
@@ -227,6 +248,9 @@
             <if test="condition.areaId!=null">
                 ${condition.groupOp}   ${condition.areaId.field}  in ( #{condition.areaId.data},'0')
             </if>
+            <if test="condition.sort!=null">
+                ${condition.groupOp}   ${condition.sort.field}  ${condition.sort.op}  #{condition.sort.data}
+            </if>
 
 
         </where>
@@ -255,6 +279,9 @@
             <if test="condition.areaId!=null">
                 AND areaId like CONCAT('%', #{condition.areaId} , '%')
             </if>
+            <if test="condition.sort!=null">
+                AND sort like CONCAT('%', #{condition.sort} , '%')
+            </if>
         </trim>
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -279,6 +306,9 @@
             <if test="condition.areaId!=null">
                 AND areaId in ( #{condition.areaId},'0')
             </if>
+            <if test="condition.sort!=null">
+                AND sort = #{condition.sort}
+            </if>
         </trim>
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -302,6 +332,9 @@
             <if test="condition.areaId!=null">
                 AND areaId in ( #{condition.areaId},'0')
             </if>
+            <if test="condition.sort!=null">
+                AND sort = #{condition.sort}
+            </if>
         </trim>
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -323,6 +356,9 @@
             </if>
             <if test="areaId!=null">
                 ${groupOp} ${areaId.field} ${areaId.op}  #{areaId.data}
+            </if>
+            <if test="sort!=null">
+                ${groupOp} ${sort.field} ${sort.op}  #{sort.data}
             </if>
 
         </where>
