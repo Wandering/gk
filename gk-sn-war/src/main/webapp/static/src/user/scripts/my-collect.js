@@ -30,7 +30,7 @@ define(function (require) {
                             ,provinceName = dataJson[i].provinceName
                             ,universityType = dataJson[i].universityType
                             ,subjection = dataJson[i].subjection
-                            ,id = dataJson[i].id
+                            ,universityId = dataJson[i].universityId
                             ,propertyName = dataJson[i].propertyName;
 
                         var listMsgHtml = '<tr>'
@@ -43,7 +43,7 @@ define(function (require) {
                         }else{
                             listMsgHtml+= '<td>-</td>'
                         }
-                        listMsgHtml+= '<td><a href="javascript:;" id="'+ id +'" class="cancel-collect"></a></td>';
+                        listMsgHtml+= '<td><a href="javascript:;" universityId="'+ universityId +'" class="cancel-collect"></a></td>';
                             + '</tr>';
                         UI.$listMsgItem.append(listMsgHtml);
                     }
@@ -60,8 +60,8 @@ define(function (require) {
         // 取消收藏
          $('#collect-table').on('click','.cancel-collect',function(){
              var $this = $(this);
-             var id = $this.attr('id');
-             $.get('/userCollection/deleteUserCollect.do?id='+id,function(data){
+             var universityId = $this.attr('universityId');
+             $.get('/userCollection/deleteUserCollect.do?universityId='+universityId,function(data){
                  console.log(data)
                  if(data.rtnCode == '0000000'){
                      if(data.bizData){
