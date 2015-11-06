@@ -67,15 +67,23 @@ public class UserCollectController extends BaseController{
 
     /**
      * 删除指定收藏院校
-     * @param id
+     * @param universityId
      * @return
      */
     @RequestMapping(value = "/deleteUserCollect",method = RequestMethod.GET)
     @ResponseBody
-    public boolean deleteUserCollect(@RequestParam(value = "id",required = true)long id){
+    public boolean deleteUserCollect(@RequestParam(value = "universityId",required = true)long universityId){
         boolean flag = false;
+        UserAccountPojo userAccountPojo=getUserAccountPojo();
+        if(null==userAccountPojo ||  null==userAccountPojo.getId()){
+            throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
+        }
+        long userId=userAccountPojo.getId();
+        Map<String,Object> param=Maps.newHashMap();
+        param.put("userId",userId);
+        param.put("universityId", universityId);
         try {
-            userCollectService.deleteById(id);
+            userCollectService.deleteByCondition(param);
             flag = true;
         }catch (Exception e){
             e.printStackTrace();
