@@ -49,6 +49,12 @@ public class UserCollectController extends BaseController{
             throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
         }
         long userId=userAccountPojo.getId();
+        Map<String,Object> param=Maps.newHashMap();
+        param.put("userId",userId);
+        param.put("universityId",universityId);
+        if(userCollectExService.isUniversityCollect(param)>0){
+            throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
+        }
         UserCollect userCollect=new UserCollect();
         userCollect.setUserId(userId);
         userCollect.setUniversityId(universityId);
