@@ -29,7 +29,8 @@
         top: 5px;
         margin: 0 0 0 6px;
     }
-    .info-content .collect:hover i{
+    .info-content .collect:hover i,
+    .info-content .collect.active i{
         background:url('../static/src/consult/images/collect-icon.png') no-repeat 0 -21px;
     }
 </style>
