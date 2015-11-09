@@ -51,11 +51,9 @@ public class VipController extends BaseController {
         map.put("cardNumber",cardPojo.getCardNumber());
         map.put("password",cardPojo.getPassword());
         map.put("areaId",areaId);
+        map.put("status",0);
         Card card=(Card)cardService.queryOne(map);
         if(null==card ){
-            throw new BizException(ERRORCODE.VIP_CARD_NOT_INVALID.getCode(), ERRORCODE.VIP_CARD_NOT_INVALID.getMessage());
-        }
-        if(card.getUserId()!=0){
             throw new BizException(ERRORCODE.VIP_CARD_NOT_INVALID.getCode(), ERRORCODE.VIP_CARD_NOT_INVALID.getMessage());
         }
         Calendar c = Calendar.getInstance();
