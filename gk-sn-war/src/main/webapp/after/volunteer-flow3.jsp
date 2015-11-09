@@ -495,9 +495,9 @@
                 <option value="">所有省</option>
             </select>
             <input type="text" name="" class="search-input" id="specialty-input" placeholder="请输入专业名称查询" />
-            <label>
-                <input type="checkbox" name="" id=""/>从我收藏的院校中获得推荐
-            </label>
+            <%--<label>--%>
+                <%--<input type="checkbox" name="" id=""/>从我收藏的院校中获得推荐--%>
+            <%--</label>--%>
             <input type="button" class="search-btn" id="specialty-search-btn" value="查询"/>
         </div>
         <div class="info-explain">
