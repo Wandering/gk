@@ -110,6 +110,47 @@
         </where>
     </select>
 
+    <select id="getMajoredScoreLinePojoList" resultType="MajoredScoreLinePojo" parameterType="java.util.Map">
+        SELECT
+        universityId,
+        majoredId,
+        year,
+        enrollBatch,
+        subject,
+        enrollNumber,
+        highestScore,
+        lowestScore,
+        averageScore
+        FROM gk_majored_score_line
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="universityId != null">
+                AND universityId = #{universityId}
+            </if>
+            <if test="year != null">
+                AND year = #{year}
+            </if>
+            <if test="subject != null">
+                AND subject = #{subject}
+            </if>
+            <if test="areaId != null">
+                AND areaId = #{areaId}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getMajoredScoreLineYears" resultType="String" parameterType="java.util.Map">
+        select DISTINCT year
+        from gk_majored_score_line
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="universityId != null">
+                AND universityId = #{universityId}
+            </if>
+            <if test="areaId != null">
+                AND areaId = #{areaId}
+            </if>
+        </trim>
+    </select>
+
 
 </mapper>
 

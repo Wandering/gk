@@ -1,10 +1,13 @@
 package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.gk.dao.IUniversityDAO;
+import cn.thinkjoy.gk.dao.IUniversityExDAO;
 import cn.thinkjoy.gk.pojo.EnrollInfo;
+import cn.thinkjoy.gk.pojo.MajoredScoreLinePojo;
 import cn.thinkjoy.gk.pojo.PlanInfo;
 import cn.thinkjoy.gk.pojo.UniversityDto;
 import cn.thinkjoy.gk.service.IExUniversityService;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,8 @@ import java.util.Map;
 public class ExUniversityServiceImpl implements IExUniversityService {
     @Autowired
     private IUniversityDAO iUniversityDAO;
+    @Autowired
+    private IUniversityExDAO iUniversityExDAO;
 
     @Override
     public List<Map> getProvinces() {
@@ -88,5 +93,32 @@ public class ExUniversityServiceImpl implements IExUniversityService {
     @Override
     public String getUniversityIntro(String schoolId) {
         return iUniversityDAO.getUniversityIntro(schoolId);
+    }
+
+    /**
+     * 获取指定院校的专业录取分数线
+     * @return
+     */
+    @Override
+    public Map<String,Object> getMajoredScoreLinePojoList(long universityId,long areaId){
+        Map<String,Object> param= Maps.newHashMap();
+        param.put("universityId",universityId);
+        param.put("areaId",areaId);
+        List<String> years=getMajoredScoreLineYears(universityId,areaId);
+        Map<String,Object> returnMap=Maps.newHashMap();
+        for (String year:years){
+            param.put("year",year);
+            List<MajoredScoreLinePojo> majoredScoreLinePojoList=iUniversityExDAO.getMajoredScoreLinePojoList(param);
+            returnMap.put(year+"年专业录取信息",majoredScoreLinePojoList);
+        }
+        return returnMap;
+    }
+
+    @Override
+    public List<String> getMajoredScoreLineYears(long universityId,long areaId){
+        Map<String,Object> param= Maps.newHashMap();
+        param.put("universityId",universityId);
+        param.put("areaId",areaId);
+        return iUniversityExDAO.getMajoredScoreLineYears(param);
     }
 }
