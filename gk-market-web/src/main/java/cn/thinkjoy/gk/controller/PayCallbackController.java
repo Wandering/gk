@@ -34,7 +34,7 @@ public class PayCallbackController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(PayCallbackController.class);
 
-    @RequestMapping(value = "createOrders", method = RequestMethod.GET)
+    @RequestMapping(value = "payCallback", method = RequestMethod.GET)
     public String payCallback(HttpServletRequest request, HttpServletResponse response) {
 
         try {
@@ -51,14 +51,12 @@ public class PayCallbackController {
 
             JSONObject payResult = JSON.parseObject(builder.toString());
 
-            LOGGER.info("====pay /payCallback· payResult: "+payResult);
+            LOGGER.info("====pay /payCallback payResult: "+payResult);
 
         } catch (IOException e) {
             LOGGER.error("error",e);
         }
-
         return "user/vip-service";
-
     }
 
 //    public static void main(String[] args) {
