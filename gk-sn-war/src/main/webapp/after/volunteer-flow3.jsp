@@ -608,8 +608,8 @@
 
 <%@ include file="/common/footer.jsp"%>
 <script>
-//    seajs.use("/static/src/after/scripts/after-flow3");
-    seajs.use("http://cdn.gaokao360.net/static/global/after/scripts/after-flow3.min");
+    seajs.use("/static/src/after/scripts/after-flow3");
+//    seajs.use("http://cdn.gaokao360.net/static/global/after/scripts/after-flow3.min");
     var params = decodeURIComponent('${params}');
 </script>
 

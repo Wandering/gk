@@ -1,6 +1,5 @@
 package cn.thinkjoy.gk.filter;
 
-import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.constant.ServletPathConst;
 import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.util.CookieUtil;
