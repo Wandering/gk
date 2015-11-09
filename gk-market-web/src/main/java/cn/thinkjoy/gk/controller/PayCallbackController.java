@@ -36,7 +36,6 @@ public class PayCallbackController {
 
     @RequestMapping(value = "payCallback", method = RequestMethod.GET)
     public String payCallback(HttpServletRequest request, HttpServletResponse response) {
-
         try {
             request.setCharacterEncoding("UTF-8");
 
