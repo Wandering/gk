@@ -170,13 +170,13 @@ define(function (require) {
             });
         }
 
-        findUserExam();
+        //findUserExam();
 
 
         $('#prev-btn').on('click', function () {
             $('#volunteer-flow1').show();
             $('#volunteer-flow2').hide();
-            findUserExam();
+            //findUserExam();
             $('#yzmDreamSchool').attr('src', '/verifyCode/randomVerifyCode.do?type=4&code=' + Math.random());
         });
 
