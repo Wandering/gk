@@ -68,7 +68,7 @@ public class VipController extends BaseController {
         userAccountPojo.setVipStatus(1);
         try {
             setUserAccountPojo(userAccountPojo);
-        }catch(Exception e){
+        } catch(Exception e) {
             throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
         }
 
