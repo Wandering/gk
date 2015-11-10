@@ -16,6 +16,7 @@ import cn.thinkjoy.gk.query.UniversityQuery;
 import cn.thinkjoy.gk.service.*;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -263,21 +265,62 @@ public class UniversityController extends BaseController {
         entrollPlan.setPlanInfos(planInfos);
         lastEntrollPlan.setTitle("2014年招生计划");
         lastEntrollPlan.setPlanInfos(lastPlanInfos);
-        /**
-         * 招生简介
-         */
-        String entroIntro=iUniversityService.getUniversityEnrollIntro(schoolId);
-        /**
-         * 大学介绍
-         */
-        String  universityIntro=iUniversityService.getUniversityIntro(schoolId);
+//        /**
+//         * 招生简介
+//         */
+//        String entroIntro=iUniversityService.getUniversityEnrollIntro(schoolId);
+//        /**
+//         * 大学介绍
+//         */
+//        String  universityIntro=iUniversityService.getUniversityIntro(schoolId);
         entrollPlans.add(entrollPlan);
         entrollPlans.add(lastEntrollPlan);
-        entrollPlanDto.setEntroIntro(entroIntro);
-        entrollPlanDto.setUniversityIntro(universityIntro);
+//        entrollPlanDto.setEntroIntro(entroIntro);
+//        entrollPlanDto.setUniversityIntro(universityIntro);
         entrollPlanDto.setEnrollPlan(entrollPlans);
 
         return  entrollPlanDto;
+    }
+
+    /**
+     * 招生简章
+     * @param universityId
+     * @return
+     */
+    @RequestMapping(value = "/getEntroIntro",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> getEntroIntro(@RequestParam(value = "universityId",required = true)long universityId){
+        Map<String,Object> entroIntroMap= Maps.newHashMap();
+        String entroIntro=iUniversityService.getUniversityEnrollIntro(String.valueOf(universityId));
+        entroIntroMap.put("entroIntro",entroIntro);
+        return entroIntroMap;
+    }
+
+    /**
+     * 院校简介
+     * @param universityId
+     * @return
+     */
+    @RequestMapping(value = "/getUniversityIntro",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> getUniversityIntro(@RequestParam(value = "universityId",required = true)long universityId){
+        Map<String,Object> universityIntroMap= Maps.newHashMap();
+        String  universityIntro=iUniversityService.getUniversityIntro(String.valueOf(universityId));
+        universityIntroMap.put("universityIntro",universityIntro);
+        return universityIntroMap;
+    }
+
+    /**
+     * 专业录取分数查询
+     * @param universityId
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/getMajoredScoreLineList",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> getMajoredScoreLineList(@RequestParam(value = "universityId",required = true)long universityId) throws Exception{
+        long areaId=getAreaCookieValue();
+        return iUniversityService.getMajoredScoreLinePojoList(universityId,areaId);
     }
 
 
