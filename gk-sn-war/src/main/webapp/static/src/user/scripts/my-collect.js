@@ -7,7 +7,7 @@ define(function (require) {
             $listMsgItem: $('#list-msg-item'),
             $nextPage: $('#nextPage')
         };
-        var pageSize = 4;
+        var pageSize = 10;
 
 
         UI.$nextPage.on('click', function () {
@@ -19,11 +19,6 @@ define(function (require) {
             $.get('/userCollection/getUserCollectPojoList.do?offset='+pageNo + "&rows="+pageSize, function (data) {
                 var dataJson = data.bizData;
                 if (data.rtnCode == "0000000") {
-                    //if (dataJson.length > 0 && dataJson.length < (pageSize+1) ) {
-                    //    UI.$nextPage.show();
-                    //}else if(dataJson.length == 0){
-                    //    UI.$listMsgItem.append('<tr><td colspan="6"><p class="noContent-tips">暂无数据</p></td></tr>')
-                    //}
                     console.log("dataJson.length:"+dataJson.length)
                     if(dataJson.length > 0){
                         UI.$nextPage.show();
@@ -50,16 +45,12 @@ define(function (require) {
                             + '</tr>';
                             UI.$listMsgItem.prepend(listMsgHtml);
                         }
-                        pageNo = parseInt(pageNo) + 4 ;
-                        console.log(pageNo)
+                        pageNo = parseInt(pageNo) + pageSize ;
                         UI.$listMsgItem.attr('pageNo', pageNo);
+                    }else{
+                        UI.$nextPage.hide();
+                        UI.$listMsgItem.append('<tr class="noData"><td colspan="6"><p class="noContent-tips">没有收藏数据了</p></td></tr>')
                     }
-                    UI.$nextPage.hide();
-
-                    //if (dataJson.length < pageSize) {
-                    //    UI.$nextPage.hide();
-                    //    //$('.noContent-tips').hide();
-                    //}
                 }
 
             });
@@ -74,6 +65,15 @@ define(function (require) {
                  if(data.rtnCode == '0000000'){
                      if(data.bizData){
                          $this.parents('tr').remove();
+                         $('tr.noData').hide();
+                         console.log(UI.$listMsgItem.find('tr').length)
+                         var trLen = UI.$listMsgItem.find('tr').length;
+                         if(trLen < (pageSize+1)){
+                             UI.$nextPage.hide();
+                         }
+                         if(trLen == 0){
+                             UI.$listMsgItem.append('<tr class="noData"><td colspan="6"><p class="noContent-tips">没有收藏数据了</p></td></tr>')
+                         }
                      }
                  }
              })

@@ -27,12 +27,12 @@
                 <table id="collect-table">
                     <thead>
                     <tr>
-                        <td>院校名称</td>
-                        <td>所在地区</td>
-                        <td>院校类型</td>
-                        <td>院校隶属</td>
-                        <td>院校特征</td>
-                        <td>取消收藏</td>
+                        <th>院校名称</th>
+                        <th>所在地区</th>
+                        <th>院校类型</th>
+                        <th>院校隶属</th>
+                        <th>院校特征</th>
+                        <th>取消收藏</th>
                     </tr>
                     </thead>
                     <tbody id="list-msg-item" pageNo="0">
