@@ -19,39 +19,47 @@ define(function (require) {
             $.get('/userCollection/getUserCollectPojoList.do?offset='+pageNo + "&rows="+pageSize, function (data) {
                 var dataJson = data.bizData;
                 if (data.rtnCode == "0000000") {
-                    if (dataJson.length > 0 && dataJson.length < (pageSize+1) ) {
+                    //if (dataJson.length > 0 && dataJson.length < (pageSize+1) ) {
+                    //    UI.$nextPage.show();
+                    //}else if(dataJson.length == 0){
+                    //    UI.$listMsgItem.append('<tr><td colspan="6"><p class="noContent-tips">暂无数据</p></td></tr>')
+                    //}
+                    console.log("dataJson.length:"+dataJson.length)
+                    if(dataJson.length > 0){
                         UI.$nextPage.show();
-                    }else{
-                        UI.$listMsgItem.append('<tr><td colspan="6"><p class="noContent-tips">暂无数据</p></td></tr>')
-                    }
-                    for (var i = 0; i < dataJson.length; i++) {
-                        console.log(dataJson)
-                        var universityName = dataJson[i].universityName
-                            ,provinceName = dataJson[i].provinceName
-                            ,universityType = dataJson[i].universityType
-                            ,subjection = dataJson[i].subjection
-                            ,universityId = dataJson[i].universityId
-                            ,propertyName = dataJson[i].propertyName;
+                        for (var i = 0; i < dataJson.length; i++) {
+                            console.log(dataJson);
+                            var universityName = dataJson[i].universityName
+                                ,provinceName = dataJson[i].provinceName
+                                ,universityType = dataJson[i].universityType
+                                ,subjection = dataJson[i].subjection
+                                ,universityId = dataJson[i].universityId
+                                ,propertyName = dataJson[i].propertyName;
 
-                        var listMsgHtml = '<tr>'
-                            + '<td>'+ universityName +'</td>'
-                            + '<td>'+ provinceName +'</td>'
-                            + '<td>'+ universityType +'</td>'
-                            + '<td>'+ subjection +'</td>';
-                        if(propertyName){
-                            listMsgHtml+= '<td>'+ propertyName +'</td>'
-                        }else{
-                            listMsgHtml+= '<td>-</td>'
-                        }
-                        listMsgHtml+= '<td><a href="javascript:;" universityId="'+ universityId +'" class="cancel-collect"></a></td>';
+                            var listMsgHtml = '<tr>'
+                                + '<td><a target="_blank" href="/consult/school_detail.jsp?id='+ universityId +'">'+ universityName +'</a></td>'
+                                + '<td>'+ provinceName +'</td>'
+                                + '<td>'+ universityType +'</td>'
+                                + '<td>'+ subjection +'</td>';
+                            if(propertyName){
+                                listMsgHtml+= '<td>'+ propertyName +'</td>'
+                            }else{
+                                listMsgHtml+= '<td>-</td>'
+                            }
+                            listMsgHtml+= '<td><a href="javascript:;" universityId="'+ universityId +'" class="cancel-collect"></a></td>';
                             + '</tr>';
-                        UI.$listMsgItem.append(listMsgHtml);
+                            UI.$listMsgItem.prepend(listMsgHtml);
+                        }
+                        pageNo = parseInt(pageNo) + 4 ;
+                        console.log(pageNo)
+                        UI.$listMsgItem.attr('pageNo', pageNo);
                     }
-                    pageNo = pageNo + 4 ;
-                    UI.$listMsgItem.attr('pageNo', pageNo);
-                    if (dataJson.length < pageSize) {
-                        UI.$nextPage.hide();
-                    }
+                    UI.$nextPage.hide();
+
+                    //if (dataJson.length < pageSize) {
+                    //    UI.$nextPage.hide();
+                    //    //$('.noContent-tips').hide();
+                    //}
                 }
 
             });

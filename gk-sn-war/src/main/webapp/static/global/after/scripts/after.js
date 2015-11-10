@@ -2,7 +2,6 @@ define(function (require) {
     var $ = require('$');
     require('backToTop');
     $(function () {
-
         var UI = {
             yzmDreamSchool: $('#yzmDreamSchool'),
             volunteerBtn: $('#volunteer-flow1-btn'),
@@ -27,31 +26,30 @@ define(function (require) {
             return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
         }
 
-        $(function () {
-            //判断当前用户cookie是否存在
-            if (GetCookie("snuser")) {
-                $.ajax({
-                    url: '/info/getUserAccount.do',
-                    type: 'GET',
-                    dataType: 'JSON',
-                    data: {},
-                    success: function (res) {
-                        console.log(res)
-                        if(res.rtnCode=="0000000" && res.bizData.isReported!=null){
-                            if (res.bizData.isReported == 0) {
-                                $('#aggregateScore-input').removeAttr('readonly').val('');
-                                $('#ranking-input').removeAttr('readonly').val('');
-                            } else {
-                                $('#aggregateScore-input').attr('readonly', 'readonly');
-                                $('#ranking-input').attr('readonly', 'readonly');
-                            }
-                        }
 
-
-                    }
-                });
-            }
-        });
+        //判断当前用户cookie是否存在
+        //if (GetCookie("snuser")) {
+        //    $.ajax({
+        //        url: '/info/getUserAccount.do',
+        //        type: 'GET',
+        //        dataType: 'JSON',
+        //        success: function (res) {
+        //            console.log("获取用户信息:");
+        //            console.log(res);
+        //            if(res.rtnCode=="0000000" && res.bizData.isReported!=null){
+        //                if (res.bizData.isReported == 0) {
+        //                    $('#aggregateScore-input').removeAttr('readonly').val('');
+        //                    $('#ranking-input').removeAttr('readonly').val('');
+        //                } else {
+        //                    $('#aggregateScore-input').attr('readonly', 'readonly');
+        //                    $('#ranking-input').attr('readonly', 'readonly');
+        //                }
+        //            }
+        //
+        //
+        //        }
+        //    });
+        //}
 
 
         // 志愿指导第一步
@@ -108,7 +106,7 @@ define(function (require) {
                     "code": yzmDreamV
                 },
                 success: function (res) {
-                    console.log(res)
+                    //console.log(res)
                     if (res.rtnCode == "0100006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
                         errorTips(res.msg);
                         return false;
@@ -116,9 +114,9 @@ define(function (require) {
                     if (res.rtnCode == "0000000") {
                         UI.schoolListinfo.html('');
                         var data = $.parseJSON(res.bizData);
-                        console.log(res);
-                        console.log(data.data);
-                        console.log(data.related);
+                        //console.log(res);
+                        //console.log(data.data);
+                        //console.log(data.related);
                         if(!data.data){
                             errorTips("该分数暂无数据");
                             return false;
@@ -155,50 +153,66 @@ define(function (require) {
                                 + '</div>';
                             UI.schoolListinfo.append(schoolListHtml);
                         });
-
                     }
+                    //在VIP用户下第一次提交考后报考
+                    $.ajax({
+                        url: '/exam/updateUserExam.do',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            "scores": aggregateScoreV,
+                            "ranking": rankingV,
+                            "isReported": 1
+                        },
+                        success: function (res) {
+                            console.log("在VIP用户下第一次提交考后报考");
+                            console.log(res);
+                            if(res.rtnCode=="0000000"){
+                                console.log('成功');
+                            }
+                        }
+                    });
 
                 }
             });
+
+        });
+
+        // 获取用户是否提交过考后报考
+        function findUserExam(){
             $.ajax({
-                url: '/exam/updateUserExam.do',
-                type: 'POST',
+                url: '/exam/findUserExam.do',
+                type: 'GET',
                 dataType: 'JSON',
-                data: {
-                    "scores": aggregateScoreV,
-                    "ranking": rankingV,
-                    "isReported": 1
-                },
+                data: {},
                 success: function (res) {
-
-                    if(res.rtnCode==0000000){
-                        console.log('成功')
+                    console.log("用户是否提交过考后报考");
+                    console.log(res);
+                    //console.log(res.bizData.isReported)
+                    var scores = res.bizData.scores;
+                    var ranking = res.bizData.ranking;
+                    $('#aggregateScore-input').val(scores);
+                    $('#ranking-input').val(ranking);
+                    if (res.bizData.isReported == 1) {
+                        $('#aggregateScore-input').attr('readonly', 'readonly');
+                        $('#ranking-input').attr('readonly', 'readonly');
+                    } else {
+                        $('#aggregateScore-input').removeAttr('readonly').val('');
+                        $('#ranking-input').removeAttr('readonly').val('');
                     }
-
 
                 }
             });
-        });
+        }
 
-        $.ajax({
-            url: '/exam/findUserExam.do',
-            type: 'GET',
-            dataType: 'JSON',
-            data: {},
-            success: function (res) {
-                console.log(res)
-                console.log(res.bizData.isReported)
-                var scores = res.bizData.scores;
-                var ranking = res.bizData.ranking;
-                $('#aggregateScore-input').val(scores);
-                $('#ranking-input').val(ranking);
-            }
-        });
+        findUserExam();
+
 
         $('#prev-btn').on('click', function () {
             $('#volunteer-flow1').show();
             $('#volunteer-flow2').hide();
             UI.yzmDreamSchool.click();
+            findUserExam();
         });
 
     })

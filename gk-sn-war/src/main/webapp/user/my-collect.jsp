@@ -4,8 +4,8 @@
 <head>
     <%@include file="/common/meta.jsp" %>
     <title>个人信息</title>
-    <%--<link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/user/styles/personal-info.min.css"/>--%>
-    <link rel="stylesheet" href="/static/global/user/styles/personal-info.min.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/user/styles/personal-info.min.css"/>
+    <%--<link rel="stylesheet" href="/static/global/user/styles/personal-info.min.css"/>--%>
 </head>
 <body>
 <%@include file="/common/header.jsp" %>
@@ -38,7 +38,7 @@
                     <tbody id="list-msg-item" pageNo="0">
                     </tbody>
                 </table>
-                <a href="javascript:;" class="next-btn hide" id="nextPage">加载更多...</a>
+                <a href="javascript:;" class="next-btn hide" style="display: none;" id="nextPage">加载更多...</a>
             </div>
 
         </div>
@@ -47,6 +47,7 @@
 
 <%@include file="/common/footer.jsp" %>
 <script>
+//    seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/my-collect.min");
     seajs.use("/static/src/user/scripts/my-collect");
 </script>
 </body>
