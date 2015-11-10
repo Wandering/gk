@@ -6,11 +6,6 @@ define(function (require) {
         var paramsJson = JSON.parse(params);
 
 
-
-
-
-
-
         console.log(paramsJson)
         $('.volunteer-flow3-table').on('click', '.open-flow3', function () {
             $('.tansLayer,.volunteer-flow3-layer').show();
@@ -52,14 +47,13 @@ define(function (require) {
                 dataType: 'JSON',
                 data: paramsJson,
                 success: function (res) {
-                    //console.log(res);
                     if (res.rtnCode == "0100006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
                         $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
                         return;
                     }
                     if (res.rtnCode == "0000000") {
                         var data = $.parseJSON(res.bizData);
-                        //console.log(data)
+                        console.log(data)
                         var m_batch_id = data.related.m_batch_id;
                         var m_batch = data.related.m_batch;
                         var listData = data.data.result;
@@ -77,21 +71,22 @@ define(function (require) {
 
                         $('.school-list').html('');
                         $.each(listData.data, function (i, v) {
-                            if (listData.data[i].data.length == 0) {
-                                $('.no-school').show();
-                                $('.school-list').hide();
-                            }
+                            console.log(listData.data[i].data.length)
+
                             if (listData.data[i].data.length > 0 && i < 4) {
                                 $('#no-school' + i).hide();
                                 $('#school-list' + i).show();
-                                $.each(listData.data[i].data, function (j, m) {
-                                    var schoolListHtml = ''
-                                        + '<div>'
-                                        + '<span class="fl"><a target="_blank" href="/consult/school_detail.jsp?code=' + m.m_university_code + '&batch=' + m_batch_id + '" id="' + m.m_university_code + '">' + m.m_university_name + '</a></span>'
-                                        + '<span class="fr selSchool" datatypeId="' + datatypeId + '" m_university_name="' + m.m_university_name + '" id="' + m.m_university_code + '" type = "' + m_keleiType + '" m_batch_id="'+ m_batch_id +'" m_batch="' + m_batch + '">选择</span>'
-                                        + '</div>';
-                                    $('#school-list' + i).append(schoolListHtml);
-                                })
+                                    $.each(listData.data[i].data, function (j, m) {
+                                        var schoolListHtml = ''
+                                            + '<div>'
+                                            + '<span class="fl"><a target="_blank" href="/consult/school_detail.jsp?code=' + m.m_university_code + '&batch=' + m_batch_id + '" id="' + m.m_university_code + '">' + m.m_university_name + '</a></span>'
+                                            + '<span class="fr selSchool" datatypeId="' + datatypeId + '" m_university_name="' + m.m_university_name + '" id="' + m.m_university_code + '" type = "' + m_keleiType + '" m_batch_id="'+ m_batch_id +'" m_batch="' + m_batch + '">选择</span>'
+                                            + '</div>';
+                                        $('#school-list' + i).append(schoolListHtml);
+                                    })
+                            }else{
+                                $('#no-school' + i).show();
+                                $('#school-list' + i).hide();
                             }
                         });
 

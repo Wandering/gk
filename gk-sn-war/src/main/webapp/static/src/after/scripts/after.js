@@ -8,49 +8,14 @@ define(function (require) {
             schoolListinfo : $('#school-list-info')
         };
 
-        // 验证码
-        function validateCode(obj) {
-            obj.on('click', function () {
-                obj.attr('src', '/verifyCode/randomVerifyCode.do?type=4&code=' + Math.random());
-            }).attr('src', '/verifyCode/randomVerifyCode.do?type=4');
-        };
-        validateCode(UI.yzmDreamSchool);
 
+         $('#yzmDreamSchool').on('click', function () {
+                $(this).attr('src', '/verifyCode/randomVerifyCode.do?type=4&code=' + Math.random());
+            }).attr('src', '/verifyCode/randomVerifyCode.do?type=4');
         // 警告提示
         function errorTips(txt) {
             $('.error-tips').text(txt).fadeIn(1000).fadeOut(1000);
         }
-
-        function GetCookie(sMainName, sSubName) {
-            var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
-            return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
-        }
-
-
-        //判断当前用户cookie是否存在
-        //if (GetCookie("snuser")) {
-        //    $.ajax({
-        //        url: '/info/getUserAccount.do',
-        //        type: 'GET',
-        //        dataType: 'JSON',
-        //        success: function (res) {
-        //            console.log("获取用户信息:");
-        //            console.log(res);
-        //            if(res.rtnCode=="0000000" && res.bizData.isReported!=null){
-        //                if (res.bizData.isReported == 0) {
-        //                    $('#aggregateScore-input').removeAttr('readonly').val('');
-        //                    $('#ranking-input').removeAttr('readonly').val('');
-        //                } else {
-        //                    $('#aggregateScore-input').attr('readonly', 'readonly');
-        //                    $('#ranking-input').attr('readonly', 'readonly');
-        //                }
-        //            }
-        //
-        //
-        //        }
-        //    });
-        //}
-
 
         // 志愿指导第一步
         UI.volunteerBtn.on('click', function () {
@@ -135,7 +100,7 @@ define(function (require) {
                                 "m_batch_id": v.m_batch_id,
                                 "m_batch": v.m_batch,
                                 "m_province_id": "",
-                                "m_province": "陕西",
+                                "m_province": "",
                                 "m_specialty_id": "",
                                 "m_specialty_name": "",
                                 "m_favorites_by_university_codes": ""
@@ -170,8 +135,6 @@ define(function (require) {
                             if(res.rtnCode=="0000000"){
                                 console.log('成功');
                             }
-
-
                         }
                     });
 
@@ -213,8 +176,8 @@ define(function (require) {
         $('#prev-btn').on('click', function () {
             $('#volunteer-flow1').show();
             $('#volunteer-flow2').hide();
-            UI.yzmDreamSchool.click();
             findUserExam();
+            $('#yzmDreamSchool').attr('src', '/verifyCode/randomVerifyCode.do?type=4&code=' + Math.random());
         });
 
     })

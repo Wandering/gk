@@ -36,7 +36,7 @@ define(function (require) {
                     };
                     pay["products"] = JSON.stringify(products);
                     var extra = {};
-                    extra["success_url"] = "http://sn.gaokao.net/payCallback.do";
+                    extra["success_url"] = "http://sn.gaokao360.net/payCallback.do";
                     pay["channel"] = 'alipay_pc_direct';
                     pay["extra"] = JSON.stringify(extra);
                     $.ajax({

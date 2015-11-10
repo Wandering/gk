@@ -46,6 +46,7 @@ public class CardExServiceImpl implements ICardExService {
             userVipDAO.update(userVip);
             Card card = new Card();
             card.setId(cardId);
+            card.setUserId(userId);
             card.setStatus(1);
             cardDAO.update(card);
             flag = true;
