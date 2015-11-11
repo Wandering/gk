@@ -10,7 +10,7 @@ public class MajoredDetailDto {
     private String similarMajor;
     private String mainCourse;
     private String workGuide;
-    private List<OpenUniversity> openUniversity;
+    private List<MajoredRankDto> openUniversity;
 
     public String getSimilarMajor() {
         return similarMajor;
@@ -36,11 +36,11 @@ public class MajoredDetailDto {
         this.workGuide = workGuide;
     }
 
-    public List<OpenUniversity> getOpenUniversity() {
+    public List<MajoredRankDto> getOpenUniversity() {
         return openUniversity;
     }
 
-    public void setOpenUniversity(List<OpenUniversity> openUniversity) {
+    public void setOpenUniversity(List<MajoredRankDto> openUniversity) {
         this.openUniversity = openUniversity;
     }
 }
