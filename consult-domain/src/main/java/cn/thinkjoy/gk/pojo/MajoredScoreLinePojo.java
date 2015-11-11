@@ -8,17 +8,19 @@ public class MajoredScoreLinePojo {
     private long universityId;
     /** 专业Id */
     private long majoredId;
+    /** 专业名称 */
+    private String majoredName;
     /** 年份 */
     private String year;
     /** 批次 */
     private String enrollBatch;
     /** 科类 */
     private String subject;
-    /** TODO 录取数，暂时没有提供 */
+    /** 录取数，暂时没有提供 */
     private int enrollNumber;
     /** 录取最高分 */
     private int highestScore;
-    /** TODO 录取最低分，暂时没有提供 */
+    /** 录取最低分，暂时没有提供 */
     private int lowestScore;
     /** 录取平均分 */
     private int averageScore;
@@ -37,6 +39,14 @@ public class MajoredScoreLinePojo {
 
     public void setMajoredId(long majoredId) {
         this.majoredId = majoredId;
+    }
+
+    public String getMajoredName() {
+        return majoredName;
+    }
+
+    public void setMajoredName(String majoredName) {
+        this.majoredName = majoredName;
     }
 
     public String getYear() {

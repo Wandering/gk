@@ -7,6 +7,7 @@
 package cn.thinkjoy.gk.dao;
 
 import cn.thinkjoy.gk.pojo.MajoredScoreLinePojo;
+import cn.thinkjoy.gk.pojo.OpenMajoredPojo;
 import cn.thinkjoy.gk.pojo.UniversityDetailDto;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,4 +29,6 @@ public interface IUniversityExDAO{
     List<MajoredScoreLinePojo> getMajoredScoreLinePojoList(Map<String,Object> params);
 
     List<String> getMajoredScoreLineYears(Map<String,Object> params);
+
+    List<OpenMajoredPojo> getOpenMajoredPojoList(Map<String,Object> params);
 }

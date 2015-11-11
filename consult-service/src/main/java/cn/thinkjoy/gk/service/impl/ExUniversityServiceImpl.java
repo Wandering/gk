@@ -2,18 +2,14 @@ package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.gk.dao.IUniversityDAO;
 import cn.thinkjoy.gk.dao.IUniversityExDAO;
-import cn.thinkjoy.gk.pojo.EnrollInfo;
-import cn.thinkjoy.gk.pojo.MajoredScoreLinePojo;
-import cn.thinkjoy.gk.pojo.PlanInfo;
-import cn.thinkjoy.gk.pojo.UniversityDto;
+import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.service.IExUniversityService;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by thinkjoy on 15/9/26.
@@ -120,5 +116,16 @@ public class ExUniversityServiceImpl implements IExUniversityService {
         param.put("universityId",universityId);
         param.put("areaId",areaId);
         return iUniversityExDAO.getMajoredScoreLineYears(param);
+    }
+
+    @Override
+    public List<OpenMajoredPojo> getOpenMajoredPojoList(long universityId,long areaId) {
+        Map<String,Object> param=Maps.newHashMap();
+        param.put("universityId",universityId);
+        param.put("areaId",areaId);
+        Calendar c = Calendar.getInstance();
+        int year=c.get(Calendar.YEAR);
+        param.put("year",year);
+        return iUniversityExDAO.getOpenMajoredPojoList(param);
     }
 }
