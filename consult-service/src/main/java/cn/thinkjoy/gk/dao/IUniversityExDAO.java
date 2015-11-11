@@ -17,7 +17,6 @@ import java.util.Map;
 
 public interface IUniversityExDAO{
 
-
     UniversityDetailDto getWSUniversityDetail(Map<String,Object> params);
 
     UniversityDetailDto getLGUniversityDetail(Map<String,Object> params);

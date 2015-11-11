@@ -302,7 +302,7 @@ define(function (require) {
                 + '<thead>'
                 + '<tr>'
                 + '<th>专业名称</th>'
-                + '<th>批次</th>'
+                //+ '<th>批次</th>'
                 + '<th>科类</th>'
                 + '<th>录取最高分</th>'
                 + '<th>录取最低分</th>'
@@ -312,13 +312,14 @@ define(function (require) {
                 + '<tbody>';
                 for (var j = 0; j < data[v].length; j++) {
                     var  admitAMarkData = data[v][j];
+
                     tabContentHtml += '<tr>'
-                    + '<td>' + "" + '</td>'
-                    + '<td>' + (admitAMarkData.enrollBatch || '') + '</td>'
-                    + '<td>' + (admitAMarkData.subject || '') + '</td>'
-                    + '<td>' + (admitAMarkData.highestScore || '') + '</td>'
+                    + '<td>' + (admitAMarkData.majoredName || '-') + '</td>'
+                    //+ '<td>' + (admitAMarkData.enrollBatch || '-') + '</td>'
+                    + '<td>' + (admitAMarkData.subject || '-') + '</td>'
+                    + '<td>' + (admitAMarkData.highestScore) + '</td>'
                     + '<td>' + (admitAMarkData.lowestScore) + '</td>'
-                    + '<td>' + (admitAMarkData.averageScore || '') + '</td>'
+                    + '<td>' + (admitAMarkData.averageScore) + '</td>'
                     + '</tr>';
                 }
                 tabContentHtml += '</tbody></table></div>';
@@ -337,8 +338,19 @@ define(function (require) {
                     $('#tabs-content').find('.school-table:eq(' + index + ')').show();
                     console.log($('#tabs-content').find('.school-table:eq(' + index + ')').html());
                 });
-        }
+        },
         // 开设专业
+        openSpecialty : function(){
+            var _this = this;
+            var batch = getUrLinKey('batch');
+            console.log(batch)
+            $.get('/university/getEnrollPlan.do?id=' + schoolId + '&batch=' + batch, function (data) {
+                console.log(data)
+                if (data.rtnCode == '0000000') {
+                    _this.renderEnroll(data.bizData.enrollPlan);
+                }
+            })
+        }
 
 
     };
