@@ -107,9 +107,18 @@ define(function (require) {
                 + '</thead>'
                 + '<tbody>';
             for (var i = 0, len = openUniversity.length; i < len; i++) {
+                var isOpenN = openUniversity[i].isOpen;
+                var isStar = '';
+                if(isOpenN==0){
+                    isStar = '';
+                }else{
+                    isStar = '<i class="star"></i>'
+                }
                 openUniversityHtml +=''
                 +'<tr>'
-                +'<td>'+ (openUniversity[i].universityName || "-" ) +'</td>'
+                +'<td>'
+                + isStar
+                + (openUniversity[i].universityName || "-" ) +'</td>'
                 +'<td>'+ (openUniversity[i].enrollNumber || "-" )   +'</td>'
                 +'<td>'+ (openUniversity[i].type || "-" )  +'</td>'
                 +'<td>'+ (openUniversity[i].foreignLanguage || "-" )  +'</td>'
