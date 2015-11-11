@@ -68,9 +68,5 @@ include 'gk-sn-war'
 
 include 'gk-ha-war'
 
-include 'gk-timer-war'
-
-include 'gk-upload-war'
-
 include 'gk-orders-war'
 

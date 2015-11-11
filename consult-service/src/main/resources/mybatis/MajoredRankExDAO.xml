@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IMajoredRankExDAO">
+
+    <select id="findOpenUniversity" resultType="majoredRankDto">
+        select * from (
+
+        select a.universityName,a.majorName,b.enrollNumber,c.type,b.feeStandard,b.subject,b.foreignLanguage,1 isOpen from gk_majored_rank a
+
+        left join gk_enroll_plan b on a.universityName=b.universityName and a.majorName like concat('%',b.majoredName,'%')
+
+        left join gk_university c on a.universityName = c.name
+
+        <where>
+            1=1
+            <if test="majorName!=null">
+                and a.majorName = #{majorName}
+            </if>
+            <if test="year!=null">
+                and b.year = #{year}
+            </if>
+            <if test="areaId!=null">
+                and b.areaId = #{areaId}
+            </if>
+        </where>
+
+        union all
+
+        select a.universityName,a.majorName,b.enrollNumber,c.type,b.feeStandard,b.subject,b.foreignLanguage,0 isOpen from gk_majored_rank a
+
+        left join gk_enroll_plan b on a.universityName=b.universityName and a.majorName like concat('%',b.majoredName,'%')
+
+        left join gk_university c on a.universityName = c.name
+
+        <where>
+            1=1
+            <if test="majorName!=null">
+                and a.majorName = #{majorName}
+            </if>
+            <if test="year!=null">
+                and b.year = #{year}
+            </if>
+            <if test="areaId!=null">
+                and b.areaId = #{areaId}
+            </if>
+        </where>
+        ) aa
+        <if test="startSize != null and endSize != null">
+            limit ${startSize}, ${endSize}
+        </if>
+    </select>
+
+</mapper>
+

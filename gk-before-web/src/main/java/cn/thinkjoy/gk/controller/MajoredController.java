@@ -1,13 +1,14 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseCommonController;
+import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.UniversityDict;
 import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.MajoredQuery;
 import cn.thinkjoy.gk.service.IDataDictService;
+import cn.thinkjoy.gk.service.IMajoredRankExService;
 import cn.thinkjoy.gk.service.IMajoredService;
 import cn.thinkjoy.gk.service.IUniversityDictService;
 import com.alibaba.dubbo.common.logger.Logger;
@@ -21,10 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by wpliu on 15/9/25.
@@ -32,12 +30,14 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/majored")
-public class MajoredController extends BaseCommonController {
+public class MajoredController extends BaseController {
 
     public static  final Logger log= LoggerFactory.getLogger(MajoredController.class);
 
     @Autowired
-     private IMajoredService  iMajoredService;
+    private IMajoredRankExService majoredRankExService;
+    @Autowired
+    private IMajoredService  iMajoredService;
     @Autowired
     private IUniversityDictService iUniversityDictService;
     @Autowired
@@ -160,29 +160,50 @@ public class MajoredController extends BaseCommonController {
      */
     @RequestMapping(value = "/getMajoredDetail",method = RequestMethod.GET)
     @ResponseBody
-    public MajoredDetailDto getMajoredDetail(){
+    public MajoredDetailDto getMajoredDetail(@RequestParam(value="code",required=false) String majoredCode,
+                                             @RequestParam(value="startSize",required=false) Integer startSize,
+                                             @RequestParam(value="endSize",required=false) Integer endSize) throws Exception {
+        if(StringUtils.isEmpty(majoredCode)){
+            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
+        }
+
+        if(startSize==null){
+            startSize = 0;
+        }
+
+        if(endSize==null){
+            endSize=0;
+        }
+
         MajoredDetailDto majoredDetailDto=new MajoredDetailDto();
-        MajoredDto majoredDto=new MajoredDto();
-        String majoredCode=request.getParameter("code");
+        MajoredDto majoredDto = new MajoredDto();
         majoredDto=iMajoredService.getMajoredById(majoredCode);
         majoredDetailDto.setMainCourse(majoredDto.getMainCourse());
         majoredDetailDto.setSimilarMajor(majoredDto.getSimilarMajored());
         majoredDetailDto.setWorkGuide(majoredDto.getWorkGuide());
-        Map<String,Object> map=new HashMap<>();
-        map.put("type","PROPERTY");//院校类型
-        List<UniversityDict> universityTypeList=iUniversityDictService.queryList(map,"id","asc");
-        List<OpenUniversity> openUniversities=new ArrayList<>();
-        for(UniversityDict universityDict:universityTypeList){
-            OpenUniversity openUniversity=new OpenUniversity();
-            openUniversity.setUniversityType(universityDict.getName());
-            List<Map<String,Object>> universityLs=iMajoredService.getUniversityByCode(majoredCode,universityDict.getName());
-            openUniversity.setUniversityLs(universityLs);
-            openUniversities.add(openUniversity);
-        }
-        majoredDetailDto.setOpenUniversity(openUniversities);
+//        Map<String,Object> map=new HashMap<>();
+//        map.put("type","PROPERTY");//院校类型
+//        List<UniversityDict> universityTypeList=iUniversityDictService.queryList(map,"id","asc");
+//        List<OpenUniversity> openUniversities=new ArrayList<>();
+//        for(UniversityDict universityDict:universityTypeList){
+//            OpenUniversity openUniversity=new OpenUniversity();
+//            openUniversity.setUniversityType(universityDict.getName());
+//            List<Map<String,Object>> universityLs=iMajoredService.getUniversityByCode(majoredCode,universityDict.getName());
+//            openUniversity.setUniversityLs(universityLs);
+//            openUniversities.add(openUniversity);
+//        }
+        Calendar a=Calendar.getInstance();
+
+        int year = a.get(Calendar.YEAR);
+
+        long areaId = getAreaCookieValue();
+
+        List<MajoredRankDto> majoredRankDto = majoredRankExService.findOpenUniversity(majoredDto.getName(), year, areaId,startSize,endSize);
+
+        majoredDetailDto.setOpenUniversity(majoredRankDto);
+
         return majoredDetailDto;
     }
-
 
     /**
      * 获取专业信息
