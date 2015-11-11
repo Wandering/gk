@@ -114,6 +114,7 @@
         SELECT
         universityId,
         majoredId,
+        majoredName,
         year,
         enrollBatch,
         subject,
@@ -151,6 +152,26 @@
         </trim>
     </select>
 
+    <select id="getOpenMajoredPojoList" resultType="OpenMajoredPojo" parameterType="java.util.Map">
+        select
+        rr.majorName as majoredName,
+        -- pp.majorBatch as batch,专业信息补充内容表中只有本科专科，暂时不显示
+        pp.subject as subject,
+        -- majoredRank,
+        rr.salaryRank as salaryRank,
+        rr.employedRank as employmentRateRank,
+        isEnrol as isEnrol
+        from gk_majored_rank rr
+        left join (
+            select id,universityId,majoredName,batch,subject,year,areaId,1 as isEnrol
+            from gk_enroll_plan
+            where universityId = #{universityId} and areaId = #{areaId}
+        ) pp
+        on  rr.universityId = pp.universityId
+        and rr.majorName=pp.majoredName
+        and pp.year = #{year}
+        where rr.universityId = #{universityId}
+    </select>
+
 
 </mapper>
-

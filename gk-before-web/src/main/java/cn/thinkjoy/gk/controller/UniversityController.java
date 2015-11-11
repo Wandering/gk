@@ -323,6 +323,19 @@ public class UniversityController extends BaseController {
         return iUniversityService.getMajoredScoreLinePojoList(universityId,areaId);
     }
 
+    /**
+     * 获取开设专业
+     * @param universityId
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/getOpenMajoredPojoList",method = RequestMethod.GET)
+    @ResponseBody
+    public List<OpenMajoredPojo> getOpenMajoredPojoList(@RequestParam(value = "universityId",required = true)long universityId) throws Exception{
+        long areaId=getAreaCookieValue();
+        return iUniversityService.getOpenMajoredPojoList(universityId,areaId);
+    }
+
 
     /**
      * 获取院校详情
