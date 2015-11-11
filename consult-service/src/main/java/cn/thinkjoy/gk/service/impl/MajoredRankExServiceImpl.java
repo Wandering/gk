@@ -24,11 +24,14 @@ public class MajoredRankExServiceImpl implements IMajoredRankExService {
     private IMajoredRankExDAO majoredRankExDAO;
 
     @Override
-    public List<MajoredRankDto> findOpenUniversity(String majorName, Integer year, Long areaId) {
+    public List<MajoredRankDto> findOpenUniversity(String majorName, Integer year, Long areaId,Integer startSize,Integer endSize) {
         Map<String,Object> params = new HashMap<>();
         params.put("majorName",majorName);
         params.put("year",year);
         params.put("areaId",areaId);
+        int pageSize = endSize - startSize;
+        params.put("startSize",startSize);
+        params.put("endSize",pageSize);
         return majoredRankExDAO.findOpenUniversity(params);
     }
 }

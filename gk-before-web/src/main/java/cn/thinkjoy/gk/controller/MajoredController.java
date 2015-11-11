@@ -160,10 +160,23 @@ public class MajoredController extends BaseController {
      */
     @RequestMapping(value = "/getMajoredDetail",method = RequestMethod.GET)
     @ResponseBody
-    public MajoredDetailDto getMajoredDetail() throws Exception {
+    public MajoredDetailDto getMajoredDetail(@RequestParam(value="code",required=false) String majoredCode,
+                                             @RequestParam(value="startSize",required=false) Integer startSize,
+                                             @RequestParam(value="endSize",required=false) Integer endSize) throws Exception {
+        if(StringUtils.isEmpty(majoredCode)){
+            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
+        }
+
+        if(startSize==null){
+            startSize = 0;
+        }
+
+        if(endSize==null){
+            endSize=0;
+        }
+
         MajoredDetailDto majoredDetailDto=new MajoredDetailDto();
-        MajoredDto majoredDto=new MajoredDto();
-        String majoredCode=request.getParameter("code");
+        MajoredDto majoredDto = new MajoredDto();
         majoredDto=iMajoredService.getMajoredById(majoredCode);
         majoredDetailDto.setMainCourse(majoredDto.getMainCourse());
         majoredDetailDto.setSimilarMajor(majoredDto.getSimilarMajored());
@@ -185,7 +198,7 @@ public class MajoredController extends BaseController {
 
         long areaId = getAreaCookieValue();
 
-        List<MajoredRankDto> majoredRankDto = majoredRankExService.findOpenUniversity(majoredDto.getName(), year, areaId);
+        List<MajoredRankDto> majoredRankDto = majoredRankExService.findOpenUniversity(majoredDto.getName(), year, areaId,startSize,endSize);
 
         majoredDetailDto.setOpenUniversity(majoredRankDto);
 
