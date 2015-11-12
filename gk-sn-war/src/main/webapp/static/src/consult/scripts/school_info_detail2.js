@@ -34,10 +34,10 @@ define(function (require) {
                         Info.schoolIntro(schoolId);
 
                         // tab切换
+                        var flag = false;
                         $('#tabs-list').on('click', 'li', function () {
                             $('#tabs-content').html('');
                             var _this = $(this);
-                            var index = _this.index();
                             var thisV = _this.attr('rel');
                             _this.addClass('active').siblings().removeClass('active');
                             if (thisV == "院校简介") {
@@ -48,8 +48,10 @@ define(function (require) {
                                 Info.getSchoolInfo(schoolId);
                             } else if (thisV == "往年招生计划") {
                                 Info.getEnroll(schoolId);
-                            } else if(thisV == "专业录取分数") {
+                            } else if (thisV == "专业录取分数") {
                                 Info.admitAMark(schoolId);
+                            } else if (thisV == "开设专业") {
+                                Info.openSpecialty(schoolId);
                             }
                         })
 
@@ -112,7 +114,6 @@ define(function (require) {
                 function (data) {
                     if (data.rtnCode = "0000000") {
                         var isCollect = data.bizData;
-                        console.log(isCollect)
                         if (isCollect == 0) {
                             $('#collect').removeClass('active').find('span').text('收藏');
                         } else {
@@ -147,16 +148,14 @@ define(function (require) {
         // 院校简介
         schoolIntro: function (schoolId) {
             $.get('/university/getUniversityIntro.do?universityId=' + schoolId, function (data) {
-                console.log(data)
                 if (data.rtnCode == '0000000') {
                     $('#tabs-content').html(data.bizData.universityIntro);
                 }
-            })
+            });
         },
         // 招生简章
         brochures: function (schoolId) {
             $.get('/university/getEntroIntro.do?universityId=' + schoolId, function (data) {
-                console.log(data)
                 if (data.rtnCode == '0000000') {
                     $('#tabs-content').html(data.bizData.entroIntro);
                 }
@@ -166,7 +165,6 @@ define(function (require) {
         getSchoolInfo: function (schoolId) {
             var _this = this;
             $.get(' /university/getEnrollInfo.do?id=' + schoolId, function (data) {
-                console.log(data)
                 if (data.rtnCode == '0000000') {
                     _this.renderSchool(data.bizData.enrollInfo);
                 }
@@ -174,12 +172,13 @@ define(function (require) {
         },
         renderSchool: function (data) {
             //招生情况年份
-            var tabHtml = '<div id="tabs_list_last"><ul>';
+            var tabHtml = '<div id="tabs_list_last" class="tabs-ui"><ul>';
             var tabContentHtml = '';
             for (var i = 0; i < data.length; i++) {
                 var title = data[i].title;
                 tabHtml += '<li>' + title + '</li>';
-                tabContentHtml += '<div style="display:none" class="school-table mt20">'
+                tabContentHtml += ''
+                + '<div style="display:none" class="school-table mt20">'
                 + '<table border="0" cellpadding="0" cellspacing="0">'
                 + '<thead>'
                 + '<tr>'
@@ -216,13 +215,14 @@ define(function (require) {
                 .append(tabHtml)
                 .append(tabContentHtml)
                 .on('click', 'li', function () {
-                    console.log($(this).index());
-                    var index = $(this).index();
-                    $(this).addClass('active').siblings().removeClass('active');
-                    $('#tabs-content').find('.school-table').hide();
-                    $('#tabs-content').find('.school-table:eq(' + index + ')').show();
-                    console.log($('#tabs-content').find('.school-table:eq(' + index + ')').html());
+                    var _this = $(this);
+                    var index = _this.index();
+                    var thisParent = _this.parents('#tabs-content');
+                    _this.addClass('active').siblings().removeClass('active');
+                    thisParent.find('.school-table').hide();
+                    thisParent.find('.school-table:eq(' + index + ')').show();
                 });
+            $('#tabs_list_last').find('li:eq(0)').click();
         },
         // 往年招生计划
         getEnroll: function (schoolId) {
@@ -230,19 +230,21 @@ define(function (require) {
             var batch = getUrLinKey('batch');
             console.log(batch)
             $.get('/university/getEnrollPlan.do?id=' + schoolId + '&batch=' + batch, function (data) {
-                console.log(data)
                 if (data.rtnCode == '0000000') {
                     _this.renderEnroll(data.bizData.enrollPlan);
                 }
             })
         },
-        renderEnroll : function(data){
-            var tabHtml = '<div id="tabs_list_last"><ul>';
+        renderEnroll: function (data) {
+            var tabHtml = '<div id="tabs_list_last" class="tabs-ui"><ul>';
             var tabContentHtml = '';
             for (var i = 0; i < data.length; i++) {
                 var title = data[i].title;
                 tabHtml += '<li>' + title + '</li>';
                 tabContentHtml += '<div style="display:none" class="school-table mt20">'
+                + '<div class="subjectType">'
+                + '<label><input type="radio" name="subject1" id=""/> <span>文史</span></label><label><input type="radio" name="subject1" id=""/> <span>理科</span></label>'
+                + '</div>'
                 + '<table border="0" cellpadding="0" cellspacing="0">'
                 + '<thead>'
                 + '<tr>'
@@ -256,8 +258,8 @@ define(function (require) {
                 + '</thead>'
                 + '<tbody>';
                 for (var j = 0; j < data[i].planInfos.length; j++) {
-                    var  planInfosData = data[i].planInfos[j];
-                    tabContentHtml += '<tr>'
+                    var planInfosData = data[i].planInfos[j];
+                    tabContentHtml += '<tr batch="'+ planInfosData.subject +'">'
                     + '<td width="50%" class="name">' + (planInfosData.majoredName || '') + '</td>'
                     + '<td width="10%">' + (planInfosData.batch || '') + '</td>'
                     + '<td width="10%">' + (planInfosData.subject || '') + '</td>'
@@ -273,16 +275,34 @@ define(function (require) {
                 .append(tabHtml)
                 .append(tabContentHtml)
                 .on('click', 'li', function () {
-                    console.log($(this).index());
-                    var index = $(this).index();
-                    $(this).addClass('active').siblings().removeClass('active');
-                    $('#tabs-content').find('.school-table').hide();
-                    $('#tabs-content').find('.school-table:eq(' + index + ')').show();
-                    console.log($('#tabs-content').find('.school-table:eq(' + index + ')').html());
+                    var _this = $(this);
+                    var index = _this.index();
+                    var thisParents = _this.parents('#tabs-content');
+                    thisParents.find('tr').show();
+                    thisParents.find('label').removeClass('active').find('input').attr('checked',false);
+                    _this.addClass('active').siblings().removeClass('active');
+                    thisParents.find('.school-table').hide();
+                    thisParents.find('.school-table:eq(' + index + ')').show()
+                        .find('label')
+                        .on('click',function(){
+                            $(this).addClass('active').siblings().removeClass('active');
+                            var batch = $(this).find('span').text();
+                            var batchW = $(this).parents('.school-table').find('tr[batch="文史"]');
+                            var batchL = $(this).parents('.school-table').find('tr[batch="理工"]');
+                            if(batch=="文史"){
+                                batchL.hide();
+                                batchW.show();
+                            }else{
+                                batchW.hide();
+                                batchL.show();
+                            }
+                        })
                 });
+            $('#tabs_list_last').find('li:eq(0)').click();
+
         },
         // 专业录取分数
-        admitAMark : function(schoolId){
+        admitAMark: function (schoolId) {
             var _this = this;
             $.get('/university/getMajoredScoreLineList.do?universityId=' + schoolId, function (data) {
                 console.log(data)
@@ -291,18 +311,21 @@ define(function (require) {
                 }
             })
         },
-        renderAdmitAMark : function(data){
-            var tabHtml = '<div id="tabs_list_last"><ul>';
+        renderAdmitAMark: function (data) {
+            var tabHtml = '<div id="tabs_list_last" class="tabs-ui"><ul>';
             var tabContentHtml = '';
-            for(var v in data){
+            for (var v in data) {
                 var title = v;
                 tabHtml += '<li>' + title + '</li>';
                 tabContentHtml += '<div style="display:none" class="school-table mt20">'
+                + '<div class="subjectType">'
+                + '<label><input type="radio" name="subject1" id=""/> <span>文史</span></label><label><input type="radio" name="subject1" id=""/> <span>理科</span></label>'
+                + '</div>'
                 + '<table border="0" cellpadding="0" cellspacing="0">'
                 + '<thead>'
                 + '<tr>'
                 + '<th>专业名称</th>'
-                //+ '<th>批次</th>'
+                    //+ '<th>批次</th>'
                 + '<th>科类</th>'
                 + '<th>录取最高分</th>'
                 + '<th>录取最低分</th>'
@@ -311,11 +334,10 @@ define(function (require) {
                 + '</thead>'
                 + '<tbody>';
                 for (var j = 0; j < data[v].length; j++) {
-                    var  admitAMarkData = data[v][j];
-
-                    tabContentHtml += '<tr>'
+                    var admitAMarkData = data[v][j];
+                    tabContentHtml += '<tr batch="'+ admitAMarkData.subject +'">'
                     + '<td>' + (admitAMarkData.majoredName || '-') + '</td>'
-                    //+ '<td>' + (admitAMarkData.enrollBatch || '-') + '</td>'
+                        //+ '<td>' + (admitAMarkData.enrollBatch || '-') + '</td>'
                     + '<td>' + (admitAMarkData.subject || '-') + '</td>'
                     + '<td>' + (admitAMarkData.highestScore) + '</td>'
                     + '<td>' + (admitAMarkData.lowestScore) + '</td>'
@@ -323,31 +345,80 @@ define(function (require) {
                     + '</tr>';
                 }
                 tabContentHtml += '</tbody></table></div>';
-
-
             }
             tabHtml += '</ul></div>';
             $('#tabs-content')
                 .append(tabHtml)
                 .append(tabContentHtml)
                 .on('click', 'li', function () {
-                    console.log($(this).index());
-                    var index = $(this).index();
-                    $(this).addClass('active').siblings().removeClass('active');
-                    $('#tabs-content').find('.school-table').hide();
-                    $('#tabs-content').find('.school-table:eq(' + index + ')').show();
-                    console.log($('#tabs-content').find('.school-table:eq(' + index + ')').html());
+                    var _this = $(this);
+                    var index = _this.index();
+                    var thisParents = _this.parents('#tabs-content');
+                    thisParents.find('tr').show();
+                    thisParents.find('label').removeClass('active').find('input').attr('checked',false);
+                    _this.addClass('active').siblings().removeClass('active');
+                    thisParents.find('.school-table').hide();
+                    thisParents.find('.school-table:eq(' + index + ')').show()
+                        .find('label')
+                        .on('click',function(){
+                            $(this).addClass('active').siblings().removeClass('active');
+                            var batch = $(this).find('span').text();
+                            var batchW = $(this).parents('.school-table').find('tr[batch="文史"]');
+                            var batchL = $(this).parents('.school-table').find('tr[batch="理工"]');
+                            console.log($(this).parents('.school-table').find('tr').html())
+                            if(batch=="文史"){
+                                batchL.hide();
+                                batchW.show();
+                            }else{
+                                batchW.hide();
+                                batchL.show();
+                            }
+                        })
                 });
+            $('#tabs_list_last').find('li:eq(0)').click();
         },
         // 开设专业
-        openSpecialty : function(){
+        openSpecialty: function (schoolId) {
             var _this = this;
-            var batch = getUrLinKey('batch');
-            console.log(batch)
-            $.get('/university/getEnrollPlan.do?id=' + schoolId + '&batch=' + batch, function (data) {
+            $.get('/university/getOpenMajoredPojoList.do?universityId=' + schoolId, function (data) {
                 console.log(data)
+                var dataJson = data.bizData;
                 if (data.rtnCode == '0000000') {
-                    _this.renderEnroll(data.bizData.enrollPlan);
+                    var tabContentHtml = '<div style="display:block" class="school-table mt20">'
+                        +'<div class="tipTxt"><strong>温馨提示：</strong> <i class="star"></i>号表示该专业在该院校招生</div>'
+                        + '<table border="0" cellpadding="0" cellspacing="0">'
+                        + '<thead>'
+                        + '<tr>'
+                        + '<th>专业名称</th>'
+                        + '<th>科类</th>'
+                        + '<th>薪资排名</th>'
+                        + '<th>就业率排名</th>'
+                        + '</tr>'
+                        + '</thead>'
+                        + '<tbody>';
+                    for (var i = 0; i < dataJson.length; i++) {
+                        var employmentRateRank = dataJson[i].employmentRateRank
+                            , isEnrol = dataJson[i].isEnrol
+                            , majoredName = dataJson[i].majoredName
+                            , salaryRank = dataJson[i].salaryRank
+                            , subject = dataJson[i].subject;
+                        var isEnrolTxt = '';
+                        if (isEnrol == 1) {
+                            isEnrolTxt = '<i class="star"></i>';
+                        } else {
+                            isEnrolTxt = '';
+                        }
+                        tabContentHtml += '<tr>'
+                        + '<td>'
+                        + isEnrolTxt
+                        + majoredName + '</td>'
+                        + '<td>' + (subject || "-") + '</td>'
+                        + '<td>' + salaryRank + '</td>'
+                        + '<td>' + employmentRateRank + '</td>'
+                        + '</tr>';
+                    }
+                    tabContentHtml += '</tbody></table></div>';
+                    $('#tabs-content').append(tabContentHtml)
                 }
             })
         }

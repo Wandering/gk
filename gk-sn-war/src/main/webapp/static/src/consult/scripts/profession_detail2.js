@@ -95,6 +95,7 @@ define(function (require) {
             var openUniversity = data.openUniversity;
             console.log(openUniversity)
             var openUniversityHtml = ''
+                +'<div class="tipTxt"><strong>温馨提示：</strong> <i class="star"></i>号表示该专业在该院校招生</div>'
                 + '<table class="table" id="openUniversity-table">'
                 + '<thead>'
                 + '<tr>'
