@@ -1,7 +1,3 @@
-/**
- * Created by kepeng on 15/9/25.
- */
-
 define(function (require) {
     var $ = require('$');
     require('backToTop');
@@ -13,77 +9,80 @@ define(function (require) {
     }
 
     var Info = {
-        getProfessionInfo: function(code) {
+        getProfessionInfo: function (code) {
             var that = this;
             $.ajax({
                 type: 'get',
                 url: '/majored/getMajoredInfo.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
-                    code:code
+                    code: code
                 },
                 dataType: 'json',
-                success: function(data) {
+                success: function (data) {
+                    console.log(data)
                     if ('0000000' === data.rtnCode) {
                         that.renderInfo(data.bizData);
                     }
                 },
-                error: function(data) {
+                error: function (data) {
                 }
             });
         },
-        renderInfo: function(obj) {
+        renderInfo: function (obj) {
             $('#info_content').html('<img class="fl" src="' + (obj.universityImage || 'http://cdn.gaokao360.net/static/global/common/images/kqbk_banner_default.png') + '" />'
-                                    + '<div class="info">'
-                                        + '<ul>'
-                                            + '<li class="school-name">' + obj.name + '</li>'
-                                            + '<li>学历层次：' + obj.educationLevel + '</li>'
-                                            + '<li>学科门类：' + obj.subjectType + '</li>'
-                                            + '<li>专业分类：' + obj.majoredType + '</li>'
-                                            + '<li>授予学位：' + obj.degree + '</li>'
-                                        + '</ul>'
-                                    + '</div>');
+            + '<div class="info">'
+            + '<ul>'
+            + '<li class="school-name">' + obj.name + '</li>'
+            + '<li>学历层次：' + obj.educationLevel + '</li>'
+            + '<li>学科门类：' + obj.subjectType + '</li>'
+            + '<li>专业分类：' + obj.majoredType + '</li>'
+            + '<li>授予学位：' + obj.degree + '</li>'
+            + '</ul>'
+            + '</div>');
         },
-        getReationInfo: function(code) {
+        getReationInfo: function (code) {
             var that = this;
             $.ajax({
                 type: 'get',
                 url: '/majored/getMajoredDetail.do',
                 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 data: {
-                    code:code
+                    code: code
                 },
                 dataType: 'json',
-                success: function(data) {
+                success: function (data) {
+                    console.log(data)
                     if ('0000000' === data.rtnCode) {
                         that.renderReation(data.bizData);
                         $('#tab_0').show()
                         that.addEventHandleTab();
                     }
                 },
-                error: function(data) {
+                error: function (data) {
                 }
             });
         },
-        addEventHandleTab: function() {
-            $('.tabs-list li').on('mouseover', function(e) {
+        addEventHandleTab: function () {
+            $('.tabs-list').on('click', 'li', function (e) {
                 if (!$(this).hasClass('active')) {
                     $(this).addClass('active').siblings().removeClass('active');
                     $('#tab_' + $(this).index()).show().siblings().hide();
                 }
             });
         },
-        renderList: function(list) {
+        renderList: function (list) {
             var html = [];
             html.push('<ul>');
-            $.each(list, function(i, value) {
+            $.each(list, function (i, value) {
+                console.log(list)
                 html.push('<li>' + value + '</li>');
             });
             html.push('</ul>');
             return html.join('');
         },
-        renderReation: function(data) {
-
+        renderReation: function (data) {
+            console.log(data)
             var similarMajor = data.similarMajor ? data.similarMajor.split('丨') : [];
 
             var mainCourse = data.mainCourse ? data.mainCourse.split('丨') : [];
@@ -94,23 +93,41 @@ define(function (require) {
             $('#tab_1').html(this.renderList(mainCourse) || defaultTipMsg);
             $('#tab_2').html('<p class="article">' + (data.workGuide || '暂无信息！') + '</p>');
             var openUniversity = data.openUniversity;
-            var html = [];
-
+            console.log(openUniversity)
+            var openUniversityHtml = ''
+                +'<div class="tipTxt"><strong>温馨提示：</strong> <i class="star"></i>号表示该专业在该院校招生</div>'
+                + '<table class="table" id="openUniversity-table">'
+                + '<thead>'
+                + '<tr>'
+                + '<th>开设院校</th>'
+                + '<th>计划人数</th>'
+                + '<th>学制</th>'
+                + '<th>外语语种</th>'
+                + '<th>收费标准</th>'
+                + '</tr>'
+                + '</thead>'
+                + '<tbody>';
             for (var i = 0, len = openUniversity.length; i < len; i++) {
-                html.push('<h5>' + openUniversity[i].universityType + '</h5>');
-
-                var universityLs = openUniversity[i].universityLs;
-                if (universityLs.length > 0) {
-                    html.push('<ul>');
-
-                    for (var j = 0, jlen = universityLs.length; j < jlen; j++) {
-                        html.push('<li><a href="/consult/school_detail.jsp?id=' + universityLs[j].code + '">' + universityLs[j].name + '</a></li>');
-                    }
-
-                    html.push('</ul>');
+                var isOpenN = openUniversity[i].isOpen;
+                var isStar = '';
+                if(isOpenN==0){
+                    isStar = '';
+                }else{
+                    isStar = '<i class="star"></i>'
                 }
+                openUniversityHtml +=''
+                +'<tr>'
+                +'<td>'
+                + isStar
+                + (openUniversity[i].universityName || "-" ) +'</td>'
+                +'<td>'+ (openUniversity[i].enrollNumber || "-" )   +'</td>'
+                +'<td>'+ (openUniversity[i].type || "-" )  +'</td>'
+                +'<td>'+ (openUniversity[i].foreignLanguage || "-" )  +'</td>'
+                +'<td>'+ (openUniversity[i].feeStandard || "-" )  +'</td>'
+                +'</tr>';
             }
-            $('#tab_3').html(html.join(''));
+            openUniversityHtml +='</tbody></table>';
+            $('#tab_3').html(openUniversityHtml);
         }
     };
 
@@ -149,7 +166,7 @@ define(function (require) {
         ]
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         var code = getUrLinKey('id');
         Info.getProfessionInfo(code);
         Info.getReationInfo(code);
