@@ -32,36 +32,20 @@
                     <li rel="开设专业">开设专业</li>
                 </ul>
             </div>
-            <div class="tabs-content" id="tabs-content">
-
-            </div>
-            <%--<ul class="tabs-list mt20" id="tabs_list_last">--%>
-            <%--</ul>--%>
-            <%--<div id="select_batch">--%>
-            <%--</div>--%>
-            <%--<div id="last_content">--%>
-
-            <%--</div>--%>
-
-
-            <%--<ul class="tabs-list mt20" id="tabs_list_enroll">--%>
-            <%--</ul>--%>
-
-            <%--<div>--%>
-            <%--<div id="category">--%>
-            <%--<button data-id="1">文史</button>--%>
-            <%--<button data-id="2">理工</button>--%>
-            <%--</div>--%>
-            <%--<div id="enroll_content"></div>--%>
-            <%--</div>--%>
+            <div class="tabs-content hide" id="tabs-content1"></div>
+            <div class="tabs-content hide" id="tabs-content2"></div>
+            <div class="tabs-content hide" id="tabs-content3"></div>
+            <div class="tabs-content hide" id="tabs-content4"></div>
+            <div class="tabs-content hide" id="tabs-content5"></div>
+            <div class="tabs-content hide" id="tabs-content6"></div>
         </div>
     </div>
 </div>
 
 <%@ include file="/common/footer.jsp" %>
 <script type="text/javascript">
-//    seajs.use("/static/src/consult/scripts/school_info_detail2");
-        seajs.use("http://cdn.gaokao360.net/static/global/consult/scripts/school_info_detail");
+    seajs.use("/static/src/consult/scripts/school_info_detail");
+//        seajs.use("http://cdn.gaokao360.net/static/global/consult/scripts/school_info_detail");
 </script>
 </body>
 </html>
