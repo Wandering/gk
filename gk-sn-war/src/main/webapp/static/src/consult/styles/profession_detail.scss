@@ -92,3 +92,20 @@ h1{
     cursor: pointer;
   }
 }
+#openUniversity-table{
+  width: 100%;
+  margin: 30px auto;
+}
+#openUniversity-table th,
+#openUniversity-table td{
+  border: 1px solid #f1f1f1;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+}
+#openUniversity-table td{
+  font-weight: normal;
+}
+#openUniversity-table th{
+  background: #f5f5f5;
+}

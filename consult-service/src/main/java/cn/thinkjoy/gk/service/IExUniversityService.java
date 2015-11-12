@@ -1,9 +1,6 @@
 package cn.thinkjoy.gk.service;
 
-import cn.thinkjoy.gk.pojo.EnrollInfo;
-import cn.thinkjoy.gk.pojo.MajoredScoreLinePojo;
-import cn.thinkjoy.gk.pojo.PlanInfo;
-import cn.thinkjoy.gk.pojo.UniversityDto;
+import cn.thinkjoy.gk.pojo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -38,4 +35,6 @@ public interface IExUniversityService {
     Map<String,Object> getMajoredScoreLinePojoList(long universityId,long areaId);
 
     List<String> getMajoredScoreLineYears(long universityId,long areaId);
+
+    List<OpenMajoredPojo> getOpenMajoredPojoList(long universityId,long areaId);
 }
