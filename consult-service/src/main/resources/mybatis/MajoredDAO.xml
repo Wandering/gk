@@ -64,19 +64,19 @@
 
     <select id="getMajorDetailList" resultType="MajorDetailPojo">
         SELECT majoredId id,majoredName name,subject,schoolLength,feeStandard,enrollNumber planNum
-    FROM gk_enroll_plan
-    <where>
-        1=1
-        <if test="id!=null">
-            and universityId = #{id}
-        </if>
-        <if test="batch!=null">
-            and batch = #{batch}
-        </if>
-        <if test="year!=null">
-            and year = #{year}
-        </if>
-    </where>
+        FROM gk_enroll_plan
+        <where>
+            1=1
+            <if test="id!=null">
+                and universityId = #{id}
+            </if>
+            <if test="batch!=null">
+                and batch = #{batch}
+            </if>
+            <if test="year!=null">
+                and year = #{year}
+            </if>
+        </where>
     </select>
 
 

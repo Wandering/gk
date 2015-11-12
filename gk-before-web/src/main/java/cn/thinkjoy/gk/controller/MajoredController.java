@@ -172,7 +172,7 @@ public class MajoredController extends BaseController {
         }
 
         if(endSize==null){
-            endSize=0;
+            endSize=10;
         }
 
         MajoredDetailDto majoredDetailDto=new MajoredDetailDto();
