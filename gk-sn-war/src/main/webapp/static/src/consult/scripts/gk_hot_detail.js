@@ -56,6 +56,7 @@ define(function (require) {
     function getRightInfo() {
         if ('hot' === method) {
             $.get('/gkinformation/getHotInformation.do?pageNo=0&pageSize=10', function(data) {
+                console.log(data)
                 if ('0000000' === data.rtnCode) {
                     var biz = data.bizData;
                     if (biz.length > 0) {
