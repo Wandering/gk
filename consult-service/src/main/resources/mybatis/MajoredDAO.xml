@@ -9,7 +9,7 @@
     </select>
 
     <select id="searchMajored" parameterType="java.util.Map" resultType="SubjectDto">
-        select a.id as majoredId,b.majoredName as name,b.enrollNumber as planNumber,
+        select a.id as majoredId,a.name as name,b.enrollNumber as planNumber,
         b.schoolLength,b.foreignLanguage as foreginLanguage,b.feeStandard,b.universityId,b.universityName
         from gk_majored a  left join gk_enroll_plan  b  on a.id=b.majoredId  where 1=1
         <if test="condition.subjectTypeName!=null and condition.subjectTypeName!=''">
@@ -22,7 +22,7 @@
             and a.majoredType=#{condition.majoredTypeName}
         </if>
         <if test="condition.searchName!=null and condition.searchName!=''">
-            and b.majoredName like CONCAT('%',#{condition.searchName},'%')
+            and a.name like CONCAT('%',#{condition.searchName},'%')
         </if>
         <if test="condition.batchTypeName!=null and condition.batchTypeName!=''">
              and b.batch=#{condition.batchTypeName}
@@ -43,7 +43,7 @@
         </if>
 
         <if test="condition.searchName!=null and condition.searchName!=''">
-            and b.majoredName like CONCAT('%',#{condition.searchName},'%')
+            and a.name like CONCAT('%',#{condition.searchName},'%')
         </if>
         <if test="condition.batchTypeName!=null and condition.batchTypeName!=''">
             and b.batch=#{condition.batchTypeName}
