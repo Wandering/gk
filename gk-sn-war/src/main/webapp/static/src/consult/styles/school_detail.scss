@@ -170,3 +170,79 @@ h1 {
 .info-content .collect.active i{
   background:url('../../consult/images/collect-icon.png') no-repeat 0 -21px;
 }
+
+.star{
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  background: url('../../consult/images/star.png') no-repeat;
+  position: relative;
+  top: 2px;
+  right: 3px;
+}
+.tabs-content{
+  min-height: 800px;
+}
+.tabs-ui ul {
+  display: inline-block;
+  margin-top: 15px;
+  background: #ececec;
+  height: 33px;
+  border-radius: 5px;
+  padding: 0;
+}
+
+.tabs-ui li {
+  display: inline-block;
+  line-height: 33px;
+  height: 33px;
+  padding: 0 15px;
+  color: #6f6d6d;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.tabs-ui li.active {
+  background: #e24333;
+  color: #fff;
+  -moz-box-shadow: 0px 0px 2px #333333;
+  -webkit-box-shadow: 0px 0px 2px #333333;
+  box-shadow: 0px 0px 2px #333333;
+}
+
+.subjectType {
+  width: 178px;
+  height: 41px;
+  border-radius: 5px 5px 0 0;
+  background: #ececec;
+}
+
+.subjectType label {
+  width: 89px;
+  height: 41px;
+  line-height: 41px;
+  display: inline-block;
+  text-align: center;
+}
+
+.subjectType label.active {
+  background: #f5f5f5;
+  border-radius: 5px 5px 0 0;
+  moz-box-shadow: 2px 0 0 #ccc;
+  -webkit-box-shadow: 2px 0 0 #ccc;
+  box-shadow: 2px 0 0 #ccc;
+}
+.school-table div.tipTxt{
+  width: 300px;
+  background: #fcf8e3;
+  border: 1px solid #faebcc;
+  height: 35px;
+  line-height: 35px;
+  padding: 0 15px;
+  border-radius: 5px;
+  margin: 15px 0;
+  color: #8a6d3b;
+}
+.school-table div.tipTxt strong{
+  margin-right: 10px;
+}

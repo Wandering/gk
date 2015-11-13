@@ -3,16 +3,17 @@
 <html>
 <head>
     <title>院校信息详情页</title>
-    <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/consult/styles/school_detail.min.css" />
-    <link rel="stylesheet" href="/static/global/consult/styles/school_detail.min.css" />
+    <%@ include file="/common/meta.jsp" %>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/consult/styles/school_detail.min.css"/>
+    <%--<link rel="stylesheet" href="/static/global/consult/styles/school_detail.min.css"/>--%>
 </head>
 <body>
-<%@ include file="/common/header.jsp"%>
+<%@ include file="/common/header.jsp" %>
 <div class="content">
     <div class="w1000">
         <div class="basic-info">
             <h1>院校基本信息</h1>
+
             <div class="info-content" id="info_content">
 
             </div>
@@ -20,6 +21,7 @@
 
         <div class="other-info">
             <h1>往年招生情况</h1>
+
             <div class="tabs">
                 <ul class="tabs-list mt20" id="tabs-list">
                     <li class="active" rel="院校简介">院校简介</li>
@@ -46,20 +48,20 @@
             <%--</ul>--%>
 
             <%--<div>--%>
-                <%--<div id="category">--%>
-                    <%--<button data-id="1">文史</button>--%>
-                    <%--<button data-id="2">理工</button>--%>
-                <%--</div>--%>
-                <%--<div id="enroll_content"></div>--%>
+            <%--<div id="category">--%>
+            <%--<button data-id="1">文史</button>--%>
+            <%--<button data-id="2">理工</button>--%>
+            <%--</div>--%>
+            <%--<div id="enroll_content"></div>--%>
             <%--</div>--%>
         </div>
     </div>
 </div>
 
-<%@ include file="/common/footer.jsp"%>
+<%@ include file="/common/footer.jsp" %>
 <script type="text/javascript">
     seajs.use("/static/src/consult/scripts/school_info_detail2");
-//    seajs.use("http://cdn.gaokao360.net/static/global/consult/scripts/school_info_detail");
+    //    seajs.use("http://cdn.gaokao360.net/static/global/consult/scripts/school_info_detail");
 </script>
 </body>
 </html>
