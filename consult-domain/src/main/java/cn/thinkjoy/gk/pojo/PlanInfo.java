@@ -4,12 +4,21 @@ package cn.thinkjoy.gk.pojo;
  * Created by wpliu on 15/9/25.
  */
 public class PlanInfo {
+    private long majoredId;
     private String majoredName;
     private String batch;
     private String subject;
     private Integer planNumber;
     private String schoolLength;
     private String feeStandard;
+
+    public long getMajoredId() {
+        return majoredId;
+    }
+
+    public void setMajoredId(long majoredId) {
+        this.majoredId = majoredId;
+    }
 
     public String getMajoredName() {
         return majoredName;

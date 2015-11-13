@@ -1166,26 +1166,26 @@ selectList
 
 
     <select id="getPlanInfosByYear" parameterType="java.lang.String" resultType="PlanInfo">
-        select majoredName,batch,subject,enrollNumber as planNumber,schoolLength,feeStandard  from gk_enroll_plan where 1=1
-         and universityId=#{universityId} and year=#{year}
+        select majoredId,majoredName,batch,subject,enrollNumber as planNumber,schoolLength,feeStandard
+        from gk_majored mm left join gk_enroll_plan pp on mm.id=pp.majoredId
+        where
+         pp.universityId=#{universityId} and pp.year=#{year}
           <if test="batch !=null and batch !=''">
-               and batch=#{batch}
+               and pp.batch=#{batch}
           </if>
           <if test="areaId !=null and areaId !=''">
-               and areaId=#{areaId}
+               and pp.areaId=#{areaId}
           </if>
     </select>
 
 
 
     <select id="getUniversityEnrollIntro" parameterType="java.lang.String" resultType="java.lang.String">
-        select  entranceIntro from gk_university where 1=1
-        and id=#{id}
+        select  entranceIntro from gk_university where id=#{id}
     </select>
 
     <select id="getUniversityIntro" parameterType="java.lang.String" resultType="java.lang.String">
-        select universityIntro from gk_university where 1=1
-        and id=#{id}
+        select universityIntro from gk_university where id=#{id}
     </select>
 
     <select id="getWSUniversityDetail" parameterType="java.lang.String" resultType="java.lang.String">
