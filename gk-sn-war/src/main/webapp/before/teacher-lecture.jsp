@@ -58,7 +58,8 @@
 
 <%@ include file="/common/footer.jsp"%>
 <script>
-    seajs.use("http://cdn.gaokao360.net/static/global/before/scripts/teacher-lecture.min");
+//    seajs.use("http://cdn.gaokao360.net/static/global/before/scripts/teacher-lecture.min");
+    seajs.use("/static/src/before/scripts/teacher-lecture");
 </script>
 </body>
 </html>
