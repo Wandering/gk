@@ -20,7 +20,7 @@ define(function (require) {
                 },
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data)
+                    //console.log(data)
                     if ('0000000' === data.rtnCode) {
                         that.renderInfo(data.bizData);
                     }
@@ -52,7 +52,7 @@ define(function (require) {
                 },
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data)
+                    //console.log(data)
                     if ('0000000' === data.rtnCode) {
                         that.renderReation(data.bizData);
                         $('#tab_0').show()
@@ -75,25 +75,26 @@ define(function (require) {
             var html = [];
             html.push('<ul>');
             $.each(list, function (i, value) {
-                console.log(list)
                 html.push('<li>' + value + '</li>');
             });
             html.push('</ul>');
             return html.join('');
         },
         renderReation: function (data) {
-            console.log(data)
+            console.log(data.mainCourse)
             var similarMajor = data.similarMajor ? data.similarMajor.split('丨') : [];
-
-            var mainCourse = data.mainCourse ? data.mainCourse.split('丨') : [];
-
             var defaultTipMsg = '<p class="article">暂无信息！</p>';
-
+            var mainCourse =  data.mainCourse ? data.mainCourse.split('丨') : '';
             $('#tab_0').html(this.renderList(similarMajor) || defaultTipMsg);
-            $('#tab_1').html(this.renderList(mainCourse) || defaultTipMsg);
+            if(mainCourse.length > 0){
+                $('#tab_1').html(this.renderList(mainCourse));
+            }else{
+                $('#tab_1').html(defaultTipMsg);
+            }
+
             $('#tab_2').html('<p class="article">' + (data.workGuide || '暂无信息！') + '</p>');
             var openUniversity = data.openUniversity;
-            console.log(openUniversity)
+            //console.log(openUniversity)
             var openUniversityHtml = ''
                 +'<div class="tipTxt"><strong>温馨提示：</strong> <i class="star"></i>号表示该专业在该院校招生</div>'
                 + '<table class="table" id="openUniversity-table">'

@@ -231,12 +231,14 @@ define(function (require) {
             var _this = this;
             var batch = getUrLinKey('batch');
             $.get('/university/getEnrollPlan.do?id=' + schoolId + '&batch=' + batch, function (data) {
+                console.log(data)
                 if (data.rtnCode == '0000000') {
                     _this.renderEnroll(data.bizData.enrollPlan);
                 }
             })
         },
         renderEnroll: function (data) {
+
             var tabHtml = '<div id="tabs_list_last4" class="tabs-ui"><ul>';
             var tabContentHtml = '';
             for (var i = 0; i < data.length; i++) {
@@ -244,7 +246,7 @@ define(function (require) {
                 tabHtml += '<li>' + title + '</li>';
                 tabContentHtml += '<div class="school-table mt20">'
                 + '<div class="subjectType">'
-                + '<label><input type="radio" name="subject1" id=""/> <span>文史</span></label><label><input type="radio" name="subject1" id=""/> <span>理科</span></label>'
+                + '<label><input type="radio" name="subject1" id=""/> <span>文史</span></label><label><input type="radio" name="subject1" id=""/> <span>理工</span></label>'
                 + '</div>'
                 + '<table border="0" cellpadding="0" cellspacing="0">'
                 + '<thead>'
@@ -261,7 +263,7 @@ define(function (require) {
                 for (var j = 0; j < data[i].planInfos.length; j++) {
                     var planInfosData = data[i].planInfos[j];
                     tabContentHtml += '<tr batch="'+ planInfosData.subject +'">'
-                    + '<td width="50%" class="name">' + (planInfosData.majoredName || '') + '</td>'
+                    + '<td width="50%" class="name"><a href="/consult/profession_detail.jsp?">' + (planInfosData.majoredName || '') + '</a></td>'
                     + '<td width="10%">' + (planInfosData.batch || '') + '</td>'
                     + '<td width="10%">' + (planInfosData.subject || '') + '</td>'
                     + '<td width="10%">' + (planInfosData.planNumber || '') + '</td>'
@@ -329,7 +331,6 @@ define(function (require) {
                     //+ '<th>批次</th>'
                 + '<th>科类</th>'
                 + '<th>录取最高分</th>'
-                + '<th>录取最低分</th>'
                 + '<th>录取平均分</th>'
                 + '</tr>'
                 + '</thead>'
@@ -341,7 +342,6 @@ define(function (require) {
                         //+ '<td>' + (admitAMarkData.enrollBatch || '-') + '</td>'
                     + '<td>' + (admitAMarkData.subject || '-') + '</td>'
                     + '<td>' + (admitAMarkData.highestScore) + '</td>'
-                    + '<td>' + (admitAMarkData.lowestScore) + '</td>'
                     + '<td>' + (admitAMarkData.averageScore) + '</td>'
                     + '</tr>';
                 }

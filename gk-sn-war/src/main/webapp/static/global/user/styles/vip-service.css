@@ -245,7 +245,8 @@ select {
  *    `input` and others.
  */
 button,
-html input[type="button"], input[type="reset"],
+html input[type="button"],
+input[type="reset"],
 input[type="submit"] {
   cursor: pointer;
   /* 3 */ }
@@ -434,8 +435,8 @@ input, textarea {
     text-decoration: none;
     font-size: 14px !important;
     margin-left: 150px !important;
-    -webkit-transition: all 0.5s;
-            transition: all 0.5s; }
+    -webkit-transition: all .5s;
+            transition: all .5s; }
     .header .log-reg a:hover {
       color: #fff !important; }
   .header .user-info-list {
@@ -737,8 +738,8 @@ a.next-btn:hover {
     text-align: center;
     cursor: pointer;
     margin: 20px 0 0 180px;
-    -webkit-transition: all 0.5s;
-            transition: all 0.5s; }
+    -webkit-transition: all .5s;
+            transition: all .5s; }
   .section .btn-red {
     border: 1px solid #e24d39;
     color: #e24d39; }

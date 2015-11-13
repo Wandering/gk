@@ -67,6 +67,7 @@ define(function (require) {
                 }
                 if (result.rtnCode == "0000000") {
                     var dataJson = result.bizData;
+                    console.log(dataJson.length)
                     if(dataJson.length>0){
                         UI.$nextPage.show();
                     }
