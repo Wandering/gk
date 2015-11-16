@@ -742,6 +742,8 @@ a.next-btn:hover {
     .content table .t-content p {
       margin: 0;
       padding: 0; }
+    .content table .t-content .info-txt {
+      text-align: center; }
 
 .content .tip-board {
   background-color: #fcf8e3;

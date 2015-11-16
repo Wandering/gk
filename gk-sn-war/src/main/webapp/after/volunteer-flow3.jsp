@@ -329,21 +329,23 @@
                     <th>姓名</th>
                     <th>性别</th>
                     <th>学校</th>
-                    <th>年级</th>
+                    <th>年纪</th>
                     <th>科类</th>
                     <th>准考证</th>
                     <th>高考分数</th>
-                    <th>一批本科省控线</th>
+                    <th>位次</th>
+                    <th><span class="info-txt" id="controlLine-txt"></span></th>
                 </tr>
                 <tr class="t-content">
-                    <td><b id="studentName"></b></td>
-                    <td><span id="sexT"></span></td>
-                    <td><span id="schoolName"></span></td>
-                    <td></td>
-                    <td id="subjectTypeT"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><span class="info-txt" id="studentName"></span></td>
+                    <td><span class="info-txt" id="sexT"></span></td>
+                    <td><span class="info-txt" id="schoolName"></span></td>
+                    <td><span class="info-txt" id="age"></span></td>
+                    <td><span class="info-txt" id="subjectTypeT"></span></td>
+                    <td><span class="info-txt" id="m_candidateNumber"></span></td>
+                    <td><span class="info-txt" id="m_aggregateScore"></span></td>
+                    <td><span class="info-txt" id="m_ranking"></span></td>
+                    <td><span class="info-txt" id="controlLine"></span></td>
                 </tr>
             </table>
             <div class="tip-board">

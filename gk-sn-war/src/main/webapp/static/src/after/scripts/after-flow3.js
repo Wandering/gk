@@ -13,6 +13,10 @@ define(function (require) {
         });
 
 
+
+
+
+
         $('#volunteer-flow3-layer').on('click', '.close-btn', function () {
             $('#volunteer-flow3-layer,.tansLayer').hide();
         });
@@ -461,6 +465,13 @@ define(function (require) {
                 var schoolName = personListData.schoolName;
                 var sex = personListData.sex;
                 var subjectType = personListData.subjectType;
+
+                $('#m_candidateNumber').text(paramsJson.m_candidateNumber);
+                $('#m_aggregateScore').text(paramsJson.m_aggregateScore);
+                $('#m_ranking').text(paramsJson.m_ranking);
+
+                var m_aggregateScore = paramsJson.m_aggregateScore;
+
                 var sexT='';
                 if(sex=="1"){
                     sexT="男";
@@ -470,9 +481,43 @@ define(function (require) {
                 var subjectTypeT = '';
                 if(subjectType=="1"){
                     subjectTypeT="理科";
+                    if(m_aggregateScore >= 510){
+                        $('#controlLine').text("510");
+                        $('#controlLine-txt').text('一批本科省控线');
+                    }else if( m_aggregateScore >= 467 && m_aggregateScore < 510){
+                        $('#controlLine').text("467");
+                        $('#controlLine-txt').text('二批本科省控线');
+                    }else if( m_aggregateScore >= 382 && m_aggregateScore < 467){
+                        $('#controlLine').text("382");
+                        $('#controlLine-txt').text('三批本科省控线');
+                    }else{
+                        $('#controlLine').text("220");
+                        $('#controlLine-txt').text('高专高职省控线');
+                    }
                 }else{
                     subjectTypeT="文史";
+                    if(m_aggregateScore >= 480){
+                        $('#controlLine').text("480");
+                        $('#controlLine-txt').text('一批本科省控线');
+                    }else if( m_aggregateScore >= 440 && m_aggregateScore < 480){
+                        $('#controlLine').text("440");
+                        $('#controlLine-txt').text('二批本科省控线');
+                    }else if( m_aggregateScore >= 350 && m_aggregateScore < 440){
+                        $('#controlLine').text("350");
+                        $('#controlLine-txt').text('三批本科省控线');
+                    }else{
+                        $('#controlLine').text("200");
+                        $('#controlLine-txt').text('高专高职省控线');
+                    }
                 }
+
+
+
+
+
+
+
+
                 $('#studentName').text(name);
                 $('#schoolName').text(schoolName);
                 $('#sexT').text(sexT);
