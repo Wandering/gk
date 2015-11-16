@@ -443,7 +443,7 @@
         </div>
         <div class="result-info">
             <ul>
-                <li>您录入的分数是<strong id="score-num">666分</strong>、<strong id="subjectTypeV">文史类</strong>，依据2015年招生情况，您的分数是<strong id="batchV">一批本科</strong>；</li>
+                <li>您录入的分数是<strong id="score-num">666分</strong>、<strong id="subjectTypeV">文史类</strong>；</li>
                 <li>如果您想选择<strong>其他批次院校</strong>，请返回重新选择，或根据本人志愿进行填报；</li>
                 <li>如果未能推荐出您的意向院校，请使用我们为您提供的<a href="javascript:;" id="dreanSchoolBtn">理想院校测评</a>服务.</li>
             </ul>
@@ -455,8 +455,8 @@
 </div>
 <%@ include file="/common/footer.jsp"%>
 <script>
-//    seajs.use(["/static/src/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
-    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+    seajs.use(["/static/src/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+//    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
 </script>
 </body>
 </html>

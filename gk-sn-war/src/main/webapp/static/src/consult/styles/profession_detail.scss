@@ -123,3 +123,13 @@ div.tipTxt{
 div.tipTxt strong{
   margin-right: 10px;
 }
+
+.star{
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  background: url('../../consult/images/star.png') no-repeat;
+  position: relative;
+  top: 2px;
+  right: 3px;
+}

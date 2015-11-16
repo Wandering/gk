@@ -81,7 +81,7 @@ define(function (require) {
             return html.join('');
         },
         renderReation: function (data) {
-            console.log(data.mainCourse)
+            console.log(data)
             var similarMajor = data.similarMajor ? data.similarMajor.split('丨') : [];
             var defaultTipMsg = '<p class="article">暂无信息！</p>';
             var mainCourse =  data.mainCourse ? data.mainCourse.split('丨') : '';
@@ -102,8 +102,7 @@ define(function (require) {
                 + '<tr>'
                 + '<th>开设院校</th>'
                 + '<th>计划人数</th>'
-                + '<th>学制</th>'
-                + '<th>外语语种</th>'
+                + '<th>科类</th>'
                 + '<th>收费标准</th>'
                 + '</tr>'
                 + '</thead>'
@@ -122,8 +121,7 @@ define(function (require) {
                 + isStar
                 + (openUniversity[i].universityName || "-" ) +'</td>'
                 +'<td>'+ (openUniversity[i].enrollNumber || "-" )   +'</td>'
-                +'<td>'+ (openUniversity[i].type || "-" )  +'</td>'
-                +'<td>'+ (openUniversity[i].foreignLanguage || "-" )  +'</td>'
+                +'<td>'+ (openUniversity[i].subject)  +'</td>'
                 +'<td>'+ (openUniversity[i].feeStandard || "-" )  +'</td>'
                 +'</tr>';
             }

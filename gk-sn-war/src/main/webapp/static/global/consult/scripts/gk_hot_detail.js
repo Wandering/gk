@@ -34,7 +34,6 @@ define(function (require) {
                 if (data.bizData) {
                     var html = [];
                     html.push('<h1>' + (data.bizData.title || data.bizData.hotInformation) + '</h1>');
-                    html.push('<h6>' + new Date(data.bizData.lastModDate).Format('yyyy-MM-dd hh:mm:ss') + '</h6>');
                     html.push('<article>' + (data.bizData.content || data.bizData.informationContent) + '</article>');
                     $('#section_article').html(html.join(''));
                     $.each($('#section_article img'), function(i, value) {

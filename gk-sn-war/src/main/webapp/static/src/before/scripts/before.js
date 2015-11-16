@@ -233,7 +233,7 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
-                console.log(res)
+
                 if (res.rtnCode == "0100006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
                     errorTips(res.msg);
                     return false;
@@ -246,6 +246,7 @@ define(function (require) {
                     $('#batchV').text(batchV);
                     $('#subjectTypeV').text(subjectTypeV);
                     var data = $.parseJSON(res.bizData);
+                    console.log(data)
                     var dataJson = data.result.data;
 
                     if (!dataJson) {
@@ -370,28 +371,6 @@ define(function (require) {
                         + '</ul>';
 
                     $('#dream-list').append(dreamSchoolList);
-
-
-
-
-                    //for (var i = 0; i < data.data.length; i++) {
-                    //    var m_averagescores = data.data[i].m_averageScores;
-                    //    var m_batch = data.data[i].m_batch;
-                    //    var m_lowestscore = data.data[i].m_lowestScore;
-                    //    var dreamSchoolList = ''
-                    //        + '<ul>'
-                    //        + '<li class="pc">' + m_batch + '</li>'
-                    //        + '<li class="result1">'
-                    //        + '<span class="t">所需最低分数</span>'
-                    //        + '<span class="num"><strong>' + m_lowestscore + '</strong>分</span>'
-                    //        + '</li>'
-                    //        + '<li class="result2">'
-                    //        + '<span class="t">所需平均分数</span>'
-                    //        + '<span class="num"><strong>' + m_averagescores + '</strong>分</span>'
-                    //        + '</li>'
-                    //        + '</ul>';
-                    //    $('#dream-list').append(dreamSchoolList);
-                    //}
 
                 }
             }

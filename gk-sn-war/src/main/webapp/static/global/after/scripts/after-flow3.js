@@ -296,9 +296,9 @@ define(function (require) {
 
                     var schoolListColHtml = '';
                     if(specialtyLength < 6){
-                        schoolListColHtml += '<div class="col-list col-list2">志愿专业填写不完整</div>';
+                        schoolListColHtml += '<div class="col-list">志愿专业填写不完整</div>';
                     }else{
-                        schoolListColHtml += '<div class="col-list col-list2">志愿专业填写完整</div>';
+                        schoolListColHtml += '<div class="col-list">志愿专业填写完整</div>';
 
                     }
                     $('#integrity').append(schoolListColHtml);
@@ -316,13 +316,14 @@ define(function (require) {
             getSpecialtyList(3);
             getSpecialtyList(4);
             var isFun1 = $('input[name="isFun1"]:checked').val();
-            $('#isFunRadio1').html(isFun1)
+            $('#isFunRadio1').html(isFun1);
             var isFun2 = $('input[name="isFun2"]:checked').val();
-            $('#isFunRadio2').html(isFun2)
+            $('#isFunRadio2').html(isFun2);
             var isFun3 = $('input[name="isFun3"]:checked').val();
-            $('#isFunRadio3').html(isFun3)
+            $('#isFunRadio3').html(isFun3);
             var isFun4 = $('input[name="isFun4"]:checked').val();
-            $('#isFunRadio4').html(isFun4)
+            $('#isFunRadio4').html(isFun4);
+
 
             //合理性分析
             var m_university_codeA = $('input[type="text"][dataType="1"]').attr('code');
@@ -413,7 +414,7 @@ define(function (require) {
                             var name = v.name;
                             var enrollmentSchoolHtml = '<div class="col-list">'+ name +'</div>';
                             $('#enrollmentSchool').append(enrollmentSchoolHtml);
-                            var schoolListColHtml = '<div class="col-list col-list2">'+ enrollIntro +'</div>';
+                            var schoolListColHtml = '<div class="col-list">'+ enrollIntro +'</div>';
                             $('#enrollment').append(schoolListColHtml);
                         });
                     }
@@ -426,13 +427,25 @@ define(function (require) {
                 var isF = '';
                 var isFt = $(v).text();
                 if(isFt=="是"){
-                    isF += "志愿专业服从调剂";
+                    isF += '<div class="col-list obey">志愿专业服从调剂</div>';
                 }else{
-                    isF += "志愿专业不服从调剂";
+                    isF += '<div class="col-list no-obey">志愿专业不服从调剂</div>';
                 }
-                var schoolListColHtml = '<div class="col-list col-list2">'+ isF +'</div>';
+
+                var schoolListColHtml = isF;
                 $('#exchange').append(schoolListColHtml);
-            })
+
+            });
+            console.log($('#exchange').find('.obey').length)
+
+            var exchangeLen = $('#exchange').find('.col-list').length;
+            if($('#exchange').find('.obey').length==exchangeLen){
+                 $('#noObey').hide();
+                 $('#allObey').show();
+            }else{
+                $('#noObey').show();
+                $('#allObey').hide();
+            }
         });
 
         // 上一步
