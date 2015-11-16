@@ -30,6 +30,10 @@ public class UserCollectExServiceImpl implements IUserCollectExService {
         return userCollectExDAO.getUserCollectPojoList(param);
     }
 
+    public int getUserCollectPojoCount(Map param) {
+        return userCollectExDAO.getUserCollectPojoCount(param);
+    }
+
     public int isUniversityCollect(Map param){
         return userCollectExDAO.isUniversityCollect(param);
     }

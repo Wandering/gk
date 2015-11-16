@@ -22,6 +22,16 @@
         </if>
     </select>
 
+    <select id="getUserCollectPojoCount" parameterType="java.util.Map">
+        SELECT count(cc.id)
+        FROM gk_user_collect cc
+        LEFT JOIN gk_university uu ON cc.universityId = uu.id
+        LEFT JOIN gk_university_dict dd ON uu.property=dd.dictId AND dd.type='FEATURE'
+        <where>
+            AND cc.userId = #{userId}
+        </where>
+    </select>
+
     <select id="isUniversityCollect" parameterType="java.util.Map" resultType="int">
         SELECT COUNT(*) FROM gk_user_collect
          WHERE userId = #{userId} AND universityId = #{universityId}
