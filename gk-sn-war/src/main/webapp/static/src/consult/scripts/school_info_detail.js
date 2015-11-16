@@ -263,7 +263,7 @@ define(function (require) {
                 for (var j = 0; j < data[i].planInfos.length; j++) {
                     var planInfosData = data[i].planInfos[j];
                     tabContentHtml += '<tr batch="'+ planInfosData.subject +'">'
-                    + '<td width="50%" class="name"><a href="/consult/profession_detail.jsp?">' + (planInfosData.majoredName || '') + '</a></td>'
+                    + '<td width="50%" class="name"><a target="_blank" href="/consult/profession_detail.jsp?id='+ planInfosData.majoredId +'">' + (planInfosData.majoredName || '') + '</a></td>'
                     + '<td width="10%">' + (planInfosData.batch || '') + '</td>'
                     + '<td width="10%">' + (planInfosData.subject || '') + '</td>'
                     + '<td width="10%">' + (planInfosData.planNumber || '') + '</td>'
