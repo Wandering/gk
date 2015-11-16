@@ -22,7 +22,7 @@
         </if>
     </select>
 
-    <select id="getUserCollectPojoCount" parameterType="java.util.Map">
+    <select id="getUserCollectPojoCount" parameterType="java.util.Map" resultType="int">
         SELECT count(cc.id)
         FROM gk_user_collect cc
         LEFT JOIN gk_university uu ON cc.universityId = uu.id
