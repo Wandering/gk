@@ -4,6 +4,7 @@ package cn.thinkjoy.gk.pojo;
  * Created by zuohao on 15/11/11.
  */
 public class OpenMajoredPojo {
+    private String majoredId;
     private String majoredName;
     private String batch;
     private String subject;
@@ -11,6 +12,14 @@ public class OpenMajoredPojo {
     private String salaryRank;
     private String employmentRateRank;
     private int isEnrol;
+
+    public String getMajoredId() {
+        return majoredId;
+    }
+
+    public void setMajoredId(String majoredId) {
+        this.majoredId = majoredId;
+    }
 
     public int getIsEnrol() {
         return isEnrol;
