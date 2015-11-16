@@ -154,6 +154,7 @@
 
     <select id="getOpenMajoredPojoList" resultType="OpenMajoredPojo" parameterType="java.util.Map">
         select
+        mm.id as majoredId ,
         rr.majorName as majoredName,
         -- pp.majorBatch as batch,专业信息补充内容表中只有本科专科，暂时不显示
         pp.subject as subject,
@@ -161,7 +162,9 @@
         rr.salaryRank as salaryRank,
         rr.employedRank as employmentRateRank,
         isEnrol as isEnrol
-        from gk_majored_rank rr
+        from gk_majored mm
+        left join  gk_majored_rank rr
+        on mm.name=rr.majorName
         left join (
             select id,universityId,majoredName,batch,subject,year,areaId,1 as isEnrol
             from gk_enroll_plan
