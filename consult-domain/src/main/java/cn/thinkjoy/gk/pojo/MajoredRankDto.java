@@ -13,6 +13,8 @@ import cn.thinkjoy.gk.domain.MajoredRank;
 
 public class MajoredRankDto extends MajoredRank{
 
+    private String universityId;
+
     private String universityName;
 
     private String majorName;
@@ -28,6 +30,14 @@ public class MajoredRankDto extends MajoredRank{
     private String foreignLanguage;
 
     private Integer isOpen;
+
+    public String getUniversityId() {
+        return universityId;
+    }
+
+    public void setUniversityId(String universityId) {
+        this.universityId = universityId;
+    }
 
     @Override
     public String getUniversityName() {

@@ -46,19 +46,23 @@
             <!--</if>-->
         <!--</where>-->
         <!--) aa-->
-        select * from (
-            select a.name majorName,b.universityName,b.enrollNumber,
+        select
+        majorName,universityId,universityName,sum(enrollNumber) as enrollNumber ,
+        foreginLanguage,feeStandard,subject,isOpen
+        from (
+            select a.name majorName,b.universityId,b.universityName,b.enrollNumber,
             b.foreignLanguage as foreginLanguage,b.feeStandard,b.subject,1 isOpen
             from gk_majored a
             left join gk_enroll_plan b on a.id=b.majoredId and b.year = #{year}
             where a.name = #{majorName} and b.areaId = #{areaId}
             union all
-            select a.name majorName,b.universityName,b.enrollNumber,
+            select a.name majorName,b.universityId,b.universityName,b.enrollNumber,
             b.foreignLanguage as foreginLanguage,b.feeStandard,b.subject,0 isOpen
             from gk_majored a
             left join gk_enroll_plan b on a.id=b.majoredId and b.year = #{year}
             where a.name = #{majorName} and b.areaId != #{areaId}
         ) a
+        GROUP BY a.universityName,a.subject
         <if test="startSize != null and endSize != null">
             limit ${startSize}, ${endSize}
         </if>
