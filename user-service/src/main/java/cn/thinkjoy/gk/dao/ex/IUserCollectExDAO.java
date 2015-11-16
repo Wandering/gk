@@ -13,6 +13,9 @@ public interface IUserCollectExDAO {
     /** 查询指定用户的收藏的所有学校 */
     List<UserCollectPojo> getUserCollectPojoList(Map param);
 
+    /** 查询指定用户的收藏的所有学校总数 */
+    int getUserCollectPojoCount(Map param);
+
     /** 判断指定用户是否收藏指定学校，0为否，1为是 */
     int isUniversityCollect(Map param);
 }

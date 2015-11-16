@@ -106,7 +106,7 @@ public class UserCollectController extends BaseController{
      */
     @RequestMapping(value = "/getUserCollectPojoList",method = RequestMethod.GET)
     @ResponseBody
-    public List<UserCollectPojo> getUserCollectPojoList(@RequestParam(value ="offset",required = false)Integer offset, @RequestParam(value = "rows",required = false)Integer rows){
+    public Map<String,Object> getUserCollectPojoList(@RequestParam(value ="offset",required = false)Integer offset, @RequestParam(value = "rows",required = false)Integer rows){
         UserAccountPojo userAccountPojo=getUserAccountPojo();
         if(null==userAccountPojo ||  null==userAccountPojo.getId()){
             throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
@@ -116,8 +116,12 @@ public class UserCollectController extends BaseController{
         param.put("userId",userId);
         param.put("offset",offset);
         param.put("rows",rows);
+        int sum=userCollectExService.getUserCollectPojoCount(param);
         List<UserCollectPojo> userCollectPojoList=userCollectExService.getUserCollectPojoList(param);
-        return userCollectPojoList;
+        Map<String,Object> returnParam=Maps.newHashMap();
+        returnParam.put("sum",sum);
+        returnParam.put("userCollectPojoList",userCollectPojoList);
+        return returnParam;
     }
 
     /**
