@@ -737,13 +737,15 @@ a.next-btn:hover {
     border: 1px solid #e5e5e5;
     border-top: none;
     text-align: left;
-    font-size: 14px;
-    text-indent: 40px; }
+    font-size: 14px; }
     .content table .t-content p {
       margin: 0;
       padding: 0; }
-    .content table .t-content .info-txt {
+    .content table .t-content td {
       text-align: center; }
+    .content table .t-content .info-txt {
+      text-align: center;
+      text-indent: 0; }
 
 .content .tip-board {
   background-color: #fcf8e3;

@@ -101,13 +101,16 @@
       border-top: none;
       text-align: left;
       font-size: 14px;
-      text-indent: 40px;
       p{
         margin: 0;
         padding: 0;
       }
+      td{
+        text-align: center;
+      }
       .info-txt{
         text-align: center;
+        text-indent: 0;
       }
     }
   }
