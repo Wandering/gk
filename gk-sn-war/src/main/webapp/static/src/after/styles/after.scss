@@ -650,8 +650,12 @@
   position: relative;
   top: -12px;
 }
+
 .col-list2{
   margin-left: 380px;
+}
+#exchange .col-list2{
+  margin-left: 190px;
 }
 .t-content .tc{
   text-align: center;
@@ -661,4 +665,12 @@
 .eva-text p{
   text-indent: 2em;
   line-height: 26px;
+}
+#eva-txt{
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #74bbd9;
+  font-size: 20px;
+  width: 362px;
 }

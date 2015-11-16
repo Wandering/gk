@@ -106,7 +106,9 @@ define(function(require) {
             var that = this;
             $.get(url + 'startSize=' + that.startSize + '&endSize=' + that.endSize, function(data) {
                 if ('0000000' === data.rtnCode) {
+                    console.log(data.bizData.length)
                     if (data.bizData.length > 0) {
+
                         $('#more_loading').show();
                         that.renderAsk(data.bizData);
                     } else {
