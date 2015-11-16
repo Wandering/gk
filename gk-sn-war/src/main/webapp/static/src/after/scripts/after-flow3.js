@@ -446,8 +446,6 @@ define(function (require) {
                 $('#noObey').show();
                 $('#allObey').hide();
             }
-
-
         });
 
         // 上一步
