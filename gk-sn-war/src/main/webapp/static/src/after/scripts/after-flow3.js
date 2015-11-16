@@ -5,6 +5,7 @@ define(function (require) {
         //
         var paramsJson = JSON.parse(params);
 
+        console.log(paramsJson)
         $('.volunteer-flow3-table').on('click', '.open-flow3', function () {
             $('.tansLayer,.volunteer-flow3-layer').show();
             $('#volunteer-flow3-layer').attr('dataType', $(this).attr('dataType'))

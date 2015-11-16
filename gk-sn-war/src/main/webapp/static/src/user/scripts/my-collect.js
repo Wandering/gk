@@ -1,5 +1,6 @@
 define(function (require) {
     var $ = require('$');
+    var pageErrorTip = require('pageErrorTip');
     var UI = {
         $listMsgItem: $('#list-msg-item'),
         $nextPage: $('#nextPage')
@@ -32,7 +33,7 @@ define(function (require) {
                             UI.$nextPage.hide();
                         }
                         if(trLen == 0){
-                            UI.$listMsgItem.append('<tr class="noData"><td colspan="6"><p class="noContent-tips">没有收藏数据了</p></td></tr>')
+                            UI.$listMsgItem.append('<tr class="noData"><td colspan="6"><br/><br/>'+ pageErrorTip('暂无相关数据') +'<br/><br/></td></tr>')
                         }
                     }
                 }
@@ -141,7 +142,7 @@ define(function (require) {
                         UI.$listMsgItem.attr('pageNo', pageNo);
                     }else{
                         UI.$nextPage.hide();
-                        UI.$listMsgItem.append('<tr class="noData"><td colspan="6"><p class="noContent-tips">没有收藏数据了</p></td></tr>')
+                        UI.$listMsgItem.append('<tr class="noData"><td colspan="6"><br/><br/>'+ pageErrorTip('暂无相关数据')  + '<br/><br/></td></tr>')
                     }
                 }
 
