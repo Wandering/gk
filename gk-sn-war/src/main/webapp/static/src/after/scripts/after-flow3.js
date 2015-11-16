@@ -6,7 +6,7 @@ define(function (require) {
         var paramsJson = JSON.parse(params);
 
 
-        console.log(paramsJson)
+        //console.log(paramsJson)
         $('.volunteer-flow3-table').on('click', '.open-flow3', function () {
             $('.tansLayer,.volunteer-flow3-layer').show();
             $('#volunteer-flow3-layer').attr('dataType', $(this).attr('dataType'))
@@ -53,7 +53,7 @@ define(function (require) {
                     }
                     if (res.rtnCode == "0000000") {
                         var data = $.parseJSON(res.bizData);
-                        console.log(data)
+                        //console.log(data)
                         var m_batch_id = data.related.m_batch_id;
                         var m_batch = data.related.m_batch;
                         var listData = data.data.result;
@@ -71,7 +71,7 @@ define(function (require) {
 
                         $('.school-list').html('');
                         $.each(listData.data, function (i, v) {
-                            console.log(listData.data[i].data.length)
+                            //console.log(listData.data[i].data.length)
 
                             if (listData.data[i].data.length > 0 && i < 4) {
                                 $('#no-school' + i).hide();
@@ -123,7 +123,7 @@ define(function (require) {
             var m_batch_id = $(this).attr('m_batch_id');
             var datatypeid = $(this).attr('datatypeid');
             var m_university_name = $(this).attr('m_university_name');
-            console.log(code + "+" + type + "+" + m_batch + "+" + m_batch_id + "+" + datatypeid + "+" + m_university_name)
+            //console.log(code + "+" + type + "+" + m_batch + "+" + m_batch_id + "+" + datatypeid + "+" + m_university_name)
             var years = 2014;
             //console.log($(this).parents('.school-list').attr('dataType'))
             var star = '';
@@ -150,8 +150,7 @@ define(function (require) {
                     batch: m_batch
                 },
                 success: function (res) {
-                    console.log(res);
-                    console.log(1);
+                    //console.log(res);
                     var data = res.bizData;
                     if ('0000000' === res.rtnCode) {
                         var dicName = '';
@@ -190,7 +189,7 @@ define(function (require) {
             var m_batch = parents.attr('m_batch');
             var code = parents.attr('code');
             var year = parents.attr('year');
-            console.log(m_batch + "=" + code + "=" + year)
+            //console.log(m_batch + "=" + code + "=" + year)
             $('#specialty-content').html('');
             $('#specialty-layer,.tansLayer').show();
             $.ajax({
@@ -203,7 +202,7 @@ define(function (require) {
                     batch: m_batch
                 },
                 success: function (res) {
-                    console.log(res);
+                    //console.log(res);
                     var data = res.bizData;
                     if ('0000000' === res.rtnCode) {
                         $.each(data, function (i, v) {
@@ -241,7 +240,7 @@ define(function (require) {
             var Eid = $(this).attr('id');
             var index = $(this).attr('index');
             var name = $(this).attr('name');
-            console.log(Eid + "=" + name);
+            //console.log(Eid + "=" + name);
             var specialtyTotalN = $(this).attr('specialtyTotal')
             $('#'+Eid +' li:eq('+ index +')').find('input').val(name).attr({'specialtyTotalN':specialtyTotalN}).addClass('write');
             $('#specialty-layer,.tansLayer').hide();
@@ -289,11 +288,11 @@ define(function (require) {
                     $('#specialty-list-info'+n).append(specialtyListInfo)
                 });
                 $.each($('#specialty'+n),function(i,v){
-                    console.log($(this).find('input').attr('specialtytotaln'))
+                    //console.log($(this).find('input').attr('specialtytotaln'))
                     //console.log($(this).find('input.write').length)
                     var specialtytotaln = $(this).find('input').attr('specialtytotaln');
                     var specialtyLength = $(this).find('input.write').length;
-                    console.log(specialtytotaln + "--" + specialtyLength)
+                    //console.log(specialtytotaln + "--" + specialtyLength)
 
                     var schoolListColHtml = '';
                     if(specialtyLength < 6){
@@ -391,7 +390,7 @@ define(function (require) {
                     batch:m_batch
                 },
                 success: function (res) {
-                    console.log(res);
+                    console.log($.parseJSON(res.bizData));
 
                     if (res.rtnCode == "0000000") {
                         var dataJson = $.parseJSON(res.bizData).report;
@@ -402,7 +401,7 @@ define(function (require) {
                             $('.school-list-col').append(schoolListColHtml);
                         });
                         var dataEnroll =$.parseJSON(res.bizData).enroll;
-                        console.log($.parseJSON(res.bizData));
+                        //console.log($.parseJSON(res.bizData));
                         $.each(dataEnroll,function(i,v){
 
                             var enrollIntro = v.enrollIntro;
