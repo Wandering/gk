@@ -1,10 +1,7 @@
-/**
- * Created by kepeng on 15/9/25.
- */
-
 define(function(require) {
     var $ = require('$');
     require('backToTop');
+    var pageErrorTip = require('pageErrorTip');
 
     var School = {
         curPage: 1,
@@ -144,7 +141,7 @@ define(function(require) {
                             }
                         } else {
                             //$('#school_list').html('<p style="text-align: center">暂无信息！</p>');
-                            var pageErrorTip = require('pageErrorTip');
+
                             $('#school_list').html(pageErrorTip('暂无相关数据'));
                             $('#page').html('');
                             $('.record').html('');

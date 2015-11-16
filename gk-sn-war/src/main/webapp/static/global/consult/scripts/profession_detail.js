@@ -119,7 +119,7 @@ define(function (require) {
                 +'<tr>'
                 +'<td>'
                 + isStar
-                + (openUniversity[i].universityName || "-" ) +'</td>'
+                + '<a href="/consult/school_detail.jsp?id='+ openUniversity[i].universityId +'">'+ (openUniversity[i].universityName || "-" ) +'</a></td>'
                 +'<td>'+ (openUniversity[i].enrollNumber || "-" )   +'</td>'
                 +'<td>'+ (openUniversity[i].subject)  +'</td>'
                 +'<td>'+ (openUniversity[i].feeStandard || "-" )  +'</td>'

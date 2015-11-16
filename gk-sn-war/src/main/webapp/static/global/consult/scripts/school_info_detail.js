@@ -322,7 +322,7 @@ define(function (require) {
                 tabHtml += '<li>' + title + '</li>';
                 tabContentHtml += '<div class="school-table mt20">'
                 + '<div class="subjectType">'
-                + '<label><input type="radio" name="subject1" id=""/> <span>文史</span></label><label><input type="radio" name="subject1" id=""/> <span>理科</span></label>'
+                + '<label><input type="radio" name="subject1" id=""/> <span>文史</span></label><label><input type="radio" name="subject1" id=""/> <span>理工</span></label>'
                 + '</div>'
                 + '<table border="0" cellpadding="0" cellspacing="0">'
                 + '<thead>'
