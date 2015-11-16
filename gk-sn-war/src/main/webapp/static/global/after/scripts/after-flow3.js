@@ -5,8 +5,6 @@ define(function (require) {
         //
         var paramsJson = JSON.parse(params);
 
-
-        //console.log(paramsJson)
         $('.volunteer-flow3-table').on('click', '.open-flow3', function () {
             $('.tansLayer,.volunteer-flow3-layer').show();
             $('#volunteer-flow3-layer').attr('dataType', $(this).attr('dataType'))
@@ -434,10 +432,8 @@ define(function (require) {
 
                 var schoolListColHtml = isF;
                 $('#exchange').append(schoolListColHtml);
-
             });
             console.log($('#exchange').find('.obey').length)
-
             var exchangeLen = $('#exchange').find('.col-list').length;
             if($('#exchange').find('.obey').length==exchangeLen){
                  $('#noObey').hide();

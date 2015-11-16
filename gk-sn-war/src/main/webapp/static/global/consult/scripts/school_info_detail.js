@@ -399,11 +399,13 @@ define(function (require) {
                         + '</thead>'
                         + '<tbody>';
                     for (var i = 0; i < dataJson.length; i++) {
+
                         var employmentRateRank = dataJson[i].employmentRateRank
                             , isEnrol = dataJson[i].isEnrol
                             , majoredName = dataJson[i].majoredName
                             , salaryRank = dataJson[i].salaryRank
-                            , subject = dataJson[i].subject;
+                            , subject = dataJson[i].subject
+                            , majoredId = dataJson[i].majoredId;
                         var isEnrolTxt = '';
                         if (isEnrol == 1) {
                             isEnrolTxt = '<i class="star"></i>';
@@ -413,7 +415,7 @@ define(function (require) {
                         tabContentHtml += '<tr>'
                         + '<td>'
                         + isEnrolTxt
-                        + majoredName + '</td>'
+                        + '<a target="_blank" href="/consult/profession_detail.jsp?id='+ majoredId +'">'+majoredName + '</a></td>'
                         + '<td>' + (subject || "-") + '</td>'
                         + '<td>' + salaryRank + '</td>'
                         + '<td>' + employmentRateRank + '</td>'
