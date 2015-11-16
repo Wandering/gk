@@ -1142,7 +1142,7 @@ selectList
 
     <select id="getEnrollInfoByYear" resultType="EnrollInfo">
         select * from (
-        select '文科' as subjectName, wsPlanNumber as planNumber,wsEnrollNumber as enrollNumber,wsHighestScore as highestScore,
+        select '文史' as subjectName, wsPlanNumber as planNumber,wsEnrollNumber as enrollNumber,wsHighestScore as highestScore,
         wsHighestRank as highestRank,wsLowestScore as lowestScore,wsLowestRank as lowestRank,wsAverageScore as averageScore,
           wsAverageRank as averageRank,batch,areaId
          from gk_enroll_report where universityId=#{universityId} and year=#{year}
