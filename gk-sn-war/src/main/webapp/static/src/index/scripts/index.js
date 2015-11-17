@@ -51,7 +51,7 @@ define(function (require) {
         });
         $.get('/agent/getAgent.do', function (res) {
             if (res.rtnCode == '0000000') {
-                console.log(res)
+                //console.log(res)
                 var dataJson = res.bizData;
                 dataJson.length > 9 ? dataJson.length = 9 : '';
                 var addressHtml = ''
