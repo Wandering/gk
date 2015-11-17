@@ -1,13 +1,18 @@
 package cn.thinkjoy.gk.controller;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.domain.Orders;
+import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.domain.UserVip;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IOrdersService;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.service.IUserVipService;
+import cn.thinkjoy.gk.util.RedisUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
@@ -116,7 +121,15 @@ public class PayCallbackController extends BaseController{
 
                     userAccountBean.setVipStatus(1);
 
-                    setUserAccountPojo(userAccountBean);
+                    String key = UserRedisConst.USER_KEY + userId;
+
+                    LOGGER.info("redis:"+RedisUtil.getInstance());
+
+                    LOGGER.info("key:"+key);
+
+                    LOGGER.info(JSON.toJSONString(userAccountBean));
+
+                    RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean));
 
                     result = "success";
                 } else {
@@ -124,9 +137,7 @@ public class PayCallbackController extends BaseController{
                 }
             }
 
-        } catch (IOException e) {
-            LOGGER.error("error",e);
-        } catch (Exception e) {
+        }  catch (Exception e) {
             LOGGER.error("error",e);
         }
 
@@ -137,6 +148,21 @@ public class PayCallbackController extends BaseController{
         }
 
     }
+
+
+//    @RequestMapping(value = "payCallback", method = RequestMethod.POST)
+//    public void failPayCallback(){
+////        UserAccountPojo userAccountPojo = getUserAccountPojo();
+////        if(userAccountPojo==null){
+////            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+////        }
+////        long userId=userAccountPojo.getId();
+//        UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoById(userId);
+//
+//        userAccountBean.setVipStatus(1);
+//        userAccountExService.updateUserAccount(userAccount);
+//
+//    }
 
 //    public static void main(String[] args) {
 //        Calendar c = Calendar.getInstance();
