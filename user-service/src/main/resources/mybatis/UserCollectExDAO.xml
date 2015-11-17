@@ -17,6 +17,7 @@
         <where>
             AND cc.userId = #{userId}
         </where>
+        ORDER BY cc.id desc
         <if test="offset != null">
             limit ${offset}, ${rows}
         </if>
