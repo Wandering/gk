@@ -37,7 +37,7 @@ define(function (require) {
             + '<li>学历层次：' + obj.educationLevel + '</li>'
             + '<li>学科门类：' + obj.subjectType + '</li>'
             + '<li>专业分类：' + obj.majoredType + '</li>'
-            + '<li>授予学位：' + obj.degree + '</li>'
+            + '<li>授予学位：' + (obj.degree || " - ") + '</li>'
             + '</ul>'
             + '</div>');
         },

@@ -32,9 +32,9 @@ define(function (require) {
                         if(trLen < (pageSize+1)){
                             UI.$nextPage.hide();
                         }
-                        if(trLen == 0){
-                            UI.$listMsgItem.append('<tr class="noData"><td colspan="6"><br/><br/>'+ pageErrorTip('暂无相关数据') +'<br/><br/></td></tr>')
-                        }
+                        //if(trLen == 0){
+                        //    UI.$listMsgItem.append('<tr class="noData"><td colspan="6"><br/><br/>'+ pageErrorTip('暂无相关数据') +'<br/><br/></td></tr>')
+                        //}
                     }
                 }
             })
@@ -112,18 +112,26 @@ define(function (require) {
         getCollect : function(pageNo,pageSize){
             $.get('/userCollection/getUserCollectPojoList.do?offset='+pageNo + "&rows="+pageSize, function (data) {
                 var dataJson = data.bizData;
+
                 if (data.rtnCode == "0000000") {
-                    console.log("dataJson.length:"+dataJson.length)
-                    if(dataJson.length > 0){
+                    var sum = dataJson.sum;
+                    console.log(sum)
+                    var  userCollectPojoList = dataJson.userCollectPojoList;
+                    console.log(userCollectPojoList.length)
+                    if(userCollectPojoList.length > 0){
                         UI.$nextPage.show();
-                        for (var i = 0; i < dataJson.length; i++) {
-                            console.log(dataJson);
-                            var universityName = dataJson[i].universityName
-                                ,provinceName = dataJson[i].provinceName
-                                ,universityType = dataJson[i].universityType
-                                ,subjection = dataJson[i].subjection
-                                ,universityId = dataJson[i].universityId
-                                ,propertyName = dataJson[i].propertyName;
+                        //if(sum > pageSize){
+                        //    UI.$nextPage.show();
+                        //}else{
+                        //    UI.$nextPage.hide();
+                        //}
+                        for (var i = 0; i < userCollectPojoList.length; i++) {
+                            var universityName = userCollectPojoList[i].universityName
+                                ,provinceName = userCollectPojoList[i].provinceName
+                                ,universityType = userCollectPojoList[i].universityType
+                                ,subjection = userCollectPojoList[i].subjection
+                                ,universityId = userCollectPojoList[i].universityId
+                                ,propertyName = userCollectPojoList[i].propertyName;
                             var listMsgHtml = '<tr>'
                                 + '<td><a target="_blank" href="/consult/school_detail.jsp?id='+ universityId +'">'+ universityName +'</a></td>'
                                 + '<td>'+ provinceName +'</td>'
@@ -140,9 +148,12 @@ define(function (require) {
                         }
                         pageNo = parseInt(pageNo) + pageSize ;
                         UI.$listMsgItem.attr('pageNo', pageNo);
+                        if (userCollectPojoList.length < pageSize) {
+                            UI.$nextPage.hide();
+                        }
                     }else{
                         UI.$nextPage.hide();
-                        UI.$listMsgItem.append('<tr class="noData"><td colspan="6"><br/><br/>'+ pageErrorTip('暂无相关数据')  + '<br/><br/></td></tr>')
+                        UI.$listMsgItem.append('<tr class="noData"><td colspan="6"><br/><br/>'+ pageErrorTip('暂无相关数据') +'<br/><br/></td></tr>')
                     }
                 }
 
