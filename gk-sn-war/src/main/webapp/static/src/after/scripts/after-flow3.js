@@ -12,11 +12,6 @@ define(function (require) {
             getSchool(paramsJson, "", "");
         });
 
-
-
-
-
-
         $('#volunteer-flow3-layer').on('click', '.close-btn', function () {
             $('#volunteer-flow3-layer,.tansLayer').hide();
         });
@@ -306,12 +301,6 @@ define(function (require) {
                     }
                     $('#integrity').append(schoolListColHtml);
 
-
-                    //if(specialtyLength==0){
-                    //    var schoolListColHtml = '<div class="col-list col-list2">志愿专业填写不完整</div>';
-                    //    $('#integrity').append(schoolListColHtml);
-                    //}
-
                 })
             }
             getSpecialtyList(1);
@@ -394,7 +383,7 @@ define(function (require) {
                     batch:m_batch
                 },
                 success: function (res) {
-                    console.log($.parseJSON(res.bizData));
+                    //console.log($.parseJSON(res.bizData));
 
                     if (res.rtnCode == "0000000") {
                         var dataJson = $.parseJSON(res.bizData).report;
@@ -464,11 +453,11 @@ define(function (require) {
                 var name = personListData.name;
                 var schoolName = personListData.schoolName;
                 var sex = personListData.sex;
-                var subjectType = personListData.subjectType;
 
                 $('#m_candidateNumber').text(paramsJson.m_candidateNumber);
                 $('#m_aggregateScore').text(paramsJson.m_aggregateScore);
                 $('#m_ranking').text(paramsJson.m_ranking);
+                $('#m_kelei').text(paramsJson.m_kelei);
 
                 var m_aggregateScore = paramsJson.m_aggregateScore;
 
@@ -478,9 +467,8 @@ define(function (require) {
                 }else{
                     sexT="女";
                 }
-                var subjectTypeT = '';
-                if(subjectType=="1"){
-                    subjectTypeT="理科";
+                var m_kelei = paramsJson.m_kelei;
+                if(m_kelei=="文史"){
                     if(m_aggregateScore >= 510){
                         $('#controlLine').text("510");
                         $('#controlLine-txt').text('一批本科省控线');
@@ -494,8 +482,7 @@ define(function (require) {
                         $('#controlLine').text("220");
                         $('#controlLine-txt').text('高专高职省控线');
                     }
-                }else{
-                    subjectTypeT="文史";
+                }else if(m_kelei=="理工"){
                     if(m_aggregateScore >= 480){
                         $('#controlLine').text("480");
                         $('#controlLine-txt').text('一批本科省控线');
@@ -510,23 +497,25 @@ define(function (require) {
                         $('#controlLine-txt').text('高专高职省控线');
                     }
                 }
-
-
-
-
-
-
-
-
                 $('#studentName').text(name);
                 $('#schoolName').text(schoolName);
                 $('#sexT').text(sexT);
-                $('#subjectTypeT').text(subjectTypeT);
             }
         });
         // 打印
         $('#print-btn').on('click',function(){
-            window.print();
+            doPrint();
         });
-    })
+    });
+
+
+    function doPrint() {
+        bdhtml=window.document.body.innerHTML;
+        sprnstr="<!--startprint-->";
+        eprnstr="<!--endprint-->";
+        prnhtml=bdhtml.substr(bdhtml.indexOf(sprnstr)+17);
+        prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr));
+        window.document.body.innerHTML=prnhtml;
+        window.print();
+    }
 });

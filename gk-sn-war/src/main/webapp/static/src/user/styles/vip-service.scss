@@ -1,13 +1,11 @@
 @charset "utf-8";
-@import "../../common/styles/comm";
-
 .personal-tab {
   position: relative;
   margin-top: 20px;
   top: 1px;
   .active {
     a {
-      color: $mainRed !important;
+      color: #e24d39 !important;
     }
   }
 }
@@ -30,8 +28,8 @@
   }
   .choose-pay-box {
     height: 340px;
-    border-top: 1px solid $borderColor;
-    border-bottom: 1px solid $borderColor;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
     margin-bottom: 10px;
     .pay-title {
       display: block;
@@ -45,7 +43,7 @@
       box-sizing: border-box;
       width: 427px;
       height: 185px;
-      border: 1px solid $borderColor;
+      border: 1px solid #e5e5e5;
       p {
         font-size: 14px;
         color: #606060;
@@ -53,7 +51,7 @@
         margin-bottom: 20px;
       }
       .pay-money {
-        color: $mainRed;
+        color: #e24d39;
         font-size: 25px;
         font-weight: bold;
       }
@@ -76,7 +74,7 @@
           height: 35px;
           width: 265px;
           border-radius: 3px;
-          border:1px solid $borderColor;
+          border:1px solid #e5e5e5;
           margin-bottom: 20px;
           box-sizing: border-box;
           padding:0 10px 0 30px;
@@ -91,7 +89,7 @@
   }
   .box-left {
     height: 340px;
-    border-right: 1px solid $borderColor;
+    border-right: 1px solid #e5e5e5;
 
   }
   .btn-upgrade {
@@ -106,10 +104,10 @@
     transition: all .5s;
   }
   .btn-red{
-    border: 1px solid $mainRed;
-    color: $mainRed;
+    border: 1px solid #e24d39;
+    color: #e24d39;
     &:hover {
-      background-color: $mainRed;
+      background-color: #e24d39;
       color: #fff;
     }
   }
@@ -135,21 +133,21 @@
 
 .tab-info{
   overflow: hidden;
-  border-left: 1px solid $borderColor;
+  border-left: 1px solid #e5e5e5;
   margin-bottom: 50px;
 }
 
 .tel-content-box {
   margin-bottom: 30px;
   //height: 255px;
-  border: 1px solid $borderColor;
+  border: 1px solid #e5e5e5;
   border-right: none;
   border-bottom: none;
   .row {
     .col-3 {
       height: 85px;
-      border-right: 1px solid $borderColor;
-      border-bottom: 1px solid $borderColor;
+      border-right: 1px solid #e5e5e5;
+      border-bottom: 1px solid #e5e5e5;
       padding-left: 50px;
       box-sizing: border-box;
       width: 33.333333%;
@@ -157,7 +155,7 @@
       font-size: 14px;
       margin: 0 auto;
       .area-name {
-        color: $mainColor;
+        color: #353535;
         margin-top: 20px;
       }
       .tel-num {
@@ -171,16 +169,21 @@
   }
 }
 
-.error-tips{
+.error-tips,
+.error-tips2{
   position: absolute;
   width: 405px;
   left:0;
-  top: 10px;
+  top: -45px;
   padding: 10px;
   text-align: center;
   margin-bottom: 10px;
   background-color: #e24d39;
   color: #fff;
   border-radius: 3px;
+}
+.error-tips2{
+  left: 36px;
+  top: 35px;
 }
 

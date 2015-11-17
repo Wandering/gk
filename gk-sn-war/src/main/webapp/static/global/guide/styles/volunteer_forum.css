@@ -666,8 +666,11 @@ a.next-btn:hover {
 section:last-child {
   margin-bottom: 50px; }
 
-.video video {
-  width: 100%; }
+.video {
+  position: relative;
+  z-index: 10; }
+  .video video {
+    width: 100%; }
 
 .section-article {
   margin-top: 50px;

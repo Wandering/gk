@@ -30,6 +30,7 @@
     <div class="choose-pay-box">
         <div class="w1000">
             <div class="box-left">
+                <div class="error-tips2 hide"></div>
                 <img src="http://cdn.gaokao360.net/static/global/user/images/online-pay-img.png" class="pay-title"/>
 
                 <div class="pay-box">
@@ -75,8 +76,8 @@
 <%@include file="/common/footer.jsp"%>
 <script>
     seajs.use('http://cdn.gaokao360.net/static/plugins/pingpp/pingpp-pc');
-    seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/vip-service.min");
-//    seajs.use("/static/src/user/scripts/vip-service");
+//    seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/vip-service.min");
+    seajs.use("/static/src/user/scripts/vip-service");
 </script>
 
 </body>
