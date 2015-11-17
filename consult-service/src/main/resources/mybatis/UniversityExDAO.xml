@@ -112,29 +112,33 @@
 
     <select id="getMajoredScoreLinePojoList" resultType="MajoredScoreLinePojo" parameterType="java.util.Map">
         SELECT
-        universityId,
-        majoredId,
-        majoredName,
-        year,
-        enrollBatch,
-        subject,
-        enrollNumber,
-        highestScore,
-        lowestScore,
-        averageScore
-        FROM gk_majored_score_line
+        ll.universityId,
+        mm.id as majoredId,
+        ll.majoredName,
+        ll.year,
+        ll.enrollBatch,
+        ll.subject,
+        ll.enrollNumber,
+        ll.highestScore,
+        ll.lowestScore,
+        ll.averageScore
+        FROM
+        gk_majored mm
+        LEFT JOIN
+        gk_majored_score_line ll
+        ON mm.name = ll.majoredName
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="universityId != null">
-                AND universityId = #{universityId}
+                AND ll.universityId = #{universityId}
             </if>
             <if test="year != null">
-                AND year = #{year}
+                AND ll.year = #{year}
             </if>
             <if test="subject != null">
-                AND subject = #{subject}
+                AND ll.subject = #{subject}
             </if>
             <if test="areaId != null">
-                AND areaId = #{areaId}
+                AND ll.areaId = #{areaId}
             </if>
         </trim>
     </select>
