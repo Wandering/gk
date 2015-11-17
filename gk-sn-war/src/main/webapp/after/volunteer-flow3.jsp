@@ -9,6 +9,7 @@
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
+<!--startprint-->
 <div id="main1">
     <div class="w1000">
         <div class="content-title">
@@ -327,7 +328,7 @@
                     <th>姓名</th>
                     <th>性别</th>
                     <th>学校</th>
-                    <th>年纪</th>
+                    <th>年级</th>
                     <th>科类</th>
                     <th>准考证</th>
                     <th>高考分数</th>
@@ -470,6 +471,7 @@
                     <p><strong>3.</strong>心仪的专业所录取，同理女部分考生可以“退而求其次”，“宁单鸡头不当凤尾巴”。以一本考生的成绩来说，在二批本科的录取时候就很有优势，很有
                         可能被自己心仪的专业录取，同理，也试用二本和三本。</p>
                 </div>
+                <!--endprint-->
                 <div class="navigation-box">
                     <span class="tip">正式填报志愿请登录网址：<a target="_blank" href="http://sn.gaokao360.net">sn.gaokao360.net</a></span>
                     <div class="btn btn-before" id="prev-btn">返回上一步</div>
@@ -615,7 +617,9 @@
     </div>
 </div>
 
+
 <%@ include file="/common/footer.jsp"%>
+
 <script>
     seajs.use("/static/src/after/scripts/after-flow3");
 //    seajs.use("http://cdn.gaokao360.net/static/global/after/scripts/after-flow3.min");

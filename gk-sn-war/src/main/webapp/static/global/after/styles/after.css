@@ -604,14 +604,16 @@
   padding: 10px 20px;
   overflow: hidden;
   line-height: 22px;
-  color: #666; }
+  color: #666;
+  text-align: left; }
   .print-result-info p {
     text-indent: 0; }
 
 .specialty-list-info {
   padding: 10px 20px;
   overflow: hidden;
-  color: #666; }
+  color: #666;
+  text-align: left; }
   .specialty-list-info p {
     text-indent: 0;
     line-height: 40px; }
