@@ -6,7 +6,6 @@ define(function (require) {
         $nextPage: $('#nextPage')
     };
     var pageSize = 8;
-
     $(function () {
         UI.$nextPage.on('click', function () {
             var pageNo = UI.$listMsgItem.attr('pageNo');
