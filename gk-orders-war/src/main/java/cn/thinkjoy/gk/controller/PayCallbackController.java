@@ -108,11 +108,11 @@ public class PayCallbackController extends BaseController{
 
                         String key = UserRedisConst.USER_KEY + userId;
 
-//                        LOGGER.info("redis:"+RedisUtil.getInstance());
-//
-//                        LOGGER.info("key:"+key);
-//
-//                        LOGGER.info(JSON.toJSONString(userAccountBean));
+                        LOGGER.info("redis:"+RedisUtil.getInstance());
+
+                        LOGGER.info("key:"+key);
+
+                        LOGGER.info(JSON.toJSONString(userAccountBean));
 
                         RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean));
 
