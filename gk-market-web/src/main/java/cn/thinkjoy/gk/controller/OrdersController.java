@@ -68,6 +68,11 @@ public class OrdersController extends BaseController {
 
         Long userId = userAccountPojo.getId();
 
+        //判断用户是否已经是VIP，如果已经是VIP则返回提示
+        if (userAccountPojo.getVipStatus()==1){
+            throw new BizException(ERRORCODE.VIP_EXIST.getCode(),ERRORCODE.VIP_EXIST.getMessage());
+        }
+
         String orderNo = String.valueOf(System.currentTimeMillis())+userId;
 
         String products = ordersQuery.getProducts();
