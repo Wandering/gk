@@ -468,7 +468,7 @@ define(function (require) {
                     sexT="女";
                 }
                 var m_kelei = paramsJson.m_kelei;
-                if(m_kelei=="理工"){
+                if(m_kelei=="文史"){
                     if(m_aggregateScore >= 510){
                         $('#controlLine').text("510");
                         $('#controlLine-txt').text('一批本科省控线');
@@ -482,7 +482,7 @@ define(function (require) {
                         $('#controlLine').text("220");
                         $('#controlLine-txt').text('高专高职省控线');
                     }
-                }else if(m_kelei=="文史"){
+                }else if(m_kelei=="理工"){
                     if(m_aggregateScore >= 480){
                         $('#controlLine').text("480");
                         $('#controlLine-txt').text('一批本科省控线');
