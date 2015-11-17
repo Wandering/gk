@@ -1,10 +1,13 @@
 package cn.thinkjoy.gk.controller;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Orders;
+import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.domain.UserVip;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IOrdersService;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.service.IUserVipService;
@@ -124,9 +127,7 @@ public class PayCallbackController extends BaseController{
                 }
             }
 
-        } catch (IOException e) {
-            LOGGER.error("error",e);
-        } catch (Exception e) {
+        }  catch (Exception e) {
             LOGGER.error("error",e);
         }
 
@@ -137,6 +138,21 @@ public class PayCallbackController extends BaseController{
         }
 
     }
+
+
+//    @RequestMapping(value = "payCallback", method = RequestMethod.POST)
+//    public void failPayCallback(){
+////        UserAccountPojo userAccountPojo = getUserAccountPojo();
+////        if(userAccountPojo==null){
+////            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+////        }
+////        long userId=userAccountPojo.getId();
+//        UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoById(userId);
+//
+//        userAccountBean.setVipStatus(1);
+//        userAccountExService.updateUserAccount(userAccount);
+//
+//    }
 
 //    public static void main(String[] args) {
 //        Calendar c = Calendar.getInstance();
