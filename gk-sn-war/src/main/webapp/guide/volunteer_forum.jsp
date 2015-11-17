@@ -25,7 +25,6 @@
         <div class="video mt60 ta">
             <a href="http://www.gkzy114.com/Public/Uploads/volunteer_school/volunteer_school.flv" style="display:inline-block;width:80%;height:460px" id="player"></a>
         </div>
-
         <div id="tab_title_content">
 
         </div>
@@ -39,7 +38,8 @@
 <%@ include file="/common/footer.jsp"%>
 <script src="http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.13.min.js"></script>
 <script type="text/javascript">
-    seajs.use(["http://cdn.gaokao360.net/static/global/guide/scripts/volunteer_forum",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+    seajs.use(["/static/src/guide/scripts/volunteer_forum",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+//    seajs.use(["http://cdn.gaokao360.net/static/global/guide/scripts/volunteer_forum",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
     var api = flowplayer("player", "http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.18.swf", {
         clip: {
             autoPlay: false,       //是否自动播放，默认true

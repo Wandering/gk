@@ -13,13 +13,11 @@
     <div class="w1000">
         <div class="content-title">
             <p class="fl w40"></p>
-
             <p class="fl w20">
                 <i class="fl arraw"></i>
                 <span>志愿指导</span>
                 <i class="fr arraw"></i>
             </p>
-
             <p class="fl w40"></p>
         </div>
     </div>
@@ -340,8 +338,8 @@
                     <td><span class="info-txt" id="studentName"></span></td>
                     <td><span class="info-txt" id="sexT"></span></td>
                     <td><span class="info-txt" id="schoolName"></span></td>
-                    <td><span class="info-txt" id="age"></span></td>
-                    <td><span class="info-txt" id="subjectTypeT"></span></td>
+                    <td><span class="info-txt">高三</span></td>
+                    <td><span class="info-txt" id="m_kelei"></span></td>
                     <td><span class="info-txt" id="m_candidateNumber"></span></td>
                     <td><span class="info-txt" id="m_aggregateScore"></span></td>
                     <td><span class="info-txt" id="m_ranking"></span></td>
@@ -442,39 +440,6 @@
                     <div class="school-list-col"></div>
                     <div id="integrity"></div>
                     <div id="integrity-txt">完整的填报志愿非常重要，不要放弃每一次机会，数量是质量的基础</div>
-                    <style>
-                        .content .evaluate-count .row #enrollment,
-                        .content .evaluate-count .row #exchange,
-                        .content .evaluate-count .row #integrity {
-                            position: absolute;
-                            top: 0;
-                            left: 380px;
-                            color: #74bbd9;
-                            font-size: 20px;
-                        }
-                        .content .evaluate-count .row #enrollment .col-list,
-                        .content .evaluate-count .row #exchange .col-list,
-                        .content .evaluate-count .row #integrity .col-list{
-                            margin: 0;
-                            line-height: 48px;
-                        }
-                        #integrity-txt,
-                        #obey{
-                            position: absolute;
-                            top: 50px;
-                            right:0;
-                            color: #74bbd9;
-                            font-size: 20px;
-                            width: 362px;
-                        }
-                        #obey{
-                            top:0;
-                        }
-                        #obey p{
-                            margin: 0;
-                            font-size: 17px;
-                        }
-                    </style>
                 </div>
             </div>
             <div class="evaluate-count">

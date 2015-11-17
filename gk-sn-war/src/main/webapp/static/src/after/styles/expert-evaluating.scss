@@ -234,6 +234,38 @@
   }
 }
 
+.content .evaluate-count .row #enrollment,
+.content .evaluate-count .row #exchange,
+.content .evaluate-count .row #integrity {
+  position: absolute;
+  top: 0;
+  left: 380px;
+  color: #74bbd9;
+  font-size: 20px;
+}
+.content .evaluate-count .row #enrollment .col-list,
+.content .evaluate-count .row #exchange .col-list,
+.content .evaluate-count .row #integrity .col-list{
+  margin: 0;
+  line-height: 48px;
+}
+#integrity-txt,
+#obey{
+  position: absolute;
+  top: 50px;
+  right:0;
+  color: #74bbd9;
+  font-size: 20px;
+  width: 362px;
+}
+#obey{
+  top:0;
+}
+#obey p{
+  margin: 0;
+  font-size: 17px;
+}
+
 
 
 

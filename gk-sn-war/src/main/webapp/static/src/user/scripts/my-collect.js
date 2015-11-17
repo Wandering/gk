@@ -5,7 +5,7 @@ define(function (require) {
         $listMsgItem: $('#list-msg-item'),
         $nextPage: $('#nextPage')
     };
-    var pageSize = 4;
+    var pageSize = 8;
 
     $(function () {
         UI.$nextPage.on('click', function () {
@@ -17,7 +17,7 @@ define(function (require) {
             var $this = $(this);
             var universityId = $this.attr('universityId');
             $.get('/userCollection/deleteUserCollect.do?universityId='+universityId,function(data){
-                console.log(data)
+                console.log(data);
                 if(data.rtnCode == '0000000'){
                     UI.$listMsgItem.html('');
                     if(data.bizData){
@@ -80,7 +80,6 @@ define(function (require) {
                         UI.$nextPage.hide();
                     }
                 }
-
             });
         }
     };

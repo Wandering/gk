@@ -13,7 +13,7 @@
         </ul>
       </li>
       <li class="menu-item"><a class="gk_hot" href="javascript:;">高考资讯</a>
-        <ul class="submenu">
+        <ul class="submenu" style="z-index: 100">
           <li><a href="/consult/gk_hot.jsp">高考热点</a></li>
           <li><a href="/consult/consult.jsp">专业测评</a></li>
           <li><a href="/consult/school_info.jsp">院校信息</a></li>
