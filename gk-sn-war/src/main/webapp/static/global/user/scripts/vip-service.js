@@ -2,7 +2,7 @@ define(function (require) {
 
     var $ = require('$');
 
-    require('header-user');
+    //require('header-user');
 
     require('http://cdn.gaokao360.net/static/plugins/pingpp/pingpp-pc');
 
@@ -46,6 +46,9 @@ define(function (require) {
                         data: pay,
                         success: function (result) {
                             console.log(result);
+                            if(result.rtnCode === '0900001'){
+                                $('.error-tips2').text(result.msg).fadeIn(1000).fadeOut(1000);
+                            }
                             if (result.rtnCode === '0000000') {
                                 var charge = result.bizData;
                                 pingppPc.createPayment(charge, function (result, error) {

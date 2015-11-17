@@ -1,29 +1,30 @@
 define(function (require) {
     var $ = require('$');
+    function GetCookie(sMainName, sSubName) {
+        var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
+        return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
+    }
+    var isUser = GetCookie("snuser");
+    $.getJSON(
+        "/info/getUserAccount.do",
+        function (res) {
+            console.log(res);
+            if (res.rtnCode == '0000000') {
+                var userData = res.bizData;
+                var account = userData.account;
+                var name = userData.name;
+                $('#accountNum').attr('accountNum', account);
+                if (name == null || name == '') {
+                    name == account;
+                }
+                $('.username').text(name);
+                var userImg = userData.icon;
+                if (userImg) {
+                    $('#user-avatar').attr('src', userImg);
+                }
 
-    $('#main-menu').on('mouseover','li.menu-item',function(){
-        $(this).addClass('active');
-    });
-    $('#main-menu').on('mouseout','li.menu-item',function(){
-        $(this).removeClass('active');
-    });
-
-
-    $(document).scroll(function() {
-        if ($(this).scrollTop() > 70) {
-            if (!$('.header').hasClass('fix')) {
-                $('.header').addClass('fix');
             }
-        } else {
-            $('.header').removeClass('fix');
-        }
-
-    });
-
-
-
-
-
+        });
     function addMenuActive() {
         var pathName = window.location.pathname.split('/');
         var pageName = pathName[pathName.length - 1];
@@ -65,6 +66,30 @@ define(function (require) {
         }
     }
 
-    addMenuActive();
+    $(function () {
+        if (isUser) {
+            $('#loginUser,#user-avatar').show();
+            $('#log-reg').hide();
+        } else {
+            $('#loginUser,#user-avatar').hide();
+            $('#log-reg').show();
+        }
+        addMenuActive();
+        $('#main-menu').on('mouseover', 'li.menu-item', function () {
+            $(this).addClass('active');
+        });
+        $('#main-menu').on('mouseout', 'li.menu-item', function () {
+            $(this).removeClass('active');
+        });
+    });
 
+    $(document).scroll(function () {
+        if ($(this).scrollTop() > 70) {
+            if (!$('.header').hasClass('fix')) {
+                $('.header').addClass('fix');
+            }
+        } else {
+            $('.header').removeClass('fix');
+        }
+    });
 });

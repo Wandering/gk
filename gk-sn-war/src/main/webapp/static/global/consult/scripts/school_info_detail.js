@@ -166,6 +166,7 @@ define(function (require) {
         getSchoolInfo: function (schoolId) {
             var _this = this;
             $.get(' /university/getEnrollInfo.do?id=' + schoolId, function (data) {
+                console.log(data)
                 if (data.rtnCode == '0000000') {
                     _this.renderSchool(data.bizData.enrollInfo)
                 }
@@ -184,6 +185,7 @@ define(function (require) {
                 + '<thead>'
                 + '<tr>'
                 + '<th></th>'
+                + '<th>批次</th>'
                 + '<th>计划数</th>'
                 + '<th>录取数</th>'
                 + '<th>最高分</th>'
@@ -199,6 +201,7 @@ define(function (require) {
                     var infosData = data[i].infos[j];
                     tabContentHtml += '<tr>'
                     + '<td>' + (infosData.subjectName || '') + '</td>'
+                    + '<td>' + (infosData.batch || '') + '</td>'
                     + '<td>' + (infosData.planNumber || '') + '</td>'
                     + '<td>' + (infosData.enrollNumber || '') + '</td>'
                     + '<td>' + (infosData.highestScore || '') + '</td>'
