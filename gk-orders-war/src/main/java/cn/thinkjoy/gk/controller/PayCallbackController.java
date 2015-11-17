@@ -101,6 +101,21 @@ public class PayCallbackController extends BaseController{
                         userVip.setStatus(1);
                         userVip.setEndDate(c.getTimeInMillis());
                         userVipService.update(userVip);
+
+                        UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoById(userId);
+
+                        userAccountBean.setVipStatus(1);
+
+                        String key = UserRedisConst.USER_KEY + userId;
+
+//                        LOGGER.info("redis:"+RedisUtil.getInstance());
+//
+//                        LOGGER.info("key:"+key);
+//
+//                        LOGGER.info(JSON.toJSONString(userAccountBean));
+
+                        RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean));
+
 //                        boolean flag = userVipService.updateUserVip(userId, 1, calendar.getTimeInMillis());
 //                        LOGGER.info("====pay /orders/createOrder updatePresell result : "+flag);
                     } catch (Exception e) {
@@ -116,20 +131,6 @@ public class PayCallbackController extends BaseController{
                     update.setStatus(1);
 
                     ordersService.update(update);//更新状态
-
-                    UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoById(userId);
-
-                    userAccountBean.setVipStatus(1);
-
-                    String key = UserRedisConst.USER_KEY + userId;
-
-                    LOGGER.info("redis:"+RedisUtil.getInstance());
-
-                    LOGGER.info("key:"+key);
-
-                    LOGGER.info(JSON.toJSONString(userAccountBean));
-
-                    RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean));
 
                     result = "success";
                 } else {
