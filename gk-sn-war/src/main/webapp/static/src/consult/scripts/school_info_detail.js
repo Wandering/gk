@@ -1,6 +1,7 @@
 define(function (require) {
     var $ = require('$');
     require('backToTop');
+    var pageErrorTip = require('pageErrorTip');
 
     // 获取URL
     function getUrLinKey(name) {
@@ -39,20 +40,20 @@ define(function (require) {
                             var thisV = _this.attr('rel');
                             var index = _this.index();
                             _this.addClass('active').siblings().removeClass('active');
-                            $('.tabs-content:eq('+ index +')').show().siblings('.tabs-content').hide();
+                            $('.tabs-content:eq(' + index + ')').show().siblings('.tabs-content').hide();
                             if (thisV == "院校简介") {
                                 $('#tabs-content1').show();
-                                if(!$('#tabs-content1').attr('flag'))Info.schoolIntro(schoolId);
+                                if (!$('#tabs-content1').attr('flag'))Info.schoolIntro(schoolId);
                             } else if (thisV == "招生简章") {
-                                if(!$('#tabs-content2').attr('flag'))Info.brochures(schoolId);
+                                if (!$('#tabs-content2').attr('flag'))Info.brochures(schoolId);
                             } else if (thisV == "往年招生情况") {
-                                if(!$('#tabs-content3').attr('flag'))Info.getSchoolInfo(schoolId);
+                                if (!$('#tabs-content3').attr('flag'))Info.getSchoolInfo(schoolId);
                             } else if (thisV == "往年招生计划") {
-                                if(!$('#tabs-content4').attr('flag'))Info.getEnroll(schoolId);
+                                if (!$('#tabs-content4').attr('flag'))Info.getEnroll(schoolId);
                             } else if (thisV == "专业录取分数") {
-                                if(!$('#tabs-content5').attr('flag'))Info.admitAMark(schoolId);
+                                if (!$('#tabs-content5').attr('flag'))Info.admitAMark(schoolId);
                             } else if (thisV == "开设专业") {
-                                if(!$('#tabs-content6').attr('flag'))Info.openSpecialty(schoolId);
+                                if (!$('#tabs-content6').attr('flag'))Info.openSpecialty(schoolId);
                             }
                         })
                         $('#tabs-list li:eq(0)').click();
@@ -149,7 +150,7 @@ define(function (require) {
         schoolIntro: function (schoolId) {
             $.get('/university/getUniversityIntro.do?universityId=' + schoolId, function (data) {
                 if (data.rtnCode == '0000000') {
-                    $('#tabs-content1').html(data.bizData.universityIntro).attr('flag',true);
+                    $('#tabs-content1').html(data.bizData.universityIntro).attr('flag', true);
                 }
             });
         },
@@ -157,7 +158,7 @@ define(function (require) {
         brochures: function (schoolId) {
             $.get('/university/getEntroIntro.do?universityId=' + schoolId, function (data) {
                 if (data.rtnCode == '0000000') {
-                    $('#tabs-content2').html(data.bizData.entroIntro).attr('flag',true);
+                    $('#tabs-content2').html(data.bizData.entroIntro).attr('flag', true);
                 }
             })
 
@@ -216,7 +217,7 @@ define(function (require) {
             }
             tabHtml += '</ul></div>';
             $('#tabs-content3')
-                .attr('flag',true)
+                .attr('flag', true)
                 .append(tabHtml)
                 .append(tabContentHtml)
                 .on('click', 'li', function () {
@@ -241,7 +242,6 @@ define(function (require) {
             })
         },
         renderEnroll: function (data) {
-
             var tabHtml = '<div id="tabs_list_last4" class="tabs-ui"><ul>';
             var tabContentHtml = '';
             for (var i = 0; i < data.length; i++) {
@@ -265,8 +265,8 @@ define(function (require) {
                 + '<tbody>';
                 for (var j = 0; j < data[i].planInfos.length; j++) {
                     var planInfosData = data[i].planInfos[j];
-                    tabContentHtml += '<tr batch="'+ planInfosData.subject +'">'
-                    + '<td width="50%" class="name"><a target="_blank" href="/consult/profession_detail.jsp?id='+ planInfosData.majoredId +'">' + (planInfosData.majoredName || '') + '</a></td>'
+                    tabContentHtml += '<tr batch="' + planInfosData.subject + '">'
+                    + '<td width="50%"><a target="_blank" href="/consult/profession_detail.jsp?id=' + planInfosData.majoredId + '">' + (planInfosData.majoredName || '') + '</a></td>'
                     + '<td width="10%">' + (planInfosData.batch || '') + '</td>'
                     + '<td width="10%">' + (planInfosData.subject || '') + '</td>'
                     + '<td width="10%">' + (planInfosData.planNumber || '') + '</td>'
@@ -278,7 +278,7 @@ define(function (require) {
             }
             tabHtml += '</ul></div>';
             $('#tabs-content4')
-                .attr('flag',true)
+                .attr('flag', true)
                 .append(tabHtml)
                 .append(tabContentHtml)
                 .on('click', 'li', function () {
@@ -286,20 +286,20 @@ define(function (require) {
                     var index = _this.index();
                     var thisParents = _this.parents('#tabs-content4');
                     thisParents.find('tr').show();
-                    thisParents.find('label').removeClass('active').find('input').attr('checked',false);
+                    thisParents.find('label').removeClass('active').find('input').attr('checked', false);
                     _this.addClass('active').siblings().removeClass('active');
                     thisParents.find('.school-table').hide();
                     thisParents.find('.school-table:eq(' + index + ')').show()
                         .find('label')
-                        .on('click',function(){
+                        .on('click', function () {
                             $(this).addClass('active').siblings().removeClass('active');
                             var batch = $(this).find('span').text();
                             var batchW = $(this).parents('.school-table').find('tr[batch="文史"]');
                             var batchL = $(this).parents('.school-table').find('tr[batch="理工"]');
-                            if(batch=="文史"){
+                            if (batch == "文史") {
                                 batchL.hide();
                                 batchW.show();
-                            }else{
+                            } else {
                                 batchW.hide();
                                 batchL.show();
                             }
@@ -318,6 +318,21 @@ define(function (require) {
             })
         },
         renderAdmitAMark: function (data) {
+            console.log(data);
+            if (typeof data === "object" && !(data instanceof Array)){
+                var hasProp = false;
+                for (var prop in data){
+                    hasProp = true;
+                    break;
+                }
+                if (!hasProp){
+                    var tips ='<div class="school-table mt20">'+ pageErrorTip('暂无相关数据') + '</div>';
+                        $('#tabs-content5')
+                            .attr('flag', true)
+                            .append(tips)
+                    return false;
+                }
+            }
             var tabHtml = '<div id="tabs_list_last5" class="tabs-ui"><ul>';
             var tabContentHtml = '';
             for (var v in data) {
@@ -338,10 +353,11 @@ define(function (require) {
                 + '</tr>'
                 + '</thead>'
                 + '<tbody>';
+
                 for (var j = 0; j < data[v].length; j++) {
                     var admitAMarkData = data[v][j];
-                    tabContentHtml += '<tr batch="'+ admitAMarkData.subject +'">'
-                    + '<td>' + (admitAMarkData.majoredName || '-') + '</td>'
+                    tabContentHtml += '<tr batch="' + admitAMarkData.subject + '">'
+                    + '<td><a target="_blank" href="/consult/profession_detail.jsp?id='+ admitAMarkData.majoredId  +'">' + (admitAMarkData.majoredName || '-') + '</a></td>'
                         //+ '<td>' + (admitAMarkData.enrollBatch || '-') + '</td>'
                     + '<td>' + (admitAMarkData.subject || '-') + '</td>'
                     + '<td>' + (admitAMarkData.highestScore) + '</td>'
@@ -352,7 +368,7 @@ define(function (require) {
             }
             tabHtml += '</ul></div>';
             $('#tabs-content5')
-                .attr('flag',true)
+                .attr('flag', true)
                 .append(tabHtml)
                 .append(tabContentHtml)
                 .on('click', 'li', function () {
@@ -360,21 +376,21 @@ define(function (require) {
                     var index = _this.index();
                     var thisParents = _this.parents('#tabs-content5');
                     thisParents.find('tr').show();
-                    thisParents.find('label').removeClass('active').find('input').attr('checked',false);
+                    thisParents.find('label').removeClass('active').find('input').attr('checked', false);
                     _this.addClass('active').siblings().removeClass('active');
                     thisParents.find('.school-table').hide();
                     thisParents.find('.school-table:eq(' + index + ')').show()
                         .find('label')
-                        .on('click',function(){
+                        .on('click', function () {
                             $(this).addClass('active').siblings().removeClass('active');
                             var batch = $(this).find('span').text();
                             var batchW = $(this).parents('.school-table').find('tr[batch="文史"]');
                             var batchL = $(this).parents('.school-table').find('tr[batch="理工"]');
                             console.log($(this).parents('.school-table').find('tr').html())
-                            if(batch=="文史"){
+                            if (batch == "文史") {
                                 batchL.hide();
                                 batchW.show();
-                            }else{
+                            } else {
                                 batchW.hide();
                                 batchL.show();
                             }
@@ -389,8 +405,9 @@ define(function (require) {
                 console.log(data)
                 var dataJson = data.bizData;
                 if (data.rtnCode == '0000000') {
+
                     var tabContentHtml = '<div class="school-table mt20">'
-                        +'<div class="tipTxt"><strong>温馨提示：</strong> <i class="star"></i>号表示该专业在该院校招生</div>'
+                        + '<div class="tipTxt"><strong>温馨提示：</strong> <i class="star"></i>号表示该专业在该院校招生</div>'
                         + '<table border="0" cellpadding="0" cellspacing="0">'
                         + '<thead>'
                         + '<tr>'
@@ -401,33 +418,39 @@ define(function (require) {
                         + '</tr>'
                         + '</thead>'
                         + '<tbody>';
-                    for (var i = 0; i < dataJson.length; i++) {
-
-                        var employmentRateRank = dataJson[i].employmentRateRank
-                            , isEnrol = dataJson[i].isEnrol
-                            , majoredName = dataJson[i].majoredName
-                            , salaryRank = dataJson[i].salaryRank
-                            , subject = dataJson[i].subject
-                            , majoredId = dataJson[i].majoredId;
-                        var isEnrolTxt = '';
-                        if (isEnrol == 1) {
-                            isEnrolTxt = '<i class="star"></i>';
-                        } else {
-                            isEnrolTxt = '';
+                    if (dataJson.length > 0) {
+                        for (var i = 0; i < dataJson.length; i++) {
+                            var employmentRateRank = dataJson[i].employmentRateRank
+                                , isEnrol = dataJson[i].isEnrol
+                                , majoredName = dataJson[i].majoredName
+                                , salaryRank = dataJson[i].salaryRank
+                                , subject = dataJson[i].subject
+                                , majoredId = dataJson[i].majoredId;
+                            var isEnrolTxt = '';
+                            if (isEnrol == 1) {
+                                isEnrolTxt = '<i class="star"></i>';
+                            } else {
+                                isEnrolTxt = '';
+                            }
+                            tabContentHtml += '<tr>'
+                            + '<td>'
+                            + isEnrolTxt
+                            + '<a target="_blank" href="/consult/profession_detail.jsp?id=' + majoredId + '">' + majoredName + '</a></td>'
+                            + '<td>' + (subject || "-") + '</td>'
+                            + '<td>' + salaryRank + '</td>'
+                            + '<td>' + employmentRateRank + '</td>'
+                            + '</tr>';
                         }
-                        tabContentHtml += '<tr>'
-                        + '<td>'
-                        + isEnrolTxt
-                        + '<a target="_blank" href="/consult/profession_detail.jsp?id='+ majoredId +'">'+majoredName + '</a></td>'
-                        + '<td>' + (subject || "-") + '</td>'
-                        + '<td>' + salaryRank + '</td>'
-                        + '<td>' + employmentRateRank + '</td>'
-                        + '</tr>';
+                        tabContentHtml += '</tbody></table></div>';
+                        $('#tabs-content6')
+                            .attr('flag', true)
+                            .append(tabContentHtml);
+                    }else{
+                        tabContentHtml += '<tr><td colspan="4">'+ pageErrorTip('暂无相关数据') +'</td></tr></table></div>';
+                        $('#tabs-content6')
+                            .attr('flag', true)
+                            .append(tabContentHtml);
                     }
-                    tabContentHtml += '</tbody></table></div>';
-                    $('#tabs-content6')
-                        .attr('flag',true)
-                        .append(tabContentHtml);
                 }
             })
         }
