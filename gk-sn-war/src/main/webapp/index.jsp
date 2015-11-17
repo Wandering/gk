@@ -4,8 +4,6 @@
 <head>
     <title>首页</title>
     <meta charset="utf-8"/>
-    <meta name="renderer" content="webkit"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
     <%@ include file="common/meta.jsp" %>
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/index/styles/index.min.css"/>
 </head>
@@ -220,8 +218,8 @@
 </div>
 <%@ include file="common/footer.jsp" %>
 <script>
-    seajs.use(["http://cdn.gaokao360.net/static/global/index/scripts/index.min","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
-//    seajs.use(["/static/src/index/scripts/index","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
+//    seajs.use(["http://cdn.gaokao360.net/static/global/index/scripts/index.min","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
+    seajs.use(["/static/src/index/scripts/index","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
 </script>
 </body>
 </html>

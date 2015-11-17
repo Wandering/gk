@@ -5,7 +5,7 @@ define(function (require) {
         $listMsgItem: $('#list-msg-item'),
         $nextPage: $('#nextPage')
     };
-    var pageSize = 4;
+    var pageSize = 8;
 
     $(function () {
         UI.$nextPage.on('click', function () {
@@ -144,7 +144,7 @@ define(function (require) {
                             }
                             listMsgHtml+= '<td><a href="javascript:;" universityId="'+ universityId +'" class="cancel-collect"></a></td>';
                             + '</tr>';
-                            UI.$listMsgItem.prepend(listMsgHtml);
+                            UI.$listMsgItem.append(listMsgHtml);
                         }
                         pageNo = parseInt(pageNo) + pageSize ;
                         UI.$listMsgItem.attr('pageNo', pageNo);
