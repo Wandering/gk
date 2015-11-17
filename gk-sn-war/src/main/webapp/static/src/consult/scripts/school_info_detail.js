@@ -266,7 +266,7 @@ define(function (require) {
                 for (var j = 0; j < data[i].planInfos.length; j++) {
                     var planInfosData = data[i].planInfos[j];
                     tabContentHtml += '<tr batch="' + planInfosData.subject + '">'
-                    + '<td width="50%" class="name"><a target="_blank" href="/consult/profession_detail.jsp?id=' + planInfosData.majoredId + '">' + (planInfosData.majoredName || '') + '</a></td>'
+                    + '<td width="50%"><a target="_blank" href="/consult/profession_detail.jsp?id=' + planInfosData.majoredId + '">' + (planInfosData.majoredName || '') + '</a></td>'
                     + '<td width="10%">' + (planInfosData.batch || '') + '</td>'
                     + '<td width="10%">' + (planInfosData.subject || '') + '</td>'
                     + '<td width="10%">' + (planInfosData.planNumber || '') + '</td>'
@@ -319,16 +319,20 @@ define(function (require) {
         },
         renderAdmitAMark: function (data) {
             console.log(data);
-
-
-            //if(typeof(data)=="object") {
-            //    var tips ='<div class="school-table mt20">'+ pageErrorTip('暂无相关数据') + '</div>';
-            //    $('#tabs-content5')
-            //        .attr('flag', true)
-            //        .append(tips)
-            //}
-
-
+            if (typeof data === "object" && !(data instanceof Array)){
+                var hasProp = false;
+                for (var prop in data){
+                    hasProp = true;
+                    break;
+                }
+                if (!hasProp){
+                    var tips ='<div class="school-table mt20">'+ pageErrorTip('暂无相关数据') + '</div>';
+                        $('#tabs-content5')
+                            .attr('flag', true)
+                            .append(tips)
+                    return false;
+                }
+            }
             var tabHtml = '<div id="tabs_list_last5" class="tabs-ui"><ul>';
             var tabContentHtml = '';
             for (var v in data) {
