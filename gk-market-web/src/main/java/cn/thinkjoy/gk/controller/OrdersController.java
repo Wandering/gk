@@ -134,7 +134,7 @@ public class OrdersController extends BaseController {
             }else {
                 throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e){
             LOGGER.info("====pay /orders/createOrder catch: "+e.getMessage());
             throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
         }
