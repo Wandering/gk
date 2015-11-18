@@ -29,7 +29,7 @@ public class BaseController extends BaseCommonController{
 	}
 
 	protected void setUserAccountPojo(UserAccountPojo userAccountBean) throws Exception {
-		if(null!=userAccountBean){
+		if(null==userAccountBean){
 			String key = UserRedisConst.USER_KEY + userAccountBean.getId();
 			RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean));
 		}
