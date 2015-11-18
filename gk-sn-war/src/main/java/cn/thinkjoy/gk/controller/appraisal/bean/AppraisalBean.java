@@ -5,7 +5,7 @@ package cn.thinkjoy.gk.controller.appraisal.bean;
  */
 public class AppraisalBean {
 
-    private final Integer affiliateId=2;
+    private final String affiliateId="2";
 
     private final String accessKey="8F14E45FCEEA167A5A36DEDD4BEA2544";
 
@@ -19,7 +19,7 @@ public class AppraisalBean {
 
     private String testerNm;
 
-    public Integer getAffiliateId() {
+    public String getAffiliateId() {
         return affiliateId;
     }
 

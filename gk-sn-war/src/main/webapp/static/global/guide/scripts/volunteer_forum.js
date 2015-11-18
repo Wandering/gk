@@ -106,6 +106,7 @@ define(function (require) {
             }
             getArticleList(curObj, parseInt($(this).attr('data-page')) + 1);
         });
+        $('body').find('#player_api').append('<param name="wmode" value="opaque">')
     });
 });
 
