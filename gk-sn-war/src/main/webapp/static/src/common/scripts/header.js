@@ -13,6 +13,13 @@ define(function (require) {
                 var userData = res.bizData;
                 var account = userData.account;
                 var name = userData.name;
+
+                var loginUserHtml = ''
+                    +'<img src="http://cdn.gaokao360.net/static/global/common/images/icon_default.png" alt="avatar" class="user-avatar hide" id="user-avatar"/>'
+                    +'<a href="javascript:" id="accountNum" class="username"></a>'
+
+
+
                 $('#accountNum').attr('accountNum', account);
                 if (name == null || name == '') {
                     name == account;

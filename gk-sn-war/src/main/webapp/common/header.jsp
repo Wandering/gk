@@ -36,8 +36,8 @@
     </div>
     <div class="user-info-list fr" id="login-user-info">
       <div class="user hide" id="loginUser">
-        <img src="http://cdn.gaokao360.net/static/global/common/images/icon_default.png" alt="avatar" class="user-avatar hide" id="user-avatar"/>
-        <a href="javascript:" id="accountNum" class="username"></a>
+        <%--<img src="http://cdn.gaokao360.net/static/global/common/images/icon_default.png" alt="avatar" class="user-avatar hide" id="user-avatar"/>--%>
+        <%--<a href="javascript:" id="accountNum" class="username"></a>--%>
       </div>
       <ul class="menu" id="userMenu">
         <li><a href="/user/personal-info.jsp">个人信息</a></li>
