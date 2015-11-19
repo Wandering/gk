@@ -39,7 +39,7 @@ public class BaseController extends BaseCommonController{
 
 	protected Long getAreaCookieValue() throws Exception {
 		Object areaId = session.getAttribute(SessionConst.AREA_SESSION_NAME);
-		if(null!=areaId){
+		if(null==areaId){
 			areaId = AreaCookieUtil.getAreaCookieValue(request);
 			session.setAttribute(SessionConst.AREA_SESSION_NAME,areaId);
 		}
