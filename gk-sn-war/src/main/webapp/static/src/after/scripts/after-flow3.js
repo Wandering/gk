@@ -1,6 +1,6 @@
 define(function (require) {
     var $ = require('$');
-    require('backToTop');
+    //require('backToTop');
     $(function () {
         //
         var paramsJson = JSON.parse(params);
@@ -15,25 +15,6 @@ define(function (require) {
         $('#volunteer-flow3-layer').on('click', '.close-btn', function () {
             $('#volunteer-flow3-layer,.tansLayer').hide();
         });
-        //console.log(JSON.parse(params).m_province);
-
-
-
-        //var params1 = {
-        //    "m_candidateNumber": "0",
-        //    "m_aggregateScore": 390,
-        //    "m_ranking": 72465,
-        //    "m_kelei": "文史",
-        //    "m_batch_id": 4,
-        //    "m_batch": "高职（专科）",
-        //    "m_province_id": "0",
-        //    "m_province": "",
-        //    "m_specialty_id": "",
-        //    "m_specialty_name": "",
-        //    "m_favorites_by_university_codes": ""
-        //};
-
-
 
         function getSchool(paramsJson, m_province, m_specialty_name) {
             paramsJson.m_province = m_province;
@@ -125,15 +106,20 @@ define(function (require) {
             var years = 2014;
             //console.log($(this).parents('.school-list').attr('dataType'))
             var star = '';
+            var sequence='';
             var starType = $(this).parents('.school-list').attr('dataType');
             if (starType == "A") {
                 star = '★';
+                sequence = '1';
             } else if (starType == "B") {
                 star = '★★';
+                sequence = '2';
             } else if (starType == "C") {
                 star = '★★★';
+                sequence = '3';
             } else {
                 star = '★★★★';
+                sequence = '4';
             }
             //console.log(code + "=" + type + "==" + m_batch);
             //console.log(star);
@@ -167,7 +153,7 @@ define(function (require) {
                             + '历年招生情况：' + data.enrollIntro + ' <br/>'
                             + '录取指数：' + star
                             + '</p>';
-                        $('.open-flow3[type="text"][dataType="' + datatypeid + '"]').val(m_university_name).attr({'code':code,'m_batch':m_batch,'m_batch_id':m_batch_id});
+                        $('.open-flow3[type="text"][dataType="' + datatypeid + '"]').val(m_university_name).attr({'code':code,'m_batch':m_batch,'m_batch_id':m_batch_id,'sequence':sequence});
                         $('#result-info' + datatypeid).html(infoHtml);
                         $('#tips' + datatypeid).hide();
                         $('#volunteer-flow3-layer,.tansLayer').hide();
@@ -320,35 +306,39 @@ define(function (require) {
             //合理性分析
             var m_university_codeA = $('input[type="text"][dataType="1"]').attr('code');
             var m_university_nameA = $('input[type="text"][dataType="1"]').val();
+            var sequenceA = $('input[type="text"][dataType="1"]').attr('sequence');
             var m_university_codeB = $('input[type="text"][dataType="2"]').attr('code');
             var m_university_nameB = $('input[type="text"][dataType="2"]').val();
+            var sequenceB = $('input[type="text"][dataType="2"]').attr('sequence');
             var m_university_codeC = $('input[type="text"][dataType="3"]').attr('code');
             var m_university_nameC = $('input[type="text"][dataType="3"]').val();
+            var sequenceC = $('input[type="text"][dataType="3"]').attr('sequence');
             var m_university_codeD = $('input[type="text"][dataType="4"]').attr('code');
             var m_university_nameD = $('input[type="text"][dataType="4"]').val();
+            var sequenceD = $('input[type="text"][dataType="4"]').attr('sequence');
             var m_batch = $('input[type="text"][dataType="1"]').attr('m_batch');
             var m_batch_id = $('input[type="text"][dataType="1"]').attr('m_batch_id');
             var data = [
                     {
-                        "sequence": 1,
+                        "sequence": sequenceA,
                         "m_university_code": m_university_codeA,
                         "m_university_name": m_university_nameA
 
                     },
                     {
-                        "sequence": 2,
+                        "sequence": sequenceB,
                         "m_university_code": m_university_codeB,
                         "m_university_name": m_university_nameB
 
                     },
                     {
-                        "sequence": 3,
+                        "sequence": sequenceC,
                         "m_university_code": m_university_codeC,
                         "m_university_name": m_university_nameC
 
                     },
                     {
-                        "sequence": 4,
+                        "sequence": sequenceD,
                         "m_university_code": m_university_codeD,
                         "m_university_name": m_university_nameD
 

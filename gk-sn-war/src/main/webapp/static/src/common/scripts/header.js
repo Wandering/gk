@@ -72,6 +72,7 @@ define(function (require) {
                 break;
         }
     }
+    addMenuActive();
 
     $(function () {
         if (isUser) {
@@ -81,7 +82,8 @@ define(function (require) {
             $('#loginUser,#user-avatar').hide();
             $('#log-reg').show();
         }
-        addMenuActive();
+
+
         $('#main-menu').on('mouseover', 'li.menu-item', function () {
             $(this).addClass('active');
         });

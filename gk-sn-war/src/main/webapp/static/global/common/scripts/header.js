@@ -14,14 +14,6 @@ define(function (require) {
                 var account = userData.account;
                 var name = userData.name;
                 var userImg = userData.icon;
-                //if (name == null || name == '') {
-                //    name == account;
-                //}
-                //$('#accountNum').attr('accountNum', account);
-                //
-                //$('.username').text(name);
-
-
                 var imgUrl = '';
                 if(!userImg){
                     imgUrl = 'http://cdn.gaokao360.net/static/global/common/images/icon_default.png';
@@ -38,8 +30,6 @@ define(function (require) {
                     +'<img src="'+ imgUrl +'" alt="avatar" class="user-avatar" id="user-avatar"/>'
                     +'<a href="javascript:" id="accountNum" class="username">'+ username +'</a>';
                 $('#loginUser').append(loginUserHtml);
-
-
             }
         });
     function addMenuActive() {
@@ -82,6 +72,7 @@ define(function (require) {
                 break;
         }
     }
+    addMenuActive();
 
     $(function () {
         if (isUser) {
@@ -91,7 +82,8 @@ define(function (require) {
             $('#loginUser,#user-avatar').hide();
             $('#log-reg').show();
         }
-        addMenuActive();
+
+
         $('#main-menu').on('mouseover', 'li.menu-item', function () {
             $(this).addClass('active');
         });
