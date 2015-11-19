@@ -26,7 +26,7 @@
   <li class="qr-code-container hide" id="qr-code-container">
     <span class="item-container">
       <span class="img-container">
-        <img src="../static/src/common/images/ewm.png" alt=""/>
+        <img src="http://cdn.gaokao360.net/static/global/common/images/ewm.png" alt=""/>
       </span>
       <p>高考360微信服务号</p>
     </span>
