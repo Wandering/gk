@@ -330,7 +330,7 @@ define(function (require) {
             },
             success: function (res) {
                 console.log(res)
-                if (res.rtnCode == "1000006" || res.rtnCode == "1000004") {
+                if (res.rtnCode == "1000006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
                     errorTips(res.msg);
                     return false;
                 }
