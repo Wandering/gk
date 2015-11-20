@@ -4,7 +4,7 @@
 <head>
     <title>考前备考</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/before/styles/before.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/before/styles/before.min.css"/>
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
@@ -26,7 +26,7 @@
     <ul class="flow-main-list">
         <li class="item">
             <a target="_blank" href="/before/teacher-lecture.jsp?classifyType=1&searchV=">
-                <img src="/static/dist/before/images/flow-img1.png" alt=""/>
+                <img src="http://cdn.gaokao360.net/static/global/before/images/flow-img1.png" alt=""/>
             </a>
             <a target="_blank" href="/before/teacher-lecture.jsp?classifyType=1&searchV=" class="name">名师讲堂</a>
             <span class="num">1</span>
@@ -34,7 +34,7 @@
         </li>
         <li class="item">
             <a target="_blank" href="/before/exam.jsp?classifyType=3&searchV=">
-                <img src="/static/dist/before/images/ztmj.png" alt=""/>
+                <img src="http://cdn.gaokao360.net/static/global/before/images/ztmj.png" alt=""/>
             </a>
             <a target="_blank" href="/before/exam.jsp?classifyType=3&searchV=" class="name">真题密卷</a>
             <span class="num">2</span>
@@ -42,15 +42,15 @@
         </li>
         <li class="item">
             <a target="_blank" href="/before/mentality.jsp?classifyType=2&searchV=">
-                <img src="/static/dist/before/images/gkxl.png" alt=""/>
+                <img src="http://cdn.gaokao360.net/static/global/before/images/gkxl.png" alt=""/>
             </a>
             <a target="_blank" href="/before/mentality.jsp?classifyType=2&searchV=" class="name">高考心理</a>
             <span class="num">3</span>
-            <p class="txt">著名示范性高中高考模拟试题和自主命制的高考真题密卷</p>
+            <p class="txt">专家告诉您如何调整，以最好的状态应对高考</p>
         </li>
         <li class="item">
             <a href="javascript:;" id="volunteer-flow1">
-                <img src="/static/dist/before/images/yxtj.png" alt=""/>
+                <img src="http://cdn.gaokao360.net/static/global/before/images/yxtj.png" alt=""/>
             </a>
             <a href="javascript:;" class="name" id="volunteer-flow">院校推荐</a>
             <span class="num">4</span>
@@ -206,7 +206,7 @@
             <p>院校评测使用的分数，位次数据，招生计划为往年数据，结果仅供参考，且系统推荐学校有限制，若要使用最新，更全面，更多推荐学校，请升级为VIP。</p>
         </div>
         <div class="eval-left">
-            <img src="/static/dist/before/images/bottom-banner.jpg" />
+            <img src="http://cdn.gaokao360.net/static/global/before/images/bottom-banner.jpg" />
             <h3>为我推荐院校</h3>
             <h6>直接系统告诉我可以报的院校名称，容我考虑考虑</h6>
         </div>
@@ -250,7 +250,7 @@
     <div class="school-eval w1000" style="padding:40px 0 0;">
         <div class="eval-left yztj-fl" >
             <div class="img">
-                <img src="/static/src/before/images/zd-pic.png" alt=""/>
+                <img src="http://cdn.gaokao360.net/static/global/before/images/zd-pic.png" alt=""/>
                 <strong>院校推荐、志愿指导</strong>
                 <p>依据总分、位次获取推荐院校及志愿指导</p>
             </div>
@@ -262,15 +262,6 @@
                 <input type="text" class="score-input" id="score-input" placeholder="请输入分数"/>
             </div>
 
-            <div class="category mt10">
-                <span class="t">选择批次：</span>
-                <div class="group-radio pl">
-                    <label><input type="radio" name="batch" value="一批本科" />一批本科</label>
-                    <label><input type="radio" name="batch" value="二批本科" />二批本科</label>
-                    <label><input type="radio" name="batch" value="三批本科" />三批本科</label>
-                    <label><input type="radio" name="batch" value="高职（专科）" />高职（专科）</label>
-                </div>
-            </div>
             <div class="category mt10">
                 <span class="t">选择文理科：</span>
                 <div class="group-radio">
@@ -303,7 +294,7 @@
             <p>院校评测使用的分数，位次数据，招生计划为往年数据，结果仅供参考，且系统推荐学校有限制，若要使用最新，更全面，更多推荐学校，请升级为VIP。</p>
         </div>
         <div class="eval-left">
-            <img src="/static/dist/before/images/bottom-banner.jpg" />
+            <img src="http://cdn.gaokao360.net/static/global/before/images/bottom-banner.jpg" />
             <h3>获得位次</h3>
             <h6>我想通过分数让平台为我估测我的位次。</h6>
         </div>
@@ -343,7 +334,7 @@
             <p>所测评的目标院校是：<strong id="dreamSchoolInfo"></strong></p>
         </div>
         <div class="evaluating-result">
-            <p class="tips">依据2015年的录取情况、在陕西省填报该院校您需要以下分数(在陕）：</p>
+            <p class="tips">依据<span id="evaluatingYears"></span>的录取情况、在陕西省填报该院校您需要以下分数(在陕）：</p>
             <div class="evaluating-result-num" id="dream-list"></div>
         </div>
         <div style="text-align: center">
@@ -364,7 +355,7 @@
             <p>您本次录入的分数是：<strong><span id="precedenceScoreInfo"></span>分</strong></p>
         </div>
         <div class="evaluating-result">
-            <p class="tips">依据<span id="current-year"></span>年的录取情况、在陕西省你的分数预估在以下位次:</p>
+            <p class="tips">依据<span id="current-year"></span>的录取情况、在陕西省你的分数预估在以下位次:</p>
             <div class="evaluating-result-num" id="precedence-list"></div>
         </div>
         <div style="text-align: center">
@@ -452,7 +443,7 @@
         </div>
         <div class="result-info">
             <ul>
-                <li>您录入的分数是<strong id="score-num">666分</strong>、<strong id="subjectTypeV">文史类</strong>，依据2015年招生情况，您的分数是<strong id="batchV">一批本科</strong>；</li>
+                <li>您录入的分数是<strong id="score-num">666分</strong>、<strong id="subjectTypeV">文史类</strong>；</li>
                 <li>如果您想选择<strong>其他批次院校</strong>，请返回重新选择，或根据本人志愿进行填报；</li>
                 <li>如果未能推荐出您的意向院校，请使用我们为您提供的<a href="javascript:;" id="dreanSchoolBtn">理想院校测评</a>服务.</li>
             </ul>
@@ -464,7 +455,8 @@
 </div>
 <%@ include file="/common/footer.jsp"%>
 <script>
-    seajs.use("/static/src/before/scripts/before");
+//    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+    seajs.use(["/static/src/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
 </script>
 </body>
 </html>

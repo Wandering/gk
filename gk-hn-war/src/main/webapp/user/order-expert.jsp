@@ -4,11 +4,9 @@
 <head>
     <%@include file="/common/meta.jsp" %>
     <title>我要预约</title>
-    <link rel="stylesheet" href="/static/dist/user/styles/order-expert.min.css"/>
-    <%--<link rel="stylesheet" href="/static/bower_components/laydate/need/laydate.css"/>--%>
-    <link rel="stylesheet" href="/static/bower_components/laydate/skins/dahong/laydate.css"/>
-    <%--<link rel="stylesheet" href="/static/bower_components/kindeditor/themes/default/default.css"/>--%>
-    <script src="/static/bower_components/laydate/laydate.js"></script>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/user/styles/order-expert.min.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/bower_components/laydate/skins/dahong/laydate.css"/>
+    <script src="http://cdn.gaokao360.net/static/bower_components/laydate/laydate.js"></script>
 </head>
 <body>
 <%@include file="/common/header.jsp" %>
@@ -20,6 +18,7 @@
         <li><a href="app-center.jsp">应用中心</a></li>
         <li><a href="online-answer.jsp">在线答疑</a></li>
         <li class="active"><a href="expert-service.jsp">专家服务</a></li>
+        <li><a href="/user/my-collect.jsp">我的收藏</a></li>
     </ul>
 
     <div class="content">
@@ -86,20 +85,16 @@
         </div>
         <div class="error-tips hide"></div>
         <div class="btn-box">
-            <div class="btn btn-submit">提交</div>
-            <div class="btn btn-submit">重置</div>
+            <div class="btn btn-submit" id="submit-btn">提交</div>
+            <div class="btn btn-submit" id="reset-btn">重置</div>
         </div>
     </div>
 </div>
 
 
 <%@include file="/common/footer.jsp" %>
-
-<%--<script src="/static/bower_components/kindeditor/kindeditor.js"></script>--%>
-<%--<script src="/static/bower_components/kindeditor/lang/zh-CN.js"></script>--%>
-
 <script>
-    seajs.use("/static/src/user/scripts/order-expert");
+    seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/order-expert.min");
 </script>
 
 </body>

@@ -11,7 +11,7 @@
 <head>
 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-  <title>高考资讯</title>
+  <title>UMEDITOR 完整demo</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <link href="http://ueditor.baidu.com/umeditor/themes/default/css/umeditor.min.css" type="text/css" rel="stylesheet">
   <script type="text/javascript" src="http://ueditor.baidu.com/umeditor/third-party/jquery.min.js"></script>
@@ -119,7 +119,7 @@
   </style>
 </head>
 <body>
-<h1>高考资讯</h1>
+<h1>UMEDITOR 完整demo</h1>
 
 <!--style给定宽度可以影响编辑器的最终宽度-->
 <script type="text/plain" id="myEditor" style="width:1000px;height:240px;">
@@ -177,8 +177,7 @@
 <form action="testController/test.do" method="post" id="testForm">
   <input type="test" name="title">
   <input type="test" name="summary">
-  <input type="hidden" name="context" ></p>
-  <input type="hidden" name="type" value="gkhot">
+  <input type="hidden" name="context" >
   <input type="button"  value="保存dd" id="btn">
 </form>
 

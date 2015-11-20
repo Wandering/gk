@@ -9,16 +9,11 @@
 <html>
 <head>
     <title></title>
-  <style type="text/css">
-    h1{
-      text-align: center;
-      color: red;
-      margin-top: 15%;
-      font-size: 48px;
-    }
-  </style>
+    <%@ include file="/common/meta.jsp"%>
 </head>
 <body>
-<h1>404</h1>
+<div id="page404">
+    <a href="/index.jsp" id="index-links">首页</a>
+</div>
 </body>
 </html>
