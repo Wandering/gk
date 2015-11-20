@@ -4,34 +4,58 @@ define(function (require) {
         var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
         return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
     }
-    var isUser = GetCookie("snuser");
-    $.getJSON(
-        "/info/getUserAccount.do",
-        function (res) {
-            console.log(res);
-            if (res.rtnCode == '0000000') {
-                var userData = res.bizData;
-                var account = userData.account;
-                var name = userData.name;
-                var userImg = userData.icon;
-                var imgUrl = '';
-                if(!userImg){
-                    imgUrl = 'http://cdn.gaokao360.net/static/global/common/images/icon_default.png';
-                }else{
-                    imgUrl = userImg;
-                }
-                var username = '';
-                if(name){
-                    username = name;
-                }else{
-                    username = account;
-                }
-                var loginUserHtml = ''
-                    +'<img src="'+ imgUrl +'" alt="avatar" class="user-avatar" id="user-avatar"/>'
-                    +'<a href="javascript:" id="accountNum" class="username">'+ username +'</a>';
-                $('#loginUser').append(loginUserHtml);
-            }
+
+
+
+    $(function () {
+        var isUser = GetCookie("snuser");
+        if (isUser) {
+            $.getJSON(
+                "/info/getUserAccount.do",
+                function (res) {
+                    //console.log(res.rtnCode)
+                    if (res.rtnCode == '0000000') {
+                        var userData = res.bizData;
+                        var account = userData.account;
+                        var name = userData.name;
+                        var userImg = userData.icon;
+                        var imgUrl = '';
+                        if(!userImg){
+                            imgUrl = 'http://cdn.gaokao360.net/static/global/common/images/icon_default.png';
+                        }else{
+                            imgUrl = userImg;
+                        }
+                        var username = '';
+                        if(name){
+                            username = name;
+                        }else{
+                            username = account;
+                        }
+                        var loginUserHtml = ''
+                            +'<img src="'+ imgUrl +'" alt="avatar" class="user-avatar" id="user-avatar"/>'
+                            +'<a href="javascript:" id="accountNum" class="username">'+ username +'</a>';
+                        $('#loginUser').append(loginUserHtml);
+
+                    }
+                });
+            $('#loginUser,#user-avatar').show();
+            $('#log-reg').hide();
+
+        } else {
+            $('#loginUser,#user-avatar').hide();
+            $('#log-reg').show();
+        }
+
+
+        $('#main-menu').on('mouseover', 'li.menu-item', function () {
+            $(this).addClass('active');
         });
+        $('#main-menu').on('mouseout', 'li.menu-item', function () {
+            $(this).removeClass('active');
+        });
+    });
+
+
     function addMenuActive() {
         var pathName = window.location.pathname.split('/');
         var pageName = pathName[pathName.length - 1];
@@ -74,23 +98,7 @@ define(function (require) {
     }
     addMenuActive();
 
-    $(function () {
-        if (isUser) {
-            $('#loginUser,#user-avatar').show();
-            $('#log-reg').hide();
-        } else {
-            $('#loginUser,#user-avatar').hide();
-            $('#log-reg').show();
-        }
 
-
-        $('#main-menu').on('mouseover', 'li.menu-item', function () {
-            $(this).addClass('active');
-        });
-        $('#main-menu').on('mouseout', 'li.menu-item', function () {
-            $(this).removeClass('active');
-        });
-    });
 
     $(document).scroll(function () {
         if ($(this).scrollTop() > 70) {

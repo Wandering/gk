@@ -32,8 +32,8 @@ DD_belatedPNG.fix('.logo img,.prev img,.next img,img');
 <div class="slide-main" id="touchMain">
   <a class="prev" href="javascript:;" stat="prev1001"><img src="http://cdn.gaokao360.net/static/global/common/images/l-btn.png" /></a>
   <div class="slide-box" id="slideContent">
-    <div class="slide" id="bgstylec" style="background: #ce4230;">
-      <img src="http://cdn.gaokao360.net/static/global/common/images/banner-0.png" alt=""/>
+    <div class="slide" id="bgstylec" style="background: #2297d4;">
+      <img src="http://cdn.gaokao360.net/static/global/common/images/banner-sn-0.png" alt=""/>
     </div>
     <div class="slide" id="bgstylea" style="background: #0d63b2;">
       <img src="http://cdn.gaokao360.net/static/global/common/images/banner-1.png" alt=""/>
