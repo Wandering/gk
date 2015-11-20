@@ -1,6 +1,5 @@
 define(function (require) {
     var $ = require('$');
-    require('backToTop');
     var pageEroorTip = require('pageErrorTip');
 
     var UI = {
@@ -330,6 +329,7 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
+                console.log(res)
                 if (res.rtnCode == "1000006" || res.rtnCode == "1000004") {
                     errorTips(res.msg);
                     return false;
@@ -351,7 +351,7 @@ define(function (require) {
                     $('#dreamScoreInfo').text(dreamScoreV);
                     $('#dreamSubjectTypeInfo').text(dreamSubjectTypeV);
                     $('#dreamSchoolInfo').text(dreamSchoolV);
-
+                     $('#evaluatingYears').text(data.related.m_years)
 
                     var m_averageScores = data.data.m_averageScores;
                     var m_batch = data.data.m_batch;

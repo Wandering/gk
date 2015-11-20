@@ -334,7 +334,7 @@
             <p>所测评的目标院校是：<strong id="dreamSchoolInfo"></strong></p>
         </div>
         <div class="evaluating-result">
-            <p class="tips">依据2015年的录取情况、在陕西省填报该院校您需要以下分数(在陕）：</p>
+            <p class="tips">依据<span id="evaluatingYears"></span>的录取情况、在陕西省填报该院校您需要以下分数(在陕）：</p>
             <div class="evaluating-result-num" id="dream-list"></div>
         </div>
         <div style="text-align: center">
@@ -455,7 +455,8 @@
 </div>
 <%@ include file="/common/footer.jsp"%>
 <script>
-    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+//    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+    seajs.use(["/static/src/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
 </script>
 </body>
 </html>

@@ -1,6 +1,5 @@
 define(function (require) {
     var $ = require('$');
-    require('backToTop');
 
     var Tab = require('http://cdn.gaokao360.net/static/global/guide/scripts/tab.min');
 

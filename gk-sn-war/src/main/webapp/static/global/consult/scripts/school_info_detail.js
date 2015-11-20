@@ -1,6 +1,5 @@
 define(function (require) {
     var $ = require('$');
-    require('backToTop');
     var pageErrorTip = require('pageErrorTip');
 
     // 获取URL

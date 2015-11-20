@@ -1,7 +1,5 @@
 define(function (require) {
     var $ = require('$');
-    //require('getTime');
-    //require('backToTop');
 
     function GetCookie(sMainName, sSubName) {
         var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
