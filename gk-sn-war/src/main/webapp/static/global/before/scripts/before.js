@@ -329,18 +329,15 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
-                console.log(res)
                 if (res.rtnCode == "1000006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
                     errorTips(res.msg);
                     return false;
                 }
                 var data = $.parseJSON(res.bizData);
-                console.log(data)
                 if (!data) {
                     errorTips(res.msg);
                     return false;
                 }
-
                 if (res.rtnCode == "0000000") {
                     $('#dream-list').html('');
                     if(data.data.length==0){
@@ -351,26 +348,31 @@ define(function (require) {
                     $('#dreamScoreInfo').text(dreamScoreV);
                     $('#dreamSubjectTypeInfo').text(dreamSubjectTypeV);
                     $('#dreamSchoolInfo').text(dreamSchoolV);
-                     $('#evaluatingYears').text(data.related.m_years)
+                    $('#evaluatingYears').text(data.related.m_years)
 
-                    var m_averageScores = data.data.m_averageScores;
-                    var m_batch = data.data.m_batch;
-                    var m_lowestScore = data.data.m_lowestScore;
-                    console.log(m_averageScores + "=" + m_batch + "=" + m_lowestScore)
-                    var dreamSchoolList = ''
-                        + '<ul>'
-                        + '<li class="pc">' + m_batch + '</li>'
-                        + '<li class="result1">'
-                        + '<span class="t">所需最低分数</span>'
-                        + '<span class="num"><strong>' + m_lowestScore + '</strong>分</span>'
-                        + '</li>'
-                        + '<li class="result2">'
-                        + '<span class="t">所需平均分数</span>'
-                        + '<span class="num"><strong>' + m_averageScores + '</strong>分</span>'
-                        + '</li>'
-                        + '</ul>';
+                    for(var i=0;i<data.data.length;i++){
+                        var m_averageScores = data.data[i].m_averageScores;
+                        var m_batch = data.data[i].m_batch;
+                        var m_lowestScore = data.data[i].m_lowestScore;
+                        console.log(m_averageScores + "=" + m_batch + "=" + m_lowestScore)
 
-                    $('#dream-list').append(dreamSchoolList);
+                        var dreamSchoolList = ''
+                            + '<ul>'
+                            + '<li class="pc">' + m_batch + '</li>'
+                            + '<li class="result1">'
+                            + '<span class="t">所需最低分数</span>'
+                            + '<span class="num"><strong>' + m_lowestScore + '</strong>分</span>'
+                            + '</li>'
+                            + '<li class="result2">'
+                            + '<span class="t">所需平均分数</span>'
+                            + '<span class="num"><strong>' + m_averageScores + '</strong>分</span>'
+                            + '</li>'
+                            + '</ul>';
+
+                        $('#dream-list').append(dreamSchoolList);
+                    }
+
+
 
                 }
             }
