@@ -64,7 +64,6 @@
 
 <%@include file="/common/footer.jsp"%>
 <script>
-//    seajs.use(["/static/src/user/scripts/online-answer","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
     seajs.use(["http://cdn.gaokao360.net/static/global/user/scripts/online-answer.min","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
 </script>
 </body>
