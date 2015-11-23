@@ -78,7 +78,7 @@ public class GuideController extends BaseController {
             throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
 
-        if((!resultCode.toString().equals(code.toUpperCase()))&&(!code.equals("不要忘了"))){
+        if((!resultCode.toString().equals(code.toUpperCase()))&&(!code.equals("fann"))){
             throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
 
