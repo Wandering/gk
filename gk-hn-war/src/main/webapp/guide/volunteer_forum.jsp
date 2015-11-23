@@ -4,7 +4,7 @@
 <head>
     <title>志愿讲堂</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/guide/styles/volunteer_forum.css" />
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/guide/styles/volunteer_forum.min.css" />
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
@@ -25,7 +25,6 @@
         <div class="video mt60 ta">
             <a href="http://www.gkzy114.com/Public/Uploads/volunteer_school/volunteer_school.flv" style="display:inline-block;width:80%;height:460px" id="player"></a>
         </div>
-
         <div id="tab_title_content">
 
         </div>
@@ -37,10 +36,15 @@
 </div>
 
 <%@ include file="/common/footer.jsp"%>
-<script type="text/javascript" src="/static/bower_components/utils/getTime.js"></script>
-<script type="text/javascript" src="/static/src/guide/scripts/flowplayer-3.2.13.min.js"></script>
+<script src="http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.13.min.js"></script>
 <script type="text/javascript">
-    seajs.use("${ctx}/static/src/guide/scripts/volunteer_forum");
+    seajs.use(["http://cdn.gaokao360.net/static/global/guide/scripts/volunteer_forum",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+    var api = flowplayer("player", "http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.18.swf", {
+        clip: {
+            autoPlay: false,       //是否自动播放，默认true
+            autoBuffering: false     //是否自动缓冲视频，默认true
+        }
+    });
 </script>
 </body>
 </html>

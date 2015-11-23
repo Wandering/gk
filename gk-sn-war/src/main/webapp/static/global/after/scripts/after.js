@@ -1,6 +1,5 @@
 define(function (require) {
     var $ = require('$');
-    require('backToTop');
     $(function () {
         var UI = {
             yzmDreamSchool: $('#yzmDreamSchool'),

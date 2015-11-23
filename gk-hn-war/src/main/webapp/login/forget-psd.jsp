@@ -2,12 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <title>找回密码</title>
     <%@include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/login/styles/login.min.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/login/styles/login.min.css"/>
 </head>
 <body>
 
@@ -15,7 +12,7 @@
 <div class="container">
     <div class="main w1000">
         <!--<img src="/static/dist/common/images/logo-min.png" class="login-logo"/>-->
-        <img src="/static/dist/login/images/login-font.png" class="login-bg-fonts"/>
+        <img src="http://cdn.gaokao360.net/static/global/login/images/login-font.png" class="login-bg-fonts"/>
 
         <div class="login-box">
             <div class="login-title find-psd-h40">
@@ -41,10 +38,10 @@
 </div>
 <div class="footer">
     <p class="copy">Copyright © 2015.Thinkjoy All rights reserved</p>
-    <img src="/static/dist/common/images/login-logo.png" alt="logo360" class="bottom-logo"/>
+    <img src="http://cdn.gaokao360.net/static/global/common/images/login-logo.png" alt="logo360" class="bottom-logo"/>
 </div>
 <script>
-    seajs.use("${ctx}/static/src/login/scripts/forget-psd");
+    seajs.use("http://cdn.gaokao360.net/static/global/login/scripts/forget-psd.min");
 </script>
 
 </body>

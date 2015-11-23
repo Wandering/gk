@@ -4,7 +4,7 @@
 <head>
     <%@include file="/common/meta.jsp" %>
     <title>在线答疑</title>
-    <link rel="stylesheet" href="/static/dist/user/styles/online-answer.min.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/user/styles/online-answer.min.css"/>
 </head>
 <body>
 <%@include file="/common/header.jsp"%>
@@ -17,6 +17,7 @@
         <li><a href="/user/app-center.jsp">应用中心</a></li>
         <li class="active"><a href="/user/online-answer.jsp">在线答疑</a></li>
         <li><a href="/user/expert-service.jsp">专家服务</a></li>
+        <li><a href="/user/my-collect.jsp">我的收藏</a></li>
     </ul>
     <div class="content">
         <div class="toggle-nav">
@@ -62,9 +63,9 @@
 </div>
 
 <%@include file="/common/footer.jsp"%>
-<script type="text/javascript" src="/static/bower_components/utils/getTime.js"></script>
 <script>
-    seajs.use("/static/src/user/scripts/online-answer");
+//    seajs.use(["/static/src/user/scripts/online-answer","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
+    seajs.use(["http://cdn.gaokao360.net/static/global/user/scripts/online-answer.min","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
 </script>
 </body>
 </html>

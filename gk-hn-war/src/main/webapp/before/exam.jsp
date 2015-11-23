@@ -4,11 +4,10 @@
 <head>
     <title>真题密卷</title>
     <%@ include file="/common/meta.jsp"%>
-    <link rel="stylesheet" href="/static/dist/before/styles/before.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/before/styles/before.min.css"/>
 </head>
 <body>
-<%@ include file="/before/header-before.jsp"%>
-
+<%@ include file="/common/header.jsp"%>
 <div class="w1000">
     <div class="content-title">
         <p class="fl w40"></p>
@@ -30,12 +29,6 @@
             <select class="sel-item subjectList" name="" id="">
                 <option value="">全部</option>
             </select>
-            <%--<select class="sel-item" name="" id="">--%>
-                <%--<option value="">模</option>--%>
-            <%--</select>--%>
-            <%--<select class="sel-item" name="" id="">--%>
-                <%--<option value="">西安铁一中</option>--%>
-            <%--</select>--%>
             <select class="sel-item years-fun" name="" id=""></select>
         </div>
         <div class="into-search">
@@ -60,7 +53,7 @@
 </div>
 <%@ include file="/common/footer.jsp"%>
 <script>
-    seajs.use("/static/src/before/scripts/exam");
+    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/exam.min",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
 </script>
 </body>
 </html>

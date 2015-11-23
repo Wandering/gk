@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>志愿讲堂播放页面</title>
-    <link rel="stylesheet" href="/static/dist/guide/styles/volunteer_forum_play.css" />
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/guide/styles/volunteer_forum_play.min.css" />
 </head>
 <body>
 <div class="header">
     <div class="w1000">
         <a href="">
-            <img src="/static/dist/common/images/logo-min.png" alt="高考360" class="logo fl"/>
+            <img src="http://cdn.gaokao360.net/static/global/common/images/logo-min.png" alt="高考360" class="logo fl"/>
         </a>
         <ul class="main-menu fl">
             <li><a href="">首页</a></li>
@@ -21,7 +21,7 @@
         </ul>
         <div class="user-info-list fr">
             <div class="user">
-                <img src="/static/dist/common/images/avatar.png" alt="avatar" class="user-avatar"/>
+                <img src="http://cdn.gaokao360.net/static/global/common/images/avatar.png" alt="avatar" class="user-avatar"/>
                 <a href="">韩小寒</a>
             </div>
             <ul class="menu hide">
@@ -83,13 +83,12 @@
                 <li><a href="">官方微信</a></li>
                 <li><a href="">新浪微博</a></li>
             </ul>
-            <img src="/static/dist/common/images/logo.png" alt="logo" class="logo"/>
+            <img src="http://cdn.gaokao360.net/static/global/common/images/logo.png" alt="logo" class="logo"/>
         </div>
     </div>
     <div class="copy-right">
         <p class="w1000">联系信息:E-mail:cewfefe@163.com QQ:5454555 备案号:陕ICP备343454135-1号 [站长统计]</p>
     </div>
 </div>
-<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
 </body>
 </html>

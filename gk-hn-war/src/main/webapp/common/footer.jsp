@@ -1,37 +1,42 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: kepeng
-  Date: 15/9/24
-  Time: 10:35
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" pageEncoding="UTF-8" %>
 <div class="footer">
   <div class="bottom-nav">
     <div class="w1000">
-      <ul>
-        <li><a href="" class="nav-title">关于高考360</a></li>
-        <li><a href="">联系我们</a></li>
-        <li><a href="">使用协议</a></li>
-      </ul>
-      <ul>
-        <li><a href="" class="nav-title">帮助中心</a></li>
-        <li><a href="">常见问题</a></li>
-        <li><a href="">意见反馈</a></li>
-      </ul>
-      <ul>
-        <li><a href="" class="nav-title">关注我们</a></li>
-        <li><a href="">官方微信</a></li>
-        <li><a href="">新浪微博</a></li>
-      </ul>
-      <img src="/static/dist/common/images/logo.png" alt="logo" class="logo"/>
+      <img src="http://cdn.gaokao360.net/static/global/common/images/logo.png" alt="logo" class="footer-logo"/>
+      <img src="http://cdn.gaokao360.net/static/global/common/images/footer-ewm.jpg" class="footer-ewm"/>
     </div>
   </div>
   <div class="copy-right">
-    <p class="w1000">联系信息:E-mail:cewfefe@163.com QQ:5454555 备案号:陕ICP备343454135-1号 [站长统计]</p>
+    <p class="w1000">联系信息：400-6699-580 Email:gk360@thinkjoy.cn <a href="http://sn.gaokao360.net/common/duty.jsp">免责声明</a>  <a href="http://sn.gaokao360.net/common/contract.jsp">服务协议</a> 备案号:<a target="_blank" href="http://www.miitbeian.gov.cn/">陕ICP备 1401330号-10</a></p>
   </div>
 </div>
-<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256565213'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1256565213%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
-<%--<a class="top" href="javascript:void(0)" onclick="window.scrollTo(0, 0)">--%>
-  <%--<img src="/static/dist/common/images/icon-top.png" />--%>
-<%--</a>--%>
+<ul class="mod-sidebar" id="goTop">
+  <li class="item mixpool" id="mixpool" data-text="在线客服">
+    <a href="javascript:;" class="service">在线客服</a>
+  </li>
+  <li class="mixpool-container hide" id="mixpool-container">
+    <p>在线QQ咨询</p>
+    <span>
+      <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=3212827779&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:3212827779:51" alt="点击这里，立即获取高考指导" title="点击这里，立即获取高考指导"/></a>
+    </span>
+  </li>
+  <li class="item qr-code" id="qr-code" data-text="二维码">
+    <a href="javascript:;">二维码</a>
+  </li>
+  <li class="qr-code-container hide" id="qr-code-container">
+    <span class="item-container">
+      <span class="img-container">
+        <img src="http://cdn.gaokao360.net/static/global/common/images/ewm.png" alt=""/>
+      </span>
+      <p>高考360微信服务号</p>
+    </span>
+  </li>
+  <li class="item gotop hide" id="goTopScroll"></li>
+</ul>
+
+<script>
+  seajs.use("http://cdn.gaokao360.net/static/global/common/scripts/footer");
+</script>
+<div style="display: none;">
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256614059'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1256614059%26online%3D1' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>

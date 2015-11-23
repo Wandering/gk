@@ -2,12 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <%@include file="/common/meta.jsp"%>
     <title>修改密码</title>
-    <link rel="stylesheet" href="/static/dist/user/styles/modify-psd.min.css"/>
+    <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/user/styles/modify-psd.min.css"/>
 </head>
 <body>
 <%@include file="/common/header.jsp"%>
@@ -19,6 +16,7 @@
         <li><a href="/user/app-center.jsp">应用中心</a></li>
         <li><a href="/user/online-answer.jsp">在线答疑</a></li>
         <li><a href="/user/expert-service.jsp">专家服务</a></li>
+        <li><a href="/user/my-collect.jsp">我的收藏</a></li>
     </ul>
     <div class="content">
         <div class="input-item-comm">
@@ -46,7 +44,7 @@
 </div>
 <%@include file="/common/footer.jsp"%>
 <script>
-    seajs.use("/static/src/user/scripts/modify-psd");
+    seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/modify-psd.min");
 </script>
 </body>
 </html>

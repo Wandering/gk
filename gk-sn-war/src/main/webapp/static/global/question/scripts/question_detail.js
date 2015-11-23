@@ -7,7 +7,6 @@ define(function (require) {
         return "";
     }
 
-    console.log(22)
     var Question = {
         renderAsk: function(data) {
             var html = [];
