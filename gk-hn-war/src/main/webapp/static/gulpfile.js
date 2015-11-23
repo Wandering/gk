@@ -29,10 +29,10 @@ gulp.task('styles', function () {
     gulp.src('src/**/*.scss')
         .pipe(sass())
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
-        .pipe(gulp.dest('global'))
+        .pipe(gulp.dest('hn'))
         .pipe(rename({suffix: '.min'}))
         .pipe(minifycss())
-        .pipe(gulp.dest('global'))
+        .pipe(gulp.dest('hn'))
 });
 
 // 脚本
@@ -53,10 +53,10 @@ gulp.task('scripts', function () {
         //.pipe(jshint('.jshintrc'))
         .pipe(jshint.reporter('default'))
         //.pipe(concat('main.js'))
-        .pipe(gulp.dest('global'))
+        .pipe(gulp.dest('hn'))
         .pipe(rename({suffix: '.min'}))
         .pipe(uglify())
-        .pipe(gulp.dest('global'))
+        .pipe(gulp.dest('hn'))
         .pipe(notify({message: 'Scripts task complete'}));
 });
 
@@ -75,7 +75,7 @@ gulp.task('scripts', function () {
 gulp.task('images', function () {
     return gulp.src(['src/**/*.png','src/**/*.jpg','src/**/*.gif','src/**/*.ico'])
         //.pipe(cache(imagemin({optimizationLevel: 3, progressive: true, interlaced: true})))
-        .pipe(gulp.dest('global/'))
+        .pipe(gulp.dest('hn/'))
         .pipe(notify({message: 'Images task complete'}));
 });
 
@@ -86,7 +86,7 @@ gulp.task('images', function () {
 //});
 
 gulp.task('clean', function () {
-    return gulp.src(['global'], {read: false})
+    return gulp.src(['hn'], {read: false})
         .pipe(clean());
 });
 
