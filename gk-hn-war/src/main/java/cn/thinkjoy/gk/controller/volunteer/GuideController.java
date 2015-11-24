@@ -151,7 +151,7 @@ public class GuideController extends BaseController {
 
         StringBuffer returnStr = new StringBuffer("");
         try {
-            StringBuffer url = new StringBuffer("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetCollegeList");
+            StringBuffer url = new StringBuffer("http://hn.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetCollegeList");
 
             if(!StringUtils.isEmpty(m_candidateNumber)){
                 url.append("/m_candidateNumber/"+m_candidateNumber);
@@ -240,7 +240,7 @@ public class GuideController extends BaseController {
         try {
 
 
-            String result = HttpRequestUtil.httpPost("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetReport",params,false);
+            String result = HttpRequestUtil.httpPost("http://hn.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetReport",params,false);
 
             if(StringUtils.isEmpty(result)){
                 throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());

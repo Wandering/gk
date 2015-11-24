@@ -747,3 +747,11 @@ a.next-btn:hover {
   text-decoration: none;
   opacity: 1\9;
   filter: alpha(opacity=100) \9 ; }
+
+@media all and (max-width: 1000px) {
+  body,
+  .header,
+  .body,
+  .content,
+  .footer {
+    width: 1100px; } }
