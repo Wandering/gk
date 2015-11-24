@@ -3,7 +3,7 @@ seajs.config({
     base: "http://cdn.gaokao360.net/static/",
     // 别名配置
     alias: {
-        "$": "bower_components/jquery/dist/jquery.js",
+        "$": "bower_components/jquery/dist/jquery.min.js",
         "laydate": "bower_components/laydate/laydate.js",
         "uploadify": "bower_components/uploadify/jquery.uploadify.min.js",
         "getTime": "bower_components/utils/getTime",
