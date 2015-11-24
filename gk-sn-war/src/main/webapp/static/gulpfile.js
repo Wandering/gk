@@ -35,6 +35,17 @@ gulp.task('styles', function () {
         .pipe(gulp.dest('global'))
 });
 
+//size
+gulp.task('size', function () {
+    gulp.src('src/common/styles/comm.scss')
+        .pipe(sass())
+        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
+        .pipe(gulp.dest('global/common/styles/'))
+        .pipe(rename({suffix: '.min'}))
+        .pipe(minifycss())
+        .pipe(gulp.dest('global/common/styles/'))
+});
+
 // 脚本
 //gulp.task('scripts', function () {
 //    return gulp.src('src/**/*.js')
