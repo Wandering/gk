@@ -63,7 +63,7 @@ public class CollegeRecController extends BaseController {
 
         String url = null;
         try {
-            url ="http://hn.gaokao360.gkzy114.com/index.php?s=Restful/CollegeReco/GetCollegeList/m_aggregateScore/"+m_aggregateScore+"/m_kelei/"+m_kelei;
+            url ="http://hn.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetCollegeList/m_aggregateScore/"+m_aggregateScore+"/m_kelei/"+m_kelei;
 
         }catch (Exception e){
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
