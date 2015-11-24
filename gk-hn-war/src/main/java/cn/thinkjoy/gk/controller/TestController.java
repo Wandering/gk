@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.BufferedReader;
 import java.util.Date;
 
 /**
@@ -76,5 +77,27 @@ public class TestController {
             return "fail";
         }
         return "success";
+
+//        try {
+//            request.setCharacterEncoding("UTF-8");
+//
+//            BufferedReader reader = request.getReader();
+//            StringBuilder builder = new StringBuilder();
+//
+//            String s = null;
+//            while ((s = reader.readLine()) != null) {
+//                builder.append(s);
+//            }
+//            reader.close();
+//
+//
+////            JSONObject payResult = JSON.parseObject(builder.toString());
+////            System.out.println(builder.toString());
+////            String ss=request.getParameter("context");
+//            String[] ss=request.getParameterValues("title");
+//            System.out.println();
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
     }
 }

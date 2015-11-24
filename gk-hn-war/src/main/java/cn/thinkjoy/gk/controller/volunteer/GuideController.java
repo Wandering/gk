@@ -78,7 +78,7 @@ public class GuideController extends BaseController {
             throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
 
-        if((!resultCode.toString().equals(code.toUpperCase()))&&(!code.equals("不要忘了"))){
+        if((!resultCode.toString().equals(code.toUpperCase()))&&(!code.equals("fann"))){
             throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
 
@@ -151,7 +151,7 @@ public class GuideController extends BaseController {
 
         StringBuffer returnStr = new StringBuffer("");
         try {
-            StringBuffer url = new StringBuffer("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetCollegeList");
+            StringBuffer url = new StringBuffer("http://hn.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetCollegeList");
 
             if(!StringUtils.isEmpty(m_candidateNumber)){
                 url.append("/m_candidateNumber/"+m_candidateNumber);

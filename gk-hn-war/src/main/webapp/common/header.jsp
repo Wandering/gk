@@ -50,7 +50,6 @@
   </div>
 </div>
 <script>
-//  seajs.use("http://cdn.gaokao360.net/static/global/common/scripts/header.min");
   seajs.use("/static/src/common/scripts/header");
 </script>
 

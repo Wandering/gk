@@ -53,7 +53,7 @@ public class CollegeRecController extends BaseController {
             throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
 
-        if((!resultCode.toString().equals(code.toUpperCase()))&&(!code.equals("请我吃饭"))){
+        if((!resultCode.toString().equals(code.toUpperCase()))&&(!code.equals("wowo"))){
             throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
 
@@ -63,7 +63,7 @@ public class CollegeRecController extends BaseController {
 
         String url = null;
         try {
-            url ="http://sn.gaokao360.gkzy114.com/index.php?s=Restful/CollegeReco/GetCollegeList/m_aggregateScore/"+m_aggregateScore+"/m_kelei/"+m_kelei;
+            url ="http://hn.gaokao360.gkzy114.com/index.php?s=Restful/CollegeReco/GetCollegeList/m_aggregateScore/"+m_aggregateScore+"/m_kelei/"+m_kelei;
 
         }catch (Exception e){
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());

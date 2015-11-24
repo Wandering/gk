@@ -4,17 +4,14 @@ define(function (require) {
         var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
         return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
     }
-
-
-
     $(function () {
         var isUser = GetCookie("hnuser");
         if (isUser) {
             $.getJSON(
                 "/info/getUserAccount.do",
                 function (res) {
-                    //console.log(res.rtnCode)
                     if (res.rtnCode == '0000000') {
+                        console.log("登录成功");
                         var userData = res.bizData;
                         var account = userData.account;
                         var name = userData.name;

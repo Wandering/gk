@@ -120,7 +120,7 @@ public class AppraisalController extends BaseController {
             throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
 
-        if((!resultCode.toString().equals(code.toUpperCase()))&&(!code.equals("听着杨甜"))){
+        if((!resultCode.toString().equals(code.toUpperCase()))&&(!code.equals("qing"))){
             throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
 
@@ -178,7 +178,7 @@ public class AppraisalController extends BaseController {
             throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
 
-        if((!resultCode.toString().equals(code.toUpperCase()))&&(!code.equals("我叫左浩"))){
+        if((!resultCode.toString().equals(code.toUpperCase()))&&(!code.equals("chii"))){
             throw new BizException(ERRORCODE.VERIFY_CODE_ERROR.getCode(),ERRORCODE.VERIFY_CODE_ERROR.getMessage());
         }
         session.removeAttribute(VerificationKeyConst.GET_THE_ORDER+value);
@@ -186,7 +186,7 @@ public class AppraisalController extends BaseController {
         String returnStr = null;
         try {
 
-            String result = HttpRequestUtil.doGet("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/CandidateRanking/GetRanking/m_aggregateScore/"+m_aggregateScore);
+            String result = HttpRequestUtil.doGet("http://hn.gaokao360.gkzy114.com/index.php?s=/Restful/CandidateRanking/GetRanking/m_aggregateScore/"+m_aggregateScore);
 
             if(StringUtils.isEmpty(result)){
                 throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
