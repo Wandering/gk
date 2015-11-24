@@ -129,8 +129,6 @@ define(function (require) {
                             "isReported": 1
                         },
                         success: function (res) {
-                            console.log("在VIP用户下第一次提交考后报考");
-                            console.log(res);
                             if(res.rtnCode=="0000000"){
                                 console.log('成功');
                             }
@@ -150,14 +148,13 @@ define(function (require) {
                 dataType: 'JSON',
                 data: {},
                 success: function (res) {
-                    console.log("用户是否提交过考后报考");
-                    console.log(res);
                     //console.log(res.bizData.isReported)
                     var scores = res.bizData.scores;
                     var ranking = res.bizData.ranking;
                     $('#aggregateScore-input').val(scores);
                     $('#ranking-input').val(ranking);
                     if (res.bizData.isReported == 1) {
+                        console.log("用户提交过考后报考");
                         $('#aggregateScore-input').attr('readonly', 'readonly');
                         $('#ranking-input').attr('readonly', 'readonly');
                     } else {
