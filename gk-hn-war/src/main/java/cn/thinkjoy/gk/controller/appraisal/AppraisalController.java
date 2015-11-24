@@ -186,7 +186,7 @@ public class AppraisalController extends BaseController {
         String returnStr = null;
         try {
 
-            String result = HttpRequestUtil.doGet("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/CandidateRanking/GetRanking/m_aggregateScore/"+m_aggregateScore);
+            String result = HttpRequestUtil.doGet("http://hn.gaokao360.gkzy114.com/index.php?s=/Restful/CandidateRanking/GetRanking/m_aggregateScore/"+m_aggregateScore);
 
             if(StringUtils.isEmpty(result)){
                 throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
