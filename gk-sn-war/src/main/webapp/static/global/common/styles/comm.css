@@ -748,10 +748,10 @@ a.next-btn:hover {
   opacity: 1\9;
   filter: alpha(opacity=100) \9 ; }
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 1000px) {
   body,
   .header,
   .body,
   .content,
   .footer {
-    width: 1000px; } }
+    width: 1100px; } }

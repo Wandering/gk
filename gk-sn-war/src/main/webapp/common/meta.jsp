@@ -4,14 +4,10 @@
       name="Keywords">
 <meta name="description" content="高考360专注高考志愿填报咨询指导，针对不同地区的考生提供特殊的知道填报技巧，为高考考生提供智能填报系统。"/>
 <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-<%--<meta name="viewport"--%>
-      <%--content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=2"/>--%>
 <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes" />
 <link rel="dns-prefetch" href="//cdn.gaokao360.net">
 <link rel="shortcut icon" href="http://cdn.gaokao360.net/static/global/common/images/icon.ico"/>
-<%--<link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/common/styles/comm.min.css"/>--%>
-<link rel="stylesheet" href="/static/global/common/styles/comm.min.css"/>
-
+<link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/common/styles/comm.min.css"/>
 <script src="http://cdn.gaokao360.net/static/bower_components/seajs/dist/sea.js"></script>
 <script src="http://cdn.gaokao360.net/static/bower_components/seajs-preload/dist/seajs-preload.js"></script>
 <script src="/static/bower_components/seajs/seajs-config.js"></script>
