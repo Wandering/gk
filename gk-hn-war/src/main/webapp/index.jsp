@@ -183,7 +183,7 @@
             <section>
                 <ul class="tabs-list" id="tabs-hosts">
                     <li class="active">高考热点</li>
-                    <li>各地招办联系方式</li>
+                    <%--<li>各地招办联系方式</li>--%>
                     <span class="more" id="hot-info">更多</span>
                 </ul>
                 <ul class="tab-info hot-list mt20"></ul>
