@@ -33,9 +33,9 @@ public class GkinformationGkhotServiceImpl implements IGkinformationGkhotService
 
     @Override
     public GkinformationGkhot getInformationContentById(Integer id) {
-        System.out.println(System.currentTimeMillis());
+        System.out.println("开始时间："+System.currentTimeMillis());
         GkinformationGkhot information = informationDAO.getInformationContentById(id);
-        System.out.println(System.currentTimeMillis());
+        System.out.println("结束时间："+System.currentTimeMillis());
         return information;
     }
 
