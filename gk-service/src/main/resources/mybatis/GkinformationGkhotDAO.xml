@@ -24,7 +24,7 @@
     </select>
 
     <select id="getHotInformation" parameterType="java.util.Map" resultType="GkinformationGkhot">
-        SELECT id,createDate,lastModDate,hotInformation,informationContent FROM gk_gkinformation_gkhot
+        SELECT id,createDate,lastModDate,hotInformation FROM gk_gkinformation_gkhot
         WHERE status = 0
           AND areaId = #{areaId}
         ORDER BY hotCount DESC
