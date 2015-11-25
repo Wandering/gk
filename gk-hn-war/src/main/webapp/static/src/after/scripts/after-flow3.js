@@ -4,7 +4,6 @@ define(function (require) {
         //
         var paramsJson = JSON.parse(params);
 
-        console.log(paramsJson)
         $('.volunteer-flow3-table').on('click', '.open-flow3', function () {
             $('.tansLayer,.volunteer-flow3-layer').show();
             $('#volunteer-flow3-layer').attr('dataType', $(this).attr('dataType'))
@@ -30,7 +29,6 @@ define(function (require) {
                     }
                     if (res.rtnCode == "0000000") {
                         var data = $.parseJSON(res.bizData);
-                        console.log(data)
                         var m_batch_id = data.related.m_batch_id;
                         var m_batch = data.related.m_batch;
                         var listData = data.data.result;
@@ -48,9 +46,7 @@ define(function (require) {
 
                         $('.school-list').html('');
                         $.each(listData.data, function (i, v) {
-                            //console.log(listData.data[i].data.length)
-
-                            if (listData.data[i].data.length > 0 && i < 4) {
+                            if (listData.data[i].data.length > 0 && i < 6) {
                                 $('#no-school' + i).hide();
                                 $('#school-list' + i).show();
                                 $.each(listData.data[i].data, function (j, m) {
@@ -74,12 +70,10 @@ define(function (require) {
 
         // 获取省份
         $.get('/region/getAllRegion.do', function (result) {
-            //console.log(result)
             var data = result.bizData;
             if ('0000000' === result.rtnCode) {
                 $.each(data, function (i, v) {
                     var provinceName = v.name.replace(/[省,市,自治区]/g, "");
-                    //console.log(provinceName)
                     $('#province-list').append('<option value="' + provinceName + '">' + provinceName + '</option>')
                 });
             }
@@ -100,9 +94,7 @@ define(function (require) {
             var m_batch_id = $(this).attr('m_batch_id');
             var datatypeid = $(this).attr('datatypeid');
             var m_university_name = $(this).attr('m_university_name');
-            //console.log(code + "+" + type + "+" + m_batch + "+" + m_batch_id + "+" + datatypeid + "+" + m_university_name)
             var years = 2014;
-            //console.log($(this).parents('.school-list').attr('dataType'))
             var star = '';
             var sequence = '';
             var starType = $(this).parents('.school-list').attr('dataType');
@@ -119,8 +111,6 @@ define(function (require) {
                 star = '★★★★';
                 sequence = '4';
             }
-            //console.log(code + "=" + type + "==" + m_batch);
-            //console.log(star);
             $.ajax({
                 url: '/university/universityDetail.do',
                 type: 'GET',
@@ -132,7 +122,6 @@ define(function (require) {
                     batch: m_batch
                 },
                 success: function (res) {
-                    //console.log(res);
                     var data = res.bizData;
                     if ('0000000' === res.rtnCode) {
                         var dicName = '';
@@ -176,7 +165,6 @@ define(function (require) {
             var m_batch = parents.attr('m_batch');
             var code = parents.attr('code');
             var year = parents.attr('year');
-            //console.log(m_batch + "=" + code + "=" + year)
             $('#specialty-content').html('');
             $('#specialty-layer,.tansLayer').show();
             $.ajax({
@@ -189,7 +177,6 @@ define(function (require) {
                     batch: m_batch
                 },
                 success: function (res) {
-                    //console.log(res);
                     var data = res.bizData;
                     if ('0000000' === res.rtnCode) {
                         $.each(data, function (i, v) {
@@ -221,7 +208,6 @@ define(function (require) {
             var Eid = $(this).attr('id');
             var index = $(this).attr('index');
             var name = $(this).attr('name');
-            //console.log(Eid + "=" + name);
             var specialtyTotalN = $(this).attr('specialtyTotal')
             $('#' + Eid + ' li:eq(' + index + ')').find('input').val(name).attr({'specialtyTotalN': specialtyTotalN}).addClass('write');
             $('#specialty-layer,.tansLayer').hide();
@@ -265,7 +251,6 @@ define(function (require) {
                 $('#specialty-list-info' + n).html('');
                 $.each($('#specialty' + n).find('input'), function (i, v) {
                     var specialtyListInfo = '<p>' + (i + 1) + '.' + $(v).val() + '</p>';
-                    //console.log((i+1) + "." + $(v).val());
                     $('#specialty-list-info' + n).append(specialtyListInfo)
                 });
                 $.each($('#specialty' + n), function (i, v) {
@@ -369,12 +354,12 @@ define(function (require) {
                     batch: m_batch
                 },
                 success: function (res) {
-                    //console.log($.parseJSON(res.bizData));
+                    console.log($.parseJSON(res.bizData));
 
                     if (res.rtnCode == "0000000") {
                         var dataJson = $.parseJSON(res.bizData).report;
-                        console.log(dataJson)
-                        var description = dataJson.data;
+                        //console.log(dataJson)
+                        var description = dataJson.result;
                         var descriptionResultA = description[1].description;
                         var descriptionResultB = description[2].description;
                         var descriptionResultC = description[3].description;
@@ -386,9 +371,8 @@ define(function (require) {
                             $('.school-list-col').append(schoolListColHtml);
                         });
                         var dataEnroll = $.parseJSON(res.bizData).enroll;
-                        //console.log($.parseJSON(res.bizData));
+                        //console.log(dataEnroll);
                         $.each(dataEnroll, function (i, v) {
-
                             var enrollIntro = v.enrollIntro;
                             var name = v.name;
                             var enrollmentSchoolHtml = '<div class="col-list">' + name + '</div>';
@@ -414,7 +398,6 @@ define(function (require) {
                 var schoolListColHtml = isF;
                 $('#exchange').append(schoolListColHtml);
             });
-            console.log($('#exchange').find('.obey').length)
             var exchangeLen = $('#exchange').find('.col-list').length;
             if ($('#exchange').find('.obey').length == exchangeLen) {
                 $('#noObey').hide();
