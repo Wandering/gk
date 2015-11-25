@@ -8,6 +8,7 @@ import com.alibaba.dubbo.common.logger.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 
 /**
@@ -32,7 +33,9 @@ public class GkinformationGkhotServiceImpl implements IGkinformationGkhotService
 
     @Override
     public GkinformationGkhot getInformationContentById(Integer id) {
+        System.out.println(System.currentTimeMillis());
         GkinformationGkhot information = informationDAO.getInformationContentById(id);
+        System.out.println(System.currentTimeMillis());
         return information;
     }
 
