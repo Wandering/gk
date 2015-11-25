@@ -20,7 +20,7 @@
             </p>
             <p class="fl w40"></p>
         </div>
-        <h6 class="w1000 ta sub-title c888 mt20">全面介绍陕西省高考志愿填报的基础知识、规则及方法，帮您掌握志愿填报的方法和技巧走出填报误区。</h6>
+        <h6 class="w1000 ta sub-title c888 mt20">全面介绍湖南省高考志愿填报的基础知识、规则及方法，帮您掌握志愿填报的方法和技巧走出填报误区。</h6>
 
         <div class="video mt60 ta">
             <a href="http://www.gkzy114.com/Public/Uploads/volunteer_school/volunteer_school.flv" style="display:inline-block;width:80%;height:460px" id="player"></a>

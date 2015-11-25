@@ -334,7 +334,7 @@
             <p>所测评的目标院校是：<strong id="dreamSchoolInfo"></strong></p>
         </div>
         <div class="evaluating-result">
-            <p class="tips">依据<span id="evaluatingYears"></span>的录取情况、在陕西省填报该院校您需要以下分数(在陕）：</p>
+            <p class="tips">依据<span id="evaluatingYears"></span>的录取情况、在湖南省填报该院校您需要以下分数(在陕）：</p>
             <div class="evaluating-result-num" id="dream-list"></div>
         </div>
         <div style="text-align: center">
@@ -355,7 +355,7 @@
             <p>您本次录入的分数是：<strong><span id="precedenceScoreInfo"></span>分</strong></p>
         </div>
         <div class="evaluating-result">
-            <p class="tips">依据<span id="current-year"></span>的录取情况、在陕西省你的分数预估在以下位次:</p>
+            <p class="tips">依据<span id="current-year"></span>的录取情况、在湖南省你的分数预估在以下位次:</p>
             <div class="evaluating-result-num" id="precedence-list"></div>
         </div>
         <div style="text-align: center">

@@ -45,7 +45,7 @@
                         <a target="_blank" href="/guide/volunteer_forum.jsp" class="name">志愿讲堂</a>
                         <span class="num">2</span>
 
-                        <p class="txt">全面介绍陕西省高考志愿填报的基础知识、规则及方法，帮您走出填报误区</p>
+                        <p class="txt">全面介绍湖南省高考志愿填报的基础知识、规则及方法，帮您走出填报误区</p>
                     </li>
                     <li class="item">
                         <a href="/consult/school_info.jsp">
@@ -87,7 +87,7 @@
                         </div>
                         <h2>强大的学术保障和专家保障</h2>
 
-                        <p>拥有陕西省最具实力的“高考研究院”，具备强大的高考数据研究和分析能力。</p>
+                        <p>拥有湖南省最具实力的“高考研究院”，具备强大的高考数据研究和分析能力。</p>
 
                         <p>本省一线招生专家，省高考阅卷组专家，高考心理专家，职业规划师为家长和考生提供专业，权威的服务和指导。</p>
                     </div>
@@ -183,7 +183,7 @@
             <section>
                 <ul class="tabs-list" id="tabs-hosts">
                     <li class="active">高考热点</li>
-                    <li>各地招办联系方式</li>
+                    <%--<li>各地招办联系方式</li>--%>
                     <span class="more" id="hot-info">更多</span>
                 </ul>
                 <ul class="tab-info hot-list mt20"></ul>
