@@ -5,6 +5,14 @@
     <title>考前备考</title>
     <%@ include file="/common/meta.jsp"%>
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/before/styles/before.min.css"/>
+    <style>
+        .volunteer-flow3-layer .volunteer-flow3-body .info-result{
+            overflow-x: scroll;
+        }
+        .volunteer-flow3-layer .volunteer-flow3-body .info-result ul{
+            width: 1150px;
+        }
+    </style>
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>
@@ -334,7 +342,7 @@
             <p>所测评的目标院校是：<strong id="dreamSchoolInfo"></strong></p>
         </div>
         <div class="evaluating-result">
-            <p class="tips">依据<span id="evaluatingYears"></span>的录取情况、在湖南省填报该院校您需要以下分数(在陕）：</p>
+            <p class="tips">依据<span id="evaluatingYears"></span>的录取情况、在湖南省填报该院校您需要以下分数：</p>
             <div class="evaluating-result-num" id="dream-list"></div>
         </div>
         <div style="text-align: center">
@@ -428,16 +436,27 @@
                     </div>
                     <div class="school-list hide" id="school-list2"></div>
                 </li>
-                <li class="starD">
+                <li class="starC">
                     <div class="title">
-                        <span>D档（垫）</span>
-                        <p>录取指数: <i class="starD-icon"></i></p>
+                        <span>D档（保）</span>
+                        <p>录取指数: <i class="starC-icon"></i></p>
                     </div>
                     <div class="no-school hide" id="no-school3">
                         <p>① 本录取指数下、没有合理院校可推荐；</p>
                         <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
                     </div>
                     <div class="school-list hide" id="school-list3"></div>
+                </li>
+                <li class="starD">
+                    <div class="title">
+                        <span>E档（垫）</span>
+                        <p>录取指数: <i class="starD-icon"></i></p>
+                    </div>
+                    <div class="no-school hide" id="no-school4">
+                        <p>① 本录取指数下、没有合理院校可推荐；</p>
+                        <p>② 在真实填报时、可以参考选择其他档中的院校；</p>
+                    </div>
+                    <div class="school-list hide" id="school-list4"></div>
                 </li>
             </ul>
         </div>
@@ -455,7 +474,8 @@
 </div>
 <%@ include file="/common/footer.jsp"%>
 <script>
-    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+//    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+    seajs.use(["/static/src/before/scripts/before",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
 </script>
 </body>
 </html>

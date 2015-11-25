@@ -232,7 +232,6 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
-
                 if (res.rtnCode == "0100006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
                     errorTips(res.msg);
                     return false;
@@ -245,9 +244,7 @@ define(function (require) {
                     $('#batchV').text(batchV);
                     $('#subjectTypeV').text(subjectTypeV);
                     var data = $.parseJSON(res.bizData);
-                    console.log(data)
-                    var dataJson = data.result.data;
-
+                    var dataJson = data.data.result.data;
                     if (!dataJson) {
                         errorTips(res.msg);
                         return false;

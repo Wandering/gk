@@ -36,7 +36,8 @@
 
 <%@ include file="/common/footer.jsp"%>
 <script type="text/javascript">
-    seajs.use("http://cdn.gaokao360.net/static/global/guide/scripts/guide");
+//    seajs.use("http://cdn.gaokao360.net/static/global/guide/scripts/guide");
+    seajs.use("/static/src/guide/scripts/guide");
 </script>
 </body>
 </html>

@@ -526,7 +526,7 @@
 
                 <div class="row">
                     <div class="col-1-img">
-                        <img src="http://cdn.gaokao360.net/static/global/after/images/eva-left-line1.png"
+                        <img src="http://cdn.gaokao360.net/static/hn/after/images/eva-left-line1.png"
                              class="eva-left-bg"/>
                     </div>
                     <div class="school-list-col"></div>
@@ -539,7 +539,7 @@
 
                 <div class="row">
                     <div class="col-1-img">
-                        <img src="http://cdn.gaokao360.net/static/global/after/images/eva-left-line2.png"
+                        <img src="http://cdn.gaokao360.net/static/hn/after/images/eva-left-line2.png"
                              class="eva-left-bg"/>
                     </div>
                     <div id="enrollmentSchool" class="enrollmentSchool"></div>
@@ -551,7 +551,7 @@
 
                 <div class="row">
                     <div class="col-1-img">
-                        <img src="http://cdn.gaokao360.net/static/global/after/images/eva-left-line3.png"
+                        <img src="http://cdn.gaokao360.net/static/hn/after/images/eva-left-line3.png"
                              class="eva-left-bg"/>
                     </div>
                     <div class="school-list-col"></div>
@@ -564,7 +564,7 @@
 
                 <div class="row">
                     <div class="col-1-img">
-                        <img src="http://cdn.gaokao360.net/static/global/after/images/eva-left-line3.png"
+                        <img src="http://cdn.gaokao360.net/static/hn/after/images/eva-left-line3.png"
                              class="eva-left-bg"/>
                     </div>
                     <div class="school-list-col"></div>
