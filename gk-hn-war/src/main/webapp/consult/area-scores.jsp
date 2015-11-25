@@ -5,6 +5,11 @@
     <title>地区批次线</title>
     <%@ include file="/common/meta.jsp" %>
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/consult/styles/consult.min.css"/>
+    <style>
+        #area-scores-table{
+            margin-bottom: 0!important;
+        }
+    </style>
 </head>
 <body>
 <%@ include file="/common/header.jsp" %>
@@ -24,103 +29,321 @@
         <thead>
         <tr>
             <th>年份</th>
-            <th>种类</th>
+            <th colspan="2">种类</th>
             <th>本科一批</th>
             <th>本科二批</th>
             <th>本科三批</th>
             <th>高专高职</th>
-            <th>普通本科艺术类</th>
-            <th>高职高专艺术类</th>
-            <th>体育类</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td rowspan="2" class="fwb">2015年</td>
+            <td rowspan="8" colspan="" class="fwb">2015年</td>
+            <td rowspan="4">文史类</td>
             <td>文科</td>
-            <td>510</td>
-            <td>467</td>
-            <td>382</td>
-            <td>220</td>
-            <td>304</td>
-            <td>154</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>理科</td>
-            <td>480</td>
-            <td>440</td>
-            <td>350</td>
-            <td>200</td>
-            <td>286</td>
-            <td>140</td>
-            <td>278</td>
-        </tr>
-        <tr>
-            <td rowspan="2" class="fwb">2014年</td>
-            <td>文科</td>
-            <td>548</td>
-            <td>492</td>
-            <td>387</td>
-            <td>273</td>
-            <td>320</td>
-            <td>191</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>理科</td>
-            <td>503</td>
-            <td>452</td>
-            <td>342</td>
-            <td>256</td>
-            <td>294</td>
-            <td>179</td>
-            <td>286</td>
-        </tr>
-        <tr>
-            <td rowspan="2" class="fwb">2013年</td>
-            <td>文科</td>
-            <td>540</td>
-            <td>486</td>
-            <td>386</td>
-            <td>200</td>
-            <td>316</td>
-            <td>140</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>理科</td>
-            <td>485</td>
+            <td>535</td>
+            <td>481</td>
             <td>435</td>
-            <td>330</td>
-            <td>150</td>
-            <td>283</td>
-            <td>105</td>
-            <td>280</td>
+            <td>200</td>
         </tr>
         <tr>
-            <td rowspan="2" class="fwb">2012年</td>
-            <td>文科</td>
-            <td>556</td>
-            <td>497</td>
-            <td>377</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>音乐</td>
+            <td> </td>
+            <td>347</td>
+            <td>326</td>
+            <td>160</td>
         </tr>
         <tr>
-            <td>理科</td>
-            <td>517</td>
-            <td>461</td>
-            <td>331</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>美术</td>
+            <td> </td>
+            <td>380</td>
+            <td>349</td>
+            <td>160</td>
+        </tr>
+        <tr>
+            <td>体育</td>
+            <td>394</td>
+            <td>345</td>
+            <td>325</td>
+            <td>160</td>
+        </tr>
+        <tr>
+            <td rowspan="4">理工类</td>
+            <td>理工</td>
+            <td>526</td>
+            <td>455</td>
+            <td>406</td>
+            <td>200</td>
+        </tr>
+        <tr>
+            <td>音乐</td>
+            <td> </td>
+            <td>320</td>
+            <td>300</td>
+            <td>160</td>
+        </tr>
+        <tr>
+            <td>美术</td>
+            <td> </td>
+            <td>324</td>
+            <td>269</td>
+            <td>160</td>
+        </tr>
+        <tr>
+            <td>体育</td>
+            <td>383</td>
+            <td>336</td>
+            <td>306</td>
+            <td>160</td>
         </tr>
         </tbody>
 
+    </table>
+    <table id="area-scores-table">
+        <thead>
+        <tr>
+            <th>年份</th>
+            <th colspan="2">种类</th>
+            <th>本科一批</th>
+            <th>本科二批</th>
+            <th>本科三批A</th>
+            <th>本科三批B</th>
+            <th>高专高职</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td rowspan="8" colspan="" class="fwb">2014年</td>
+            <td rowspan="4">文史类</td>
+            <td>文科</td>
+            <td>562</td>
+            <td>501</td>
+            <td>473</td>
+            <td>453</td>
+            <td>200</td>
+        </tr>
+        <tr>
+            <td>音乐</td>
+            <td> </td>
+            <td>344</td>
+            <td>324</td>
+            <td>323</td>
+            <td>160</td>
+        </tr>
+        <tr>
+            <td>美术</td>
+            <td> </td>
+            <td>402</td>
+            <td>382</td>
+            <td>368</td>
+            <td>160</td>
+        </tr>
+        <tr>
+            <td>体育</td>
+            <td>421</td>
+            <td>359</td>
+            <td>339</td>
+            <td>338</td>
+            <td>160</td>
+        </tr>
+        <tr>
+            <td rowspan="4">理工类</td>
+            <td>理工</td>
+            <td>522</td>
+            <td>442</td>
+            <td>406</td>
+            <td>386</td>
+            <td>200</td>
+        </tr>
+        <tr>
+            <td>音乐</td>
+            <td> </td>
+            <td>312</td>
+            <td>292</td>
+            <td>291</td>
+            <td>160</td>
+        </tr>
+        <tr>
+            <td>美术</td>
+            <td> </td>
+            <td>328</td>
+            <td>308</td>
+            <td>259</td>
+            <td>160</td>
+        </tr>
+        <tr>
+            <td>体育</td>
+            <td>386</td>
+            <td>333</td>
+            <td>313</td>
+            <td>305</td>
+            <td>160</td>
+        </tr>
+        </tbody>
+    </table>
+    <table id="area-scores-table">
+        <thead>
+        <tr>
+            <th>年份</th>
+            <th colspan="2">种类</th>
+            <th>本科一批</th>
+            <th>本科二批</th>
+            <th>本科三批A</th>
+            <th>本科三批B</th>
+            <th>高专高职</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td rowspan="8" colspan="" class="fwb">2013年</td>
+            <td rowspan="4">文史类</td>
+            <td>文科</td>
+            <td>557</td>
+            <td>502</td>
+            <td>463</td>
+            <td>435</td>
+            <td>200</td>
+        </tr>
+        <tr>
+            <td>音乐</td>
+            <td> </td>
+            <td>327</td>
+            <td>307</td>
+            <td>306</td>
+            <td>160</td>
+        </tr>
+        <tr>
+            <td>美术</td>
+            <td> </td>
+            <td>403</td>
+            <td>383</td>
+            <td>360</td>
+            <td>160</td>
+        </tr>
+        <tr>
+            <td>体育</td>
+            <td>444</td>
+            <td>368</td>
+            <td>348</td>
+            <td>347</td>
+            <td>160</td>
+        </tr>
+        <tr>
+            <td rowspan="4">理工类</td>
+            <td>理工</td>
+            <td>495</td>
+            <td>423</td>
+            <td>376</td>
+            <td>350</td>
+            <td>200</td>
+        </tr>
+        <tr>
+            <td>音乐</td>
+            <td> </td>
+            <td>274</td>
+            <td>254</td>
+            <td>252</td>
+            <td>160</td>
+        </tr>
+        <tr>
+            <td>美术</td>
+            <td> </td>
+            <td>316</td>
+            <td>290</td>
+            <td>248</td>
+            <td>160</td>
+        </tr>
+        <tr>
+            <td>体育</td>
+            <td>368</td>
+            <td>318</td>
+            <td>298</td>
+            <td>297</td>
+            <td>160</td>
+        </tr>
+        </tbody>
+    </table>
+    <table id="area-scores-table" style="margin-bottom: 100px!important;">
+        <thead>
+        <tr>
+            <th>年份</th>
+            <th colspan="2">种类</th>
+            <th>本科一批</th>
+            <th>本科二批</th>
+            <th>本科三批A</th>
+            <th>本科三批B</th>
+            <th>高专高职</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td rowspan="8" colspan="" class="fwb">2012年</td>
+            <td rowspan="4">文史类</td>
+            <td>文科</td>
+            <td>571</td>
+            <td>523</td>
+            <td>470</td>
+            <td>448</td>
+            <td>205</td>
+        </tr>
+        <tr>
+            <td>音乐</td>
+            <td> </td>
+            <td>351</td>
+            <td>331</td>
+            <td>328</td>
+            <td>170</td>
+        </tr>
+        <tr>
+            <td>美术</td>
+            <td> </td>
+            <td>398</td>
+            <td>378</td>
+            <td>358</td>
+            <td>170</td>
+        </tr>
+        <tr>
+            <td>体育</td>
+            <td>457</td>
+            <td>393</td>
+            <td>373</td>
+            <td>372</td>
+            <td>170</td>
+        </tr>
+        <tr>
+            <td rowspan="4">理工类</td>
+            <td>理工</td>
+            <td>520</td>
+            <td>451</td>
+            <td>357</td>
+            <td>335</td>
+            <td>200</td>
+        </tr>
+        <tr>
+            <td>音乐</td>
+            <td> </td>
+            <td>317</td>
+            <td>297</td>
+            <td>290</td>
+            <td>170</td>
+        </tr>
+        <tr>
+            <td>美术</td>
+            <td> </td>
+            <td>313</td>
+            <td>263</td>
+            <td>244</td>
+            <td>170</td>
+        </tr>
+        <tr>
+            <td>体育</td>
+            <td>382</td>
+            <td>324</td>
+            <td>304</td>
+            <td>303</td>
+            <td>170</td>
+        </tr>
+        </tbody>
     </table>
 </div>
 
