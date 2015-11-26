@@ -22,8 +22,11 @@
 
         <div class="main-body">
             <section class="section-article" id="section_article">
-            </section>
+                <h1 id="section_article_t"></h1>
+                <article id="section_article_c">
 
+                </article>
+            </section>
             <section class="ask-list" id="ask_list">
             </section>
         </div>

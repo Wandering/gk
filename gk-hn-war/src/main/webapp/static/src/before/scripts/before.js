@@ -44,7 +44,7 @@ define(function (require) {
                     for (var i = 0; i < dataJson.length; i++) {
                         var tabLi = dataJson[i].subjectName,
                             tabId = dataJson[i].subjectId;
-                        console.log(tabLi)
+                        //console.log(tabLi)
                         var subjectListHtml = '<li id="' + tabId + '">' + tabLi + '</li>';
                         $('.subjectList').append(subjectListHtml);
                     }
@@ -232,6 +232,7 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
+
                 if (res.rtnCode == "0100006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
                     errorTips(res.msg);
                     return false;
@@ -244,12 +245,17 @@ define(function (require) {
                     $('#batchV').text(batchV);
                     $('#subjectTypeV').text(subjectTypeV);
                     var data = $.parseJSON(res.bizData);
+                    console.log(data)
                     var dataJson = data.data.result.data;
                     if (!dataJson) {
                         errorTips(res.msg);
                         return false;
                     }
+                    if(dataJson.length==0){
+                        $('.no-school').show();
+                    }
                     for (var i = 0; i < dataJson.length; i++) {
+
                         if (dataJson[i].status == 0) {
                             $('#no-school' + i).show();
                         } else {
@@ -351,7 +357,7 @@ define(function (require) {
                         var m_averageScores = data.data[i].m_averageScores;
                         var m_batch = data.data[i].m_batch;
                         var m_lowestScore = data.data[i].m_lowestScore;
-                        console.log(m_averageScores + "=" + m_batch + "=" + m_lowestScore)
+                        //console.log(m_averageScores + "=" + m_batch + "=" + m_lowestScore)
 
                         var dreamSchoolList = ''
                             + '<ul>'
