@@ -50,7 +50,7 @@ public class TestController {
         }
         else if (type.equals("policy")){
             PolicyInterpretation policyInterpretation = new PolicyInterpretation();
-            policyInterpretation.setStatus(0);
+            policyInterpretation.setStatus(1);
             policyInterpretation.setAdmissionBatchId(batch);
             policyInterpretation.setCreateDate(new Date().getTime());
             policyInterpretation.setLastModDate(new Date().getTime());
