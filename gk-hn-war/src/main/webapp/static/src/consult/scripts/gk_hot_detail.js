@@ -39,8 +39,9 @@ define(function (require) {
                     $('#section_article_t').append(sectionArticleT);
                     var infoContent = (data.bizData.content || data.bizData.informationContent);
                     var isUrl = infoContent.substr(0,26);
+                    var iframe = '<iframe id="iframe" src="'+ infoContent +'" frameborder="0" scrolling="no" style="border:0px;width:100%;height:1000px"></iframe>';
                     if(isUrl=="http://video.gaokao360.net"){
-                        $('#section_article_c').html('<iframe id="iframe" src="'+ infoContent +'" frameborder="0" scrolling="no" style="border:0px;width:100%;height:1000px"></iframe>');
+                        $('#section_article_c').html(iframe);
                     }else{
                         $('#section_article_c').html(infoContent);
                     }
@@ -54,6 +55,7 @@ define(function (require) {
                 } else {
                     $('#section_article').html('<h6>暂无信息！</h6>');
                 }
+
             } else {
                 $('#section_article').html('<h6>暂无信息！</h6>');
             }
@@ -111,6 +113,8 @@ define(function (require) {
             window.location.href = '/consult/gk_hot.jsp?val=' + val;
         });
     });
+
+
 
 });
 
