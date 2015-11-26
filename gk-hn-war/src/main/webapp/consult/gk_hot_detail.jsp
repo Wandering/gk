@@ -6,6 +6,15 @@
     <%@ include file="/common/meta.jsp"%>
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/consult/styles/gk_hot_detile.min.css" />
 </head>
+<style>
+    .section-article article p span{
+        white-space: inherit!important;
+    }
+    .section-article article{
+        width: 760px;
+        margin: 20px;
+    }
+</style>
 <body>
 <%@ include file="/common/header.jsp"%>
 
