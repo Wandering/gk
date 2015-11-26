@@ -20,7 +20,7 @@
             </p>
             <p class="fl w40"></p>
         </div>
-        <h6 class="w1000 ta sub-title c888 mt20">及时、准确发布在陕招生的相关院校、专业及招生计划信息，方便您查询、筛选、了解。</h6>
+        <h6 class="w1000 ta sub-title c888 mt20">及时、准确发布在湖南招生的相关院校、专业及招生计划信息，方便您查询、筛选、了解。</h6>
 
         <div class="search-content ta mt60">
             <span>
@@ -61,7 +61,7 @@
 
 <%@ include file="/common/footer.jsp"%>
 <script type="text/javascript">
-    seajs.use("http://cdn.gaokao360.net/static/global/consult/scripts/profession_info.min");
+    seajs.use("http://cdn.gaokao360.net/static/global/consult/scripts/profession_info");
 </script>
 </body>
 </html>
