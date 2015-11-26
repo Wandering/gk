@@ -39,11 +39,27 @@ define(function (require) {
                     $('#section_article_t').append(sectionArticleT);
                     var infoContent = (data.bizData.content || data.bizData.informationContent);
                     var isUrl = infoContent.substr(0,26);
+                    var iframe = '<iframe id="iframe" src="'+ infoContent +'" frameborder="0" scrolling="no" style="border:0px;width:100%;height:1000px"></iframe>';
                     if(isUrl=="http://video.gaokao360.net"){
-                        $('#section_article_c').html('<iframe id="iframe" src="'+ infoContent +'" frameborder="0" scrolling="no" style="border:0px;width:100%;height:1000px"></iframe>');
+                        $('#section_article_c').html(iframe);
+                        //var temp_css;
+                        //temp_css='<style type="text/css">';
+                        //temp_css+="body{padding:10px 0;margin:0;font-size:100px;}";
+                        //temp_css+="</style>";
+                        //window.onload=function(){
+                        //    var obj=window.frames["iframe"];
+                        //    obj.document.body.innerHTML+=temp_css;
+                        //}
+                        $("#iframe").load(function(){
+                            $(this).contents().find("#main").css('color','red')
+                            })
+                        console.log(window.frames["iframe"].document);
                     }else{
                         $('#section_article_c').html(infoContent);
                     }
+
+
+
                     $.each($('#section_article img'), function(i, value) {
                         var src = $(value).attr('src');
                         if (src.indexOf('http://') < 0 && src.indexOf('https://') < 0) {
@@ -54,6 +70,7 @@ define(function (require) {
                 } else {
                     $('#section_article').html('<h6>暂无信息！</h6>');
                 }
+
             } else {
                 $('#section_article').html('<h6>暂无信息！</h6>');
             }
@@ -111,6 +128,8 @@ define(function (require) {
             window.location.href = '/consult/gk_hot.jsp?val=' + val;
         });
     });
+
+
 
 });
 
