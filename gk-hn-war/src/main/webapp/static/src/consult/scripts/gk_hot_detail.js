@@ -45,9 +45,6 @@ define(function (require) {
                     }else{
                         $('#section_article_c').html(infoContent);
                     }
-
-
-
                     $.each($('#section_article img'), function(i, value) {
                         var src = $(value).attr('src');
                         if (src.indexOf('http://') < 0 && src.indexOf('https://') < 0) {
