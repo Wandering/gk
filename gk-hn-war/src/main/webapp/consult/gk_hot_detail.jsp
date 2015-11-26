@@ -22,8 +22,11 @@
 
         <div class="main-body">
             <section class="section-article" id="section_article">
-            </section>
+                <h1 id="section_article_t"></h1>
+                <article id="section_article_c">
 
+                </article>
+            </section>
             <section class="ask-list" id="ask_list">
             </section>
         </div>
@@ -32,7 +35,8 @@
 
 <%@ include file="/common/footer.jsp"%>
 <script type="text/javascript">
-    seajs.use(["http://cdn.gaokao360.net/static/global/consult/scripts/gk_hot_detail.min",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+//    seajs.use(["http://cdn.gaokao360.net/static/global/consult/scripts/gk_hot_detail.min",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+    seajs.use(["/static/src/consult/scripts/gk_hot_detail",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
 </script>
 </body>
 </html>
