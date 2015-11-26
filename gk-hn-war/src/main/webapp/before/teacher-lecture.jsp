@@ -5,6 +5,13 @@
     <title>名师讲堂</title>
     <%@ include file="/common/meta.jsp"%>
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/before/styles/before.min.css"/>
+    <style>
+        ul.main-video-list li.item img{
+            box-shadow: 8px 30px 40px #333333;
+            border: 1px solid #C0C0C0;
+            border-radius: 0 10px 0px 0;
+        }
+    </style>
 </head>
 <body>
 <%@ include file="/common/header.jsp"%>

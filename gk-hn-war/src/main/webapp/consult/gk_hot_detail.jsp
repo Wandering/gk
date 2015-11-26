@@ -14,6 +14,9 @@
         width: 760px;
         margin: 20px;
     }
+    #section_article_c table{
+        background: #ffff00!important: ;
+    }
 </style>
 <body>
 <%@ include file="/common/header.jsp"%>
@@ -41,7 +44,9 @@
         </div>
     </div>
 </div>
-
+<script>
+    document.getElementById('iframe').contentWindow.document.body.style.backgroundColor="#f00";
+</script>
 <%@ include file="/common/footer.jsp"%>
 <script type="text/javascript">
 //    seajs.use(["http://cdn.gaokao360.net/static/global/consult/scripts/gk_hot_detail.min",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
