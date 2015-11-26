@@ -187,7 +187,7 @@ define(function (require) {
                 + '<th></th>'
                 + '<th>批次</th>'
                 + '<th>计划数</th>'
-                + '<th>录取数</th>'
+                //+ '<th>录取数</th>'
                 + '<th>最高分</th>'
                 + '<th>最高位次</th>'
                 + '<th>最低分</th>'
@@ -203,7 +203,7 @@ define(function (require) {
                     + '<td>' + (infosData.subjectName || '') + '</td>'
                     + '<td>' + (infosData.batch || '') + '</td>'
                     + '<td>' + (infosData.planNumber || '') + '</td>'
-                    + '<td>' + (infosData.enrollNumber || '') + '</td>'
+                    //+ '<td>' + (infosData.enrollNumber || '') + '</td>'
                     + '<td>' + (infosData.highestScore || '') + '</td>'
                     + '<td>' + (infosData.highestRank || '') + '</td>'
                     + '<td>' + (infosData.lowestScore || '') + '</td>'
@@ -258,8 +258,8 @@ define(function (require) {
                 + '<th>批次</th>'
                 + '<th>科类</th>'
                 + '<th>计划人数</th>'
-                + '<th>学制</th>'
-                + '<th>收费标准</th>'
+                //+ '<th>学制</th>'
+                //+ '<th>收费标准</th>'
                 + '</tr>'
                 + '</thead>'
                 + '<tbody>';
@@ -270,8 +270,8 @@ define(function (require) {
                     + '<td width="10%">' + (planInfosData.batch || '') + '</td>'
                     + '<td width="10%">' + (planInfosData.subject || '') + '</td>'
                     + '<td width="10%">' + (planInfosData.planNumber || '') + '</td>'
-                    + '<td width="10%">' + (planInfosData.schoolLength || '') + '</td>'
-                    + '<td width="10%">' + (planInfosData.feeStandard || '') + '</td>'
+                    //+ '<td width="10%">' + (planInfosData.schoolLength || '') + '</td>'
+                    //+ '<td width="10%">' + (planInfosData.feeStandard || '') + '</td>'
                     + '</tr>';
                 }
                 console.info(data[i].planInfos.length);
