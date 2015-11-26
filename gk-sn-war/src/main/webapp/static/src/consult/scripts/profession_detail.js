@@ -94,6 +94,10 @@ define(function (require) {
             $('#tab_2').html('<p class="article">' + (data.workGuide || '暂无信息！') + '</p>');
             var openUniversity = data.openUniversity;
             //console.log(openUniversity)
+            if(openUniversity.length == 0){
+                $('#tab_3').html(defaultTipMsg);
+                return false;
+            }
             var openUniversityHtml = ''
                 +'<div class="tipTxt"><strong>温馨提示：</strong> <i class="star"></i>号表示该专业在该院校招生</div>'
                 + '<table class="table" id="openUniversity-table">'
