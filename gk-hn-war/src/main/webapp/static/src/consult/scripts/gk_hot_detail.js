@@ -42,18 +42,6 @@ define(function (require) {
                     var iframe = '<iframe id="iframe" src="'+ infoContent +'" frameborder="0" scrolling="no" style="border:0px;width:100%;height:1000px"></iframe>';
                     if(isUrl=="http://video.gaokao360.net"){
                         $('#section_article_c').html(iframe);
-                        //var temp_css;
-                        //temp_css='<style type="text/css">';
-                        //temp_css+="body{padding:10px 0;margin:0;font-size:100px;}";
-                        //temp_css+="</style>";
-                        //window.onload=function(){
-                        //    var obj=window.frames["iframe"];
-                        //    obj.document.body.innerHTML+=temp_css;
-                        //}
-                        $("#iframe").load(function(){
-                            $(this).contents().find("#main").css('color','red')
-                            })
-                        console.log(window.frames["iframe"].document);
                     }else{
                         $('#section_article_c').html(infoContent);
                     }
