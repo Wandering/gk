@@ -18,7 +18,9 @@ define(function(require, exports, module) {
             parentHtml.push('<ul class="tabs-list mt60">');
             for (var i = 0, len = this.data.length; i < len; i++) {
                 console.log(this.data[i].id  + "==" + this.data[i].name)
-                parentHtml.push('<li data-id="' + this.data[i].id + '">' + this.data[i].name + '</li>');
+                if(this.data[i].name != "志愿讲堂"){
+                    parentHtml.push('<li data-id="' + this.data[i].id + '">' + this.data[i].name + '</li>');
+                }
             }
             parentHtml.push('</ul>');
             $('#' + this.contentId).html(parentHtml.join(''));

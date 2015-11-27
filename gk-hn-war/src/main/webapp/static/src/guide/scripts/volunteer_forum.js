@@ -1,8 +1,7 @@
 define(function (require) {
     var $ = require('$');
 
-    //var Tab = require('http://cdn.gaokao360.net/static/global/guide/scripts/tab.min');
-    var Tab = require('/static/src/guide/scripts/tab');
+    var Tab = require('http://cdn.gaokao360.net/static/hn/guide/scripts/tab.min');
 
     var timer = null;
 
