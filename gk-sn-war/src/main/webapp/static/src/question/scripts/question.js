@@ -27,9 +27,9 @@ define(function(require) {
                     html.push('<a href="/question/question_detail.jsp?id=' + question.questionId + '"><section class="ask-answer mt20">');
                     html.push('<div class="ask mt20">');
                     html.push('<div class="head-img">');
-                    var src = question.userIcon || '/static/src/common/images/user_default.png';
+                    var src = question.userIcon || 'http://cdn.gaokao360.net/static/global/common/images/user_default.png';
                     if (!'aa.jpg'.match(/(.jpg|.png|.gif)/g)) {
-                        src = '/static/src/common/images/user_default.png';
+                        src = 'http://cdn.gaokao360.net/static/global/common/images/user_default.png';
                     }
                     html.push('<img src="' + (src || '') + '" />');
                     html.push('</div>');
