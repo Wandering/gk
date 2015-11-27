@@ -430,7 +430,7 @@ define(function (require) {
                 }
                 if(res.rtnCode == '0100005'){
                     errorTips(res.msg);
-                    $('#precedence-yzmDreamSchool').attr('src', '/verifyCode/randomVerifyCode.do?type=1&code=' + Math.random())
+                    $('#precedence-yzmDreamSchool').attr('src', '/verifyCode/randomVerifyCode.do?type=3&code=' + Math.random())
                     return false;
                 }
                 var data = $.parseJSON(res.bizData);
