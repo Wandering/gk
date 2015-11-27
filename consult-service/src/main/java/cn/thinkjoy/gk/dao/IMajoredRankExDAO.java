@@ -16,4 +16,6 @@ public interface IMajoredRankExDAO{
 	
     List<MajoredRankDto> findOpenUniversity(Map<String,Object> params);
 
+    Integer getRecentlyByYear(Map<String,Object> params);
+
 }

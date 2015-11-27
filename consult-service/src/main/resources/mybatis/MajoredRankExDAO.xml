@@ -60,12 +60,21 @@
             b.foreignLanguage as foreginLanguage,b.feeStandard,b.subject,0 isOpen
             from gk_majored a
             left join gk_enroll_plan b on a.id=b.majoredId and b.year = #{year}
-            where a.name = #{majorName} and b.areaId = #{areaId}
+            where a.name = #{majorName} and b.areaId != #{areaId}
         ) a
         GROUP BY a.universityName,a.subject
         <if test="startSize != null and endSize != null">
             limit ${startSize}, ${endSize}
         </if>
+    </select>
+
+    <select id="getRecentlyByYear" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select distinct b.year
+            from gk_majored a
+            left join gk_enroll_plan b on a.id=b.majoredId
+            where a.name = #{majorName} and b.areaId = #{areaId}
+        ORDER BY b.year DESC
+        limit 1;
     </select>
 
 </mapper>
