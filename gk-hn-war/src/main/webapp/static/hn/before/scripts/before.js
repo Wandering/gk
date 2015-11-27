@@ -254,6 +254,9 @@ define(function (require) {
                         errorTips(res.msg);
                         return false;
                     }
+                    if(dataJson.length==0){
+                        $('.no-school').show();
+                    }
                     for (var i = 0; i < dataJson.length; i++) {
                         if (dataJson[i].status == 0) {
                             $('#no-school' + i).show();
