@@ -11,7 +11,7 @@ public class AppraisalBean {
 
     private final String version="V12";
 
-    private final String item = "b438e1582d3331d1fcc8fa4ecc48543f20ada3ca851d79281ef58db137ad7c21";
+    private final String item = "95ddf8c8f9d08c2fe275f03349fca0441597982f88b4627fa3d42c81481474b6";
 
     private final String api = "getDirectTestUrl";
 

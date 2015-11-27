@@ -13,7 +13,6 @@
     <div class="main w1000">
         <!--<img src="/static/dist/common/images/logo-min.png" class="login-logo"/>-->
         <img src="http://cdn.gaokao360.net/static/hn/common/images/login-font.png" class="login-bg-fonts"/>
-
         <div class="login-box">
             <div class="login-title find-psd-h40">
                 <span class="find-psd">找回密码</span>
