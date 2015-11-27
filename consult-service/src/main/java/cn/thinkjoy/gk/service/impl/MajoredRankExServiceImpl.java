@@ -34,4 +34,12 @@ public class MajoredRankExServiceImpl implements IMajoredRankExService {
         params.put("endSize",pageSize);
         return majoredRankExDAO.findOpenUniversity(params);
     }
+
+    @Override
+    public Integer getRecentlyByYear(String majorName, long areaId) {
+        Map<String,Object> params = new HashMap<>();
+        params.put("majorName",majorName);
+        params.put("areaId",areaId);
+        return majoredRankExDAO.getRecentlyByYear(params);
+    }
 }

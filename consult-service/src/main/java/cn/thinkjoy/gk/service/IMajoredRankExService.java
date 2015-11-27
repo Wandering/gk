@@ -15,4 +15,6 @@ public interface IMajoredRankExService{
 
     List<MajoredRankDto> findOpenUniversity(String majorName, Integer year,Long areaId,Integer pageSize,Integer pageNo);
 
+    Integer getRecentlyByYear(String majorName,long areaId);
+
 }
