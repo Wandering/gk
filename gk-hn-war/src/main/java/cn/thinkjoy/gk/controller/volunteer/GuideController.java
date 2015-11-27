@@ -89,7 +89,7 @@ public class GuideController extends BaseController {
         try {
 
 
-            String result = HttpRequestUtil.doGet("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetBatch/m_candidateNumber/"+m_candidateNumber+"/m_aggregateScore/"+m_aggregateScore+"/m_ranking/"+m_ranking+"/m_kelei/"+m_kelei);
+            String result = HttpRequestUtil.doGet("http://hn.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetBatch/m_candidateNumber/"+m_candidateNumber+"/m_aggregateScore/"+m_aggregateScore+"/m_ranking/"+m_ranking+"/m_kelei/"+m_kelei);
 
             if(StringUtils.isEmpty(result)){
                 throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());

@@ -597,7 +597,7 @@
                 </div>
                 <!--endprint-->
                 <div class="navigation-box">
-                    <span class="tip">正式填报志愿请登录网址：<a target="_blank" href="http://sn.gaokao360.net">sn.gaokao360.net</a></span>
+                    <span class="tip">正式填报志愿请登录网址：<a target="_blank" href="http://hn.gaokao360.net">hn.gaokao360.net</a></span>
 
                     <div class="btn btn-before" id="prev-btn">返回上一步</div>
                     <div class="btn btn-next" id="print-btn">打印</div>

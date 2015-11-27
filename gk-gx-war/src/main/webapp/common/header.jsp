@@ -34,11 +34,8 @@
     <div class="log-reg hide" id="log-reg">
       <a href="/login/login.jsp">登录/注册</a>
     </div>
-    <div class="user-info-list fr hide" id="login-user-info">
-      <div class="user">
-        <img src="" alt="avatar" class="user-avatar hide"/>
-        <a href="javascript:" id="accountNum" class="username"></a>
-      </div>
+    <div class="user-info-list fr" id="login-user-info">
+      <div class="user hide" id="loginUser"></div>
       <ul class="menu hide">
         <li><a href="/user/personal-info.jsp">个人信息</a></li>
         <li><a href="/user/vip-service.jsp">VIP服务</a></li>
@@ -53,7 +50,7 @@
 </div>
 
 <script>
-  seajs.use(["http://cdn.gaokao360.net/static/global/common/scripts/header.min","/static/src/common/scripts/header-user-base"]);
+  seajs.use("/static/src/common/scripts/header");
 </script>
 
 
