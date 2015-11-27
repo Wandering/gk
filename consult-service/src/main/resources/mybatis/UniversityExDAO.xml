@@ -141,6 +141,7 @@
                 AND ll.areaId = #{areaId}
             </if>
         </trim>
+        GROUP BY ll.majoredName
     </select>
 
     <select id="getMajoredScoreLineYears" resultType="String" parameterType="java.util.Map">
@@ -154,6 +155,8 @@
                 AND areaId = #{areaId}
             </if>
         </trim>
+        order by year DESC
+        limit 3
     </select>
 
     <select id="getOpenMajoredPojoList" resultType="OpenMajoredPojo" parameterType="java.util.Map">
@@ -181,5 +184,33 @@
         GROUP BY rr.majorName,pp.subject
     </select>
 
+    <select id="getRecentlyPlanInfosByYear" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select DISTINCT pp.year
+        from gk_majored mm left join gk_enroll_plan pp on mm.id=pp.majoredId
+        where
+        pp.universityId=#{universityId}
+        <if test="batch !=null and batch !=''">
+            and pp.batch=#{batch}
+        </if>
+        <if test="areaId !=null and areaId !=''">
+            and pp.areaId=#{areaId}
+        </if>
+        order by pp.year DESC
+        limit 3
+    </select>
+
+    <select id="getRecentlyEnrollInfoByYear" parameterType="java.util.Map" resultType="java.lang.Integer">
+
+        select DISTINCT year
+        from gk_enroll_report where universityId=#{universityId}
+        <if test="batch !=null and batch !=''">
+            and batch=#{batch}
+        </if>
+        <if test="areaId !=null and batch !=''">
+            and areaId=#{areaId}
+        </if>
+        order by year DESC
+        limit 3
+    </select>
 
 </mapper>

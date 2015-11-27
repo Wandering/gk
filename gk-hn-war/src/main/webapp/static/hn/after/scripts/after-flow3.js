@@ -440,27 +440,27 @@ define(function (require) {
                 var m_kelei = paramsJson.m_kelei;
                 if (m_kelei == "文史") {
                     if (m_aggregateScore >= 510) {
-                        $('#controlLine').text("510");
+                        $('#controlLine').text("535");
                         $('#controlLine-txt').text('一批本科省控线');
-                    } else if (m_aggregateScore >= 467 && m_aggregateScore < 510) {
-                        $('#controlLine').text("467");
+                    } else if (m_aggregateScore >= 481 && m_aggregateScore < 535) {
+                        $('#controlLine').text("481");
                         $('#controlLine-txt').text('二批本科省控线');
-                    } else if (m_aggregateScore >= 382 && m_aggregateScore < 467) {
-                        $('#controlLine').text("382");
+                    } else if (m_aggregateScore >= 435 && m_aggregateScore < 481) {
+                        $('#controlLine').text("435");
                         $('#controlLine-txt').text('三批本科省控线');
                     } else {
-                        $('#controlLine').text("220");
+                        $('#controlLine').text("200");
                         $('#controlLine-txt').text('高专高职省控线');
                     }
                 } else if (m_kelei == "理工") {
-                    if (m_aggregateScore >= 480) {
-                        $('#controlLine').text("480");
+                    if (m_aggregateScore >= 526) {
+                        $('#controlLine').text("526");
                         $('#controlLine-txt').text('一批本科省控线');
-                    } else if (m_aggregateScore >= 440 && m_aggregateScore < 480) {
-                        $('#controlLine').text("440");
+                    } else if (m_aggregateScore >= 455 && m_aggregateScore < 526) {
+                        $('#controlLine').text("455");
                         $('#controlLine-txt').text('二批本科省控线');
-                    } else if (m_aggregateScore >= 350 && m_aggregateScore < 440) {
-                        $('#controlLine').text("350");
+                    } else if (m_aggregateScore >= 406 && m_aggregateScore < 455) {
+                        $('#controlLine').text("406");
                         $('#controlLine-txt').text('三批本科省控线');
                     } else {
                         $('#controlLine').text("200");

@@ -30,4 +30,8 @@ public interface IUniversityExDAO{
     List<String> getMajoredScoreLineYears(Map<String,Object> params);
 
     List<OpenMajoredPojo> getOpenMajoredPojoList(Map<String,Object> params);
+
+    List<Integer> getRecentlyPlanInfosByYear(Map<String,Object> params);
+
+    List<Integer> getRecentlyEnrollInfoByYear(Map<String,Object> params);
 }

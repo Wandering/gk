@@ -9,6 +9,7 @@ package cn.thinkjoy.gk.service.impl;
 import cn.thinkjoy.gk.dao.IUniversityExDAO;
 import cn.thinkjoy.gk.pojo.UniversityDetailDto;
 import cn.thinkjoy.gk.service.IUniversityExService;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,5 +64,22 @@ public class UniversityExServiceImpl implements IUniversityExService{
         }
 
         return universityDetailDtos;
+    }
+
+    @Override
+    public List<Integer> getRecentlyPlanInfosByYear(String universityId, String batch, long areaId) {
+        Map<String,Object> params = new HashMap<>();
+        params.put("universityId",universityId);
+        params.put("batch",batch);
+        params.put("areaId",areaId);
+        return universityExDAO.getRecentlyPlanInfosByYear(params);
+    }
+
+    @Override
+    public List<Integer> getRecentlyEnrollInfoByYear(String universityId, long areaId) {
+        Map<String,Object> params = Maps.newHashMap();
+        params.put("universityId",universityId);
+        params.put("areaId",areaId);
+        return universityExDAO.getRecentlyEnrollInfoByYear(params);
     }
 }
