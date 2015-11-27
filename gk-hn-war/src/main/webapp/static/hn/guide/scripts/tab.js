@@ -17,7 +17,7 @@ define(function(require, exports, module) {
             var parentHtml = [];
             parentHtml.push('<ul class="tabs-list mt60">');
             for (var i = 0, len = this.data.length; i < len; i++) {
-                console.log(this.data[i].id  + "==" + this.data[i].name)
+                //console.log(this.data[i].id  + "==" + this.data[i].name)
                 if(this.data[i].name != "志愿讲堂"){
                     parentHtml.push('<li data-id="' + this.data[i].id + '">' + this.data[i].name + '</li>');
                 }
@@ -40,7 +40,7 @@ define(function(require, exports, module) {
                 if (!flag) {
                     that.removeChildren();
                     $(this).addClass('active').siblings().removeClass('active');
-                    console.log(that.parentHandle)
+                    //console.log(that.parentHandle)
                     if (that.parentHandle && typeof that.parentHandle === 'function') {
                         that.parentHandle(that.data[$(this).index()]);
                     }
@@ -57,7 +57,7 @@ define(function(require, exports, module) {
             }
         },
         renderChildren: function(data) {
-            console.log(data)
+            //console.log(data)
             if (data.length <= 0) {
                 return;
             }
