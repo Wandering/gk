@@ -53,7 +53,7 @@
 </div>
 <%@ include file="/common/footer.jsp"%>
 <script>
-    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/exam.min",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+    seajs.use(["http://cdn.gaokao360.net/static/hn/before/scripts/exam.min",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
 </script>
 </body>
 </html>

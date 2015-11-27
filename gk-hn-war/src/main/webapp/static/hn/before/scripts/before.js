@@ -340,7 +340,7 @@ define(function (require) {
                 }
                 if(res.rtnCode == '0100005'){
                     errorTips(res.msg);
-                    $('#yzmDreamSchool').attr('src', '/verifyCode/randomVerifyCode.do?type=2&code=' + Math.random())
+                    $('#yzmDreamSchool').attr('src', '/verifyCode/randomVerifyCode.do?type=1&code=' + Math.random())
                     return false;
                 }
                 var data = $.parseJSON(res.bizData);
@@ -393,12 +393,6 @@ define(function (require) {
         $('#dream-school-layer,.tansLayer').hide();
         $('#yzmDreamSchool').attr('src', '/verifyCode/randomVerifyCode.do?type=2&code=' + Math.random());
     });
-
-
-
-
-
-
 
     $('#precedence-yzmDreamSchool').on('click', function () {
         $('#precedence-yzmDreamSchool').attr('src', '/verifyCode/randomVerifyCode.do?type=3&code=' + Math.random());
