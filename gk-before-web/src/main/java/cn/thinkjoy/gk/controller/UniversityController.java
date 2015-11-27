@@ -219,16 +219,14 @@ public class UniversityController extends BaseController {
         String schoolId=request.getParameter("id");
         Map<String,Object> map=new HashMap<String, Object>();
         List<EnrollResponseDto>  enrollResponseDtoList=new ArrayList<EnrollResponseDto>();
-        List<EnrollInfo>  lastenrollInfos=iUniversityService.getEnrollInfoByYear(2014,schoolId,areaId);
-        List<EnrollInfo>  enrollInfos=iUniversityService.getEnrollInfoByYear(2013,schoolId,areaId);
-        EnrollResponseDto lastEnrollResponseDto=new EnrollResponseDto();
-        lastEnrollResponseDto.setTitle("2013招生情况");
-        lastEnrollResponseDto.setInfos(enrollInfos);
-        EnrollResponseDto enrollResponseDto=new EnrollResponseDto();
-        enrollResponseDto.setTitle("2014招生情况");
-        enrollResponseDto.setInfos(lastenrollInfos);
-        enrollResponseDtoList.add(enrollResponseDto);
-        enrollResponseDtoList.add(lastEnrollResponseDto);
+        List<Integer> yearList=universityExService.getRecentlyEnrollInfoByYear(schoolId,areaId);
+        for (Integer year:yearList){
+            List<EnrollInfo>  enrollInfos=iUniversityService.getEnrollInfoByYear(year,schoolId,areaId);
+            EnrollResponseDto lastEnrollResponseDto=new EnrollResponseDto();
+            lastEnrollResponseDto.setTitle(year+"招生情况");
+            lastEnrollResponseDto.setInfos(enrollInfos);
+            enrollResponseDtoList.add(lastEnrollResponseDto);
+        }
         map.put("enrollInfo",enrollResponseDtoList);
         return map;
     }
@@ -257,26 +255,15 @@ public class UniversityController extends BaseController {
             default: batch="";
 
         }
-        EntrollPlan entrollPlan=new EntrollPlan();
-        EntrollPlan lastEntrollPlan=new EntrollPlan();
-        List<PlanInfo> planInfos=iUniversityService.getPlanInfosByYear(2015,schoolId,batch,areaId);
-        List<PlanInfo> lastPlanInfos=iUniversityService.getPlanInfosByYear(2014,schoolId,batch,areaId);
-        entrollPlan.setTitle("2015年招生计划");
-        entrollPlan.setPlanInfos(planInfos);
-        lastEntrollPlan.setTitle("2014年招生计划");
-        lastEntrollPlan.setPlanInfos(lastPlanInfos);
-//        /**
-//         * 招生简介
-//         */
-//        String entroIntro=iUniversityService.getUniversityEnrollIntro(schoolId);
-//        /**
-//         * 大学介绍
-//         */
-//        String  universityIntro=iUniversityService.getUniversityIntro(schoolId);
-        entrollPlans.add(entrollPlan);
-        entrollPlans.add(lastEntrollPlan);
-//        entrollPlanDto.setEntroIntro(entroIntro);
-//        entrollPlanDto.setUniversityIntro(universityIntro);
+        // 获取有数据的最近三年
+        List<Integer> yearList=universityExService.getRecentlyPlanInfosByYear(schoolId,batch,areaId);
+        for (Integer year:yearList){
+            EntrollPlan entrollPlan=new EntrollPlan();
+            List<PlanInfo> planInfos=iUniversityService.getPlanInfosByYear(year,schoolId,batch,areaId);
+            entrollPlan.setTitle(year+"年招生计划");
+            entrollPlan.setPlanInfos(planInfos);
+            entrollPlans.add(entrollPlan);
+        }
         entrollPlanDto.setEnrollPlan(entrollPlans);
 
         return  entrollPlanDto;

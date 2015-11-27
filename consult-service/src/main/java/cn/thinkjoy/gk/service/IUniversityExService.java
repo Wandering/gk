@@ -17,4 +17,7 @@ public interface IUniversityExService{
 
     List<UniversityDetailDto> getUniversityDetailByCodes(List<String> schoolCodes,String batch,Integer type,Integer year,long areaId);
 
+    List<Integer> getRecentlyPlanInfosByYear(String universityId,String batch,long areaId);
+
+    List<Integer> getRecentlyEnrollInfoByYear(String universityId,long areaId);
 }
