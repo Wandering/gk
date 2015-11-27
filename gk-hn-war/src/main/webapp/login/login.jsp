@@ -32,7 +32,7 @@
                 <i class="icon-user-psd"></i>
                 <input type="password" class="input-comm login-password" placeholder="密码"/>
                 <a href="/login/forget-psd.jsp" class="forget-psd">忘记密码？</a>
-                <div class="btn-login">登录</div>
+                <div class="btn-login" id="btn-login">登录</div>
             </div>
             <!--注册-->
             <div class="register-input hide">
@@ -56,7 +56,8 @@
     <img src="http://cdn.gaokao360.net/static/hn/common/images/login-logo.png" alt="logo360" class="bottom-logo"/>
 </div>
 <script>
-    seajs.use("http://cdn.gaokao360.net/static/global/login/scripts/login.min");
+//    seajs.use("http://cdn.gaokao360.net/static/global/login/scripts/login.min");
+    seajs.use("/static/src/login/scripts/login.js");
 </script>
 </body>
 </html>

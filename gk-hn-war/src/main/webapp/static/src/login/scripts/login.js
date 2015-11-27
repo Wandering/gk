@@ -10,7 +10,7 @@ define(function(require) {
         loginAccount: $('.login-account'),
         loginPassword: $('.login-password'),
         forgetPsd: $('.forget-psd'),
-        btnLogin: $('.btn-login'),
+        btnLogin: $('#btn-login'),
         btnLoginRegister: $('.btn-login-register'),
         telNumber: $('.tel-number'),
         captchaCode: $('.captcha-code'),
@@ -18,6 +18,7 @@ define(function(require) {
         regPassword: $('.reg-password'),
         regPasswordConfirm: $('.reg-password-confirm')
     };
+
     // 登陆检测
     function loginCheck() {
         var tel = Dom.loginAccount.val();

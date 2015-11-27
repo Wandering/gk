@@ -7,6 +7,7 @@ define(function (require) {
     $(function () {
         var isUser = GetCookie("hnuser");
         if (isUser) {
+
             $.getJSON(
                 "/info/getUserAccount.do",
                 function (res) {
