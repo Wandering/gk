@@ -486,7 +486,8 @@ define(function (require) {
                         $('#controlLine-txt').text('高专高职省控线');
                     }
                 }
-                $('#studentName').text(name);
+
+
                 $('#schoolName').text(schoolName);
                 $('#sexT').text(sexT);
             }

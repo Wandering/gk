@@ -1,16 +1,16 @@
 define(function (require) {
     var $ = require('$');
-    require('backToTop');
     $(function () {
-        //
+        // 传送数据
         var paramsJson = JSON.parse(params);
+        //点击选择院校
         $('.volunteer-flow3-table').on('click', '.open-flow3', function () {
             $('.tansLayer,.volunteer-flow3-layer').show();
             $('#volunteer-flow3-layer').attr('dataType', $(this).attr('dataType'));
             getSchool(paramsJson, "", "");
         });
 
-
+        // 关闭院校弹层
         $('#volunteer-flow3-layer').on('click', '.close-btn', function () {
             $('#volunteer-flow3-layer,.tansLayer').hide();
         });
@@ -23,7 +23,6 @@ define(function (require) {
                 dataType: 'JSON',
                 data: paramsJson,
                 success: function (res) {
-                    console.log(res);
                     if (res.rtnCode == "0100006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
                         $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
                         return;
@@ -31,7 +30,7 @@ define(function (require) {
                     if (res.rtnCode == "0000000") {
                         $('.school-list').html('');
                         var data = $.parseJSON(res.bizData);
-                        console.log(data)
+                        //console.log(data)
                         var m_batch_id = data.related.m_batch_id;
                         var m_batch = data.related.m_batch;
                         var listData = data.data.result;
@@ -46,11 +45,7 @@ define(function (require) {
                             m_keleiType = 1;
                         }
                         var datatypeId = $('#volunteer-flow3-layer').attr('datatype');
-
-
-
                         $.each(listData.data, function (i, v) {
-
                             if (listData.data[i].data.length == 0) {
                                 $('.no-school').show();
                                 $('.school-list').hide();
@@ -106,7 +101,7 @@ define(function (require) {
             var datatypeid = $(this).attr('datatypeid');
             var m_university_name = $(this).attr('m_university_name');
             var years = 2014;
-            console.log(code + "+" + type + "+" + m_batch + "+" + m_batch_id + "+" + datatypeid + "+" + m_university_name)
+            //console.log(code + "+" + type + "+" + m_batch + "+" + m_batch_id + "+" + datatypeid + "+" + m_university_name)
             var star = '';
             var starType = $(this).parents('.school-list').attr('dataType');
             if (starType == "A") {
@@ -133,10 +128,8 @@ define(function (require) {
                 success: function (res) {
                     var data = res.bizData;
 
-                    console.log(data)
+                    //console.log(data)
                     if ('0000000' === res.rtnCode) {
-                        var dicName = '';
-
                         var infoHtml = ''
                             + '<p>';
                         if (data.dictName) {
@@ -158,10 +151,10 @@ define(function (require) {
                         });
                         if (data.provinceName == "广西") {
                             $('input.partChecked[name="isFun' + datatypeid + '"]').parent().show();
-                            $('#area-tips'+datatypeid).show();
+                            $('#area-tips' + datatypeid).show();
                         } else {
                             $('input.partChecked[name="isFun' + datatypeid + '"]').parent().hide();
-                            $('#area-tips'+datatypeid).hide();
+                            $('#area-tips' + datatypeid).hide();
                         }
                         $('#result-info' + datatypeid).html(infoHtml);
                         $('#tips' + datatypeid).hide();
@@ -183,10 +176,10 @@ define(function (require) {
             $('input[name="isFun' + n + '"]').on('click', function () {
                 if ($(this).hasClass('partChecked')) {
                     $('#specialtyPart' + n).show();
-                    $('#area-tips'+n).hide();
+                    $('#area-tips' + n).hide();
                 } else {
                     $('#specialtyPart' + n).hide();
-                    $('#area-tips'+n).show();
+                    $('#area-tips' + n).show();
                 }
             })
         }
@@ -207,7 +200,7 @@ define(function (require) {
             var m_batch = parents.attr('m_batch');
             var code = parents.attr('code');
             var year = parents.attr('year');
-            console.log(boxId + "=" + index + "="+m_batch + "=" + code + "=" + year);
+            //console.log(boxId + "=" + index + "="+m_batch + "=" + code + "=" + year);
             $('#specialty-layer,.tansLayer').show();
             $.ajax({
                 url: '/majored/majorList.do',
@@ -219,7 +212,7 @@ define(function (require) {
                     batch: m_batch
                 },
                 success: function (res) {
-                    console.log(res);
+                    //console.log(res);
                     var data = res.bizData;
                     if ('0000000' === res.rtnCode) {
                         $('#specialty-content').html('');
@@ -247,12 +240,12 @@ define(function (require) {
             });
         });
 
-
+        // 选择专业
         $('#specialty-layer').on('click', 'label', function () {
             var Eid = $(this).attr('id');
             var index = $(this).attr('index');
             var name = $(this).attr('name');
-            console.log(Eid + "=" + name);
+            //console.log(Eid + "=" + name);
             var specialtyTotalN = $(this).attr('specialtyTotal')
             $('#' + Eid + ' li:eq(' + index + ')').find('input').val(name).attr({'specialtyTotalN': specialtyTotalN}).addClass('write');
             $('#specialty-layer,.tansLayer').hide();
@@ -304,30 +297,21 @@ define(function (require) {
             // 专业信息
             function getSpecialtyList(n) {
                 $('#specialty-list-info' + n).html('');
-                $('#partSel'+n).html('');
-
-
+                $('#partSel' + n).html('');
                 $.each($('#specialty' + n).find('input'), function (i, v) {
                     var specialtyListInfo = '<p>' + (i + 1) + '.' + $(v).val() + '</p>';
                     //console.log((i+1) + "." + $(v).val());
                     $('#specialty-list-info' + n).append(specialtyListInfo)
                 });
-
-
                 $.each($('#specialtyPart' + n).find('input'), function (i, v) {
                     var partSel = '<p>' + (i + 1) + '.' + $(v).val() + '</p>';
                     //console.log((i+1) + "." + $(v).val());
                     $('#partSel' + n).append(partSel)
                 });
-
-
                 $.each($('#specialty' + n), function (i, v) {
-                    console.log($(this).find('input').attr('specialtytotaln'))
-                    //console.log($(this).find('input.write').length)
                     var specialtytotaln = $(this).find('input').attr('specialtytotaln');
                     var specialtyLength = $(this).find('input.write').length;
-                    console.log(specialtytotaln + "--" + specialtyLength)
-
+                    //console.log(specialtytotaln + "--" + specialtyLength)
                     var schoolListColHtml = '';
                     if (specialtyLength < 6) {
                         schoolListColHtml += '<div class="col-list col-list2">志愿专业填写不完整</div>';
@@ -346,7 +330,7 @@ define(function (require) {
             getSpecialtyList(5);
             getSpecialtyList(6);
             var isFun1 = $('input[name="isFun1"]:checked').val();
-            console.log(isFun1)
+            //console.log(isFun1)
             $('#isFunRadio1').html(isFun1)
             var isFun2 = $('input[name="isFun2"]:checked').val();
             $('#isFunRadio2').html(isFun2)
@@ -431,7 +415,7 @@ define(function (require) {
                 "data": data,
                 "related": related
             };
-            console.log(JSON.stringify(params))
+            //console.log(JSON.stringify(params))
 
             $.ajax({
                 url: '/guide/report.do',
@@ -444,6 +428,7 @@ define(function (require) {
                     batch: m_batch
                 },
                 success: function (res) {
+                    //console.log(res)
                     $('#enrollment').html('');
                     if (res.rtnCode == "0000000") {
                         var dataJson = $.parseJSON(res.bizData).report;
@@ -455,7 +440,7 @@ define(function (require) {
                         });
 
                         var dataEnroll = $.parseJSON(res.bizData).enroll;
-                        console.log(dataEnroll);
+                        //console.log(dataEnroll);
                         $.each(dataEnroll, function (i, v) {
 
                             var enrollIntro = v.enrollIntro;
@@ -474,7 +459,7 @@ define(function (require) {
             $.each($('.isFunRadio'), function (i, v) {
                 var isF = '';
                 var isFt = $(v).text();
-                console.log(isFt)
+                //console.log(isFt)
                 if (isFt == "是") {
                     isF += "志愿专业服从调剂";
                 } else {
@@ -496,27 +481,52 @@ define(function (require) {
         $.get('/info/getUserInfo.do', function (res) {
             if (res.rtnCode == '0000000') {
                 var personListData = res.bizData;
-                //console.log(res);
-                var name = personListData.name;
                 var schoolName = personListData.schoolName;
                 var sex = personListData.sex;
-                var subjectType = personListData.subjectType;
+                $('#m_candidateNumber').text(paramsJson.m_candidateNumber);
+                $('#m_aggregateScore').text(paramsJson.m_aggregateScore);
+                $('#m_ranking').text(paramsJson.m_ranking);
+                $('#m_kelei').text(paramsJson.m_kelei);
+                var m_aggregateScore = paramsJson.m_aggregateScore;
+
                 var sexT = '';
                 if (sex == "1") {
                     sexT = "男";
                 } else {
                     sexT = "女";
                 }
-                var subjectTypeT = '';
-                if (subjectType == "1") {
-                    subjectTypeT = "理科";
-                } else {
-                    subjectTypeT = "文史";
+                var m_kelei = paramsJson.m_kelei;
+                if(m_kelei=="文史"){
+                    if(m_aggregateScore >= 510){
+                        $('#controlLine').text("510");
+                        $('#controlLine-txt').text('一批本科省控线');
+                    }else if( m_aggregateScore >= 467 && m_aggregateScore < 510){
+                        $('#controlLine').text("467");
+                        $('#controlLine-txt').text('二批本科省控线');
+                    }else if( m_aggregateScore >= 382 && m_aggregateScore < 467){
+                        $('#controlLine').text("382");
+                        $('#controlLine-txt').text('三批本科省控线');
+                    }else{
+                        $('#controlLine').text("220");
+                        $('#controlLine-txt').text('高专高职省控线');
+                    }
+                }else if(m_kelei=="理工"){
+                    if(m_aggregateScore >= 480){
+                        $('#controlLine').text("480");
+                        $('#controlLine-txt').text('一批本科省控线');
+                    }else if( m_aggregateScore >= 440 && m_aggregateScore < 480){
+                        $('#controlLine').text("440");
+                        $('#controlLine-txt').text('二批本科省控线');
+                    }else if( m_aggregateScore >= 350 && m_aggregateScore < 440){
+                        $('#controlLine').text("350");
+                        $('#controlLine-txt').text('三批本科省控线');
+                    }else{
+                        $('#controlLine').text("200");
+                        $('#controlLine-txt').text('高专高职省控线');
+                    }
                 }
-                $('#studentName').text(name);
                 $('#schoolName').text(schoolName);
                 $('#sexT').text(sexT);
-                $('#subjectTypeT').text(subjectTypeT);
             }
         });
         // 打印

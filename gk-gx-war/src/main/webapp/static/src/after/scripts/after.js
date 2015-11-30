@@ -1,6 +1,5 @@
 define(function (require) {
     var $ = require('$');
-    require('backToTop');
     $(function () {
 
         var UI = {
@@ -29,25 +28,25 @@ define(function (require) {
 
         $(function () {
             //判断当前用户cookie是否存在
-            if (GetCookie("gxuser")) {
-                $.ajax({
-                    url: '/info/getUserAccount.do',
-                    type: 'GET',
-                    dataType: 'JSON',
-                    data: {},
-                    success: function (res) {
-                        console.log(res)
-                        console.log(res.bizData.isReported + "===")
-                        if (res.bizData.isReported == 0) {
-                            $('#aggregateScore-input').removeAttr('readonly').val('');
-                            $('#ranking-input').removeAttr('readonly').val('');
-                        } else {
-                            $('#aggregateScore-input').attr('readonly', 'readonly');
-                            $('#ranking-input').attr('readonly', 'readonly');
-                        }
-                    }
-                });
-            }
+            //if (GetCookie("gxuser")) {
+            //    $.ajax({
+            //        url: '/info/getUserAccount.do',
+            //        type: 'GET',
+            //        dataType: 'JSON',
+            //        data: {},
+            //        success: function (res) {
+            //            console.log(res)
+            //            console.log(res.bizData.isReported + "===")
+            //            if (res.bizData.isReported == 0) {
+            //                $('#aggregateScore-input').removeAttr('readonly').val('');
+            //                $('#ranking-input').removeAttr('readonly').val('');
+            //            } else {
+            //                $('#aggregateScore-input').attr('readonly', 'readonly');
+            //                $('#ranking-input').attr('readonly', 'readonly');
+            //            }
+            //        }
+            //    });
+            //}
         });
 
 

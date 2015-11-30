@@ -904,17 +904,19 @@
                     <th>科类</th>
                     <th>准考证</th>
                     <th>高考分数</th>
-                    <th>一批本科省控线</th>
+                    <th>位次</th>
+                    <th><span class="info-txt" id="controlLine-txt"></span></th>
                 </tr>
                 <tr class="t-content">
-                    <td><b id="studentName"></b></td>
-                    <td><span id="sexT"></span></td>
-                    <td><span id="schoolName"></span></td>
-                    <td></td>
-                    <td id="subjectTypeT"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><span class="info-txt" id="studentName"></span></td>
+                    <td><span class="info-txt" id="sexT"></span></td>
+                    <td><span class="info-txt" id="schoolName"></span></td>
+                    <td><span class="info-txt">高三</span></td>
+                    <td><span class="info-txt" id="m_kelei"></span></td>
+                    <td><span class="info-txt" id="m_candidateNumber"></span></td>
+                    <td><span class="info-txt" id="m_aggregateScore"></span></td>
+                    <td><span class="info-txt" id="m_ranking"></span></td>
+                    <td><span class="info-txt" id="controlLine"></span></td>
                 </tr>
             </table>
             <div class="tip-board">
@@ -966,10 +968,10 @@
                 </tr>
                 <tr class="t-content">
                     <td>
-                        <div id="partSel1"></div>
+                        <div id="partSel1" class="specialty-list-info"></div>
                     </td>
                     <td>
-                        <div id="partSel2"></div>
+                        <div id="partSel2" class="specialty-list-info"></div>
                     </td>
                 </tr>
             </table>
@@ -1012,10 +1014,10 @@
                 </tr>
                 <tr class="t-content">
                     <td>
-                        <div id="partSel3"></div>
+                        <div id="partSel3" class="specialty-list-info"></div>
                     </td>
                     <td>
-                        <div id="partSel4"></div>
+                        <div id="partSel4" class="specialty-list-info"></div>
                     </td>
                 </tr>
             </table>
@@ -1058,10 +1060,10 @@
                 </tr>
                 <tr class="t-content">
                     <td>
-                        <div id="partSel5"></div>
+                        <div id="partSel5" class="specialty-list-info"></div>
                     </td>
                     <td>
-                        <div id="partSel6"></div>
+                        <div id="partSel6" class="specialty-list-info"></div>
                     </td>
                 </tr>
             </table>
@@ -1105,16 +1107,13 @@
                     <div id="exchange"></div>
                 </div>
                 <div class="eva-text">
-                    作为压线生，心理是比较复杂的，首先是怕从本批次落榜，降档到下一个批次，“上”与“下”的矛盾和不平衡、不甘愿降档的心理始终横跨在自己眼前。其
-                    次 担心在本批次中选不到好院校本批次中选不到好的院校，读不到称心如意的专业。因为一本和二本采用的是平行志愿的录取规则，这种规则对于高分考生有
-                    利，反之，增加了压线生甚至低分考生的填报风险。是否与其他的考生“撞车”，是否合理地避开热门专业或绕开人们追捧地院校，等等，这里压线生志愿填
-                    报时最常问地问题。第三是带点赌博意味地“退尔求其次”地想法。能冲被本批次院校录取那是运气，若不能如愿，反正还有下一个批次地院校因为一本压线
-                    生地分数在二本批次还是有较大优势和竞争力地，同理，二本压线生地分数相对于三本，三本压线生相对于高职高专。我提出的三点建议：
-                    1  　对于压线考生来说，不要放弃本批次地录用。充分利用高考志愿卡,筛选出合理地高校，志愿高校一定要填满，专业服从调剂，费省会或者热点城市地高
-                    校，录取的机会大。
-                    2  　关于征集志愿。压线生本批次落档后，要及时留意征集志愿的信息，把握机会。
-                    3　心仪的专业所录取，同理女部分考生可以“退而求其次”，“宁单鸡头不当凤尾巴”。以一本考生的成绩来说，在二批本科的录取时候就很有优势，很有
-                    可能被自己心仪的专业录取，同理，也试用二本和三本。
+
+                    <p><strong>压线生报考技巧:</strong></p>
+                    <p>作为压线生，心理是比较复杂的，首先是怕从本批次落榜，降档到下一个批次，其次担心在本批次中选不到好院校，读不到称心如意的专业。增加了压线生甚至低分考生的填报风险。是否与其他的考生“撞车”，是否合理地避开热门专业，这是压线生志愿填报时最常见的问题。</p>
+                    <p><strong>为此提出的三点建议：</strong></p>
+                    <p><strong>1.</strong>对于压线考生来说，不要放弃本批次录取机会。充分利用高考志愿卡,筛选出合理的高校，志愿一定要填满，专业服从调剂尽可能避开省会或者热点城市高校，这样录取的机会加大。</p>
+                    <p><strong>2.</strong>关于征集志愿，压线生本批次落档后，要及时留意征集志愿的信息，把握机会。</p><p><strong>3.</strong>专业优先原则，部分考生可以“退而求其次”，“宁当鸡头不当凤尾巴”。以一本考生的成绩来说，在二批本科的录取时候就很有优势，很有可能被自己心仪的专业录取，同理，也适用二本和三本的填报.</p>
+
                 </div>
                 <div class="navigation-box">
                     <span class="tip">正式填报志愿请登录网址：<a target="_blank" href="http://gx.gaokao360.net">gx.gaokao360.net</a></span>
