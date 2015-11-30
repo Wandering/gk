@@ -51,11 +51,11 @@
             <td>-</td>
             <td>180</td>
             <td>247</td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
             <td>126</td>
-            <td></td>
+            <td>-</td>
         </tr>
         <tr>
             <td>理科</td>
@@ -82,7 +82,7 @@
             <td>263</td>
             <td>-</td>
             <td>140</td>
-            <td></td>
+            <td>-</td>
         </tr>
         <tr>
             <td>理科</td>
@@ -151,6 +151,7 @@
             <td>140</td>
             <td>170</td>
         </tr>
+
         </tbody>
 
     </table>
