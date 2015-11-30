@@ -14,24 +14,9 @@ define(function (require) {
         $('#volunteer-flow3-layer').on('click', '.close-btn', function () {
             $('#volunteer-flow3-layer,.tansLayer').hide();
         });
-        //console.log(JSON.parse(params).m_province);
-        //var params1 = {
-        //    "m_candidateNumber": "0",
-        //    "m_aggregateScore": 390,
-        //    "m_ranking": 72465,
-        //    "m_kelei": "文史",
-        //    "m_batch_id": 4,
-        //    "m_batch": "高职（专科）",
-        //    "m_province_id": "0",
-        //    "m_province": "",
-        //    "m_specialty_id": "",
-        //    "m_specialty_name": "",
-        //    "m_favorites_by_university_codes": ""
-        //};
         function getSchool(paramsJson, m_province, m_specialty_name) {
             paramsJson.m_province = m_province;
             paramsJson.m_specialty_name = m_specialty_name;
-            //console.log(paramsJson);
             $.ajax({
                 url: '/guide/school.do',
                 type: 'GET',
