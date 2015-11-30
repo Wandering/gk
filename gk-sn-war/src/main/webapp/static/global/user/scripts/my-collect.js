@@ -9,7 +9,7 @@ define(function (require) {
     $(function () {
         UI.$nextPage.on('click', function () {
             var pageNo = UI.$listMsgItem.attr('pageNo');
-            Collect.getCollect(pageNo, pageSize);
+            getCollect(pageNo, pageSize);
         }).click();
 
         $('#collect-table').on('click','.cancel-collect',function(){
@@ -24,7 +24,7 @@ define(function (require) {
                         $('tr.noData').hide();
                         UI.$listMsgItem.attr('pageNo','0');
                         var pageNo = UI.$listMsgItem.attr('pageNo');
-                        Collect.getCollect(pageNo, pageSize);
+                        getCollect(pageNo, pageSize);
                         var trLen = UI.$listMsgItem.find('tr').length;
                         if(trLen < (pageSize+1)){
                             UI.$nextPage.hide();
@@ -35,8 +35,7 @@ define(function (require) {
         })
     });
 
-    var Collect = {
-        getCollect : function(pageNo,pageSize){
+    function getCollect(pageNo,pageSize){
             $.get('/userCollection/getUserCollectPojoList.do?offset='+pageNo + "&rows="+pageSize, function (data) {
                 var dataJson = data.bizData;
                 if (data.rtnCode == "0000000") {
@@ -81,6 +80,5 @@ define(function (require) {
                 }
             });
         }
-    };
 
 });

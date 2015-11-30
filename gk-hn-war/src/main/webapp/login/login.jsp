@@ -56,8 +56,7 @@
     <img src="http://cdn.gaokao360.net/static/hn/common/images/login-logo.png" alt="logo360" class="bottom-logo"/>
 </div>
 <script>
-//    seajs.use("http://cdn.gaokao360.net/static/global/login/scripts/login.min");
-    seajs.use("/static/src/login/scripts/login.js");
+    seajs.use("http://cdn.gaokao360.net/static/global/login/scripts/login.min");
 </script>
 </body>
 </html>
