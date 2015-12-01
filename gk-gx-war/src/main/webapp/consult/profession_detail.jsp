@@ -10,7 +10,7 @@
 <%@ include file="/common/header.jsp"%>
 
 <div class="content">
-    <div class="w1000">
+    <div class="w1000 hide">
         <div class="basic-info">
             <h1>专业基本信息</h1>
             <div class="info-content" id="info_content">
@@ -33,10 +33,20 @@
             </div>
         </div>
     </div>
+    <div class="loader">
+        <div class="loader-inner line-scale">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
 </div>
 
 <%@ include file="/common/footer.jsp"%>
 <script type="text/javascript">
+//    seajs.use("/static/src/consult/scripts/profession_detail");
     seajs.use("http://cdn.gaokao360.net/static/global/consult/scripts/profession_detail.min");
 </script>
 </body>

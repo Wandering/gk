@@ -6,7 +6,14 @@ define(function (require) {
         if (reg.test(window.location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
         return "";
     }
-
+    //加载loading
+    function loadingShowContent(){
+        $('.content').css({
+            'height':'auto'
+        });
+        $('.loader').hide();
+        $('.w1000').show();
+    }
     var Info = {
         getProfessionInfo: function (code) {
             var that = this;
@@ -130,6 +137,7 @@ define(function (require) {
             }
             openUniversityHtml +='</tbody></table>';
             $('#tab_3').html(openUniversityHtml);
+            loadingShowContent();
         }
     };
 
@@ -167,7 +175,6 @@ define(function (require) {
             }
         ]
     }
-
     $(document).ready(function () {
         var code = getUrLinKey('id');
         Info.getProfessionInfo(code);

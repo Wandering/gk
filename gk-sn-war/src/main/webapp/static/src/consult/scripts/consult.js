@@ -4,7 +4,6 @@
 
 define(function (require) {
     var $ = require('$');
-
     function GetCookie(sMainName, sSubName) {
         var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
         return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
@@ -12,14 +11,20 @@ define(function (require) {
     //if (!GetCookie("gkuser") || GetCookie("gkuser") == '""') {
     //    window.location.href = '/login/login.jsp';
     //}
-
+    //加载loading
+    function loadingShowContent(){
+        $('.content').css({
+            'height':'auto'
+        });
+        $('.loader').hide();
+        $('.w1000').show();
+    }
     var api = flowplayer("player", "http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.18.swf", {
         clip: {
             autoPlay: false,       //是否自动播放，默认true
             autoBuffering: false     //是否自动缓冲视频，默认true
         }
     });
-
     $(document).ready(function() {
         $('#search').on('click', function(e) {
             var val = $('#keywords').val();
@@ -33,7 +38,7 @@ define(function (require) {
                 }
             }
         });
-
+        loadingShowContent();
         $('.into-evalution a').on('click',function(e) {
             var flag = false;
             if (!flag) {

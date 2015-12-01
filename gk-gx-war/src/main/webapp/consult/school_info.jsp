@@ -10,7 +10,7 @@
 <%@ include file="/common/header.jsp"%>
 
 <div class="content">
-    <div class="w1000">
+    <div class="w1000 hide">
         <div class="content-title mt60">
             <p class="fl w40"></p>
             <p class="fl w20">
@@ -55,6 +55,15 @@
         <div class="page">
             <span class="record"></span>
             <span id="page"></span>
+        </div>
+    </div>
+    <div class="loader">
+        <div class="loader-inner line-scale">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
     </div>
 </div>

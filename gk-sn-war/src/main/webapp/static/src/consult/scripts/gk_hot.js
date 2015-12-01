@@ -1,6 +1,5 @@
 define(function (require) {
     var $ = require('$');
-
     var getQueryStr = function(_url, _param) {
         var rs = new RegExp("(^|)" + _param + "=([^\&]*)(\&|$)", "g").exec(_url),
             tmp;
@@ -9,7 +8,14 @@ define(function (require) {
         }
         return "";
     };
-
+    //加载loading
+    function loadingShowContent(){
+        $('.content').css({
+            'height':'auto'
+        });
+        $('.loader').hide();
+        $('.w1000').show();
+    }
     var Hot = {
         nextBtn:$('.next-btn'),
         render: function(data, pageNO) {
@@ -38,6 +44,7 @@ define(function (require) {
             } else {
                 $('#wrapper').append(html.join(''));
             }
+            loadingShowContent();
         },
         getData: function(pageNO) {
             var that = this;
