@@ -61,7 +61,7 @@ define(function (require) {
                             } else if (thisV == "开设专业") {
                                 if (!$('#tabs-content6').attr('flag'))Info.openSpecialty(schoolId);
                             }
-                        })
+                        });
                         $('#tabs-list li:eq(0)').click();
                     } else {
                         var pageErrorTip = require('pageErrorTip');
