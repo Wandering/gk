@@ -428,12 +428,16 @@ define(function (require) {
                     batch: m_batch
                 },
                 success: function (res) {
-                    //console.log(res)
+                    console.log($.parseJSON(res.bizData))
                     $('#enrollment').html('');
                     if (res.rtnCode == "0000000") {
                         var dataJson = $.parseJSON(res.bizData).report;
-                        var description = dataJson.description;
-                        $('#eva').text(description);
+                        var description = dataJson.result;
+                        var descriptionResultA = description[1].description;
+                        var descriptionResultB = description[2].description;
+                        var descriptionResultC = description[3].description;
+                        $('#eva').text(descriptionResultA.substr(0,descriptionResultA.length-1));
+                        $('#eva-txt').html(descriptionResultB + descriptionResultC)
                         $.each(dataJson.data, function (i, v) {
                             var schoolListColHtml = '<div class="col-list">' + v.m_university_name + '</div>';
                             $('.school-list-col').append(schoolListColHtml);
@@ -468,6 +472,14 @@ define(function (require) {
                 var schoolListColHtml = '<div class="col-list col-list2">' + isF + '</div>';
                 $('#exchange').append(schoolListColHtml);
             })
+            var exchangeLen = $('#exchange').find('.col-list').length;
+            if($('#exchange').find('.obey').length==exchangeLen){
+                $('#noObey').hide();
+                $('#allObey').show();
+            }else{
+                $('#noObey').show();
+                $('#allObey').hide();
+            }
         });
 
         // 上一步
@@ -488,7 +500,6 @@ define(function (require) {
                 $('#m_ranking').text(paramsJson.m_ranking);
                 $('#m_kelei').text(paramsJson.m_kelei);
                 var m_aggregateScore = paramsJson.m_aggregateScore;
-
                 var sexT = '';
                 if (sex == "1") {
                     sexT = "男";
@@ -497,31 +508,25 @@ define(function (require) {
                 }
                 var m_kelei = paramsJson.m_kelei;
                 if(m_kelei=="文史"){
-                    if(m_aggregateScore >= 510){
-                        $('#controlLine').text("510");
+                    if(m_aggregateScore >= 530){
+                        $('#controlLine').text("530");
                         $('#controlLine-txt').text('一批本科省控线');
-                    }else if( m_aggregateScore >= 467 && m_aggregateScore < 510){
-                        $('#controlLine').text("467");
+                    }else if( m_aggregateScore >= 380 && m_aggregateScore < 530){
+                        $('#controlLine').text("380");
                         $('#controlLine-txt').text('二批本科省控线');
-                    }else if( m_aggregateScore >= 382 && m_aggregateScore < 467){
-                        $('#controlLine').text("382");
-                        $('#controlLine-txt').text('三批本科省控线');
                     }else{
-                        $('#controlLine').text("220");
+                        $('#controlLine').text("180");
                         $('#controlLine-txt').text('高专高职省控线');
                     }
                 }else if(m_kelei=="理工"){
                     if(m_aggregateScore >= 480){
                         $('#controlLine').text("480");
                         $('#controlLine-txt').text('一批本科省控线');
-                    }else if( m_aggregateScore >= 440 && m_aggregateScore < 480){
-                        $('#controlLine').text("440");
+                    }else if( m_aggregateScore >= 320 && m_aggregateScore < 480){
+                        $('#controlLine').text("320");
                         $('#controlLine-txt').text('二批本科省控线');
-                    }else if( m_aggregateScore >= 350 && m_aggregateScore < 440){
-                        $('#controlLine').text("350");
-                        $('#controlLine-txt').text('三批本科省控线');
                     }else{
-                        $('#controlLine').text("200");
+                        $('#controlLine').text("180");
                         $('#controlLine-txt').text('高专高职省控线');
                     }
                 }

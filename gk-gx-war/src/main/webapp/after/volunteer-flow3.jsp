@@ -1068,13 +1068,14 @@
                 </tr>
             </table>
             <div class="evaluate-count">
-                <h3 class="eva-title">志愿梯度合理性评估</h3>
+                <h3 class="eva-title">志愿结构合理性评估</h3>
                 <div class="row">
                     <div class="col-1-img">
                         <img src="http://cdn.gaokao360.net/static/gx/after/images/eva-left-line1.png" class="eva-left-bg"/>
                     </div>
                     <div class="school-list-col"></div>
                     <div class="eva" id="eva"></div>
+                    <div id="eva-txt"></div>
                 </div>
             </div>
             <div class="evaluate-count">
@@ -1095,6 +1096,7 @@
                     </div>
                     <div class="school-list-col"></div>
                     <div id="integrity"></div>
+                    <div id="integrity-txt">完整的填报志愿非常重要，不要放弃每一次机会，数量是质量的基础</div>
                 </div>
             </div>
             <div class="evaluate-count">
@@ -1105,6 +1107,13 @@
                     </div>
                     <div class="school-list-col"></div>
                     <div id="exchange"></div>
+                    <div id="obey">
+                        <p id="noObey">系统监测出你的志愿专业不服从调剂，建议修改。平行志愿的录取规则其中一条就是“一次投档”，
+                            投档时遵循每名考生在同一批次中仅被投档一次。当考生档案投到所报的某所学校，所报专业志愿按学校录取规则不能满足，同时考生填报的志愿是不服从调剂，则可能被退档。因此服从专业调剂能大大降低滑档风险。</p>
+
+                        <p id="allObey">平行志愿的录取规则其中一条就是“一次投档”，
+                            投档时遵循每名考生在同一批次中仅被投档一次。当考生档案投到所报的某所学校，所报专业志愿按学校录取规则不能满足，同时考生填报的志愿是不服从调剂，则可能被退档。因此服从专业调剂能大大降低滑档风险。</p>
+                    </div>
                 </div>
                 <div class="eva-text">
 
