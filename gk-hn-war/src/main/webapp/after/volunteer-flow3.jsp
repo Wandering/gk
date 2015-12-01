@@ -7,24 +7,24 @@
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/after/styles/after.min.css"/>
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/after/styles/expert-evaluating.min.css"/>
     <style>
-        .content .evaluate-count .row {
-            height: 250px;
-        }
-        .specialty-layer .specialty-body .info-result,
-        .specialty-layer .volunteer-flow3-body .info-result,
-        .volunteer-flow3-layer .specialty-body .info-result,
-        .volunteer-flow3-layer .volunteer-flow3-body .info-result{
-            width: 938px;
-            overflow-x: scroll;
-        }
-        .specialty-layer .specialty-body .info-result ul,
-        .specialty-layer .volunteer-flow3-body .info-result ul,
-        .volunteer-flow3-layer .specialty-body .info-result ul,
-        .volunteer-flow3-layer .volunteer-flow3-body .info-result ul{
-            padding-left: 18px;
-            width: 1150px;
-            overflow: hidden;
-        }
+        /*.content .evaluate-count .row {*/
+            /*height: 250px;*/
+        /*}*/
+        /*.specialty-layer .specialty-body .info-result,*/
+        /*.specialty-layer .volunteer-flow3-body .info-result,*/
+        /*.volunteer-flow3-layer .specialty-body .info-result,*/
+        /*.volunteer-flow3-layer .volunteer-flow3-body .info-result{*/
+            /*width: 938px;*/
+            /*overflow-x: scroll;*/
+        /*}*/
+        /*.specialty-layer .specialty-body .info-result ul,*/
+        /*.specialty-layer .volunteer-flow3-body .info-result ul,*/
+        /*.volunteer-flow3-layer .specialty-body .info-result ul,*/
+        /*.volunteer-flow3-layer .volunteer-flow3-body .info-result ul{*/
+            /*padding-left: 18px;*/
+            /*width: 1150px;*/
+            /*overflow: hidden;*/
+        /*}*/
     </style>
 </head>
 <body>

@@ -239,7 +239,7 @@ public class GuideController extends BaseController {
         try {
 
 
-            String result = HttpRequestUtil.httpPost("http://gx.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetReport",params,false);
+            String result = HttpRequestUtil.httpPost("http://gx.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetReport_TEST",params,false);
 
             if(StringUtils.isEmpty(result)){
                 throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
@@ -283,11 +283,11 @@ public class GuideController extends BaseController {
             int num = enrollNum-planNum;
 
             if(num>0){
-                universityDetailDto.setEnrollIntro("实际招生超过计划招生数!");
+                universityDetailDto.setEnrollIntro("实际招生超过计划招生数，该院校增加计划几率大");
             }else if(num==0){
-                universityDetailDto.setEnrollIntro("实际招生和计划招生数相等!");
+                universityDetailDto.setEnrollIntro("实际招生和计划招生数相等，该院校计划调整机会小");
             }else{
-                universityDetailDto.setEnrollIntro("计划招生超过实际招生数!");
+                universityDetailDto.setEnrollIntro("计划招生超过实际招生数，该院校报考热度低");
             }
 
             enrollObj.put("code",universityDetailDto.getId());
