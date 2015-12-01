@@ -10,7 +10,7 @@
 <%@ include file="/common/header.jsp"%>
 
 <div class="content">
-    <div class="w1000">
+    <div class="w1000 hide">
         <div class="content-title mt60">
             <p class="fl w40"></p>
             <p class="fl w20">
@@ -42,12 +42,22 @@
 
 
     </div>
+    <div class="loader">
+        <div class="loader-inner line-scale">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
 </div>
 
 <%@ include file="/common/footer.jsp"%>
 <script type="text/javascript" src="http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.13.min.js"></script>
 <script type="text/javascript">
-    seajs.use("http://cdn.gaokao360.net/static/global/consult/scripts/consult.min");
+    seajs.use("/static/src/consult/scripts/consult");
+//    seajs.use("http://cdn.gaokao360.net/static/global/consult/scripts/consult.min");
 </script>
 </body>
 </html>

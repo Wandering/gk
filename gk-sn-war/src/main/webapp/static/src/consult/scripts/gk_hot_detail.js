@@ -10,7 +10,14 @@ define(function (require) {
         if (reg.test(window.location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
         return "";
     }
-
+    //加载loading
+    function loadingShowContent(){
+        $('.content').css({
+            'height':'auto'
+        });
+        $('.loader').hide();
+        $('.w1000').show();
+    }
     var getQueryStr = function(_url, _param) {
         var rs = new RegExp("(^|)" + _param + "=([^\&]*)(\&|$)", "g").exec(_url),
             tmp;
@@ -94,6 +101,7 @@ define(function (require) {
         }
     }
 
+    loadingShowContent();
 
     $(document).ready(function() {
         var id = getUrLinKey('id');

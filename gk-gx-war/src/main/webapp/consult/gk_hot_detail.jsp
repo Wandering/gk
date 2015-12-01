@@ -10,7 +10,7 @@
 <%@ include file="/common/header.jsp"%>
 
 <div class="content">
-    <div class="w1000">
+    <div class="w1000 hide">
 
         <%--<div class="search-content ta mt20">--%>
                  <%--<span>--%>
@@ -28,11 +28,21 @@
             </section>
         </div>
     </div>
+    <div class="loader">
+        <div class="loader-inner line-scale">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
 </div>
 
 <%@ include file="/common/footer.jsp"%>
 <script type="text/javascript">
-    seajs.use(["http://cdn.gaokao360.net/static/global/consult/scripts/gk_hot_detile.min",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+//    seajs.use(["/static/src/consult/scripts/gk_hot_detail",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+    seajs.use(["http://cdn.gaokao360.net/static/global/consult/scripts/gk_hot_detail.min",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
 </script>
 </body>
 </html>
