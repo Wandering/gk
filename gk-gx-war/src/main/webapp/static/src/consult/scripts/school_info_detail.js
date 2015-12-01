@@ -33,7 +33,7 @@ define(function (require) {
                 dataType: 'json',
                 success: function (data) {
                     var schoolId = data.bizData.id;
-                    if (GetCookie("snuser")) {
+                    if (GetCookie("gxuser")) {
                         Info.getIsCollect(schoolId);
                     }
                     if ('0000000' === data.rtnCode) {
@@ -94,7 +94,7 @@ define(function (require) {
                 urlClassName = 'integet-line';
             }
             var collectHref = '';
-            if (!GetCookie("snuser") || GetCookie("snuser") == '""') {
+            if (!GetCookie("gxuser") || GetCookie("gxuser") == '""') {
                 console.log('没有登录111');
                 collectHref = '/login/login.jsp';
             } else {
