@@ -16,7 +16,6 @@
             <div class="info-content" id="info_content">
             </div>
         </div>
-
         <div class="other-info">
             <h1>往年招生情况</h1>
             <ul class="tabs-list mt20">
