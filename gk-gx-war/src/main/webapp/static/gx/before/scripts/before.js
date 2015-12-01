@@ -1,6 +1,5 @@
 define(function (require) {
     var $ = require('$');
-    require('backToTop');
     var pageEroorTip = require('pageErrorTip');
 
     var UI = {
