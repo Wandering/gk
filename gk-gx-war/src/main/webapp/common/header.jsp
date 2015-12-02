@@ -89,7 +89,6 @@
                     });
             $('#loginUser,#user-avatar').show();
             $('#log-reg').hide();
-            alert('已登录')
         } else {
             $('#loginUser,#user-avatar').hide();
             $('#log-reg').show();
