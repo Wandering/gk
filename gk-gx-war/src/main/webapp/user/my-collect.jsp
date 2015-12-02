@@ -5,6 +5,7 @@
     <%@include file="/common/meta.jsp" %>
     <title>个人信息</title>
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/user/styles/personal-info.min.css"/>
+    <%--<link rel="stylesheet" href="/static/global/user/styles/personal-info.min.css"/>--%>
 </head>
 <body>
 <%@include file="/common/header.jsp" %>
