@@ -46,7 +46,8 @@
 
 <%@include file="/common/footer.jsp" %>
 <script>
-    seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/my-collect.min");
+    seajs.use("/static/src/user/scripts/my-collect");
+//    seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/my-collect.min");
 </script>
 </body>
 </html>
