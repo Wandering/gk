@@ -12,7 +12,7 @@ define(function (require) {
             getCollect(pageNo, pageSize);
         }).click();
 
-        $('#collect-table').on('click','.cancel-collect',function(){
+        $(document).on('click','.cancel-collect',function(){
             var $this = $(this);
             var universityId = $this.attr('universityId');
             $.get('/userCollection/deleteUserCollect.do?universityId='+universityId,function(data){
