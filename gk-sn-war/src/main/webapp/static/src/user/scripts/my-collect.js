@@ -11,7 +11,6 @@ define(function (require) {
             var pageNo = UI.$listMsgItem.attr('pageNo');
             getCollect(pageNo, pageSize);
         }).click();
-
         $('#collect-table').on('click','.cancel-collect',function(){
             var $this = $(this);
             var universityId = $this.attr('universityId');
