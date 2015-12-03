@@ -7,7 +7,6 @@ define(function (require) {
         return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
     }
 
-
     $(function () {
         var isUser = GetCookie("gxuser");
         if (isUser) {
