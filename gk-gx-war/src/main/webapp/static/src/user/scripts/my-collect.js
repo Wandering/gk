@@ -76,7 +76,7 @@ define(function (require) {
                             } else {
                                 listMsgHtml += '<td>-</td>'
                             }
-                            listMsgHtml += '<td><a href="javascript:;" universityId="' + universityId + '" class="cancel-collect"></a></td>';
+                            listMsgHtml += '<td><a href="javascript:void(0);" universityId="' + universityId + '" class="cancel-collect"></a></td>';
                             +'</tr>';
                             UI.$listMsgItem.append(listMsgHtml);
                         }

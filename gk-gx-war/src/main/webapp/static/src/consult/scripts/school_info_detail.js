@@ -96,12 +96,13 @@ define(function (require) {
             var collectHref = '';
             if (!GetCookie("gxuser") || GetCookie("gxuser") == '""') {
                 console.log('没有登录111');
-                collectHref = '/login/login.jsp';
+                collectHref = '<a target="_blank" href="/login/login.jsp" id="collect" class="collect"><span>收藏</span><i></i></a>';
+
             } else {
-                collectHref = 'javascript:;';
+                collectHref = '<a href="javascript:;" id="collect" class="collect"><span>收藏</span><i></i></a>';
             }
             $('#info_content').html(
-                '<a target="_blank" href="' + collectHref + '" id="collect" class="collect"><span>收藏</span><i></i></a>'
+                 collectHref
                 + '<img class="fl" src="' + (obj.universityImage || 'http://cdn.gaokao360.net/static/global/common/images/kqbk_banner_default.png') + '" />'
                 + '<div class="info">'
                 + '<ul>'
