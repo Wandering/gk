@@ -1,6 +1,11 @@
 define(function (require) {
     var $ = require('$');
     var pageErrorTip = require('pageErrorTip');
+    function GetCookie(sMainName, sSubName) {
+        var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
+        return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
+    }
+    var isUser = GetCookie('snuser');
 
     // 获取URL
     function getUrLinKey(name) {
@@ -10,10 +15,10 @@ define(function (require) {
     }
 
     // 获取cookie
-    function GetCookie(sMainName, sSubName) {
-        var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
-        return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
-    }
+    //function GetCookie(sMainName, sSubName) {
+    //    var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
+    //    return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
+    //}
     //加载loading
     function loadingShowContent(){
         $('.content').css({
@@ -33,7 +38,7 @@ define(function (require) {
                 dataType: 'json',
                 success: function (data) {
                     var schoolId = data.bizData.id;
-                    if (GetCookie("snuser")) {
+                    if (isUser) {
                         Info.getIsCollect(schoolId);
                     }
                     if ('0000000' === data.rtnCode) {
@@ -94,7 +99,7 @@ define(function (require) {
                 urlClassName = 'integet-line';
             }
             var collectHref = '';
-            if (!GetCookie("snuser") || GetCookie("snuser") == '""') {
+            if (!isUser || isUser == '""') {
                 console.log('没有登录111');
                 collectHref = '/login/login.jsp';
             } else {

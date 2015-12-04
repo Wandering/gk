@@ -7,24 +7,32 @@
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/after/styles/after.min.css"/>
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/after/styles/expert-evaluating.min.css"/>
     <style>
-        /*.content .evaluate-count .row {*/
-            /*height: 250px;*/
-        /*}*/
-        /*.specialty-layer .specialty-body .info-result,*/
-        /*.specialty-layer .volunteer-flow3-body .info-result,*/
-        /*.volunteer-flow3-layer .specialty-body .info-result,*/
-        /*.volunteer-flow3-layer .volunteer-flow3-body .info-result{*/
-            /*width: 938px;*/
-            /*overflow-x: scroll;*/
-        /*}*/
-        /*.specialty-layer .specialty-body .info-result ul,*/
-        /*.specialty-layer .volunteer-flow3-body .info-result ul,*/
-        /*.volunteer-flow3-layer .specialty-body .info-result ul,*/
-        /*.volunteer-flow3-layer .volunteer-flow3-body .info-result ul{*/
-            /*padding-left: 18px;*/
-            /*width: 1150px;*/
-            /*overflow: hidden;*/
-        /*}*/
+        .content .evaluate-count .row {
+            height: 250px;
+        }
+        .specialty-layer .specialty-body .info-result,
+        .specialty-layer .volunteer-flow3-body .info-result,
+        .volunteer-flow3-layer .specialty-body .info-result,
+        .volunteer-flow3-layer .volunteer-flow3-body .info-result{
+            width: 938px;
+            overflow-x: scroll;
+        }
+        .specialty-layer .specialty-body .info-result ul,
+        .specialty-layer .volunteer-flow3-body .info-result ul,
+        .volunteer-flow3-layer .specialty-body .info-result ul,
+        .volunteer-flow3-layer .volunteer-flow3-body .info-result ul{
+            padding-left: 18px;
+            width: 1150px;
+            overflow: hidden;
+        }
+        .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li{
+            width: 178px;
+            font-size: 12px;
+        }
+        .volunteer-flow3-layer .volunteer-flow3-body .info-explain ul li span{
+            position: relative;
+            top: 3px;
+        }
     </style>
 </head>
 <body>
@@ -615,7 +623,7 @@
         <a href="javascript:;" class="close-btn close-flow3-layer">x</a>
     </div>
     <div class="tips" style="width: 900px;">
-        <p><strong>温馨提示：</strong>依据平行志愿规则，系统推荐遵循分数最大化，为您推荐一下A、B、C、D四档院校；考生可根据个性化需求调整院校顺位。</p>
+        <p><strong>温馨提示：</strong>依据平行志愿规则，系统推荐遵循分数最大化，为您推荐一下A、B、C、D、E五档院校；考生可根据个性化需求调整院校顺位。</p>
     </div>
     <div class="volunteer-flow3-body">
         <div class="search-box">

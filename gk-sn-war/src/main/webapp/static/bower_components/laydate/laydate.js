@@ -10,8 +10,8 @@
 //define(function (require, exports, module) {
     ;!function (a) {
         var b = {
-            path: "",
-            defSkin: "default",
+            path: "http://cdn.gaokao360.net/static/bower_components/laydate/",
+            defSkin: "dahong",
             format: "YYYY-MM-DD",
             min: "1900-01-01 00:00:00",
             max: "2099-12-31 23:59:59",

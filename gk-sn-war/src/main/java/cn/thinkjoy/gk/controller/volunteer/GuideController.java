@@ -151,7 +151,7 @@ public class GuideController extends BaseController {
 
         StringBuffer returnStr = new StringBuffer("");
         try {
-            StringBuffer url = new StringBuffer("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetCollegeList");
+            StringBuffer url = new StringBuffer("http://sn.gaokao360.gkzy114.com/index.php?s=/Restful/Guide/GetCollegeList_TEST");
 
             if(!StringUtils.isEmpty(m_candidateNumber)){
                 url.append("/m_candidateNumber/"+m_candidateNumber);
