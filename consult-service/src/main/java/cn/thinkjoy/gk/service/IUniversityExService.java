@@ -10,6 +10,7 @@ package cn.thinkjoy.gk.service;
 import cn.thinkjoy.gk.pojo.UniversityDetailDto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IUniversityExService{
 
@@ -20,4 +21,6 @@ public interface IUniversityExService{
     List<Integer> getRecentlyPlanInfosByYear(String universityId,String batch,long areaId);
 
     List<Integer> getRecentlyEnrollInfoByYear(String universityId,long areaId);
+
+    void saveMajoredScoreLine(Map<String,Object> map);
 }

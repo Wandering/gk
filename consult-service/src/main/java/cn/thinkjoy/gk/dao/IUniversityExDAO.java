@@ -34,4 +34,7 @@ public interface IUniversityExDAO{
     List<Integer> getRecentlyPlanInfosByYear(Map<String,Object> params);
 
     List<Integer> getRecentlyEnrollInfoByYear(Map<String,Object> params);
+
+    void saveMajoredScoreLine(Map<String,Object> map);
+
 }

@@ -82,4 +82,9 @@ public class UniversityExServiceImpl implements IUniversityExService{
         params.put("areaId",areaId);
         return universityExDAO.getRecentlyEnrollInfoByYear(params);
     }
+
+    @Override
+    public void saveMajoredScoreLine(Map<String,Object> map){
+        universityExDAO.saveMajoredScoreLine(map);
+    }
 }

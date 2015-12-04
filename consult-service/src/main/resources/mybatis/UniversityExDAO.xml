@@ -213,4 +213,38 @@
         limit 3
     </select>
 
+    <insert id="saveMajoredScoreLine" parameterType="java.util.Map" >
+        INSERT INTO gk_majored_score_line
+        (
+        universityId,
+        universityName,
+        majoredId,
+        majoredName,
+        provinceName,
+        year,
+        enrollBatch,
+        subject,
+        enrollNumber,
+        highestScore,
+        lowestScore,
+        averageScore,
+        areaId
+        )
+        VALUES
+        (
+        #{universityId},
+        #{universityName},
+        #{majoredId},
+        #{majoredName},
+        #{provinceName},
+        #{year},
+        #{enrollBatch},
+        #{subject},
+        #{enrollNumber},
+        #{highestScore},
+        #{lowestScore},
+        #{averageScore},
+        #{areaId}
+        )
+    </insert>
 </mapper>
