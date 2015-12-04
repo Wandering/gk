@@ -3,9 +3,8 @@
 <html>
 <head>
     <title>院校信息详情页</title>
-    <%@ include file="/common/meta.jsp" %>
+    <%@ include file="/common/meta.jsp"%>
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/consult/styles/school_detail.min.css"/>
-    <%--<link rel="stylesheet" href="/static/global/consult/styles/school_detail.min.css"/>--%>
 </head>
 <body>
 <%@ include file="/common/header.jsp" %>

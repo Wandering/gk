@@ -4,7 +4,6 @@
 
 define(function (require) {
     var $ = require('$');
-
     var getQueryStr = function(_url, _param) {
         var rs = new RegExp("(^|)" + _param + "=([^\&]*)(\&|$)", "g").exec(_url),
             tmp;
@@ -13,7 +12,14 @@ define(function (require) {
         }
         return "";
     };
-
+    //加载loading
+    function loadingShowContent(){
+        $('.content').css({
+            'height':'auto'
+        });
+        $('.loader').hide();
+        $('.w1000').show();
+    }
     var Profession = {
         curPage:1,
         totalPage:0,
@@ -51,6 +57,7 @@ define(function (require) {
             this.addEventHandle();
             this.addEventForClassify();
             this.getProfession(1);
+            loadingShowContent();
         },
         getYear: function() {
             var year = this.years;
@@ -524,7 +531,7 @@ define(function (require) {
                 "universityName": "解放军理工大学"
             }
         ]
-    }
+    };
 
     $(document).ready(function() {
         Profession.getOptions();
@@ -538,7 +545,6 @@ define(function (require) {
                 Profession.getSearch();
             }
         });
-
         $('#search').keydown(function(e) {
             if (e.keyCode == 13) {
                 var search = $('#search').val();

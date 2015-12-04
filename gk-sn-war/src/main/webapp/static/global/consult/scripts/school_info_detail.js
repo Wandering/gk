@@ -1,6 +1,13 @@
 define(function (require) {
     var $ = require('$');
     var pageErrorTip = require('pageErrorTip');
+    function GetCookie(sMainName, sSubName) {
+        var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
+        return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
+    }
+    var isUser = GetCookie('snuser');
+
+
 
     // 获取URL
     function getUrLinKey(name) {
@@ -10,11 +17,18 @@ define(function (require) {
     }
 
     // 获取cookie
-    function GetCookie(sMainName, sSubName) {
-        var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
-        return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
+    //function GetCookie(sMainName, sSubName) {
+    //    var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
+    //    return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
+    //}
+    //加载loading
+    function loadingShowContent(){
+        $('.content').css({
+            'height':'auto'
+        });
+        $('.loader').hide();
+        $('.w1000').show();
     }
-
 
     var Info = {
         // 院校基本信息
@@ -26,7 +40,7 @@ define(function (require) {
                 dataType: 'json',
                 success: function (data) {
                     var schoolId = data.bizData.id;
-                    if (GetCookie("snuser")) {
+                    if (isUser) {
                         Info.getIsCollect(schoolId);
                     }
                     if ('0000000' === data.rtnCode) {
@@ -60,12 +74,14 @@ define(function (require) {
                         var pageErrorTip = require('pageErrorTip');
                         $('#info_content').html(pageErrorTip('数据维护中'));
                     }
+                    loadingShowContent();
                 },
                 error: function (data) {
                     var pageErrorTip = require('pageErrorTip');
                     $('#info_content').html(pageErrorTip('数据维护中'));
                 }
             });
+            loadingShowContent();
         },
         //基本信息
         renderInfo: function (obj) {
@@ -85,7 +101,7 @@ define(function (require) {
                 urlClassName = 'integet-line';
             }
             var collectHref = '';
-            if (!GetCookie("snuser") || GetCookie("snuser") == '""') {
+            if (!isUser || isUser == '""') {
                 console.log('没有登录111');
                 collectHref = '/login/login.jsp';
             } else {
@@ -170,7 +186,7 @@ define(function (require) {
                 if (data.rtnCode == '0000000') {
                     _this.renderSchool(data.bizData.enrollInfo)
                 }
-            })
+            });
         },
         renderSchool: function (data) {
             //招生情况年份
@@ -326,9 +342,9 @@ define(function (require) {
                 }
                 if (!hasProp){
                     var tips ='<div class="school-table mt20">'+ pageErrorTip('暂无相关数据') + '</div>';
-                        $('#tabs-content5')
-                            .attr('flag', true)
-                            .append(tips)
+                    $('#tabs-content5')
+                        .attr('flag', true)
+                        .append(tips)
                     return false;
                 }
             }

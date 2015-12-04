@@ -47,17 +47,17 @@ gulp.task('size', function () {
 });
 
 // 脚本
-//gulp.task('scripts', function () {
-//    return gulp.src('src/**/*.js')
-//        //.pipe(jshint('.jshintrc'))
-//        .pipe(jshint.reporter('default'))
-//        //.pipe(concat('main.js'))
-//        .pipe(gulp.dest('dist'))
-//        .pipe(rename({suffix: '.min'}))
-//        .pipe(uglify())
-//        .pipe(gulp.dest('dist'))
-//        .pipe(notify({message: 'Scripts task complete'}));
-//});
+gulp.task('scripts', function () {
+    return gulp.src('src/**/*.js')
+        //.pipe(jshint('.jshintrc'))
+        .pipe(jshint.reporter('default'))
+        //.pipe(concat('main.js'))
+        .pipe(gulp.dest('dist'))
+        .pipe(rename({suffix: '.min'}))
+        .pipe(uglify())
+        .pipe(gulp.dest('dist'))
+        .pipe(notify({message: 'Scripts task complete'}));
+});
 
 gulp.task('scripts', function () {
     return gulp.src('src/**/*.js')

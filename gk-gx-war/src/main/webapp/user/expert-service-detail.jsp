@@ -18,6 +18,7 @@
         <li><a href="app-center.jsp">应用中心</a></li>
         <li><a href="online-answer.jsp">在线答疑</a></li>
         <li class="active"><a href="expert-service.jsp">专家服务</a></li>
+        <li><a href="/user/my-collect.jsp">我的收藏</a></li>
     </ul>
     <div class="content">
         <div class="search-content">

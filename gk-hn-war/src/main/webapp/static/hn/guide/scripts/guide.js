@@ -18,7 +18,6 @@ define(function (require) {
                     data:data.bizData,
                     contentId:'tab_title_content',
                     getArticleHandle:function(id) {
-
                         clearTimeout(timer);
                         timer = setTimeout(function() {
                             getArticle(id);
@@ -44,7 +43,6 @@ define(function (require) {
             }
         });
     }
-
     $(document).ready(function() {
         getTab();
     });

@@ -66,12 +66,12 @@ gulp.task('scripts', function () {
 
 
 // 图片
-//gulp.task('images', function () {
-//    return gulp.src('src/**/*')
-//        .pipe(cache(imagemin({optimizationLevel: 3, progressive: true, interlaced: true})))
-//        .pipe(gulp.dest('dist'))
-//        .pipe(notify({message: 'Images task complete'}));
-//});
+gulp.task('images', function () {
+    return gulp.src('src/**/*')
+        .pipe(cache(imagemin({optimizationLevel: 3, progressive: true, interlaced: true})))
+        .pipe(gulp.dest('dist'))
+        .pipe(notify({message: 'Images task complete'}));
+});
 
 gulp.task('images', function () {
     return gulp.src(['src/**/*.png','src/**/*.jpg','src/**/*.gif'])

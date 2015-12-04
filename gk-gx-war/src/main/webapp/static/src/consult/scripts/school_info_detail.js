@@ -1,46 +1,83 @@
-/**
- * Created by kepeng on 15/9/25.
- */
-
 define(function (require) {
     var $ = require('$');
-    require('backToTop');
+    var pageErrorTip = require('pageErrorTip');
 
+    // 获取URL
     function getUrLinKey(name) {
         var reg = new RegExp("(^|\\?|&)" + name + "=([^&]*)(\\s|&|$)", "i");
         if (reg.test(window.location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
         return "";
     }
 
+    // 获取cookie
+    function GetCookie(sMainName, sSubName) {
+        var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
+        return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
+    }
+    //加载loading
+    function loadingShowContent(){
+        $('.content').css({
+            'height':'auto'
+        });
+        $('.loader').hide();
+        $('.w1000').show();
+    }
+
     var Info = {
-        batchData:[],
-        batchName: [],
         // 院校基本信息
-        getBasicInfo: function(code) {
-            var that = this;
+        getBasicInfo: function (parameterId, code) {
+            var _this = this;
             $.ajax({
-                type: 'get',
-                url: '/university/getUniversityDetail.do',
-                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
-                data: {
-                    id:code
-                },
+                type: 'GET',
+                url: '/university/getUniversityDetail.do?' + parameterId + '=' + code,
                 dataType: 'json',
-                success: function(data) {
+                success: function (data) {
+                    var schoolId = data.bizData.id;
+                    if (GetCookie("gxuser")) {
+                        Info.getIsCollect(schoolId);
+                    }
                     if ('0000000' === data.rtnCode) {
-                        that.renderInfo(data.bizData);
+                        _this.renderInfo(data.bizData);
+                        Info.schoolIntro(schoolId);
+                        // tab切换
+                        var flag = false;
+                        $('#tabs-list').on('click', 'li', function () {
+                            var _this = $(this);
+                            var thisV = _this.attr('rel');
+                            var index = _this.index();
+                            _this.addClass('active').siblings().removeClass('active');
+                            $('.tabs-content:eq(' + index + ')').show().siblings('.tabs-content').hide();
+                            if (thisV == "院校简介") {
+                                $('#tabs-content1').show();
+                                if (!$('#tabs-content1').attr('flag'))Info.schoolIntro(schoolId);
+                            } else if (thisV == "招生简章") {
+                                if (!$('#tabs-content2').attr('flag'))Info.brochures(schoolId);
+                            } else if (thisV == "往年招生情况") {
+                                if (!$('#tabs-content3').attr('flag'))Info.getSchoolInfo(schoolId);
+                            } else if (thisV == "往年招生计划") {
+                                if (!$('#tabs-content4').attr('flag'))Info.getEnroll(schoolId);
+                            } else if (thisV == "专业录取分数") {
+                                if (!$('#tabs-content5').attr('flag'))Info.admitAMark(schoolId);
+                            } else if (thisV == "开设专业") {
+                                if (!$('#tabs-content6').attr('flag'))Info.openSpecialty(schoolId);
+                            }
+                        });
+                        $('#tabs-list li:eq(0)').click();
                     } else {
                         var pageErrorTip = require('pageErrorTip');
                         $('#info_content').html(pageErrorTip('数据维护中'));
                     }
+                    loadingShowContent();
                 },
-                error: function(data) {
+                error: function (data) {
                     var pageErrorTip = require('pageErrorTip');
                     $('#info_content').html(pageErrorTip('数据维护中'));
                 }
             });
+            loadingShowContent();
         },
-        renderInfo: function(obj) {
+        //基本信息
+        renderInfo: function (obj) {
             var address = '院校地址：' + (obj.address || '');
             var addressClassName = '';
             if (address.length > 17) {
@@ -51,140 +88,116 @@ define(function (require) {
             if (contactPhone.length > 16) {
                 phoneClassName = 'integet-line';
             }
-
             var url = '院校网址：' + (obj.url || '');
             var urlClassName = '';
-            console.log(url.length);
             if (url.length > 20) {
                 urlClassName = 'integet-line';
             }
+            var collectHref = '';
+            if (!GetCookie("gxuser") || GetCookie("gxuser") == '""') {
+                console.log('没有登录111');
+                collectHref = '<a target="_blank" href="/login/login.jsp" id="collect" class="collect"><span>收藏</span><i></i></a>';
 
-            $('#info_content').html('<img class="fl" src="' + (obj.universityImage || 'http://cdn.gaokao360.net/static/global/common/images/kqbk_banner_default.png') + '" />'
-                                    + '<div class="info">'
-                                        + '<ul>'
-                                            + '<li class="school-name">' + (obj.name || '') + '</li>'
-                                            + '<li>所在省份：' + (obj.provinceName || '') + '</li>'
-                                            + '<li>院校隶属：' + (obj.subjection || '') + '</li>'
-                                            + '<li>学历层次：' + (obj.educatLevel || '') + '</li>'
-                                            + '<li>院校特征：' + (obj.property || '') + '</li>'
-                                            + '<li>院校类型：' + (obj.universityType || '') + '</li>'
-                                            + '<li class="' + urlClassName + '">院校网址：<a class="website" target="_blank" href="' + obj.url + '">' + (obj.url || '') + '</a></li>'
-                                            + '<li class="' + addressClassName + '">' + address + '</li>'
-                                            + '<li class="' + phoneClassName + '">联系电话：<span>' + (obj.contactPhone || '') + '</span></li>'
-                                        + '</ul>'
-                                    + '</div>');
-        },
-        getSchoolInfo: function(code) {
-            var that = this;
-            $.ajax({
-                type: 'get',
-                url: '/university/getEnrollInfo.do',
-                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
-                data: {
-                    id:code
-                },
-                dataType: 'json',
-                success: function(data) {
-                    if ('0000000' === data.rtnCode) {
-                        that.renderSchool(data.bizData.enrollInfo);
-                    }
-                },
-                error: function(data) {
-                }
-            });
-        },
-        renderSchool: function(data) {
-            this.batchData = data;
-            var tab = [];
-            var tabContent = [];
-            for (var i = 0, len = data.length; i < len; i++) {
-                var batchNameTmp = [];
-                if (data[i].title.indexOf('年')) {
-                    var year = data[i].title.substring(0, 4);
-                    tab.push('<li>' + data[i].title.replace(year, year + '年') + '</li>');
-                } else {
-                    tab.push('<li>' + data[i].title + '</li>');
-                }
-                var infos = data[i].infos;
-                tabContent.push('<div style="display:none" class="school-table mt20" id="school_table_' + i + '">'
-                                + '<table border="0" cellpadding="0" cellspacing="0">'
-                                    + '<thead>'
-                                        + '<tr>'
-                                            + '<th></th>'
-                                            + '<th>计划数</th>'
-                                            + '<th>录取数</th>'
-                                            + '<th>最高分</th>'
-                                            + '<th>最高位次</th>'
-                                            + '<th>最低分</th>'
-                                            + '<th>最低位次</th>'
-                                            + '<th>平均分</th>'
-                                            + '<th>平均分位次</th>'
-                                        + '</tr>'
-                                    + '</thead>'
-                                    + '<tbody>');
-                for (var j = 0, infolen = infos.length; j < infolen; j++) {
-                    var tmpNameStr = batchNameTmp.join('&');
-                    if (tmpNameStr.indexOf(infos[j].batch) < 0) {
-                        batchNameTmp.push(infos[j].batch);
-                    }
-                    tabContent.push('<tr>'
-                                    + '<td>' + (infos[j].subjectName || '') + '</td>'
-                                    + '<td>' + (infos[j].planNumber || '') + '</td>'
-                                    + '<td>' + (infos[j].enrollNumber || '') + '</td>'
-                                    + '<td>' + (infos[j].highestScore || '') + '</td>'
-                                    + '<td>' + (infos[j].highestRank || '') + '</td>'
-                                    + '<td>' + (infos[j].lowestScore || '') + '</td>'
-                                    + '<td>' + (infos[j].lowestRank || '') + '</td>'
-                                    + '<td>' + (infos[j].averageScore || '') + '</td>'
-                                    + '<td>' + (infos[j].averageRank || '') + '</td>'
-                                + '</tr>');
-                }
-                tabContent.push('</tbody>'
-                        + '</table>'
-                    + '</div>');
-                this.batchName.push(batchNameTmp);
-            }
-            $('#tabs_list_last').html(tab.join(''));
-            $('#tabs_list_last li').first().addClass('active');
-            if (this.renderBatch(this.batchName[0])) {
-                $('#select_batch').html(this.renderBatch(this.batchName[0]));
-                $('#select_batch button').first().addClass('active');
-                this.getSchoolByBatch();
-                this.addHandleBatch();
             } else {
-                $('#last_content').html(tabContent.join(''));
+                collectHref = '<a href="javascript:;" id="collect" class="collect"><span>收藏</span><i></i></a>';
             }
-            $('#school_table_0').show();
-            this.addSchoolEventHandle();
+            $('#info_content').html(
+                 collectHref
+                + '<img class="fl" src="' + (obj.universityImage || 'http://cdn.gaokao360.net/static/global/common/images/kqbk_banner_default.png') + '" />'
+                + '<div class="info">'
+                + '<ul>'
+                + '<li class="school-name">' + (obj.name || '') + '</li>'
+                + '<li>所在省份：' + (obj.provinceName || '') + '</li>'
+                + '<li>院校隶属：' + (obj.subjection || '') + '</li>'
+                + '<li>学历层次：' + (obj.educatLevel || '') + '</li>'
+                + '<li>院校特征：' + (obj.property || '') + '</li>'
+                + '<li>院校类型：' + (obj.universityType || '') + '</li>'
+                + '<li class="' + urlClassName + '">院校网址：<a class="website" target="_blank" href="' + obj.url + '">' + (obj.url || '') + '</a></li>'
+                + '<li class="' + addressClassName + '">' + address + '</li>'
+                + '<li class="' + phoneClassName + '">联系电话：<span>' + (obj.contactPhone || '') + '</span></li>'
+                + '</ul>'
+                + '</div>');
         },
-        addHandleBatch: function() {
-            var that = this;
-            $('#select_batch button').off('click');
-            $('#select_batch button').on('click', function(e) {
-                $(this).addClass('active').siblings().removeClass('active');
-                that.getSchoolByBatch();
+        // 收藏学校
+        getIsCollect: function (schoolId) {
+            $.get('/userCollection/isUniversityCollect.do?universityId=' + schoolId,
+                function (data) {
+                    if (data.rtnCode = "0000000") {
+                        var isCollect = data.bizData;
+                        if (isCollect == 0) {
+                            $('#collect').removeClass('active').find('span').text('收藏');
+                        } else {
+                            $('#collect').addClass('active').find('span').text('取消收藏');
+                        }
+                        $('#info_content').on('click', '#collect', function () {
+                            if ($('#collect').find('span').text() == '收藏') {
+                                Info.saveUserCollect(schoolId);
+                            } else {
+                                Info.deleteUserCollect(schoolId);
+                            }
+                        });
+                    }
+                });
+        },
+        // 保存收藏
+        saveUserCollect: function (schoolId) {
+            $.get('/userCollection/saveUserCollect.do?universityId=' + schoolId, function (data) {
+                if (data.rtnCode == "0000000") {
+                    $('#collect').addClass('active').find('span').text('取消收藏');
+                }
             });
         },
-        getSchoolByBatch: function() {
-            var batchName = $('#select_batch button.active').text();
-            var arry = [];
-            var index = $('#tabs_list_last li.active').index();
-            var infos = this.batchData[index].infos;
-
-
-            for (var i = 0; i < infos.length; i++) {
-                if (batchName === infos[i].batch) {
-                    arry.push(infos[i]);
+        // 取消收藏
+        deleteUserCollect: function (schoolId) {
+            $.get('/userCollection/deleteUserCollect.do?universityId=' + schoolId, function (data) {
+                if (data.rtnCode == '0000000') {
+                    $('#collect').removeClass('active').find('span').text('收藏');
                 }
-            }
-            var tabContent = [];
-            tabContent.push('<div style="display:none" class="school-table mt20" id="school_table_' + index + '">'
+            })
+        },
+        // 院校简介
+        schoolIntro: function (schoolId) {
+            $.get('/university/getUniversityIntro.do?universityId=' + schoolId, function (data) {
+                if (data.rtnCode == '0000000') {
+                    $('#tabs-content1').html(data.bizData.universityIntro).attr('flag', true);
+                }
+            });
+        },
+        // 招生简章
+        brochures: function (schoolId) {
+            $.get('/university/getEntroIntro.do?universityId=' + schoolId, function (data) {
+                if (data.rtnCode == '0000000') {
+                    $('#tabs-content2').html(data.bizData.entroIntro).attr('flag', true);
+                }
+            })
+
+        },
+        // 往年招生情况
+        getSchoolInfo: function (schoolId) {
+            var _this = this;
+            $.get(' /university/getEnrollInfo.do?id=' + schoolId, function (data) {
+                console.log(data)
+                if (data.rtnCode == '0000000') {
+                    _this.renderSchool(data.bizData.enrollInfo)
+                }
+            });
+        },
+        renderSchool: function (data) {
+            //招生情况年份
+            var tabHtml = '<div id="tabs_list_last3" class="tabs-ui"><ul>';
+            var tabContentHtml = '';
+            for (var i = 0; i < data.length; i++) {
+                var title = data[i].title;
+                tabHtml += '<li>' + title + '</li>';
+                tabContentHtml += ''
+                + '<div class="school-table mt20">'
                 + '<table border="0" cellpadding="0" cellspacing="0">'
                 + '<thead>'
                 + '<tr>'
                 + '<th></th>'
+                + '<th>批次</th>'
                 + '<th>计划数</th>'
-                //+ '<th>录取数</th>'
+                + '<th>录取数</th>'
                 + '<th>最高分</th>'
                 + '<th>最高位次</th>'
                 + '<th>最低分</th>'
@@ -193,313 +206,271 @@ define(function (require) {
                 + '<th>平均分位次</th>'
                 + '</tr>'
                 + '</thead>'
-                + '<tbody>');
-            for (var j = 0, infolen = arry.length; j < infolen; j++) {
-                tabContent.push('<tr>'
-                    + '<td>' + (arry[j].subjectName || '') + '</td>'
-                    + '<td>' + (arry[j].planNumber || '') + '</td>'
-                    //+ '<td>' + (arry[j].enrollNumber || '') + '</td>'
-                    + '<td>' + (arry[j].highestScore || '') + '</td>'
-                    + '<td>' + (arry[j].highestRank || '') + '</td>'
-                    + '<td>' + (arry[j].lowestScore || '') + '</td>'
-                    + '<td>' + (arry[j].lowestRank || '') + '</td>'
-                    + '<td>' + (arry[j].averageScore || '') + '</td>'
-                    + '<td>' + (arry[j].averageRank || '') + '</td>'
-                    + '</tr>');
-            }
-            tabContent.push('</tbody>'
-                + '</table>'
-                + '</div>');
-            $('#last_content').html(tabContent.join(''));
-            $('#school_table_' + index).show();
-        },
-        renderBatch: function(data) {
-            if (data.length < 2) {
-                return '';
-            }
-            var str = [];
-            for (var i = 0; i < data.length; i++) {
-                str.push('<button>' + data[i] + '</button>');
-            }
-            return str.join('');
-        },
-        addSchoolEventHandle: function() {
-            var that = this;
-            $('#tabs_list_last li').on('mouseover', function() {
-                if (!$(this).hasClass('active')) {
-                    $(this).addClass('active').siblings().removeClass('active');
-                    $('#school_table_' + $(this).index()).show().siblings().hide();
-                    if (that.renderBatch(that.batchName[$(this).index()])) {
-                        $('#select_batch').html(that.renderBatch(that.batchName[$(this).index()]));
-                        $('#select_batch button').first().addClass('active');
-                        that.getSchoolByBatch();
-                        that.addHandleBatch();
-                    }
+                + '<tbody>';
+                for (var j = 0; j < data[i].infos.length; j++) {
+                    var infosData = data[i].infos[j];
+                    tabContentHtml += '<tr>'
+                    + '<td>' + (infosData.subjectName || '') + '</td>'
+                    + '<td>' + (infosData.batch || '') + '</td>'
+                    + '<td>' + (infosData.planNumber || '') + '</td>'
+                    + '<td>' + (infosData.enrollNumber || '') + '</td>'
+                    + '<td>' + (infosData.highestScore || '') + '</td>'
+                    + '<td>' + (infosData.highestRank || '') + '</td>'
+                    + '<td>' + (infosData.lowestScore || '') + '</td>'
+                    + '<td>' + (infosData.lowestRank || '') + '</td>'
+                    + '<td>' + (infosData.averageScore || '') + '</td>'
+                    + '<td>' + (infosData.averageRank || '') + '</td>'
+                    + '</tr>';
                 }
-            });
+                tabContentHtml += '</tbody></table></div>';
+            }
+            tabHtml += '</ul></div>';
+            $('#tabs-content3')
+                .attr('flag', true)
+                .append(tabHtml)
+                .append(tabContentHtml)
+                .on('click', 'li', function () {
+                    var _this = $(this);
+                    var index = _this.index();
+                    var thisParent = _this.parents('#tabs-content3');
+                    _this.addClass('active').siblings().removeClass('active');
+                    thisParent.find('.school-table').hide();
+                    thisParent.find('.school-table:eq(' + index + ')').show();
+                })
+            $('#tabs_list_last3').find('li:eq(0)').click();
         },
-        getEnroll: function(code) {
-            var that = this;
+        // 往年招生计划
+        getEnroll: function (schoolId) {
+            var _this = this;
             var batch = getUrLinKey('batch');
-            $.ajax({
-                type: 'get',
-                url: '/university/getEnrollPlan.do',
-                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
-                data: {
-                    id: code,
-                    batch: batch
-                },
-                dataType: 'json',
-                success: function(data) {
-                    if ('0000000' === data.rtnCode) {
-                        that.renderEnroll(data.bizData);
-                    }
-                },
-                error: function(data) {
+            $.get('/university/getEnrollPlan.do?id=' + schoolId + '&batch=' + batch, function (data) {
+                console.log(data)
+                if (data.rtnCode == '0000000') {
+                    _this.renderEnroll(data.bizData.enrollPlan);
                 }
-            });
+            })
         },
-        renderEnrollTable: function(infos) {
-            console.log(infos)
-            var tabContent = [];
-            tabContent.push('<table border="0" cellpadding="0" cellspacing="0">'
+        renderEnroll: function (data) {
+            var tabHtml = '<div id="tabs_list_last4" class="tabs-ui"><ul>';
+            var tabContentHtml = '';
+            for (var i = 0; i < data.length; i++) {
+                var title = data[i].title;
+                tabHtml += '<li>' + title + '</li>';
+                tabContentHtml += '<div class="school-table mt20">'
+                + '<div class="subjectType">'
+                + '<label><input type="radio" name="subject1" id=""/> <span>文史</span></label><label><input type="radio" name="subject1" id=""/> <span>理工</span></label>'
+                + '</div>'
+                + '<table border="0" cellpadding="0" cellspacing="0">'
                 + '<thead>'
                 + '<tr>'
                 + '<th  class="name">专业名称</th>'
                 + '<th>批次</th>'
                 + '<th>科类</th>'
                 + '<th>计划人数</th>'
-                //+ '<th>学制</th>'
-                //+ '<th>收费标准</th>'
+                + '<th>学制</th>'
+                + '<th>收费标准</th>'
                 + '</tr>'
                 + '</thead>'
-                + '<tbody>');
-            for (var j = 0, infolen = infos.length; j < infolen; j++) {
-
-                tabContent.push('<tr>'
-                    + '<td width="50%" class="name">' + (infos[j].majoredName || '') + '</td>'
-                    + '<td width="10%">' + (infos[j].batch || '') + '</td>'
-                    + '<td width="10%">' + (infos[j].subject || '') + '</td>'
-                    + '<td width="10%">' + (infos[j].planNumber || '') + '</td>'
-                    //+ '<td width="10%">' + (infos[j].schoolLength || '') + '</td>'
-                    //+ '<td width="10%">' + (infos[j].feeStandard || '') + '</td>'
-                    + '</tr>');
+                + '<tbody>';
+                for (var j = 0; j < data[i].planInfos.length; j++) {
+                    var planInfosData = data[i].planInfos[j];
+                    tabContentHtml += '<tr batch="' + planInfosData.subject + '">'
+                    + '<td width="50%"><a target="_blank" href="/consult/profession_detail.jsp?id=' + planInfosData.majoredId + '">' + (planInfosData.majoredName || '') + '</a></td>'
+                    + '<td width="10%">' + (planInfosData.batch || '') + '</td>'
+                    + '<td width="10%">' + (planInfosData.subject || '') + '</td>'
+                    + '<td width="10%">' + (planInfosData.planNumber || '') + '</td>'
+                    + '<td width="10%">' + (planInfosData.schoolLength || '') + '</td>'
+                    + '<td width="10%">' + (planInfosData.feeStandard || '') + '</td>'
+                    + '</tr>';
+                }
+                tabContentHtml += '</tbody></table></div>';
             }
-            tabContent.push('</tbody>'
-                + '</table>');
-            return tabContent.join('');
+            tabHtml += '</ul></div>';
+            $('#tabs-content4')
+                .attr('flag', true)
+                .append(tabHtml)
+                .append(tabContentHtml)
+                .on('click', 'li', function () {
+                    var _this = $(this);
+                    var index = _this.index();
+                    var thisParents = _this.parents('#tabs-content4');
+                    thisParents.find('tr').show();
+                    thisParents.find('label').removeClass('active').find('input').attr('checked', false);
+                    _this.addClass('active').siblings().removeClass('active');
+                    thisParents.find('.school-table').hide();
+                    thisParents.find('.school-table:eq(' + index + ')').show()
+                        .find('label')
+                        .on('click', function () {
+                            $(this).addClass('active').siblings().removeClass('active');
+                            var batch = $(this).find('span').text();
+                            var batchW = $(this).parents('.school-table').find('tr[batch="文史"]');
+                            var batchL = $(this).parents('.school-table').find('tr[batch="理工"]');
+                            if (batch == "文史") {
+                                batchL.hide();
+                                batchW.show();
+                            } else {
+                                batchW.hide();
+                                batchL.show();
+                            }
+                        })
+                });
+            $('#tabs_list_last4').find('li:eq(0)').click();
         },
-        renderEnroll: function(ret) {
-            var data = ret.enrollPlan;
-            var tab = [];
-            var tabContent = [];
-            // 暂时去掉2015招生计划
-            for (var i = 0, len = data.length; i < len; i++) {
-                if(data[i].title!="2015年招生计划"){
-                    var paramName = 'enrollData' + i;
-                    tab.push('<li data-saveData="' + paramName + '">' + data[i].title + '</li>');
-                    var infos = data[i].planInfos;
-                    this[paramName] = infos;
-                    tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + i + '">');
-                    tabContent.push(this.renderEnrollTable(infos));
-                    tabContent.push('</div>');
+        // 专业录取分数
+        admitAMark: function (schoolId) {
+            var _this = this;
+            $.get('/university/getMajoredScoreLineList.do?universityId=' + schoolId, function (data) {
+                console.log(data)
+                if (data.rtnCode == '0000000') {
+                    _this.renderAdmitAMark(data.bizData);
+                }
+            })
+        },
+        renderAdmitAMark: function (data) {
+            console.log(data);
+            if (typeof data === "object" && !(data instanceof Array)){
+                var hasProp = false;
+                for (var prop in data){
+                    hasProp = true;
+                    break;
+                }
+                if (!hasProp){
+                    var tips ='<div class="school-table mt20">'+ pageErrorTip('暂无相关数据') + '</div>';
+                    $('#tabs-content5')
+                        .attr('flag', true)
+                        .append(tips)
+                    return false;
                 }
             }
+            var tabHtml = '<div id="tabs_list_last5" class="tabs-ui"><ul>';
+            var tabContentHtml = '';
+            for (var v in data) {
+                var title = v;
+                tabHtml += '<li>' + title + '</li>';
+                tabContentHtml += '<div class="school-table mt20">'
+                + '<div class="subjectType">'
+                + '<label><input type="radio" name="subject1" id=""/> <span>文史</span></label><label><input type="radio" name="subject1" id=""/> <span>理工</span></label>'
+                + '</div>'
+                + '<table border="0" cellpadding="0" cellspacing="0">'
+                + '<thead>'
+                + '<tr>'
+                + '<th>专业名称</th>'
+                    //+ '<th>批次</th>'
+                + '<th>科类</th>'
+                + '<th>录取最高分</th>'
+                + '<th>录取平均分</th>'
+                + '</tr>'
+                + '</thead>'
+                + '<tbody>';
 
-
-            //var paramName = 'enrollData1';
-            //tab.push('<li data-saveData="' + paramName + '">' + data[1].title + '</li>');
-            //var infos = data[1].planInfos;
-            //this[paramName] = infos;
-            //tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + 1 + '">');
-            //tabContent.push(this.renderEnrollTable(infos));
-            //tabContent.push('</div>');
-
-
-
-
-
-            tab.push('<li>招生章程</li>');
-            tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + i + '">' + (ret.entroIntro || '') + '</div>');
-            i++;
-            tab.push('<li>院校简介</li>');
-            tabContent.push('<div style="display:none" class="school-table mt20" id="enroll_table_' + i + '">' + (ret.universityIntro || '') + '</div>');
-
-            console.log(tab);
-
-            $('#tabs_list_enroll').html(tab.join(''));
-            $('#enroll_content').html(tabContent.join(''));
-            $('#tabs_list_enroll li').first().addClass('active');
-            var text = $('#tabs_list_enroll li.active').text();
-            this.setCategory(text);
-            $('#enroll_table_1').show();
-            this.addEnrollEventHandle();
-            this.categoryHandle();
-        },
-        addEnrollEventHandle: function() {
-            var that = this;
-            $('#tabs_list_enroll li').on('mouseover', function() {
-                if ($(this).hasClass('fr')) {
-                    return;
+                for (var j = 0; j < data[v].length; j++) {
+                    var admitAMarkData = data[v][j];
+                    tabContentHtml += '<tr batch="' + admitAMarkData.subject + '">'
+                    + '<td><a target="_blank" href="/consult/profession_detail.jsp?id='+ admitAMarkData.majoredId  +'">' + (admitAMarkData.majoredName || '-') + '</a></td>'
+                        //+ '<td>' + (admitAMarkData.enrollBatch || '-') + '</td>'
+                    + '<td>' + (admitAMarkData.subject || '-') + '</td>'
+                    + '<td>' + (admitAMarkData.highestScore) + '</td>'
+                    + '<td>' + (admitAMarkData.averageScore) + '</td>'
+                    + '</tr>';
                 }
-                if (!$(this).hasClass('active')) {
-                    $(this).addClass('active').siblings().removeClass('active');
-                    var text = $(this).text();
-                    var index = $(this).index();
-                    that.setCategory(text, $(this));
-                    $('#enroll_table_' + (index+1)).show().siblings().hide();
-                }
-            });
+                tabContentHtml += '</tbody></table></div>';
+            }
+            tabHtml += '</ul></div>';
+            $('#tabs-content5')
+                .attr('flag', true)
+                .append(tabHtml)
+                .append(tabContentHtml)
+                .on('click', 'li', function () {
+                    var _this = $(this);
+                    var index = _this.index();
+                    var thisParents = _this.parents('#tabs-content5');
+                    thisParents.find('tr').show();
+                    thisParents.find('label').removeClass('active').find('input').attr('checked', false);
+                    _this.addClass('active').siblings().removeClass('active');
+                    thisParents.find('.school-table').hide();
+                    thisParents.find('.school-table:eq(' + index + ')').show()
+                        .find('label')
+                        .on('click', function () {
+                            $(this).addClass('active').siblings().removeClass('active');
+                            var batch = $(this).find('span').text();
+                            var batchW = $(this).parents('.school-table').find('tr[batch="文史"]');
+                            var batchL = $(this).parents('.school-table').find('tr[batch="理工"]');
+                            console.log($(this).parents('.school-table').find('tr').html())
+                            if (batch == "文史") {
+                                batchL.hide();
+                                batchW.show();
+                            } else {
+                                batchW.hide();
+                                batchL.show();
+                            }
+                        })
+                });
+            $('#tabs_list_last5').find('li:eq(0)').click();
         },
-        setCategory: function(text, activeDom) {
-            if ('招生章程' === text || '院校简介' === text) {
-                $('#category').hide();
-            } else {
-                $('#category button').removeClass('active');
-                if (activeDom) {
-                    var categoryId = activeDom.attr('data-categoryId');
-                    if (categoryId) {
-                        $('#category button[data-id="' + categoryId + '"]').addClass('active');
+        // 开设专业
+        openSpecialty: function (schoolId) {
+            var _this = this;
+            $.get('/university/getOpenMajoredPojoList.do?universityId=' + schoolId, function (data) {
+                console.log(data)
+                var dataJson = data.bizData;
+                if (data.rtnCode == '0000000') {
+
+                    var tabContentHtml = '<div class="school-table mt20">'
+                        + '<div class="tipTxt"><strong>温馨提示：</strong> <i class="star"></i>号表示该专业在该院校招生</div>'
+                        + '<table border="0" cellpadding="0" cellspacing="0">'
+                        + '<thead>'
+                        + '<tr>'
+                        + '<th>专业名称</th>'
+                        + '<th>科类</th>'
+                        + '<th>薪资排名</th>'
+                        + '<th>就业率排名</th>'
+                        + '</tr>'
+                        + '</thead>'
+                        + '<tbody>';
+                    if (dataJson.length > 0) {
+                        for (var i = 0; i < dataJson.length; i++) {
+                            var employmentRateRank = dataJson[i].employmentRateRank
+                                , isEnrol = dataJson[i].isEnrol
+                                , majoredName = dataJson[i].majoredName
+                                , salaryRank = dataJson[i].salaryRank
+                                , subject = dataJson[i].subject
+                                , majoredId = dataJson[i].majoredId;
+                            var isEnrolTxt = '';
+                            if (isEnrol == 1) {
+                                isEnrolTxt = '<i class="star"></i>';
+                            } else {
+                                isEnrolTxt = '';
+                            }
+                            tabContentHtml += '<tr>'
+                            + '<td>'
+                            + isEnrolTxt
+                            + '<a target="_blank" href="/consult/profession_detail.jsp?id=' + majoredId + '">' + majoredName + '</a></td>'
+                            + '<td>' + (subject || "-") + '</td>'
+                            + '<td>' + salaryRank + '</td>'
+                            + '<td>' + employmentRateRank + '</td>'
+                            + '</tr>';
+                        }
+                        tabContentHtml += '</tbody></table></div>';
+                        $('#tabs-content6')
+                            .attr('flag', true)
+                            .append(tabContentHtml);
+                    }else{
+                        tabContentHtml += '<tr><td colspan="4">'+ pageErrorTip('暂无相关数据') +'</td></tr></table></div>';
+                        $('#tabs-content6')
+                            .attr('flag', true)
+                            .append(tabContentHtml);
                     }
                 }
-                $('#category').show();
-            }
-        },
-        categoryHandle: function() {
-            var that = this;
-            $('#category button').on('click', function(e) {
-                $(this).addClass('active').siblings().removeClass('active');
-                $('#tabs_list_enroll li.active').attr('data-categoryId', $(this).attr('data-id'));
-                var categoryText = $(this).text();
-                that.filterEnroll(categoryText, $('#tabs_list_enroll li.active').index());
-            });
-        },
-        filterEnroll: function(categoryText, menuId) {
-            var data = this['enrollData' + menuId];
-            var NewData = [];
-            for (var i = 0; i < data.length; i++) {
-                if (categoryText === data[i].subject) {
-                    NewData.push(data[i]);
-                }
-            }
-            if (NewData.length > 0) {
-                $('#enroll_table_' + menuId).html(this.renderEnrollTable(NewData));
-            } else {
-                $('#enroll_table_' + menuId).html('<p style="padding: 20px 0; text-align: center">没有符合相关的信息！</p>');
-            }
+            })
         }
     };
-
-    var BasicInfoForTest = {
-        "code": 0012,
-        "name": "北京大学",
-        "subjection": "教育部直属",
-        "educatLevel": "本科",
-        "universityType": "综合",
-        "property": "985,211,研",
-        "address": "北京市海淀区颐和园路5号",
-        "contactPhone": "010-62751407",
-        "universityImage": "http://himg.bdimg.com/sys/portrait/item/c68b4a737048696265726e6174655374d718.jpg",
-        "provinceName": "北京",
-        "url": "http://www.baidu.com"
-    };
-
-    var getEnrollInfo = {
-        "enrollInfo": [
-            {
-                "title": "2014年招生情况",
-                "infos": [
-                    {
-                        "subjectName": "文科",
-                        "planNumber": 20,//计划人数
-                        "enrollNumber": 10,//录取数
-                        "highestScore": 666,//最高分
-                        "highestRank": 1,//最高位次
-                        "lowestScore": 500,//最低分
-                        "lowestRank": 26,///最低位次
-                        "averageScore": 580,//平均分
-                        "averageRank": 12//平均分位次
-                    },
-                    {
-                        "subjectName": "理科",
-                        "planNumber": 15,//计划人数
-                        "enrollNumber": 8,//录取数
-                        "highestScore": 616,//最高分
-                        "highestRank": 1,//最高位次
-                        "lowestScore": 520,//最低分
-                        "lowestRank": 16,///最低位次
-                        "averageScore": 560,//平均分
-                        "averageRank": 10//平均分位次
-                    }
-                ]
-            }, {
-                "title": "2013年招生情况",
-                "infos": [
-                    {
-                        "subjectName": "文科",
-                        "planNumber": 20,//计划人数
-                        "enrollNumber": 20,//录取数
-                        "highestScore": 566,//最高分
-                        "highestRank": 1,//最高位次
-                        "lowestScore": 600,//最低分
-                        "lowestRank": 26,///最低位次
-                        "averageScore": 680,//平均分
-                        "averageRank": 14//平均分位次
-                    },
-                    {
-                        "subjectName": "理科",
-                        "planNumber": 15,//计划人数
-                        "enrollNumber": 10,//录取数
-                        "highestScore": 616,//最高分
-                        "highestRank": 1,//最高位次
-                        "lowestScore": 520,//最低分
-                        "lowestRank": 16,///最低位次
-                        "averageScore": 560,//平均分
-                        "averageRank": 10//平均分位次
-                    }
-                ]
-            }
-        ]
-    };
-
-    var getEnrollPlan = {
-        "enrollPlan": [
-            {
-                "title": "2015招生计划",
-                "planInfos": [
-                    {
-                        "majoredName": "材料类",
-                        "batch": "一批本科",
-                        "subject": "理科",
-                        "planNumber": 20,//计划人数
-                        "schoolLength": "四年",//学制
-                        "feeStandard": "12000/年"//收费标准
-                    }
-                ]
-            },
-            {
-                "title": "2014招生计划",
-                "planInfos": [
-                    {
-                        "majoredName": "材料类",
-                        "batch": "一批本科",
-                        "subject": "理科",
-                        "planNumber": 10,//计划人数
-                        "schoolLength": "四年",//学制
-                        "feeStandard": "10000/年"//收费标准
-                    }
-                ]
-            },
-
-        ],
-        "entroIntro": "<p> 北京大学招生简介</p>",//招生简介，一段html代码
-        "universityIntro": "<p> 北京大学介绍</p>"//院校简介，一段html代码
-    };
-
-    $(document).ready(function() {
-        var code = getUrLinKey('id');
-        Info.getBasicInfo(code);
-        Info.getSchoolInfo(code);
-        Info.getEnroll(code);
+    $(document).ready(function () {
+        var code = getUrLinKey('code');
+        var id = getUrLinKey('id');
+        if (code) {
+            Info.getBasicInfo('code', code);
+        } else if (id) {
+            Info.getBasicInfo('id', id);
+        }
     });
 });

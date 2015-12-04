@@ -1,7 +1,14 @@
 define(function(require) {
     var $ = require('$');
     var pageErrorTip = require('pageErrorTip');
-
+    //加载loading
+    function loadingShowContent(){
+        $('.content').css({
+            'height':'auto'
+        });
+        $('.loader').hide();
+        $('.w1000').show();
+    }
     var School = {
         curPage: 1,
         totalPage: 0,
@@ -57,30 +64,31 @@ define(function(require) {
                 i = 0,
                 len = data.length;
             html.push('<table border="0" cellpadding="0" cellspacing="0">'
-                        + '<thead>'
-                            + '<tr>'
-                                + '<th class="name">院校名称</th>'
-                                + '<th>所在地区</th>'
-                                + '<th>院校类型</th>'
-                                + '<th>院校隶属</th>'
-                                + '<th>院校特征</th>'
-                                + '<th>院校信息</th>'
-                            + '</tr>'
-                        + '</thead>'
-                    + '<tbody>');
+            + '<thead>'
+            + '<tr>'
+            + '<th class="name">院校名称</th>'
+            + '<th>所在地区</th>'
+            + '<th>院校类型</th>'
+            + '<th>院校隶属</th>'
+            + '<th>院校特征</th>'
+            + '<th>院校信息</th>'
+            + '</tr>'
+            + '</thead>'
+            + '<tbody>');
             for (; i < len; i++) {
                 var trClass = i % 2 != 0 ? 'active' : '';
                 html.push('<tr class="' + trClass + '">'
-                                + '<td class="name">' + (data[i].name || '') + '</td>'
-                                + '<td>' + (data[i].provinceName || '') + '</td>'
-                                + '<td>' + (data[i].universityType || '') + '</td>'
-                                + '<td>' + (data[i].subjection || '') + '</td>'
-                                + '<td>' + (data[i].property || '') + '</td>'
-                                + '<td>' + '<a target="_blank" href="/consult/school_detail.jsp?id=' + data[i].id + '">查看详情</a>' + '</td>'
-                            + '</tr>');
+                + '<td class="name">' + (data[i].name || '') + '</td>'
+                + '<td>' + (data[i].provinceName || '') + '</td>'
+                + '<td>' + (data[i].universityType || '') + '</td>'
+                + '<td>' + (data[i].subjection || '') + '</td>'
+                + '<td>' + (data[i].property || '') + '</td>'
+                + '<td>' + '<a href="/consult/school_detail.jsp?id=' + data[i].id + '">查看详情</a>' + '</td>'
+                + '</tr>');
             }
             html.push('</tbody>' + '</table>');
             $('#school_list').html(html.join(''));
+            loadingShowContent();
         },
         getSchoolList: function(pageNo) {
             var provinces = $('#provinces a.active').attr('id');
@@ -342,8 +350,8 @@ define(function(require) {
                 "property": "985,211",
                 "url":"http://www.baidu.com"
             }
-    ]
-}
+        ]
+    }
 
     $(document).ready(function() {
         School.getData();

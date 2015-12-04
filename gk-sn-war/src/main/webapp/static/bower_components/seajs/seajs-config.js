@@ -1,15 +1,16 @@
 seajs.config({
     // 基础路径
-    base: "http://cdn.gaokao360.net/static/",
+    base: "/static/",
     // 别名配置
     alias: {
-        "$": "bower_components/jquery/dist/jquery.min.js",
+        "$": "bower_components/jquery/dist/jquery.js",
         "laydate": "bower_components/laydate/laydate.js",
         "uploadify": "bower_components/uploadify/jquery.uploadify.min.js",
-        "getTime": "bower_components/utils/getTime",
+        "getTimes": "bower_components/utils/getTimes",
         "backToTop": "bower_components/utils/backToTop",
         "pageErrorTip": "bower_components/utils/pageErrorTip",
-        "belatedPNG": "bower_components/banner/belatedPNG"
+        "belatedPNG": "bower_components/banner/belatedPNG",
+        "cookie": "bower_components/cookie/jquery.cookie.js"
     },
     preload: ['$'],
     //map,批量更新时间戳

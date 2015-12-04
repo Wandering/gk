@@ -25,21 +25,21 @@ define(function(require) {
         Dom.errorTip1.text('');
         Dom.errorTip2.text('');
         var isPhone = /^0?1[3578]\d{9}$/;
-        if (tel.trim() == '') {
+        if ($.trim(tel) == '') {
             Dom.errorTip1.text('请输入账号').fadeIn();
             return
         }
-        if (!isPhone.test(tel.trim())) {
+        if (!isPhone.test($.trim(tel))) {
             Dom.errorTip1.text('账号输入有误').fadeIn();
             return
         }
-        if (pwd.trim() == '') {
+        if ($.trim(pwd) == '') {
             Dom.errorTip1.text('密码不能为空').fadeIn();
             return
         }
-        if (pwd.trim().length < 6 || pwd.trim().length > 16 || isNaN(pwd.trim())) {
+        if ($.trim(pwd).length < 6 || $.trim(pwd).length > 16 || isNaN($.trim(pwd))) {
             Dom.errorTip1.text('密码输入有误').fadeIn();
-            console.log('长度：'+pwd.trim().length+'----'+(!isNaN(pwd.trim())));
+            console.log('长度：'+$.trim(pwd).length+'----'+(!isNaN($.trim(pwd))));
             return false;
         } else {
             Dom.errorTip1.text('');
