@@ -33,7 +33,7 @@ define(function (require) {
                 dataType: 'json',
                 success: function (data) {
                     var schoolId = data.bizData.id;
-                    if (GetCookie("snuser")) {
+                    if (GetCookie("gxuser")) {
                         Info.getIsCollect(schoolId);
                     }
                     if ('0000000' === data.rtnCode) {
@@ -61,7 +61,7 @@ define(function (require) {
                             } else if (thisV == "开设专业") {
                                 if (!$('#tabs-content6').attr('flag'))Info.openSpecialty(schoolId);
                             }
-                        })
+                        });
                         $('#tabs-list li:eq(0)').click();
                     } else {
                         var pageErrorTip = require('pageErrorTip');
@@ -94,14 +94,15 @@ define(function (require) {
                 urlClassName = 'integet-line';
             }
             var collectHref = '';
-            if (!GetCookie("snuser") || GetCookie("snuser") == '""') {
+            if (!GetCookie("gxuser") || GetCookie("gxuser") == '""') {
                 console.log('没有登录111');
-                collectHref = '/login/login.jsp';
+                collectHref = '<a target="_blank" href="/login/login.jsp" id="collect" class="collect"><span>收藏</span><i></i></a>';
+
             } else {
-                collectHref = 'javascript:;';
+                collectHref = '<a href="javascript:;" id="collect" class="collect"><span>收藏</span><i></i></a>';
             }
             $('#info_content').html(
-                '<a target="_blank" href="' + collectHref + '" id="collect" class="collect"><span>收藏</span><i></i></a>'
+                 collectHref
                 + '<img class="fl" src="' + (obj.universityImage || 'http://cdn.gaokao360.net/static/global/common/images/kqbk_banner_default.png') + '" />'
                 + '<div class="info">'
                 + '<ul>'

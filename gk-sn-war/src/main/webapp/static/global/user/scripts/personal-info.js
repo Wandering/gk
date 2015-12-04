@@ -1,96 +1,50 @@
-/**
- * Created by pdeng on 15/9/24.
- */
 define(function (require) {
-    require('$');
+    var $ = require('$');
     require('laydate');
-
+    var getTime = require('getTimes');
     function errorTips(txt) {
         $('.error-tips').text(txt).fadeIn(1000).fadeOut(1000);
     }
-
-
-
-    Date.prototype.Format = function (fmt) {
-        var o = {
-            "M+": this.getMonth() + 1, //月份
-            "d+": this.getDate(), //日
-            "h+": this.getHours(), //小时
-            "m+": this.getMinutes(), //分
-            "s+": this.getSeconds(), //秒
-            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-            "S": this.getMilliseconds() //毫秒
-        };
-        if (/(y+)/.test(fmt))
-            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-        for (var k in o)
-            if (new RegExp("(" + k + ")").test(fmt))
-                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-        return fmt;
-    };
-    function getTime(timestamp) {
-        var newDate = new Date();
-        newDate.setTime(timestamp);
-        return newDate.Format("yyyy-MM-dd");
-    }
-
-    //获取用户信息
+    // 获取手机号
     $.get('/vip/getAccount.do', function (res) {
+        console.log(res)
+        var phoneN = res.bizData.account;
         if (res.rtnCode == '0000000') {
-            $('.account-tel').text(res.bizData.account);
+            if(phoneN){
+                $('#account-tel').text(phoneN);
+            }
         } else {
             console.log(res.msg);
         }
     });
-    $.get('/info/getUserInfo.do', function (res) {
+    // 获取用户信息
+    $.get('/info/getUserInfo.do?'+new Date().getTime(), function (res) {
+        console.log(res)
         if (res.rtnCode == '0000000') {
             var personListData = res.bizData;
-            var avatar;
+            var avatar = '';
             if (personListData.icon == '' || personListData.icon == null) {
                 avatar = 'http://cdn.gaokao360.net/static/global/common/images/icon_default.png';
             } else {
                 avatar = personListData.icon
             }
-            console.log(res);
-            $('.avatar-img').attr('src', avatar);
-            $('.avatar-box').show();
-            $('.name').attr('value', personListData.name);
-            $('.school').attr('value', personListData.schoolName);
-            $('.birthdayDate').attr('value', personListData.birthdayDate ? getTime(personListData.birthdayDate) : '1970-01-01');
-            $('.sex').attr('value', personListData.sex);
-            $('.subject').attr('value', personListData.subjectType);
-            $('.mail').attr('value', personListData.mail);
-            $('.qq').attr('value', personListData.qq);
-            //$('#cmbProvince option').attr('value', personListData.provinceId);
-            //$('#cmbCity option').attr('value', personListData.cityId);
-            //$('#cmbArea option').attr('value', personListData.countyId);
-            if (personListData.sex == 1) {
-                $('#sex_m').attr('checked', true)
-            } else {
-                $('#sex_w').attr('checked', true)
-            }
-            if (personListData.subjectType == 1) {
-                $('#subject_l').attr('checked', true)
-            } else {
-                $('#subject_w').attr('checked', true)
-            }
-
+            $('#avatar-img').attr('src', avatar);
+            $('#userName').val(personListData.name);
+            $('#school').val(personListData.schoolName);
+            $('#birthdayDate').val(personListData.birthdayDate ? getTime.getTime(personListData.birthdayDate,'yyyy-MM-dd') : '1970-01-01');
+            $('input[name="sex"][value="'+ personListData.sex +'"]').attr('checked',true);
+            $('input[name="subject"][value="'+ personListData.subjectType +'"]').attr('checked',true);
+            $('#email').val(personListData.mail);
+            $('#qq').val(personListData.qq);
             Area.init(personListData);
             Area.addEventForArea();
-        } else {
-            alert(res.msg);
         }
     });
-    $('.content').fadeIn();
-
-
-
 
     //省市地区
     var cmbProvince = '';
     var cmbCity = '';
     var cmbArea = '';
-
     var Area = {
         data: [],
         init: function (personListData) {
@@ -178,22 +132,27 @@ define(function (require) {
         }
     };
 
+    function transdate(endTime){
+        var date=new Date();
+        date.setFullYear(endTime.substring(0,4));
+        date.setMonth(endTime.substring(5,7)-1);
+        date.setDate(endTime.substring(8,10));
+        date.setHours(endTime.substring(11,13));
+        date.setMinutes(endTime.substring(14,16));
+        date.setSeconds(endTime.substring(17,19));
+        return Date.parse(date)/1000;
+    }
 
 
+    $('#btn-submit').click(function () {
 
-
-
-
-
-
-    $('.btn-submit').click(function () {
         //修改信息
         var sex = $('input[name="sex"]:checked').val()
             , subject = $('input[name="subject"]:checked').val()
-            , school = $('.school').val().trim()
-            , str = $('.birthdayDate').val().trim()
-            , birthdayDate = Date.parse(new Date(str)) / 1000
-            , name = $('.name').val().trim();
+            , school = $.trim($('#school').val())
+            , str = $.trim($('#birthdayDate').val())
+            , birthdayDate = transdate(str)
+            , name = $.trim($('#userName').val());
 
         if (name.length == 0) {
             errorTips('用户名不能为空');
@@ -211,8 +170,8 @@ define(function (require) {
             errorTips('学校名不能大于20个字');
             return false;
         }
-        var qq = $('.qq').val().trim();
-        var mail = $('.mail').val().trim();
+        var qq = $.trim($('#qq').val());
+        var mail = $.trim($('#email').val());
 
         if (qq.length != 0 || mail.length != 0) {
             var mail_reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
@@ -226,16 +185,20 @@ define(function (require) {
                 return false;
             }
         }
-        var img_url = $('.avatar-img ').attr('src');
+        var img_url = $('#avatar-img ').attr('src');
+
+        var provinceId = $('#cmbProvince').val(),
+            cityId = $('#cmbCity').val(),
+            countyId = $('#cmbArea').val();
         $.ajax({
             url: '/info/updateUserInfo.do',
+            type: 'POST',
             dataType: 'json',
-            type: 'post',
             data: {
                 name: name,
-                provinceId: $('#cmbProvince').val(),
-                cityId: $('#cmbCity').val(),
-                countyId: $('#cmbArea').val(),
+                provinceId: provinceId,
+                cityId: cityId,
+                countyId: countyId,
                 schoolName: school,
                 sex: sex,
                 birthdayDate: birthdayDate,
@@ -247,7 +210,6 @@ define(function (require) {
             success: function (res) {
                 console.log(res)
                 if (res.rtnCode == '0000000') {
-                    $('.user-avatar').attr('src', img_url);
                     $('.error-tips').text('信息更新成功').fadeIn(1000).fadeOut(2000);
                     window.location.href="/user/personal-info.jsp";
                 } else {
@@ -256,5 +218,4 @@ define(function (require) {
             }
         })
     });
-
 });
