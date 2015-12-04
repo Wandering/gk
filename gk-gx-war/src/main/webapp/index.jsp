@@ -214,8 +214,8 @@
 </div>
 <%@ include file="common/footer.jsp" %>
 <script>
-    seajs.use(["/static/src/index/scripts/index","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
-//    seajs.use(["http://cdn.gaokao360.net/static/global/index/scripts/index","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
+//    seajs.use(["/static/src/index/scripts/index","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
+    seajs.use(["http://cdn.gaokao360.net/static/global/index/scripts/index","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
 </script>
 </body>
 </html>
