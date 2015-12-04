@@ -244,9 +244,9 @@ define(function (require) {
                     $('#batchV').text(batchV);
                     $('#subjectTypeV').text(subjectTypeV);
                     var data = $.parseJSON(res.bizData);
-                    console.log(data.data.result.data)
-                    var dataJson = data.data.result.data;
 
+                    var dataJson = data.data.result.data;
+                    console.log(dataJson.length)
                     if (!dataJson) {
                         errorTips(res.msg);
                         return false;

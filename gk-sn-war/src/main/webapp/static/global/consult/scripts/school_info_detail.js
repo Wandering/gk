@@ -7,8 +7,6 @@ define(function (require) {
     }
     var isUser = GetCookie('snuser');
 
-
-
     // 获取URL
     function getUrLinKey(name) {
         var reg = new RegExp("(^|\\?|&)" + name + "=([^&]*)(\\s|&|$)", "i");
