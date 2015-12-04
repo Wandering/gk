@@ -181,6 +181,13 @@
   <input type="button"  value="保存dd" id="btn">
 </form>
 
+<form action="http://cs-dev.thinkjoy.com.cn/rest/v1/uploadFile" enctype="multipart/form-data" method="post">
+    product:<input type="text" name="productCode" value="gk360"><br>
+    bizSystem: <input type="text" name="bizSystem" value="gk360"><br>
+    userId: <input type="text" name="userId" value="erere3403403434034"><br>
+    file: <input type="file" name="file"><br>
+    spaceName: <input type="text" name="spaceName" value="gk360"><br>
+  <input type="submit" value="上传"></form>
 
 
 <div>
