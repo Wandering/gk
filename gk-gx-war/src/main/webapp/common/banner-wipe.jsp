@@ -20,20 +20,19 @@
     margin: 0 auto;
     display: block;
   }
+  .slide-main .slide a.banner-max{
+    height: 360px;
+    display: inline-block;
+    width: 100%;
+    background: url(http://cdn.gaokao360.net/static/global/common/images/banner1.png) center center;
+  }
 </style>
-<!--[if lte IE 6]>
-<script type="text/javascript" src="http://cdn.gaokao360.net/static/global/bower_components/banner/belatedPNG.js"></script>
-<script type="text/javascript">
-var __IE6=true;
-DD_belatedPNG.fix('.logo img,.prev img,.next img,img');
-</script>
-<![endif]-->
 <!-- 代码 开始 -->
 <div class="slide-main" id="touchMain">
   <a class="prev" href="javascript:;" stat="prev1001"><img src="http://cdn.gaokao360.net/static/global/common/images/l-btn.png" /></a>
   <div class="slide-box" id="slideContent" style="background-color: #f1f1f1">
-    <div class="slide" id="bgstylec" style="background: #ce4230;">
-      <img src="http://cdn.gaokao360.net/static/global/common/images/banner-0.png" alt=""/>
+    <div class="slide" id="bgstylec" style="background: #ce4230;" class="banner-max">
+      <!--<img src="http://cdn.gaokao360.net/static/global/common/images/banner-0.png" alt=""/>-->
     </div>
     <div class="slide" id="bgstylea" style="background: #0d63b2;">
       <img src="http://cdn.gaokao360.net/static/global/common/images/banner-1.png" alt=""/>
