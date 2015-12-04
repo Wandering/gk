@@ -6,6 +6,9 @@ dependencies {
     compile "org.mortbay.jetty:servlet-api:2.5-20081211"
 
     compile "cn.thinkjoy.cloudstack:cs-spring-redis:$thinkjoyCloudstackVersion"
+    compile "org.apache.poi:poi-ooxml:3.9"
+    compile "org.apache.poi:poi:3.9"
+    compile "commons-io:commons-io:2.4"
 
     compile group: "org.apache.httpcomponents", name: "httpclient", version: "4.2.2"
 
