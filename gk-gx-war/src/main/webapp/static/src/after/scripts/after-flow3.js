@@ -159,12 +159,13 @@ define(function (require) {
                             'm_batch_id': m_batch_id,
                             'sequence':sequence
                         });
-                        if (data.provinceName == "广西") {
+                        if (data.provinceName.substr(0,2) == "广西") {
                             $('input.partChecked[name="isFun' + datatypeid + '"]').parent().show();
                             $('#area-tips' + datatypeid).show();
                         } else {
                             $('input.partChecked[name="isFun' + datatypeid + '"]').parent().hide();
                             $('#area-tips' + datatypeid).hide();
+                            $('#specialtyPart'+datatypeid).hide();
                         }
                         $('#result-info' + datatypeid).html(infoHtml);
                         $('#tips' + datatypeid).hide();
