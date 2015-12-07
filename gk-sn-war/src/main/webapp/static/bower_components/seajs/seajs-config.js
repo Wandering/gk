@@ -1,9 +1,11 @@
 seajs.config({
     // 基础路径
-    base: "/static/",
+    //base: "/static/",
+    base: "http://cdn.gaokao360.net/static/",
     // 别名配置
     alias: {
-        "$": "bower_components/jquery/dist/jquery.js",
+        "$": "bower_components/jquery/dist/jquery-1.11.3.min",
+        //"$": "bower_components/jquery/dist/jquery.min",
         "laydate": "bower_components/laydate/laydate.js",
         "uploadify": "bower_components/uploadify/jquery.uploadify.min.js",
         "getTimes": "bower_components/utils/getTimes",
