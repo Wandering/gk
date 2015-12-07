@@ -79,7 +79,7 @@
 </script>
 <link rel="stylesheet" href="http://cdn.gaokao360.net/static/bower_components/laydate/need/laydate.css"/>
 <link rel="stylesheet" href="http://cdn.gaokao360.net/static/bower_components/laydate/skins/dahong/laydate.css"/>
-<script src="http://cdn.gaokao360.net/static/bower_components/jquery/dist/cdn.jquery.min.js"></script>
+<script src="/static/src/user/scripts/uploadify/jquery-1.9.1.min.js"></script>
 <script src="http://cdn.gaokao360.net/static/bower_components/uploadify/jquery.uploadify.js"></script>
 <script>
     var errorCodes = ["-100", "-110", "-120", "-130"];
