@@ -32,7 +32,6 @@ define(function (require) {
     });
 
 
-    //var localhosts = 'http://www.gkzy114.com';
 
     // 获取科目
     function getSubjectList() {
@@ -340,13 +339,14 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
+                console.log(res)
                 if (res.rtnCode == "1000006") {
                     errorTips(res.msg);
                     return false;
                 }
                 if(res.rtnCode == '0100005'){
                     errorTips(res.msg);
-                    $('#yzmDreamSchool').attr('src', '/verifyCode/randomVerifyCode.do?type=1&code=' + Math.random())
+                    $('#yzmDreamSchool').attr('src', '/verifyCode/randomVerifyCode.do?type=2&code=' + Math.random())
                     return false;
                 }
                 var data = $.parseJSON(res.bizData);
