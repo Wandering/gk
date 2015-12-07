@@ -1,12 +1,12 @@
 define(function (require) {
     var $ = require('$');
 
-
     function GetCookie(sMainName, sSubName) {
         var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
         return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
     }
 
+    alert(GetCookie("gxuser"))
     $(function () {
         var isUser = GetCookie("gxuser");
         if (isUser) {
@@ -35,7 +35,6 @@ define(function (require) {
                             +'<img src="'+ imgUrl +'" alt="avatar" class="user-avatar" id="user-avatar"/>'
                             +'<a href="javascript:" id="accountNum" class="username">'+ username +'</a>';
                         $('#loginUser').append(loginUserHtml);
-
                     }
                 });
             $('#loginUser,#user-avatar').show();
