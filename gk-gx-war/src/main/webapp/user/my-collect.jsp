@@ -45,10 +45,10 @@
     </div>
 </div>
 
-<%@include file="/common/footer.jsp" %>
 <script>
     seajs.use("/static/src/user/scripts/my-collect");
-//        seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/my-collect");
+    //        seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/my-collect");
 </script>
+<%@include file="/common/footer.jsp" %>
 </body>
 </html>

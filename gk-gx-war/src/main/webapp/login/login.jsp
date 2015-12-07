@@ -51,12 +51,10 @@
         </div>
     </div>
 </div>
-<div class="footer">
-    <p class="copy">Copyright © 2015.Thinkjoy All rights reserved</p>
-    <img src="http://cdn.gaokao360.net/static/gx/common/images/login-logo.png" alt="logo360" class="bottom-logo"/>
-</div>
+
 <script>
     seajs.use("http://cdn.gaokao360.net/static/global/login/scripts/login.min");
 </script>
+<%@ include file="/common/footer.jsp"%>
 </body>
 </html>

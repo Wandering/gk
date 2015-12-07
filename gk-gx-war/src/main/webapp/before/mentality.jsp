@@ -54,9 +54,9 @@
     </div>
 </div>
 
-<%@ include file="/common/footer.jsp"%>
 <script>
     seajs.use("http://cdn.gaokao360.net/static/global/before/scripts/mentality.min");
 </script>
+<%@ include file="/common/footer.jsp"%>
 </body>
 </html>

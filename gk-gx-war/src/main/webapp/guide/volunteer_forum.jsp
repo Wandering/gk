@@ -33,10 +33,10 @@
     </div>
 </div>
 
-<%@ include file="/common/footer.jsp"%>
 <script type="text/javascript">
-//    seajs.use(["/static/src/guide/scripts/volunteer_forum",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
+    //    seajs.use(["/static/src/guide/scripts/volunteer_forum",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
     seajs.use(["http://cdn.gaokao360.net/static/gx/guide/scripts/volunteer_forum",'http://cdn.gaokao360.net/static/bower_components/utils/getTime.js']);
 </script>
+<%@ include file="/common/footer.jsp"%>
 </body>
 </html>

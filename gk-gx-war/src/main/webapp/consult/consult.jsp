@@ -53,12 +53,12 @@
     </div>
 </div>
 
-<%@ include file="/common/footer.jsp"%>
 <script type="text/javascript" src="http://cdn.gaokao360.net/static/global/guide/scripts/flowplayer-3.2.13.min.js"></script>
 <script type="text/javascript">
     seajs.use("/static/src/consult/scripts/consult");
-//    seajs.use("http://cdn.gaokao360.net/static/global/consult/scripts/consult.min");
+    //    seajs.use("http://cdn.gaokao360.net/static/global/consult/scripts/consult.min");
 </script>
+<%@ include file="/common/footer.jsp"%>
 </body>
 </html>
 

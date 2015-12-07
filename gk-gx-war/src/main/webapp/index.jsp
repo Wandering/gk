@@ -212,9 +212,9 @@
         </section>
     </div>
 </div>
-<%@ include file="common/footer.jsp" %>
 <script>
     seajs.use(["http://cdn.gaokao360.net/static/global/index/scripts/index","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
 </script>
+<%@ include file="common/footer.jsp" %>
 </body>
 </html>
