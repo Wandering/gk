@@ -7,7 +7,6 @@ define(function (require) {
         return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
     }
 
-
     $(function () {
         var isUser = GetCookie("gxuser");
         if (isUser) {
@@ -45,9 +44,16 @@ define(function (require) {
         } else {
             $('#loginUser,#user-avatar').hide();
             $('#log-reg').show();
+             /*
+             * @param 添加权限管理
+             *        user、模块需要用户登陆才能访问
+             * */
+            var url = window.location.pathname;
+            var path = url.split('/');
+            if(path[1] == 'user'){
+                window.location.href = '/login/login.jsp';
+            }
         }
-
-
         $('#main-menu').on('mouseover', 'li.menu-item', function () {
             $(this).addClass('active');
         });

@@ -1,8 +1,11 @@
 define(function (require) {
     var $ = require('$');
-    require('cookie');
+    function GetCookie(sMainName, sSubName) {
+        var re = new RegExp((sSubName ? sMainName + "=(?:.*?&)*?" + sSubName + "=([^&;$]*)" : sMainName + "=([^;$]*)"), "i");
+        return re.test(unescape(document.cookie)) ? RegExp["$1"] : "";
+    }
     $(function () {
-        var isUser = $.cookie('snuser');
+        var isUser = GetCookie('snuser');
         if (isUser) {
             $.getJSON(
                 "/info/getUserAccount.do",

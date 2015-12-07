@@ -109,6 +109,39 @@ define(function (require) {
                             case 11:
                                 subjectTypeTxt='文综';
                                 break;
+                            case 13:
+                                subjectTypeTxt='其他';
+                                break;
+                            case 15:
+                                subjectTypeTxt='英语';
+                                break;
+                            case 17:
+                                subjectTypeTxt='数学';
+                                break;
+                            case 18:
+                                subjectTypeTxt='语文';
+                                break;
+                            case 23:
+                                subjectTypeTxt='语文';
+                                break;
+                            case 24:
+                                subjectTypeTxt='数学';
+                                break;
+                            case 25:
+                                subjectTypeTxt='英语';
+                                break;
+                            case 32:
+                                subjectTypeTxt='理综';
+                                break;
+                            case 33:
+                                subjectTypeTxt='文综';
+                                break;
+                            case 34:
+                                subjectTypeTxt='理综';
+                                break;
+                            case 35:
+                                subjectTypeTxt='文综';
+                                break;
                             default :
                                 subjectTypeTxt='其他';
                         }
