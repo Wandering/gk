@@ -81,13 +81,13 @@
 <link rel="stylesheet" href="http://cdn.gaokao360.net/static/bower_components/laydate/need/laydate.css"/>
 <link rel="stylesheet" href="http://cdn.gaokao360.net/static/bower_components/laydate/skins/dahong/laydate.css"/>
 <script src="http://cdn.gaokao360.net/static/bower_components/jquery/dist/cdn.jquery.min.js"></script>
-<script src="http://cdn.gaokao360.net/static/bower_components/uploadify/jquery.uploadify.js"></script>
+<script src="/static/bower_components/uploadify/jquery.uploadify.js"></script>
 <script>
     var errorCodes = ["-100", "-110", "-120", "-130"];
     var errorMsgs = ["文件数量不能超过(5)", "文件超过大小限制(10MB)", "零字节的文件", "无效的文件类型"];
     $("#uploadify").uploadify({
         'debug' : false,
-        'swf': "http://cdn.gaokao360.net/static/bower_components/uploadify/uploadify.swf",
+        'swf': "/static/bower_components/uploadify/uploadify.swf",
         'fileObjName': 'file',
         'uploader': "http://pre.file.xy189.cn/file/upload/savefile.shtml",
         'auto': true,
