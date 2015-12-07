@@ -5,10 +5,8 @@ define(function (require) {
     function errorTips(txt) {
         $('.error-tips').text(txt).fadeIn(1000).fadeOut(1000);
     }
-    alert(111)
     // 获取手机号
     $.get('/vip/getAccount.do', function (res) {
-        alert(res)
         var phoneN = res.bizData.account;
         if (res.rtnCode == '0000000') {
             if(phoneN){

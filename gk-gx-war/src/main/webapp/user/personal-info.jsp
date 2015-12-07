@@ -77,6 +77,89 @@
 <script>
     seajs.use("/static/src/user/scripts/personal-info");
 </script>
+<link rel="stylesheet" href="http://cdn.gaokao360.net/static/bower_components/laydate/need/laydate.css"/>
+<link rel="stylesheet" href="http://cdn.gaokao360.net/static/bower_components/laydate/skins/dahong/laydate.css"/>
+<script src="http://cdn.gaokao360.net/static/bower_components/jquery/dist/cdn.jquery.min.js"></script>
+<script src="http://cdn.gaokao360.net/static/bower_components/uploadify/jquery.uploadify.js"></script>
+<script>
+    var errorCodes = ["-100", "-110", "-120", "-130"];
+    var errorMsgs = ["文件数量不能超过(5)", "文件超过大小限制(10MB)", "零字节的文件", "无效的文件类型"];
+    $("#uploadify").uploadify({
+        'debug' : false,
+        'swf': "/static/src/user/scripts/uploadify/uploadify.swf",
+        'fileObjName': 'file',
+        'uploader': "http://pre.file.xy189.cn/file/upload/savefile.shtml",
+        'auto': true,
+        'removeTimeout': 0,
+        'multi': false,
+        'uploadLimit': 0,
+        'fileSizeLimit': "10MB",
+        'fileTypeDesc': '图片文件(*.jpg;*.png;*.gif;*.jpeg)',
+        'buttonText': '点击上传',
+        'fileTypeExts': "*.jpg;*.png;*.gif;*.jpeg",
+        'progressData': 'percentage',
+        'speed': 'percentage',
+        'queueSizeLimit': 5,
+        'removeCompleted': true,
+        'onSelect': function (file) {
+
+            this.queueData.filesErrored = 0;
+        },
+        'onOpen': function (event, ID, fileObj) {
+        },
+        'onSelectError': function (file, errorCode, errorMsg) {
+
+            for (var i = 0; i < errorCodes.length; i++) {
+                if (errorCodes[i] == errorCode) {
+                    this.queueData.errorMsg = errorMsgs[i];
+                }
+            }
+        },
+        'onCancel': function (file) {
+            //alert(file.name);
+        },
+        'onFallback': function () {
+            alert("浏览器不能兼容Flash,请下载最新版!");
+        },
+        'onClearQueue': function (queueItemCount) {
+        },
+        'onUploadStart': function (file) {
+            console.log(file)
+        },
+        'onUploadSuccess': function (file, data, response) {
+            //获取到data处理
+            console.log(data);
+            var obj = JSON.parse(data);
+            var data = {'userIcon': obj.data.url};
+            $('.avatar-img').attr('src', obj.data.url);
+            var id = this.wrapper.selector;
+            $(id).uploadify('settings', 'buttonText', '正在加载');
+            $("img[data-icon]").each(function () {
+                $(this).attr("src", obj.data.url + "!100?t=" + new Date().getTime());
+            });
+            $(id).uploadify('settings', 'buttonText', '换一个');
+        },
+        'onUploadError': function (file, errorCode, errorMsg, errorString) {
+            switch (errorMsg) {
+                case '400':
+                    $('#' + file.id).find('.data').html(" - 上传失败，文件超过大小限制(2MB)");
+                    break;
+                case '401':
+                    $('#' + file.id).find('.data').html(" - 上传失败，零字节的文件");
+                    break;
+                case '402':
+                    $('#' + file.id).find('.data').html(" - 上传失败，无效的文件类型");
+                    break;
+                case '500':
+                    $('#' + file.id).find('.data').html(" - 上传失败，服务器问题");
+                    break;
+            }
+        },
+        'onDialogClose': function (queueDat) {
+        }
+    });
+</script>
 <%@include file="/common/footer.jsp"%>
+
 </body>
 </html>
