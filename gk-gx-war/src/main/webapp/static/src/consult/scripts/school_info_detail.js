@@ -265,6 +265,7 @@ define(function (require) {
                 + '<tr>'
                 + '<th  class="name">专业名称</th>'
                 + '<th>批次</th>'
+                + '<th>性质</th>'
                 + '<th>科类</th>'
                 + '<th>计划人数</th>'
                 //+ '<th>学制</th>'
@@ -275,8 +276,9 @@ define(function (require) {
                 for (var j = 0; j < data[i].planInfos.length; j++) {
                     var planInfosData = data[i].planInfos[j];
                     tabContentHtml += '<tr batch="' + planInfosData.subject + '">'
-                    + '<td width="50%"><a target="_blank" href="/consult/profession_detail.jsp?id=' + planInfosData.majoredId + '">' + (planInfosData.majoredName || '') + '</a></td>'
-                    + '<td width="20%">' + (planInfosData.batch || '') + '</td>'
+                    + '<td width="40%"><a target="_blank" href="/consult/profession_detail.jsp?id=' + planInfosData.majoredId + '">' + (planInfosData.majoredName || '') + '</a></td>'
+                    + '<td width="15%">' + (planInfosData.batch || '') + '</td>'
+                    + '<td width="15%">' + (planInfosData.majoredType || '') + '</td>'
                     + '<td width="15%">' + (planInfosData.subject || '') + '</td>'
                     + '<td width="15%">' + (planInfosData.planNumber || '') + '</td>'
                     //+ '<td width="10%">' + (planInfosData.schoolLength || '') + '</td>'
