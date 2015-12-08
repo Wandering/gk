@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>高考热点1</title>
+    <title>高考热点</title>
     <%@ include file="/common/meta.jsp"%>
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/consult/styles/gk_hot.min.css" />
 </head>
