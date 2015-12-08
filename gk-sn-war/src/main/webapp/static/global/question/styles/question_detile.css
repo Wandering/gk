@@ -593,7 +593,6 @@ input, textarea {
   top: 13.63636px;
   left: 13.63636px;
   -webkit-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
   -webkit-animation: line-spin-fade-loader 1.2s 0.24s infinite ease-in-out;
   animation: line-spin-fade-loader 1.2s 0.24s infinite ease-in-out; }
@@ -602,7 +601,6 @@ input, textarea {
   top: 0;
   left: 20px;
   -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
   transform: rotate(90deg);
   -webkit-animation: line-spin-fade-loader 1.2s 0.36s infinite ease-in-out;
   animation: line-spin-fade-loader 1.2s 0.36s infinite ease-in-out; }
@@ -611,7 +609,6 @@ input, textarea {
   top: -13.63636px;
   left: 13.63636px;
   -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
   transform: rotate(45deg);
   -webkit-animation: line-spin-fade-loader 1.2s 0.48s infinite ease-in-out;
   animation: line-spin-fade-loader 1.2s 0.48s infinite ease-in-out; }
@@ -626,7 +623,6 @@ input, textarea {
   top: -13.63636px;
   left: -13.63636px;
   -webkit-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
   -webkit-animation: line-spin-fade-loader 1.2s 0.72s infinite ease-in-out;
   animation: line-spin-fade-loader 1.2s 0.72s infinite ease-in-out; }
@@ -635,7 +631,6 @@ input, textarea {
   top: 0;
   left: -20px;
   -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
   transform: rotate(90deg);
   -webkit-animation: line-spin-fade-loader 1.2s 0.84s infinite ease-in-out;
   animation: line-spin-fade-loader 1.2s 0.84s infinite ease-in-out; }
@@ -644,7 +639,6 @@ input, textarea {
   top: 13.63636px;
   left: -13.63636px;
   -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
   transform: rotate(45deg);
   -webkit-animation: line-spin-fade-loader 1.2s 0.96s infinite ease-in-out;
   animation: line-spin-fade-loader 1.2s 0.96s infinite ease-in-out; }
@@ -1050,8 +1044,7 @@ a.next-btn:hover {
   text-decoration: none !important;
   text-align: center;
   -webkit-transform-origin: -50% 50%;
-  -ms-transform-origin: -50% 50%;
-      transform-origin: -50% 50%;
+  transform-origin: -50% 50%;
   -webkit-transform: rotate3d(0, 0, 1, 90deg);
   transform: rotate3d(0, 0, 1, 90deg);
   -webkit-transition: -webkit-transform .3s ease-in;
@@ -1741,7 +1734,6 @@ input, textarea {
   top: 13.63636px;
   left: 13.63636px;
   -webkit-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
   -webkit-animation: line-spin-fade-loader 1.2s 0.24s infinite ease-in-out;
   animation: line-spin-fade-loader 1.2s 0.24s infinite ease-in-out; }
@@ -1750,7 +1742,6 @@ input, textarea {
   top: 0;
   left: 20px;
   -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
   transform: rotate(90deg);
   -webkit-animation: line-spin-fade-loader 1.2s 0.36s infinite ease-in-out;
   animation: line-spin-fade-loader 1.2s 0.36s infinite ease-in-out; }
@@ -1759,7 +1750,6 @@ input, textarea {
   top: -13.63636px;
   left: 13.63636px;
   -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
   transform: rotate(45deg);
   -webkit-animation: line-spin-fade-loader 1.2s 0.48s infinite ease-in-out;
   animation: line-spin-fade-loader 1.2s 0.48s infinite ease-in-out; }
@@ -1774,7 +1764,6 @@ input, textarea {
   top: -13.63636px;
   left: -13.63636px;
   -webkit-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
   -webkit-animation: line-spin-fade-loader 1.2s 0.72s infinite ease-in-out;
   animation: line-spin-fade-loader 1.2s 0.72s infinite ease-in-out; }
@@ -1783,7 +1772,6 @@ input, textarea {
   top: 0;
   left: -20px;
   -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
   transform: rotate(90deg);
   -webkit-animation: line-spin-fade-loader 1.2s 0.84s infinite ease-in-out;
   animation: line-spin-fade-loader 1.2s 0.84s infinite ease-in-out; }
@@ -1792,7 +1780,6 @@ input, textarea {
   top: 13.63636px;
   left: -13.63636px;
   -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
   transform: rotate(45deg);
   -webkit-animation: line-spin-fade-loader 1.2s 0.96s infinite ease-in-out;
   animation: line-spin-fade-loader 1.2s 0.96s infinite ease-in-out; }
@@ -2198,8 +2185,7 @@ a.next-btn:hover {
   text-decoration: none !important;
   text-align: center;
   -webkit-transform-origin: -50% 50%;
-  -ms-transform-origin: -50% 50%;
-      transform-origin: -50% 50%;
+  transform-origin: -50% 50%;
   -webkit-transform: rotate3d(0, 0, 1, 90deg);
   transform: rotate3d(0, 0, 1, 90deg);
   -webkit-transition: -webkit-transform .3s ease-in;

@@ -40,9 +40,9 @@
         </div>
     </div>
 </div>
-<%@include file="/common/footer.jsp"%>
 <script>
     seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/expert-service.min");
 </script>
+<%@include file="/common/footer.jsp"%>
 </body>
 </html>

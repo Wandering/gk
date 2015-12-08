@@ -24,8 +24,13 @@
     </div>
 </div>
 
-<%@ include file="/common/footer.jsp"%>
 
+<script src="http://cdn.gaokao360.net/static/bower_components/kindeditor/kindeditor.js"></script>
+<script src="http://cdn.gaokao360.net/static/bower_components/kindeditor/lang/zh-CN.js"></script>
+<script type="text/javascript">
+    seajs.use("http://cdn.gaokao360.net/static/global/question/scripts/ask.min");
+</script>
+<%@ include file="/common/footer.jsp"%>
 <div class="custom-model" style="display: none" id="custom_model">
     <div class="custom-content">
         <div class="custom-head">温馨提示</div>
@@ -35,10 +40,5 @@
         </div>
     </div>
 </div>
-<script src="http://cdn.gaokao360.net/static/bower_components/kindeditor/kindeditor.js"></script>
-<script src="http://cdn.gaokao360.net/static/bower_components/kindeditor/lang/zh-CN.js"></script>
-<script type="text/javascript">
-    seajs.use("http://cdn.gaokao360.net/static/global/question/scripts/ask.min");
-</script>
 </body>
 </html>

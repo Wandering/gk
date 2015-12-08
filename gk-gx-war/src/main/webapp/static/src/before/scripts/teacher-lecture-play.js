@@ -7,7 +7,6 @@ define(function (require) {
     var courseId = detailsUrl.substr(num + 10);
     (classifyType == 1) ? (window.document.title = "名师学堂详情") : (window.document.title = "高考心理详情");
 
-    //var localhosts = 'http://www.gkzy114.com';
 
 
     function GetCookie(sMainName, sSubName) {
@@ -55,10 +54,7 @@ define(function (require) {
                         }
                         $('#episode-num').append(listMsgHtml);
                     }
-                    $('#episode-num').find('a:eq(0)').click();
-                    var firstFileurl = $('#episode-num').find('a:eq(0)').attr('fileurl');
-                    console.log(firstFileurl);
-
+                    var firstFileurl = dataJson[0].fileUrl;
                     var videoHtml = ''
                         + '<video class="video" poster="http://cdn.gaokao360.net/static/gx/before/images/poster.png" width="759" height="427" controls preload>'
                         + '<source src="' + firstFileurl + '" media="only screen and (min-device-width: 568px)"></source>'
@@ -68,17 +64,7 @@ define(function (require) {
                 }
             });
     }
-
     getList();
-    //$.get('/before/video/getVideoSectionList.do?courseId=' + courseId, function(data) {
-    //    if ('0000000' === data.rtnCode) {
-    //        var videoCourse = data.bizData.videoCourse;
-    //        if (videoCourse) {
-    //            $('#title').html(videoCourse.teacher + '<span>' + videoCourse.title + '</span>');
-    //            $('#subcontent').html(videoCourse.subcontent);
-    //        }
-    //    }
-    //});
     $('#episode-num').on('click', 'a', function () {
         $(this).addClass('active').siblings().removeClass('active');
         var fileurl = $(this).attr('fileurl');
@@ -86,7 +72,7 @@ define(function (require) {
             $(window).scrollTop(0);
 
             var videoHtml = ''
-                + '<video class="video" poster="http://cdn.gaokao360.net/static/gx/before/images/poster.png" width="618" height="347" controls preload>'
+                + '<video class="video" poster="http://cdn.gaokao360.net/static/gx/before/images/poster.png" width="759" height="427" controls preload>'
                 + '<source src="' + fileurl + '" media="only screen and (min-device-width: 568px)"></source>'
                 + '</video>';
             $('#videoHtml').html(videoHtml);

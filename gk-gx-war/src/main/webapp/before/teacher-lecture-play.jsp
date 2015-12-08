@@ -4,6 +4,7 @@
 <head>
     <title>考前备考</title>
     <%@ include file="/common/meta.jsp"%>
+    <%--<link rel="stylesheet" href="static/global/guide/styles/volunteer_forum_play.min.css" />--%>
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/guide/styles/volunteer_forum_play.min.css" />
 </head>
 <body>
@@ -27,12 +28,13 @@
         <div class="episode-num mt20" id="episode-num"></div>
     </div>
 </div>
-<%@ include file="/common/footer.jsp"%>
-<script type="text/javascript" src="http://cdn.gaokao360.net/static/bower_components/html5media/html5media.min.js"></script>
+<%--<script type="text/javascript" src="http://cdn.gaokao360.net/static/bower_components/html5media/html5media.min.js"></script>--%>
+<script src="http://api.html5media.info/1.1.8/html5media.min.js"></script>
 <script>
 //    seajs.use(["http://cdn.gaokao360.net/static/global/before/scripts/teacher-lecture-play.min","http://cdn.gaokao360.net/static/gx/before/scripts/teacher-lecture-play-user.min"]);
     seajs.use(["/static/src/before/scripts/teacher-lecture-play"]);
 </script>
+<%@ include file="/common/footer.jsp"%>
 </body>
 </html>
 

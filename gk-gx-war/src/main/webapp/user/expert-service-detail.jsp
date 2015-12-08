@@ -62,10 +62,10 @@
 </div>
 
 
-<%@include file="/common/footer.jsp"%>
 
 <script>
     seajs.use("http://cdn.gaokao360.net/static/global/user/scripts/expert-service-detail.min");
 </script>
+<%@include file="/common/footer.jsp"%>
 </body>
 </html>

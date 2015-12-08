@@ -43,11 +43,11 @@
     </div>
 </div>
 
-<%@ include file="/common/footer.jsp"%>
 <script type="text/javascript">
-//    seajs.use("/static/src/consult/scripts/profession_detail");
+    //    seajs.use("/static/src/consult/scripts/profession_detail");
     seajs.use("http://cdn.gaokao360.net/static/global/consult/scripts/profession_detail.min");
 </script>
+<%@ include file="/common/footer.jsp"%>
 </body>
 </html>
 

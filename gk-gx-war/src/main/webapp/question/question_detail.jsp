@@ -28,10 +28,10 @@
     </div>
 </div>
 
-<%@ include file="/common/footer.jsp"%>
 <script type="text/javascript">
     seajs.use(["http://cdn.gaokao360.net/static/global/question/scripts/question_detail.min","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
 </script>
+<%@ include file="/common/footer.jsp"%>
 </body>
 </html>
 
