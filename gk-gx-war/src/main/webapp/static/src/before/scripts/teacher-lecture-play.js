@@ -1,6 +1,7 @@
 define(function (require) {
     var $ = require('$');
 
+
     var detailsUrl = window.location.search;
     var classifyType = detailsUrl.substr(14, 1);
     var num = detailsUrl.indexOf("&");
@@ -54,13 +55,12 @@ define(function (require) {
                         }
                         $('#episode-num').append(listMsgHtml);
                     }
-                    var firstFileurl = dataJson[0].fileUrl;
+                    var urls = dataJson[0].fileUrl;
                     var videoHtml = ''
-                        + '<video class="video" poster="http://cdn.gaokao360.net/static/gx/before/images/poster.png" width="759" height="427" controls preload>'
-                        + '<source src="' + firstFileurl + '" media="only screen and (min-device-width: 568px)"></source>'
-                        + '</video>';
+                        +'<video class="video" id="video" poster="http://media.html5media.info/poster.jpg" controls preload>'
+                        +'<source id="source" src="'+urls+'" media="only screen and (min-device-width: 568px)"></source>'
+                        +'</video>';
                     $('#videoHtml').html(videoHtml);
-
                 }
             });
     }
@@ -70,7 +70,6 @@ define(function (require) {
         var fileurl = $(this).attr('fileurl');
         if (fileurl != "" || fileurl == null) {
             $(window).scrollTop(0);
-
             var videoHtml = ''
                 + '<video class="video" poster="http://cdn.gaokao360.net/static/gx/before/images/poster.png" width="759" height="427" controls preload>'
                 + '<source src="' + fileurl + '" media="only screen and (min-device-width: 568px)"></source>'
@@ -81,6 +80,10 @@ define(function (require) {
             $('.error-tips').text('您还不是VIP用户,请升级为VIP后在观看。').fadeIn(1000).fadeOut(2000);
         }
     });
+
+
+
+
 
 
 });

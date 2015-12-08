@@ -59,7 +59,7 @@ define(function (require) {
                                 $.each(listData.data[i].data, function (j, m) {
                                     var schoolListHtml = ''
                                         + '<div>'
-                                        + '<span class="fl"><a target="_blank" href="/consult/school_detail.jsp?id=' + m.m_university_code + '&batch=' + m_batch_id + '" id="' + m.m_university_code + '">' + m.m_university_name + '</a></span>'
+                                        + '<span class="fl"><a target="_blank" href="/consult/school_detail.jsp?code=' + m.m_university_code + '&batch=' + m_batch_id + '" id="' + m.m_university_code + '">' + m.m_university_name + '</a></span>'
                                         + '<span class="fr selSchool" datatypeId="' + datatypeId + '" m_university_name="' + m.m_university_name + '" id="' + m.m_university_code + '" type = "' + m_keleiType + '" m_batch_id="' + m_batch_id + '" m_batch="' + m_batch + '">选择</span>'
                                         + '</div>';
                                     $('#school-list' + i).append(schoolListHtml);
@@ -103,18 +103,27 @@ define(function (require) {
             var years = 2014;
             //console.log(code + "+" + type + "+" + m_batch + "+" + m_batch_id + "+" + datatypeid + "+" + m_university_name)
             var star = '';
+            var sequence='';
             var starType = $(this).parents('.school-list').attr('dataType');
             if (starType == "A") {
                 star = '★';
+                sequence='1';
             } else if (starType == "B") {
                 star = '★★';
+                sequence='2';
             } else if (starType == "C") {
+                star = '★★';
+                sequence='3';
+            } else if (starType == "D") {
                 star = '★★★';
+                sequence='4';
+            } else if (starType == "E") {
+                star = '★★★';
+                sequence='5';
             } else {
                 star = '★★★★';
+                sequence='6';
             }
-            //console.log(code + "=" + type + "==" + m_batch);
-            //console.log(star);
             $.ajax({
                 url: '/university/universityDetail.do',
                 type: 'GET',
@@ -147,14 +156,16 @@ define(function (require) {
                         $('.open-flow3[type="text"][dataType="' + datatypeid + '"]').val(m_university_name).attr({
                             'code': code,
                             'm_batch': m_batch,
-                            'm_batch_id': m_batch_id
+                            'm_batch_id': m_batch_id,
+                            'sequence':sequence
                         });
-                        if (data.provinceName == "广西") {
+                        if (data.provinceName.substr(0,2) == "广西") {
                             $('input.partChecked[name="isFun' + datatypeid + '"]').parent().show();
                             $('#area-tips' + datatypeid).show();
                         } else {
                             $('input.partChecked[name="isFun' + datatypeid + '"]').parent().hide();
                             $('#area-tips' + datatypeid).hide();
+                            $('#specialtyPart'+datatypeid).hide();
                         }
                         $('#result-info' + datatypeid).html(infoHtml);
                         $('#tips' + datatypeid).hide();
@@ -346,51 +357,57 @@ define(function (require) {
             //合理性分析
             var m_university_codeA = $('input[type="text"][dataType="1"]').attr('code');
             var m_university_nameA = $('input[type="text"][dataType="1"]').val();
+            var sequenceA = $('input[type="text"][dataType="1"]').attr('sequence');
             var m_university_codeB = $('input[type="text"][dataType="2"]').attr('code');
             var m_university_nameB = $('input[type="text"][dataType="2"]').val();
+            var sequenceB = $('input[type="text"][dataType="2"]').attr('sequence');
             var m_university_codeC = $('input[type="text"][dataType="3"]').attr('code');
             var m_university_nameC = $('input[type="text"][dataType="3"]').val();
+            var sequenceC = $('input[type="text"][dataType="3"]').attr('sequence');
             var m_university_codeD = $('input[type="text"][dataType="4"]').attr('code');
             var m_university_nameD = $('input[type="text"][dataType="4"]').val();
+            var sequenceD = $('input[type="text"][dataType="4"]').attr('sequence');
             var m_university_codeE = $('input[type="text"][dataType="5"]').attr('code');
             var m_university_nameE = $('input[type="text"][dataType="5"]').val();
+            var sequenceE = $('input[type="text"][dataType="5"]').attr('sequence');
             var m_university_codeF = $('input[type="text"][dataType="6"]').attr('code');
             var m_university_nameF = $('input[type="text"][dataType="6"]').val();
+            var sequenceF = $('input[type="text"][dataType="6"]').attr('sequence');
             var m_batch = $('input[type="text"][dataType="1"]').attr('m_batch');
             var m_batch_id = $('input[type="text"][dataType="1"]').attr('m_batch_id');
             var data = [
                 {
-                    "sequence": 1,
+                    "sequence": sequenceA,
                     "m_university_code": m_university_codeA,
                     "m_university_name": m_university_nameA
 
                 },
                 {
-                    "sequence": 2,
+                    "sequence": sequenceB,
                     "m_university_code": m_university_codeB,
                     "m_university_name": m_university_nameB
 
                 },
                 {
-                    "sequence": 3,
+                    "sequence": sequenceC,
                     "m_university_code": m_university_codeC,
                     "m_university_name": m_university_nameC
 
                 },
                 {
-                    "sequence": 4,
+                    "sequence": sequenceD,
                     "m_university_code": m_university_codeD,
                     "m_university_name": m_university_nameD
 
                 },
                 {
-                    "sequence": 5,
+                    "sequence": sequenceE,
                     "m_university_code": m_university_codeE,
                     "m_university_name": m_university_nameE
 
                 },
                 {
-                    "sequence": 6,
+                    "sequence": sequenceF,
                     "m_university_code": m_university_codeF,
                     "m_university_name": m_university_nameF
 
@@ -401,8 +418,6 @@ define(function (require) {
                 "m_batch_id": m_batch_id,
                 "m_batch": m_batch
             };
-
-
             var typeT = '';
             var type = paramsJson.m_kelei;
             if (type == "文史") {
@@ -415,8 +430,6 @@ define(function (require) {
                 "data": data,
                 "related": related
             };
-            //console.log(JSON.stringify(params))
-
             $.ajax({
                 url: '/guide/report.do',
                 type: 'GET',
@@ -442,11 +455,8 @@ define(function (require) {
                             var schoolListColHtml = '<div class="col-list">' + v.m_university_name + '</div>';
                             $('.school-list-col').append(schoolListColHtml);
                         });
-
                         var dataEnroll = $.parseJSON(res.bizData).enroll;
-                        //console.log(dataEnroll);
                         $.each(dataEnroll, function (i, v) {
-
                             var enrollIntro = v.enrollIntro;
                             var name = v.name;
                             var enrollmentSchoolHtml = '<div class="col-list">' + name + '</div>';
@@ -491,10 +501,13 @@ define(function (require) {
 
         // 个人信息
         $.get('/info/getUserInfo.do', function (res) {
+            console.log(res)
             if (res.rtnCode == '0000000') {
                 var personListData = res.bizData;
                 var schoolName = personListData.schoolName;
                 var sex = personListData.sex;
+                var name = personListData.name;
+                $('#studentName').text(name);
                 $('#m_candidateNumber').text(paramsJson.m_candidateNumber);
                 $('#m_aggregateScore').text(paramsJson.m_aggregateScore);
                 $('#m_ranking').text(paramsJson.m_ranking);

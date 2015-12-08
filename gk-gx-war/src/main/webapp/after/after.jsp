@@ -96,8 +96,8 @@
     </div>
 </div>
 <script>
-//    seajs.use("http://cdn.gaokao360.net/static/gx/after/scripts/after.min");
-    seajs.use("/static/src/after/scripts/after");
+    seajs.use("http://cdn.gaokao360.net/static/gx/after/scripts/after.min");
+//    seajs.use("/static/src/after/scripts/after");
 </script>
 <%@ include file="/common/footer.jsp"%>
 </body>

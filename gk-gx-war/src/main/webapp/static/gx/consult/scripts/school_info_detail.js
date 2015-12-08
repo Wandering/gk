@@ -267,8 +267,8 @@ define(function (require) {
                 + '<th>批次</th>'
                 + '<th>科类</th>'
                 + '<th>计划人数</th>'
-                + '<th>学制</th>'
-                + '<th>收费标准</th>'
+                //+ '<th>学制</th>'
+                //+ '<th>收费标准</th>'
                 + '</tr>'
                 + '</thead>'
                 + '<tbody>';
@@ -276,11 +276,11 @@ define(function (require) {
                     var planInfosData = data[i].planInfos[j];
                     tabContentHtml += '<tr batch="' + planInfosData.subject + '">'
                     + '<td width="50%"><a target="_blank" href="/consult/profession_detail.jsp?id=' + planInfosData.majoredId + '">' + (planInfosData.majoredName || '') + '</a></td>'
-                    + '<td width="10%">' + (planInfosData.batch || '') + '</td>'
-                    + '<td width="10%">' + (planInfosData.subject || '') + '</td>'
-                    + '<td width="10%">' + (planInfosData.planNumber || '') + '</td>'
-                    + '<td width="10%">' + (planInfosData.schoolLength || '') + '</td>'
-                    + '<td width="10%">' + (planInfosData.feeStandard || '') + '</td>'
+                    + '<td width="20%">' + (planInfosData.batch || '') + '</td>'
+                    + '<td width="15%">' + (planInfosData.subject || '') + '</td>'
+                    + '<td width="15%">' + (planInfosData.planNumber || '') + '</td>'
+                    //+ '<td width="10%">' + (planInfosData.schoolLength || '') + '</td>'
+                    //+ '<td width="10%">' + (planInfosData.feeStandard || '') + '</td>'
                     + '</tr>';
                 }
                 tabContentHtml += '</tbody></table></div>';

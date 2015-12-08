@@ -244,7 +244,7 @@ define(function (require) {
             var _this = this;
             var batch = getUrLinKey('batch');
             $.get('/university/getEnrollPlan.do?id=' + schoolId + '&batch=' + batch, function (data) {
-                console.log(data)
+                console.info(data)
                 if (data.rtnCode == '0000000') {
                     _this.renderEnroll(data.bizData.enrollPlan);
                 }

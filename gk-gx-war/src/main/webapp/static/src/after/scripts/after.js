@@ -71,8 +71,13 @@ define(function (require) {
                 },
                 success: function (res) {
                     //console.log(res)
-                    if (res.rtnCode == "0100006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
+                    if (res.rtnCode == "0100006" || res.rtnCode == "1000004") {
                         errorTips(res.msg);
+                        return false;
+                    }
+                    if( res.rtnCode == "0100005"){
+                        errorTips(res.msg);
+                        $('#yzmDreamSchool').attr('src', '/verifyCode/randomVerifyCode.do?type=4&code=' + Math.random());
                         return false;
                     }
                     if (res.rtnCode == "0000000") {
