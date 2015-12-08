@@ -7,10 +7,19 @@ public class PlanInfo {
     private long majoredId;
     private String majoredName;
     private String batch;
+    private String majoredType;
     private String subject;
     private Integer planNumber;
     private String schoolLength;
     private String feeStandard;
+
+    public String getMajoredType() {
+        return majoredType;
+    }
+
+    public void setMajoredType(String majoredType) {
+        this.majoredType = majoredType;
+    }
 
     public long getMajoredId() {
         return majoredId;
