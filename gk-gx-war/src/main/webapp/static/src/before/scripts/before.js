@@ -32,7 +32,6 @@ define(function (require) {
     });
 
 
-    //var localhosts = 'http://www.gkzy114.com';
 
     // 获取科目
     function getSubjectList() {
@@ -234,8 +233,13 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
-                if (res.rtnCode == "0100006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
+                if (res.rtnCode == "0100006" || res.rtnCode == "1000004") {
                     errorTips(res.msg);
+                    return false;
+                }
+                if(res.rtnCode == '0100005'){
+                    errorTips(res.msg);
+                    $('#college-yzm').attr('src', '/verifyCode/randomVerifyCode.do?type=1&code=' + Math.random())
                     return false;
                 }
                 if (res.rtnCode == "0000000") {
@@ -335,8 +339,14 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
-                if (res.rtnCode == "1000006" || res.rtnCode == "1000004") {
+                console.log(res)
+                if (res.rtnCode == "1000006") {
                     errorTips(res.msg);
+                    return false;
+                }
+                if(res.rtnCode == '0100005'){
+                    errorTips(res.msg);
+                    $('#yzmDreamSchool').attr('src', '/verifyCode/randomVerifyCode.do?type=2&code=' + Math.random())
                     return false;
                 }
                 var data = $.parseJSON(res.bizData);
@@ -415,6 +425,11 @@ define(function (require) {
                 if (res.rtnCode == "1000006" || res.rtnCode == "1000004") {
                     $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
                     return;
+                }
+                if(res.rtnCode == '0100005'){
+                    errorTips(res.msg);
+                    $('#precedence-yzmDreamSchool').attr('src', '/verifyCode/randomVerifyCode.do?type=3&code=' + Math.random())
+                    return false;
                 }
                 var data = $.parseJSON(res.bizData);
                 if (!data) {

@@ -62,9 +62,9 @@
 
 </div>
 
-<%@include file="/common/footer.jsp"%>
 <script>
     seajs.use(["http://cdn.gaokao360.net/static/global/user/scripts/online-answer.min","http://cdn.gaokao360.net/static/bower_components/utils/getTime.js"]);
 </script>
+<%@include file="/common/footer.jsp"%>
 </body>
 </html>
