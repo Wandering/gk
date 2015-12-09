@@ -125,6 +125,10 @@ public class ExUniversityServiceImpl implements IExUniversityService {
         param.put("areaId",areaId);
         Calendar c = Calendar.getInstance();
         int year=c.get(Calendar.YEAR);
+        List<Integer> yearList=iUniversityExDAO.getRecentlyPlanInfosByYear(param);
+        if (yearList.size()>1){
+            year=yearList.get(0);
+        }
         param.put("year",year);
         return iUniversityExDAO.getOpenMajoredPojoList(param);
     }
