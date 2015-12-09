@@ -1116,10 +1116,10 @@ h1 {
         .info-content .info ul li a.website:hover {
           color: #e24333; }
         .info-content .info ul li.school-name {
-          font-size: 30px;
+          font-size: 25px;
           color: #444;
           width: 90%;
-          margin: 0px 0 10px 10px; }
+          margin: 0 0 10px 10px; }
         .info-content .info ul li.integet-line {
           width: 100%; }
 
@@ -1251,7 +1251,7 @@ h1 {
   box-shadow: 2px 0 0 #ccc; }
 
 .school-table div.tipTxt {
-  width: 300px;
+  width: 350px;
   background: #fcf8e3;
   border: 1px solid #faebcc;
   height: 35px;

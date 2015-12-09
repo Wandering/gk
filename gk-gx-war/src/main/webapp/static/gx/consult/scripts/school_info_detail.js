@@ -267,8 +267,8 @@ define(function (require) {
                 + '<th>批次</th>'
                 + '<th>科类</th>'
                 + '<th>计划人数</th>'
-                + '<th>学制</th>'
-                + '<th>收费标准</th>'
+                //+ '<th>学制</th>'
+                //+ '<th>收费标准</th>'
                 + '</tr>'
                 + '</thead>'
                 + '<tbody>';
@@ -276,11 +276,11 @@ define(function (require) {
                     var planInfosData = data[i].planInfos[j];
                     tabContentHtml += '<tr batch="' + planInfosData.subject + '">'
                     + '<td width="50%"><a target="_blank" href="/consult/profession_detail.jsp?id=' + planInfosData.majoredId + '">' + (planInfosData.majoredName || '') + '</a></td>'
-                    + '<td width="10%">' + (planInfosData.batch || '') + '</td>'
-                    + '<td width="10%">' + (planInfosData.subject || '') + '</td>'
-                    + '<td width="10%">' + (planInfosData.planNumber || '') + '</td>'
-                    + '<td width="10%">' + (planInfosData.schoolLength || '') + '</td>'
-                    + '<td width="10%">' + (planInfosData.feeStandard || '') + '</td>'
+                    + '<td width="20%">' + (planInfosData.batch || '') + '</td>'
+                    + '<td width="15%">' + (planInfosData.subject || '') + '</td>'
+                    + '<td width="15%">' + (planInfosData.planNumber || '') + '</td>'
+                    //+ '<td width="10%">' + (planInfosData.schoolLength || '') + '</td>'
+                    //+ '<td width="10%">' + (planInfosData.feeStandard || '') + '</td>'
                     + '</tr>';
                 }
                 tabContentHtml += '</tbody></table></div>';
@@ -416,7 +416,7 @@ define(function (require) {
                 if (data.rtnCode == '0000000') {
 
                     var tabContentHtml = '<div class="school-table mt20">'
-                        + '<div class="tipTxt"><strong>温馨提示：</strong> <i class="star"></i>号表示该专业在该院校招生</div>'
+                        + '<div class="tipTxt"><strong>温馨提示：</strong> <i class="star"></i>号表示选择院校中的专业在当前省份招生</div>'
                         + '<table border="0" cellpadding="0" cellspacing="0">'
                         + '<thead>'
                         + '<tr>'

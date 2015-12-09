@@ -244,7 +244,7 @@ define(function (require) {
             var _this = this;
             var batch = getUrLinKey('batch');
             $.get('/university/getEnrollPlan.do?id=' + schoolId + '&batch=' + batch, function (data) {
-                console.log(data)
+                console.info(data)
                 if (data.rtnCode == '0000000') {
                     _this.renderEnroll(data.bizData.enrollPlan);
                 }
@@ -265,6 +265,7 @@ define(function (require) {
                 + '<tr>'
                 + '<th  class="name">专业名称</th>'
                 + '<th>批次</th>'
+                + '<th>性质</th>'
                 + '<th>科类</th>'
                 + '<th>计划人数</th>'
                 //+ '<th>学制</th>'
@@ -275,8 +276,9 @@ define(function (require) {
                 for (var j = 0; j < data[i].planInfos.length; j++) {
                     var planInfosData = data[i].planInfos[j];
                     tabContentHtml += '<tr batch="' + planInfosData.subject + '">'
-                    + '<td width="50%"><a target="_blank" href="/consult/profession_detail.jsp?id=' + planInfosData.majoredId + '">' + (planInfosData.majoredName || '') + '</a></td>'
-                    + '<td width="20%">' + (planInfosData.batch || '') + '</td>'
+                    + '<td width="40%"><a target="_blank" href="/consult/profession_detail.jsp?id=' + planInfosData.majoredId + '">' + (planInfosData.majoredName || '') + '</a></td>'
+                    + '<td width="15%">' + (planInfosData.batch || '') + '</td>'
+                    + '<td width="15%">' + (planInfosData.majoredType || '') + '</td>'
                     + '<td width="15%">' + (planInfosData.subject || '') + '</td>'
                     + '<td width="15%">' + (planInfosData.planNumber || '') + '</td>'
                     //+ '<td width="10%">' + (planInfosData.schoolLength || '') + '</td>'
@@ -416,7 +418,7 @@ define(function (require) {
                 if (data.rtnCode == '0000000') {
 
                     var tabContentHtml = '<div class="school-table mt20">'
-                        + '<div class="tipTxt"><strong>温馨提示：</strong> <i class="star"></i>号表示该专业在该院校招生</div>'
+                        + '<div class="tipTxt"><strong>温馨提示：</strong> <i class="star"></i>号表示选择院校中的专业在当前省份招生</div>'
                         + '<table border="0" cellpadding="0" cellspacing="0">'
                         + '<thead>'
                         + '<tr>'

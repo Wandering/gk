@@ -106,7 +106,7 @@ define(function (require) {
                 return false;
             }
             var openUniversityHtml = ''
-                +'<div class="tipTxt"><strong>温馨提示：</strong> <i class="star"></i>号表示该专业在该院校招生</div>'
+                +'<div class="tipTxt"><strong>温馨提示：</strong> <i class="star"></i>号表示选择院校中的专业在当前省份招生</div>'
                 + '<table class="table" id="openUniversity-table">'
                 + '<thead>'
                 + '<tr>'
