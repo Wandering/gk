@@ -8,22 +8,26 @@ import cn.thinkjoy.gk.service.IGkinformationGkhotService;
 import cn.thinkjoy.gk.service.IPolicyInterpretationService;
 import cn.thinkjoy.gk.service.IUniversityExService;
 import cn.thinkjoy.gk.service.IVolunteerSchoolService;
-import cn.thinkjoy.gk.util.AreaCookieUtil;
 import cn.thinkjoy.gk.util.ExcelUtil;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
+import java.io.File;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -184,5 +188,30 @@ public class TestController extends BaseController {
             }
         }
         return null;
+    }
+
+
+    @RequestMapping(value = "uploadFile", method = RequestMethod.POST)
+    @ResponseBody
+    public String uploadFile() {
+        String url = "http://cs-dev.thinkjoy.com.cn/rest/v1/uploadFile";
+//        FileSystemResource resource = new FileSystemResource(new File("/Users/zuohao/Desktop/test4.html"));
+        FileSystemResource resource = new FileSystemResource(new File("/Users/zuohao/Documents/转码视频/化学/14484335628433uvdfye8ppaks82haldw.mp4"));
+        MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
+        RestTemplate template = new RestTemplate();//这里大家可以用其他的httpClient均可以
+        param.add("file", resource);
+        param.add("productCode", "gk360");
+        param.add("bizSystem", "gk360");
+        param.add("spaceName", "gk360");
+        param.add("userId", "gk360");
+        param.add("dirId", "0");
+        template.getMessageConverters().add(new FastJsonHttpMessageConverter());
+        long start=System.currentTimeMillis();
+        System.out.println("开始时间:"+start);
+        String st = template.postForObject(url, param, String.class);
+        long end=System.currentTimeMillis();
+        System.out.println("结束时间:"+end);
+        System.out.println("上传耗费时间："+(end-start)+"ms");
+        return st+"上传耗费时间："+(end-start)+"ms";
     }
 }

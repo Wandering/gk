@@ -215,10 +215,12 @@ public class MajoredController extends BaseController {
     @ResponseBody
     public List<MajorDetailPojo> majorList(@RequestParam(value="code",required=false) String code,
                                            @RequestParam(value="year",required=false) Integer year,
+                                           @RequestParam(value="subject",required=false) String subject,
                                            @RequestParam(value="batch",required=false) String batch){
 
         if(StringUtils.isBlank(code)
                 ||StringUtils.isBlank(batch)
+                ||StringUtils.isBlank(subject)
                 ||null==year){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
@@ -226,7 +228,7 @@ public class MajoredController extends BaseController {
         List<MajorDetailPojo> lists = null;
 
         try {
-            lists = iMajoredService.getMajorDetailList(code, batch, year);
+            lists = iMajoredService.getMajorDetailList(code, batch, year,subject);
         }catch(Exception e){
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
         }

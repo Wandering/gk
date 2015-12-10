@@ -24,6 +24,6 @@ public interface IMajoredService {
 
     List<Map<String,Object>> getUniversityByCode(String majoredCode, String name);
 
-    List<MajorDetailPojo> getMajorDetailList(String code,String batch,Integer year);
+    List<MajorDetailPojo> getMajorDetailList(String code,String batch,Integer year,String subject);
 
 }
