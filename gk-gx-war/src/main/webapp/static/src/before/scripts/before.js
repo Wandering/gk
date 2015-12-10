@@ -2,6 +2,7 @@ define(function (require) {
     var $ = require('$');
     var pageEroorTip = require('pageErrorTip');
 
+    var localhosts = 'http://www.gkzy114.com';
     var UI = {
         $tabsList: $('.tabs-list'),
         $evaluatingSub: $('#evaluating-sub')
@@ -155,9 +156,10 @@ define(function (require) {
                             createDate = dataJson[i].createDate,
                             resources = dataJson[i].resources;
                         var date = new Date(createDate).Format('yyyy-MM-dd');
+                        console.log(resources)
                         var listMsgHtml = ''
                             + '<li class="item">'
-                            + '<a target="_blank" href="' + resources + '">'
+                            + '<a target="_blank" href="/before/exam-play.jsp?url='+ localhosts  + resources + '">'
                             + '<span class="subject-n"><strong>' + subject + '</strong></span>'
                             + '<span class="subject-t">' + paperName + '</span>'
                             + '<span class="subject-d">上传时间：' + date + '</span>'
