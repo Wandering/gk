@@ -6,7 +6,14 @@ define(function (require) {
         if (reg.test(window.location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
         return "";
     }
-
+    //加载loading
+    function loadingShowContent(){
+        $('.content').css({
+            'height':'auto'
+        });
+        $('.loader').hide();
+        $('.w1000').show();
+    }
     var Info = {
         getProfessionInfo: function (code) {
             var that = this;
@@ -99,7 +106,7 @@ define(function (require) {
                 return false;
             }
             var openUniversityHtml = ''
-                +'<div class="tipTxt"><strong>温馨提示：</strong> <i class="star"></i>号表示该专业在该院校招生</div>'
+                +'<div class="tipTxt"><strong>温馨提示：</strong> <i class="star"></i>号表示选择院校中的专业在当前省份招生</div>'
                 + '<table class="table" id="openUniversity-table">'
                 + '<thead>'
                 + '<tr>'
@@ -130,6 +137,7 @@ define(function (require) {
             }
             openUniversityHtml +='</tbody></table>';
             $('#tab_3').html(openUniversityHtml);
+            loadingShowContent();
         }
     };
 
@@ -167,7 +175,6 @@ define(function (require) {
             }
         ]
     }
-
     $(document).ready(function () {
         var code = getUrLinKey('id');
         Info.getProfessionInfo(code);

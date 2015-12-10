@@ -75,7 +75,6 @@ define(function (require) {
                 + '<source src="' + fileurl + '" media="only screen and (min-device-width: 568px)"></source>'
                 + '</video>';
             $('#videoHtml').html(videoHtml);
-
         } else {
             $('.error-tips').text('您还不是VIP用户,请升级为VIP后在观看。').fadeIn(1000).fadeOut(2000);
         }
