@@ -66,7 +66,6 @@ define(function (require) {
                                 })
                             }
                         });
-
                     }
                 }
             });
@@ -137,7 +136,7 @@ define(function (require) {
                 success: function (res) {
                     var data = res.bizData;
 
-                    //console.log(data)
+                    console.log(res)
                     if ('0000000' === res.rtnCode) {
                         var infoHtml = ''
                             + '<p>';
@@ -157,7 +156,8 @@ define(function (require) {
                             'code': code,
                             'm_batch': m_batch,
                             'm_batch_id': m_batch_id,
-                            'sequence':sequence
+                            'sequence':sequence,
+                            'types':type
                         });
                         if (data.provinceName.substr(0,2) == "广西") {
                             $('input.partChecked[name="isFun' + datatypeid + '"]').parent().show();
@@ -171,10 +171,10 @@ define(function (require) {
                         $('#tips' + datatypeid).hide();
                         $('#volunteer-flow3-layer,.tansLayer').hide();
                         $('#specialty' + datatypeid).show()
-                            .attr({'m_batch': m_batch, 'code': code, 'year': years})
+                            .attr({'m_batch': m_batch, 'code': code, 'year': years,'types':type})
                             .find('input').val('');
                         $('#specialtyPart' + datatypeid)
-                            .attr({'m_batch': m_batch, 'code': code, 'year': years})
+                            .attr({'m_batch': m_batch, 'code': code, 'year': years,'types':type})
                             .find('input').val('');
                     }
                 }
@@ -209,6 +209,7 @@ define(function (require) {
             var index = $(this).parents('li').index();
             var parents = $(this).parents('.specialty');
             var m_batch = parents.attr('m_batch');
+            var types = parents.attr('types');
             var code = parents.attr('code');
             var year = parents.attr('year');
             //console.log(boxId + "=" + index + "="+m_batch + "=" + code + "=" + year);
@@ -220,7 +221,8 @@ define(function (require) {
                 data: {
                     code: code,
                     year: year,
-                    batch: m_batch
+                    batch: m_batch,
+                    subject:types
                 },
                 success: function (res) {
                     //console.log(res);
