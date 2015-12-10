@@ -48,11 +48,12 @@ public class MajoredServiceImpl implements IMajoredService {
     }
 
     @Override
-    public List<MajorDetailPojo> getMajorDetailList(String code, String batch, Integer year) {
+    public List<MajorDetailPojo> getMajorDetailList(String code, String batch, Integer year,String subject) {
         Map<String,Object> params = new HashMap<>();
         params.put("code",code);
         params.put("batch",batch);
         params.put("year",year);
+        params.put("subject",subject);
         return majoredDAO.getMajorDetailList(params);
     }
 

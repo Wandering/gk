@@ -182,6 +182,9 @@
   <input type="button"  value="保存dd" id="btn">
 </form>
 
+<form action="testController/uploadFile.do" method="post">
+  <input type="submit" value="upload">
+</form>
 
 
 <div>

@@ -76,6 +76,9 @@
             <if test="year!=null">
                 and year = #{year}
             </if>
+            <if test="subject!=null">
+                and subject = #{subject}
+            </if>
         </where>
     </select>
 
