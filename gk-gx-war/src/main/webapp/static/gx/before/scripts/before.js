@@ -32,7 +32,6 @@ define(function (require) {
     });
 
 
-    //var localhosts = 'http://www.gkzy114.com';
 
     // 获取科目
     function getSubjectList() {
@@ -44,7 +43,6 @@ define(function (require) {
                     for (var i = 0; i < dataJson.length; i++) {
                         var tabLi = dataJson[i].subjectName,
                             tabId = dataJson[i].subjectId;
-                        console.log(tabLi)
                         var subjectListHtml = '<li id="' + tabId + '">' + tabLi + '</li>';
                         $('.subjectList').append(subjectListHtml);
                     }
@@ -235,9 +233,13 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
-                console.log(res)
-                if (res.rtnCode == "0100006" || res.rtnCode == "1000004" || res.rtnCode == "0100005") {
+                if (res.rtnCode == "0100006" || res.rtnCode == "1000004") {
                     errorTips(res.msg);
+                    return false;
+                }
+                if(res.rtnCode == '0100005'){
+                    errorTips(res.msg);
+                    $('#college-yzm').attr('src', '/verifyCode/randomVerifyCode.do?type=1&code=' + Math.random())
                     return false;
                 }
                 if (res.rtnCode == "0000000") {
@@ -248,9 +250,7 @@ define(function (require) {
                     $('#batchV').text(batchV);
                     $('#subjectTypeV').text(subjectTypeV);
                     var data = $.parseJSON(res.bizData);
-                    console.log(data)
                     var dataJson = data.data.result.data;
-                    console.log(dataJson.length)
 
                     if (!dataJson) {
                         errorTips(res.msg);
@@ -339,64 +339,35 @@ define(function (require) {
                 "code": yzmDreamV
             },
             success: function (res) {
-                if (res.rtnCode == "1000006" || res.rtnCode == "1000004") {
+                console.log(res)
+                if (res.rtnCode == "1000006") {
                     errorTips(res.msg);
                     return false;
                 }
+                if(res.rtnCode == '0100005'){
+                    errorTips(res.msg);
+                    $('#yzmDreamSchool').attr('src', '/verifyCode/randomVerifyCode.do?type=2&code=' + Math.random())
+                    return false;
+                }
                 var data = $.parseJSON(res.bizData);
-                console.log(data)
                 if (!data) {
                     errorTips(res.msg);
                     return false;
                 }
-
-
                 if (res.rtnCode == "0000000") {
-
                     if(data.data.length==0){
                         errorTips('暂无数据,请检查输入信息');
                         return false;
                     }
-
                     $('#dream-school-layer,.tansLayer').show();
                     $('#dreamScoreInfo').text(dreamScoreV);
                     $('#dreamSubjectTypeInfo').text(dreamSubjectTypeV);
                     $('#dreamSchoolInfo').text(dreamSchoolV);
                     $('#m_years').text(data.related.m_years)
-
-                    console.log(333)
-                    console.log(data.data)
-                    console.log(data.data.length)
-
-
-                    var m_averageScores = data.data.m_averageScores;
-                    var m_batch = data.data.m_batch;
-                    var m_lowestScore = data.data.m_lowestScore;
-                    console.log(m_averageScores + "=" + m_batch + "=" + m_lowestScore)
-                    var dreamSchoolList = ''
-                        + '<ul>'
-                        + '<li class="pc">' + m_batch + '</li>'
-                        + '<li class="result1">'
-                        + '<span class="t">所需最低分数</span>'
-                        + '<span class="num"><strong>' + m_lowestScore + '</strong>分</span>'
-                        + '</li>'
-                        + '<li class="result2">'
-                        + '<span class="t">所需平均分数</span>'
-                        + '<span class="num"><strong>' + m_averageScores + '</strong>分</span>'
-                        + '</li>'
-                        + '</ul>';
-
-                    $('#dream-list').append(dreamSchoolList);
-
-
-
-
                     for (var i = 0; i < data.data.length; i++) {
-                        console.log(224)
                         var m_averagescores = data.data[i].m_averageScores;
                         var m_batch = data.data[i].m_batch;
                         var m_lowestscore = data.data[i].m_lowestScore;
-                        console.log(m_averagescores + "=" + m_batch + "=" + m_lowestscore)
                         var dreamSchoolList = ''
                             + '<ul>'
                             + '<li class="pc">' + m_batch + '</li>'
@@ -409,19 +380,8 @@ define(function (require) {
                             + '<span class="num"><strong>' + m_averagescores + '</strong>分</span>'
                             + '</li>'
                             + '</ul>';
-
                         $('#dream-list').append(dreamSchoolList);
-
-
-                        //if(m_averagescores!=null || m_lowestscore != null){
-                        //    $('#dream-list').append(dreamSchoolList);
-                        //}
-                        //if($('#dream-list').find('li').length==0){
-                        //    $('#dream-list').html('<p style="text-align: center;padding: 30px 0;">'+ dreamSchoolV + dreamSubjectTypeV +'类2014年未招生</p>');
-                        //}
                     }
-
-
                 }
             }
         });
@@ -466,12 +426,16 @@ define(function (require) {
                     $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
                     return;
                 }
+                if(res.rtnCode == '0100005'){
+                    errorTips(res.msg);
+                    $('#precedence-yzmDreamSchool').attr('src', '/verifyCode/randomVerifyCode.do?type=3&code=' + Math.random())
+                    return false;
+                }
                 var data = $.parseJSON(res.bizData);
                 if (!data) {
                     $('.error-tips').text(res.msg).fadeIn(1000).fadeOut(1000);
                     return;
                 }
-                console.log(res.bizData)
                 if (res.rtnCode == "0000000") {
                     $('#precedence-list').html('');
                     $('#precedence-school-layer,.tansLayer').show();
