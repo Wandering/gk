@@ -55,12 +55,7 @@ define(function (require) {
                         }
                         $('#episode-num').append(listMsgHtml);
                     }
-                    var urls = dataJson[0].fileUrl;
-                    var videoHtml = ''
-                        +'<video class="video" id="video" poster="http://media.html5media.info/poster.jpg" controls preload>'
-                        +'<source id="source" src="'+urls+'" media="only screen and (min-device-width: 568px)"></source>'
-                        +'</video>';
-                    $('#videoHtml').html(videoHtml);
+                    $('#episode-num').find('a:eq(0)').click();
                 }
             });
     }
@@ -68,11 +63,13 @@ define(function (require) {
     $('#episode-num').on('click', 'a', function () {
         $(this).addClass('active').siblings().removeClass('active');
         var fileurl = $(this).attr('fileurl');
-        if (fileurl != "" || fileurl == null) {
+        console.log(fileurl)
+        if (fileurl != "" || fileurl != null) {
             $(window).scrollTop(0);
             var videoHtml = ''
-                + '<video class="video" poster="http://cdn.gaokao360.net/static/gx/before/images/poster.png" width="759" height="427" controls preload>'
-                + '<source src="' + fileurl + '" media="only screen and (min-device-width: 568px)"></source>'
+                + '<video class="video" poster="http://cdn.gaokao360.net/static/gx/before/images/poster.png" src="http://video.gaokao360.net/videos/political/7339a149-8595-4989-93ad-8ed52021bcb8.mp4" width="759" height="427" controls>'
+                //+ '<source src="' + fileurl + '" media="only screen and (min-device-width: 568px)"></source>'
+                //+ '<source src="http://video.gaokao360.net/videos/political/7339a149-8595-4989-93ad-8ed52021bcb8.mp4" media="only screen and (min-device-width: 568px)"></source>'
                 + '</video>';
             $('#videoHtml').html(videoHtml);
         } else {

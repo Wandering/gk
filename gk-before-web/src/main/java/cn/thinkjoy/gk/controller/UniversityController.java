@@ -357,11 +357,9 @@ public class UniversityController extends BaseController {
         }catch(Exception e){
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
         }
-
         if(universityDetailDto==null){
             return null;
         }
-
         int enrollNum = universityDetailDto.getEnrollNum();
 
         int planNum = universityDetailDto.getPlanNum();
