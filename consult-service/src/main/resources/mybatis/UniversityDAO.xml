@@ -1167,7 +1167,7 @@ selectList
 
     <select id="getPlanInfosByYear" parameterType="java.lang.String" resultType="PlanInfo">
         select majoredId,majoredName,pp.majoredType,batch,subject,enrollNumber as planNumber,schoolLength,feeStandard
-        from gk_majored mm left join gk_enroll_plan pp on mm.id=pp.majoredId
+        from gk_enroll_plan pp
         where
          pp.universityId=#{universityId} and pp.year=#{year}
           <if test="batch !=null and batch !=''">
