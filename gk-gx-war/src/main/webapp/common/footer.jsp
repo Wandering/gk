@@ -42,7 +42,7 @@
   var oHead = document.getElementsByTagName('HEAD')[0];
   var oScript= document.createElement("script");
   oScript.type = "text/javascript";
-  if(window.location.hostname.indexOf("dapw-pro.thinkjoy.com.cn") > -1){
+  if(window.location.hostname.indexOf("gx.gaokao360.net") > -1){
     oScript.src="http://pro-jssdk.thinkjoy.com.cn/statistics.js?kafkaId=RESOURCE_GK360_UBEHAVE&appCode=GK360"+ "&ts="+new Date().getTime();
   }else{
     oScript.src="http://dev-jssdk.thinkjoy.com.cn/statistics.js?kafkaId=RESOURCE_GK360_UBEHAVE&appCode=GK360"+ "&ts="+new Date().getTime();
