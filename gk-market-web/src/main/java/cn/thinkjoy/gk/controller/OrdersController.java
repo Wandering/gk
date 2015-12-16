@@ -24,13 +24,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -195,4 +196,60 @@ public class OrdersController extends BaseController {
 
     }
 
+    /**
+     * 订单详情查询
+     * @param response
+     * @param paramMap
+     * @return
+     */
+    @RequestMapping(value = "getOrderDetail", method = RequestMethod.GET)
+    public String getOrderDetail(HttpServletResponse response,
+         @RequestParam(value="pageNo",required=false) Integer pageNo,
+         @RequestParam(value="pageSize",required=false) Integer pageSize,
+         @RequestParam(value="userAccount",required=false) String userAccount,
+         @RequestParam(value="orderNo",required=false) String orderNo)
+    {
+        Map<String, Object> paramMap = new HashMap<>();
+        if(null != pageNo && null != pageSize) {
+            paramMap.put("offset", pageNo * pageSize);
+        }
+        paramMap.put("rows", 10);
+        paramMap.put("userAccount", userAccount);
+        paramMap.put("orderNo", orderNo);
+        List<Map<String,String>> resultList = ordersService.queryOrderDetail(paramMap);
+        sendMessage(response, JSON.toJSONString(resultList), "Invoke method getOrderDetail failed!");
+        return null;
+    }
+
+    /**
+     * 各省订单销售总记录
+     * @param response
+     * @param paramMap
+     * @return
+     */
+    @RequestMapping(value = "getOrderStatisticsData", method = RequestMethod.GET)
+    public String getOrderStatisticsData(HttpServletResponse response, HashMap<String, Object> paramMap) {
+        List<Map<String,String>> resultList = ordersService.queryOrderStatisticsData(paramMap);
+        sendMessage(response, JSON.toJSONString(resultList), "Invoke method getOrderStatisticsData failed!");
+        return null;
+    }
+
+    private void sendMessage(HttpServletResponse response, String msg, String errorMsg) {
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter pw = null;
+        try {
+            pw = response.getWriter();
+            pw.write(msg);
+        } catch (Exception e) {
+            if (null != pw) {
+                pw.write("Error!");
+            }
+            LOGGER.error(errorMsg);
+        } finally {
+            if (null != pw) {
+                pw.close();
+            }
+        }
+    }
 }

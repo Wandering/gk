@@ -620,4 +620,68 @@
         FROM gk_orders
     </select>
 
+    <select id="selectOrderDetail" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        select od.id,od.orderNo,
+        pro.`name` as provinceName,
+        usr.id as userId,
+        usr.account as userAccount,od.amount,
+        CASE WHEN od.payStatus=0 THEN '未支付'
+        WHEN od.payStatus=1 THEN '已支付'
+        ELSE '其他' END as payStatus,
+        CASE WHEN od.`status`=0 THEN '未激活'
+        WHEN od.`status`=1 THEN '已激活'
+        ELSE '其他' END as activeStatus,
+        CASE WHEN od.channel='alipay' THEN '支付宝手机支付'
+        WHEN od.channel='alipay_wap' THEN '支付宝手机网页支付'
+        WHEN od.channel='alipay_pc_direct' THEN '支付宝PC网页支付'
+        WHEN od.channel='apple_pay' THEN 'Apple Pay'
+        WHEN od.channel='bfb' THEN '百度钱包移动快捷支付'
+        WHEN od.channel='bfb_wap' THEN '百度钱包手机网页支付'
+        WHEN od.channel='upacp' THEN '银联全渠道支付'
+        WHEN od.channel='upacp_wap' THEN '银联全渠道手机网页支付'
+        WHEN od.channel='upmp' THEN '银联手机支付'
+        WHEN od.channel='upmp_wap' THEN '银联手机网页支付'
+        WHEN od.channel='wx' THEN '微信支付'
+        WHEN od.channel='wx_pub' THEN '微信公众账号支付'
+        WHEN od.channel='wx_pub_qr' THEN '微信公众账号扫码支付'
+        ELSE '其他渠道'
+        END as channel,
+        od.createDate
+        from gk_orders od
+        left join gk_user_account usr on od.userId = usr.id
+        left join gk_province pro on usr.areaId = pro.id
+        where usr.id is not null
+        <if test="id!=null">
+            and od.id like CONCAT('%', #{id} , '%')
+        </if>
+        <if test="orderNo!=null">
+            and od.orderNo like CONCAT('%', #{orderNo} , '%')
+        </if>
+        <if test="provinceName!=null">
+            and pro.`name` like CONCAT('%', #{provinceName} , '%')
+        </if>
+        <if test="userAccount!=null">
+            and usr.account like CONCAT('%', #{userAccount} , '%')
+        </if>
+        <if test="payStatus!=null">
+            and od.payStatus like CONCAT('%', #{payStatus} , '%')
+        </if>
+        <if test="activeStatus!=null">
+            and od.`status` like CONCAT('%', #{activeStatus} , '%')
+        </if>
+        order by usr.areaId desc,od.createDate desc
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+    <select id="selectOrderStatisticsData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        select pro.`name` as provinceName, sum(od.amount) totleAmount from gk_orders od
+        left join gk_user_account usr on od.userId= usr.id
+        left join gk_province pro on usr.areaId = pro.id
+        where od.userId is not null
+        and usr.areaId is not null
+        and od.payStatus= 1
+        group by pro.`name`
+        order by totleAmount desc
+    </select>
 </mapper>
