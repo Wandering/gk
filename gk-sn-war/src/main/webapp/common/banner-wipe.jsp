@@ -32,8 +32,7 @@
   <a class="prev" href="javascript:;" stat="prev1001"><img src="http://cdn.gaokao360.net/static/global/common/images/l-btn.png" /></a>
   <div class="slide-box" id="slideContent">
     <div class="slide" id="bgstylec" style="background: #52a08f;">
-      <a href="http://gk360.ke.qq.com/" target="_blank" class="banner-max">
-        <!--<img src="http://cdn.gaokao360.net/static/global/common/images/banner1.png" alt=""/>-->
+      <a href="http://ke.qq.com/course/92607#term_id=100093153" target="_blank" class="banner-max">
       </a>
     </div>
     <div class="slide" id="bgstylea" style="background: #2297d4;">
