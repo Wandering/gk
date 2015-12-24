@@ -10,6 +10,7 @@ import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.CookieUtil;
+import com.google.common.collect.Maps;
 import com.jlusoft.microschool.core.utils.MD5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

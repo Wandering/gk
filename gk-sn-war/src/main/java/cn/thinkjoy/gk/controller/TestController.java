@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.controller;
 
+import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.domain.GkinformationGkhot;
 import cn.thinkjoy.gk.domain.PolicyInterpretation;
 import cn.thinkjoy.gk.domain.VolunteerSchool;
@@ -21,7 +22,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping(value = "guide/testController")
-public class TestController {
+public class TestController extends BaseController{
 
     @Autowired
     private IGkinformationGkhotService gkinformationGkhotService;
@@ -34,8 +35,8 @@ public class TestController {
 
     @RequestMapping(value = "/test",method = RequestMethod.POST)
     @ResponseBody
-    public String test(@RequestParam(value = "type")String type,@RequestParam(value = "batch",required = false)Long batch,@RequestParam(value = "title")String title,@RequestParam(value="summary")String summary,@RequestParam(value="context")String context){
-
+    public String test(@RequestParam(value = "type")String type,@RequestParam(value = "batch",required = false)Long batch,@RequestParam(value = "title")String title,@RequestParam(value="summary")String summary,@RequestParam(value="context")String context) throws Exception {
+        long areaId=getAreaCookieValue();
         if(type.equals("gkhot")) {
             GkinformationGkhot gkinformationGkhot = new GkinformationGkhot();
             gkinformationGkhot.setStatus(0);
@@ -45,7 +46,7 @@ public class TestController {
             gkinformationGkhot.setInformationSubContent(summary);
             gkinformationGkhot.setInformationContent(context);
             gkinformationGkhot.setHotCount(0L);
-            gkinformationGkhot.setAreaId(430000L);
+            gkinformationGkhot.setAreaId(areaId);
             gkinformationGkhotService.saveGkinformationGkhot(gkinformationGkhot);
         }
         else if (type.equals("policy")){
@@ -56,7 +57,7 @@ public class TestController {
             policyInterpretation.setLastModDate(new Date().getTime());
             policyInterpretation.setCategoryName(title);
             policyInterpretation.setContent(context);
-            policyInterpretation.setAreaId(430000L);
+            policyInterpretation.setAreaId(areaId);
             policyInterpretation.setProvinceId(1L);
             policyInterpretationService.add(policyInterpretation);
         }
@@ -69,7 +70,7 @@ public class TestController {
             volunteerSchool.setTitle(title);
             volunteerSchool.setSummary(summary);
             volunteerSchool.setContent(context);
-            volunteerSchool.setAreaId(430000L);
+            volunteerSchool.setAreaId(areaId);
             volunteerSchool.setHits(0);
             volunteerSchoolService.add(volunteerSchool);
         }

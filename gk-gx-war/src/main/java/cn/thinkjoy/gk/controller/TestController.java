@@ -196,15 +196,17 @@ public class TestController extends BaseController {
     public String uploadFile() {
         String url = "http://cs-dev.thinkjoy.com.cn/rest/v1/uploadFile";
 //        FileSystemResource resource = new FileSystemResource(new File("/Users/zuohao/Desktop/test4.html"));
-        FileSystemResource resource = new FileSystemResource(new File("/Users/zuohao/Documents/转码视频/化学/14484335628433uvdfye8ppaks82haldw.mp4"));
+//        FileSystemResource resource = new FileSystemResource(new File("/Users/zuohao/Documents/转码视频/化学/14484335628433uvdfye8ppaks82haldw.mp4"));
+        FileSystemResource resource = new FileSystemResource(new File("/Users/zuohao/Documents/2015高考真题讲解陕西卷—英语/MP4/2015高考真题讲解陕西卷—英语 书面表达.mp4"));
         MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
         RestTemplate template = new RestTemplate();//这里大家可以用其他的httpClient均可以
         param.add("file", resource);
         param.add("productCode", "gk360");
         param.add("bizSystem", "gk360");
-        param.add("spaceName", "gk360");
+//        param.add("spaceName", "gk360");
         param.add("userId", "gk360");
         param.add("dirId", "0");
+        param.add("isRandomName", "0");
         template.getMessageConverters().add(new FastJsonHttpMessageConverter());
         long start=System.currentTimeMillis();
         System.out.println("开始时间:"+start);
