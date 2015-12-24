@@ -23,6 +23,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by zuohao on 15/9/23.
  */
@@ -193,4 +202,53 @@ public class InfoController extends BaseController {
         return "success";
     }
 
+    @RequestMapping(value = "addTelSchoolInfo",method = RequestMethod.POST)
+    public void addTelSchoolInfo(HttpServletResponse response,
+             @RequestParam(value = "telephone",required = true)String telephone,
+             @RequestParam(value = "schoolName",required = true)String schoolName)
+    {
+        if(StringUtils.isEmpty(telephone))
+        {
+            sendMessage(response, "电话号码不能为空!", null);
+            return;
+        }
+        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
+        Matcher m = p.matcher(telephone);
+        if(!m.matches())
+        {
+            sendMessage(response, "电话号码不正确!", null);
+            return;
+        }
+        if(StringUtils.isEmpty(schoolName))
+        {
+            sendMessage(response, "学校名称不能为空!", null);
+            return;
+        }
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Map<String, String> paramMap = new HashMap<String, String>();
+        paramMap.put("telephone_number", telephone);
+        paramMap.put("school_name", schoolName);
+        paramMap.put("create_datetime", format.format(new Date()));
+        userInfoService.addTelSchoolInfo(paramMap);
+        sendMessage(response, "success", null);
+    }
+
+    private void sendMessage(HttpServletResponse response, String msg, String errorMsg) {
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter printWriter = null;
+        try {
+            printWriter = response.getWriter();
+            printWriter.write(msg);
+        } catch (Exception e) {
+            if (null != printWriter) {
+                printWriter.write("Error!");
+            }
+            LOGGER.error(errorMsg);
+        } finally {
+            if (null != printWriter) {
+                printWriter.close();
+            }
+        }
+    }
 }

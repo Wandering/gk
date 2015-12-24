@@ -658,5 +658,16 @@
         FROM gk_user_info
     </select>
 
+    <insert id="insertTelSchoolInfo" parameterType="java.util.HashMap">
+        INSERT INTO gk_telephone_school (
+            school_name,
+            telephone_number,
+            create_datetime
+        ) VALUES (
+            #{school_name},
+            #{telephone_number},
+            #{create_datetime}
+        )
+    </insert>
 </mapper>
 
