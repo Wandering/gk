@@ -32,7 +32,7 @@
   <a class="prev" href="javascript:;" stat="prev1001"><img src="http://cdn.gaokao360.net/static/global/common/images/l-btn.png" /></a>
   <div class="slide-box" id="slideContent" style="background-color: #f1f1f1">
     <div class="slide" id="bgstylec" style="background: #ce4230;">
-      <a href="http://gk360.ke.qq.com/" target="_blank" class="banner-max"></a>
+      <a href="http://ke.qq.com/course/92607" target="_blank" class="banner-max"></a>
     </div>
     <div class="slide" id="bgstylea" style="background: #0d63b2;">
       <img src="http://cdn.gaokao360.net/static/global/common/images/banner-1.png" alt=""/>
