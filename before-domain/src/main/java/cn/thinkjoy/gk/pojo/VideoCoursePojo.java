@@ -6,7 +6,8 @@ import java.io.Serializable;
  * Created by yhwang on 15/9/23.
  */
 public class VideoCoursePojo implements Serializable{
-    private Long courseId;//ID
+    private long id;
+    private long courseId;//ID
     private String classifyName;//分类名称
     private String teacherName;//教师名字
     private String subjectName;//所属科目
@@ -20,6 +21,14 @@ public class VideoCoursePojo implements Serializable{
     private String frontcover1;//封面二
     private long areaId;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public long getAreaId(){
         return areaId;
     }
@@ -28,11 +37,11 @@ public class VideoCoursePojo implements Serializable{
         this.areaId=areaId;
     }
 
-    public Long getCourseId() {
+    public long getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(Long courseId) {
+    public void setCourseId(long courseId) {
         this.courseId = courseId;
     }
 

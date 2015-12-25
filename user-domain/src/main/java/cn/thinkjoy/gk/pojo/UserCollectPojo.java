@@ -11,11 +11,8 @@
 
 package cn.thinkjoy.gk.pojo;
 
-import cn.thinkjoy.common.domain.BaseDomain;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
 
 public class UserCollectPojo{
 	/** ID */
@@ -23,10 +20,12 @@ public class UserCollectPojo{
     /** 用户Id */
     private long userId;
     /** 收藏院校ID */
-    private long universityId;
+    private long projectId;
 	/** 收藏创建时间 */
 	private long createDate;
 
+	/** 学校logo */
+	private String universityLogo;
 	/** 收藏院校名称 */
 	private String universityName;
 	/** 所在地区 */
@@ -37,6 +36,8 @@ public class UserCollectPojo{
 	private String subjection;
 	/** 院校特征 */
 	private String propertyName;
+	/** TODO 收藏人数，尚未增加，等等课程收藏确定后统一设计 */
+	private int number;
 
 	public UserCollectPojo(){
 	}
@@ -47,6 +48,46 @@ public class UserCollectPojo{
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public long getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(long projectId) {
+		this.projectId = projectId;
+	}
+
+	public long getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(long createDate) {
+		this.createDate = createDate;
+	}
+
+	public String getUniversityLogo() {
+		return universityLogo;
+	}
+
+	public void setUniversityLogo(String universityLogo) {
+		this.universityLogo = universityLogo;
+	}
+
+	public String getUniversityName() {
+		return universityName;
+	}
+
+	public void setUniversityName(String universityName) {
+		this.universityName = universityName;
 	}
 
 	public String getProvinceName() {
@@ -81,46 +122,14 @@ public class UserCollectPojo{
 		this.propertyName = propertyName;
 	}
 
-	public String getUniversityName() {
-		return universityName;
+	public int getNumber() {
+		return number;
 	}
 
-	public void setUniversityName(String universityName) {
-		this.universityName = universityName;
+	public void setNumber(int number) {
+		this.number = number;
 	}
 
-	public void setUserId(Long value) {
-        this.userId = value;
-    }
-
-    public Long getUserId() {
-        return this.userId;
-    }
-    public void setUniversityId(Long value) {
-        this.universityId = value;
-    }
-
-    public Long getUniversityId() {
-        return this.universityId;
-    }
-
-	public Long getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Long createDate) {
-		this.createDate = createDate;
-	}
-
-	public String toString() {
-		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-			.append("Id",getId())
-			.append("CreateDate",getCreateDate())
-			.append("UserId",getUserId())
-			.append("UniversityId",getUniversityId())
-			.toString();
-	}
-	
 	public int hashCode() {
 		return new HashCodeBuilder()
 			.append(getId())

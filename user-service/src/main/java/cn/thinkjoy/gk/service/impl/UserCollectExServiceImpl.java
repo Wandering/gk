@@ -1,18 +1,12 @@
 package cn.thinkjoy.gk.service.impl;
 
-import cn.thinkjoy.gk.dao.IUserCollectDAO;
-import cn.thinkjoy.gk.dao.ex.IAppointmentExDAO;
 import cn.thinkjoy.gk.dao.ex.IUserCollectExDAO;
-import cn.thinkjoy.gk.domain.UserCollect;
 import cn.thinkjoy.gk.pojo.UserCollectPojo;
+import cn.thinkjoy.gk.pojo.VideoCoursePojo;
 import cn.thinkjoy.gk.service.IUserCollectExService;
-import cn.thinkjoy.gk.service.IUserCollectService;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,15 +20,20 @@ public class UserCollectExServiceImpl implements IUserCollectExService {
     private IUserCollectExDAO userCollectExDAO;
 
     /** 查询指定用户的收藏的所有学校 */
-    public List<UserCollectPojo> getUserCollectPojoList(Map param){
-        return userCollectExDAO.getUserCollectPojoList(param);
+    public List<UserCollectPojo> getUserCollectUniversityPojoList(Map param){
+        return userCollectExDAO.getUserCollectUniversityPojoList(param);
     }
 
-    public int getUserCollectPojoCount(Map param) {
-        return userCollectExDAO.getUserCollectPojoCount(param);
+    public int getUserCollectUniversityPojoCount(Map param) {
+        return userCollectExDAO.getUserCollectUniversityPojoCount(param);
     }
 
     public int isUniversityCollect(Map param){
         return userCollectExDAO.isUniversityCollect(param);
+    }
+
+    /** 查询指定用户收藏的所有课程 */
+    public List<VideoCoursePojo> getUserCollectVideoCoursePojoList(Map param){
+        return userCollectExDAO.getUserCollectVideoCoursePojoList(param);
     }
 }
