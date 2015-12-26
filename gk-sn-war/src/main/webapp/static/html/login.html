@@ -93,7 +93,7 @@
 
 
 <div id="login">
-    <h1>高考360登记</h1>
+    <h1>高考360</h1>
     <form>
         <div class="form-group">
             <input type="text" class="form-control" id="phone" placeholder="请输入手机号">
@@ -105,7 +105,7 @@
     </form>
 </div>
 <div id="tips"></div>
-<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.gaokao360.net/static/bower_components/jquery/dist/cdn.jquery.min.js"></script>
 <script>
     $(function(){
         $('#submit-btn').on('click',function(){
@@ -133,7 +133,6 @@
             $.ajax({
                 url: '/info/addTelSchoolInfo.do',
                 type: 'POST',
-                dataType: 'JSON',
                 data: {
                     "telephone": telephoneV,
                     "schoolName": schoolNameV
@@ -141,8 +140,10 @@
                 success: function (res) {
                     console.log(res)
                     if(res=='success'){
-                        tips('您已提交成功');
-                        window.location.href="/static/html/login.html"
+                        $('#tips').text('您已提交成功').fadeIn('1000');
+                        setTimeout(function(){
+                            window.location.href="/static/html/login.html"
+                        },1000);
                     }
                 }
             });
