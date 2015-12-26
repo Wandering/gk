@@ -140,8 +140,10 @@
                 success: function (res) {
                     console.log(res)
                     if(res=='success'){
-                        tips('您已提交成功');
-                        window.location.href="/static/html/login.html"
+                        $('#tips').text('您已提交成功').fadeIn('1000');
+                        setTimeout(function(){
+                            window.location.href="/static/html/login.html"
+                        },1000);
                     }
                 }
             });
