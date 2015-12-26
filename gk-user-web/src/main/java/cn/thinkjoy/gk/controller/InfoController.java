@@ -216,14 +216,16 @@ public class InfoController extends BaseController {
             sendMessage(response, "电话号码不能为空!", null);
             return "fail";
         }
-        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
-        Matcher m = p.matcher(telephone);
-        if (!m.matches()) {
-            sendMessage(response, "电话号码不正确!", null);
+        if (telephone.length()>15) {
+            sendMessage(response, "电话号码长度错误!", null);
             return "fail";
         }
         if (StringUtils.isEmpty(schoolName)) {
             sendMessage(response, "学校名称不能为空!", null);
+            return "fail";
+        }
+        if (schoolName.length()>20) {
+            sendMessage(response, "学校名称长度太长!", null);
             return "fail";
         }
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
