@@ -208,6 +208,7 @@ public class InfoController extends BaseController {
     }
 
     @RequestMapping(value = "addTelSchoolInfo", method = RequestMethod.POST)
+    @ResponseBody
     public String addTelSchoolInfo(HttpServletResponse response,
                                  @RequestParam(value = "telephone", required = true) String telephone,
                                  @RequestParam(value = "schoolName", required = true) String schoolName) {
