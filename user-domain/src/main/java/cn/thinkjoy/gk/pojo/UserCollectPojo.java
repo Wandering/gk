@@ -36,7 +36,7 @@ public class UserCollectPojo{
 	private String subjection;
 	/** 院校特征 */
 	private String propertyName;
-	/** TODO 收藏人数，尚未增加，等等课程收藏确定后统一设计 */
+	/** 收藏人数 */
 	private int number;
 
 	public UserCollectPojo(){
