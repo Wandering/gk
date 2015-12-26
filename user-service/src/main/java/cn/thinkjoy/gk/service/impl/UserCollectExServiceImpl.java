@@ -24,12 +24,12 @@ public class UserCollectExServiceImpl implements IUserCollectExService {
         return userCollectExDAO.getUserCollectUniversityPojoList(param);
     }
 
-    public int getUserCollectUniversityPojoCount(Map param) {
-        return userCollectExDAO.getUserCollectUniversityPojoCount(param);
+    public int getUserCollectCount(Map param) {
+        return userCollectExDAO.getUserCollectCount(param);
     }
 
-    public int isUniversityCollect(Map param){
-        return userCollectExDAO.isUniversityCollect(param);
+    public int isCollect(Map param){
+        return userCollectExDAO.isCollect(param);
     }
 
     /** 查询指定用户收藏的所有课程 */

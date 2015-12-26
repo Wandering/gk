@@ -4,13 +4,14 @@
     <select id="getUserCollectUniversityPojoList" parameterType="java.util.Map" resultType="UserCollectPojo">
         SELECT cc.id as id,
             cc.userId as userId,
-            cc.projectId as projectId,
+            cc.projectId as universityId,
             cc.createDate as createDate,
             uu.name as universityName,
             uu.provinceName as provinceName,
             uu.type as universityType,
             uu.subjection as subjection,
-            dd.name as propertyName
+            dd.name as propertyName,
+            (select number from zgk_count where projectId = cc.projectId AND type='1' limit 1) as number
         FROM zgk_user_collect cc
         LEFT JOIN gk_university uu ON cc.projectId = uu.id
         LEFT JOIN gk_university_dict dd ON uu.property=dd.dictId AND dd.type='FEATURE'
@@ -24,20 +25,18 @@
         </if>
     </select>
 
-    <select id="getUserCollectUniversityPojoCount" parameterType="java.util.Map" resultType="int">
+    <select id="getUserCollectCount" parameterType="java.util.Map" resultType="int">
         SELECT count(cc.id)
         FROM zgk_user_collect cc
-        LEFT JOIN gk_university uu ON cc.projectId = uu.id
-        LEFT JOIN gk_university_dict dd ON uu.property=dd.dictId AND dd.type='FEATURE'
         <where>
-            AND cc.type = '1'
             AND cc.userId = #{userId}
+            AND cc.type = #{type}
         </where>
     </select>
 
-    <select id="isUniversityCollect" parameterType="java.util.Map" resultType="int">
+    <select id="isCollect" parameterType="java.util.Map" resultType="int">
         SELECT COUNT(*) FROM zgk_user_collect
-         WHERE userId = #{userId} AND projectId = #{projectId}
+         WHERE userId = #{userId} AND projectId = #{projectId} AND type = #{type}
     </select>
 
     <!-- 查询指定用户收藏的所有课程 -->

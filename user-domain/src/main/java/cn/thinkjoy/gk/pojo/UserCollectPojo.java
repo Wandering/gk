@@ -20,7 +20,7 @@ public class UserCollectPojo{
     /** 用户Id */
     private long userId;
     /** 收藏院校ID */
-    private long projectId;
+    private long universityId;
 	/** 收藏创建时间 */
 	private long createDate;
 
@@ -58,12 +58,12 @@ public class UserCollectPojo{
 		this.userId = userId;
 	}
 
-	public long getProjectId() {
-		return projectId;
+	public long getUniversityId() {
+		return universityId;
 	}
 
-	public void setProjectId(long projectId) {
-		this.projectId = projectId;
+	public void setUniversityId(long universityId) {
+		this.universityId = universityId;
 	}
 
 	public long getCreateDate() {
