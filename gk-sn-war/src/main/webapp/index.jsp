@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>首页</title>
+    <title>高考360</title>
     <meta charset="utf-8"/>
     <%@ include file="common/meta.jsp" %>
     <link rel="stylesheet" href="http://cdn.gaokao360.net/static/global/index/styles/index.min.css"/>
