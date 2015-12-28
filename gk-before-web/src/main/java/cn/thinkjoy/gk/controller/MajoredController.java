@@ -215,6 +215,7 @@ public class MajoredController extends BaseController {
     @ResponseBody
     public List<MajorDetailPojo> majorList(@RequestParam(value="code",required=false) String code,
                                            @RequestParam(value="year",required=false) Integer year,
+                                           @RequestParam(value="subject",required=false)int subject,
                                            @RequestParam(value="batch",required=false) String batch){
 
         if(StringUtils.isBlank(code)
@@ -224,9 +225,15 @@ public class MajoredController extends BaseController {
         }
 
         List<MajorDetailPojo> lists = null;
+        String subjectName=null;
+        if(subject==0){
+            subjectName="文史";
+        } else if (subject==1){
+            subjectName="理工";
+        }
 
         try {
-            lists = iMajoredService.getMajorDetailList(code, batch, year);
+            lists = iMajoredService.getMajorDetailList(code, batch, year,subjectName);
         }catch(Exception e){
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
         }

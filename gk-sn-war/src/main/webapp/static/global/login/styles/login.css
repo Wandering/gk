@@ -1271,3 +1271,15 @@ a.next-btn:hover {
     display: block;
     width: 116px;
     margin: 0 auto 50px; }
+
+@media all and (max-width: 800px) {
+  body,
+  .header,
+  .body,
+  .content,
+  .footer {
+    width: 100%; }
+  .w1000 {
+    width: 100%; }
+  .login-bg-fonts {
+    display: none; } }

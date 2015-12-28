@@ -81,10 +81,11 @@ define(function (require) {
                         return false;
                     }
                     if (res.rtnCode == "0000000") {
+
                         UI.schoolListinfo.html('');
                         var data = $.parseJSON(res.bizData);
-                        //console.log(res);
-                        //console.log(data.data);
+
+                        console.log(data);
                         //console.log(data.related);
                         if(!data.data){
                             errorTips("该分数暂无数据");
@@ -110,17 +111,22 @@ define(function (require) {
                                 "m_favorites_by_university_codes": ""
                             };
                             var jsons = JSON.stringify(params);
-                            var schoolListHtml = ''
-                                + '<div class="info2">'
-                                + '<h3>普通' + v.m_batch + '院校</h3>'
-                                + v.m_years_fl + '：<strong>' + v.m_liberalarts + '分</strong>，<strong>' + v.m_science + '分</strong>'
-                                + '<form id="forwardForm" method="post" action="/forward.do">'
-                                + '<input type="hidden" name="params" value="' + encodeURIComponent(jsons) + '" />'
-                                + '<input type="hidden" name="url" value="/after/volunteer-flow3.jsp" />'
-                                + '<input type="submit" class="btn" value="开始"></a>'
-                                + '</form>'
-                                + '</div>';
-                            UI.schoolListinfo.append(schoolListHtml);
+
+                            if(v.m_liberalarts.length!="2"){
+                                var schoolListHtml = ''
+                                    + '<div class="info2">'
+                                    + '<h3>普通' + v.m_batch + '院校</h3>'
+                                    + v.m_years_fl + '：<strong>' + v.m_liberalarts + '分</strong>，<strong>' + v.m_science + '分</strong>'
+                                    + '<form id="forwardForm" method="post" action="/forward.do">'
+                                    + '<input type="hidden" name="params" value="' + encodeURIComponent(jsons) + '" />'
+                                    + '<input type="hidden" name="url" value="/after/volunteer-flow3.jsp" />'
+                                    + '<input type="submit" class="btn" value="开始"></a>'
+                                    + '</form>'
+                                    + '</div>';
+                                UI.schoolListinfo.append(schoolListHtml);
+                            }
+
+
                         });
                     }
                     //在VIP用户下第一次提交考后报考

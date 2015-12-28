@@ -37,5 +37,16 @@
   seajs.use("http://cdn.gaokao360.net/static/global/common/scripts/footer");
 </script>
 <div style="display: none;">
-  <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256843283'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1256843283' type='text/javascript'%3E%3C/script%3E"));</script>
+  <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256843283'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1256843283' type='text/javascript'%3E%3C/script%3E"));
+
+  var oHead = document.getElementsByTagName('HEAD')[0];
+  var oScript= document.createElement("script");
+  oScript.type = "text/javascript";
+  if(window.location.hostname.indexOf("gx.gaokao360.net") > -1){
+    oScript.src="http://pro-jssdk.thinkjoy.com.cn/statistics.js?kafkaId=RESOURCE_GK360_UBEHAVE&appCode=GK360"+ "&ts="+new Date().getTime();
+  }else{
+    oScript.src="http://dev-jssdk.thinkjoy.com.cn/statistics.js?kafkaId=RESOURCE_GK360_UBEHAVE&appCode=GK360"+ "&ts="+new Date().getTime();
+  }
+  oHead.appendChild( oScript);
+  </script>
 </div>

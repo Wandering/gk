@@ -7,12 +7,15 @@
 package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
+import cn.thinkjoy.common.service.impl.AbstractPageService;
 import cn.thinkjoy.gk.dao.IOrdersDAO;
 import cn.thinkjoy.gk.domain.Orders;
 import cn.thinkjoy.gk.service.IOrdersService;
-import cn.thinkjoy.common.service.impl.AbstractPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 
 @Service("OrdersServiceImpl")
@@ -140,5 +143,13 @@ public class OrdersServiceImpl extends AbstractPageService<IBaseDAO<Orders>, Ord
 //        return super.doQueryPageByDataPerm(resUri, conditions, curPage, offset, rows);
 //    }
 
+    public List<Map<String, String>> queryOrderDetail(Map<String, Object> paramMap)
+    {
+        return ordersDAO.selectOrderDetail(paramMap);
+    }
 
+    public List<Map<String, String>> queryOrderStatisticsData(Map<String, Object> paramMap)
+    {
+        return ordersDAO.selectOrderStatisticsData(paramMap);
+    }
 }
