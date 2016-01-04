@@ -1,6 +1,5 @@
 package cn.thinkjoy.gk.controller;
 
-import cn.thinkjoy.gaokao360.domain.VideoSection;
 import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.domain.GkinformationGkhot;
 import cn.thinkjoy.gk.domain.PolicyInterpretation;
@@ -10,7 +9,6 @@ import cn.thinkjoy.gk.service.IPolicyInterpretationService;
 import cn.thinkjoy.gk.service.IUniversityExService;
 import cn.thinkjoy.gk.service.IVolunteerSchoolService;
 import cn.thinkjoy.gk.util.ExcelUtil;
-import cn.thinkjoy.testDubbo.ITestService;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,10 +50,8 @@ public class TestController extends BaseController {
     private IVolunteerSchoolService volunteerSchoolService;
 
     @Autowired
-    private ITestService testService;
-
-    @Autowired
     private IUniversityExService iUniversityExService;
+
     @RequestMapping(value = "/test",method = RequestMethod.POST)
     @ResponseBody
     public String test(@RequestParam(value = "type")String type,@RequestParam(value = "batch",required = false)Long batch,@RequestParam(value = "title")String title,@RequestParam(value="summary")String summary,@RequestParam(value="context")String context) throws Exception {
@@ -217,11 +213,5 @@ public class TestController extends BaseController {
         System.out.println("结束时间:"+end);
         System.out.println("上传耗费时间："+(end-start)+"ms");
         return st+"上传耗费时间："+(end-start)+"ms";
-    }
-
-    @RequestMapping(value = "videoSection", method = RequestMethod.GET)
-    @ResponseBody
-    public VideoSection  videoSection(){
-        return testService.hello();
     }
 }
