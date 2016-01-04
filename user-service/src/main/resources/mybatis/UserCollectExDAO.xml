@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.thinkjoy.gk.dao.ex.IUserCollectExDAO">
-    <select id="getUserCollectPojoList" parameterType="java.util.Map" resultType="UserCollectPojo">
+    <select id="getUserCollectUniversityPojoList" parameterType="java.util.Map" resultType="UserCollectPojo">
         SELECT cc.id as id,
             cc.userId as userId,
-            cc.universityId as universityId,
+            cc.projectId as universityId,
             cc.createDate as createDate,
             uu.name as universityName,
             uu.provinceName as provinceName,
             uu.type as universityType,
             uu.subjection as subjection,
-            dd.name as propertyName
-        FROM gk_user_collect cc
-        LEFT JOIN gk_university uu ON cc.universityId = uu.id
+            dd.name as propertyName,
+            (select number from zgk_count where projectId = cc.projectId AND type='1' limit 1) as number
+        FROM zgk_user_collect cc
+        LEFT JOIN gk_university uu ON cc.projectId = uu.id
         LEFT JOIN gk_university_dict dd ON uu.property=dd.dictId AND dd.type='FEATURE'
         <where>
+            AND cc.type = '1'
             AND cc.userId = #{userId}
         </where>
         ORDER BY cc.id desc
@@ -23,18 +25,29 @@
         </if>
     </select>
 
-    <select id="getUserCollectPojoCount" parameterType="java.util.Map" resultType="int">
+    <select id="getUserCollectCount" parameterType="java.util.Map" resultType="int">
         SELECT count(cc.id)
-        FROM gk_user_collect cc
-        LEFT JOIN gk_university uu ON cc.universityId = uu.id
-        LEFT JOIN gk_university_dict dd ON uu.property=dd.dictId AND dd.type='FEATURE'
+        FROM zgk_user_collect cc
         <where>
             AND cc.userId = #{userId}
+            AND cc.type = #{type}
         </where>
     </select>
 
-    <select id="isUniversityCollect" parameterType="java.util.Map" resultType="int">
-        SELECT COUNT(*) FROM gk_user_collect
-         WHERE userId = #{userId} AND universityId = #{universityId}
+    <select id="isCollect" parameterType="java.util.Map" resultType="int">
+        SELECT COUNT(*) FROM zgk_user_collect
+         WHERE userId = #{userId} AND projectId = #{projectId} AND type = #{type}
+    </select>
+
+    <!-- 查询指定用户收藏的所有课程 -->
+    <select id="getUserCollectVideoCoursePojoList" parameterType="java.util.Map" resultType="VideoCoursePojo">
+        SELECT cc.id as id,cc.projectId as courseId,vc.frontCover as frontCover,vc.title as title,vc.teacher as teacherName
+        FROM zgk_user_collect cc
+        LEFT JOIN zgk_video_course vc ON cc.projectId = vc.id
+        WHERE cc.userId = #{userId} AND cc.type = '2'
+        ORDER BY cc.id desc
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
     </select>
 </mapper>
