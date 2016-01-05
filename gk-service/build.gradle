@@ -68,4 +68,8 @@ dependencies {
 
     compile project(':user-service')
 
+//    compile project(':qky-api')
+    compile "cn.thinkjoy.gaokao360:gaokao360-api:0.0.1-SNAPSHOT"
+
+
 }

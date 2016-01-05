@@ -12,6 +12,7 @@
 
     <!-- 引入dubbo配置文件 请根据需要更改-->
     <import resource="classpath:dubbo/gk-dubbo-provider.xml" />
+    <import resource="classpath:dubbo/gk-dubbo-consumer.xml" />
 
     <bean id="redisUtil" class="cn.thinkjoy.gk.util.RedisUtil">
         <property name="redisRepository" ref="redisRepository"/>
