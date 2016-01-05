@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.controller.index;
 
 import cn.thinkjoy.ITestService.ITestService;
+import cn.thinkjoy.gk.common.GkControllerUtil;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.zgk.domain.GkHot;
 import cn.thinkjoy.zgk.remote.IGkHotService;
@@ -31,6 +32,9 @@ public class GkHotController {
     @RequestMapping(value = "/getGkHotList",method = RequestMethod.GET)
     @ResponseBody
     public List<GkHot> getGkHotList(String areaId,String type,Integer num){
+        areaId=GkControllerUtil.setDefault(areaId, "330000");
+        type=GkControllerUtil.setDefault(type,"0");
+        num=GkControllerUtil.setDefault(num,4);
         return gkHotService.getGkHotList(areaId,type,num);
     }
 
