@@ -11,5 +11,10 @@
 
     <description>zgk dubbo 服务消费配置 </description>
 
-    <dubbo:reference id="testService" interface="cn.thinkjoy.testDubbo.ITestService"/>
+    <!--测试dubbo服务-->
+    <dubbo:reference id="testService" interface="cn.thinkjoy.ITestService.ITestService" check="false"
+                     timeout="60000"/>
+    <!--dubbo服务-->
+    <dubbo:reference id="gkHotService" interface="cn.thinkjoy.zgk.remote.IGkHotService" check="false"
+                     timeout="60000"/>
 </beans>
