@@ -7,6 +7,8 @@ dependencies {
 
     compile project(':gk-service')
 
+    compile project(':zgk-service')
+
     compile project(':gk-before-web')
 
     compile project(':gk-consult-web')

@@ -64,3 +64,5 @@ include 'gk-orders-war'
 
 include 'zgk-war'
 
+include 'zgk-service'
+
