@@ -70,3 +70,7 @@ include 'gk-ha-war'
 
 include 'gk-orders-war'
 
+include 'data-domain'
+
+include 'data-service'
+

@@ -19,4 +19,8 @@ dependencies {
 
     compile project(':gk-question-web')
 
+    compile project(':data-service')
+//
+//    compile project(':data-domain')
+
 }
