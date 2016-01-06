@@ -1,0 +1,26 @@
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    compile "org.jsoup:jsoup:1.8.1"
+
+    compile project(':web-common')
+
+    compile project(':gk-service')
+
+    compile project(':zgk-service')
+
+    compile project(':gk-before-web')
+
+    compile project(':gk-consult-web')
+
+    compile project(':gk-guide-web')
+
+    compile project(':gk-login-web')
+
+    compile project(':gk-user-web')
+
+    compile project(':gk-market-web')
+
+    compile project(':gk-question-web')
+
+}

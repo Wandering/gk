@@ -48,6 +48,8 @@ dependencies {
         exclude group: 'net.sf.json-lib'
     }
 
+    compile group:"cn.thinkjoy.gaokao360",name:"gaokao360-api",version:"0.0.1-SNAPSHOT", changing: true
+
     compile "cn.thinkjoy.ss:ss-api:$thinkjoySSVersion"
 
     compile "cn.thinkjoy.ss:ss-domain:$thinkjoySSVersion"
@@ -67,9 +69,5 @@ dependencies {
     compile project(':market-service')
 
     compile project(':user-service')
-
-//    compile project(':qky-api')
-    compile "cn.thinkjoy.gaokao360:gaokao360-api:0.0.1-SNAPSHOT"
-
 
 }
