@@ -65,13 +65,13 @@ define(function(require) {
     //验证码检测
     function codeCheck(){
         Dom.errorTip2.text('');
-        var reg_tel = Dom.telNumber.val().trim();
+        var reg_tel = $.trim(Dom.telNumber.val());
         var isPhone = /^0?1[3578]\d{9}$/;
-        if (reg_tel.trim() == '') {
+        if ($.trim(reg_tel) == '') {
             Dom.errorTip2.text('手机号不能为空').fadeIn();
             return
         }
-        if (!isPhone.test(reg_tel.trim())) {
+        if (!isPhone.test($.trim(reg_tel))) {
             Dom.errorTip2.text('手机号输入有误').fadeIn();
             return
         }
@@ -120,36 +120,36 @@ define(function(require) {
     }
     // 注册检测
     function registerCheck(){
-        var reg_code = Dom.captchaCode.val().trim();
-        var reg_pwd = Dom.regPassword.val().trim();
-        var reg_conform_pwd = Dom.regPasswordConfirm.val().trim();
-        var reg_tel = Dom.telNumber.val().trim();
+        var reg_code = $.trim(Dom.captchaCode.val());
+        var reg_pwd = $.trim(Dom.regPassword.val());
+        var reg_conform_pwd = $.trim(Dom.regPasswordConfirm.val());
+        var reg_tel = $.trim(Dom.telNumber.val());
         var isPhone = /^0?1[3578]\d{9}$/;
-        if (reg_tel.trim() == '') {
+        if ($.trim(reg_tel) == '') {
             Dom.errorTip2.text('手机号不能为空').fadeIn();
             return
         }
-        if (!isPhone.test(reg_tel.trim())) {
+        if (!isPhone.test($.trim(reg_tel))) {
             Dom.errorTip2.text('手机号输入有误').fadeIn();
             return
         }
-        if (reg_code.trim() == '') {
+        if ($.trim(reg_code) == '') {
             Dom.errorTip2.text('验证码不能为空').fadeIn();
             return
         }
-        if (reg_code.trim().length > 6) {
+        if ($.trim(reg_code).length > 6) {
             Dom.errorTip2.text('验证码输入有误').fadeIn();
             return
         }
-        if (reg_pwd.trim() == '' || reg_conform_pwd.trim() == '') {
+        if ($.trim(reg_pwd) == '' || $.trim(reg_conform_pwd) == '') {
             Dom.errorTip2.text('密码不能为空').fadeIn();
             return
         }
-        if (reg_pwd.trim().length< 6 || reg_pwd.trim().length>16 || isNaN(reg_pwd.trim())) {
+        if ($.trim(reg_pwd).length< 6 || $.trim(reg_pwd).length>16 || isNaN($.trim(reg_pwd))) {
             Dom.errorTip2.text('密码不能小于6位大于16位，且只能为数字').fadeIn();
             return
         }
-        if (reg_pwd.trim() != reg_conform_pwd.trim()) {
+        if ($.trim(reg_pwd) != $.trim(reg_conform_pwd)) {
             Dom.errorTip2.text('两次密码输入不一致').fadeIn();
             return
         } else {
