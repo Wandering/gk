@@ -19,4 +19,6 @@
                      timeout="60000"/>
     <dubbo:reference id="gkScheduleService" interface="cn.thinkjoy.zgk.remote.IGkScheduleService" check="false"
                      timeout="60000"/>
+    <dubbo:reference id="remoteUniversityService" interface="cn.thinkjoy.zgk.remote.IUniversityService" check="false"
+                     timeout="60000"/>
 </beans>

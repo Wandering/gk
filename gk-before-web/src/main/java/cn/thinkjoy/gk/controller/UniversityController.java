@@ -14,6 +14,8 @@ import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.UniversityQuery;
 import cn.thinkjoy.gk.service.*;
+import cn.thinkjoy.gk.util.ConditionsUtil;
+import cn.thinkjoy.zgk.remote.*;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.google.common.collect.Maps;
@@ -46,6 +48,8 @@ public class UniversityController extends BaseController {
     public static final Logger LOGGER= LoggerFactory.getLogger(UniversityController.class);
 
     @Autowired
+    private IUserCollectExService userCollectExService;
+    @Autowired
     private IExUniversityService iUniversityService;
     @Autowired
     private IUniversityDictService universityDictService;
@@ -56,6 +60,53 @@ public class UniversityController extends BaseController {
     @Autowired
     private IDataDictService dataDictService;
 
+    @Autowired
+    private cn.thinkjoy.zgk.remote.IUniversityService iremoteUniversityService;
+
+    /**
+     * 智高考院校信息列表
+     * @return
+     */
+    @RequestMapping(value = "/getRemoteUniversityList",method = RequestMethod.GET)
+    @ResponseBody
+    public List getUniversityList(@RequestParam(value = "universityName",required = false)String universityName,
+                                  @RequestParam(value = "province",required = false)String province,//省份
+                                  @RequestParam(value = "type",required = false)Integer type,//院校分类
+                                  @RequestParam(value = "educationLevel",required = false)Integer educationLevel,//学历层次
+                                  @RequestParam(value = "property",required = false)String property,//院校特征
+                                  @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
+                                  @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
+        Map<String,Object> condition=Maps.newHashMap();
+        condition.put("groupOp","and");
+        if (StringUtils.isNotBlank(universityName))
+            ConditionsUtil.setCondition(condition,"name","like","%"+universityName+"%");
+        if (StringUtils.isNotBlank(province))
+            ConditionsUtil.setCondition(condition,"province","=",province);
+        if (type!=null)
+            ConditionsUtil.setCondition(condition,"type","=",type.toString());
+        if (educationLevel!=null)
+            ConditionsUtil.setCondition(condition,"educationLevel","=",educationLevel.toString());
+        if (StringUtils.isNotBlank(property))
+            ConditionsUtil.setCondition(condition,"property","=",property);
+        String orederBy=null;
+        String sqlOrderEnumStr="asc";
+        List<Map<String,Object>> getUniversityList=iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, null);
+        //如果用户已登录
+        UserAccountPojo userAccountPojo=getUserAccountPojo();
+        if(null!=userAccountPojo) {
+            long userId = userAccountPojo.getId();
+            //需要在收藏表中拼接收藏状态字段
+            for (Map<String, Object> university : getUniversityList) {
+                Map<String,Object> param=Maps.newHashMap();
+//                param.put("userId",54);
+                param.put("userId",userId);
+                param.put("projectId",university.get("id"));
+                param.put("type",1);
+                university.put("isCollect",userCollectExService.isCollect(param));
+            }
+        }
+        return getUniversityList;
+    }
 
     /**
      * 获取初始化信息
