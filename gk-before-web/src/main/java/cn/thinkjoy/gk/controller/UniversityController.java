@@ -108,6 +108,12 @@ public class UniversityController extends BaseController {
         return getUniversityList;
     }
 
+    @RequestMapping(value = "getRemoteUniversityById",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getUniversityDTOById(@RequestParam(value = "universityId",required = true)long universityId){
+        return iremoteUniversityService.getUniversityById(universityId);
+    }
+
     /**
      * 智高考获取省份列表
      * @return
