@@ -70,7 +70,7 @@ public class UniversityController extends BaseController {
     @RequestMapping(value = "/getRemoteUniversityList",method = RequestMethod.GET)
     @ResponseBody
     public List getUniversityList(@RequestParam(value = "universityName",required = false)String universityName,
-                                  @RequestParam(value = "province",required = false)String province,//省份
+                                  @RequestParam(value = "areaid",required = false)String areaid,//省份
                                   @RequestParam(value = "type",required = false)Integer type,//院校分类
                                   @RequestParam(value = "educationLevel",required = false)Integer educationLevel,//学历层次
                                   @RequestParam(value = "property",required = false)String property,//院校特征
@@ -80,14 +80,14 @@ public class UniversityController extends BaseController {
         condition.put("groupOp","and");
         if (StringUtils.isNotBlank(universityName))
             ConditionsUtil.setCondition(condition,"name","like","%"+universityName+"%");
-        if (StringUtils.isNotBlank(province))
-            ConditionsUtil.setCondition(condition,"province","=",province);
+        if (StringUtils.isNotBlank(areaid))
+            ConditionsUtil.setCondition(condition,"areaid","=",areaid);
         if (type!=null)
             ConditionsUtil.setCondition(condition,"type","=",type.toString());
         if (educationLevel!=null)
             ConditionsUtil.setCondition(condition,"educationLevel","=",educationLevel.toString());
         if (StringUtils.isNotBlank(property))
-            ConditionsUtil.setCondition(condition,"property","=",property);
+            ConditionsUtil.setCondition(condition,"property","like","%"+property+"%");
         String orederBy=null;
         String sqlOrderEnumStr="asc";
         List<Map<String,Object>> getUniversityList=iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, null);
@@ -106,6 +106,27 @@ public class UniversityController extends BaseController {
             }
         }
         return getUniversityList;
+    }
+
+    /**
+     * 智高考获取省份列表
+     * @return
+     */
+    @RequestMapping(value = "getRemoteProvinceList",method = RequestMethod.GET)
+    @ResponseBody
+    public List getProvinceList(){
+        return iremoteUniversityService.getProvinceName();
+    }
+
+    /**
+     * 智高考获取字典表通用接口
+     * @param type
+     * @return
+     */
+    @RequestMapping(value = "getRemoteDataDictList",method = RequestMethod.GET)
+    @ResponseBody
+    public List getDataDictList(@RequestParam(value = "type",required = true)String type){
+        return iremoteUniversityService.getDataDictListByType(type);
     }
 
     /**
