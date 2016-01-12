@@ -1,6 +1,10 @@
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
+    compile group: "cn.thinkjoy.common", name: "thinkjoy-web-common", version: "0.1.15-SNAPSHOT", changing: true
+    testCompile "org.springframework:spring-test:$springVersion"
+    testCompile "org.freemarker:freemarker:$freemarkerVersion"
+
     compile "org.jsoup:jsoup:1.8.1"
 
     compile project(':web-common')
