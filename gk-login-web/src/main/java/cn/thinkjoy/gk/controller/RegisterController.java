@@ -69,9 +69,9 @@ public class RegisterController extends BaseController {
             if (userAccountBean!=null){
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号已被注册!");
             }
-            if (!checkCaptcha(account,captcha)){
-                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "验证码有误!");
-            }
+//            if (!checkCaptcha(account,captcha)){
+//                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "验证码有误!");
+//            }
 
             //保存用户
             UserAccount userAccount = new UserAccount();
@@ -82,6 +82,7 @@ public class RegisterController extends BaseController {
             userAccount.setUserType(0);
             userAccount.setStatus(0);
             userAccount.setAreaId(areaId);
+            userAccount.setCanTargetSchool(true);
             try{
                 boolean flag=userAccountExService.insertUserAccount(userAccount);
                 if (!flag){

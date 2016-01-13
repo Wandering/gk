@@ -19,7 +19,7 @@ import cn.thinkjoy.common.domain.CreateBaseDomain;
 
 import java.util.*;
 
-public class VideoCourse extends CreateBaseDomain{
+public class VideoCourse extends CreateBaseDomain<Long>{
     /** 分类ID */
     private Long classifyId;
     /** 教师ID */

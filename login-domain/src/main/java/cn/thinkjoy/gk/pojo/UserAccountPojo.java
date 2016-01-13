@@ -5,7 +5,7 @@ import cn.thinkjoy.common.domain.BaseDomain;
 /**
  * Created by clei on 15/9/21.
  */
-public class UserAccountPojo extends BaseDomain {
+public class UserAccountPojo extends BaseDomain<Long> {
     private Integer status;
     private String name;
     private String icon;

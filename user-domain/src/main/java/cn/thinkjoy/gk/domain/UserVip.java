@@ -17,7 +17,7 @@ import cn.thinkjoy.common.domain.CreateBaseDomain;
 
 import java.util.*;
 
-public class UserVip extends CreateBaseDomain{
+public class UserVip extends CreateBaseDomain<Long>{
     private Long endDate;
 
 	public UserVip(){
