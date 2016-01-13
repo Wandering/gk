@@ -44,7 +44,7 @@ public class GkPolicyController extends BaseApiController{
     @ApiDesc(value = "获取政策解读摘要列表", owner = "杨永平")
     @RequestMapping(value = "/getPolicyList",method = RequestMethod.GET)
     @ResponseBody
-    public BizData4Page getScheduleList(@ApiParam(param="type", desc="标题模糊查询")String queryparam,
+    public BizData4Page getPolicyList(@ApiParam(param="type", desc="标题模糊查询")String queryparam,
                                                @ApiParam(param="page", desc="页数")Integer page,
                                                @ApiParam(param="rows", desc="每页条数")Integer rows){
         //默认参数设置

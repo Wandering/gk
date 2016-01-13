@@ -1,10 +1,8 @@
 package cn.thinkjoy.gk.controller.api;
 
-import cn.thinkjoy.ITestService.ITestService;
 import cn.thinkjoy.common.domain.view.BizData4Page;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
-import cn.thinkjoy.gk.common.GkControllerUtil;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.zgk.common.QueryUtil;
 import cn.thinkjoy.zgk.domain.GkHot;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
