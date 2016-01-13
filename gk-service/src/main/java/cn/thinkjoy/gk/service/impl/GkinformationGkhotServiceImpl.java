@@ -47,13 +47,9 @@ public class GkinformationGkhotServiceImpl implements IGkinformationGkhotService
 
     @Override
     public boolean updateHotInformation(Integer id) {
-        boolean flag = false;
-        try {
-            informationDAO.updateHotCount(id);
-            flag = true;
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
+        boolean flag;
+        informationDAO.updateHotCount(id);
+        flag = true;
         return flag;
     }
 

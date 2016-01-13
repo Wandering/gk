@@ -77,7 +77,7 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
 
     @Override
     public boolean insertUserAccount(UserAccount userAccount) {
-        boolean flag = false;
+        boolean flag;
         userAccountDAO.insert(userAccount);
         long id = userAccount.getId();
         UserInfo userInfo = new UserInfo();
