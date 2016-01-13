@@ -137,14 +137,24 @@ public class UniversityController extends BaseController {
         selectorpage.put("educationLevel",1);
         selectorpage.put("gainDegree",1);
         selectorpage.put("majorRank",1);
-        List ll = iremoteUniversityService.queryPage("universityMajorExService",condition, offset, rows, "majorRank", "asc", selectorpage);
+        List ll = iremoteUniversityService.queryPage("universityMajorExService", condition, offset, rows, "majorRank", "asc", selectorpage);
 //        List ll=iremoteUniversityService.getUniversityMajorListByUniversityId(universityId,condition, offset, rows, "majorRank", "asc", selectorpage);
         return ll;
     }
 
-    @RequestMapping(value = "getUniversityMajorEnrollingList",method = RequestMethod.GET)
+    /**
+     * 招生计划列表获取
+     * @param universityId
+     * @param year
+     * @param batch
+     * @param universityMajorType
+     * @param offset
+     * @param rows
+     * @return
+     */
+    @RequestMapping(value = "getUniversityMajorEnrollingPlanList",method = RequestMethod.GET)
     @ResponseBody
-    public List getUniversityMajorEnrollingList(@RequestParam(value = "universityId",required = true)long universityId,
+    public List getUniversityMajorEnrollingPlanList(@RequestParam(value = "universityId",required = true)long universityId,
                                                 @RequestParam(value = "year",required = true)String year,//年份
                                                 @RequestParam(value = "batch",required = true)int batch,//批次
                                                 @RequestParam(value = "universityMajorType",required = true)String universityMajorType,//科类
@@ -156,7 +166,59 @@ public class UniversityController extends BaseController {
         ConditionsUtil.setCondition(condition,"year", "=", year);
         ConditionsUtil.setCondition(condition,"batch","=",String.valueOf(batch));
         ConditionsUtil.setCondition(condition,"universityMajorType","=",universityMajorType);
-        List ll = iremoteUniversityService.queryPage("universityMajorEnrollingExService",condition, offset, rows, "id", "asc", null);
+        Map<String,Object> selectorpage=Maps.newHashMap();
+        selectorpage.put("majorId",1);
+        selectorpage.put("majorName",1);
+        selectorpage.put("year",1);
+        selectorpage.put("batch",1);
+        selectorpage.put("admissionBatchId",1);
+        selectorpage.put("planEnrollingNumber",1);
+        selectorpage.put("lengthOfSchooling",1);
+        selectorpage.put("schoolFee",1);
+        selectorpage.put("universityMajorType",1);
+        List ll = iremoteUniversityService.queryPage("universityMajorEnrollingExService",condition, offset, rows, "id", "asc", selectorpage);
+        return ll;
+    }
+
+    /**
+     * 院校专业录取数据
+     * @param universityId
+     * @param year
+     * @param batch
+     * @param universityMajorType
+     * @param offset
+     * @param rows
+     * @return
+     */
+    @RequestMapping(value = "getUniversityMajorEnrollingSituationList",method = RequestMethod.GET)
+    @ResponseBody
+    public List getUniversityMajorEnrollingSituationList(@RequestParam(value = "universityId",required = true)long universityId,
+                                                         @RequestParam(value = "year",required = true)String year,//年份
+                                                         @RequestParam(value = "batch",required = true)int batch,//批次
+                                                         @RequestParam(value = "universityMajorType",required = true)String universityMajorType,//科类
+                                                         @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
+                                                         @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
+        Map<String,Object> condition=Maps.newHashMap();
+        condition.put("groupOp","and");
+        ConditionsUtil.setCondition(condition, "universityId", "=", String.valueOf(universityId));
+        ConditionsUtil.setCondition(condition,"year", "=", year);
+        ConditionsUtil.setCondition(condition, "batch", "=", String.valueOf(batch));
+        ConditionsUtil.setCondition(condition, "universityMajorType", "=", universityMajorType);
+        Map<String,Object> selectorpage=Maps.newHashMap();
+        selectorpage.put("majorId",1);
+        selectorpage.put("majorName",1);
+        selectorpage.put("year",1);
+        selectorpage.put("batch",1);
+        selectorpage.put("admissionBatchId",1);
+        selectorpage.put("realEnrollingNumber",1);
+        selectorpage.put("universityMajorType",1);
+        selectorpage.put("highestScore",1);
+        selectorpage.put("highestPrecedence",1);
+        selectorpage.put("lowestScore",1);
+        selectorpage.put("lowestPrecedence",1);
+        selectorpage.put("averageScore",1);
+        selectorpage.put("averagePrecedence",1);
+        List ll = iremoteUniversityService.queryPage("universityMajorEnrollingExService",condition, offset, rows, "id", "asc", selectorpage);
         return ll;
     }
 
