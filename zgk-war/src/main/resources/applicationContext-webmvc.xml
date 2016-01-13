@@ -20,7 +20,9 @@
                      http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 
     <!-- @Controller, @Service, @Configuration, etc. -->
-    <context:component-scan base-package="cn.thinkjoy" />
+    <context:component-scan base-package="cn.thinkjoy" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
 
     <mvc:interceptors >
         <bean class="cn.thinkjoy.gk.interceptor.LoginInterceptor"></bean>

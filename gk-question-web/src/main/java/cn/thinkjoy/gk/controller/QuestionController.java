@@ -388,7 +388,7 @@ public class QuestionController extends BaseController {
 
         UserAccountBean userAccountBean = userAccountService.findUserAccountBeanByToken(userAccountPojo.getId().toString(),7);
 
-        long value = userAccountBean.getId();
+        long value = Long.parseLong(userAccountBean.getId()+"");
 
         long currentTime = System.currentTimeMillis();
 

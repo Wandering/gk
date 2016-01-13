@@ -13,7 +13,7 @@
         endDate
     </sql>
     <insert id="insert" parameterType="UserVip">
-        INSERT INTO gk_user_vip (
+        INSERT INTO zgk_user_vip (
         id,
         status,
         creator,
@@ -35,7 +35,7 @@
 
     <!-- 更新 -->
     <update id="update" parameterType="UserVip">
-        UPDATE gk_user_vip
+        UPDATE zgk_user_vip
         <trim prefix="SET" suffixOverrides=",">
             <if test="status!=null">
                 status = #{status},
@@ -61,7 +61,7 @@
     </update>
 
     <update id="updateMap">
-        UPDATE gk_user_vip
+        UPDATE zgk_user_vip
         <trim prefix="SET" suffixOverrides=",">
             <if test="map.status!=null">
                 status = #{map.status},
@@ -87,7 +87,7 @@
     </update>
 
     <update id="updateByCondition">
-        UPDATE gk_user_vip
+        UPDATE zgk_user_vip
         <trim prefix="SET" suffixOverrides=",">
             <if test="update.status!=null">
                 status = #{update.status},
@@ -135,7 +135,7 @@
     </update>
 
     <insert id="insertMap" >
-        INSERT INTO gk_user_vip (
+        INSERT INTO zgk_user_vip (
                 status,
                 creator,
                 createDate,
@@ -154,7 +154,7 @@
 
 
     <update id="updateNull" parameterType="UserVip">
-        UPDATE gk_user_vip
+        UPDATE zgk_user_vip
         <trim prefix="SET" suffixOverrides=",">
             status = #{status},
             creator = #{creator},
@@ -169,7 +169,7 @@
 
     <!-- 按Id删除 -->
     <delete id="deleteById" parameterType="java.lang.Long">
-        DELETE FROM gk_user_vip
+        DELETE FROM zgk_user_vip
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -177,7 +177,7 @@
 
 
     <delete id="deleteByCondition" parameterType="java.util.Map">
-        DELETE FROM gk_user_vip
+        DELETE FROM zgk_user_vip
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id = #{id}
@@ -204,14 +204,14 @@
     </delete>
 
     <delete id="deleteByProperty" parameterType="java.util.Map">
-        DELETE FROM gk_user_vip WHERE
+        DELETE FROM zgk_user_vip WHERE
         ${property} = #{value}
     </delete>
 
     <select id="fetch" parameterType="java.lang.Long" resultType="UserVip">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_vip
+        FROM zgk_user_vip
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -223,7 +223,7 @@
     <select id="findOne" parameterType="java.util.Map" resultType="UserVip">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_vip WHERE
+        FROM zgk_user_vip WHERE
         ${property} = #{value}
         LIMIT 0,1
     </select>
@@ -231,7 +231,7 @@
     <select id="findList" parameterType="java.util.Map" resultType="UserVip">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_vip WHERE
+        FROM zgk_user_vip WHERE
         ${property} = #{value}
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -241,7 +241,7 @@
     <select id="findAll" resultType="UserVip">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_vip
+        FROM zgk_user_vip
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
         </if>
@@ -250,7 +250,7 @@
     <select id="queryPage" resultType="UserVip">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_vip
+        FROM zgk_user_vip
         <where>
 
             <if test="condition.whereSql != null">
@@ -293,7 +293,7 @@
     <select id="like" parameterType="java.util.Map" resultType="UserVip">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_vip
+        FROM zgk_user_vip
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id like CONCAT('%', #{id} , '%')
@@ -326,7 +326,7 @@
     <select id="queryList" parameterType="java.util.Map" resultType="UserVip">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_vip
+        FROM zgk_user_vip
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="condition.id!=null">
                 AND id = #{condition.id}
@@ -358,7 +358,7 @@
     <select id="queryOne" parameterType="java.util.Map" resultType="UserVip">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_vip
+        FROM zgk_user_vip
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id = #{id}
@@ -386,7 +386,7 @@
     </select>
 
     <select id="count" resultType="java.lang.Integer">
-        SELECT count(id) FROM gk_user_vip
+        SELECT count(id) FROM zgk_user_vip
        <where>
            <if test="id!=null">
                ${groupOp} id ${id.op}  #{id.data}
@@ -419,7 +419,7 @@
     <select id="selectMaxId" resultType="java.lang.Long">
         SELECT
         MAX(id)
-        FROM gk_user_vip
+        FROM zgk_user_vip
     </select>
 
 </mapper>
