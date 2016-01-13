@@ -58,11 +58,11 @@ public class GKInformationController extends BaseController{
 //        String keyString = new String(key.getBytes("ISO-8859-1"),"UTF-8");
         String pn = request.getParameter("pageNo");
         if (pn == null||pn.length() < 0) {
-            pn = "0";   //���û������ҳ�룬Ĭ�ϵ�һҳ
+            pn = "0";
         }
         String ps = request.getParameter("pageSize");
         if (ps == null||ps.length() < 0){
-            ps="4";  //���û���趨��Ĭ����ʾ4�����
+            ps="4";
         }
         List<GkinformationGkhot> information = informationService.getInformationByKey(areaId,key, (Integer.valueOf(pn) - 1) * Integer.valueOf(ps), Integer.valueOf(ps));
         return information;
