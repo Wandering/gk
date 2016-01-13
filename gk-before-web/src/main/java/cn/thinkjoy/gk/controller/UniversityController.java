@@ -15,9 +15,11 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.UniversityQuery;
 import cn.thinkjoy.gk.service.*;
 import cn.thinkjoy.gk.util.ConditionsUtil;
+import cn.thinkjoy.zgk.dto.UniversityPlanChartDTO;
 import cn.thinkjoy.zgk.remote.*;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
@@ -156,6 +158,15 @@ public class UniversityController extends BaseController {
         ConditionsUtil.setCondition(condition,"universityMajorType","=",universityMajorType);
         List ll = iremoteUniversityService.queryPage("universityMajorEnrollingExService",condition, offset, rows, "id", "asc", null);
         return ll;
+    }
+
+    @RequestMapping(value = "queryUniversityPlanChart",method = RequestMethod.GET)
+    @ResponseBody
+    public List queryUniversityPlanChart(@RequestParam(value = "universityId",required = true)long universityId){
+        Map<String,Object> map=Maps.newHashMap();
+        map.put("universityId",universityId);
+        List<UniversityPlanChartDTO> universityPlanChartDTOList=iremoteUniversityService.queryUniversityPlanChart(map);
+        return universityPlanChartDTOList;
     }
 
     /**
