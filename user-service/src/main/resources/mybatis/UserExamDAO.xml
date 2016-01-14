@@ -31,7 +31,7 @@ selectList
         isReported
     </sql>
     <insert id="insert" parameterType="UserExam">
-        INSERT INTO gk_user_exam (
+        INSERT INTO zgk_user_exam (
         id,
         scores,
         ranking,
@@ -51,7 +51,7 @@ selectList
 
     <!-- 更新 -->
     <update id="update" parameterType="UserExam">
-        UPDATE gk_user_exam
+        UPDATE zgk_user_exam
         <trim prefix="SET" suffixOverrides=",">
             <if test="scores!=null">
                 scores = #{scores},
@@ -71,7 +71,7 @@ selectList
     </update>
 
     <update id="updateMap">
-        UPDATE gk_user_exam
+        UPDATE zgk_user_exam
         <trim prefix="SET" suffixOverrides=",">
             <if test="map.scores!=null">
                 scores = #{map.scores},
@@ -91,7 +91,7 @@ selectList
     </update>
 
     <update id="updateByCondition">
-        UPDATE gk_user_exam
+        UPDATE zgk_user_exam
         <trim prefix="SET" suffixOverrides=",">
             <if test="update.scores!=null">
                 scores = #{update.scores},
@@ -127,7 +127,7 @@ selectList
     </update>
 
     <insert id="insertMap" >
-        INSERT INTO gk_user_exam (
+        INSERT INTO zgk_user_exam (
                 scores,
                 ranking,
                 isSurvey,
@@ -142,7 +142,7 @@ selectList
 
 
     <update id="updateNull" parameterType="UserExam">
-        UPDATE gk_user_exam
+        UPDATE zgk_user_exam
         <trim prefix="SET" suffixOverrides=",">
             scores = #{scores},
             ranking = #{ranking},
@@ -155,7 +155,7 @@ selectList
 
     <!-- 按Id删除 -->
     <delete id="deleteById" parameterType="java.lang.Long">
-        DELETE FROM gk_user_exam
+        DELETE FROM zgk_user_exam
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -163,7 +163,7 @@ selectList
 
 
     <delete id="deleteByCondition" parameterType="java.util.Map">
-        DELETE FROM gk_user_exam
+        DELETE FROM zgk_user_exam
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id = #{id}
@@ -184,14 +184,14 @@ selectList
     </delete>
 
     <delete id="deleteByProperty" parameterType="java.util.Map">
-        DELETE FROM gk_user_exam WHERE
+        DELETE FROM zgk_user_exam WHERE
         ${property} = #{value}
     </delete>
 
     <select id="fetch" parameterType="java.lang.Long" resultType="UserExam">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_exam
+        FROM zgk_user_exam
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -203,7 +203,7 @@ selectList
     <select id="findOne" parameterType="java.util.Map" resultType="UserExam">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_exam WHERE
+        FROM zgk_user_exam WHERE
         ${property} = #{value}
         LIMIT 0,1
     </select>
@@ -211,7 +211,7 @@ selectList
     <select id="findList" parameterType="java.util.Map" resultType="UserExam">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_exam WHERE
+        FROM zgk_user_exam WHERE
         ${property} = #{value}
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -221,7 +221,7 @@ selectList
     <select id="findAll" resultType="UserExam">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_exam
+        FROM zgk_user_exam
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
         </if>
@@ -230,7 +230,7 @@ selectList
     <select id="queryPage" resultType="UserExam">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_exam
+        FROM zgk_user_exam
         <where>
 
             <if test="condition.whereSql != null">
@@ -263,7 +263,7 @@ selectList
     <select id="like" parameterType="java.util.Map" resultType="UserExam">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_exam
+        FROM zgk_user_exam
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id like CONCAT('%', #{id} , '%')
@@ -290,7 +290,7 @@ selectList
     <select id="queryList" parameterType="java.util.Map" resultType="UserExam">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_exam
+        FROM zgk_user_exam
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="condition.id!=null">
                 AND id = #{condition.id}
@@ -316,7 +316,7 @@ selectList
     <select id="queryOne" parameterType="java.util.Map" resultType="UserExam">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_exam
+        FROM zgk_user_exam
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id = #{id}
@@ -338,7 +338,7 @@ selectList
     </select>
 
     <select id="count" resultType="java.lang.Integer">
-        SELECT count(id) FROM gk_user_exam
+        SELECT count(id) FROM zgk_user_exam
        <where>
            <if test="id!=null">
                ${groupOp} id ${id.op}  #{id.data}
@@ -365,7 +365,7 @@ selectList
     <select id="selectMaxId" resultType="java.lang.Long">
         SELECT
         MAX(id)
-        FROM gk_user_exam
+        FROM zgk_user_exam
     </select>
 
 </mapper>

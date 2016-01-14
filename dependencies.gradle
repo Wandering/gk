@@ -2,9 +2,9 @@ allprojects {
 
     gkCommonVersion = "0.0.1-SNAPSHOT"
 
-    thinkjoyCommonVersion = "0.0.59-SNAPSHOT"
+    thinkjoyCommonVersion = "0.1.43-SNAPSHOT"
 
-    thinkjoyCloudstackVersion = "0.0.17-SNAPSHOT"
+    thinkjoyCloudstackVersion = "0.0.32-SNAPSHOT"
 
     thinkjoyUCMVersion = "1.0.0-SNAPSHOT"
 

@@ -6,6 +6,7 @@
  */
 package cn.thinkjoy.gk.service.impl;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.dao.*;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.domain.UserExam;
@@ -76,43 +77,35 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
 
     @Override
     public boolean insertUserAccount(UserAccount userAccount) {
-        boolean flag = false;
-        try{
-            userAccountDAO.insert(userAccount);
-            long id = userAccount.getId();
-            UserInfo userInfo = new UserInfo();
-            userInfo.setId(id);
-            String account = userAccount.getAccount();
-            userInfo.setName("gk-" + account.substring(0,3)+"****"+account.substring(account.length()-4,account.length()));
-            userInfo.setToken(UUID.randomUUID().toString());
-            userInfoExDAO.insertUserInfo(userInfo);
-            UserVip userVip = new UserVip();
-            userVip.setId(id);
-            userVip.setStatus(0);
-            userVip.setCreateDate(System.currentTimeMillis());
-//            userVip.setEndDate(System.currentTimeMillis());
-            userVipDAO.insert(userVip);
-            UserExam userExam = new UserExam();
-            userExam.setId(id);
-            userExam.setIsReported(0);
-            userExam.setIsSurvey(0);
-            userExamDAO.insert(userExam);
-            flag = true;
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        boolean flag;
+        userAccountDAO.insert(userAccount);
+        long id = userAccount.getId();
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(id);
+        String account = userAccount.getAccount();
+        userInfo.setName("gk-" + account.substring(0,3)+"****"+account.substring(account.length()-4,account.length()));
+        userInfo.setToken(UUID.randomUUID().toString());
+        userInfoExDAO.insertUserInfo(userInfo);
+        UserVip userVip = new UserVip();
+        userVip.setId(id);
+        userVip.setStatus(0);
+        userVip.setCreateDate(System.currentTimeMillis());
+        userVipDAO.insert(userVip);
+        UserExam userExam = new UserExam();
+        userExam.setId(id);
+        userExam.setIsReported(0);
+        userExam.setIsSurvey(0);
+        userExamDAO.insert(userExam);
+        flag = true;
+
         return flag;
     }
 
     @Override
     public boolean updateUserAccount(UserAccount userAccount){
         boolean flag = false;
-        try {
-            userAccountDAO.update(userAccount);
-            flag = true;
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        userAccountDAO.update(userAccount);
+        flag = true;
         return flag;
     }
 

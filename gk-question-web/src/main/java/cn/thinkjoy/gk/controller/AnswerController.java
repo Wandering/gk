@@ -92,7 +92,7 @@ public class AnswerController extends BaseController {
 
         UserAccountBean userAccountBean = userAccountService.findUserAccountBeanByToken(userAccountPojo.getId().toString(),7);
 
-        long userId = userAccountBean.getId();
+        long userId = Long.parseLong(userAccountBean.getId()+"");
 
         List<QuestionDetailBean> questionDetailBeans = answerService.findAnswerPage(keyword,isAnswer,Long.valueOf(userId), startSize, endSize);
 

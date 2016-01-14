@@ -15,7 +15,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import cn.thinkjoy.common.domain.CreateBaseDomain;
 
-public class VideoClassify extends CreateBaseDomain{
+public class VideoClassify extends CreateBaseDomain<Long>{
     private String classifyName;
 
 	public VideoClassify(){

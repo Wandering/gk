@@ -19,7 +19,7 @@ import cn.thinkjoy.common.domain.CreateBaseDomain;
 
 import java.util.*;
 
-public class Card extends CreateBaseDomain{
+public class Card extends CreateBaseDomain<Long>{
 	/** 有效结束日期 */
 	private Long endDate;
 	/** 信息标题 */

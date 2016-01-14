@@ -19,7 +19,7 @@ import cn.thinkjoy.common.domain.BaseDomain;
 
 import java.util.*;
 
-public class UserInfo extends BaseDomain{
+public class UserInfo extends BaseDomain<Long>{
     /** 预留 */
     private String token;
     /** 用户名 */

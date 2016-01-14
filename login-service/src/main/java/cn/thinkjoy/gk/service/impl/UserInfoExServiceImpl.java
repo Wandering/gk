@@ -26,13 +26,9 @@ public class UserInfoExServiceImpl implements IUserInfoExService {
 
     @Override
     public boolean updateUserInfoById(UserInfo userInfo) {
-        boolean flag = false;
-        try {
-            userInfoDAO.update(userInfo);
-            flag = true;
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        boolean flag;
+        userInfoDAO.update(userInfo);
+        flag = true;
         return flag;
     }
 }

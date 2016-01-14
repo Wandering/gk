@@ -19,7 +19,7 @@ import cn.thinkjoy.common.domain.CreateBaseDomain;
 
 import java.util.*;
 
-public class Agent extends CreateBaseDomain{
+public class Agent extends CreateBaseDomain<Long>{
 	/** 明层 */
 	private String name;
 	/** 电话 */

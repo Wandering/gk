@@ -19,7 +19,7 @@ import cn.thinkjoy.common.domain.BaseDomain;
 
 import java.util.*;
 
-public class Count extends BaseDomain{
+public class Count extends BaseDomain<Long>{
     /** 统计的项目 */
     private Long projectId;
     /** 统计总数 */
