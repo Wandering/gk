@@ -1,8 +1,10 @@
 package cn.thinkjoy.gk.controller.api;
 
 import cn.thinkjoy.common.domain.view.BizData4Page;
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
+import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.zgk.common.QueryUtil;
 import cn.thinkjoy.zgk.domain.GkHot;
@@ -65,6 +67,13 @@ public class GkHotController extends BaseApiController{
     @RequestMapping(value = "/getGkHotInfo",method = RequestMethod.GET)
     @ResponseBody
     public GkHot getGkHotInfo(@ApiParam(param="id", desc="热点主键ID",required = true) @RequestParam("id")String id){
-        return gkHotService.getGkHotInfo(id);
+        if("".equals(id)){
+            throw new BizException(ERRORCODE.IDISNOTNULL.getCode(),ERRORCODE.IDISNOTNULL.getMessage());
+        }
+        GkHot gkHot=gkHotService.getGkHotInfo(id);
+        if(gkHot==null){
+            throw new BizException(ERRORCODE.RESOURCEISNULL.getCode(),ERRORCODE.RESOURCEISNULL.getMessage());
+        }
+        return gkHot;
     }
 }

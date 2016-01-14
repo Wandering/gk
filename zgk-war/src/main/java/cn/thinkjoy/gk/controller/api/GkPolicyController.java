@@ -1,8 +1,10 @@
 package cn.thinkjoy.gk.controller.api;
 
 import cn.thinkjoy.common.domain.view.BizData4Page;
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
+import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.zgk.common.QueryUtil;
 import cn.thinkjoy.zgk.domain.GkPolicy;
@@ -44,7 +46,7 @@ public class GkPolicyController extends BaseApiController{
     @ApiDesc(value = "获取政策解读摘要列表", owner = "杨永平")
     @RequestMapping(value = "/getPolicyList",method = RequestMethod.GET)
     @ResponseBody
-    public BizData4Page getPolicyList(@ApiParam(param="queryparam", desc="标题模糊查询") @RequestParam("type") String queryparam,
+    public BizData4Page getPolicyList(@ApiParam(param="queryparam", desc="标题模糊查询") @RequestParam("queryparam") String queryparam,
                                                @ApiParam(param="page", desc="页数") @RequestParam("page") Integer page,
                                                @ApiParam(param="rows", desc="每页条数") @RequestParam("rows") Integer rows){
         //默认参数设置
@@ -64,6 +66,13 @@ public class GkPolicyController extends BaseApiController{
     @RequestMapping(value = "/getPolicyInfo",method = RequestMethod.GET)
     @ResponseBody
     public GkPolicy getPolicyInfo(@ApiParam(param="id", desc="高考日程主键ID",required = true) @RequestParam("id")String id){
-        return gkPolicyService.getGkPolicyInfo(id);
+        if("".equals(id)){
+            throw new BizException(ERRORCODE.IDISNOTNULL.getCode(),ERRORCODE.IDISNOTNULL.getMessage());
+        }
+        GkPolicy gkPolicy=gkPolicyService.getGkPolicyInfo(id);
+        if(gkPolicy==null){
+            throw new BizException(ERRORCODE.RESOURCEISNULL.getCode(),ERRORCODE.RESOURCEISNULL.getMessage());
+        }
+        return gkPolicy;
     }
 }
