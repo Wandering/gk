@@ -33,10 +33,10 @@ public class APIDocGenMain {
         //cfg.setClassForTemplateLoading(APIDocGenMain.class, "apidoc");
         cfg.setDefaultEncoding("UTF-8");
 
-        String rootPath = "E:\\2015工作空间2\\ucenter\\ucenter-web-war\\src\\test\\resources\\apidoc\\";
+        String rootPath = "D:\\IdeaProjects\\gkadmin\\gk\\zgk-war\\src\\test\\resources\\apidoc\\api\\";
         Writer out = null;
         try {
-            Template template = cfg.getTemplate("ucenter-web-war/src/test/resources/apidoc/apidoc.ftl");
+            Template template = cfg.getTemplate("zgk-war/src/test/resources/apidoc/apidoc.ftl");
             File file = new File(rootPath +"apidoc.html");
             out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
             Map<String, Object> root = new HashMap<String, Object>();

@@ -36,6 +36,7 @@ public class GkPolicyTest {
         map.put("sortBy","desc");
         Assert.notNull(gkPolicyService.getGkPolicyList(map, null, 4));
         QueryUtil.setMapOp(map, "type", "=", 1);
+        QueryUtil.setMapOp(map,"title","LIKE","%"+"标题1"+"%");
         Assert.notNull(gkPolicyService.getGkPolicyList(map, 1, 4));
 
     }

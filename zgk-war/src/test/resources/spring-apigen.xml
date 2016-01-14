@@ -12,7 +12,7 @@
     <description>apigen spring </description>
 
     <bean class="cn.thinkjoy.common.restful.apigen.ApiDocCollector" id="apiDocCollector">
-        <property name="scanPath" value="cn.thinkjoy.ucenter.controller.api"/>
+        <property name="scanPath" value="cn.thinkjoy.gk.controller.api"/>
         <property name="protocolVersion" value="v1"/>
         <property name="sysCode" value="zgk"/>
         <property name="onOff" value="true"/>

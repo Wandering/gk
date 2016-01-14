@@ -44,9 +44,9 @@ public class GkPolicyController extends BaseApiController{
     @ApiDesc(value = "获取政策解读摘要列表", owner = "杨永平")
     @RequestMapping(value = "/getPolicyList",method = RequestMethod.GET)
     @ResponseBody
-    public BizData4Page getPolicyList(@ApiParam(param="type", desc="标题模糊查询")String queryparam,
-                                               @ApiParam(param="page", desc="页数")Integer page,
-                                               @ApiParam(param="rows", desc="每页条数")Integer rows){
+    public BizData4Page getPolicyList(@ApiParam(param="queryparam", desc="标题模糊查询") @RequestParam("type") String queryparam,
+                                               @ApiParam(param="page", desc="页数") @RequestParam("page") Integer page,
+                                               @ApiParam(param="rows", desc="每页条数") @RequestParam("rows") Integer rows){
         //默认参数设置
         Map<String,Object> map = new HashMap<>();
         map.put("groupOp","and");
@@ -63,7 +63,7 @@ public class GkPolicyController extends BaseApiController{
     @ApiDesc(value = "根据主键获取政策解读详情", owner = "杨永平")
     @RequestMapping(value = "/getPolicyInfo",method = RequestMethod.GET)
     @ResponseBody
-    public GkPolicy getPolicyInfo(@ApiParam(param="id", desc="高考日程主键ID")@RequestParam("id")String id){
+    public GkPolicy getPolicyInfo(@ApiParam(param="id", desc="高考日程主键ID",required = true) @RequestParam("id")String id){
         return gkPolicyService.getGkPolicyInfo(id);
     }
 }

@@ -34,7 +34,7 @@ public class GkScheduleController extends BaseApiController{
     @ApiDesc(value = "获取高考日程摘要列表", owner = "杨永平")
     @RequestMapping(value = "/getScheduleList",method = RequestMethod.GET)
     @ResponseBody
-    public List<GkScheduleDTO> getScheduleList(@ApiParam(param="num", desc="热点摘要条数")Integer num){
+    public List<GkScheduleDTO> getScheduleList(@ApiParam(param="num", desc="热点摘要条数") @RequestParam("num") Integer num){
         num=setDefault(num,3);
         return gkScheduleService.getScheduleList(num);
     }
@@ -46,7 +46,7 @@ public class GkScheduleController extends BaseApiController{
     @ApiDesc(value = "根据主键获取高考日程详情", owner = "杨永平")
     @RequestMapping(value = "/getScheduleInfo",method = RequestMethod.GET)
     @ResponseBody
-    public GkSchedule getScheduleInfo(@ApiParam(param="id", desc="高考日程主键ID")@RequestParam("id")String id){
+    public GkSchedule getScheduleInfo(@ApiParam(param="id", desc="高考日程主键ID",required = true) @RequestParam("id") String id){
         return gkScheduleService.getScheduleInfo(id);
     }
 }

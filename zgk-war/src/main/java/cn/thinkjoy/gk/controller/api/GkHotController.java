@@ -40,9 +40,9 @@ public class GkHotController extends BaseApiController{
     @ApiDesc(value = "获取热点摘要列表", owner = "杨永平")
     @RequestMapping(value = "/getGkHotList",method = RequestMethod.GET)
     @ResponseBody
-    public BizData4Page getGkHotList(@ApiParam(param="type", desc="热点类型")Integer type,
-                                    @ApiParam(param="page", desc="页数")Integer page,
-                                    @ApiParam(param="rows", desc="每页条数")Integer rows){
+    public BizData4Page getGkHotList(@ApiParam(param="type", desc="热点类型") @RequestParam("type") Integer type,
+                                    @ApiParam(param="page", desc="页数") @RequestParam("page") Integer page,
+                                    @ApiParam(param="rows", desc="每页条数") @RequestParam("rows") Integer rows){
         Map<String,Object> map = new HashMap<>();
         //默认参数设置
         map.put("groupOp","and");
@@ -64,7 +64,7 @@ public class GkHotController extends BaseApiController{
     @ApiDesc(value = "获取热点详细信息", owner = "杨永平")
     @RequestMapping(value = "/getGkHotInfo",method = RequestMethod.GET)
     @ResponseBody
-    public GkHot getGkHotInfo(@ApiParam(param="id", desc="热点主键ID")@RequestParam("id")String id){
+    public GkHot getGkHotInfo(@ApiParam(param="id", desc="热点主键ID",required = true) @RequestParam("id")String id){
         return gkHotService.getGkHotInfo(id);
     }
 }
