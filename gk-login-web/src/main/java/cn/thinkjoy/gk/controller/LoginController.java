@@ -41,6 +41,7 @@ public class LoginController extends BaseController {
 	@ResponseBody
 	public long login(@RequestParam(value="account",required=false) String account,
 					  @RequestParam(value="password",required=false) String password) throws Exception {
+		LOGGER.debug("22222");
 		long id = 0l;
 		long areaId=getAreaCookieValue();
 		try {
