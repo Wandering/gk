@@ -19,7 +19,7 @@ import cn.thinkjoy.common.domain.CreateBaseDomain;
 
 import java.util.*;
 
-public class ExaminationPaper extends CreateBaseDomain{
+public class ExaminationPaper extends CreateBaseDomain<Long>{
     /** 年份 */
     private String years;
     /** 排序 */

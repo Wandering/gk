@@ -17,7 +17,7 @@ import cn.thinkjoy.common.domain.BaseDomain;
 
 import java.util.*;
 
-public class UserAccount extends BaseDomain{
+public class UserAccount extends BaseDomain<Long>{
 
 	private Integer status;
 	private Long createDate;
@@ -27,6 +27,15 @@ public class UserAccount extends BaseDomain{
     private Integer userType;
 	/** 区域Id */
 	private Long areaId;
+	private boolean canTargetSchool;
+
+	public boolean isCanTargetSchool() {
+		return canTargetSchool;
+	}
+
+	public void setCanTargetSchool(boolean canTargetSchool) {
+		this.canTargetSchool = canTargetSchool;
+	}
 
 	public UserAccount(){
 	}
@@ -94,6 +103,7 @@ public class UserAccount extends BaseDomain{
 			.append("LastModDate",getLastModDate())
 			.append("Password",getPassword())
 			.append("UserType",getUserType())
+			.append("CanTargetSchool",isCanTargetSchool())
 			.toString();
 	}
 	

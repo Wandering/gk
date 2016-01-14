@@ -14,8 +14,12 @@ import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.UniversityQuery;
 import cn.thinkjoy.gk.service.*;
+import cn.thinkjoy.gk.util.ConditionsUtil;
+import cn.thinkjoy.zgk.dto.UniversityPlanChartDTO;
+import cn.thinkjoy.zgk.remote.*;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
@@ -46,6 +50,8 @@ public class UniversityController extends BaseController {
     public static final Logger LOGGER= LoggerFactory.getLogger(UniversityController.class);
 
     @Autowired
+    private IUserCollectExService userCollectExService;
+    @Autowired
     private IExUniversityService iUniversityService;
     @Autowired
     private IUniversityDictService universityDictService;
@@ -56,6 +62,195 @@ public class UniversityController extends BaseController {
     @Autowired
     private IDataDictService dataDictService;
 
+    @Autowired
+    private cn.thinkjoy.zgk.remote.IUniversityService iremoteUniversityService;
+
+    /**
+     * 智高考院校信息列表
+     * @return
+     */
+    @RequestMapping(value = "/getRemoteUniversityList",method = RequestMethod.GET)
+    @ResponseBody
+    public List getUniversityList(@RequestParam(value = "universityName",required = false)String universityName,
+                                  @RequestParam(value = "areaid",required = false)String areaid,//省份
+                                  @RequestParam(value = "type",required = false)Integer type,//院校分类
+                                  @RequestParam(value = "educationLevel",required = false)Integer educationLevel,//学历层次
+                                  @RequestParam(value = "property",required = false)String property,//院校特征
+                                  @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
+                                  @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
+        Map<String,Object> condition=Maps.newHashMap();
+        condition.put("groupOp","and");
+        if (StringUtils.isNotBlank(universityName))
+            ConditionsUtil.setCondition(condition,"name","like","%"+universityName+"%");
+        if (StringUtils.isNotBlank(areaid))
+            ConditionsUtil.setCondition(condition,"areaid","=",areaid);
+        if (type!=null)
+            ConditionsUtil.setCondition(condition,"type","=",type.toString());
+        if (educationLevel!=null)
+            ConditionsUtil.setCondition(condition,"educationLevel","=",educationLevel.toString());
+        if (StringUtils.isNotBlank(property))
+            ConditionsUtil.setCondition(condition,"property","like","%"+property+"%");
+        String orederBy=null;
+        String sqlOrderEnumStr="asc";
+        List<Map<String,Object>> getUniversityList=iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, null);
+        //如果用户已登录
+        UserAccountPojo userAccountPojo=getUserAccountPojo();
+        if(null!=userAccountPojo) {
+            long userId = userAccountPojo.getId();
+            //需要在收藏表中拼接收藏状态字段
+            for (Map<String, Object> university : getUniversityList) {
+                Map<String,Object> param=Maps.newHashMap();
+//                param.put("userId",54);
+                param.put("userId",userId);
+                param.put("projectId",university.get("id"));
+                param.put("type",1);
+                university.put("isCollect",userCollectExService.isCollect(param));
+            }
+        }
+        return getUniversityList;
+    }
+
+    @RequestMapping(value = "getRemoteUniversityById",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getUniversityDTOById(@RequestParam(value = "universityId",required = true)long universityId){
+        return iremoteUniversityService.getUniversityById(universityId);
+    }
+
+    /**
+     * 获取开设专业列表
+     * @param universityId
+     * @param offset
+     * @param rows
+     * @return
+     */
+    @RequestMapping(value = "getRemoteUniversityMajorListByUniversityId",method = RequestMethod.GET)
+    @ResponseBody
+    public List getUniversityMajorListByUniversityId(@RequestParam(value = "universityId",required = true)long universityId,
+                                                     @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
+                                                     @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
+        Map<String,Object> condition=Maps.newHashMap();
+        condition.put("groupOp","and");
+        ConditionsUtil.setCondition(condition,"universityId","=",String.valueOf(universityId));
+        Map<String,Object> selectorpage=Maps.newHashMap();
+        selectorpage.put("majorId",1);
+        selectorpage.put("majorName",1);
+        selectorpage.put("educationLevel",1);
+        selectorpage.put("gainDegree",1);
+        selectorpage.put("majorRank",1);
+        List ll = iremoteUniversityService.queryPage("universityMajorExService", condition, offset, rows, "majorRank", "asc", selectorpage);
+//        List ll=iremoteUniversityService.getUniversityMajorListByUniversityId(universityId,condition, offset, rows, "majorRank", "asc", selectorpage);
+        return ll;
+    }
+
+    /**
+     * 招生计划列表获取
+     * @param universityId
+     * @param year
+     * @param batch
+     * @param universityMajorType
+     * @param offset
+     * @param rows
+     * @return
+     */
+    @RequestMapping(value = "getUniversityMajorEnrollingPlanList",method = RequestMethod.GET)
+    @ResponseBody
+    public List getUniversityMajorEnrollingPlanList(@RequestParam(value = "universityId",required = true)long universityId,
+                                                @RequestParam(value = "year",required = true)String year,//年份
+                                                @RequestParam(value = "batch",required = true)int batch,//批次
+                                                @RequestParam(value = "universityMajorType",required = true)String universityMajorType,//科类
+                                                @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
+                                                @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
+        Map<String,Object> condition=Maps.newHashMap();
+        condition.put("groupOp","and");
+        ConditionsUtil.setCondition(condition, "universityId", "=", String.valueOf(universityId));
+        ConditionsUtil.setCondition(condition,"year", "=", year);
+        ConditionsUtil.setCondition(condition,"batch","=",String.valueOf(batch));
+        ConditionsUtil.setCondition(condition,"universityMajorType","=",universityMajorType);
+        Map<String,Object> selectorpage=Maps.newHashMap();
+        selectorpage.put("majorId",1);
+        selectorpage.put("majorName",1);
+        selectorpage.put("year",1);
+        selectorpage.put("batch",1);
+        selectorpage.put("admissionBatchId",1);
+        selectorpage.put("planEnrollingNumber",1);
+        selectorpage.put("lengthOfSchooling",1);
+        selectorpage.put("schoolFee",1);
+        selectorpage.put("universityMajorType",1);
+        List ll = iremoteUniversityService.queryPage("universityMajorEnrollingExService",condition, offset, rows, "id", "asc", selectorpage);
+        return ll;
+    }
+
+    /**
+     * 院校专业录取数据
+     * @param universityId
+     * @param year
+     * @param batch
+     * @param universityMajorType
+     * @param offset
+     * @param rows
+     * @return
+     */
+    @RequestMapping(value = "getUniversityMajorEnrollingSituationList",method = RequestMethod.GET)
+    @ResponseBody
+    public List getUniversityMajorEnrollingSituationList(@RequestParam(value = "universityId",required = true)long universityId,
+                                                         @RequestParam(value = "year",required = true)String year,//年份
+                                                         @RequestParam(value = "batch",required = true)int batch,//批次
+                                                         @RequestParam(value = "universityMajorType",required = true)String universityMajorType,//科类
+                                                         @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
+                                                         @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
+        Map<String,Object> condition=Maps.newHashMap();
+        condition.put("groupOp","and");
+        ConditionsUtil.setCondition(condition, "universityId", "=", String.valueOf(universityId));
+        ConditionsUtil.setCondition(condition,"year", "=", year);
+        ConditionsUtil.setCondition(condition, "batch", "=", String.valueOf(batch));
+        ConditionsUtil.setCondition(condition, "universityMajorType", "=", universityMajorType);
+        Map<String,Object> selectorpage=Maps.newHashMap();
+        selectorpage.put("majorId",1);
+        selectorpage.put("majorName",1);
+        selectorpage.put("year",1);
+        selectorpage.put("batch",1);
+        selectorpage.put("admissionBatchId",1);
+        selectorpage.put("realEnrollingNumber",1);
+        selectorpage.put("universityMajorType",1);
+        selectorpage.put("highestScore",1);
+        selectorpage.put("highestPrecedence",1);
+        selectorpage.put("lowestScore",1);
+        selectorpage.put("lowestPrecedence",1);
+        selectorpage.put("averageScore",1);
+        selectorpage.put("averagePrecedence",1);
+        List ll = iremoteUniversityService.queryPage("universityMajorEnrollingExService",condition, offset, rows, "id", "asc", selectorpage);
+        return ll;
+    }
+
+    @RequestMapping(value = "queryUniversityPlanChart",method = RequestMethod.GET)
+    @ResponseBody
+    public List queryUniversityPlanChart(@RequestParam(value = "universityId",required = true)long universityId){
+        Map<String,Object> map=Maps.newHashMap();
+        map.put("universityId",universityId);
+        List<UniversityPlanChartDTO> universityPlanChartDTOList=iremoteUniversityService.queryUniversityPlanChart(map);
+        return universityPlanChartDTOList;
+    }
+
+    /**
+     * 智高考获取省份列表
+     * @return
+     */
+    @RequestMapping(value = "getRemoteProvinceList",method = RequestMethod.GET)
+    @ResponseBody
+    public List getProvinceList(){
+        return iremoteUniversityService.getProvinceName();
+    }
+
+    /**
+     * 智高考获取字典表通用接口
+     * @param type
+     * @return
+     */
+    @RequestMapping(value = "getRemoteDataDictList",method = RequestMethod.GET)
+    @ResponseBody
+    public List getDataDictList(@RequestParam(value = "type",required = true)String type){
+        return iremoteUniversityService.getDataDictListByType(type);
+    }
 
     /**
      * 获取初始化信息

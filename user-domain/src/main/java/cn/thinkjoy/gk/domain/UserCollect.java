@@ -19,7 +19,7 @@ import cn.thinkjoy.common.domain.BaseDomain;
 
 import java.util.*;
 
-public class UserCollect extends BaseDomain{
+public class UserCollect extends BaseDomain<Long>{
     /** 用户Id */
     private long userId;
     /** 收藏院校ID */

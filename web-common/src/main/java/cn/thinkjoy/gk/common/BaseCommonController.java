@@ -31,6 +31,8 @@ public class BaseCommonController {
 	}
 
 	public String getCookieValue(){
+		if (CookieUtil.getCookieValue(request)==null)
+			return "0";
 		return CookieUtil.getCookieValue(request);
 	}
 

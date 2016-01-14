@@ -15,7 +15,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import cn.thinkjoy.common.domain.CreateBaseDomain;
 
-public class VideoSection extends CreateBaseDomain{
+public class VideoSection extends CreateBaseDomain<Long>{
     private Long courseId;
     private String sectionName;
     private Integer sectionSort;
