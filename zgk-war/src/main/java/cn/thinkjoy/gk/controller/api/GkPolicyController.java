@@ -54,7 +54,9 @@ public class GkPolicyController extends BaseApiController{
         map.put("groupOp","and");
         map.put("orderBy","createDate");
         map.put("sortBy","desc");
-        QueryUtil.setMapOp(map,"title","LIKE","%"+queryparam+"%");
+        if(!"".equals(queryparam)) {
+            QueryUtil.setMapOp(map, "title", "LIKE", "%" + queryparam + "%");
+        }
         return gkPolicyService.getGkPolicyList(map,page,rows);
     }
 
@@ -65,7 +67,7 @@ public class GkPolicyController extends BaseApiController{
     @ApiDesc(value = "根据主键获取政策解读详情", owner = "杨永平")
     @RequestMapping(value = "/getPolicyInfo",method = RequestMethod.GET)
     @ResponseBody
-    public GkPolicy getPolicyInfo(@ApiParam(param="id", desc="高考日程主键ID",required = true) @RequestParam("id")String id){
+    public Object getPolicyInfo(@ApiParam(param="id", desc="高考日程主键ID",required = true) @RequestParam("id")String id){
         if("".equals(id)){
             throw new BizException(ERRORCODE.IDISNOTNULL.getCode(),ERRORCODE.IDISNOTNULL.getMessage());
         }
@@ -73,6 +75,6 @@ public class GkPolicyController extends BaseApiController{
         if(gkPolicy==null){
             throw new BizException(ERRORCODE.RESOURCEISNULL.getCode(),ERRORCODE.RESOURCEISNULL.getMessage());
         }
-        return gkPolicy;
+        return isNull(gkPolicy);
     }
 }

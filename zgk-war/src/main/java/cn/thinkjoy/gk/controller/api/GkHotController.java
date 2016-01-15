@@ -66,7 +66,7 @@ public class GkHotController extends BaseApiController{
     @ApiDesc(value = "获取热点详细信息", owner = "杨永平")
     @RequestMapping(value = "/getGkHotInfo",method = RequestMethod.GET)
     @ResponseBody
-    public GkHot getGkHotInfo(@ApiParam(param="id", desc="热点主键ID",required = true) @RequestParam("id")String id){
+    public Object getGkHotInfo(@ApiParam(param="id", desc="热点主键ID",required = true) @RequestParam("id")String id){
         if("".equals(id)){
             throw new BizException(ERRORCODE.IDISNOTNULL.getCode(),ERRORCODE.IDISNOTNULL.getMessage());
         }
@@ -74,6 +74,6 @@ public class GkHotController extends BaseApiController{
         if(gkHot==null){
             throw new BizException(ERRORCODE.RESOURCEISNULL.getCode(),ERRORCODE.RESOURCEISNULL.getMessage());
         }
-        return gkHot;
+        return isNull(gkHot);
     }
 }

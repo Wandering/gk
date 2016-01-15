@@ -1,5 +1,8 @@
 package cn.thinkjoy.gk.controller.api;
 
+import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.common.ERRORCODE;
+
 /**
  * 开发平台api基类
  * <p/>
@@ -21,5 +24,12 @@ public class BaseApiController {
             num=defaultNum;
         }
         return num;
+    }
+
+    protected Object isNull(Object o){
+        if(o==null){
+            throw new BizException(ERRORCODE.RESOURCEISNULL.getCode(),ERRORCODE.RESOURCEISNULL.getMessage());
+        }
+        return o;
     }
 }

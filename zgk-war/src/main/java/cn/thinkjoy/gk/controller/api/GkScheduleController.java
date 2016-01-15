@@ -48,14 +48,11 @@ public class GkScheduleController extends BaseApiController{
     @ApiDesc(value = "根据主键获取高考日程详情", owner = "杨永平")
     @RequestMapping(value = "/getScheduleInfo",method = RequestMethod.GET)
     @ResponseBody
-    public GkSchedule getScheduleInfo(@ApiParam(param="id", desc="高考日程主键ID",required = true) @RequestParam("id") String id){
+    public Object getScheduleInfo(@ApiParam(param="id", desc="高考日程主键ID",required = true) @RequestParam("id") String id){
         if("".equals(id)){
             throw new BizException(ERRORCODE.IDISNOTNULL.getCode(),ERRORCODE.IDISNOTNULL.getMessage());
         }
         GkSchedule gkSchedule=gkScheduleService.getScheduleInfo(id);
-        if(gkSchedule==null){
-            throw new BizException(ERRORCODE.RESOURCEISNULL.getCode(),ERRORCODE.RESOURCEISNULL.getMessage());
-        }
-        return gkSchedule;
+        return isNull(gkSchedule);
     }
 }

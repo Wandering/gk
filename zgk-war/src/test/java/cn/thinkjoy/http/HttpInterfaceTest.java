@@ -55,4 +55,64 @@ public class HttpInterfaceTest extends TestCase{
 //                assertTrue(result.contains("33"));
 //            assertTrue(result.contains("文史"));
         }
+
+    public void testGetPolicyList(){
+        String url=host + getPolicyList_url + "?queryparam=&page=&rows=";
+        String result = RequestUtils.requestGet(url);
+        assertTrue(result.contains("2015"));
+//                assertTrue(result.contains("01"));
+//                assertTrue(result.contains("12"));
+//                assertTrue(result.contains("11"));
+//                assertTrue(result.contains("2015"));
+//            assertTrue(result.contains("一批本科"));
+//            assertTrue(result.contains("985/211"));
+//            assertTrue(result.contains("教育部"));
+//                assertTrue(result.contains("33"));
+//            assertTrue(result.contains("文史"));
+    }
+
+    public void testGetPolicyInfo(){
+        String url=host + getPolicyInfo_url + "?id=44";
+        String result = RequestUtils.requestGet(url);
+        assertTrue(result.contains("摘要"));
+//                assertTrue(result.contains("01"));
+//                assertTrue(result.contains("12"));
+//                assertTrue(result.contains("11"));
+//                assertTrue(result.contains("2015"));
+//            assertTrue(result.contains("一批本科"));
+//            assertTrue(result.contains("985/211"));
+//            assertTrue(result.contains("教育部"));
+//                assertTrue(result.contains("33"));
+//            assertTrue(result.contains("文史"));
+    }
+
+    public void testGetGkHotInfo(){
+        String url=host + getGkHotInfo_url + "?id=280";
+        String result = RequestUtils.requestGet(url);
+        assertTrue(result.contains("280"));
+//                assertTrue(result.contains("01"));
+//                assertTrue(result.contains("12"));
+//                assertTrue(result.contains("11"));
+//                assertTrue(result.contains("2015"));
+//            assertTrue(result.contains("一批本科"));
+//            assertTrue(result.contains("985/211"));
+//            assertTrue(result.contains("教育部"));
+//                assertTrue(result.contains("33"));
+//            assertTrue(result.contains("文史"));
+    }
+
+    public void testGetGkHotList(){
+        String url=host + getGkHotList_url + "?type=&page=&rows=";
+        String result = RequestUtils.requestGet(url);
+        assertTrue(result.contains("2015"));
+//                assertTrue(result.contains("01"));
+//                assertTrue(result.contains("12"));
+//                assertTrue(result.contains("11"));
+//                assertTrue(result.contains("2015"));
+//            assertTrue(result.contains("一批本科"));
+//            assertTrue(result.contains("985/211"));
+//            assertTrue(result.contains("教育部"));
+//                assertTrue(result.contains("33"));
+//            assertTrue(result.contains("文史"));
+    }
 }
