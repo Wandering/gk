@@ -25,7 +25,7 @@ import java.util.List;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/schedule")
-public class GkScheduleController extends BaseApiController{
+public class GkScheduleController extends BaseApiController<GkSchedule>{
 
     @Autowired
     IGkScheduleService gkScheduleService;
@@ -49,7 +49,7 @@ public class GkScheduleController extends BaseApiController{
     @ApiDesc(value = "根据主键获取高考日程详情", owner = "杨永平")
     @RequestMapping(value = "/getScheduleInfo",method = RequestMethod.GET)
     @ResponseBody
-    public Object getScheduleInfo(@ApiParam(param="id", desc="高考日程主键ID",required = true) @RequestParam("id") String id){
+    public GkSchedule getScheduleInfo(@ApiParam(param="id", desc="高考日程主键ID",required = true) @RequestParam("id") String id){
         if("".equals(id)){
             throw new BizException(ERRORCODE.IDISNOTNULL.getCode(),ERRORCODE.IDISNOTNULL.getMessage());
         }

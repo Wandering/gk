@@ -11,7 +11,7 @@ import cn.thinkjoy.gk.common.ERRORCODE;
  * @author qyang
  * @since v0.0.1
  */
-public class BaseApiController {
+public class BaseApiController<T> {
     protected String setDefault(String str,String defaultStr){
         if(str==null || "".equals(str)){
             str=defaultStr;
@@ -31,7 +31,7 @@ public class BaseApiController {
         }
         return num;
     }
-    protected Object isNull(Object o){
+    protected T isNull(T o){
         if(o==null){
             throw new BizException(ERRORCODE.RESOURCEISNULL.getCode(),ERRORCODE.RESOURCEISNULL.getMessage());
         }

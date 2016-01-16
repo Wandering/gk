@@ -31,7 +31,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/policy")
-public class GkPolicyController extends BaseApiController{
+public class GkPolicyController extends BaseApiController<GkPolicy>{
 
     /**行默认**/
     private static int ROWSDEFAULT=4;
@@ -47,7 +47,7 @@ public class GkPolicyController extends BaseApiController{
     @ApiDesc(value = "获取政策解读摘要列表", owner = "杨永平")
     @RequestMapping(value = "/getPolicyList",method = RequestMethod.GET)
     @ResponseBody
-    public BizData4Page getPolicyList(@ApiParam(param="queryparam", desc="标题模糊查询") @RequestParam("queryparam") String queryparam,
+    public BizData4Page<GkPolicy> getPolicyList(@ApiParam(param="queryparam", desc="标题模糊查询") @RequestParam("queryparam") String queryparam,
                                                @ApiParam(param="page", desc="页数") @RequestParam("page") Integer page,
                                                @ApiParam(param="rows", desc="每页条数") @RequestParam("rows") Integer rows){
         //默认参数设置
@@ -68,7 +68,7 @@ public class GkPolicyController extends BaseApiController{
     @ApiDesc(value = "根据主键获取政策解读详情", owner = "杨永平")
     @RequestMapping(value = "/getPolicyInfo",method = RequestMethod.GET)
     @ResponseBody
-    public Object getPolicyInfo(@ApiParam(param="id", desc="高考日程主键ID",required = true) @RequestParam("id")String id){
+    public GkPolicy getPolicyInfo(@ApiParam(param="id", desc="高考日程主键ID",required = true) @RequestParam("id")String id){
         if("".equals(id)){
             throw new BizException(ERRORCODE.IDISNOTNULL.getCode(),ERRORCODE.IDISNOTNULL.getMessage());
         }

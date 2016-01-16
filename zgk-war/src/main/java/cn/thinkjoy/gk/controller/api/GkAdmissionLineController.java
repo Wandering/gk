@@ -5,6 +5,7 @@ import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.zgk.common.QueryUtil;
+import cn.thinkjoy.zgk.domain.GkAdmissionLine;
 import cn.thinkjoy.zgk.remote.IGkAdmissionLineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -38,7 +39,7 @@ public class GkAdmissionLineController extends BaseApiController{
     @ApiDesc(value = "获取分数线", owner = "杨永平")
     @RequestMapping(value = "/getGkAdmissionLineList",method = RequestMethod.GET)
     @ResponseBody
-    public BizData4Page getGkAdmissionLineList(@ApiParam(param="queryparam", desc="标题模糊查询") @RequestParam("queryparam") String queryparam,
+    public BizData4Page<GkAdmissionLine> getGkAdmissionLineList(@ApiParam(param="queryparam", desc="标题模糊查询") @RequestParam("queryparam") String queryparam,
                                                @ApiParam(param="year", desc="年份") @RequestParam("year") String year,
                                                @ApiParam(param="name", desc="院校名称") @RequestParam("name") String name,
                                                @ApiParam(param="areaId", desc="页数") @RequestParam("areaId") String areaId,

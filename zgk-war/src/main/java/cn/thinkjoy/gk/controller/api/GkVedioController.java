@@ -30,7 +30,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/video")
-public class GkVedioController extends BaseApiController{
+public class GkVedioController extends BaseApiController<GkVideoDTO>{
 
     @Autowired
     private IGkVideoService gkVideoService;
@@ -42,7 +42,7 @@ public class GkVedioController extends BaseApiController{
     @ApiDesc(value = "获取高考学堂和视频列表", owner = "杨永平")
     @RequestMapping(value = "/getGkVideoList",method = RequestMethod.GET)
     @ResponseBody
-    public BizData4Page getScheduleList(@ApiParam(param="isIgnore", desc="是否拉取视频详情") @RequestParam("isIgnore") Boolean boo,
+    public BizData4Page<GkVideoDTO> getScheduleList(@ApiParam(param="isIgnore", desc="是否拉取视频详情") @RequestParam("isIgnore") Boolean boo,
                                                @ApiParam(param="page", desc="当前页数") @RequestParam("page") Integer page,
                                                @ApiParam(param="rows", desc="每页行数") @RequestParam("rows") Integer rows){
         rows=setDefault(rows,4);
@@ -59,7 +59,7 @@ public class GkVedioController extends BaseApiController{
     @ApiDesc(value = "根据ID获取视频详情页面", owner = "杨永平")
     @RequestMapping(value = "/getGkVideoInfo",method = RequestMethod.GET)
     @ResponseBody
-    public Object getGkVideoInfo(@ApiParam(param="id", desc="主键ID",required = true) @RequestParam("id") String id){
+    public GkVideoDTO getGkVideoInfo(@ApiParam(param="id", desc="主键ID",required = true) @RequestParam("id") String id){
         if("".equals(id)){
             throw new BizException(ERRORCODE.IDISNOTNULL.getCode(),ERRORCODE.IDISNOTNULL.getMessage());
         }
@@ -71,7 +71,7 @@ public class GkVedioController extends BaseApiController{
      * 获取日程详情
      * @return
      */
-    @ApiDesc(value = "根据ID获取视频详情页面", owner = "杨永平")
+    @ApiDesc(value = "访问量统计自增方法", owner = "杨永平")
     @RequestMapping(value = "/hitInc",method = RequestMethod.GET)
     @ResponseBody
     public void hitInc(@ApiParam(param="id", desc="主键ID",required = true) @RequestParam("id") String id){
