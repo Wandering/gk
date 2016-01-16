@@ -5,6 +5,7 @@ import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
 import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.controller.api.base.BaseApiController;
 import cn.thinkjoy.zgk.domain.GkSchedule;
 import cn.thinkjoy.zgk.dto.GkScheduleDTO;
 import cn.thinkjoy.zgk.remote.IGkScheduleService;
@@ -25,7 +26,7 @@ import java.util.List;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/schedule")
-public class GkScheduleController extends BaseApiController<GkSchedule>{
+public class GkScheduleController extends BaseApiController<GkSchedule> {
 
     @Autowired
     IGkScheduleService gkScheduleService;

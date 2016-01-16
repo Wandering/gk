@@ -6,10 +6,8 @@ import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
 import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
-import cn.thinkjoy.zgk.domain.GkSchedule;
-import cn.thinkjoy.zgk.dto.GkScheduleDTO;
+import cn.thinkjoy.gk.controller.api.base.BaseApiController;
 import cn.thinkjoy.zgk.dto.GkVideoDTO;
-import cn.thinkjoy.zgk.remote.IGkScheduleService;
 import cn.thinkjoy.zgk.remote.IGkVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,7 +27,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/video")
-public class GkVedioController extends BaseApiController<GkVideoDTO>{
+public class GkVedioController extends BaseApiController<GkVideoDTO> {
 
     @Autowired
     private IGkVideoService gkVideoService;

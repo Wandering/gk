@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.controller.api;
+package cn.thinkjoy.gk.controller.api.base;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ERRORCODE;

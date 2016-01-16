@@ -4,6 +4,7 @@ import cn.thinkjoy.common.domain.view.BizData4Page;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.controller.api.base.BaseApiController;
 import cn.thinkjoy.zgk.common.QueryUtil;
 import cn.thinkjoy.zgk.domain.GkAdmissionLine;
 import cn.thinkjoy.zgk.remote.IGkAdmissionLineService;
@@ -25,7 +26,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/admissionline")
-public class GkAdmissionLineController extends BaseApiController{
+public class GkAdmissionLineController extends BaseApiController {
 
     /**行默认**/
     private static int ROWSDEFAULT=4;
