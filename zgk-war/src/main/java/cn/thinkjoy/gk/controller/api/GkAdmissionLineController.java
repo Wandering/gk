@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 历年分数线controller
  * Created by admin on 2016/1/4.
  */
 @Controller
@@ -34,7 +35,7 @@ public class GkAdmissionLineController extends BaseApiController{
      * 获取批次线分页方法
      * @return
      */
-    @ApiDesc(value = "获取批次线", owner = "杨永平")
+    @ApiDesc(value = "获取分数线", owner = "杨永平")
     @RequestMapping(value = "/getGkAdmissionLineList",method = RequestMethod.GET)
     @ResponseBody
     public BizData4Page getGkAdmissionLineList(@ApiParam(param="queryparam", desc="标题模糊查询") @RequestParam("queryparam") String queryparam,

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 /**
+ * 高考日程controller
  * Created by admin on 2016/1/4.
  */
 @Controller

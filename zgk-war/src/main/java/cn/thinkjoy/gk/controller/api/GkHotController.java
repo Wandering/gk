@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 高考热点/头条controller
  * Created by admin on 2016/1/4.
  */
 @Controller

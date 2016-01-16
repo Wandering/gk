@@ -38,6 +38,11 @@ public class GkVideoTest {
     }
     @Test
     public void testHitInc() {
-        gkVideoService.hitInc("19");
+        Long l1=gkVideoService.getGkVideoInfo("29").getGkVideoInfo().getHit();
+        gkVideoService.hitInc(29);
+        Long l2=gkVideoService.getGkVideoInfo("29").getGkVideoInfo().getHit();
+        Assert.isTrue(l1==l2);
     }
+
+
 }

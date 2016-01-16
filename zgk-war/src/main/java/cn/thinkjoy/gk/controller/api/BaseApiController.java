@@ -25,7 +25,12 @@ public class BaseApiController {
         }
         return num;
     }
-
+    protected boolean setDefault(Boolean num,boolean defaultBoo){
+        if(num==null){
+            num=defaultBoo;
+        }
+        return num;
+    }
     protected Object isNull(Object o){
         if(o==null){
             throw new BizException(ERRORCODE.RESOURCEISNULL.getCode(),ERRORCODE.RESOURCEISNULL.getMessage());
