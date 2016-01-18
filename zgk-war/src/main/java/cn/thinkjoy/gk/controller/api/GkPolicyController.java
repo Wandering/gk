@@ -49,9 +49,6 @@ public class GkPolicyController extends BaseApiController<GkPolicy> {
                                                @ApiParam(param="rows", desc="每页条数") @RequestParam(defaultValue = "4",required = false) Integer rows){
         //默认参数设置
         Map<String,Object> map = new HashMap<>();
-        map.put("groupOp","and");
-        map.put("orderBy","createDate");
-        map.put("sortBy","desc");
         if(!"".equals(queryparam)) {
             QueryUtil.setMapOp(map, "title", "LIKE", "%" + queryparam + "%");
         }

@@ -29,7 +29,7 @@ public class HttpInterfaceTest extends TestCase{
         }
 
         public void testGetScheduleList(){
-                String url=host + getScheduleList_url + "?rows=3";
+                String url=host + getScheduleList_url + "?rows=3&scheduleRows=1";
                 String result = RequestUtils.requestGet(url);
             assertTrue(result.contains("2016"));
             assertTrue(result.contains("01"));
@@ -109,6 +109,23 @@ public class HttpInterfaceTest extends TestCase{
 //        assertTrue(result.contains("2016"));
         url=host + getGkHotList_url + "?type=1";
         result = RequestUtils.requestGet(url);
+        url=host + getGkHotList_url + "?type=1&page=3&rows=4";
+        result = RequestUtils.requestGet(url);
+//        assertTrue(result.contains("2016"));
+//                assertTrue(result.contains("01"));
+//                assertTrue(result.contains("12"));
+//                assertTrue(result.contains("11"));
+//                assertTrue(result.contains("2015"));
+//            assertTrue(result.contains("一批本科"));
+//            assertTrue(result.contains("985/211"));
+//            assertTrue(result.contains("教育部"));
+//                assertTrue(result.contains("33"));
+//            assertTrue(result.contains("文史"));
+    }
+
+    public void testGetGkVideoInfo(){
+        String url=host + getGkVideoList_url + "?isIgnore=true&page=7";
+        String result = RequestUtils.requestGet(url);
         assertTrue(result.contains("2016"));
 //                assertTrue(result.contains("01"));
 //                assertTrue(result.contains("12"));
