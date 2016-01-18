@@ -155,17 +155,17 @@ public class UniversityController extends BaseController {
     @RequestMapping(value = "getUniversityMajorEnrollingPlanList",method = RequestMethod.GET)
     @ResponseBody
     public List getUniversityMajorEnrollingPlanList(@RequestParam(value = "universityId",required = true)long universityId,
-                                                @RequestParam(value = "year",required = true)String year,//年份
-                                                @RequestParam(value = "batch",required = true)int batch,//批次
-                                                @RequestParam(value = "universityMajorType",required = true)String universityMajorType,//科类
-                                                @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
-                                                @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
+                                                    @RequestParam(value = "year",required = true)String year,//年份
+                                                    @RequestParam(value = "batch",required = true)int batch,//批次
+                                                    @RequestParam(value = "universityMajorType",required = true)String universityMajorType,//科类
+                                                    @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
+                                                    @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
         Map<String,Object> condition=Maps.newHashMap();
         condition.put("groupOp","and");
         ConditionsUtil.setCondition(condition, "universityId", "=", String.valueOf(universityId));
         ConditionsUtil.setCondition(condition,"year", "=", year);
-        ConditionsUtil.setCondition(condition,"batch","=",String.valueOf(batch));
-        ConditionsUtil.setCondition(condition,"universityMajorType","=",universityMajorType);
+        ConditionsUtil.setCondition(condition, "batch", "=", String.valueOf(batch));
+        ConditionsUtil.setCondition(condition, "universityMajorType", "=", universityMajorType);
         Map<String,Object> selectorpage=Maps.newHashMap();
         selectorpage.put("majorId",1);
         selectorpage.put("majorName",1);
@@ -222,6 +222,24 @@ public class UniversityController extends BaseController {
         return ll;
     }
 
+    /**
+     * 院校录取情况图表接口
+     * @param universityId
+     * @return
+     */
+    @RequestMapping(value = "queryUniversityEnrollingChart",method = RequestMethod.GET)
+    @ResponseBody
+    public List queryUniversityEnrollingChart(@RequestParam(value = "universityId",required = true)long universityId){
+        Map<String,Object> map=Maps.newHashMap();
+        map.put("universityId",universityId);
+        return iremoteUniversityService.queryUniversityEnrollingChart(map);
+    }
+
+    /**
+     * 院校招生计划图表数据接口
+     * @param universityId
+     * @return
+     */
     @RequestMapping(value = "queryUniversityPlanChart",method = RequestMethod.GET)
     @ResponseBody
     public List queryUniversityPlanChart(@RequestParam(value = "universityId",required = true)long universityId){
@@ -345,7 +363,7 @@ public class UniversityController extends BaseController {
             List<UniversityDict> universityFeatureList=universityDictService.queryList(map,"id","asc");
             for(UniversityDict universityDict:universityFeatureList){
                 if((universityFeatureId.intValue() & universityDict.getDictId().intValue()) >= universityFeatureId.intValue() ){
-                        universityFeatureParam.add(universityDict.getDictId());
+                    universityFeatureParam.add(universityDict.getDictId());
                 }
             }
         }
@@ -440,13 +458,13 @@ public class UniversityController extends BaseController {
         List<EntrollPlan> entrollPlans=new ArrayList<EntrollPlan>();
         switch (batch){
             case "1": batch="一批本科";
-                  break;
+                break;
             case "2": batch="二批本科";
-                  break;
+                break;
             case "3":batch="三批本科";
-                  break;
+                break;
             case "4":batch="高职（专科）";
-                 break;
+                break;
             default: batch="";
 
         }
