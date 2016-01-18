@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 高考日程controller
@@ -38,8 +40,13 @@ public class GkScheduleController extends BaseApiController<GkSchedule> {
     @ApiDesc(value = "获取高考日程摘要列表", owner = "杨永平")
     @RequestMapping(value = "/getScheduleList.do",method = RequestMethod.GET)
     @ResponseBody
-    public List<GkScheduleDTO> getScheduleList(@ApiParam(param="rows", desc="热点摘要条数",required = false) @RequestParam(defaultValue = "3",required = false) Integer rows){
-        return gkScheduleService.getScheduleList(rows);
+    public List<GkScheduleDTO> getScheduleList(@ApiParam(param="rows", desc="条数",required = false) @RequestParam(defaultValue = "3",required = false) Integer rows,
+                                               @ApiParam(param="scheduleRows", desc="条数",required = false) @RequestParam(required = false) Integer scheduleRows){
+        Map<String,Object> map = new HashMap<>();
+        if(scheduleRows!=null) {
+            map.put("scheduleRows", scheduleRows);
+        }
+        return gkScheduleService.getScheduleList(map,rows);
     }
 
     /**

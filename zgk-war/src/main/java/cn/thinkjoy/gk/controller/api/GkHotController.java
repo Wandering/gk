@@ -44,9 +44,6 @@ public class GkHotController extends BaseApiController<GkHot> {
                                     @ApiParam(param="page", desc="页数",required = false) @RequestParam(defaultValue = "1",required = false) Integer page,
                                     @ApiParam(param="rows", desc="每页条数",required = false) @RequestParam(defaultValue = "4",required = false) Integer rows){
         Map<String,Object> map = new HashMap<>();
-        map.put("groupOp","and");
-        map.put("orderBy","createDate");
-        map.put("sortBy","desc");
         QueryUtil.setMapOp(map, "type", "=", type);
         return gkHotService.getGkHotList(map,page,rows);
     }

@@ -26,8 +26,8 @@ public class GkScheduleTest {
     @Test
     public void testGetGkScheduleList() {
 
-        Assert.notNull(gkScheduleService.getScheduleList(6));
-        System.out.println(gkScheduleService.getScheduleList(4));
+//        Assert.notNull(gkScheduleService.getScheduleList(6));
+//        System.out.println(gkScheduleService.getScheduleList(4));
     }
     @Test
     public void testGetGkScheduleInfo() {
