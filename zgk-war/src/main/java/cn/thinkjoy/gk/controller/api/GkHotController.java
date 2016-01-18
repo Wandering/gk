@@ -47,9 +47,7 @@ public class GkHotController extends BaseApiController<GkHot> {
         map.put("groupOp","and");
         map.put("orderBy","createDate");
         map.put("sortBy","desc");
-        if(type==null) {
-            QueryUtil.setMapOp(map, "type", "=", type);
-        }
+        QueryUtil.setMapOp(map, "type", "=", type);
         return gkHotService.getGkHotList(map,page,rows);
     }
 

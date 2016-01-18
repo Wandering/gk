@@ -104,9 +104,12 @@ public class HttpInterfaceTest extends TestCase{
     }
 
     public void testGetGkHotList(){
-        String url=host + getGkHotList_url + "?type=&page=&rows=";
+        String url=host + getGkHotList_url + "";
         String result = RequestUtils.requestGet(url);
-        assertTrue(result.contains("2015"));
+//        assertTrue(result.contains("2016"));
+        url=host + getGkHotList_url + "?type=1";
+        result = RequestUtils.requestGet(url);
+        assertTrue(result.contains("2016"));
 //                assertTrue(result.contains("01"));
 //                assertTrue(result.contains("12"));
 //                assertTrue(result.contains("11"));
