@@ -30,10 +30,6 @@ import java.util.Map;
 @RequestMapping(value = "/gkhot")
 public class GkHotController extends BaseApiController<GkHot> {
 
-    /**行默认**/
-    private static int ROWSDEFAULT=4;
-    /**类型默认**/
-    private static int TYPEDEFAULT=0;
     @Autowired
     IGkHotService gkHotService;
 
@@ -42,21 +38,17 @@ public class GkHotController extends BaseApiController<GkHot> {
      * @return
      */
     @ApiDesc(value = "获取热点摘要列表", owner = "杨永平")
-    @RequestMapping(value = "/getGkHotList",method = RequestMethod.GET)
+    @RequestMapping(value = "/getGkHotList.do",method = RequestMethod.GET)
     @ResponseBody
-    public BizData4Page<GkHot> getGkHotList(@ApiParam(param="type", desc="热点类型") @RequestParam("type") Integer type,
-                                    @ApiParam(param="page", desc="页数") @RequestParam("page") Integer page,
-                                    @ApiParam(param="rows", desc="每页条数") @RequestParam("rows") Integer rows){
+    public BizData4Page<GkHot> getGkHotList(@ApiParam(param="type", desc="热点类型",required = false) @RequestParam(defaultValue = "0",required = false) Integer type,
+                                    @ApiParam(param="page", desc="页数",required = false) @RequestParam(defaultValue = "1",required = false) Integer page,
+                                    @ApiParam(param="rows", desc="每页条数",required = false) @RequestParam(defaultValue = "4",required = false) Integer rows){
         Map<String,Object> map = new HashMap<>();
-        //默认参数设置
         map.put("groupOp","and");
         map.put("orderBy","createDate");
         map.put("sortBy","desc");
         if(type==null) {
-            QueryUtil.setMapOp(map, "type", "=", TYPEDEFAULT);
-        }
-        if(rows==null) {
-            rows=ROWSDEFAULT;
+            QueryUtil.setMapOp(map, "type", "=", type);
         }
         return gkHotService.getGkHotList(map,page,rows);
     }
@@ -66,9 +58,9 @@ public class GkHotController extends BaseApiController<GkHot> {
      * @return
      */
     @ApiDesc(value = "获取热点详细信息", owner = "杨永平")
-    @RequestMapping(value = "/getGkHotInfo",method = RequestMethod.GET)
+    @RequestMapping(value = "/getGkHotInfo.do",method = RequestMethod.GET)
     @ResponseBody
-    public GkHot getGkHotInfo(@ApiParam(param="id", desc="热点主键ID",required = true) @RequestParam("id")String id){
+    public GkHot getGkHotInfo(@ApiParam(param="id", desc="热点主键ID",required = true) @RequestParam String id){
         if("".equals(id)){
             throw new BizException(ERRORCODE.IDISNOTNULL.getCode(),ERRORCODE.IDISNOTNULL.getMessage());
         }

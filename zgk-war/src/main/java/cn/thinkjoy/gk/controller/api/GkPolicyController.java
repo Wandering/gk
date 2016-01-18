@@ -38,15 +38,15 @@ public class GkPolicyController extends BaseApiController<GkPolicy> {
     IGkPolicyService gkPolicyService;
 
     /**
-     * 获取日程摘要列表 四个
+     * 政策解读摘要列表
      * @return
      */
     @ApiDesc(value = "获取政策解读摘要列表", owner = "杨永平")
     @RequestMapping(value = "/getPolicyList",method = RequestMethod.GET)
     @ResponseBody
-    public BizData4Page<GkPolicy> getPolicyList(@ApiParam(param="queryparam", desc="标题模糊查询") @RequestParam("queryparam") String queryparam,
-                                               @ApiParam(param="page", desc="页数") @RequestParam("page") Integer page,
-                                               @ApiParam(param="rows", desc="每页条数") @RequestParam("rows") Integer rows){
+    public BizData4Page<GkPolicy> getPolicyList(@ApiParam(param="queryparam", desc="标题模糊查询") @RequestParam(required = false) String queryparam,
+                                               @ApiParam(param="page", desc="页数") @RequestParam(defaultValue = "1",required = false) Integer page,
+                                               @ApiParam(param="rows", desc="每页条数") @RequestParam(defaultValue = "4",required = false) Integer rows){
         //默认参数设置
         Map<String,Object> map = new HashMap<>();
         map.put("groupOp","and");

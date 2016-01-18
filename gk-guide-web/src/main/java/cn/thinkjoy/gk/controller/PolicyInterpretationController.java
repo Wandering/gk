@@ -61,10 +61,10 @@ public class PolicyInterpretationController extends BaseController {
         if (admissionBatchList != null) {
             for (AdmissionBatch batch: admissionBatchList) {
                 PolicyInterpretationCategory category = new PolicyInterpretationCategory();
-                category.setId(batch.getId());
+                category.setId(Long.parseLong(batch.getId().toString()));
                 category.setName(batch.getName());
                 List<PolicyInterpretation> policyInterpretations = policyInterpretationService
-                        .findPolicyInterpretationCategoryByBatchIdAndProvinceId(batch.getId(), provinceId);
+                        .findPolicyInterpretationCategoryByBatchIdAndProvinceId(Long.parseLong(batch.getId().toString()), provinceId);
                 category.setCategory(policyInterpretations);
                 allCategory.add(category);
             }

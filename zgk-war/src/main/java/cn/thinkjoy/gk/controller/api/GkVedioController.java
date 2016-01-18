@@ -39,13 +39,10 @@ public class GkVedioController extends BaseApiController<GkVideoDTO> {
     @ApiDesc(value = "获取高考学堂和视频列表", owner = "杨永平")
     @RequestMapping(value = "/getGkVideoList",method = RequestMethod.GET)
     @ResponseBody
-    public BizData4Page<GkVideoDTO> getScheduleList(@ApiParam(param="isIgnore", desc="是否拉取视频详情") @RequestParam("isIgnore") Boolean boo,
-                                               @ApiParam(param="page", desc="当前页数") @RequestParam("page") Integer page,
-                                               @ApiParam(param="rows", desc="每页行数") @RequestParam("rows") Integer rows){
-        rows=setDefault(rows,4);
-        boo=setDefault(boo,false);
+    public BizData4Page<GkVideoDTO> getScheduleList(@ApiParam(param="isIgnore", desc="是否拉取视频详情") @RequestParam(defaultValue = "false",required = false) Boolean boo,
+                                               @ApiParam(param="page", desc="当前页数") @RequestParam(defaultValue = "1",required = false) Integer page,
+                                               @ApiParam(param="rows", desc="每页行数") @RequestParam(defaultValue = "4",required = false) Integer rows){
         Map<String,Object> map = new HashMap<>();
-        map.put("isIgnore",boo);
         return gkVideoService.getGkVideoList(map,page,rows);
     }
 

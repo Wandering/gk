@@ -38,17 +38,18 @@ public class GkAdmissionLineController extends BaseApiController {
      * @return
      */
     @ApiDesc(value = "获取分数线", owner = "杨永平")
-    @RequestMapping(value = "/getGkAdmissionLineList",method = RequestMethod.GET)
+    @RequestMapping(value = "/getGkAdmissionLineList.do",method = RequestMethod.GET)
     @ResponseBody
-    public BizData4Page<GkAdmissionLine> getGkAdmissionLineList(@ApiParam(param="queryparam", desc="标题模糊查询") @RequestParam("queryparam") String queryparam,
-                                               @ApiParam(param="year", desc="年份") @RequestParam("year") String year,
-                                               @ApiParam(param="name", desc="院校名称") @RequestParam("name") String name,
-                                               @ApiParam(param="areaId", desc="页数") @RequestParam("areaId") String areaId,
-                                               @ApiParam(param="property", desc="院校特征") @RequestParam("property") String property,
-                                               @ApiParam(param="batch", desc="批次") @RequestParam("batch") Integer batch,
-                                               @ApiParam(param="type", desc="科类") @RequestParam("type") Integer type,
-                                               @ApiParam(param="page", desc="页数") @RequestParam("page") Integer page,
-                                               @ApiParam(param="rows", desc="每页条数") @RequestParam("rows") Integer rows){
+    public BizData4Page<GkAdmissionLine> getGkAdmissionLineList(@ApiParam(param="queryparam", desc="标题模糊查询",required = false) @RequestParam(required = false) String queryparam,
+                                               @ApiParam(param="year", desc="年份",required = false) @RequestParam(required = false) String year,
+                                               @ApiParam(param="name", desc="院校名称",required = false) @RequestParam(required = false) String name,
+                                               @ApiParam(param="areaId", desc="页数",required = false) @RequestParam(required = false) String areaId,
+                                               @ApiParam(param="property", desc="院校特征",required = false) @RequestParam(required = false) String property,
+                                               @ApiParam(param="batch", desc="批次",required = false) @RequestParam(required = false) Integer batch,
+                                               @ApiParam(param="type", desc="科类",required = false) @RequestParam(defaultValue = "1",required = false) Integer type,
+                                               @ApiParam(param="page", desc="页数",required = false) @RequestParam(defaultValue = "1",required = false) Integer page,
+                                               @ApiParam(param="rows", desc="每页条数",required = false) @RequestParam(defaultValue = "10",required = false) Integer rows){
+
         //默认参数设置
         Map<String,Object> map=new HashMap<>();
         map.put("groupOp","and");
@@ -71,15 +72,14 @@ public class GkAdmissionLineController extends BaseApiController {
             QueryUtil.setMapOp(map, "universityproperty", "like", "%" + property + "%");
         }
 //        批次
-        if(type!=null) {
-            QueryUtil.setMapOp(map, "enrollingbatch", "=", type);
+        if(batch!=null) {
+            QueryUtil.setMapOp(map, "enrollingbatch", "=", batch);
         }
 //        文史/理工
         if(type!=null) {
             QueryUtil.setMapOp(map, "enrollinguniversityMajorType", "=", type);
         }
-//        设置默认值
-        this.setDefault(rows,ROWSDEFAULT);
+
         return gkAdmissionLineService.getGkAdmissionLineList(map,page,rows);
     }
 

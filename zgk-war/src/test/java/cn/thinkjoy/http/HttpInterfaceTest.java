@@ -13,6 +13,8 @@ public class HttpInterfaceTest extends TestCase{
         String getScheduleInfo_url="/schedule/getScheduleInfo.do";
         String getPolicyList_url="/policy/getPolicyList.do";
         String getPolicyInfo_url="/policy/getPolicyInfo.do";
+        String getGkVideoInfo_url="/video/getGkVideoInfo.do";
+        String getGkVideoList_url="/video/getGkVideoList.do";
         String getGkHotInfo_url="/gkhot/getGkHotInfo.do";
         String getGkHotList_url="/gkhot/getGkHotList.do";
         public void testGetGkAdmissionLineList(){
