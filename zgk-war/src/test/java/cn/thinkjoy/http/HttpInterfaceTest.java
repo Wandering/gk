@@ -7,7 +7,8 @@ import junit.framework.TestCase;
  * Created by admin on 2016/1/14.
  */
 public class HttpInterfaceTest extends TestCase{
-        String host="http://10.254.130.33:9080";
+//        String host="http://10.254.130.33:9080";
+        String host="http://localhost:8080";
         String getGkAdmissionLineList_url="/admissionline/getGkAdmissionLineList.do";
         String getScheduleList_url="/schedule/getScheduleList.do";
         String getScheduleInfo_url="/schedule/getScheduleInfo.do";
@@ -29,7 +30,7 @@ public class HttpInterfaceTest extends TestCase{
         }
 
         public void testGetScheduleList(){
-                String url=host + getScheduleList_url + "?rows=3&scheduleRows=1";
+                String url=host + getScheduleList_url + "?month=11";
                 String result = RequestUtils.requestGet(url);
             assertTrue(result.contains("2016"));
             assertTrue(result.contains("01"));
