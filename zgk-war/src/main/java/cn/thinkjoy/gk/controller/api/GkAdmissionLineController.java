@@ -42,7 +42,6 @@ public class GkAdmissionLineController extends BaseApiController {
     @ResponseBody
     public BizData4Page<GkAdmissionLine> getGkAdmissionLineList(@ApiParam(param="queryparam", desc="标题模糊查询",required = false) @RequestParam(required = false) String queryparam,
                                                @ApiParam(param="year", desc="年份",required = false) @RequestParam(required = false) String year,
-                                               @ApiParam(param="name", desc="院校名称",required = false) @RequestParam(required = false) String name,
                                                @ApiParam(param="areaId", desc="页数",required = false) @RequestParam(required = false) String areaId,
                                                @ApiParam(param="property", desc="院校特征",required = false) @RequestParam(required = false) String property,
                                                @ApiParam(param="batch", desc="批次",required = true) @RequestParam(required = true) Integer batch,
@@ -56,19 +55,19 @@ public class GkAdmissionLineController extends BaseApiController {
         map.put("orderBy","lastModDate");
         map.put("sortBy","desc");
 //        年份
-        if(!"".equals(year)) {
+        if(year!=null &&!"".equals(year)) {
             QueryUtil.setMapOp(map, "enrollingyear", "=", year);
         }
 //        院校名称 模糊
-        if(!"".equals(name)) {
-            QueryUtil.setMapOp(map, "universityname", "like", "%" + name + "%");
+        if(queryparam!=null &&!"".equals(queryparam)) {
+            QueryUtil.setMapOp(map, "universityname", "like", "%" + queryparam + "%");
         }
 //        地区
-        if(!"".equals(areaId)) {
+        if(areaId!=null &&!"".equals(areaId)) {
             QueryUtil.setMapOp(map, "universityareaid", "=", areaId);
         }
 //        特征
-        if(!"".equals(property)) {
+        if(property!=null &&!"".equals(property)) {
             QueryUtil.setMapOp(map, "universityproperty", "like", "%" + property + "%");
         }
 //        批次

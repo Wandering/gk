@@ -49,7 +49,7 @@ public class GkPolicyController extends BaseApiController<GkPolicy> {
                                                @ApiParam(param="rows", desc="每页条数") @RequestParam(defaultValue = "4",required = false) Integer rows){
         //默认参数设置
         Map<String,Object> map = new HashMap<>();
-        if(!"".equals(queryparam)) {
+        if(queryparam!=null && !"".equals(queryparam)) {
             QueryUtil.setMapOp(map, "title", "LIKE", "%" + queryparam + "%");
         }
         return gkPolicyService.getGkPolicyList(map,page,rows);

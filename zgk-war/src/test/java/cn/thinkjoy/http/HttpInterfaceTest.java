@@ -7,7 +7,7 @@ import junit.framework.TestCase;
  * Created by admin on 2016/1/14.
  */
 public class HttpInterfaceTest extends TestCase{
-        String host="http://localhost:8087";
+        String host="http://10.254.130.33:9080";
         String getGkAdmissionLineList_url="/admissionline/getGkAdmissionLineList.do";
         String getScheduleList_url="/schedule/getScheduleList.do";
         String getScheduleInfo_url="/schedule/getScheduleInfo.do";
