@@ -39,9 +39,9 @@ public class GkPhoneController extends BaseApiController<GkHot> {
      * @return
      */
     @ApiDesc(value = "获取招办电话列表", owner = "杨永平")
-    @RequestMapping(value = "/getGkHotList.do",method = RequestMethod.GET)
+    @RequestMapping(value = "/getGkPhoneList.do",method = RequestMethod.GET)
     @ResponseBody
-    public BizData4Page<GkHot> getGkHotList(@ApiParam(param="page", desc="页数",required = false) @RequestParam(defaultValue = "1",required = false) Integer page,
+    public BizData4Page<GkHot> getGkPhoneList(@ApiParam(param="page", desc="页数",required = false) @RequestParam(defaultValue = "1",required = false) Integer page,
                                     @ApiParam(param="rows", desc="每页条数",required = false) @RequestParam(defaultValue = "4",required = false) Integer rows){
         Map<String,Object> map = new HashMap<>();
         return gkPhoneService.getGkPhoneList(map,page,rows);
