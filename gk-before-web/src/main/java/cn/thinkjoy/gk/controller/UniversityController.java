@@ -110,6 +110,7 @@ public class UniversityController extends BaseController {
             propertys[0]=university.get("property").toString();
 
             university.put("property",propertys);
+            university.put("isCollect",0);
             if(null!=userAccountPojo) {
                 long userId = userAccountPojo.getId();
                 //需要在收藏表中拼接收藏状态字段
