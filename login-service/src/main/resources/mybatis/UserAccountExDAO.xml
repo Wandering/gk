@@ -3,6 +3,43 @@
 
 <mapper namespace="cn.thinkjoy.gk.dao.IUserAccountExDAO">
 
+    <select id="getUserInfoPojoById" resultType="UserInfoPojo">
+        SELECT
+        acc.id as id,
+        acc.account as account,
+        info.icon as icon,
+        exam.isReported as isReported,
+        exam.isSurvey as isSurvey,
+        info.name as name,
+        acc.status as status,
+        vip.status as vipStatus,
+        info.subjectType as subjectType,
+        info.sex as sex,
+        info.schoolName as schoolName,
+        info.provinceId as province,
+        info.cityId as city,
+        info.countyId as county
+        FROM zgk_user_account acc
+        left join zgk_user_vip vip on acc.id = vip.id
+        left join zgk_user_info info on acc.id = info.id
+        left join zgk_user_exam exam on acc.id = exam.id
+        <where>
+            acc.userType = 0
+            <if test="token!=null">
+                and info.token = #{token}
+            </if>
+            <if test="id!=null">
+                and acc.id = #{id}
+            </if>
+            <if test="account!=null">
+                and acc.account = #{account}
+            </if>
+            <if test="areaId!=null">
+                and acc.areaId = #{areaId}
+            </if>
+        </where>
+    </select>
+
     <select id="findUserAccountPojo" resultType="UserAccountPojo">
         SELECT
           acc.id,

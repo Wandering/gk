@@ -13,6 +13,7 @@ import cn.thinkjoy.gk.domain.UserExam;
 import cn.thinkjoy.gk.domain.UserInfo;
 import cn.thinkjoy.gk.domain.UserVip;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
+import cn.thinkjoy.gk.pojo.UserInfoPojo;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -112,6 +113,13 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
     @Override
     public UserAccount findUserAccountById(long id){
         return userAccountDAO.fetch(id);
+    }
+
+    @Override
+    public UserInfoPojo getUserInfoPojoById(long id){
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("id",id);
+        return userAccountExDAO.getUserInfoPojoById(params);
     }
 
 

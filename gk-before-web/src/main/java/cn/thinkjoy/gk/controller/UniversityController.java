@@ -101,6 +101,7 @@ public class UniversityController extends BaseController {
         selectorpage.put("rank",1);
         selectorpage.put("subjection",1);
         selectorpage.put("typeName",1);
+        selectorpage.put("url",1);
         List<Map<String,Object>> getUniversityList=iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
         int count=iremoteUniversityService.getUniversityCount(condition);
         //如果用户已登录
