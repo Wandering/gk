@@ -71,7 +71,7 @@ public class UniversityController extends BaseController {
      */
     @RequestMapping(value = "/getRemoteUniversityList",method = RequestMethod.GET)
     @ResponseBody
-    public List getUniversityList(@RequestParam(value = "universityName",required = false)String universityName,
+    public Map<String,Object> getUniversityList(@RequestParam(value = "universityName",required = false)String universityName,
                                   @RequestParam(value = "areaid",required = false)String areaid,//省份
                                   @RequestParam(value = "type",required = false)Integer type,//院校分类
                                   @RequestParam(value = "educationLevel",required = false)Integer educationLevel,//学历层次
@@ -122,10 +122,10 @@ public class UniversityController extends BaseController {
                 university.put("isCollect",userCollectExService.isCollect(param));
             }
         }
-        Map<String,Object> countMap=Maps.newHashMap();
-        countMap.put("count",count);
-        getUniversityList.add(countMap);
-        return getUniversityList;
+        Map<String,Object> returnMap=Maps.newHashMap();
+        returnMap.put("universityList", getUniversityList);
+        returnMap.put("count", count);
+        return returnMap;
     }
 
     @RequestMapping(value = "getRemoteUniversityById",method = RequestMethod.GET)
