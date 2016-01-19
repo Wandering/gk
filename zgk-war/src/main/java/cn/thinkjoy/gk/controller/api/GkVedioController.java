@@ -7,6 +7,7 @@ import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
 import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
+import cn.thinkjoy.zgk.common.QueryUtil;
 import cn.thinkjoy.zgk.dto.GkVideoDTO;
 import cn.thinkjoy.zgk.remote.IGkVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.management.Query;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,9 +42,12 @@ public class GkVedioController extends BaseApiController<GkVideoDTO> {
     @RequestMapping(value = "/getGkVideoList",method = RequestMethod.GET)
     @ResponseBody
     public BizData4Page<GkVideoDTO> getScheduleList(@ApiParam(param="isIgnore", desc="是否拉取视频详情") @RequestParam(defaultValue = "false",required = false) Boolean isIgnore,
+                                                    @ApiParam(param="type", desc="类型") @RequestParam(defaultValue = "1",required = false) Integer type,
                                                @ApiParam(param="page", desc="当前页数") @RequestParam(defaultValue = "1",required = false) Integer page,
                                                @ApiParam(param="rows", desc="每页行数") @RequestParam(defaultValue = "4",required = false) Integer rows){
         Map<String,Object> map = new HashMap<>();
+        map.put("isIgnore",isIgnore);
+        QueryUtil.setMapOp(map,"classifyId","=",type);
         return gkVideoService.getGkVideoList(map,page,rows);
     }
 

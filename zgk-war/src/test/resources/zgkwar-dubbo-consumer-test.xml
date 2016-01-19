@@ -30,4 +30,6 @@
                      timeout="60000"/>
     <dubbo:reference id="gkVideoService" interface="cn.thinkjoy.zgk.remote.IGkVideoService" check="false"
                      timeout="60000"/>
+    <dubbo:reference id="gkPhoneService" interface="cn.thinkjoy.zgk.remote.IGkPhoneService" check="false"
+                     timeout="60000"/>
 </beans>
