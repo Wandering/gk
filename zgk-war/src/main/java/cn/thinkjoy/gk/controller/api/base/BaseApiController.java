@@ -18,4 +18,9 @@ public class BaseApiController<T> {
         }
         return o;
     }
+    protected void idIsNull(String o){
+        if(o==null || "".equals(o)){
+            throw new BizException(ERRORCODE.IDISNOTNULL.getCode(),ERRORCODE.IDISNOTNULL.getMessage());
+        }
+    }
 }

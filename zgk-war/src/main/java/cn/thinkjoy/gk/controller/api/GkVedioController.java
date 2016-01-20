@@ -1,6 +1,5 @@
 package cn.thinkjoy.gk.controller.api;
 
-import cn.thinkjoy.common.domain.view.BizData4Page;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
@@ -8,6 +7,7 @@ import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
 import cn.thinkjoy.zgk.common.QueryUtil;
+import cn.thinkjoy.zgk.domain.BizData4Page;
 import cn.thinkjoy.zgk.dto.GkVideoDTO;
 import cn.thinkjoy.zgk.remote.IGkVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,9 +59,7 @@ public class GkVedioController extends BaseApiController<GkVideoDTO> {
     @RequestMapping(value = "/getGkVideoInfo",method = RequestMethod.GET)
     @ResponseBody
     public GkVideoDTO getGkVideoInfo(@ApiParam(param="id", desc="主键ID",required = true) @RequestParam("id") String id){
-        if("".equals(id)){
-            throw new BizException(ERRORCODE.IDISNOTNULL.getCode(),ERRORCODE.IDISNOTNULL.getMessage());
-        }
+        this.idIsNull(id);
         GkVideoDTO gkVideoDTO=gkVideoService.getGkVideoInfo(id);
         return isNull(gkVideoDTO);
     }
@@ -74,9 +72,7 @@ public class GkVedioController extends BaseApiController<GkVideoDTO> {
     @RequestMapping(value = "/hitInc",method = RequestMethod.GET)
     @ResponseBody
     public void hitInc(@ApiParam(param="id", desc="主键ID",required = true) @RequestParam("id") String id){
-        if("".equals(id)){
-            throw new BizException(ERRORCODE.IDISNOTNULL.getCode(),ERRORCODE.IDISNOTNULL.getMessage());
-        }
+        this.idIsNull(id);
         try {
             gkVideoService.hitInc(id);
         }catch (BizException e){
