@@ -41,11 +41,11 @@ public class GkProfessionalController extends BaseApiController<GkProfessionDTO>
     @ApiDesc(value = "获取职业列表", owner = "杨永平")
     @RequestMapping(value = "/getProfessionalList",method = RequestMethod.GET)
     @ResponseBody
-    public BizData4Page<GkProfessional> getProfessionalList(@ApiParam(param="queryparam", desc="是否拉取视频详情") @RequestParam(required = false) String queryparam,
+    public BizData4Page<GkProfessional> getProfessionalList(@ApiParam(param="queryparam", desc="搜索框查询字段") @RequestParam(required = false) String queryparam,
                                                     @ApiParam(param="professionTypeId", desc="大类型") @RequestParam(required = false) Integer professionTypeId,
                                                     @ApiParam(param="professionSubTypeId", desc="子类型") @RequestParam(required = false) Integer professionSubTypeId,
                                                @ApiParam(param="page", desc="当前页数") @RequestParam(defaultValue = "1",required = false) Integer page,
-                                               @ApiParam(param="rows", desc="每页行数") @RequestParam(defaultValue = "4",required = false) Integer rows){
+                                               @ApiParam(param="rows", desc="每页行数") @RequestParam(defaultValue = "6",required = false) Integer rows){
         Map<String,Object> map = new HashMap<>();
         QueryUtil.setMapOp(map,"professionName","like",queryparam);
         QueryUtil.setMapOp(map,"professionTypeId","=",professionTypeId);
