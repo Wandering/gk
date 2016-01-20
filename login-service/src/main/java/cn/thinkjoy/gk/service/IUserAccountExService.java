@@ -10,6 +10,7 @@ package cn.thinkjoy.gk.service;
 
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
+import cn.thinkjoy.gk.pojo.UserInfoPojo;
 
 
 public interface IUserAccountExService {
@@ -27,5 +28,7 @@ public interface IUserAccountExService {
     boolean updateUserAccount(UserAccount userAccount);
 
     UserAccount findUserAccountById(long id);
+
+    UserInfoPojo getUserInfoPojoById(long id);
 
 }

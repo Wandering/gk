@@ -71,7 +71,7 @@ public class UniversityController extends BaseController {
      */
     @RequestMapping(value = "/getRemoteUniversityList",method = RequestMethod.GET)
     @ResponseBody
-    public List getUniversityList(@RequestParam(value = "universityName",required = false)String universityName,
+    public Map<String,Object> getUniversityList(@RequestParam(value = "universityName",required = false)String universityName,
                                   @RequestParam(value = "areaid",required = false)String areaid,//省份
                                   @RequestParam(value = "type",required = false)Integer type,//院校分类
                                   @RequestParam(value = "educationLevel",required = false)Integer educationLevel,//学历层次
@@ -92,13 +92,29 @@ public class UniversityController extends BaseController {
             ConditionsUtil.setCondition(condition,"property","like","%"+property+"%");
         String orederBy=null;
         String sqlOrderEnumStr="asc";
-        List<Map<String,Object>> getUniversityList=iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, null);
+        Map<String,Object> selectorpage=Maps.newHashMap();
+        selectorpage.put("photoUrl",1);
+        selectorpage.put("id",1);
+        selectorpage.put("name",1);
+        selectorpage.put("property",1);
+        selectorpage.put("province",1);
+        selectorpage.put("rank",1);
+        selectorpage.put("subjection",1);
+        selectorpage.put("typeName",1);
+        selectorpage.put("url",1);
+        List<Map<String,Object>> getUniversityList=iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
+        int count=iremoteUniversityService.getUniversityCount(condition);
         //如果用户已登录
         UserAccountPojo userAccountPojo=getUserAccountPojo();
-        if(null!=userAccountPojo) {
-            long userId = userAccountPojo.getId();
-            //需要在收藏表中拼接收藏状态字段
-            for (Map<String, Object> university : getUniversityList) {
+        for (Map<String, Object> university : getUniversityList) {
+            String[] propertys=new String[1];
+            propertys[0]=university.get("property").toString();
+
+            university.put("property",propertys);
+            university.put("isCollect",0);
+            if(null!=userAccountPojo) {
+                long userId = userAccountPojo.getId();
+                //需要在收藏表中拼接收藏状态字段
                 Map<String,Object> param=Maps.newHashMap();
 //                param.put("userId",54);
                 param.put("userId",userId);
@@ -107,7 +123,10 @@ public class UniversityController extends BaseController {
                 university.put("isCollect",userCollectExService.isCollect(param));
             }
         }
-        return getUniversityList;
+        Map<String,Object> returnMap=Maps.newHashMap();
+        returnMap.put("universityList", getUniversityList);
+        returnMap.put("count", count);
+        return returnMap;
     }
 
     @RequestMapping(value = "getRemoteUniversityById",method = RequestMethod.GET)

@@ -7,9 +7,11 @@ import cn.thinkjoy.gk.constant.CookieConst;
 import cn.thinkjoy.gk.constant.CookieTimeConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
+import cn.thinkjoy.gk.pojo.UserInfoPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.CookieUtil;
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.jlusoft.microschool.core.utils.MD5Util;
 import org.slf4j.Logger;
@@ -39,10 +41,11 @@ public class LoginController extends BaseController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public long login(@RequestParam(value="account",required=false) String account,
+	public String login(@RequestParam(value="account",required=false) String account,
 					  @RequestParam(value="password",required=false) String password) throws Exception {
 		long id = 0l;
 		long areaId=getAreaCookieValue();
+		UserInfoPojo userInfoPojo=null;
 		try {
 			if (StringUtils.isEmpty(account)) {
 				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
@@ -79,12 +82,14 @@ public class LoginController extends BaseController {
 
 			setUserAccountPojo(userAccountBean);
 
+			userInfoPojo=userAccountExService.getUserInfoPojoById(id);
+
 		}catch(Exception e){
 			throw e;
 		}finally{
 
 		}
-		return id;
+		return JSON.toJSONString(userInfoPojo);
 	}
 
 	/**
