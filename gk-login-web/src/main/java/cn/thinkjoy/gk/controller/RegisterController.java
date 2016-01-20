@@ -3,6 +3,7 @@ package cn.thinkjoy.gk.controller;
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.DESUtil;
 import cn.thinkjoy.gk.constant.CookieConst;
 import cn.thinkjoy.gk.constant.CookieTimeConst;
 import cn.thinkjoy.gk.constant.RedisConst;
@@ -24,6 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -50,11 +54,12 @@ public class RegisterController extends BaseController {
      */
     @RequestMapping(value = "/account",method = RequestMethod.POST)
     @ResponseBody
-    public String registerAccount(@RequestParam(value="account",required = false) String account,
+    public Map<String, String> registerAccount(@RequestParam(value="account",required = false) String account,
                                   @RequestParam(value="captcha",required = false) String captcha,
                                   @RequestParam(value="password",required = false) String password)
             throws Exception{
         long areaId=getAreaCookieValue();
+        Map<String, String> resultMap = new HashMap<>();
         try{
             if (StringUtils.isEmpty(account)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
@@ -101,13 +106,14 @@ public class RegisterController extends BaseController {
             response.addCookie(CookieUtil.addCookie(domain,getCookieName(), String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
 
             setUserAccountPojo(userAccountBean);
-
+            String token = DESUtil.getEightByteMultypleStr(account, MD5Util.MD5Encode(password));
+            resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
         }catch (Exception e){
             throw e;
         }finally {
 
         }
-        return "registerSuccess";
+        return resultMap;
     }
     /**
      * 找回密码

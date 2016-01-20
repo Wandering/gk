@@ -7,6 +7,7 @@ import cn.thinkjoy.common.domain.BaseDomain;
  */
 public class UserInfoPojo extends BaseDomain<Long> {
     private String account;
+    private String password;
     private String icon;
     /** 是否填报 */
     private String isReported;
@@ -29,6 +30,14 @@ public class UserInfoPojo extends BaseDomain<Long> {
 
     public void setAccount(String account) {
         this.account = account;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getIcon() {

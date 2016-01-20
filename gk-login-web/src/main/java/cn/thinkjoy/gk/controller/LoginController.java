@@ -3,6 +3,7 @@ package cn.thinkjoy.gk.controller;
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.DESUtil;
 import cn.thinkjoy.gk.constant.CookieConst;
 import cn.thinkjoy.gk.constant.CookieTimeConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
@@ -25,6 +26,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/login")
@@ -41,11 +45,12 @@ public class LoginController extends BaseController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public String login(@RequestParam(value="account",required=false) String account,
+	public Map<String, String> login(@RequestParam(value="account",required=false) String account,
 					  @RequestParam(value="password",required=false) String password) throws Exception {
 		long id = 0l;
 		long areaId=getAreaCookieValue();
 		UserInfoPojo userInfoPojo=null;
+		Map<String, String> resultMap = new HashMap<>();
 		try {
 			if (StringUtils.isEmpty(account)) {
 				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
@@ -53,8 +58,6 @@ public class LoginController extends BaseController {
 			if (StringUtils.isEmpty(password)) {
 				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入密码!");
 			}
-
-
 
 			UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account,areaId);
 
@@ -83,13 +86,18 @@ public class LoginController extends BaseController {
 			setUserAccountPojo(userAccountBean);
 
 			userInfoPojo=userAccountExService.getUserInfoPojoById(id);
-
+			if(null != userInfoPojo)
+			{
+				String token = DESUtil.getEightByteMultypleStr(userInfoPojo.getAccount(), userInfoPojo.getPassword());
+				System.out.println(token.length());
+				resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
+			}
 		}catch(Exception e){
 			throw e;
 		}finally{
 
 		}
-		return JSON.toJSONString(userInfoPojo);
+		return resultMap;
 	}
 
 	/**
