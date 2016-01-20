@@ -76,7 +76,7 @@ public class HttpInterfaceTest extends TestCase{
     }
 
     public void testGetPolicyInfo(){
-        String url=host + getPolicyInfo_url + "?id=44";
+        String url=host + getPolicyInfo_url + "?id=38";
         String result = RequestUtils.requestGet(url);
         assertTrue(result.contains("摘要"));
 //                assertTrue(result.contains("01"));
