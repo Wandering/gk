@@ -28,6 +28,6 @@ allprojects {
 
     thinkjoySSProtocolCommonVersion = "0.0.8-SNAPSHOT"
 
-    gaokao360Version = "0.0.1-SNAPSHOT"
+    gaokao360Version = "0.0.11-SNAPSHOT"
 
 }
