@@ -31,14 +31,16 @@ public class CrossFilter extends OncePerRequestFilter {
         if(!StringUtils.isEmpty(referer)) {
             String origin_referer = getOriginUrl(referer);
 //            if (checkReferer(origin_referer)) {
+            if (true) {
                 response.setHeader("Access-Control-Allow-Credentials", "true");
+//                response.setHeader("Access-Control-Allow-Origin", origin_referer);
                 response.setHeader("Access-Control-Allow-Origin", "*");
                 response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
                 response.setHeader("Access-Control-Allow-Headers", "Content-Type");
                 response.setHeader("Access-Control-Max-Age", "1800");//30 min
                 response.setHeader("XDomainRequestAllowed","1");
 
-//            }
+            }
         }
         filterChain.doFilter(request, response);
     }
