@@ -54,12 +54,12 @@ public class RegisterController extends BaseController {
      */
     @RequestMapping(value = "/account",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> registerAccount(@RequestParam(value="account",required = false) String account,
+    public Map<String, Object> registerAccount(@RequestParam(value="account",required = false) String account,
                                   @RequestParam(value="captcha",required = false) String captcha,
                                   @RequestParam(value="password",required = false) String password)
             throws Exception{
         long areaId=getAreaCookieValue();
-        Map<String, String> resultMap = new HashMap<>();
+        Map<String, Object> resultMap = new HashMap<>();
         try{
             if (StringUtils.isEmpty(account)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
@@ -108,6 +108,9 @@ public class RegisterController extends BaseController {
             setUserAccountPojo(userAccountBean);
             String token = DESUtil.getEightByteMultypleStr(account, MD5Util.MD5Encode(password));
             resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
+            userAccountBean.setPassword(null);
+            userAccountBean.setId(null);
+            resultMap.put("userInfo", userAccountBean);
         }catch (Exception e){
             throw e;
         }finally {

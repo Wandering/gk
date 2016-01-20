@@ -45,12 +45,12 @@ public class LoginController extends BaseController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, String> login(@RequestParam(value="account",required=false) String account,
+	public Map<String, Object> login(@RequestParam(value="account",required=false) String account,
 					  @RequestParam(value="password",required=false) String password) throws Exception {
 		long id = 0l;
 		long areaId=getAreaCookieValue();
 		UserInfoPojo userInfoPojo=null;
-		Map<String, String> resultMap = new HashMap<>();
+		Map<String, Object> resultMap = new HashMap<>();
 		try {
 			if (StringUtils.isEmpty(account)) {
 				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
@@ -89,8 +89,11 @@ public class LoginController extends BaseController {
 			if(null != userInfoPojo)
 			{
 				String token = DESUtil.getEightByteMultypleStr(userInfoPojo.getAccount(), userInfoPojo.getPassword());
-				System.out.println(token.length());
 				resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
+				userInfoPojo.setPassword(null);
+				userInfoPojo.setId(null);
+				userInfoPojo.setStatus(null);
+				resultMap.put("userInfo", userInfoPojo);
 			}
 		}catch(Exception e){
 			throw e;
