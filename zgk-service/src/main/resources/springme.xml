@@ -29,7 +29,6 @@
     <context:component-scan base-package="cn.thinkjoy" use-default-filters="false">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
-    <aop:aspectj-autoproxy />
 
     <!-- 默认的redis配置，启动时会建立连接 -->
     <import resource="classpath*:spring-redis.xml" />
