@@ -43,7 +43,7 @@ public class GkAdmissionLineController extends BaseApiController {
                                                @ApiParam(param="year", desc="年份",required = false) @RequestParam(required = false) String year,
                                                @ApiParam(param="areaId", desc="页数",required = false) @RequestParam(required = false) String areaId,
                                                @ApiParam(param="property", desc="院校特征",required = false) @RequestParam(required = false) String property,
-                                               @ApiParam(param="batch", desc="批次",required = true) @RequestParam(required = true) Integer batch,
+                                               @ApiParam(param="batch", desc="批次",required = false) @RequestParam(required = false) Integer batch,
                                                @ApiParam(param="type", desc="科类",required = false) @RequestParam(defaultValue = "1",required = false) Integer type,
                                                @ApiParam(param="page", desc="页数",required = false) @RequestParam(defaultValue = "1",required = false) Integer page,
                                                @ApiParam(param="rows", desc="每页条数",required = false) @RequestParam(defaultValue = "10",required = false) Integer rows){
