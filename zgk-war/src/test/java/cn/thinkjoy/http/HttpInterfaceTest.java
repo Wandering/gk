@@ -19,6 +19,7 @@ public class HttpInterfaceTest extends TestCase{
         String getGkHotInfo_url="/gkhot/getGkHotInfo.do";
         String getGkHotList_url="/gkhot/getGkHotList.do";
         String getGkPhoneList_url="/phone/getGkPhoneList.do";
+        String getGkAreaBatchInfo_url="/areabatch/getGkAreaBatchInfo.do";
         public void testGetGkAdmissionLineList(){
                 String url=host + getGkAdmissionLineList_url + "?queryparam=&year=&name=&areaId=&property=33&batch=&type=2&page=&rows=";
             String result = RequestUtils.requestGet(url);
@@ -158,6 +159,21 @@ public class HttpInterfaceTest extends TestCase{
         String url=host + getGkPhoneList_url + "";
         String result = RequestUtils.requestGet(url);
         assertTrue(result.contains("2016"));
+//                assertTrue(result.contains("01"));
+//                assertTrue(result.contains("12"));
+//                assertTrue(result.contains("11"));
+//                assertTrue(result.contains("2015"));
+//            assertTrue(result.contains("一批本科"));
+//            assertTrue(result.contains("985/211"));
+//            assertTrue(result.contains("教育部"));
+//                assertTrue(result.contains("33"));
+//            assertTrue(result.contains("文史"));
+    }
+
+    public void testGetGkAreaBatchInfo(){
+        String url=host + getGkAreaBatchInfo_url + "?areaId=110000";
+        String result = RequestUtils.requestGet(url);
+        assertTrue(result.contains("110000"));
 //                assertTrue(result.contains("01"));
 //                assertTrue(result.contains("12"));
 //                assertTrue(result.contains("11"));
