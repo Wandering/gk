@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 历年分数线controller
@@ -78,6 +77,22 @@ public class GkAdmissionLineController extends BaseApiController {
             QueryUtil.setMapOp(map, "enrollinguniversityMajorType", "=", type);
 
         return gkAdmissionLineService.getGkAdmissionLineList(map,page,rows);
+    }
+    /**
+     * 获取批次线分页方法
+     * @return
+     */
+    @ApiDesc(value = "获取年份", owner = "杨永平")
+    @RequestMapping(value = "/getYears.do",method = RequestMethod.GET)
+    @ResponseBody
+    public List getYears(){
+        List list = new ArrayList();
+        Calendar a=Calendar.getInstance();
+        int year=a.get(Calendar.YEAR);
+        list.add(year);
+        list.add(year-1);
+        list.add(year-2);
+        return list;
     }
 
 }
