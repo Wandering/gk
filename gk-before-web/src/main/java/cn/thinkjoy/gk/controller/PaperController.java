@@ -1,8 +1,7 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseCommonController;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.ExaminationPaper;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
@@ -25,7 +24,7 @@ import java.util.List;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/before/paper")
-public class PaperController extends BaseController {
+public class PaperController extends ZGKBaseController {
     @Autowired
     private IExaminationPaperService iExaminationPaperService;
     @Autowired

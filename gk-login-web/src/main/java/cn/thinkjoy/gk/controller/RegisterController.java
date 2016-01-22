@@ -2,9 +2,8 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.common.DESUtil;
-import cn.thinkjoy.gk.constant.CookieConst;
 import cn.thinkjoy.gk.constant.CookieTimeConst;
 import cn.thinkjoy.gk.constant.RedisConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
@@ -37,7 +36,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/register")
-public class RegisterController extends BaseController {
+public class RegisterController extends ZGKBaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterController.class);
 
@@ -105,8 +104,8 @@ public class RegisterController extends BaseController {
 
             response.addCookie(CookieUtil.addCookie(domain,getCookieName(), String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
 
-            setUserAccountPojo(userAccountBean);
-            String token = DESUtil.getEightByteMultypleStr(account, MD5Util.MD5Encode(password));
+            String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), account);
+            setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));
             resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
             userAccountBean.setPassword(null);
             userAccountBean.setId(null);

@@ -48,11 +48,18 @@ public class PredictController {
      */
     @RequestMapping(value = "/predictProbability",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> predictProbability(@RequestParam(value = "universityName", defaultValue = "") String name,
-                                                  @RequestParam(value = "score", defaultValue = "") String score,
-                                                  @RequestParam(value = "type", defaultValue = "") String type)
+    public Map<String, Object> predictProbability(@RequestParam(value = "universityName") String name,
+                                                  @RequestParam(value = "score") int score,
+                                                  @RequestParam(value = "type") String type)
     {
-
+        if(score<=0 || score > 999)
+        {
+            throw new BizException("error", "请输入正确的分数!");
+        }
+        if(null==name || "".equals(name))
+        {
+            throw new BizException("error", "请输入院校名称!");
+        }
         List universityList = universityService.getUniversityByName(name);
         if(universityList.size()==0 || universityList.size()>1)
         {
@@ -151,26 +158,4 @@ public class PredictController {
         resultMap.put("垫", list4);
         return resultMap;
     }
-
-//    public Integer predictionAchievement(){
-//
-////        C=数个人分
-////
-////        A=院校平均录取最低分
-////
-////        B=录取平均分分差
-//
-//        /**当前分数**/
-//        Integer currScores=null;
-//        /**院校平均录取最低分**/
-//        Integer averageScore=null;
-//        /**录取平均分分差**/
-//        Integer difference=null;
-//
-////        C/（A+B）>1+B/A
-//        Integer analogueScale=currScores/(averageScore+difference);
-//
-//        return analogueScale;
-//    }
-
 }

@@ -1,9 +1,8 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
-import cn.thinkjoy.gk.domain.UniversityDict;
 import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.MajoredQuery;
@@ -30,7 +29,7 @@ import java.util.*;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/majored")
-public class MajoredController extends BaseController {
+public class MajoredController extends ZGKBaseController {
 
     public static  final Logger log= LoggerFactory.getLogger(MajoredController.class);
 

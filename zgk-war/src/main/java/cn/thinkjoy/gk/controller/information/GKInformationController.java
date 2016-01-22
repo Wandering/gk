@@ -1,7 +1,7 @@
 package cn.thinkjoy.gk.controller.information;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.GkinformationGkhot;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
@@ -25,7 +25,7 @@ import java.util.List;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/gkinformation")
-public class GKInformationController extends BaseController{
+public class GKInformationController extends ZGKBaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GKInformationController.class);
 

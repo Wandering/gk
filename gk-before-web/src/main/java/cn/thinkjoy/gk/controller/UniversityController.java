@@ -5,8 +5,7 @@ package cn.thinkjoy.gk.controller;
  */
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseCommonController;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.domain.UniversityDict;
@@ -16,12 +15,9 @@ import cn.thinkjoy.gk.query.UniversityQuery;
 import cn.thinkjoy.gk.service.*;
 import cn.thinkjoy.gk.util.ConditionsUtil;
 import cn.thinkjoy.zgk.dto.UniversityPlanChartDTO;
-import cn.thinkjoy.zgk.remote.*;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -31,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +40,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/university")
-public class UniversityController extends BaseController {
+public class UniversityController extends ZGKBaseController {
 
     public static final Logger LOGGER= LoggerFactory.getLogger(UniversityController.class);
 

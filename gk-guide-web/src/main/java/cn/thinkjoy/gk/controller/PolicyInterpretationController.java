@@ -1,6 +1,6 @@
 package cn.thinkjoy.gk.controller;
 
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.AdmissionBatch;
 import cn.thinkjoy.gk.domain.PolicyInterpretation;
@@ -23,7 +23,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/policyInterpretation")
-public class PolicyInterpretationController extends BaseController {
+public class PolicyInterpretationController extends ZGKBaseController {
 
     @Autowired
     private IAdmissionBatchService admissionBatchService;

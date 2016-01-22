@@ -34,7 +34,7 @@ public class LoginFilter implements Filter {
             chain.doFilter(request, response);
         }else {
 
-            String value = CookieUtil.getCookieValue(hrequest);
+            String value = hrequest.getParameter("token");
 
             String key = UserRedisConst.USER_KEY + value;
 

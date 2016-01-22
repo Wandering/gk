@@ -2,8 +2,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.domain.SearchField;
 import cn.thinkjoy.common.domain.view.BizData4Page;
-import cn.thinkjoy.gk.common.BaseCommonController;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.VolunteerSchool;
 import cn.thinkjoy.gk.domain.VolunteerSchoolCategory;
@@ -27,7 +26,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("volunteerSchool")
-public class VolunteerSchoolController extends BaseController {
+public class VolunteerSchoolController extends ZGKBaseController {
 
     @Autowired
     private IVolunteerSchoolCategoryService volunteerSchoolCategoryService;

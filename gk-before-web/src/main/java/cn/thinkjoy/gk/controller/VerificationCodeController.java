@@ -1,7 +1,7 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.CaptchaConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.constant.VerificationKeyConst;
@@ -21,7 +21,7 @@ import java.awt.image.BufferedImage;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/verifyCode")
-public class VerificationCodeController extends BaseController {
+public class VerificationCodeController extends ZGKBaseController {
 
 	private static final Logger LOGGER= LoggerFactory.getLogger(VerificationCodeController.class);
 

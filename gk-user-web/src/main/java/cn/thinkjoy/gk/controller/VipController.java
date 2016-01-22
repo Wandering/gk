@@ -1,16 +1,15 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.DESUtil;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Card;
-import cn.thinkjoy.gk.domain.UserVip;
 import cn.thinkjoy.gk.pojo.CardPojo;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.ICardExService;
 import cn.thinkjoy.gk.service.ICardService;
-import cn.thinkjoy.gk.service.IUserVipService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/vip")
-public class VipController extends BaseController {
+public class VipController extends ZGKBaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(VipController.class);
     @Autowired
@@ -67,7 +66,8 @@ public class VipController extends BaseController {
         cardExService.updateUserVip(card.getId(),userAccountPojo.getId(),card.getEndDate());
         userAccountPojo.setVipStatus(1);
         try {
-            setUserAccountPojo(userAccountPojo);
+            String token = DESUtil.getEightByteMultypleStr(String.valueOf(userAccountPojo.getId()), userAccountPojo.getAccount());
+            setUserAccountPojo(userAccountPojo, DESUtil.encrypt(token, DESUtil.key));
         } catch(Exception e) {
             throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
         }

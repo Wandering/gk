@@ -1,6 +1,6 @@
 package cn.thinkjoy.gk.controller;
 
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.domain.GkinformationGkhot;
 import cn.thinkjoy.gk.domain.PolicyInterpretation;
 import cn.thinkjoy.gk.domain.VolunteerSchool;
@@ -38,7 +38,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "guide/testController")
-public class TestController extends BaseController {
+public class TestController extends ZGKBaseController {
 
     @Autowired
     private IGkinformationGkhotService gkinformationGkhotService;
