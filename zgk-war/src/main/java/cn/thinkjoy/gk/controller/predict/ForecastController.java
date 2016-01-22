@@ -73,7 +73,7 @@ public class ForecastController extends BaseApiController{
         idIsNull(universityid);
         Map<String,Object> map = new HashMap<>();
         QueryUtil.setMapOp(map,"universityid","=",universityid);
-        if(batch==null) {
+        if(batch!=null) {
             QueryUtil.setMapOp(map, "enrollingbatch", "=", batch);
         }
         BizData4Page bizData4Page=gkAdmissionLineService.getGkAdmissionLineList(map,null,3);

@@ -22,13 +22,13 @@ public class HttpInterfaceForecastTest extends TestCase{
         public void testGetLastoFrecast(){
                 String url=host + getLastoFrecast_url + "";
             String result = RequestUtils.requestGet(url);
-            assertTrue(result.contains("33"));
+            assertTrue(result.contains("测试测试测试"));
         }
 
         public void testGetFormerYearsAdmission(){
-                String url=host + getFormerYearsAdmission_url + "?universityid=&batch=";
+                String url=host + getFormerYearsAdmission_url + "?universityid=47";
             String result = RequestUtils.requestGet(url);
-            assertTrue(result.contains("33"));
+            assertTrue(result.contains("averageScore"));
         }
 
 
