@@ -35,10 +35,10 @@ public class GkEntryController extends BaseApiController<GkEntry> {
     IGkEntryService gkEntryService;
 
     /**
-     * 获取日程摘要列表 四个
+     * 获取词条摘要列表 四个
      * @return
      */
-    @ApiDesc(value = "获取高考日程摘要列表", owner = "杨永平")
+    @ApiDesc(value = "获取词条摘要列表", owner = "杨永平")
     @RequestMapping(value = "/getGkEntryList.do",method = RequestMethod.GET)
     @ResponseBody
     public BizData4Page getGkEntryList(@ApiParam(param="rows", desc="条数",required = false) @RequestParam(defaultValue = "5",required = false) Integer rows,
@@ -48,7 +48,7 @@ public class GkEntryController extends BaseApiController<GkEntry> {
     }
 
     /**
-     * 获取日程详情
+     * 根据主键获取高考词条详情
      * @return
      */
     @ApiDesc(value = "根据主键获取高考词条详情", owner = "杨永平")

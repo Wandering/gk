@@ -144,7 +144,8 @@ public class HttpInterfaceTest extends TestCase{
 //            assertTrue(result.contains("文史"));
     }
     public void testGkVideoInfo(){
-        String url=host + getGkVideoInfo_url + "?id=29";
+        String url=host + getGkVideoInfo_url + "?id=95";
+        System.out.print(url);
         String result = RequestUtils.requestGet(url);
         assertTrue(result.contains("2016"));
 //                assertTrue(result.contains("01"));
@@ -158,6 +159,21 @@ public class HttpInterfaceTest extends TestCase{
 //            assertTrue(result.contains("文史"));
     }
 
+//    public void testGkVideoInfo(){
+//        String url=host + getGkVideoInfo_url + "?id=29";
+//        System.out.print(url);
+//        String result = RequestUtils.requestGet(url);
+//        assertTrue(result.contains("2016"));
+////                assertTrue(result.contains("01"));
+////                assertTrue(result.contains("12"));
+////                assertTrue(result.contains("11"));
+////                assertTrue(result.contains("2015"));
+////            assertTrue(result.contains("一批本科"));
+////            assertTrue(result.contains("985/211"));
+////            assertTrue(result.contains("教育部"));
+////                assertTrue(result.contains("33"));
+////            assertTrue(result.contains("文史"));
+//    }
     public void testGkPhoneList(){
         String url=host + getGkPhoneList_url + "";
         String result = RequestUtils.requestGet(url);

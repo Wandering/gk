@@ -109,8 +109,8 @@ public class PredictController {
         Integer Star4=averageScore/difference+1;
 //        [1,1+B/A]三颗星
         Integer Star3=averageScore/difference;
-//        [1-B/A,1] 二颗星
-
+//        [1-B/A,1-2B/A] 二颗星
+//        Integer Star3=averageScore/difference;
 //        [1-2B/A,1-B/A] 一颗星
 
 //        C/（A+B）>1+B/A
