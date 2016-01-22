@@ -40,7 +40,7 @@ public class PredictController {
     }
 
     /**
-     *
+     * 录取难易预测接口
      * @param name
      * @param score
      * @param name
@@ -48,11 +48,14 @@ public class PredictController {
      */
     @RequestMapping(value = "/predictProbability",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> predictProbability(@RequestParam(value = "universityName", defaultValue = "") String name,
-                                                  @RequestParam(value = "score", defaultValue = "") String score,
-                                                  @RequestParam(value = "type", defaultValue = "") String type)
+    public Map<String, Object> predictProbability(@RequestParam(value = "universityName") String name,
+                                                  @RequestParam(value = "score") String score,
+                                                  @RequestParam(value = "type") String type)
     {
-
+        if(null==name || "".equals(name))
+        {
+            throw new BizException("error", "请输入院校名称!");
+        }
         List universityList = universityService.getUniversityByName(name);
         if(universityList.size()==0 || universityList.size()>1)
         {
@@ -97,50 +100,58 @@ public class PredictController {
         return resultMap;
     }
 
-    public Integer predictionAchievement(){
-        /**当前分数**/
-        Integer currScores=null;
-        /**三年平均分**/
-        Integer averageScore=null;
-        /**三年平均分分差**/
-        Integer difference=null;
-
-//        1+B/A 四颗星
-        Integer Star4=averageScore/difference+1;
-//        [1,1+B/A]三颗星
-        Integer Star3=averageScore/difference;
-//        [1-B/A,1] 二颗星
-
-//        [1-2B/A,1-B/A] 一颗星
-
-//        C/（A+B）>1+B/A
-        Integer analogueScale=currScores/(averageScore+difference);
-
-//        switch (){
-//        }
-
-        return analogueScale;
+    /**
+     * 预测院校接口
+     * @param score
+     */
+    @RequestMapping(value = "/predictSchoolList",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> predictSchoolList(@RequestParam(value = "score", defaultValue = "") int score,
+                                                 @RequestParam(value = "type", defaultValue = "") String type)
+    {
+        if(score<=0 || score > 999)
+        {
+            throw new BizException("error", "请输入正确的分数!");
+        }
+        Map<String, Object> resultMap = new HashMap<>();
+        List<Map<String, String>> list = new ArrayList<>();
+        Map<String, String> map = new HashMap<>();
+        map.put("id","1");
+        map.put("universityName","北京大学");
+        map.put("province","北京");
+        map.put("rank","1");
+        map.put("feature","985,211,研,国,自");
+        list.add(map);
+        Map<String, String> map2 = new HashMap<>();
+        map2.put("id","2");
+        map2.put("universityName","清华大学");
+        map2.put("province","北京");
+        map2.put("rank","2");
+        map2.put("feature","985,211,研,国,自");
+        list.add(map2);
+        Map<String, String> map3 = new HashMap<>();
+        map3.put("id","3");
+        map3.put("universityName","中国人民大学");
+        map3.put("province","北京");
+        map3.put("rank","3");
+        map3.put("feature","985,211,研,国,自");
+        list.add(map3);
+        resultMap.put("冲", list);
+        List<Map<String, String>> list2 = new ArrayList<>();
+        list2.add(map);
+        list2.add(map2);
+        list2.add(map3);
+        resultMap.put("稳", list2);
+        List<Map<String, String>> list3 = new ArrayList<>();
+        list3.add(map);
+        list3.add(map2);
+        list3.add(map3);
+        resultMap.put("保", list3);
+        List<Map<String, String>> list4 = new ArrayList<>();
+        list4.add(map);
+        list4.add(map2);
+        list4.add(map3);
+        resultMap.put("垫", list4);
+        return resultMap;
     }
-
-//    public Integer predictionAchievement(){
-//
-////        C=数个人分
-////
-////        A=院校平均录取最低分
-////
-////        B=录取平均分分差
-//
-//        /**当前分数**/
-//        Integer currScores=null;
-//        /**院校平均录取最低分**/
-//        Integer averageScore=null;
-//        /**录取平均分分差**/
-//        Integer difference=null;
-//
-////        C/（A+B）>1+B/A
-//        Integer analogueScale=currScores/(averageScore+difference);
-//
-//        return analogueScale;
-//    }
-
 }
