@@ -9,6 +9,7 @@ sourceCompatibility = 1.7
 delete "${buildDir}/classes/test"
 
 project.configurations.all {
+
     resolutionStrategy {
         cacheChangingModulesFor 0, 'seconds'
         resolutionRules.with {
@@ -43,9 +44,6 @@ buildscript {
     }
 }
 
-tasks.withType(Compile) {
-    options.encoding = "UTF-8"
-}
 
 /** 此闭包内的声明子类皆可使用 */
 allprojects {
@@ -58,6 +56,9 @@ allprojects {
     apply plugin: 'maven-publish'
     apply plugin: 'maven-publish-auth'
 
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
     repositories {
         repositories { maven { url 'http://repo.thinkjoy.cn/content/groups/public/' } }
         mavenLocal()
