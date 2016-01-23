@@ -61,6 +61,7 @@ public class BaseCommonController {
 		this.session = request.getSession();
 	}
 
+
 	/**
 	 * 获取用户ID
 	 * @return

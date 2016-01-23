@@ -4,6 +4,7 @@ import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
+import cn.thinkjoy.zgk.common.QueryUtil;
 import cn.thinkjoy.zgk.domain.BizData4Page;
 import cn.thinkjoy.zgk.domain.GkEntry;
 import cn.thinkjoy.zgk.domain.GkSchedule;
@@ -42,8 +43,12 @@ public class GkEntryController extends BaseApiController<GkEntry> {
     @RequestMapping(value = "/getGkEntryList.do",method = RequestMethod.GET)
     @ResponseBody
     public BizData4Page getGkEntryList(@ApiParam(param="rows", desc="条数",required = false) @RequestParam(defaultValue = "5",required = false) Integer rows,
+                                       @ApiParam(param="name", desc="模糊查询",required = false) @RequestParam(required = false) String name,
                                                @ApiParam(param="page", desc="页",required = false) @RequestParam(defaultValue = "1",required = false) Integer page){
         Map<String,Object> map = new HashMap<>();
+        if(name!=null && "".equals(name)) {
+            QueryUtil.setMapOp(map, "title", "like", name);
+        }
         return gkEntryService.getGkEntryList(map,page,rows);
     }
 

@@ -23,6 +23,7 @@ public class HttpInterfaceTest extends TestCase{
         String getGkEntryList_url="/entry/getGkEntryList.do";
         String getGkEntryInfo_url="/entry/getGkEntryInfo.do";
         String predictProbability_url="/predict/predictProbability.do";
+        String getProfessionalList_url="/professional/getProfessionalList.do" ;
         public void testGetGkAdmissionLineList(){
                 String url=host + getGkAdmissionLineList_url + "?queryparam=&year=&name=&areaId=&property=33&batch=&type=2&page=&rows=";
             String result = RequestUtils.requestGet(url);
@@ -237,6 +238,22 @@ public class HttpInterfaceTest extends TestCase{
         String url=host + predictProbability_url + "?universityName=测试&score=&type=";
 //        String result = RequestUtils.requestGet(url);
         String result = RequestUtils.requestPost(url);
+        assertTrue(result.contains("87"));
+//                assertTrue(result.contains("01"));
+//                assertTrue(result.contains("12"));
+//                assertTrue(result.contains("11"));
+//                assertTrue(result.contains("2015"));
+//            assertTrue(result.contains("一批本科"));
+//            assertTrue(result.contains("985/211"));
+//            assertTrue(result.contains("教育部"));
+//                assertTrue(result.contains("33"));
+//            assertTrue(result.contains("文史"));
+    }
+
+    public void testPredictProbability1(){
+        String url=host + getProfessionalList_url + "";
+//        String result = RequestUtils.requestGet(url);
+        String result = RequestUtils.requestGet(url);
         assertTrue(result.contains("87"));
 //                assertTrue(result.contains("01"));
 //                assertTrue(result.contains("12"));
