@@ -55,7 +55,7 @@ public class TestController extends ZGKBaseController {
     @RequestMapping(value = "/test",method = RequestMethod.POST)
     @ResponseBody
     public String test(@RequestParam(value = "type")String type,@RequestParam(value = "batch",required = false)Long batch,@RequestParam(value = "title")String title,@RequestParam(value="summary")String summary,@RequestParam(value="context")String context) throws Exception {
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         if(type.equals("gkhot")) {
             GkinformationGkhot gkinformationGkhot = new GkinformationGkhot();
             gkinformationGkhot.setStatus(0);
@@ -125,7 +125,7 @@ public class TestController extends ZGKBaseController {
     @ResponseBody
     public String uploadMajoredScoreLine(HttpServletRequest request) throws Exception {
         List<Map<Integer, String>> data=getData(request, 8);
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         for (Map<Integer, String> pMap : data) {
             String majoredName=pMap.get(0).trim();
             String universityName=pMap.get(1).trim();
@@ -200,10 +200,10 @@ public class TestController extends ZGKBaseController {
         MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
         RestTemplate template = new RestTemplate();//这里大家可以用其他的httpClient均可以
         param.add("file", resource);
-        param.add("productCode", "gk360");
-        param.add("bizSystem", "gk360");
-        param.add("spaceName", "gk360");
-        param.add("userId", "gk360");
+        param.add("productCode", "zgk");
+        param.add("bizSystem", "zgk");
+        param.add("spaceName", "zgk");
+        param.add("userId", "zgk");
         param.add("dirId", "0");
         template.getMessageConverters().add(new FastJsonHttpMessageConverter());
         long start=System.currentTimeMillis();

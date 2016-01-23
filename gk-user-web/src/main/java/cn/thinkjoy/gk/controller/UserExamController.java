@@ -38,7 +38,7 @@ public class UserExamController extends ZGKBaseController {
     @ResponseBody
     public boolean getUserInfo(UserExam userExam) throws Exception{
 
-        String id=getCookieValue();
+        String id=getAccoutId();
 
         if(StringUtils.isEmpty(id)){
             throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
@@ -66,7 +66,7 @@ public class UserExamController extends ZGKBaseController {
     @ResponseBody
     public UserExam findUserExam() throws Exception{
 
-        String id=getCookieValue();
+        String id=getAccoutId();
 
         if(StringUtils.isEmpty(id)){
             throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());

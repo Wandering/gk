@@ -1,16 +1,13 @@
 package cn.thinkjoy.gk.controller;
 
-import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.common.DESUtil;
-import cn.thinkjoy.gk.constant.CookieTimeConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.pojo.UserInfoPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IUserAccountExService;
-import cn.thinkjoy.gk.util.CookieUtil;
 import com.jlusoft.microschool.core.utils.MD5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +42,7 @@ public class LoginController extends ZGKBaseController {
 	public Map<String, Object> login(@RequestParam(value="account",required=false) String account,
 					  @RequestParam(value="password",required=false) String password) throws Exception {
 		long id = 0l;
-		long areaId=getAreaCookieValue();
+		long areaId= getAreaId();
 		UserInfoPojo userInfoPojo=null;
 		Map<String, Object> resultMap = new HashMap<>();
 		try {
@@ -101,14 +98,14 @@ public class LoginController extends ZGKBaseController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout() throws Exception {
 //		boolean status = true;
-		try {
+//		try {
 //			RedisUtil.getInstance().del(UserRedisConst.USER_KEY + getCookieValue());
-			String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
-			response.addCookie(CookieUtil.addCookie(domain,getCookieName(), "", CookieTimeConst.CLEAN_COOKIE));
-		}catch(Exception e){
+//			String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
+//			response.addCookie(CookieUtil.addCookie(domain,getCookieName(), "", CookieTimeConst.CLEAN_COOKIE));
+//		}catch(Exception e){
 //			status = false;
-			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
-		}
+//			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
+//		}
 		return "index";
 	}
 

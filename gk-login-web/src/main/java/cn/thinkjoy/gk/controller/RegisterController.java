@@ -4,14 +4,12 @@ import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.common.DESUtil;
-import cn.thinkjoy.gk.constant.CookieTimeConst;
 import cn.thinkjoy.gk.constant.RedisConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.util.CookieUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import com.jlusoft.microschool.core.utils.MD5Util;
 import org.apache.commons.lang3.StringUtils;
@@ -57,7 +55,7 @@ public class RegisterController extends ZGKBaseController {
                                   @RequestParam(value="captcha",required = false) String captcha,
                                   @RequestParam(value="password",required = false) String password)
             throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         Map<String, Object> resultMap = new HashMap<>();
         try{
             if (StringUtils.isEmpty(account)) {
@@ -102,8 +100,6 @@ public class RegisterController extends ZGKBaseController {
 
             String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
 
-            response.addCookie(CookieUtil.addCookie(domain,getCookieName(), String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
-
             String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), account);
             setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));
             resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
@@ -131,7 +127,7 @@ public class RegisterController extends ZGKBaseController {
                                    @RequestParam(value="captcha",required = false) String captcha,
                                    @RequestParam(value="password",required = false) String password)
             throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         try{
             if (StringUtils.isEmpty(account)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
@@ -185,7 +181,7 @@ public class RegisterController extends ZGKBaseController {
             if (StringUtils.isEmpty(account)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
             }
-            long areaId=getAreaCookieValue();
+            long areaId= getAreaId();
             UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account,areaId);
             if (type==0){
                 if (userAccountBean!=null){

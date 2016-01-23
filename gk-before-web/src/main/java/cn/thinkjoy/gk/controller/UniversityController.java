@@ -441,7 +441,7 @@ public class UniversityController extends ZGKBaseController {
     @RequestMapping(value = "/getEnrollInfo",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> getEnrollInfo()throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
 //        long areaId=450000L;
         String schoolId=request.getParameter("id");
         Map<String,Object> map=new HashMap<String, Object>();
@@ -467,7 +467,7 @@ public class UniversityController extends ZGKBaseController {
     public EntrollPlanDto getEnrollPlan() throws Exception{
         String schoolId=request.getParameter("id");
         String batch=request.getParameter("batch");
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         EntrollPlanDto entrollPlanDto=new EntrollPlanDto();
         List<EntrollPlan> entrollPlans=new ArrayList<EntrollPlan>();
         switch (batch){
@@ -533,7 +533,7 @@ public class UniversityController extends ZGKBaseController {
     @RequestMapping(value = "/getMajoredScoreLineList",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> getMajoredScoreLineList(@RequestParam(value = "universityId",required = true)long universityId) throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         return iUniversityService.getMajoredScoreLinePojoList(universityId,areaId);
     }
 
@@ -546,7 +546,7 @@ public class UniversityController extends ZGKBaseController {
     @RequestMapping(value = "/getOpenMajoredPojoList",method = RequestMethod.GET)
     @ResponseBody
     public List<OpenMajoredPojo> getOpenMajoredPojoList(@RequestParam(value = "universityId",required = true)long universityId) throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         return iUniversityService.getOpenMajoredPojoList(universityId,areaId);
     }
 
@@ -577,7 +577,7 @@ public class UniversityController extends ZGKBaseController {
 //        } catch (UnsupportedEncodingException e) {
 //            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
 //        }
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         UniversityDetailDto universityDetailDto = null;
         try{
             universityDetailDto = universityExService.getUniversityDetail(code,batch,type,year,areaId);

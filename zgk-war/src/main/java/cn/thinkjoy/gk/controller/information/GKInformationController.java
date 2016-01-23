@@ -36,7 +36,7 @@ public class GKInformationController extends ZGKBaseController {
     @RequestMapping(value = "getAllInformation",method = RequestMethod.GET)
     @ResponseBody
     public List<GkinformationGkhot> getAllInformation(HttpServletRequest request) throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         String pn = request.getParameter("pageNo");
         if (pn == null||pn.length() < 0) {
             pn = "0";
@@ -53,7 +53,7 @@ public class GKInformationController extends ZGKBaseController {
     @RequestMapping(value = "getInformationByKey",method = RequestMethod.GET)
     @ResponseBody
     public List<GkinformationGkhot> getInformationByKey(HttpServletRequest request) throws Exception {
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         String key = request.getParameter("key");
 //        String keyString = new String(key.getBytes("ISO-8859-1"),"UTF-8");
         String pn = request.getParameter("pageNo");
@@ -78,7 +78,7 @@ public class GKInformationController extends ZGKBaseController {
     @RequestMapping(value="getHotInformation",method=RequestMethod.GET)
     @ResponseBody
     public  List<GkinformationGkhot> getHotInformation(HttpServletRequest request) throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         String pn = request.getParameter("pageNo");
         if(pn == null || pn.length() < 0){
             pn = "0";

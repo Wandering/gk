@@ -86,7 +86,7 @@ public class VerificationCodeController extends ZGKBaseController {
 
 			String randomCode = CaptchaUtil.getRandomString(image).toUpperCase();
 //
-			String value = getCookieValue();
+			String value = getAccoutId();
 			if(VerificationKeyConst.COLLEGE_RECOMMENDATION_TYPE==Integer.valueOf(type)){
 				session.setAttribute(VerificationKeyConst.COLLEGE_RECOMMENDATION+value, randomCode.toString());
 			}else if(VerificationKeyConst.COLLEGE_EVALUATION_TYPE==Integer.valueOf(type)){

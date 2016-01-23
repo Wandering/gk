@@ -47,7 +47,6 @@ public class QuestionInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		String url = request.getServletPath();
 		if(url.indexOf("/question/insert.do")>-1||url.indexOf("/answer/findMyQuestion.do")>-1){
-//			String ssValue = CookieUtil.getCookieValue(request.getCookies(), CookieConst.SS_USER_COOKIE_NAME);
 
 			String value = request.getParameter("token");
 
@@ -105,12 +104,6 @@ public class QuestionInterceptor extends HandlerInterceptorAdapter {
 					userInfoService.updateUserInfo(userInfo);
 
 				}
-
-//				String ssValue = CookieUtil.getCookieValue(request.getCookies(), CookieConst.SS_USER_COOKIE_NAME);
-//
-//				if(StringUtils.isEmpty(ssValue)){
-//					response.addCookie(CookieUtil.addCookie(CookieConst.SS_USER_COOKIE_NAME, String.valueOf(userAccountBean.getId()), CookieTimeConst.DEFAULT_COOKIE));
-//				}
 			}
 		}
 		return true;
