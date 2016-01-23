@@ -16,10 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 @Scope(SpringMVCConst.SCOPE)
 public class BaseApiController<T> extends ZGKBaseController{
 
-    protected HttpServletRequest request;
-
-    protected HttpServletResponse response;
-
     protected T isNull(T o){
         if(o==null){
             throw new BizException(ERRORCODE.RESOURCEISNULL.getCode(),ERRORCODE.RESOURCEISNULL.getMessage());
@@ -32,10 +28,4 @@ public class BaseApiController<T> extends ZGKBaseController{
         }
     }
 
-    @ModelAttribute
-    public void setReqAndRes(HttpServletRequest request,
-                             HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
-    }
 }
