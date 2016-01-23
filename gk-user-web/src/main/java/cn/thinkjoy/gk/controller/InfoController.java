@@ -1,7 +1,8 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.DESUtil;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.domain.UserInfo;
@@ -29,7 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/info")
-public class InfoController extends BaseController {
+public class InfoController extends ZGKBaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(InfoController.class);
 
@@ -115,7 +116,8 @@ public class InfoController extends BaseController {
 
             userInfoService.update(userInfo);
 
-            setUserAccountPojo(userAccountPojo);
+            String token = DESUtil.getEightByteMultypleStr(String.valueOf(userAccountPojo.getId()), userAccountPojo.getAccount());
+            setUserAccountPojo(userAccountPojo, DESUtil.encrypt(token, DESUtil.key));
 
 //            userInfoExService.updateUserInfoById(userInfo);
         } catch (Exception e) {

@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.interceptor;
 
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.common.DESUtil;
 import cn.thinkjoy.gk.constant.CookieConst;
 import cn.thinkjoy.gk.constant.CookieTimeConst;
 import cn.thinkjoy.gk.constant.UserRedisConst;
@@ -48,17 +49,21 @@ public class QuestionInterceptor extends HandlerInterceptorAdapter {
 		if(url.indexOf("/question/insert.do")>-1||url.indexOf("/answer/findMyQuestion.do")>-1){
 //			String ssValue = CookieUtil.getCookieValue(request.getCookies(), CookieConst.SS_USER_COOKIE_NAME);
 
-			String value = CookieUtil.getCookieValue(request);
+			String value = request.getParameter("token");
 
-			UserAccountBean userAccountBean = userAccountService.findUserAccountBeanByToken(value,7);
+			String uInfo = DESUtil.decrypt(value, DESUtil.key);
+
+			String uid = DESUtil.getUserInfo(uInfo)[0];
+
+			UserAccountBean userAccountBean = userAccountService.findUserAccountBeanByToken(uid,7);
 
 			if(userAccountBean==null){
 
-				UserAccountPojo userAccountPojo = userAccountExService.findUserAccountPojoById(Long.valueOf(value));
+				UserAccountPojo userAccountPojo = userAccountExService.findUserAccountPojoById(Long.valueOf(uid));
 
 				UserInfoBean userInfoBean = new UserInfoBean();
 
-				userInfoBean.setToken(value);
+				userInfoBean.setToken(uid);
 
 				userInfoBean.setName(userAccountPojo.getName());
 

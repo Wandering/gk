@@ -1,7 +1,7 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Appointment;
 import cn.thinkjoy.gk.pojo.AppointmentPojo;
@@ -20,7 +20,7 @@ import java.util.*;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/appointment")
-public class AppointmentController extends BaseController {
+public class AppointmentController extends ZGKBaseController {
     private static final Logger LOGGER= LoggerFactory.getLogger(AppointmentController.class);
     @Autowired
     private IAppointmentService appointmentService;

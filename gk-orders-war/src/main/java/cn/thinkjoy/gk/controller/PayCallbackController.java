@@ -1,14 +1,12 @@
 package cn.thinkjoy.gk.controller;
 
-import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.DESUtil;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.domain.Orders;
-import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.domain.UserVip;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
-import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IOrdersService;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.service.IUserVipService;
@@ -37,7 +35,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("")
-public class PayCallbackController extends BaseController{
+public class PayCallbackController extends ZGKBaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(PayCallbackController.class);
 
@@ -106,7 +104,8 @@ public class PayCallbackController extends BaseController{
 
                         userAccountBean.setVipStatus(1);
 
-                        String key = UserRedisConst.USER_KEY + userId;
+                        String token = DESUtil.getEightByteMultypleStr(String.valueOf(userId), userAccountBean.getAccount());
+                        String key = UserRedisConst.USER_KEY + DESUtil.encrypt(token, DESUtil.key);
 
                         LOGGER.info("redis:"+RedisUtil.getInstance());
 

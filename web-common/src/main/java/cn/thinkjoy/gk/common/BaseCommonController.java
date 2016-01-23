@@ -1,6 +1,8 @@
 package cn.thinkjoy.gk.common;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.util.CookieUtil;
+import cn.thinkjoy.gk.util.DESUtil;
 import cn.thinkjoy.gk.util.DomainUtil;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -31,9 +33,20 @@ public class BaseCommonController {
 	}
 
 	public String getCookieValue(){
-		if (CookieUtil.getCookieValue(request)==null)
-			return "0";
-		return CookieUtil.getCookieValue(request);
+		String uid = "0";
+		if (request.getParameter("token") == null) {
+			return uid;
+		}
+		try{
+			String value = request.getParameter("token");
+			String uInfo = DESUtil.decrypt(value, DESUtil.key);
+			uid = DESUtil.getUserInfo(uInfo)[0];
+		}catch (Exception e)
+		{
+			throw new BizException("error","The token is invalid!");
+		}
+
+		return uid;
 	}
 
 	public String getCookieName(){

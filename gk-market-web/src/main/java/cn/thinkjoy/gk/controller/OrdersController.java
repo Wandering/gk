@@ -6,7 +6,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.query.OrdersQuery;
 import cn.thinkjoy.gk.domain.Orders;
@@ -41,7 +41,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value="/orders")
-public class OrdersController extends BaseController {
+public class OrdersController extends ZGKBaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(OrdersController.class);
 

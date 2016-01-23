@@ -59,31 +59,11 @@ public class CookieUtil {
 	}
 
 	public static String getCookieValue(HttpServletRequest request){
-		String domainValue = DomainUtil.getDomainValue(request);
-		if(domainValue.equals(DomainConst.SN_DOMAIN)){
-			return CookieUtil.getCookieValue(request.getCookies(), CookieConst.SN_USER_COOKIE_NAME);
-		} else if(domainValue.equals(DomainConst.HN_DOMAIN)){
-			return CookieUtil.getCookieValue(request.getCookies(), CookieConst.HN_USER_COOKIE_NAME);
-		} else if(domainValue.equals(DomainConst.GX_DOMAIN)){
-			return CookieUtil.getCookieValue(request.getCookies(), CookieConst.GX_USER_COOKIE_NAME);
-		} else if(domainValue.equals(DomainConst.HA_DOMAIN)){
-			return CookieUtil.getCookieValue(request.getCookies(), CookieConst.HA_USER_COOKIE_NAME);
-		}
-		return null;
+		return request.getParameter("token");
 	}
 
 	public static String getCookieName(HttpServletRequest request){
-		String domainValue = DomainUtil.getDomainValue(request);
-		if(domainValue.equals(DomainConst.SN_DOMAIN)){
-			return CookieConst.SN_USER_COOKIE_NAME;
-		} else if(domainValue.equals(DomainConst.HN_DOMAIN)){
-			return CookieConst.HN_USER_COOKIE_NAME;
-		} else if(domainValue.equals(DomainConst.GX_DOMAIN)){
-			return CookieConst.GX_USER_COOKIE_NAME;
-		} else if(domainValue.equals(DomainConst.HA_DOMAIN)){
-			return CookieConst.HA_USER_COOKIE_NAME;
-		}
-		return null;
+		return request.getParameter("userKey");
 	}
 
 }

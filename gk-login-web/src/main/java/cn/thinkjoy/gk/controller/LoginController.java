@@ -2,9 +2,8 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.common.DESUtil;
-import cn.thinkjoy.gk.constant.CookieConst;
 import cn.thinkjoy.gk.constant.CookieTimeConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
@@ -12,8 +11,6 @@ import cn.thinkjoy.gk.pojo.UserInfoPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.CookieUtil;
-import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Maps;
 import com.jlusoft.microschool.core.utils.MD5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,14 +23,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/login")
-public class LoginController extends BaseController {
+public class LoginController extends ZGKBaseController {
 
 	private static final Logger LOGGER= LoggerFactory.getLogger(LoginController.class);
 
@@ -78,18 +74,12 @@ public class LoginController extends BaseController {
 
 			id = userAccountBean.getId();
 
-			String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
-
-			response.addCookie(CookieUtil.addCookie(domain,getCookieName(), String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
-
-//			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
-
-			setUserAccountPojo(userAccountBean);
-
 			userInfoPojo=userAccountExService.getUserInfoPojoById(id);
+			String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), userInfoPojo.getAccount());
+			setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));
+
 			if(null != userInfoPojo)
 			{
-				String token = DESUtil.getEightByteMultypleStr(userInfoPojo.getAccount(), userInfoPojo.getPassword());
 				resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
 				userInfoPojo.setPassword(null);
 				userInfoPojo.setId(null);
