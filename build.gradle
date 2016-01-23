@@ -48,7 +48,9 @@ allprojects {
     apply plugin: 'eclipse'
     apply plugin: 'maven-publish'
     apply plugin: 'maven-publish-auth'
-
+    tasks.withType(Compile) {
+        options.encoding = "UTF-8"
+    }
     repositories {
         repositories { maven { url 'http://repo.thinkjoy.cn/content/groups/public/' } }
         mavenLocal()

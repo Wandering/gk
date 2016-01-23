@@ -46,8 +46,8 @@ public class GkEntryController extends BaseApiController<GkEntry> {
                                        @ApiParam(param="name", desc="模糊查询",required = false) @RequestParam(required = false) String name,
                                                @ApiParam(param="page", desc="页",required = false) @RequestParam(defaultValue = "1",required = false) Integer page){
         Map<String,Object> map = new HashMap<>();
-        if(name!=null && "".equals(name)) {
-            QueryUtil.setMapOp(map, "title", "like", name);
+        if(name!=null && !"".equals(name)) {
+            QueryUtil.setMapOp(map, "title", "like", "%"+name+"%");
         }
         return gkEntryService.getGkEntryList(map,page,rows);
     }

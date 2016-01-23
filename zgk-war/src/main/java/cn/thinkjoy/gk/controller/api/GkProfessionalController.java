@@ -47,8 +47,8 @@ public class GkProfessionalController extends BaseApiController<GkProfessionDTO>
                                                @ApiParam(param="page", desc="当前页数") @RequestParam(defaultValue = "1",required = false) Integer page,
                                                @ApiParam(param="rows", desc="每页行数") @RequestParam(defaultValue = "6",required = false) Integer rows){
         Map<String,Object> map = new HashMap<>();
-        if(queryparam!=null && "".equals(queryparam)) {
-            QueryUtil.setMapOp(map, "professionName", "like", queryparam);
+        if(queryparam!=null &&!"".equals(queryparam)) {
+            QueryUtil.setMapOp(map, "professionName", "like", "%"+queryparam+"%");
         }
         if(professionTypeId!=null) {
             QueryUtil.setMapOp(map, "professionTypeId", "=", professionTypeId);
