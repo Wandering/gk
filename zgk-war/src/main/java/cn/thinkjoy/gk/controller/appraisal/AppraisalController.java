@@ -1,7 +1,7 @@
 package cn.thinkjoy.gk.controller.appraisal;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.controller.appraisal.bean.AppraisalBean;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
@@ -27,7 +27,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value="/appraisal")
-public class AppraisalController extends BaseController {
+public class AppraisalController extends ZGKBaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(AppraisalController.class);
 

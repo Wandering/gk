@@ -23,27 +23,31 @@ updateOrSave
 selectOne
 selectList
 -->
+
     <sql id="Base_Column_List">
-        id,
-        status,
-        name
+        id as id ,
+        status as status ,
+        name as name ,
+        code as code 
     </sql>
     <insert id="insert" parameterType="Province">
-        INSERT INTO gk_province (
+        INSERT INTO zgk_province (
         status,
-        name
+        name,
+        code
         ) VALUES (
         #{status},
-        #{name}
+        #{name},
+        #{code}
         )
-        <selectKey resultType="java.lang.Long" keyProperty="id">
-        SELECT LAST_INSERT_ID() AS ID
-        </selectKey>
+            <selectKey resultType="java.lang.Long" keyProperty="id">
+                SELECT LAST_INSERT_ID() AS ID
+            </selectKey>
     </insert>
 
     <!-- 更新 -->
     <update id="update" parameterType="Province">
-        UPDATE gk_province
+        UPDATE zgk_province
         <trim prefix="SET" suffixOverrides=",">
             <if test="status!=null">
                 status = #{status},
@@ -51,13 +55,16 @@ selectList
             <if test="name!=null">
                 name = #{name},
             </if>
+            <if test="code!=null">
+                code = #{code},
+            </if>
         </trim>
         WHERE
         id = #{id}
     </update>
 
     <update id="updateMap">
-        UPDATE gk_province
+        UPDATE zgk_province
         <trim prefix="SET" suffixOverrides=",">
             <if test="map.status!=null">
                 status = #{map.status},
@@ -65,19 +72,25 @@ selectList
             <if test="map.name!=null">
                 name = #{map.name},
             </if>
+            <if test="map.code!=null">
+                code = #{map.code},
+            </if>
         </trim>
         WHERE
         id = #{map.id}
     </update>
 
     <update id="updateByCondition">
-        UPDATE gk_province
+        UPDATE zgk_province
         <trim prefix="SET" suffixOverrides=",">
             <if test="update.status!=null">
                 status = #{update.status},
             </if>
             <if test="update.name!=null">
                 name = #{update.name},
+            </if>
+            <if test="update.code!=null">
+                code = #{update.code},
             </if>
         </trim>
 
@@ -91,25 +104,31 @@ selectList
             <if test="condition.name!=null">
                 AND name = #{condition.name}
             </if>
+            <if test="condition.code!=null">
+                AND code = #{condition.code}
+            </if>
         </trim>
     </update>
 
     <insert id="insertMap" >
-        INSERT INTO gk_province (
+        INSERT INTO zgk_province (
                 status,
-                name
+                name,
+                code
         ) VALUES (
                     #{map.status},
-                    #{map.name}
+                    #{map.name},
+                    #{map.code}
         )
     </insert>
 
 
     <update id="updateNull" parameterType="Province">
-        UPDATE gk_province
+        UPDATE zgk_province
         <trim prefix="SET" suffixOverrides=",">
             status = #{status},
             name = #{name},
+            code = #{code},
         </trim>
         WHERE
         id = #{id} 
@@ -117,7 +136,7 @@ selectList
 
     <!-- 按Id删除 -->
     <delete id="deleteById" parameterType="java.lang.Long">
-        DELETE FROM gk_province
+        DELETE FROM zgk_province
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -125,7 +144,7 @@ selectList
 
 
     <delete id="deleteByCondition" parameterType="java.util.Map">
-        DELETE FROM gk_province
+        DELETE FROM zgk_province
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id = #{id}
@@ -136,38 +155,41 @@ selectList
             <if test="name!=null">
                 AND name = #{name}
             </if>
+            <if test="code!=null">
+                AND code = #{code}
+            </if>
         </trim>
     </delete>
 
     <delete id="deleteByProperty" parameterType="java.util.Map">
-        DELETE FROM gk_province WHERE
+        DELETE FROM zgk_province WHERE
         ${property} = #{value}
     </delete>
 
     <select id="fetch" parameterType="java.lang.Long" resultType="Province">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_province
+        FROM zgk_province
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
-        <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
-        </if>
     </select>
 
     <select id="findOne" parameterType="java.util.Map" resultType="Province">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_province WHERE
+        FROM zgk_province WHERE
         ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
         LIMIT 0,1
     </select>
 
     <select id="findList" parameterType="java.util.Map" resultType="Province">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_province WHERE
+        FROM zgk_province WHERE
         ${property} = #{value}
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -177,7 +199,7 @@ selectList
     <select id="findAll" resultType="Province">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_province
+        FROM zgk_province
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
         </if>
@@ -185,8 +207,26 @@ selectList
 
     <select id="queryPage" resultType="Province">
         SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                        <if test="selector.id!=null">
+                            , id
+                        </if>
+                        <if test="selector.status!=null">
+                            , status
+                        </if>
+                        <if test="selector.name!=null">
+                            , name
+                        </if>
+                        <if test="selector.code!=null">
+                            , code
+                        </if>
+            </trim>
+        </if>
+        <if test="selector==null">
         <include refid="Base_Column_List" />
-        FROM gk_province
+        </if>
+        FROM zgk_province
         <where>
 
             <if test="condition.whereSql != null">
@@ -194,18 +234,20 @@ selectList
             </if>
 
             <if test="condition.id!=null">
-                ${condition.groupOp}   id  ${condition.id.op}  #{condition.id.data}
+                ${condition.groupOp}   ${condition.id.field}  ${condition.id.op}  #{condition.id.data}
             </if>
             <if test="condition.status!=null">
-                ${condition.groupOp}   status  ${condition.status.op}  #{condition.status.data}
+                ${condition.groupOp}   ${condition.status.field}  ${condition.status.op}  #{condition.status.data}
             </if>
             <if test="condition.name!=null">
-                ${condition.groupOp}   name  ${condition.name.op}  #{condition.name.data}
+                ${condition.groupOp}   ${condition.name.field}  ${condition.name.op}  #{condition.name.data}
+            </if>
+            <if test="condition.code!=null">
+                ${condition.groupOp}   ${condition.code.field}  ${condition.code.op}  #{condition.code.data}
             </if>
 
 
     </where>
-
         <if test="orderBy!=null">
         ORDER BY ${orderBy} ${sortBy}
         </if>
@@ -216,17 +258,38 @@ selectList
 
     <select id="like" parameterType="java.util.Map" resultType="Province">
         SELECT
-        <include refid="Base_Column_List" />
-        FROM gk_province
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                    <if test="selector.id!=null">
+                        , id
+                    </if>
+                    <if test="selector.status!=null">
+                        , status
+                    </if>
+                    <if test="selector.name!=null">
+                        , name
+                    </if>
+                    <if test="selector.code!=null">
+                        , code
+                    </if>
+            </trim>
+        </if>
+        <if test="selector==null">
+            <include refid="Base_Column_List" />
+        </if>
+        FROM zgk_province
         <trim prefix="WHERE" prefixOverrides="AND | OR">
-            <if test="id!=null">
-                AND id like CONCAT('%', #{id} , '%')
+            <if test="condition.id!=null">
+                AND id like CONCAT('%', #{condition.id} , '%')
             </if>
-            <if test="status!=null">
-                AND status like CONCAT('%', #{status} , '%')
+            <if test="condition.status!=null">
+                AND status like CONCAT('%', #{condition.status} , '%')
             </if>
-            <if test="name!=null">
-                AND name like CONCAT('%', #{name} , '%')
+            <if test="condition.name!=null">
+                AND name like CONCAT('%', #{condition.name} , '%')
+            </if>
+            <if test="condition.code!=null">
+                AND code like CONCAT('%', #{condition.code} , '%')
             </if>
         </trim>
         <if test="orderBy!=null">
@@ -237,8 +300,26 @@ selectList
 
     <select id="queryList" parameterType="java.util.Map" resultType="Province">
         SELECT
-        <include refid="Base_Column_List" />
-        FROM gk_province
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.status!=null">
+                    , status
+                </if>
+                <if test="selector.name!=null">
+                    , name
+                </if>
+                <if test="selector.code!=null">
+                    , code
+                </if>
+        </trim>
+    </if>
+<if test="selector==null">
+<include refid="Base_Column_List" />
+</if>
+        FROM zgk_province
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="condition.id!=null">
                 AND id = #{condition.id}
@@ -249,6 +330,9 @@ selectList
             <if test="condition.name!=null">
                 AND name = #{condition.name}
             </if>
+            <if test="condition.code!=null">
+                AND code = #{condition.code}
+            </if>
         </trim>
         <if test="orderBy!=null">
         ORDER BY ${orderBy} ${sortBy}
@@ -257,45 +341,69 @@ selectList
 
     <select id="queryOne" parameterType="java.util.Map" resultType="Province">
         SELECT
-        <include refid="Base_Column_List" />
-        FROM gk_province
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                    <if test="selector.id!=null">
+                        , id
+                    </if>
+                    <if test="selector.status!=null">
+                        , status
+                    </if>
+                    <if test="selector.name!=null">
+                        , name
+                    </if>
+                    <if test="selector.code!=null">
+                        , code
+                    </if>
+            </trim>
+        </if>
+        <if test="selector==null">
+            <include refid="Base_Column_List" />
+        </if>
+        FROM zgk_province
         <trim prefix="WHERE" prefixOverrides="AND | OR">
-            <if test="id!=null">
-                AND id = #{id}
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
             </if>
-            <if test="status!=null">
-                AND status = #{status}
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
             </if>
-            <if test="name!=null">
-                AND name = #{name}
+            <if test="condition.name!=null">
+                AND name = #{condition.name}
+            </if>
+            <if test="condition.code!=null">
+                AND code = #{condition.code}
             </if>
         </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
         limit 0,1
     </select>
 
     <select id="count" resultType="java.lang.Integer">
-        SELECT count(id) FROM gk_province
+        SELECT count(id) FROM zgk_province
        <where>
            <if test="id!=null">
-               ${groupOp} id ${id.op}  #{id.data}
+               ${groupOp} ${id.field} ${id.op}  #{id.data}
            </if>
            <if test="status!=null">
-               ${groupOp} status ${status.op}  #{status.data}
+               ${groupOp} ${status.field} ${status.op}  #{status.data}
            </if>
            <if test="name!=null">
-               ${groupOp} name ${name.op}  #{name.data}
+               ${groupOp} ${name.field} ${name.op}  #{name.data}
+           </if>
+           <if test="code!=null">
+               ${groupOp} ${code.field} ${code.op}  #{code.data}
            </if>
 
        </where>
-    <if test="orderBy!=null">
-        ORDER BY ${orderBy} ${sortBy}
-    </if>
     </select>
 
     <select id="selectMaxId" resultType="java.lang.Long">
         SELECT
         MAX(id)
-        FROM gk_province
+        FROM zgk_province
     </select>
 
 </mapper>

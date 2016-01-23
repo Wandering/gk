@@ -1,7 +1,8 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.DESUtil;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.domain.UserInfo;
@@ -29,7 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/info")
-public class InfoController extends BaseController {
+public class InfoController extends ZGKBaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(InfoController.class);
 
@@ -55,7 +56,7 @@ public class InfoController extends BaseController {
     @RequestMapping(value = "getUserInfo",method = RequestMethod.GET)
     @ResponseBody
     public UserInfo getUserInfo() {
-        String id=getCookieValue();
+        String id=getAccoutId();
         UserInfo userInfo=userInfoExService.findUserInfoById(Long.valueOf(id));
         return userInfo;
     }
@@ -115,7 +116,8 @@ public class InfoController extends BaseController {
 
             userInfoService.update(userInfo);
 
-            setUserAccountPojo(userAccountPojo);
+            String token = DESUtil.getEightByteMultypleStr(String.valueOf(userAccountPojo.getId()), userAccountPojo.getAccount());
+            setUserAccountPojo(userAccountPojo, DESUtil.encrypt(token, DESUtil.key));
 
 //            userInfoExService.updateUserInfoById(userInfo);
         } catch (Exception e) {
@@ -132,7 +134,7 @@ public class InfoController extends BaseController {
     @RequestMapping(value = "confirmPassword",method = RequestMethod.POST)
     @ResponseBody
     public String confirmPassword(@RequestParam(value = "oldPassword",required = true)String oldPassword){
-        String id=getCookieValue();
+        String id=getAccoutId();
         UserAccount userAccount = userAccountExService.findUserAccountById(Long.valueOf(id));
         if (userAccount==null){
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号信息有误!");
@@ -163,7 +165,7 @@ public class InfoController extends BaseController {
             }
 
             //根据账号id查询账号
-            String id=getCookieValue();
+            String id=getAccoutId();
             UserAccount userAccount = userAccountExService.findUserAccountById(Long.valueOf(id));
             if (userAccount==null){
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号信息有误!");

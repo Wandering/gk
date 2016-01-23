@@ -2,16 +2,14 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.constant.CookieConst;
-import cn.thinkjoy.gk.constant.CookieTimeConst;
+import cn.thinkjoy.gk.common.ZGKBaseController;
+import cn.thinkjoy.gk.common.DESUtil;
 import cn.thinkjoy.gk.constant.RedisConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.util.CookieUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import com.jlusoft.microschool.core.utils.MD5Util;
 import org.apache.commons.lang3.StringUtils;
@@ -25,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * Created by zuohao on 15/9/22.
@@ -33,7 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/register")
-public class RegisterController extends BaseController {
+public class RegisterController extends ZGKBaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterController.class);
 
@@ -50,11 +51,12 @@ public class RegisterController extends BaseController {
      */
     @RequestMapping(value = "/account",method = RequestMethod.POST)
     @ResponseBody
-    public String registerAccount(@RequestParam(value="account",required = false) String account,
+    public Map<String, Object> registerAccount(@RequestParam(value="account",required = false) String account,
                                   @RequestParam(value="captcha",required = false) String captcha,
                                   @RequestParam(value="password",required = false) String password)
             throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
+        Map<String, Object> resultMap = new HashMap<>();
         try{
             if (StringUtils.isEmpty(account)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
@@ -98,16 +100,18 @@ public class RegisterController extends BaseController {
 
             String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
 
-            response.addCookie(CookieUtil.addCookie(domain,getCookieName(), String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
-
-            setUserAccountPojo(userAccountBean);
-
+            String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), account);
+            setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));
+            resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
+            userAccountBean.setPassword(null);
+            userAccountBean.setId(null);
+            resultMap.put("userInfo", userAccountBean);
         }catch (Exception e){
             throw e;
         }finally {
 
         }
-        return "registerSuccess";
+        return resultMap;
     }
     /**
      * 找回密码
@@ -123,7 +127,7 @@ public class RegisterController extends BaseController {
                                    @RequestParam(value="captcha",required = false) String captcha,
                                    @RequestParam(value="password",required = false) String password)
             throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         try{
             if (StringUtils.isEmpty(account)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
@@ -177,7 +181,7 @@ public class RegisterController extends BaseController {
             if (StringUtils.isEmpty(account)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
             }
-            long areaId=getAreaCookieValue();
+            long areaId= getAreaId();
             UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account,areaId);
             if (type==0){
                 if (userAccountBean!=null){

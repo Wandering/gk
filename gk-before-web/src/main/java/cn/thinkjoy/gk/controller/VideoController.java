@@ -1,7 +1,7 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.VideoCourse;
 import cn.thinkjoy.gk.domain.VideoSection;
@@ -31,7 +31,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/before/video")
-public class VideoController extends BaseController {
+public class VideoController extends ZGKBaseController {
     @Autowired
     private IEXSubjectService iexSubjectService;
 
@@ -60,7 +60,7 @@ public class VideoController extends BaseController {
         if(StringUtils.isBlank(classifyType)){
             throw new BizException(ERRORCODE.PARAM_ISNULL.getCode(),ERRORCODE.PARAM_ISNULL.getMessage());
         }
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         List<VideoCoursePojo> videoCoursePojos = iexVideoCourseService.getVideoListByParams(StringUtils.isBlank(subjectId)? null : Long.valueOf(subjectId), Integer.valueOf(classifyType), Integer.parseInt(sortType),searchName, Integer.valueOf(pageNo) * Integer.valueOf(pageSize), Integer.valueOf(pageSize),areaId);
         if(videoCoursePojos == null || videoCoursePojos.size() == 0){
             throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());
@@ -75,7 +75,7 @@ public class VideoController extends BaseController {
     @RequestMapping(value = "getSubjectList",method = RequestMethod.GET)
     @ResponseBody
     public List<SubjectPojo> getSubjectList() throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         List<SubjectPojo> subjectPojos = iexSubjectService.getSubjectList(areaId);
         if(subjectPojos == null || subjectPojos.size() == 0){
             throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());

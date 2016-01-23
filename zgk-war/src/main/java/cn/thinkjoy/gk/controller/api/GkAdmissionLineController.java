@@ -1,11 +1,11 @@
 package cn.thinkjoy.gk.controller.api;
 
-import cn.thinkjoy.common.domain.view.BizData4Page;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
 import cn.thinkjoy.zgk.common.QueryUtil;
+import cn.thinkjoy.zgk.domain.BizData4Page;
 import cn.thinkjoy.zgk.domain.GkAdmissionLine;
 import cn.thinkjoy.zgk.remote.IGkAdmissionLineService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 历年分数线controller
@@ -44,7 +43,7 @@ public class GkAdmissionLineController extends BaseApiController {
                                                @ApiParam(param="year", desc="年份",required = false) @RequestParam(required = false) String year,
                                                @ApiParam(param="areaId", desc="页数",required = false) @RequestParam(required = false) String areaId,
                                                @ApiParam(param="property", desc="院校特征",required = false) @RequestParam(required = false) String property,
-                                               @ApiParam(param="batch", desc="批次",required = true) @RequestParam(required = true) Integer batch,
+                                               @ApiParam(param="batch", desc="批次",required = false) @RequestParam(required = false) Integer batch,
                                                @ApiParam(param="type", desc="科类",required = false) @RequestParam(defaultValue = "1",required = false) Integer type,
                                                @ApiParam(param="page", desc="页数",required = false) @RequestParam(defaultValue = "1",required = false) Integer page,
                                                @ApiParam(param="rows", desc="每页条数",required = false) @RequestParam(defaultValue = "10",required = false) Integer rows){
@@ -78,6 +77,22 @@ public class GkAdmissionLineController extends BaseApiController {
             QueryUtil.setMapOp(map, "enrollinguniversityMajorType", "=", type);
 
         return gkAdmissionLineService.getGkAdmissionLineList(map,page,rows);
+    }
+    /**
+     * 获取批次线分页方法
+     * @return
+     */
+    @ApiDesc(value = "获取年份", owner = "杨永平")
+    @RequestMapping(value = "/getYears.do",method = RequestMethod.GET)
+    @ResponseBody
+    public List getYears(){
+        List list = new ArrayList();
+        Calendar a=Calendar.getInstance();
+        int year=a.get(Calendar.YEAR);
+        list.add(year);
+        list.add(year-1);
+        list.add(year-2);
+        return list;
     }
 
 }

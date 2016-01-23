@@ -32,7 +32,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 		LOGGER.info("url:"+url);
 
-		String value = CookieUtil.getCookieValue(request);
+		String value = request.getParameter("token");
 
 		LOGGER.info("cookie:"+value);
 //		RedisUtil.getInstance().del(key);
@@ -53,7 +53,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request,HttpServletResponse response, Object handler,ModelAndView modelAndView) throws Exception {
 //		System.out.println("===========HandlerInterceptor1 postHandle");
-
 	}
 
 	@Override

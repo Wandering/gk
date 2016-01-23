@@ -1,6 +1,6 @@
 package cn.thinkjoy.gk.controller;
 
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.AdmissionBatch;
 import cn.thinkjoy.gk.domain.PolicyInterpretation;
@@ -23,7 +23,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/policyInterpretation")
-public class PolicyInterpretationController extends BaseController {
+public class PolicyInterpretationController extends ZGKBaseController {
 
     @Autowired
     private IAdmissionBatchService admissionBatchService;
@@ -33,7 +33,7 @@ public class PolicyInterpretationController extends BaseController {
     @RequestMapping(value = "/admissionBatchs", method = RequestMethod.GET)
     @ResponseBody
     public List<AdmissionBatch> getAdmissionBatchs() throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         Map<String, Object> conditions = Maps.newHashMap();
         conditions.put("status", 1);
         conditions.put("areaId",areaId);
@@ -52,7 +52,7 @@ public class PolicyInterpretationController extends BaseController {
     @RequestMapping(value = "/allCategories", method = RequestMethod.GET)
     @ResponseBody
     public List<PolicyInterpretationCategory> getAllPolicyInterpretationCategory(@RequestParam("provinceId") long provinceId) throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         List<PolicyInterpretationCategory> allCategory = Lists.newArrayList();
         Map<String, Object> conditions = Maps.newHashMap();
         conditions.put("status", 1);

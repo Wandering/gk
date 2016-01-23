@@ -31,4 +31,10 @@
                      timeout="60000"/>
     <dubbo:reference id="gkPhoneService" interface="cn.thinkjoy.zgk.remote.IGkPhoneService" check="false"
                      timeout="60000"/>
+    <dubbo:reference id="gkProfessionalService" interface="cn.thinkjoy.zgk.remote.IGkProfessionalService" check="false"
+                     timeout="60000"/>
+    <dubbo:reference id="gkAreaBatchService" interface="cn.thinkjoy.zgk.remote.IGkAreaBatchService" check="false"
+                     timeout="60000"/>
+    <dubbo:reference id="gkEntryService" interface="cn.thinkjoy.zgk.remote.IGkEntryService" check="false"
+                     timeout="60000"/>
 </beans>

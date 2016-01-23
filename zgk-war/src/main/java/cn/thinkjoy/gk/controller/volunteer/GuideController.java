@@ -1,7 +1,7 @@
 package cn.thinkjoy.gk.controller.volunteer;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.VerificationKeyConst;
 import cn.thinkjoy.gk.pojo.UniversityDetailDto;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
@@ -29,7 +29,7 @@ import java.util.List;
 @Controller
 @Scope("prototype")
 @RequestMapping(value="/guide")
-public class GuideController extends BaseController {
+public class GuideController extends ZGKBaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(GuideController.class);
 
@@ -266,7 +266,7 @@ public class GuideController extends BaseController {
             codes.add(data.getJSONObject(i).getString("m_university_code"));
         }
 
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         List<UniversityDetailDto> universityDetailDtos =universityExService.getUniversityDetailByCodes(codes,batch,type,year,areaId);
 
         JSONArray enrollArray = new JSONArray();

@@ -1,6 +1,6 @@
 package cn.thinkjoy.gk.controller.redirect;
 
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.ControllerReturnConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value="/")
-public class RedirectController extends BaseController {
+public class RedirectController extends ZGKBaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(RedirectController.class);
 

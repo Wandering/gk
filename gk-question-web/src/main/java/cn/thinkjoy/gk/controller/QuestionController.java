@@ -1,8 +1,8 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.bean.QuestionAnswerBean;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.dto.AnswerDetailDto;
 import cn.thinkjoy.gk.dto.QuestionContentDto;
@@ -13,7 +13,6 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.protocol.PageQuery;
 import cn.thinkjoy.ss.api.IQuestionService;
 import cn.thinkjoy.ss.api.IUserAccountService;
-import cn.thinkjoy.ss.api.bean.UserInfoBean;
 import cn.thinkjoy.ss.bean.QuestionDetailBean;
 import cn.thinkjoy.ss.bean.war.UserAccountBean;
 import cn.thinkjoy.ss.domain.Question;
@@ -40,7 +39,7 @@ import java.util.List;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value="/question")
-public class QuestionController extends BaseController {
+public class QuestionController extends ZGKBaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(QuestionController.class);
 

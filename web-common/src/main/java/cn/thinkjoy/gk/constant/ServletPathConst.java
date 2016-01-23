@@ -39,7 +39,15 @@ public class ServletPathConst {
         MAPPING_URLS.add("/guide/report.do");
         MAPPING_URLS.add("/exam/updateUserExam.do");
         MAPPING_URLS.add("/exam/findUserExam.do");
-
+        //杨永平--start
+        MAPPING_URLS.add("/video/getGkVideoInfo.do");
+        MAPPING_URLS.add("/forecast/getPerformanceDetail.do");
+        MAPPING_URLS.add("/forecast/getLastoFrecast.do");
+        MAPPING_URLS.add("/forecast/getLastoFrecast.do");
+        MAPPING_URLS.add("/forecast/getFormerYearsAdmission.do");
+        MAPPING_URLS.add("/forecast/addFrecast.do");
+        MAPPING_URLS.add("/predict/predictProbability.do");
+        //杨永平--end
 //        JSP_URLS.put("/guide/guide.jsp","");
         JSP_URLS.add("/user/personal-info.jsp");
         JSP_URLS.add("/user/modify-psd.jsp");
@@ -51,6 +59,7 @@ public class ServletPathConst {
         JSP_URLS.add("/user/online-answer.jsp?method=ask");
         JSP_URLS.add("/user/vip-service.jsp");
 //        JSP_URLS.put("/question/question_detile.jsp","");
+
 
     }
 }

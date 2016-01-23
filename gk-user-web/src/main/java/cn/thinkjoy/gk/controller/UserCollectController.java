@@ -1,7 +1,7 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.UserCollect;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
@@ -28,7 +28,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "userCollection")
-public class UserCollectController extends BaseController{
+public class UserCollectController extends ZGKBaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(UserCollectController.class);
 

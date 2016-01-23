@@ -1,13 +1,7 @@
 package cn.thinkjoy.gk.controller;
 
-import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
-import cn.thinkjoy.gk.domain.UserAccount;
-import cn.thinkjoy.gk.domain.UserVip;
-import cn.thinkjoy.gk.pojo.UserAccountPojo;
-import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.service.IUserAccountService;
 import cn.thinkjoy.gk.service.IUserVipService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -22,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
-import java.io.IOException;
 
 /**
  * Created by jzli on 15/6/3.
@@ -30,7 +23,7 @@ import java.io.IOException;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("")
-public class PayCallbackController extends BaseController {
+public class PayCallbackController extends ZGKBaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(PayCallbackController.class);
 
