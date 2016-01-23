@@ -195,7 +195,7 @@ public class MajoredController extends ZGKBaseController {
 //        Calendar a=Calendar.getInstance();
 //        int year = a.get(Calendar.YEAR);
 
-        long areaId = getAreaCookieValue();
+        long areaId = getAreaId();
         // 改为获取有数据最近一年
         int year = majoredRankExService.getRecentlyByYear(majoredDto.getName(), areaId);
 

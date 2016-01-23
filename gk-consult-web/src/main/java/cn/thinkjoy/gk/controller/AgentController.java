@@ -37,7 +37,7 @@ public class AgentController extends ZGKBaseController {
 	@RequestMapping(value = "/getAgent" , method = RequestMethod.GET)
 	@ResponseBody
 	public List<AgentPojo> getAgent() throws Exception{
-		long areaId = getAreaCookieValue();
+		long areaId = getAreaId();
 		Map<String, Object> conditions = Maps.newHashMap();
 		conditions.put("areaId", areaId);
 		List<Agent> list=  agentService.queryList(conditions, null, null);

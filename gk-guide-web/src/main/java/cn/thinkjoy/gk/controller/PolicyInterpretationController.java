@@ -33,7 +33,7 @@ public class PolicyInterpretationController extends ZGKBaseController {
     @RequestMapping(value = "/admissionBatchs", method = RequestMethod.GET)
     @ResponseBody
     public List<AdmissionBatch> getAdmissionBatchs() throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         Map<String, Object> conditions = Maps.newHashMap();
         conditions.put("status", 1);
         conditions.put("areaId",areaId);
@@ -52,7 +52,7 @@ public class PolicyInterpretationController extends ZGKBaseController {
     @RequestMapping(value = "/allCategories", method = RequestMethod.GET)
     @ResponseBody
     public List<PolicyInterpretationCategory> getAllPolicyInterpretationCategory(@RequestParam("provinceId") long provinceId) throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         List<PolicyInterpretationCategory> allCategory = Lists.newArrayList();
         Map<String, Object> conditions = Maps.newHashMap();
         conditions.put("status", 1);

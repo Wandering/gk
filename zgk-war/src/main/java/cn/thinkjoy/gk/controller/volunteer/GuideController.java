@@ -266,7 +266,7 @@ public class GuideController extends ZGKBaseController {
             codes.add(data.getJSONObject(i).getString("m_university_code"));
         }
 
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         List<UniversityDetailDto> universityDetailDtos =universityExService.getUniversityDetailByCodes(codes,batch,type,year,areaId);
 
         JSONArray enrollArray = new JSONArray();
