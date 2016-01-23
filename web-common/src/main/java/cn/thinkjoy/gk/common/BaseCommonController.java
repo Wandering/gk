@@ -89,16 +89,28 @@ public class BaseCommonController {
 	protected UserAccountPojo getUserAccountPojo() {
 		UserAccountPojo userAccountBean  = null;
 		String value = request.getParameter("token");
+		if(null == value || "".equals(value))
+		{
+			return userAccountBean;
+		}
 		try{
 			String uInfo = cn.thinkjoy.gk.common.DESUtil.decrypt(value, cn.thinkjoy.gk.common.DESUtil.key);
 			String uid = cn.thinkjoy.gk.common.DESUtil.getUserInfo(uInfo)[0];
 			String key = UserRedisConst.USER_KEY + value;
-			if(!RedisUtil.getInstance().exists(key)){
+			if(!RedisUtil.getInstance().exists(key))
+			{
 				userAccountBean = userAccountExService.findUserAccountPojoById(Long.parseLong(uid));
-				if(null!=userAccountBean){
+				if(null!=userAccountBean)
+				{
 					RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 5L, TimeUnit.HOURS);
 				}
-			} else{
+				else
+				{
+					throw new BizException("error","The token is invalid!");
+				}
+			}
+			else
+			{
 				userAccountBean = JSON.parseObject(RedisUtil.getInstance().get(key).toString(),UserAccountPojo.class);
 			}
 		}catch (Exception e)
