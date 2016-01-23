@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller.api.base;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ERRORCODE;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @Scope(SpringMVCConst.SCOPE)
-public class BaseApiController<T> {
+public class BaseApiController<T> extends ZGKBaseController{
 
     protected HttpServletRequest request;
 

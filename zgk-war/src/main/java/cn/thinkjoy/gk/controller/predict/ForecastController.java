@@ -46,9 +46,6 @@ public class ForecastController extends BaseApiController{
     @RequestMapping(value = "/getPerformanceDetail",method = RequestMethod.GET)
     @ResponseBody
     public Object getPerformanceDetail(){
-//        UserContext.getCurrentUser();
-//        System.out.println(UserContext.getCurrentUser());
-
         return forecastService.findAll();
     }
 
