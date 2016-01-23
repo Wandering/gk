@@ -7,8 +7,8 @@ import junit.framework.TestCase;
  * Created by admin on 2016/1/14.
  */
 public class HttpInterfaceTest extends TestCase{
-//        String host="http://10.254.130.33:9080";
-        String host="http://localhost:8080";
+        String host="http://10.254.130.33:9080";
+//        String host="http://localhost:8080";
         String getGkAdmissionLineList_url="/admissionline/getGkAdmissionLineList.do";
         String getScheduleList_url="/schedule/getScheduleList.do";
         String getScheduleInfo_url="/schedule/getScheduleInfo.do";
@@ -251,7 +251,7 @@ public class HttpInterfaceTest extends TestCase{
     }
 
     public void testPredictProbability1(){
-        String url=host + getProfessionalList_url + "";
+        String url=host + getProfessionalList_url + "?debug=true";
 //        String result = RequestUtils.requestGet(url);
         String result = RequestUtils.requestGet(url);
         assertTrue(result.contains("87"));
