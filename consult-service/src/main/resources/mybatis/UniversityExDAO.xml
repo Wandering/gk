@@ -163,9 +163,9 @@
         select
         mm.id as majoredId ,
         rr.majorName as majoredName,
-        -- pp.majorBatch as batch,专业信息补充内容表中只有本科专科，暂时不显示
+        <!-- pp.majorBatch as batch,专业信息补充内容表中只有本科专科，暂时不显示-->
         pp.subject as subject,
-        -- majoredRank,
+        <!-- majoredRank,-->
         rr.salaryRank as salaryRank,
         rr.employedRank as employmentRateRank,
         isEnrol as isEnrol
