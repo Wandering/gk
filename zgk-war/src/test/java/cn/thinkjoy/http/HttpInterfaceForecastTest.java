@@ -12,6 +12,7 @@ public class HttpInterfaceForecastTest extends TestCase{
         String getPerformanceDetail_url="/forecast/getPerformanceDetail.do";
         String getLastoFrecast_url="/forecast/getLastoFrecast.do";
         String getFormerYearsAdmission_url="/forecast/getFormerYearsAdmission.do";
+        String addFrecast_url="/forecast/addFrecast.do";
 
         public void testGetPerformanceDetail(){
                 String url=host + getPerformanceDetail_url + "";
@@ -29,6 +30,11 @@ public class HttpInterfaceForecastTest extends TestCase{
                 String url=host + getFormerYearsAdmission_url + "?universityid=47";
             String result = RequestUtils.requestGet(url);
             assertTrue(result.contains("averageScore"));
+        }
+        public void testAddFrecast(){
+            String url=host + addFrecast_url + "?universityId=47";
+            String result = RequestUtils.requestPost(url);
+            assertTrue(result.contains("true"));
         }
 
 

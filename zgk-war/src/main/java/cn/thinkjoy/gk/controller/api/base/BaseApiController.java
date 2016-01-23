@@ -2,16 +2,23 @@ package cn.thinkjoy.gk.controller.api.base;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ERRORCODE;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
-/**
- * 开发平台api基类
- * <p/>
- * 创建时间: 15/7/25 下午3:11<br/>
- *
- * @author qyang
- * @since v0.0.1
- */
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+@Controller
+@Scope(SpringMVCConst.SCOPE)
 public class BaseApiController<T> {
+
+    protected HttpServletRequest request;
+
+    protected HttpServletResponse response;
+
     protected T isNull(T o){
         if(o==null){
             throw new BizException(ERRORCODE.RESOURCEISNULL.getCode(),ERRORCODE.RESOURCEISNULL.getMessage());
@@ -22,5 +29,12 @@ public class BaseApiController<T> {
         if(o==null || "".equals(o)){
             throw new BizException(ERRORCODE.IDISNOTNULL.getCode(),ERRORCODE.IDISNOTNULL.getMessage());
         }
+    }
+
+    @ModelAttribute
+    public void setReqAndRes(HttpServletRequest request,
+                             HttpServletResponse response) {
+        this.request = request;
+        this.response = response;
     }
 }
