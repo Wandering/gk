@@ -16,10 +16,6 @@ public class BaseCommonController {
 	protected HttpServletResponse response;
 	protected HttpSession session;
 
-//	protected HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
-
-//	protected HttpServletResponse response =  ((ServletWebRequest)RequestContextHolder.getRequestAttributes()).getResponse();
-
 	@ModelAttribute
 	public void setReqAndRes(HttpServletRequest request,
 							 HttpServletResponse response) {
@@ -28,11 +24,7 @@ public class BaseCommonController {
 		this.session = request.getSession();
 	}
 
-	public String getDomainValue(){
-		return DomainUtil.getDomainValue(request);
-	}
-
-	public String getCookieValue(){
+	public String getAccoutId(){
 		String uid = "0";
 		if (request.getParameter("token") == null) {
 			return uid;
@@ -48,9 +40,4 @@ public class BaseCommonController {
 
 		return uid;
 	}
-
-	public String getCookieName(){
-		return CookieUtil.getCookieName(request);
-	}
-
 }

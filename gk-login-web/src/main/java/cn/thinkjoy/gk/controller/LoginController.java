@@ -101,14 +101,14 @@ public class LoginController extends ZGKBaseController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout() throws Exception {
 //		boolean status = true;
-		try {
+//		try {
 //			RedisUtil.getInstance().del(UserRedisConst.USER_KEY + getCookieValue());
-			String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
-			response.addCookie(CookieUtil.addCookie(domain,getCookieName(), "", CookieTimeConst.CLEAN_COOKIE));
-		}catch(Exception e){
+//			String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
+//			response.addCookie(CookieUtil.addCookie(domain,getCookieName(), "", CookieTimeConst.CLEAN_COOKIE));
+//		}catch(Exception e){
 //			status = false;
-			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
-		}
+//			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
+//		}
 		return "index";
 	}
 

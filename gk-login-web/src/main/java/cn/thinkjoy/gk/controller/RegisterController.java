@@ -102,8 +102,6 @@ public class RegisterController extends ZGKBaseController {
 
             String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
 
-            response.addCookie(CookieUtil.addCookie(domain,getCookieName(), String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
-
             String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), account);
             setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));
             resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));

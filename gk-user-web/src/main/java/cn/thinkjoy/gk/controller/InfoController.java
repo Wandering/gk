@@ -56,7 +56,7 @@ public class InfoController extends ZGKBaseController {
     @RequestMapping(value = "getUserInfo",method = RequestMethod.GET)
     @ResponseBody
     public UserInfo getUserInfo() {
-        String id=getCookieValue();
+        String id=getAccoutId();
         UserInfo userInfo=userInfoExService.findUserInfoById(Long.valueOf(id));
         return userInfo;
     }
@@ -134,7 +134,7 @@ public class InfoController extends ZGKBaseController {
     @RequestMapping(value = "confirmPassword",method = RequestMethod.POST)
     @ResponseBody
     public String confirmPassword(@RequestParam(value = "oldPassword",required = true)String oldPassword){
-        String id=getCookieValue();
+        String id=getAccoutId();
         UserAccount userAccount = userAccountExService.findUserAccountById(Long.valueOf(id));
         if (userAccount==null){
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号信息有误!");
@@ -165,7 +165,7 @@ public class InfoController extends ZGKBaseController {
             }
 
             //根据账号id查询账号
-            String id=getCookieValue();
+            String id=getAccoutId();
             UserAccount userAccount = userAccountExService.findUserAccountById(Long.valueOf(id));
             if (userAccount==null){
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号信息有误!");

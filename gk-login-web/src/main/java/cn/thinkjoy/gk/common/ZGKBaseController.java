@@ -1,22 +1,28 @@
 package cn.thinkjoy.gk.common;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.constant.SessionConst;
+import cn.thinkjoy.gk.constant.DomainConst;
 import cn.thinkjoy.gk.constant.UserRedisConst;
+import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
+import cn.thinkjoy.gk.service.IProvinceService;
 import cn.thinkjoy.gk.service.IUserAccountExService;
-import cn.thinkjoy.gk.util.AreaCookieUtil;
-import cn.thinkjoy.gk.util.CookieUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class ZGKBaseController extends BaseCommonController{
 
 	@Autowired
 	private IUserAccountExService userAccountExService;
+
+	@Autowired
+	private IProvinceService provinceService;
 
 	protected UserAccountPojo getUserAccountPojo() {
 		UserAccountPojo userAccountBean  = null;
@@ -47,11 +53,16 @@ public class ZGKBaseController extends BaseCommonController{
 		}
 	}
 
-	protected Long getAreaCookieValue() throws Exception {
-		Object areaId = session.getAttribute(SessionConst.AREA_SESSION_NAME);
-		if(null==areaId){
-			areaId = AreaCookieUtil.getAreaCookieValue(request);
-			session.setAttribute(SessionConst.AREA_SESSION_NAME,areaId);
+	public Long getAreaCookieValue() throws Exception {
+		List<Province> list =  provinceService.findAll();
+		Map<String, Object> areaMap = new HashMap<>();
+		for (Province province:list) {
+			areaMap.put(province.getCode(), String.valueOf(province.getId()));
+		}
+		String areaShort = request.getParameter("userKey");
+		String areaId = DomainConst.ZJ_DOMAIN_CODE;
+		if(null != areaShort){
+			areaId = String.valueOf(areaMap.get(areaShort));
 		}
 		return Long.valueOf(areaId.toString());
 	}
