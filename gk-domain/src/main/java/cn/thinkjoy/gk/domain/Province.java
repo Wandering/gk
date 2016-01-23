@@ -1,15 +1,16 @@
 /*
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
- * Project Name: gaokao
- * $Id:  Province.java 2015-09-26 09:20:33 $
+ * Project Name: gaokao360
+ * $Id:  Province.java 2016-01-23 10:57:01 $
  */
+
+
 
 
 
 package cn.thinkjoy.gk.domain;
 
-import cn.thinkjoy.common.domain.CreateBaseDomain;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -18,9 +19,11 @@ import cn.thinkjoy.common.domain.BaseDomain;
 
 import java.util.*;
 
-public class Province extends BaseDomain {
+public class Province extends BaseDomain<Long>{
+    /**  */
     private String name;
-	private Integer status;
+    /**  */
+    private String code;
 
 	public Province(){
 	}
@@ -31,15 +34,22 @@ public class Province extends BaseDomain {
     public String getName() {
         return this.name;
     }
+    public void setCode(String value) {
+        this.code = value;
+    }
 
-	public Integer getStatus() {
-		return status;
+    public String getCode() {
+        return this.code;
+    }
+
+	public String toString() {
+		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+			.append("Id",getId())
+			.append("Name",getName())
+			.append("Code",getCode())
+			.toString();
 	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-
+	
 	public int hashCode() {
 		return new HashCodeBuilder()
 			.append(getId())
