@@ -79,11 +79,11 @@ public class GkProfessionalController extends BaseApiController<GkProfessionDTO>
     @ApiDesc(value = "获取职业分类", owner = "杨永平")
     @RequestMapping(value = "/getProfessionCategory",method = RequestMethod.GET)
     @ResponseBody
-    public void getProfessionCategory(@ApiParam(param="pid", desc="父Id",required = true) @RequestParam(required = false) String pid){
+    public Object getProfessionCategory(@ApiParam(param="pid", desc="父Id",required = true) @RequestParam(required = false) String pid){
         Map<String,Object> map = new HashMap<>();
-        if(pid==null && !"".equals(pid)) {
+        if(pid!=null && !"".equals(pid)) {
             map.put("pid", pid);
         }
-        gkProfessionalService.getProfessionCategory(map);
+        return gkProfessionalService.getProfessionCategory(map);
     }
 }
