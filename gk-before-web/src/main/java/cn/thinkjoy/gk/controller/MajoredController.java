@@ -7,12 +7,12 @@ import cn.thinkjoy.gk.domain.UniversityDict;
 import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.MajoredQuery;
-import cn.thinkjoy.gk.service.IDataDictService;
-import cn.thinkjoy.gk.service.IMajoredRankExService;
-import cn.thinkjoy.gk.service.IMajoredService;
-import cn.thinkjoy.gk.service.IUniversityDictService;
+import cn.thinkjoy.gk.service.*;
+import cn.thinkjoy.zgk.dto.MajoredCategoryRemoteDTO;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -39,9 +39,168 @@ public class MajoredController extends BaseController {
     @Autowired
     private IMajoredService  iMajoredService;
     @Autowired
-    private IUniversityDictService iUniversityDictService;
-    @Autowired
     private IDataDictService iDataDictService;
+
+    @Autowired
+    private IUserCollectExService userCollectExService;
+
+    @Autowired
+    private cn.thinkjoy.zgk.remote.IMajoredService iremoteMajoredService;
+
+
+    @RequestMapping(value = "getMajoredCategory",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getMajoredCategory(@RequestParam(value = "type",required = true)int type){
+        MajoredCategoryRemoteDTO majoredCategoryRemoteDTO = new MajoredCategoryRemoteDTO();
+        //本科
+        if (type==1) {
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO5 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO5.setId(5);
+            majoredCategoryRemoteDTO5.setName("哲学22");
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO4 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO4.setId(4);
+            majoredCategoryRemoteDTO4.setName("哲学11");
+
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO2 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO2.setId(2);
+            majoredCategoryRemoteDTO2.setName("哲学");
+            majoredCategoryRemoteDTO2.getChildList().add(majoredCategoryRemoteDTO4);
+            majoredCategoryRemoteDTO2.getChildList().add(majoredCategoryRemoteDTO5);
+            majoredCategoryRemoteDTO2.setChildNumber(new Integer(2));
+            majoredCategoryRemoteDTO2.setMajoredNumber(new Integer(10));
+
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO7 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO7.setId(7);
+            majoredCategoryRemoteDTO7.setName("经济学22");
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO6 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO6.setId(6);
+            majoredCategoryRemoteDTO6.setName("经济学11");
+
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO3 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO3.setId(3);
+            majoredCategoryRemoteDTO3.setName("经济学");
+            majoredCategoryRemoteDTO3.getChildList().add(majoredCategoryRemoteDTO7);
+            majoredCategoryRemoteDTO3.getChildList().add(majoredCategoryRemoteDTO6);
+            majoredCategoryRemoteDTO3.setChildNumber(new Integer(2));
+            majoredCategoryRemoteDTO3.setMajoredNumber(new Integer(10));
+            majoredCategoryRemoteDTO.setId(1);
+            majoredCategoryRemoteDTO.setName("本科");
+            majoredCategoryRemoteDTO.getChildList().add(majoredCategoryRemoteDTO2);
+            majoredCategoryRemoteDTO.getChildList().add(majoredCategoryRemoteDTO3);
+        }
+        if (type==2) {
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO6 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO6.setId(6);
+            majoredCategoryRemoteDTO6.setName("哲学44");
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO5 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO5.setId(5);
+            majoredCategoryRemoteDTO5.setName("哲学44");
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO4 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO4.setId(4);
+            majoredCategoryRemoteDTO4.setName("哲学33");
+
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO2 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO2.setId(2);
+            majoredCategoryRemoteDTO2.setName("哲学");
+            majoredCategoryRemoteDTO2.getChildList().add(majoredCategoryRemoteDTO4);
+            majoredCategoryRemoteDTO2.getChildList().add(majoredCategoryRemoteDTO5);
+            majoredCategoryRemoteDTO2.getChildList().add(majoredCategoryRemoteDTO6);
+            majoredCategoryRemoteDTO2.setChildNumber(new Integer(3));
+            majoredCategoryRemoteDTO2.setMajoredNumber(new Integer(15));
+
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO7 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO7.setId(7);
+            majoredCategoryRemoteDTO7.setName("经济学22");
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO8 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO8.setId(6);
+            majoredCategoryRemoteDTO8.setName("经济学11");
+
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO3 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO3.setId(3);
+            majoredCategoryRemoteDTO3.setName("经济学");
+            majoredCategoryRemoteDTO3.getChildList().add(majoredCategoryRemoteDTO7);
+            majoredCategoryRemoteDTO3.getChildList().add(majoredCategoryRemoteDTO8);
+            majoredCategoryRemoteDTO3.setChildNumber(new Integer(2));
+            majoredCategoryRemoteDTO3.setMajoredNumber(new Integer(10));
+            majoredCategoryRemoteDTO.setId(2);
+            majoredCategoryRemoteDTO.setName("专科");
+            majoredCategoryRemoteDTO.getChildList().add(majoredCategoryRemoteDTO2);
+            majoredCategoryRemoteDTO.getChildList().add(majoredCategoryRemoteDTO3);
+        }
+
+        return majoredCategoryRemoteDTO;
+    }
+
+    @RequestMapping(value = "getMajoredCategoryById",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getMajoredCategoryById(@RequestParam(value = "categoryId",required = true)int categoryId){
+        //本科
+        MajoredCategoryRemoteDTO majoredCategoryRemoteDTO5 = new MajoredCategoryRemoteDTO();
+        majoredCategoryRemoteDTO5.setId(5);
+        majoredCategoryRemoteDTO5.setName("哲学22");
+        MajoredCategoryRemoteDTO majoredCategoryRemoteDTO4 = new MajoredCategoryRemoteDTO();
+        majoredCategoryRemoteDTO4.setId(4);
+        majoredCategoryRemoteDTO4.setName("哲学11");
+
+        MajoredCategoryRemoteDTO majoredCategoryRemoteDTO2 = new MajoredCategoryRemoteDTO();
+        majoredCategoryRemoteDTO2.setId(Long.valueOf(categoryId));
+        majoredCategoryRemoteDTO2.setName("哲学");
+        majoredCategoryRemoteDTO2.getChildList().add(majoredCategoryRemoteDTO4);
+        majoredCategoryRemoteDTO2.getChildList().add(majoredCategoryRemoteDTO5);
+        majoredCategoryRemoteDTO2.setChildNumber(new Integer(2));
+        majoredCategoryRemoteDTO2.setMajoredNumber(new Integer(10));
+        return majoredCategoryRemoteDTO2;
+    }
+
+    @RequestMapping(value = "getMajoredInfoById",method = RequestMethod.GET)
+    @ResponseBody
+    public Map getMajoredInfoById(@RequestParam(value = "majoredId",required = true)int majoredId){
+        //专业Id、专业名称、就业率、薪资、专业代码、授予学位、修学年限、开设课程、专业解读、
+        Map<String,Object> returnMap=Maps.newHashMap();
+        returnMap.put("id",majoredId);
+        returnMap.put("majorName","哲学专业");
+        returnMap.put("employmentRate","90%");
+        returnMap.put("salary","250");
+        returnMap.put("majorCode","010203");
+        returnMap.put("degreeOffered","学士学位");
+        returnMap.put("schoolingDuration","四年");
+        returnMap.put("offerCourses","课程1、课程2、课程3");
+        returnMap.put("majorIntroduce","专业解读");
+        return returnMap;
+    }
+
+    @RequestMapping(value = "/getMajorOpenUniversityList",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getMajorOpenUniversityList(@RequestParam(value = "majoredId",required = true)int majoredId,
+                                             @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
+                                             @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
+        List<Map<String,Object>> getUniversityList=iremoteMajoredService.getMajorOpenUniversityList(majoredId,offset,rows,null,null);
+//        int count=iremoteUniversityService.getUniversityCount(condition);
+        //如果用户已登录
+        UserAccountPojo userAccountPojo=getUserAccountPojo();
+        for (Map<String, Object> university : getUniversityList) {
+            String[] propertys=new String[1];
+            propertys[0]=university.get("property").toString();
+
+            university.put("property",propertys);
+            university.put("isCollect",0);
+            if(null!=userAccountPojo) {
+                long userId = userAccountPojo.getId();
+                //需要在收藏表中拼接收藏状态字段
+                Map<String,Object> param=Maps.newHashMap();
+//                param.put("userId",54);
+                param.put("userId",userId);
+                param.put("projectId",university.get("id"));
+                param.put("type",1);
+                university.put("isCollect",userCollectExService.isCollect(param));
+            }
+        }
+        Map<String,Object> returnMap=Maps.newHashMap();
+        returnMap.put("universityList", getUniversityList);
+//        returnMap.put("count", count);
+        return returnMap;
+    }
+
     /**
      * 获取初始化信息
      * @return
