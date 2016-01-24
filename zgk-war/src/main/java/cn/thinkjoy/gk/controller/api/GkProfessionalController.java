@@ -48,13 +48,13 @@ public class GkProfessionalController extends BaseApiController<GkProfessionDTO>
                                                @ApiParam(param="rows", desc="每页行数") @RequestParam(defaultValue = "6",required = false) Integer rows){
         Map<String,Object> map = new HashMap<>();
         if(queryparam!=null &&!"".equals(queryparam)) {
-            QueryUtil.setMapOp(map, "professionName", "like", "%"+queryparam+"%");
+            QueryUtil.setMapOp(map, "professionName", "like", queryparam);
         }
         if(professionTypeId!=null) {
-            QueryUtil.setMapOp(map, "professionTypeId", "=", professionTypeId);
+            QueryUtil.setMapOp(map, "professionType", "=", professionTypeId);
         }
         if(professionSubTypeId!=null) {
-            QueryUtil.setMapOp(map, "professionSubTypeId", "=", professionSubTypeId);
+            QueryUtil.setMapOp(map, "professionSubType", "=", professionSubTypeId);
         }
         return gkProfessionalService.getProfessionalList(map, page, rows);
     }
@@ -79,9 +79,11 @@ public class GkProfessionalController extends BaseApiController<GkProfessionDTO>
     @ApiDesc(value = "获取职业分类", owner = "杨永平")
     @RequestMapping(value = "/getProfessionCategory",method = RequestMethod.GET)
     @ResponseBody
-    public void getProfessionCategory(@ApiParam(param="pid", desc="父Id",required = true) @RequestParam("pid") String pid){
-        this.idIsNull(pid);
+    public Object getProfessionCategory(@ApiParam(param="pid", desc="父Id",required = true) @RequestParam(required = false) String pid){
         Map<String,Object> map = new HashMap<>();
-        gkProfessionalService.getProfessionCategory(map);
+        if(pid!=null && !"".equals(pid)) {
+            map.put("pid", pid);
+        }
+        return gkProfessionalService.getProfessionCategory(map);
     }
 }

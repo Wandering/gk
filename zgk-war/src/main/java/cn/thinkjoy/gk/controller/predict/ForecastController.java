@@ -46,7 +46,10 @@ public class ForecastController extends BaseApiController{
     @RequestMapping(value = "/getPerformanceDetail",method = RequestMethod.GET)
     @ResponseBody
     public Object getPerformanceDetail(){
-        return forecastService.findAll();
+    //实际接口
+        Map<String,Object> map=new HashMap<>();
+        map.put("userId", this.getAccoutId());
+        return forecastService.queryList(map, "lastModDate", "desc");
     }
 
     /**
@@ -56,10 +59,8 @@ public class ForecastController extends BaseApiController{
     @RequestMapping(value = "/getLastoFrecast",method = RequestMethod.GET)
     @ResponseBody
     public Object getLastoFrecast(){
-//        UserContext.getCurrentUser();
-//        System.out.println(UserContext.getCurrentUser());
-
         Map<String,Object> map = new HashMap<>();
+        map.put("userId",this.getAccoutId());
         return forecastService.queryOne(map);
     }
 
@@ -70,8 +71,6 @@ public class ForecastController extends BaseApiController{
     @RequestMapping(value = "/getFormerYearsAdmission",method = RequestMethod.GET)
     @ResponseBody
     public Object getFormerYearsAdmission(@RequestParam String universityid,@RequestParam(required = false) Integer batch){
-//        UserContext.getCurrentUser();
-//        System.out.println(UserContext.getCurrentUser());
         idIsNull(universityid);
         Map<String,Object> map = new HashMap<>();
         QueryUtil.setMapOp(map,"universityid","=",universityid);
@@ -108,16 +107,15 @@ public class ForecastController extends BaseApiController{
         }
 
         //模拟测试数据
-        dataMap.put("userId","");
-        dataMap.put("type","");
-        dataMap.put("typeId","");
-        dataMap.put("universityId","");
-        dataMap.put("universityName","");
-        dataMap.put("achievement","");
-        dataMap.put("lowestScore","");
-        dataMap.put("averageScore","");
+        dataMap.put("userId",this.getAccoutId());
+        if("1".equals(dataMap.get("typeId")))
+        {
+            dataMap.put("type","文史");
+        }else {
+            dataMap.put("type","理工");
+        }
         try {
-//            forecastService.insertMap(dataMap);
+            forecastService.insertMap(dataMap);
         }catch (Exception e){
             throw new BizException(ERRORCODE.ADDEXCEPTION.getCode(),ERRORCODE.ADDEXCEPTION.getMessage());
         }
