@@ -51,10 +51,10 @@ public class GkProfessionalController extends BaseApiController<GkProfessionDTO>
             QueryUtil.setMapOp(map, "professionName", "like", "%"+queryparam+"%");
         }
         if(professionTypeId!=null) {
-            QueryUtil.setMapOp(map, "professionTypeId", "=", professionTypeId);
+            QueryUtil.setMapOp(map, "professionType", "=", professionTypeId);
         }
         if(professionSubTypeId!=null) {
-            QueryUtil.setMapOp(map, "professionSubTypeId", "=", professionSubTypeId);
+            QueryUtil.setMapOp(map, "professionSubType", "=", professionSubTypeId);
         }
         return gkProfessionalService.getProfessionalList(map, page, rows);
     }
