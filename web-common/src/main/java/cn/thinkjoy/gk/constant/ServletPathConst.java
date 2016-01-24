@@ -48,6 +48,11 @@ public class ServletPathConst {
         MAPPING_URLS.add("/forecast/addFrecast.do");
         MAPPING_URLS.add("/predict/predictProbability.do");
         //杨永平--end
+
+        MAPPING_URLS.add("/userCollection/saveUserCollect.do");
+        MAPPING_URLS.add("/userCollection/getUserCollectList.do");
+        MAPPING_URLS.add("/userCollection/deleteUserCollect.do");
+        MAPPING_URLS.add("/userCollection/isUniversityCollect.do");
 //        JSP_URLS.put("/guide/guide.jsp","");
         JSP_URLS.add("/user/personal-info.jsp");
         JSP_URLS.add("/user/modify-psd.jsp");
