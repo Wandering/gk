@@ -53,12 +53,37 @@ public class MajoredController extends ZGKBaseController {
         MajoredCategoryRemoteDTO majoredCategoryRemoteDTO = new MajoredCategoryRemoteDTO();
         //本科
         if (type==1) {
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO10 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO10.setId(25);
+            majoredCategoryRemoteDTO10.setName("电子商务");
+            majoredCategoryRemoteDTO10.setChildList(null);
+
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO9 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO9.setId(22);
+            majoredCategoryRemoteDTO9.setName("旅游管理");
+            majoredCategoryRemoteDTO9.setChildList(null);
+
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO8 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO8.setId(16);
+            majoredCategoryRemoteDTO8.setName("应用数学");
+            majoredCategoryRemoteDTO8.setChildList(null);
+
             MajoredCategoryRemoteDTO majoredCategoryRemoteDTO5 = new MajoredCategoryRemoteDTO();
             majoredCategoryRemoteDTO5.setId(5);
             majoredCategoryRemoteDTO5.setName("哲学22");
+            majoredCategoryRemoteDTO5.getChildList().add(majoredCategoryRemoteDTO8);
+            majoredCategoryRemoteDTO5.getChildList().add(majoredCategoryRemoteDTO9);
+            majoredCategoryRemoteDTO5.getChildList().add(majoredCategoryRemoteDTO10);
+            majoredCategoryRemoteDTO5.setMajoredNumber(new Integer(3));
+
+
+
             MajoredCategoryRemoteDTO majoredCategoryRemoteDTO4 = new MajoredCategoryRemoteDTO();
             majoredCategoryRemoteDTO4.setId(4);
             majoredCategoryRemoteDTO4.setName("哲学11");
+            majoredCategoryRemoteDTO4.getChildList().add(majoredCategoryRemoteDTO8);
+            majoredCategoryRemoteDTO4.getChildList().add(majoredCategoryRemoteDTO9);
+            majoredCategoryRemoteDTO4.setMajoredNumber(new Integer(2));
 
             MajoredCategoryRemoteDTO majoredCategoryRemoteDTO2 = new MajoredCategoryRemoteDTO();
             majoredCategoryRemoteDTO2.setId(2);
@@ -66,7 +91,7 @@ public class MajoredController extends ZGKBaseController {
             majoredCategoryRemoteDTO2.getChildList().add(majoredCategoryRemoteDTO4);
             majoredCategoryRemoteDTO2.getChildList().add(majoredCategoryRemoteDTO5);
             majoredCategoryRemoteDTO2.setChildNumber(new Integer(2));
-            majoredCategoryRemoteDTO2.setMajoredNumber(new Integer(10));
+//            majoredCategoryRemoteDTO2.setMajoredNumber(new Integer(10));
 
             MajoredCategoryRemoteDTO majoredCategoryRemoteDTO7 = new MajoredCategoryRemoteDTO();
             majoredCategoryRemoteDTO7.setId(7);
@@ -81,22 +106,52 @@ public class MajoredController extends ZGKBaseController {
             majoredCategoryRemoteDTO3.getChildList().add(majoredCategoryRemoteDTO7);
             majoredCategoryRemoteDTO3.getChildList().add(majoredCategoryRemoteDTO6);
             majoredCategoryRemoteDTO3.setChildNumber(new Integer(2));
-            majoredCategoryRemoteDTO3.setMajoredNumber(new Integer(10));
+//            majoredCategoryRemoteDTO3.setMajoredNumber(new Integer(10));
             majoredCategoryRemoteDTO.setId(1);
             majoredCategoryRemoteDTO.setName("本科");
             majoredCategoryRemoteDTO.getChildList().add(majoredCategoryRemoteDTO2);
             majoredCategoryRemoteDTO.getChildList().add(majoredCategoryRemoteDTO3);
         }
         if (type==2) {
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO10 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO10.setId(25);
+            majoredCategoryRemoteDTO10.setName("电子商务");
+            majoredCategoryRemoteDTO10.setChildList(null);
+
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO9 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO9.setId(22);
+            majoredCategoryRemoteDTO9.setName("旅游管理");
+            majoredCategoryRemoteDTO9.setChildList(null);
+
+            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO11 = new MajoredCategoryRemoteDTO();
+            majoredCategoryRemoteDTO11.setId(16);
+            majoredCategoryRemoteDTO11.setName("应用数学");
+            majoredCategoryRemoteDTO11.setChildList(null);
+
+
             MajoredCategoryRemoteDTO majoredCategoryRemoteDTO6 = new MajoredCategoryRemoteDTO();
             majoredCategoryRemoteDTO6.setId(6);
             majoredCategoryRemoteDTO6.setName("哲学44");
+            majoredCategoryRemoteDTO6.getChildList().add(majoredCategoryRemoteDTO11);
+            majoredCategoryRemoteDTO6.getChildList().add(majoredCategoryRemoteDTO9);
+            majoredCategoryRemoteDTO6.getChildList().add(majoredCategoryRemoteDTO10);
+            majoredCategoryRemoteDTO6.setMajoredNumber(new Integer(3));
+
             MajoredCategoryRemoteDTO majoredCategoryRemoteDTO5 = new MajoredCategoryRemoteDTO();
             majoredCategoryRemoteDTO5.setId(5);
             majoredCategoryRemoteDTO5.setName("哲学44");
+            majoredCategoryRemoteDTO5.getChildList().add(majoredCategoryRemoteDTO11);
+            majoredCategoryRemoteDTO5.getChildList().add(majoredCategoryRemoteDTO9);
+            majoredCategoryRemoteDTO5.getChildList().add(majoredCategoryRemoteDTO10);
+            majoredCategoryRemoteDTO5.setMajoredNumber(new Integer(3));
+
             MajoredCategoryRemoteDTO majoredCategoryRemoteDTO4 = new MajoredCategoryRemoteDTO();
             majoredCategoryRemoteDTO4.setId(4);
             majoredCategoryRemoteDTO4.setName("哲学33");
+            majoredCategoryRemoteDTO4.getChildList().add(majoredCategoryRemoteDTO11);
+            majoredCategoryRemoteDTO4.getChildList().add(majoredCategoryRemoteDTO9);
+            majoredCategoryRemoteDTO4.getChildList().add(majoredCategoryRemoteDTO10);
+            majoredCategoryRemoteDTO4.setMajoredNumber(new Integer(3));
 
             MajoredCategoryRemoteDTO majoredCategoryRemoteDTO2 = new MajoredCategoryRemoteDTO();
             majoredCategoryRemoteDTO2.setId(2);
@@ -105,14 +160,20 @@ public class MajoredController extends ZGKBaseController {
             majoredCategoryRemoteDTO2.getChildList().add(majoredCategoryRemoteDTO5);
             majoredCategoryRemoteDTO2.getChildList().add(majoredCategoryRemoteDTO6);
             majoredCategoryRemoteDTO2.setChildNumber(new Integer(3));
-            majoredCategoryRemoteDTO2.setMajoredNumber(new Integer(15));
+//            majoredCategoryRemoteDTO2.setMajoredNumber(new Integer(15));
 
             MajoredCategoryRemoteDTO majoredCategoryRemoteDTO7 = new MajoredCategoryRemoteDTO();
             majoredCategoryRemoteDTO7.setId(7);
             majoredCategoryRemoteDTO7.setName("经济学22");
+            majoredCategoryRemoteDTO7.getChildList().add(majoredCategoryRemoteDTO9);
+            majoredCategoryRemoteDTO7.getChildList().add(majoredCategoryRemoteDTO10);
+            majoredCategoryRemoteDTO7.setMajoredNumber(new Integer(2));
             MajoredCategoryRemoteDTO majoredCategoryRemoteDTO8 = new MajoredCategoryRemoteDTO();
             majoredCategoryRemoteDTO8.setId(6);
             majoredCategoryRemoteDTO8.setName("经济学11");
+            majoredCategoryRemoteDTO8.getChildList().add(majoredCategoryRemoteDTO11);
+            majoredCategoryRemoteDTO8.getChildList().add(majoredCategoryRemoteDTO10);
+            majoredCategoryRemoteDTO8.setMajoredNumber(new Integer(2));
 
             MajoredCategoryRemoteDTO majoredCategoryRemoteDTO3 = new MajoredCategoryRemoteDTO();
             majoredCategoryRemoteDTO3.setId(3);
@@ -120,7 +181,7 @@ public class MajoredController extends ZGKBaseController {
             majoredCategoryRemoteDTO3.getChildList().add(majoredCategoryRemoteDTO7);
             majoredCategoryRemoteDTO3.getChildList().add(majoredCategoryRemoteDTO8);
             majoredCategoryRemoteDTO3.setChildNumber(new Integer(2));
-            majoredCategoryRemoteDTO3.setMajoredNumber(new Integer(10));
+//            majoredCategoryRemoteDTO3.setMajoredNumber(new Integer(10));
             majoredCategoryRemoteDTO.setId(2);
             majoredCategoryRemoteDTO.setName("专科");
             majoredCategoryRemoteDTO.getChildList().add(majoredCategoryRemoteDTO2);
