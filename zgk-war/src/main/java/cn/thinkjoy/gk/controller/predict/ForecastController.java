@@ -12,7 +12,6 @@ import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.common.utils.UserContext;
 import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
-import cn.thinkjoy.gk.domain.Forecast;
 import cn.thinkjoy.gk.service.IForecastService;
 import cn.thinkjoy.zgk.common.QueryUtil;
 import cn.thinkjoy.zgk.domain.BizData4Page;
@@ -25,9 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 @Controller
@@ -98,12 +95,33 @@ public class ForecastController extends BaseApiController{
             prop = names.nextElement();
             dataMap.put(prop, request.getParameter(prop));
         }
-        dataMap.put("creator", UserContext.getCurrentUser().getId());
+        dataMap.put("creator", this.getAccoutId());
         dataMap.put("createDate", System.currentTimeMillis());
-        dataMap.put("lastModifier", UserContext.getCurrentUser().getId());
+        dataMap.put("lastModifier", this.getAccoutId());
         dataMap.put("lastModDate", System.currentTimeMillis());
         if(dataMap.get("status") == null || ((String)dataMap.get("status")).trim().length() == 0){
             dataMap.put("status", BizStatusEnum.N.getCode());
+        }
+
+//        typeId 科类ID(文史理工)
+//        universityId 院校ID
+//        universityName 院校名称
+//        achievement 成绩
+//        lowestScore 最低分
+//        averageScore 平均分
+        Map<String,Object> map = new HashMap<>();
+        map.put("universityId","院校ID");
+        map.put("typeId","科类ID");
+        map.put("universityName","院校名称");
+        map.put("achievement","成绩");
+        map.put("lowestScore","最低分");
+        map.put("averageScore", "平均分");
+        Iterator<String> iterator=map.keySet().iterator();
+        while (iterator.hasNext()){
+            String key=iterator.next();
+            if(!dataMap.containsKey(key)) {
+                throw new BizException("error","缺少"+map.get(key)+","+key+"参数");
+            }
         }
 
         //模拟测试数据

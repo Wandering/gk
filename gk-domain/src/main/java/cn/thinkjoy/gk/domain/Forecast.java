@@ -2,7 +2,7 @@
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
  * Project Name: gaokao360
- * $Id:  Forecast.java 2016-01-22 11:48:22 $
+ * $Id:  Forecast.java 2016-01-25 17:03:47 $
  */
 
 
@@ -35,7 +35,7 @@ public class Forecast extends CreateBaseDomain<Long>{
     /** 最低分 */
     private Integer lowestScore;
     /** 平均分 */
-    private String averageScore;
+    private Integer averageScore;
 
 	public Forecast(){
 	}
@@ -88,11 +88,11 @@ public class Forecast extends CreateBaseDomain<Long>{
     public Integer getLowestScore() {
         return this.lowestScore;
     }
-    public void setAverageScore(String value) {
+    public void setAverageScore(Integer value) {
         this.averageScore = value;
     }
 
-    public String getAverageScore() {
+    public Integer getAverageScore() {
         return this.averageScore;
     }
 
