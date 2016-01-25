@@ -103,9 +103,11 @@ public class UniversityController extends ZGKBaseController {
         UserAccountPojo userAccountPojo=getUserAccountPojo();
         for (Map<String, Object> university : getUniversityList) {
             String[] propertys=new String[1];
-            propertys[0]=university.get("property").toString();
+            if (university.containsKey("property")) {
+                propertys[0] = university.get("property").toString();
+                university.put("property",propertys);
+            }
 
-            university.put("property",propertys);
             university.put("isCollect",0);
             if(null!=userAccountPojo) {
                 long userId = userAccountPojo.getId();
