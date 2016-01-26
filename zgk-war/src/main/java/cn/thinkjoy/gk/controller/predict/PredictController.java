@@ -140,6 +140,7 @@ public class PredictController {
         Map<String, Object> mp1 = new HashMap<>();
         mp1.put("count", list.size());
         mp1.put("list", list);
+        mp1.put("star", 4);
         resultMap.put("4", mp1);
         List<Map<String, String>> list2 = new ArrayList<>();
         list2.add(map);
@@ -148,6 +149,7 @@ public class PredictController {
         Map<String, Object> mp2 = new HashMap<>();
         mp2.put("count", list2.size());
         mp2.put("list", list2);
+        mp2.put("star", 3);
         resultMap.put("3", mp2);
         List<Map<String, String>> list3 = new ArrayList<>();
         list3.add(map);
@@ -156,6 +158,7 @@ public class PredictController {
         Map<String, Object> mp3 = new HashMap<>();
         mp3.put("count", list3.size());
         mp3.put("list", list3);
+        mp3.put("star", 2);
         resultMap.put("2", mp3);
         List<Map<String, String>> list4 = new ArrayList<>();
         list4.add(map);
@@ -164,6 +167,7 @@ public class PredictController {
         Map<String, Object> mp4 = new HashMap<>();
         mp4.put("count", list4.size());
         mp4.put("list", list4);
+        mp4.put("star", 1);
         resultMap.put("1", mp4);
         return resultMap;
     }
