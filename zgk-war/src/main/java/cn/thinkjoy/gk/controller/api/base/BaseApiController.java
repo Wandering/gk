@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Iterator;
+import java.util.Map;
 
 
 @Controller
@@ -28,4 +30,19 @@ public class BaseApiController<T> extends ZGKBaseController{
         }
     }
 
+
+    /**
+     * 数据校验
+     * @param map 校验字段
+     * @param dataMap 页面提交字段
+     */
+    public void paramCheck(Map<String,Object> map,Map<String,Object> dataMap){
+        Iterator<String> iterator=map.keySet().iterator();
+        while (iterator.hasNext()){
+            String key=iterator.next();
+            if(!dataMap.containsKey(key)) {
+                throw new BizException("error","缺少"+map.get(key)+","+key+"参数");
+            }
+        }
+    }
 }
