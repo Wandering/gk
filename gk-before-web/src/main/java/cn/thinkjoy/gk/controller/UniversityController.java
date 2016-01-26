@@ -103,9 +103,11 @@ public class UniversityController extends ZGKBaseController {
         UserAccountPojo userAccountPojo=getUserAccountPojo();
         for (Map<String, Object> university : getUniversityList) {
             String[] propertys=new String[1];
-            propertys[0]=university.get("property").toString();
+            if (university.containsKey("property")&&university.get("property")!=null) {
+                propertys[0] = university.get("property").toString();
+                university.put("property",propertys);
+            }
 
-            university.put("property",propertys);
             university.put("isCollect",0);
             if(null!=userAccountPojo) {
                 long userId = userAccountPojo.getId();
@@ -139,7 +141,7 @@ public class UniversityController extends ZGKBaseController {
      */
     @RequestMapping(value = "getRemoteUniversityMajorListByUniversityId",method = RequestMethod.GET)
     @ResponseBody
-    public List getUniversityMajorListByUniversityId(@RequestParam(value = "universityId",required = true)long universityId,
+    public Map getUniversityMajorListByUniversityId(@RequestParam(value = "universityId",required = true)long universityId,
                                                      @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
                                                      @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
         Map<String,Object> condition=Maps.newHashMap();
@@ -152,8 +154,16 @@ public class UniversityController extends ZGKBaseController {
         selectorpage.put("gainDegree",1);
         selectorpage.put("majorRank",1);
         List ll = iremoteUniversityService.queryPage("universityMajorExService", condition, offset, rows, "majorRank", "asc", selectorpage);
-//        List ll=iremoteUniversityService.getUniversityMajorListByUniversityId(universityId,condition, offset, rows, "majorRank", "asc", selectorpage);
-        return ll;
+        Map<String,Object> condition2=Maps.newHashMap();
+        condition2.put("groupOp","and");
+        ConditionsUtil.setCondition(condition2,"id","=",String.valueOf(universityId));
+        Map<String,Object> selectorpage2=Maps.newHashMap();
+        selectorpage2.put("featureMajor",1);
+        List featureMajorList=iremoteUniversityService.queryPage("universityDetailService", condition2, 0, 10, "id", "asc", selectorpage2);
+        Map<String,List> returnMap=Maps.newHashMap();
+        returnMap.put("majorList",ll);
+        returnMap.put("featureMajorList",featureMajorList);
+        return returnMap;
     }
 
     /**
