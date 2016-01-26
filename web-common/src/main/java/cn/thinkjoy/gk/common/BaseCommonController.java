@@ -67,8 +67,9 @@ public class BaseCommonController {
 	 * @return
      */
 	public String getAccoutId(){
-		String uid = "0";
-		if (request.getParameter("token") == null) {
+		String uid = null;
+		String  token= request.getParameter("token");
+		if (null == token || "".equals(token)) {
 			return uid;
 		}
 		try{

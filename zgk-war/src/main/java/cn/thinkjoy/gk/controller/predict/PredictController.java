@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by liusven on 16/1/13.
@@ -117,7 +114,7 @@ public class PredictController {
         {
             throw new BizException("error", "请输入正确的分数!");
         }
-        Map<String, Object> resultMap = new HashMap<>();
+        Map<String, Object> resultMap = new LinkedHashMap<>();
         List<Map<String, String>> list = new ArrayList<>();
         Map<String, String> map = new HashMap<>();
         map.put("id","1");
@@ -140,22 +137,34 @@ public class PredictController {
         map3.put("rank","3");
         map3.put("feature","985,211,研,国,自");
         list.add(map3);
-        resultMap.put("冲", list);
+        Map<String, Object> mp1 = new HashMap<>();
+        mp1.put("count", list.size());
+        mp1.put("list", list);
+        resultMap.put("4", mp1);
         List<Map<String, String>> list2 = new ArrayList<>();
         list2.add(map);
         list2.add(map2);
         list2.add(map3);
-        resultMap.put("稳", list2);
+        Map<String, Object> mp2 = new HashMap<>();
+        mp2.put("count", list2.size());
+        mp2.put("list", list2);
+        resultMap.put("3", mp2);
         List<Map<String, String>> list3 = new ArrayList<>();
         list3.add(map);
         list3.add(map2);
         list3.add(map3);
-        resultMap.put("保", list3);
+        Map<String, Object> mp3 = new HashMap<>();
+        mp3.put("count", list3.size());
+        mp3.put("list", list3);
+        resultMap.put("2", mp3);
         List<Map<String, String>> list4 = new ArrayList<>();
         list4.add(map);
         list4.add(map2);
         list4.add(map3);
-        resultMap.put("垫", list4);
+        Map<String, Object> mp4 = new HashMap<>();
+        mp4.put("count", list4.size());
+        mp4.put("list", list4);
+        resultMap.put("1", mp4);
         return resultMap;
     }
 }
