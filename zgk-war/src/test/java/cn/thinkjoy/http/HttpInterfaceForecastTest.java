@@ -32,7 +32,7 @@ public class HttpInterfaceForecastTest extends TestCase{
             assertTrue(result.contains("averageScore"));
         }
         public void testAddFrecast(){
-            String url=host + addFrecast_url + "?universityId=47";
+            String url=host + addFrecast_url + "?typeId=1&universityName=北京大学&achievement=1&lowestScore=1&averageScore=1";
             String result = RequestUtils.requestPost(url);
             assertTrue(result.contains("true"));
         }
