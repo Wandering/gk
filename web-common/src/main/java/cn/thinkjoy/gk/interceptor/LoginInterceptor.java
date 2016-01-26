@@ -28,14 +28,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		if(!ServletPathConst.MAPPING_URLS.contains(url)){
 			return true;
 		}
-//		System.out.println("===========HandlerInterceptor1 preHandle");
 
 		LOGGER.info("url:"+url);
 
 		String value = request.getParameter("token");
 
 		LOGGER.info("cookie:"+value);
-//		RedisUtil.getInstance().del(key);
 		String key = UserRedisConst.USER_KEY+value;
 
 		boolean redisFlag = RedisUtil.getInstance().exists(key);
@@ -43,7 +41,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		LOGGER.info("redis is exists:"+ redisFlag);
 
 		if (StringUtils.isEmpty(value)||!redisFlag) {
-//			request.getRequestDispatcher().forward(request, response);
 			throw new BizException("1000004","请先登录后再进行操作");
 		}
 
