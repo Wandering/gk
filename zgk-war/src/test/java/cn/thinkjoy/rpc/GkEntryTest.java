@@ -17,6 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import java.util.HashMap;
 import java.util.Map;
 
 ;
@@ -35,7 +36,7 @@ public class GkEntryTest {
     }
     @Test
     public void testGetGkVideoInfo() {
-        Assert.notNull(gkEntryService.getGkEntryInfo("87"));
+        Assert.notNull(gkEntryService.getGkEntryInfo(new HashMap<String, Object>(),"87"));
     }
 
 

@@ -60,7 +60,7 @@ public class GkVedioController extends BaseApiController<GkVideoDTO> {
     @ResponseBody
     public GkVideoDTO getGkVideoInfo(@ApiParam(param="id", desc="主键ID",required = true) @RequestParam("id") String id){
         this.idIsNull(id);
-        GkVideoDTO gkVideoDTO=gkVideoService.getGkVideoInfo(id);
+        GkVideoDTO gkVideoDTO=gkVideoService.getGkVideoInfo(new HashMap<String, Object>(),id);
         return isNull(gkVideoDTO);
     }
 
@@ -74,9 +74,9 @@ public class GkVedioController extends BaseApiController<GkVideoDTO> {
     public void hitInc(@ApiParam(param="id", desc="主键ID",required = true) @RequestParam("id") String id){
         this.idIsNull(id);
         try {
-            gkVideoService.hitInc(id);
-        }catch (BizException e){
-            throw e;
+            gkVideoService.hitInc(new HashMap<String, Object>(),id);
+        }catch (Exception e){
+            throw new BizException(ERRORCODE.RESOURCEISNULL.getCode(),ERRORCODE.RESOURCEISNULL.getMessage());
         }
     }
 }

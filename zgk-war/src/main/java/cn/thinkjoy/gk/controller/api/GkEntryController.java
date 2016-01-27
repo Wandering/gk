@@ -7,10 +7,7 @@ import cn.thinkjoy.gk.controller.api.base.BaseApiController;
 import cn.thinkjoy.zgk.common.QueryUtil;
 import cn.thinkjoy.zgk.domain.BizData4Page;
 import cn.thinkjoy.zgk.domain.GkEntry;
-import cn.thinkjoy.zgk.domain.GkSchedule;
-import cn.thinkjoy.zgk.dto.GkScheduleDTO;
 import cn.thinkjoy.zgk.remote.IGkEntryService;
-import cn.thinkjoy.zgk.remote.IGkScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -61,7 +58,7 @@ public class GkEntryController extends BaseApiController<GkEntry> {
     @ResponseBody
     public GkEntry getGkEntryInfo(@ApiParam(param="id", desc="主键ID",required = true) @RequestParam("id") String id){
         this.idIsNull(id);
-        GkEntry gkEntry = gkEntryService.getGkEntryInfo(id);
+        GkEntry gkEntry = gkEntryService.getGkEntryInfo(new HashMap<String, Object>(),id);
         return isNull(gkEntry);
     }
 }

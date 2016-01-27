@@ -64,7 +64,7 @@ public class GkScheduleController extends BaseApiController<GkSchedule> {
     @ResponseBody
     public GkSchedule getScheduleInfo(@ApiParam(param="id", desc="高考日程主键ID",required = true) @RequestParam("id") String id){
         this.idIsNull(id);
-        GkSchedule gkSchedule=gkScheduleService.getScheduleInfo(id);
+        GkSchedule gkSchedule=gkScheduleService.getScheduleInfo(new HashMap<String, Object>(),id);
         return isNull(gkSchedule);
     }
 }

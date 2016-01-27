@@ -17,6 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import java.util.HashMap;
 import java.util.Map;
 
 ;
@@ -35,7 +36,7 @@ public class GkProfessionalTest {
     }
     @Test
     public void testGetProfessionalInfo() {
-        Assert.notNull(gkProfessionalService.getProfessionalInfo("32798"));
+        Assert.notNull(gkProfessionalService.getProfessionalInfo(new HashMap<String, Object>(),"32798"));
     }
     @Test
     public void testGetProfessionCategory() {

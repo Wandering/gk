@@ -7,9 +7,7 @@ import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IProvinceService;
 import cn.thinkjoy.gk.service.IUserAccountExService;
-import cn.thinkjoy.gk.util.CookieUtil;
 import cn.thinkjoy.gk.util.DESUtil;
-import cn.thinkjoy.gk.util.DomainUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +31,7 @@ public class BaseCommonController {
 	private IProvinceService provinceService;
 	private Map<String, Long> areaMap = new HashMap<>();
 
+	private String areaShort;
 	@Autowired
 	private IUserAccountExService userAccountExService;
 
@@ -44,6 +43,7 @@ public class BaseCommonController {
 		}
 		return areaMap;
 	}
+
 
 	private void initAreaInfo()
 	{
@@ -59,6 +59,7 @@ public class BaseCommonController {
 		this.request = request;
 		this.response = response;
 		this.session = request.getSession();
+		this.setAreaShort(request.getParameter("userKey"));
 	}
 
 
@@ -132,14 +133,22 @@ public class BaseCommonController {
 	 * 获取省份ID
 	 * @return
 	 * @throws Exception
-     */
+	 */
 	protected Long getAreaId() throws Exception {
-		String areaShort = request.getParameter("userKey");
 		//默认浙江省
-		String areaId = DomainConst.ZJ_DOMAIN_CODE;
-		if(null != areaShort){
-			areaId = String.valueOf(getAreaMap().get(areaShort));
+		return Long.valueOf(String.valueOf(getAreaMap().get(this.getAreaShort())).toString());
+	}
+
+	public String getAreaShort() {
+		return areaShort;
+	}
+
+	public void setAreaShort(String areaShort) {
+		//默认浙江省
+		if(null == areaShort){
+			areaShort=DomainConst.ZJ_DOMAIN;
 		}
-		return Long.valueOf(areaId.toString());
+		this.areaShort = areaShort;
+		UserAreaContext.setCurrentUserArea(this.areaShort);
 	}
 }

@@ -8,7 +8,8 @@ import junit.framework.TestCase;
  */
 public class HttpInterfaceForecastTest extends TestCase{
 //        String host="http://10.254.130.33:9080";
-        String host="http://localhost:8080";
+        String host="http://zjtest.zhigaokao.cn";
+//        String host="http://localhost:8080";
         String getPerformanceDetail_url="/forecast/getPerformanceDetail.do";
         String getLastoFrecast_url="/forecast/getLastoFrecast.do";
         String getFormerYearsAdmission_url="/forecast/getFormerYearsAdmission.do";
@@ -32,7 +33,7 @@ public class HttpInterfaceForecastTest extends TestCase{
             assertTrue(result.contains("averageScore"));
         }
         public void testAddFrecast(){
-            String url=host + addFrecast_url + "?typeId=1&universityName=北京大学&achievement=1&lowestScore=1&averageScore=1";
+            String url=host + addFrecast_url + "?typeId=1&universityName=北京大学&achievement=1&lowestScore=1&averageScore=1&token=sdU1hVSXgr8zAFvH5A4pjg%3D%3D";
             String result = RequestUtils.requestPost(url);
             assertTrue(result.contains("true"));
         }
