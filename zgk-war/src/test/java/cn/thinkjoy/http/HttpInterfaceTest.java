@@ -15,6 +15,7 @@ public class HttpInterfaceTest extends TestCase{
         String getPolicyList_url="/policy/getPolicyList.do";
         String getPolicyInfo_url="/policy/getPolicyInfo.do";
         String getGkVideoInfo_url="/video/getGkVideoInfo.do";
+        String hitInc_url="/video/hitInc.do";
         String getGkVideoList_url="/video/getGkVideoList.do";
         String getGkHotInfo_url="/gkhot/getGkHotInfo.do";
         String getGkHotList_url="/gkhot/getGkHotList.do";
@@ -26,7 +27,7 @@ public class HttpInterfaceTest extends TestCase{
         String getProfessionalList_url="/professional/getProfessionalList.do" ;
         String getProfessionCategory_url="/professional//getProfessionCategory.do" ;
         public void testGetGkAdmissionLineList(){
-                String url=host + getGkAdmissionLineList_url + "?queryparam=&year=&name=&areaId=&property=33&batch=&type=2&page=&rows=";
+                String url=host + getGkAdmissionLineList_url + "?queryparam=&year=&name=&areaId=&property=33&batch=&type=2&page=&rows=&userKey=zj";
             String result = RequestUtils.requestGet(url);
 //            assertTrue(result.contains("西北农林科技大学"));
 //            assertTrue(result.contains("一批本科"));
@@ -111,8 +112,23 @@ public class HttpInterfaceTest extends TestCase{
 //            assertTrue(result.contains("文史"));
     }
 
+    public void testHitIncInfo(){
+        String url=host + hitInc_url + "?id=1&userKey=zj";
+        String result = RequestUtils.requestGet(url);
+        assertTrue(result.contains("280"));
+//                assertTrue(result.contains("01"));
+//                assertTrue(result.contains("12"));
+//                assertTrue(result.contains("11"));
+//                assertTrue(result.contains("2015"));
+//            assertTrue(result.contains("一批本科"));
+//            assertTrue(result.contains("985/211"));
+//            assertTrue(result.contains("教育部"));
+//                assertTrue(result.contains("33"));
+//            assertTrue(result.contains("文史"));
+    }
+
     public void testGetGkHotList(){
-        String url=host + getGkHotList_url + "";
+        String url=host + getGkHotList_url + "&userKey=zj";
         String result = RequestUtils.requestGet(url);
 //        assertTrue(result.contains("2016"));
         url=host + getGkHotList_url + "?type=1";

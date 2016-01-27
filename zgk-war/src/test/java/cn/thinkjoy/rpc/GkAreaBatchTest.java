@@ -17,6 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import java.util.HashMap;
 import java.util.Map;
 
 ;
@@ -35,7 +36,7 @@ public class GkAreaBatchTest {
     }
     @Test
     public void testGetGkVideoInfo() {
-        Assert.notNull(gkAreaBatchService.getGkAreaBatchInfo("110000"));
+        Assert.notNull(gkAreaBatchService.getGkAreaBatchInfo(new HashMap<String, Object>(),"110000"));
     }
 
 

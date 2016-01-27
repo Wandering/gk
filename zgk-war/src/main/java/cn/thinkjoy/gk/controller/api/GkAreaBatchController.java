@@ -44,7 +44,7 @@ public class GkAreaBatchController extends BaseApiController<GkAreaBatch> {
     @ResponseBody
     public GkAreaBatch getGkAreaBatchInfo(@ApiParam(param="areaId", desc="区域id",required = true) @RequestParam("areaId") String areaId){
         this.idIsNull(areaId);
-        GkAreaBatch gkAreaBatch=gkAreaBatchService.getGkAreaBatchInfo(areaId);
+        GkAreaBatch gkAreaBatch=gkAreaBatchService.getGkAreaBatchInfo(new HashMap<String, Object>(),areaId);
         return isNull(gkAreaBatch);
     }
 

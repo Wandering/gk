@@ -76,7 +76,8 @@ public class ForecastController extends BaseApiController{
         if(batch!=null) {
             QueryUtil.setMapOp(map, "enrollingbatch", "=", batch);
         }
-        BizData4Page bizData4Page=gkAdmissionLineService.getGkAdmissionLineList(map,null,3);
+        Object o=gkAdmissionLineService.getGkAdmissionLineList(map,null,3);
+        BizData4Page bizData4Page = (BizData4Page)o;
         return isNull(bizData4Page.getRows());
     }
 

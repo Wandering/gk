@@ -68,7 +68,7 @@ public class GkProfessionalController extends BaseApiController<GkProfessionDTO>
     @ResponseBody
     public GkProfessionDTO getProfessionalInfo(@ApiParam(param="id", desc="主键ID",required = true) @RequestParam("id") String id){
         this.idIsNull(id);
-        GkProfessionDTO gkProfessionDTO=gkProfessionalService.getProfessionalInfo(id);
+        GkProfessionDTO gkProfessionDTO=gkProfessionalService.getProfessionalInfo(new HashMap<String, Object>(),id);
         return isNull(gkProfessionDTO);
     }
 

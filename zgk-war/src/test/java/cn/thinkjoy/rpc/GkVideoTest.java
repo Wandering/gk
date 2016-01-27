@@ -17,7 +17,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-;import java.util.Map;
+;import java.util.HashMap;
+import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:zgkwar-dubbo-consumer-test.xml")
@@ -34,13 +35,13 @@ public class GkVideoTest {
     }
     @Test
     public void testGetGkVideoInfo() {
-        Assert.notNull(gkVideoService.getGkVideoInfo("29"));
+        Assert.notNull(gkVideoService.getGkVideoInfo(new HashMap<String, Object>(),"29"));
     }
     @Test
     public void testHitInc() {
-        Long l1=gkVideoService.getGkVideoInfo("29").getGkVideoInfo().getHit();
-        gkVideoService.hitInc(29);
-        Long l2=gkVideoService.getGkVideoInfo("29").getGkVideoInfo().getHit();
+        Long l1=gkVideoService.getGkVideoInfo(new HashMap<String, Object>(),"29").getGkVideoInfo().getHit();
+        gkVideoService.hitInc(new HashMap<String, Object>(),29);
+        Long l2=gkVideoService.getGkVideoInfo(new HashMap<String, Object>(),"29").getGkVideoInfo().getHit();
         Assert.isTrue(l1==l2);
     }
 

@@ -64,7 +64,7 @@ public class GkPolicyController extends BaseApiController<GkPolicy> {
     @ResponseBody
     public GkPolicy getPolicyInfo(@ApiParam(param="id", desc="高考日程主键ID",required = true) @RequestParam("id")String id){
         this.idIsNull(id);
-        GkPolicy gkPolicy=gkPolicyService.getGkPolicyInfo(id);
+        GkPolicy gkPolicy=gkPolicyService.getGkPolicyInfo(new HashMap<String, Object>(),id);
         return isNull(gkPolicy);
     }
 }

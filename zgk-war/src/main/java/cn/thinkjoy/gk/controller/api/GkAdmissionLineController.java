@@ -74,7 +74,7 @@ public class GkAdmissionLineController extends BaseApiController {
             QueryUtil.setMapOp(map, "enrollingbatch", "=", batch);
         }
 //        文史/理工
-            QueryUtil.setMapOp(map, "enrollinguniversityMajorType", "=", type);
+         QueryUtil.setMapOp(map, "type", "=", type);
 
         return gkAdmissionLineService.getGkAdmissionLineList(map,page,rows);
     }

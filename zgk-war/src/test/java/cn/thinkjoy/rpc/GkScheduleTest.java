@@ -15,7 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-;
+;import java.util.HashMap;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:zgkwar-dubbo-consumer-test.xml")
@@ -31,7 +31,7 @@ public class GkScheduleTest {
     }
     @Test
     public void testGetGkScheduleInfo() {
-        Assert.notNull(gkScheduleService.getScheduleInfo("19"));
+        Assert.notNull(gkScheduleService.getScheduleInfo(new HashMap<String, Object>(),"19"));
     }
 
 }

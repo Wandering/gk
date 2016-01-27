@@ -42,7 +42,7 @@ public class GkPolicyTest {
     }
     @Test
     public void testGetGkPolicyInfo() {
-        Assert.notNull(gkPolicyService.getGkPolicyInfo("38"));
+        Assert.notNull(gkPolicyService.getGkPolicyInfo(new HashMap<String, Object>(),"38"));
         //baseDataService.
         //Assert.notNull(user, "");
     }
