@@ -179,17 +179,23 @@ public class UniversityController extends ZGKBaseController {
     @RequestMapping(value = "getUniversityMajorEnrollingPlanList",method = RequestMethod.GET)
     @ResponseBody
     public List getUniversityMajorEnrollingPlanList(@RequestParam(value = "universityId",required = true)long universityId,
-                                                    @RequestParam(value = "year",required = true)String year,//年份
-                                                    @RequestParam(value = "batch",required = true)int batch,//批次
-                                                    @RequestParam(value = "universityMajorType",required = true)String universityMajorType,//科类
+                                                    @RequestParam(value = "year",required = false)String year,//年份
+                                                    @RequestParam(value = "batch",required = false)Integer batch,//批次
+                                                    @RequestParam(value = "universityMajorType",required = false)String universityMajorType,//科类
                                                     @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
                                                     @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
         Map<String,Object> condition=Maps.newHashMap();
         condition.put("groupOp","and");
         ConditionsUtil.setCondition(condition, "universityId", "=", String.valueOf(universityId));
-        ConditionsUtil.setCondition(condition,"year", "=", year);
-        ConditionsUtil.setCondition(condition, "batch", "=", String.valueOf(batch));
-        ConditionsUtil.setCondition(condition, "universityMajorType", "=", universityMajorType);
+        if (StringUtils.isNotBlank(year)) {
+            ConditionsUtil.setCondition(condition, "year", "=", year);
+        }
+        if (batch!=null) {
+            ConditionsUtil.setCondition(condition, "batch", "=", String.valueOf(batch));
+        }
+        if (StringUtils.isNotBlank(universityMajorType)) {
+            ConditionsUtil.setCondition(condition, "universityMajorType", "=", universityMajorType);
+        }
         Map<String,Object> selectorpage=Maps.newHashMap();
         selectorpage.put("majorId",1);
         selectorpage.put("majorName",1);
