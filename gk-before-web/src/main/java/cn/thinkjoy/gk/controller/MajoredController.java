@@ -58,44 +58,11 @@ public class MajoredController extends ZGKBaseController {
         return iremoteMajoredService.getMajoredCategory(type);
     }
 
-//    @RequestMapping(value = "getMajoredCategoryById",method = RequestMethod.GET)
-//    @ResponseBody
-//    public Object getMajoredCategoryById(@RequestParam(value = "categoryId",required = true)int categoryId){
-//        if(categoryId==7) {
-//            //本科
-//            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO5 = new MajoredCategoryRemoteDTO();
-//            majoredCategoryRemoteDTO5.setId(5);
-//            majoredCategoryRemoteDTO5.setName("经济学11");
-//            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO4 = new MajoredCategoryRemoteDTO();
-//            majoredCategoryRemoteDTO4.setId(4);
-//            majoredCategoryRemoteDTO4.setName("经济学11");
-//
-//            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO2 = new MajoredCategoryRemoteDTO();
-//            majoredCategoryRemoteDTO2.setId(Long.valueOf(categoryId));
-//            majoredCategoryRemoteDTO2.setName("经济学");
-//            majoredCategoryRemoteDTO2.getChildList().add(majoredCategoryRemoteDTO4);
-//            majoredCategoryRemoteDTO2.getChildList().add(majoredCategoryRemoteDTO5);
-//            majoredCategoryRemoteDTO2.setChildNumber(new Integer(2));
-//            majoredCategoryRemoteDTO2.setMajoredNumber(new Integer(10));
-//            return majoredCategoryRemoteDTO2;
-//        }else {
-//            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO5 = new MajoredCategoryRemoteDTO();
-//            majoredCategoryRemoteDTO5.setId(5);
-//            majoredCategoryRemoteDTO5.setName("哲学22");
-//            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO4 = new MajoredCategoryRemoteDTO();
-//            majoredCategoryRemoteDTO4.setId(4);
-//            majoredCategoryRemoteDTO4.setName("哲学11");
-//
-//            MajoredCategoryRemoteDTO majoredCategoryRemoteDTO2 = new MajoredCategoryRemoteDTO();
-//            majoredCategoryRemoteDTO2.setId(Long.valueOf(categoryId));
-//            majoredCategoryRemoteDTO2.setName("哲学");
-//            majoredCategoryRemoteDTO2.getChildList().add(majoredCategoryRemoteDTO4);
-//            majoredCategoryRemoteDTO2.getChildList().add(majoredCategoryRemoteDTO5);
-//            majoredCategoryRemoteDTO2.setChildNumber(new Integer(2));
-//            majoredCategoryRemoteDTO2.setMajoredNumber(new Integer(10));
-//            return majoredCategoryRemoteDTO2;
-//        }
-//    }
+    @RequestMapping(value = "getMajoredByName",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getMajoredByName(@RequestParam(value = "majoredName",required = true)String majoredName,@RequestParam(value = "type",required = true)String type){
+        return iremoteMajoredService.getMajoredByName(majoredName,type);
+    }
 
     @RequestMapping(value = "getMajoredInfoById",method = RequestMethod.GET)
     @ResponseBody
