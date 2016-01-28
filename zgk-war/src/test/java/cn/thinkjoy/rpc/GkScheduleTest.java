@@ -28,8 +28,10 @@ public class GkScheduleTest {
     public void testGetGkScheduleList() {
         Map<String, Object> conditions = new HashMap<>();
         conditions.put("scheduleRows","4");
-        conditions.put("showMonth",12);
-        Assert.notNull(gkScheduleService.getScheduleList(conditions,6));
+        conditions.put("showMonth",9);
+        conditions.put("startMonth","2015-9");
+        conditions.put("boo",true);
+        Assert.notNull(gkScheduleService.getScheduleList(conditions, 6));
 //        System.out.println(gkScheduleService.getScheduleList(4));
     }
     @Test

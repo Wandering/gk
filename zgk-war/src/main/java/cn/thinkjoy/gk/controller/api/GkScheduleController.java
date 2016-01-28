@@ -43,6 +43,7 @@ public class GkScheduleController extends BaseApiController<GkSchedule> {
     public List<GkScheduleDTO> getScheduleList(@ApiParam(param="rows", desc="条数",required = false) @RequestParam(defaultValue = "3",required = false) Integer rows,
                                                @ApiParam(param="hasList", desc="是否展示列表",required = false) @RequestParam(defaultValue = "true",required = false) Boolean hasList,
                                                @ApiParam(param="month", desc="月份",required = false) @RequestParam(required = false) Integer month,
+                                               @ApiParam(param="startMonth", desc="起始年月",required = false) @RequestParam(required = false) Integer startMonth,
                                                @ApiParam(param="scheduleRows", desc="条数",required = false) @RequestParam(required = false) Integer scheduleRows){
         Map<String,Object> map = new HashMap<>();
         if(scheduleRows!=null) {
@@ -50,6 +51,9 @@ public class GkScheduleController extends BaseApiController<GkSchedule> {
         }
         if(month!=null) {
             map.put("showMonth", month);
+        }
+        if(startMonth!=null&&!"".equals(startMonth)) {
+            map.put("startMonth", startMonth);
         }
         map.put("boo", hasList);
         return gkScheduleService.getScheduleList(map,rows);
