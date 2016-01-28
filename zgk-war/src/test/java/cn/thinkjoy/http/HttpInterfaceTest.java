@@ -38,7 +38,7 @@ public class HttpInterfaceTest extends TestCase{
         }
 
         public void testGetScheduleList(){
-                String url=host + getScheduleList_url + "?month=11&scheduleRows=4";
+                String url=host + getScheduleList_url + "?month=1&rows=10&startMonth=2015-9&scheduleRows=10&userKey=zj";
                 String result = RequestUtils.requestGet(url);
             assertTrue(result.contains("2016"));
             assertTrue(result.contains("01"));
