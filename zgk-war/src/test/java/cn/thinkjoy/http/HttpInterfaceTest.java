@@ -53,7 +53,7 @@ public class HttpInterfaceTest extends TestCase{
         }
 
         public void testGetScheduleInfo(){
-                String url=host + getScheduleInfo_url + "?id=6";
+                String url=host + getScheduleInfo_url + "?id=12";
                 String result = RequestUtils.requestGet(url);
                 assertTrue(result.contains("2015"));
 //                assertTrue(result.contains("01"));

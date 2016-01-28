@@ -41,7 +41,7 @@ tasks.withType(Compile) {
 /** 此闭包内的声明子类皆可使用 */
 allprojects {
     group = 'cn.thinkjoy.gk'
-    version = '0.0.18-SNAPSHOT'
+    version = '0.0.20-SNAPSHOT'
 
     apply plugin: 'java'
     apply plugin: 'idea'
@@ -52,8 +52,8 @@ allprojects {
         options.encoding = "UTF-8"
     }
     repositories {
-        mavenLocal()
         repositories { maven { url 'http://repo.thinkjoy.cn/content/groups/public/' } }
+        mavenLocal()
         mavenCentral()
     }
 
