@@ -128,7 +128,13 @@ public class BaseCommonController {
 		if(null!=userAccountBean){
 			String key = UserRedisConst.USER_KEY + token;
 			System.out.println("hahaha");
-			RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean));
+			try{
+				RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean));
+			}catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+
 		}
 	}
 
