@@ -25,31 +25,60 @@ public class HttpInterfaceTest extends TestCase{
         String getGkEntryInfo_url="/entry/getGkEntryInfo.do";
         String predictProbability_url="/predict/predictProbability.do";
         String getProfessionalList_url="/professional/getProfessionalList.do" ;
-        String getProfessionCategory_url="/professional//getProfessionCategory.do" ;
+        String getProfessionCategory_url="/professional/getProfessionCategory.do" ;
         public void testGetGkAdmissionLineList(){
-                String url=host + getGkAdmissionLineList_url + "?queryparam=&year=&name=&areaId=&property=33&batch=&type=2&page=&rows=&userKey=zj";
+
+            long start=System.currentTimeMillis();
+            String url=host + getGkAdmissionLineList_url + "?batch=1&type=2&page=&rows=10&userKey=zj";
             String result = RequestUtils.requestGet(url);
-//            assertTrue(result.contains("西北农林科技大学"));
-//            assertTrue(result.contains("一批本科"));
-//            assertTrue(result.contains("985/211"));
-//            assertTrue(result.contains("教育部"));
-            assertTrue(result.contains("33"));
-//            assertTrue(result.contains("文史"));
+            assertTrue(result.contains("一批本科"));
+            url=host + getGkAdmissionLineList_url + "?batch=2&type=1&page=&rows=10&userKey=zj";
+            result = RequestUtils.requestGet(url);
+            assertTrue(result.contains("理工"));
+            url=host + getGkAdmissionLineList_url + "?batch=2&type=2&page=&rows=10&userKey=zj";
+            result = RequestUtils.requestGet(url);
+            assertTrue(result.contains("文史"));
+            System.out.print(System.currentTimeMillis()-start);
         }
 
         public void testGetScheduleList(){
-                String url=host + getScheduleList_url + "?month=1&rows=10&startMonth=2015-9&scheduleRows=10&userKey=zj";
-                String result = RequestUtils.requestGet(url);
-            assertTrue(result.contains("2016"));
-            assertTrue(result.contains("01"));
-            assertTrue(result.contains("12"));
+            String url=host + getScheduleList_url + "?month=9&rows=12&isIndex=true&scheduleRows=10&userKey=zj";
+            String result = RequestUtils.requestGet(url);
+            assertTrue(result.contains("9"));
+            url=host + getScheduleList_url + "?month=10&rows=12&isIndex=true&scheduleRows=10&userKey=zj";
+            result = RequestUtils.requestGet(url);
+            assertTrue(result.contains("10"));
+            url=host + getScheduleList_url + "?month=11&rows=12&isIndex=true&scheduleRows=10&userKey=zj";
+            result = RequestUtils.requestGet(url);
             assertTrue(result.contains("11"));
-            assertTrue(result.contains("2015"));
-//            assertTrue(result.contains("一批本科"));
-//            assertTrue(result.contains("985/211"));
-//            assertTrue(result.contains("教育部"));
-//                assertTrue(result.contains("33"));
-//            assertTrue(result.contains("文史"));
+            url=host + getScheduleList_url + "?month=12&rows=12&isIndex=true&scheduleRows=10&userKey=zj";
+            result = RequestUtils.requestGet(url);
+            assertTrue(result.contains("12"));
+            url=host + getScheduleList_url + "?month=1&rows=12&isIndex=true&scheduleRows=10&userKey=zj";
+            result = RequestUtils.requestGet(url);
+            assertTrue(result.contains("1"));
+            url=host + getScheduleList_url + "?month=2&rows=12&isIndex=true&scheduleRows=10&userKey=zj";
+            result = RequestUtils.requestGet(url);
+            assertTrue(result.contains("2"));
+            url=host + getScheduleList_url + "?month=3&rows=12&isIndex=true&scheduleRows=10&userKey=zj";
+            result = RequestUtils.requestGet(url);
+            assertTrue(result.contains("3"));
+            url=host + getScheduleList_url + "?month=4&rows=12&isIndex=true&scheduleRows=10&userKey=zj";
+            result = RequestUtils.requestGet(url);
+            assertTrue(result.contains("4"));
+            url=host + getScheduleList_url + "?month=5&rows=12&isIndex=true&scheduleRows=10&userKey=zj";
+            result = RequestUtils.requestGet(url);
+            assertTrue(result.contains("5"));
+            url=host + getScheduleList_url + "?month=6&rows=12&isIndex=true&scheduleRows=10&userKey=zj";
+            result = RequestUtils.requestGet(url);
+            assertTrue(result.contains("6"));
+            url=host + getScheduleList_url + "?month=7&rows=12&isIndex=true&scheduleRows=10&userKey=zj";
+            result = RequestUtils.requestGet(url);
+            assertTrue(result.contains("7"));
+            url=host + getScheduleList_url + "?month=8&rows=12&isIndex=true&scheduleRows=10&userKey=zj";
+            result = RequestUtils.requestGet(url);
+            assertTrue(result.contains("8"));
+
         }
 
         public void testGetScheduleInfo(){
