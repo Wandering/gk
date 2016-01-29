@@ -9,8 +9,10 @@ import cn.thinkjoy.gk.service.IProvinceService;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.DESUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
+import com.alibaba.druid.pool.vendor.SybaseExceptionSorter;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
@@ -125,6 +127,7 @@ public class BaseCommonController {
 	protected void setUserAccountPojo(UserAccountPojo userAccountBean,String token) throws Exception {
 		if(null!=userAccountBean){
 			String key = UserRedisConst.USER_KEY + token;
+			System.out.println("hahaha");
 			RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean));
 		}
 	}
@@ -132,9 +135,8 @@ public class BaseCommonController {
 	/**
 	 * 获取省份ID
 	 * @return
-	 * @throws Exception
 	 */
-	protected Long getAreaId() throws Exception {
+	protected Long getAreaId(){
 		//默认浙江省
 		return Long.valueOf(String.valueOf(getAreaMap().get(this.getAreaShort())).toString());
 	}
