@@ -38,7 +38,7 @@
         areaId as areaId
     </sql>
     <insert id="insert" parameterType="Card">
-        INSERT INTO gk_card (
+        INSERT INTO zgk_card (
         status,
         creator,
         createDate,
@@ -68,7 +68,7 @@
 
     <!-- 更新 -->
     <update id="update" parameterType="Card">
-        UPDATE gk_card
+        UPDATE zgk_card
         <trim prefix="SET" suffixOverrides=",">
             <if test="status!=null">
                 status = #{status},
@@ -106,7 +106,7 @@
     </update>
 
     <update id="updateMap">
-        UPDATE gk_card
+        UPDATE zgk_card
         <trim prefix="SET" suffixOverrides=",">
             <if test="map.status!=null">
                 status = #{map.status},
@@ -144,7 +144,7 @@
     </update>
 
     <update id="updateByCondition">
-        UPDATE gk_card
+        UPDATE zgk_card
         <trim prefix="SET" suffixOverrides=",">
             <if test="update.status!=null">
                 status = #{update.status},
@@ -216,7 +216,7 @@
     </update>
 
     <insert id="insertMap" >
-        INSERT INTO gk_card (
+        INSERT INTO zgk_card (
         status,
         creator,
         createDate,
@@ -243,7 +243,7 @@
 
 
     <update id="updateNull" parameterType="Card">
-        UPDATE gk_card
+        UPDATE zgk_card
         <trim prefix="SET" suffixOverrides=",">
             status = #{status},
             creator = #{creator},
@@ -262,7 +262,7 @@
 
     <!-- 按Id删除 -->
     <delete id="deleteById" parameterType="java.lang.Long">
-        DELETE FROM gk_card
+        DELETE FROM zgk_card
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -270,7 +270,7 @@
 
 
     <delete id="deleteByCondition" parameterType="java.util.Map">
-        DELETE FROM gk_card
+        DELETE FROM zgk_card
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id = #{id}
@@ -309,14 +309,14 @@
     </delete>
 
     <delete id="deleteByProperty" parameterType="java.util.Map">
-        DELETE FROM gk_card WHERE
+        DELETE FROM zgk_card WHERE
         ${property} = #{value}
     </delete>
 
     <select id="fetch" parameterType="java.lang.Long" resultType="Card">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_card
+        FROM zgk_card
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -325,7 +325,7 @@
     <select id="findOne" parameterType="java.util.Map" resultType="Card">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_card WHERE
+        FROM zgk_card WHERE
         ${property} = #{value}
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -336,7 +336,7 @@
     <select id="findList" parameterType="java.util.Map" resultType="Card">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_card WHERE
+        FROM zgk_card WHERE
         ${property} = #{value}
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -346,7 +346,7 @@
     <select id="findAll" resultType="Card">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_card
+        FROM zgk_card
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
         </if>
@@ -355,7 +355,7 @@
     <select id="queryPage" resultType="Card">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_card
+        FROM zgk_card
         <where>
 
             <if test="condition.whereSql != null">
@@ -409,7 +409,7 @@
     <select id="like" parameterType="java.util.Map" resultType="Card">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_card
+        FROM zgk_card
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="condition.id!=null">
                 AND id like CONCAT('%', #{condition.id} , '%')
@@ -454,7 +454,7 @@
     <select id="queryList" parameterType="java.util.Map" resultType="Card">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_card
+        FROM zgk_card
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="condition.id!=null">
                 AND id = #{condition.id}
@@ -498,7 +498,7 @@
     <select id="queryOne" parameterType="java.util.Map" resultType="Card">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_card
+        FROM zgk_card
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id = #{id}
@@ -541,7 +541,7 @@
     </select>
 
     <select id="count" resultType="java.lang.Integer">
-        SELECT count(id) FROM gk_card
+        SELECT count(id) FROM zgk_card
         <where>
             <if test="id!=null">
                 ${groupOp} ${id.field} ${id.op}  #{id.data}
@@ -583,7 +583,7 @@
     <select id="selectMaxId" resultType="java.lang.Long">
         SELECT
         MAX(id)
-        FROM gk_card
+        FROM zgk_card
     </select>
 
 </mapper>
