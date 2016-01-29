@@ -127,7 +127,6 @@ public class BaseCommonController {
 	protected void setUserAccountPojo(UserAccountPojo userAccountBean,String token) throws Exception {
 		if(null!=userAccountBean){
 			String key = UserRedisConst.USER_KEY + token;
-			System.out.println("hahaha");
 			try{
 				RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 4L, TimeUnit.HOURS);
 			}catch (Exception e)
