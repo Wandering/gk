@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by jzli on 15/6/3.
@@ -113,7 +114,7 @@ public class PayCallbackController extends ZGKBaseController {
 
                         LOGGER.info(JSON.toJSONString(userAccountBean));
 
-                        RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean));
+                        RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 4L, TimeUnit.HOURS);
 
 //                        boolean flag = userVipService.updateUserVip(userId, 1, calendar.getTimeInMillis());
 //                        LOGGER.info("====pay /orders/createOrder updatePresell result : "+flag);

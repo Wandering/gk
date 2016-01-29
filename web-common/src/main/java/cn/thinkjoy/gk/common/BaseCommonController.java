@@ -106,7 +106,7 @@ public class BaseCommonController {
 				userAccountBean = userAccountExService.findUserAccountPojoById(Long.parseLong(uid));
 				if(null!=userAccountBean)
 				{
-					RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 5L, TimeUnit.HOURS);
+					RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 4L, TimeUnit.HOURS);
 				}
 				else
 				{
@@ -129,7 +129,7 @@ public class BaseCommonController {
 			String key = UserRedisConst.USER_KEY + token;
 			System.out.println("hahaha");
 			try{
-				RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean));
+				RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 4L, TimeUnit.HOURS);
 			}catch (Exception e)
 			{
 				e.printStackTrace();
