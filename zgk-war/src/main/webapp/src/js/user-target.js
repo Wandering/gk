@@ -2,7 +2,7 @@ define(['commonjs','handlebars','tips'], function (util,handlebars,tips) {
     require('../css/user/user-account-info.css');
 
     $(function () {
-        $('#banner-info').prepend(require('html!../user-banner.html'));
+        $('#banner-info').prepend(require('html!../static/user-banner.html'));
 
         var targetTypeImg = require('../img/user-target-jbtm.png');
         var targetJbtmTypeImg = require('../img/icon-jbtm.png');
