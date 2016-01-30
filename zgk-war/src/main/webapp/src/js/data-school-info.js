@@ -171,9 +171,9 @@ define(['commonjs', '../css/data/data-school-info.css', 'handlebars', 'timeForma
 
 
     //静态图片
-    var sideBanner1 = require('img/side-banner1.png');
+    var sideBanner1 = require('../img/side-banner1.png');
     $('#side-banner1').attr('src', sideBanner1);
-    var sideBanner2 = require('img/side-banner2.png');
+    var sideBanner2 = require('../img/side-banner2.png');
     $('#side-banner2').attr('src', sideBanner2);
     $('#side-banner3').attr('src', sideBanner1);
     $('#side-banner4').attr('src', sideBanner2);
