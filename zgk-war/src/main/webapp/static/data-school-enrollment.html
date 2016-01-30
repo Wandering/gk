@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>院校招生信息</title><link href="fd768acb.data-school-enrollment.min.css" rel="stylesheet"></head><body><section id="crumb" class="crumb"><ol class="breadcrumb w1000"><li><span class="icon-crumb breadcrumb-home"></span><a href="/">首页</a></li><li><a href="/static/data-school-info.html">数据查询</a></li><li class="active">院校招生信息</li></ol></section><div class="search w1000"><section class="search-box"><input id="query" class="" type="text" size="27" name="" autocomplete="off" placeholder="请输入院校名称" value=""> <a href="#" class="go"><span class="icon-query"></span></a></section></div><div class="choose-option w1000"><dl class="select" id="province-list"></dl><script id="province-list-tpl" type="text/x-handlebars-template"><dt>
+            <span>院校所属</span>
+            <span>&gt;&nbsp;&nbsp;</span>
+        </dt>
+        <dd>
+            <span class="all active _ml45">全部</span>
+            {{#each bizData}}
+            <span areaid="{{id}}">{{name}}</span>
+            {{/each}}
+        </dd></script><dl class="select" id="college-list"></dl><script id="college-list-tpl" type="text/x-handlebars-template"><dt>
+            <span>院校分类</span>
+            <span>&gt;&nbsp;&nbsp;</span>
+        </dt>
+        <dd>
+            <span class="all active _ml45">全部</span>
+            {{#each bizData}}
+            <span sortid="{{dictId}}">{{name}}</span>
+            {{/each}}
+        </dd></script><dl class="select" id="characteristic-list"></dl><script id="characteristic-list-tpl" type="text/x-handlebars-template"><dt>
+            <span>院校特征</span>
+            <span>&gt;&nbsp;&nbsp;</span>
+        </dt>
+        <dd>
+            <span class="all active _ml45">全部</span>
+            {{#each bizData}}
+            <span propertyid="{{dictId}}">{{name}}</span>
+            {{/each}}
+        </dd></script><dl class="select" id="enrol-years"></dl><script id="enrol-years-tpl" type="text/x-handlebars-template"><dt>
+            <span>招生年份</span>
+            <span>&gt;&nbsp;&nbsp;</span>
+        </dt>
+        <dd>
+            <span class="all active _ml45">全部</span>
+            <span yearid="{{bizData.[0]}}">{{bizData.[0]}}年</span>
+            <span yearid="{{bizData.[1]}}">{{bizData.[1]}}年</span>
+            <span yearid="{{bizData.[2]}}">{{bizData.[2]}}年</span>
+        </dd></script></div><div class="result-box w1000"><div class="title"><b class="active" tid="2">理工招生分数 <i class="triangle-bottom"></i></b> <span class="divide">|</span> <b tid="1">文史招生分数<i class="triangle-bottom"></i></b></div><table class="table-list table-hover"><thead><tr><th class="w250">院校名称</th><th>课类</th><th>年份</th><th>录取批次</th><th>隶属</th><th>最低分</th><th>最高分</th><th>平均分</th></tr></thead><tbody id="line-list"></tbody><script id="line-list-tpl" type="text/x-handlebars-template">{{#each rows}}
+            <tr>
+                <td class="school-info">
+                    <i class="icon-heart" id="{{id}}"></i>
+                    <p class="name" did="{{id}}">{{name}}</p>
+                    <div class="list-type">
+                        <span>{{property}}</span>
+                        <!--<span class="type-985">985</span>-->
+                        <!--<span class="type-211">211</span>-->
+                        <!--<span class="type-yan">研</span>-->
+                        <!--<span class="type-zi">自</span>-->
+                        <!--<span class="type-guo">国</span>-->
+                        <!--<span class="type-zhuo">卓</span>-->
+                    </div>
+                </td>
+                <td>{{typename}}</td>
+                <td>{{year}}年</td>
+                <td>{{batchname}}</td>
+                <td>{{subjection}}</td>
+                <td>{{lowestScore}}</td>
+                <td>{{highestScore}}</td>
+                <td>{{averageScore}}</td>
+            </tr>
+            {{/each}}</script></table><div class="btn-more"><button class="btn btn-next"></button></div></div><br><br><script src="js/e55d4f2a.data-school-enrollment.min.js"></script></body></html>

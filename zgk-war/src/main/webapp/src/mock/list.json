@@ -1,0 +1,35 @@
+{
+  "bizData": {
+    "rows": [
+      {
+        "hotDate": "2016-01-20",
+        "id": 287,
+        "image": "http://gk360b.ks3-cn-center-1.ksyun.com/20160115120126.TiRnaduC22.jpg",
+        "subContent": "",
+        "title": "222摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要"
+      },
+      {
+        "hotDate": "2016-01-12",
+        "id": 286,
+        "image": "http://gk360b.ks3-cn-center-1.ksyun.com/20160115120126.TiRnaduC22.jpg",
+        "subContent": "发顺丰发顺丰发顺丰发顺丰发顺丰发顺丰发顺丰发顺丰摘要",
+        "title": "发顺丰发顺丰发顺丰发顺丰发顺丰发顺丰发顺丰发顺丰摘要"
+      },
+      {
+        "hotDate": "2016-01-28",
+        "id": 285,
+        "image": "http://gk360b.ks3-cn-center-1.ksyun.com/20160113165658.YaAcpZYUJF.jpg",
+        "subContent": "摘要",
+        "title": "湖南 高考头条"
+      },
+      {
+        "hotDate": "2016-01-28",
+        "id": 284,
+        "image": "http://gk360b.ks3-cn-center-1.ksyun.com/20160113163201.aIU5OkFuR8.png",
+        "subContent": "摘要",
+        "title": "辽宁 高考头条"
+      }
+    ]
+  }
+}
+

@@ -5,6 +5,8 @@
     <title>智高考</title>
 </head>
 <body>
-Hello world!
+<script>
+    window.location.href="/static/index.html";
+</script>
 </body>
 </html>

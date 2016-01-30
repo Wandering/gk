@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>高考学堂</title><link href="2307cc34.class-college.min.css" rel="stylesheet"></head><body><section class="banner"></section><div class="w1000"><h2 class="h2-t"><span class="line"></span> 推荐学习 <span class="login-txt">登录后更多精彩哦！<a href="/static/login.html">立即登录</a></span></h2><section class="school-main"><div class="list-body"><ul class="list-ul list-recommend-list"><script id="list-recommend-list" type="text/x-handlebars-template">{{#each rows}}
+                    <li class="list-item list-recommend-list">
+                        <a href="/static/class-college-detail.html?id={{gkVideoInfo.id}}" class="list-links">
+                            <img src="{{gkVideoInfo.frontCover}}" alt="{{gkVideoInfo.title}}">
+                        </a>
+                        <p class="name">{{gkVideoInfo.title}}</p>
+                    </li>
+                    {{/each}}</script></ul></div></section><h2 class="h2-t"><span class="line"></span> 志愿讲堂</h2><section class="school-main"><div class="list-header list-header-bg1"></div><div class="list-body content-r"><ul class="list-ul volunteer-forum-list"></ul><div class="page-nav" id="Volunteer-page"><ul class="page-nav-ul"><li class="page-nav-item active">1</li><li class="page-nav-item">2</li><li class="page-nav-item">3</li></ul></div><script id="volunteer-forum-list" type="text/x-handlebars-template">{{#each rows}}
+                <li class="list-item">
+                    <a href="/static/class-college-detail.html?id={{gkVideoInfo.id}}" class="list-links">
+                        <img src="{{gkVideoInfo.frontCover}}" alt="{{gkVideoInfo.title}}">
+                        <p class="name">{{gkVideoInfo.title}}</p>
+                    </a>
+                    <p class="teacher">主讲:{{gkVideoInfo.teacher}}</p>
+
+                </li>
+                {{/each}}</script></div></section><div class="hide"><h2 class="h2-t"><span class="line"></span> 心理学堂</h2><section class="school-main"><div class="list-header list-header-bg2"></div><div class="list-body content-r"><ul class="list-ul mentality-list"><script id="mentality-list" type="text/x-handlebars-template">{{#each rows}}
+                        <li class="list-item">
+                            <a href="/static/class-college-detail.html?id={{gkVideoInfo.id}}" class="list-links">
+                                <img src="{{gkVideoInfo.frontCover}}" alt="{{gkVideoInfo.title}}">
+                                <p class="name">{{gkVideoInfo.title}}</p>
+                            </a>
+                            <p class="teacher">主讲:{{gkVideoInfo.teacher}}</p>
+                        </li>
+                        {{/each}}</script></ul><div class="page-nav"><ul class="page-nav-ul"><li class="page-nav-item active">1</li><li class="page-nav-item">2</li><li class="page-nav-item">3</li></ul></div></div></section><h2 class="h2-t"><span class="line"></span> 高考课堂</h2><section class="school-main mt20"><div class="list-header list-header-bg3"></div><div class="list-body content-r"><ul class="list-ul teacher-lecture-list"><script id="teacher-lecture-list" type="text/x-handlebars-template">{{#each rows}}
+                        <li class="list-item">
+                            <a href="/static/class-college-detail.html?id={{gkVideoInfo.id}}" class="list-links">
+                                <img src="{{gkVideoInfo.frontCover}}" alt="">
+                                <p class="name">{{gkVideoInfo.title}}</p>
+                            </a>
+                            <p class="teacher">主讲:{{gkVideoInfo.teacher}}</p>
+                        </li>
+                        {{/each}}</script></ul><div class="page-nav"><ul class="page-nav-ul"><li class="page-nav-item active">1</li><li class="page-nav-item">2</li><li class="page-nav-item">3</li></ul></div></div></section></div><h3 class="title-name">顶级名师团</h3><section class="top-teach-team-list"><script id="top-teach-team-list" type="text/x-handlebars-template">{{#each rows}}
+            <div class="col-comm">
+                <img src="{{topTeachTeam.frontCover}}" class="avatar-img">
+                <p>主讲: <span>{{topTeachTeam.teacher}}</span></p>
+                <p class="txt1">{{topTeachTeam.from}}</p>
+                <p class="txt2"> {{topTeachTeam.aboutTitle}}</p>
+            </div>
+            {{/each}}</script></section></div><script src="js/fc189a36.class-college.min.js"></script></body></html>
