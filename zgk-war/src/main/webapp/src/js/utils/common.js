@@ -20,7 +20,6 @@ define(['commonCss', 'jquery'], function () {
     }
     var cookie = require('cookie');
     if (cookie.getCookieValue('isLogin') == 'true') {
-        alert(cookie.getCookieValue('isLogin'))
         $('#login-front').hide();
         $('#login-end').show();
     } else {

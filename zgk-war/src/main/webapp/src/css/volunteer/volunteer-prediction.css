@@ -25,6 +25,10 @@
   margin: 0 0 0 -54px;
 }
 
+.type-ul {
+  width: 688px;
+}
+
 .content-main .t-bg {
   width: 723px;
   height: 102px;
@@ -101,6 +105,7 @@
   font-size: 20px;
   color: #666;
   font-weight: normal;
+  width: 1000px;
 }
 .content-b-header .school-title span {
   margin-right: 65px;
@@ -111,7 +116,7 @@
 }
 .content-b-header .ul li {
   float: left;
-  width: 170px;
+  width: 230px;
   line-height: 25px;
   color: #666;
   font-size: 16px;

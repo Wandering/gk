@@ -23,7 +23,6 @@ define(['commonjs', '../css/index.css', 'handlebars','tips', 'chinaMap','cookie'
         'type':1
     }, function (res) {
         console.log(res)
-        alert(JSON.stringify(res))
         if (res.rtnCode == '0000000') {
             var template = handlebars.compile($("#gk-top-list").html());
             var list = res.bizData;

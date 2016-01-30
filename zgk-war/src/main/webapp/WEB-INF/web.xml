@@ -99,7 +99,7 @@
     </context-param>
     
 	<welcome-file-list>
-        <welcome-file>/static/index.html</welcome-file>
+        <welcome-file>static/index.html</welcome-file>
     </welcome-file-list>
 
     <context-param>
