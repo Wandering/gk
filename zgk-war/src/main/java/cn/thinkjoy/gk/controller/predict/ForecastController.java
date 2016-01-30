@@ -12,6 +12,7 @@ import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
 import cn.thinkjoy.gk.service.IForecastService;
+import cn.thinkjoy.gk.annotation.VipMethonTag;
 import cn.thinkjoy.zgk.common.QueryUtil;
 import cn.thinkjoy.zgk.domain.BizData4Page;
 import cn.thinkjoy.zgk.remote.IGkAdmissionLineService;
@@ -44,6 +45,7 @@ public class ForecastController extends BaseApiController{
      */
     @RequestMapping(value = "/getPerformanceDetail",method = RequestMethod.GET)
     @ResponseBody
+    @VipMethonTag
     public Object getPerformanceDetail(){
     //实际接口
         Map<String,Object> map=new HashMap<>();
@@ -57,6 +59,7 @@ public class ForecastController extends BaseApiController{
      */
     @RequestMapping(value = "/getLastoFrecast",method = RequestMethod.GET)
     @ResponseBody
+    @VipMethonTag
     public Object getLastoFrecast(){
         Map<String,Object> map = new HashMap<>();
         map.put("userId",this.getAccoutId());
@@ -69,6 +72,7 @@ public class ForecastController extends BaseApiController{
      */
     @RequestMapping(value = "/getFormerYearsAdmission",method = RequestMethod.GET)
     @ResponseBody
+    @VipMethonTag
     public Object getFormerYearsAdmission(@RequestParam String universityid,@RequestParam(required = false) Integer batch){
         idIsNull(universityid);
         Map<String,Object> map = new HashMap<>();
@@ -88,6 +92,7 @@ public class ForecastController extends BaseApiController{
      */
     @RequestMapping(value = "/addFrecast",method = RequestMethod.POST)
     @ResponseBody
+    @VipMethonTag
     public boolean addFrecast(){
         //TODO   支持多对象保存
         Map<String, Object> dataMap = Maps.newHashMap();

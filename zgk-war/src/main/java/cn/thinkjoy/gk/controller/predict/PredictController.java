@@ -3,6 +3,7 @@ package cn.thinkjoy.gk.controller.predict;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.annotation.VipMethonTag;
 import cn.thinkjoy.zgk.remote.IUniversityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -46,6 +47,7 @@ public class PredictController extends BaseCommonController{
      */
     @RequestMapping(value = "/predictProbability",method = RequestMethod.POST)
     @ResponseBody
+    @VipMethonTag
     public Map<String, Object> predictProbability(@RequestParam(value = "universityName") String name,
                                                   @RequestParam(value = "score") int score,
                                                   @RequestParam(value = "type") String type)
@@ -115,6 +117,7 @@ public class PredictController extends BaseCommonController{
      */
     @RequestMapping(value = "/predictSchoolList",method = RequestMethod.POST)
     @ResponseBody
+    @VipMethonTag
     public Map<String, Object> predictSchoolList(@RequestParam(value = "score", defaultValue = "") int score,
                                                  @RequestParam(value = "type", defaultValue = "") String type)
     {

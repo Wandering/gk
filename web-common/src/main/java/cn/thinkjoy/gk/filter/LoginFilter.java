@@ -40,6 +40,7 @@ public class LoginFilter implements Filter {
 
             boolean redisFlag = RedisUtil.getInstance().exists(key);
 
+
             if (StringUtils.isEmpty(value) || !redisFlag) {
 //			request.getRequestDispatcher().forward(request, response);
                 hresponse.sendRedirect("/login/login.jsp");
