@@ -39,7 +39,7 @@ public class GkHotTest {
     }
     @Test
     public void testGetGkHotInfo() {
-        Assert.notNull(gkHotService.getGkHotInfo("255"));
+        Assert.notNull(gkHotService.getGkHotInfo(new HashMap<String, Object>(),"255"));
         //baseDataService.
         //Assert.notNull(user, "");
     }

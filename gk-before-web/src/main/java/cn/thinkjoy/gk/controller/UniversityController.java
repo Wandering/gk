@@ -5,8 +5,7 @@ package cn.thinkjoy.gk.controller;
  */
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseCommonController;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.domain.UniversityDict;
@@ -16,12 +15,9 @@ import cn.thinkjoy.gk.query.UniversityQuery;
 import cn.thinkjoy.gk.service.*;
 import cn.thinkjoy.gk.util.ConditionsUtil;
 import cn.thinkjoy.zgk.dto.UniversityPlanChartDTO;
-import cn.thinkjoy.zgk.remote.*;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -31,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +40,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/university")
-public class UniversityController extends BaseController {
+public class UniversityController extends ZGKBaseController {
 
     public static final Logger LOGGER= LoggerFactory.getLogger(UniversityController.class);
 
@@ -71,7 +66,7 @@ public class UniversityController extends BaseController {
      */
     @RequestMapping(value = "/getRemoteUniversityList",method = RequestMethod.GET)
     @ResponseBody
-    public List getUniversityList(@RequestParam(value = "universityName",required = false)String universityName,
+    public Map<String,Object> getUniversityList(@RequestParam(value = "universityName",required = false)String universityName,
                                   @RequestParam(value = "areaid",required = false)String areaid,//省份
                                   @RequestParam(value = "type",required = false)Integer type,//院校分类
                                   @RequestParam(value = "educationLevel",required = false)Integer educationLevel,//学历层次
@@ -92,13 +87,31 @@ public class UniversityController extends BaseController {
             ConditionsUtil.setCondition(condition,"property","like","%"+property+"%");
         String orederBy=null;
         String sqlOrderEnumStr="asc";
-        List<Map<String,Object>> getUniversityList=iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, null);
+        Map<String,Object> selectorpage=Maps.newHashMap();
+        selectorpage.put("photoUrl",1);
+        selectorpage.put("id",1);
+        selectorpage.put("name",1);
+        selectorpage.put("property",1);
+        selectorpage.put("province",1);
+        selectorpage.put("rank",1);
+        selectorpage.put("subjection",1);
+        selectorpage.put("typeName",1);
+        selectorpage.put("url",1);
+        List<Map<String,Object>> getUniversityList=iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
+        int count=iremoteUniversityService.getUniversityCount(condition);
         //如果用户已登录
         UserAccountPojo userAccountPojo=getUserAccountPojo();
-        if(null!=userAccountPojo) {
-            long userId = userAccountPojo.getId();
-            //需要在收藏表中拼接收藏状态字段
-            for (Map<String, Object> university : getUniversityList) {
+        for (Map<String, Object> university : getUniversityList) {
+            String[] propertys=new String[1];
+            if (university.containsKey("property")&&university.get("property")!=null) {
+                propertys[0] = university.get("property").toString();
+                university.put("property",propertys);
+            }
+
+            university.put("isCollect",0);
+            if(null!=userAccountPojo) {
+                long userId = userAccountPojo.getId();
+                //需要在收藏表中拼接收藏状态字段
                 Map<String,Object> param=Maps.newHashMap();
 //                param.put("userId",54);
                 param.put("userId",userId);
@@ -107,7 +120,10 @@ public class UniversityController extends BaseController {
                 university.put("isCollect",userCollectExService.isCollect(param));
             }
         }
-        return getUniversityList;
+        Map<String,Object> returnMap=Maps.newHashMap();
+        returnMap.put("universityList", getUniversityList);
+        returnMap.put("count", count);
+        return returnMap;
     }
 
     @RequestMapping(value = "getRemoteUniversityById",method = RequestMethod.GET)
@@ -125,7 +141,7 @@ public class UniversityController extends BaseController {
      */
     @RequestMapping(value = "getRemoteUniversityMajorListByUniversityId",method = RequestMethod.GET)
     @ResponseBody
-    public List getUniversityMajorListByUniversityId(@RequestParam(value = "universityId",required = true)long universityId,
+    public Map getUniversityMajorListByUniversityId(@RequestParam(value = "universityId",required = true)long universityId,
                                                      @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
                                                      @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
         Map<String,Object> condition=Maps.newHashMap();
@@ -138,8 +154,16 @@ public class UniversityController extends BaseController {
         selectorpage.put("gainDegree",1);
         selectorpage.put("majorRank",1);
         List ll = iremoteUniversityService.queryPage("universityMajorExService", condition, offset, rows, "majorRank", "asc", selectorpage);
-//        List ll=iremoteUniversityService.getUniversityMajorListByUniversityId(universityId,condition, offset, rows, "majorRank", "asc", selectorpage);
-        return ll;
+        Map<String,Object> condition2=Maps.newHashMap();
+        condition2.put("groupOp","and");
+        ConditionsUtil.setCondition(condition2,"id","=",String.valueOf(universityId));
+        Map<String,Object> selectorpage2=Maps.newHashMap();
+        selectorpage2.put("featureMajor",1);
+        List featureMajorList=iremoteUniversityService.queryPage("universityDetailService", condition2, 0, 10, "id", "asc", selectorpage2);
+        Map<String,List> returnMap=Maps.newHashMap();
+        returnMap.put("majorList",ll);
+        returnMap.put("featureMajorList",featureMajorList);
+        return returnMap;
     }
 
     /**
@@ -155,17 +179,23 @@ public class UniversityController extends BaseController {
     @RequestMapping(value = "getUniversityMajorEnrollingPlanList",method = RequestMethod.GET)
     @ResponseBody
     public List getUniversityMajorEnrollingPlanList(@RequestParam(value = "universityId",required = true)long universityId,
-                                                @RequestParam(value = "year",required = true)String year,//年份
-                                                @RequestParam(value = "batch",required = true)int batch,//批次
-                                                @RequestParam(value = "universityMajorType",required = true)String universityMajorType,//科类
-                                                @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
-                                                @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
+                                                    @RequestParam(value = "year",required = false)String year,//年份
+                                                    @RequestParam(value = "batch",required = false)Integer batch,//批次
+                                                    @RequestParam(value = "universityMajorType",required = false)String universityMajorType,//科类
+                                                    @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
+                                                    @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
         Map<String,Object> condition=Maps.newHashMap();
         condition.put("groupOp","and");
         ConditionsUtil.setCondition(condition, "universityId", "=", String.valueOf(universityId));
-        ConditionsUtil.setCondition(condition,"year", "=", year);
-        ConditionsUtil.setCondition(condition,"batch","=",String.valueOf(batch));
-        ConditionsUtil.setCondition(condition,"universityMajorType","=",universityMajorType);
+        if (StringUtils.isNotBlank(year)) {
+            ConditionsUtil.setCondition(condition, "year", "=", year);
+        }
+        if (batch!=null) {
+            ConditionsUtil.setCondition(condition, "batch", "=", String.valueOf(batch));
+        }
+        if (StringUtils.isNotBlank(universityMajorType)) {
+            ConditionsUtil.setCondition(condition, "universityMajorType", "=", universityMajorType);
+        }
         Map<String,Object> selectorpage=Maps.newHashMap();
         selectorpage.put("majorId",1);
         selectorpage.put("majorName",1);
@@ -222,6 +252,24 @@ public class UniversityController extends BaseController {
         return ll;
     }
 
+    /**
+     * 院校录取情况图表接口
+     * @param universityId
+     * @return
+     */
+    @RequestMapping(value = "queryUniversityEnrollingChart",method = RequestMethod.GET)
+    @ResponseBody
+    public List queryUniversityEnrollingChart(@RequestParam(value = "universityId",required = true)long universityId){
+        Map<String,Object> map=Maps.newHashMap();
+        map.put("universityId",universityId);
+        return iremoteUniversityService.queryUniversityEnrollingChart(map);
+    }
+
+    /**
+     * 院校招生计划图表数据接口
+     * @param universityId
+     * @return
+     */
     @RequestMapping(value = "queryUniversityPlanChart",method = RequestMethod.GET)
     @ResponseBody
     public List queryUniversityPlanChart(@RequestParam(value = "universityId",required = true)long universityId){
@@ -345,7 +393,7 @@ public class UniversityController extends BaseController {
             List<UniversityDict> universityFeatureList=universityDictService.queryList(map,"id","asc");
             for(UniversityDict universityDict:universityFeatureList){
                 if((universityFeatureId.intValue() & universityDict.getDictId().intValue()) >= universityFeatureId.intValue() ){
-                        universityFeatureParam.add(universityDict.getDictId());
+                    universityFeatureParam.add(universityDict.getDictId());
                 }
             }
         }
@@ -409,7 +457,7 @@ public class UniversityController extends BaseController {
     @RequestMapping(value = "/getEnrollInfo",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> getEnrollInfo()throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
 //        long areaId=450000L;
         String schoolId=request.getParameter("id");
         Map<String,Object> map=new HashMap<String, Object>();
@@ -435,18 +483,18 @@ public class UniversityController extends BaseController {
     public EntrollPlanDto getEnrollPlan() throws Exception{
         String schoolId=request.getParameter("id");
         String batch=request.getParameter("batch");
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         EntrollPlanDto entrollPlanDto=new EntrollPlanDto();
         List<EntrollPlan> entrollPlans=new ArrayList<EntrollPlan>();
         switch (batch){
             case "1": batch="一批本科";
-                  break;
+                break;
             case "2": batch="二批本科";
-                  break;
+                break;
             case "3":batch="三批本科";
-                  break;
+                break;
             case "4":batch="高职（专科）";
-                 break;
+                break;
             default: batch="";
 
         }
@@ -501,7 +549,7 @@ public class UniversityController extends BaseController {
     @RequestMapping(value = "/getMajoredScoreLineList",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> getMajoredScoreLineList(@RequestParam(value = "universityId",required = true)long universityId) throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         return iUniversityService.getMajoredScoreLinePojoList(universityId,areaId);
     }
 
@@ -514,7 +562,7 @@ public class UniversityController extends BaseController {
     @RequestMapping(value = "/getOpenMajoredPojoList",method = RequestMethod.GET)
     @ResponseBody
     public List<OpenMajoredPojo> getOpenMajoredPojoList(@RequestParam(value = "universityId",required = true)long universityId) throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         return iUniversityService.getOpenMajoredPojoList(universityId,areaId);
     }
 
@@ -545,7 +593,7 @@ public class UniversityController extends BaseController {
 //        } catch (UnsupportedEncodingException e) {
 //            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),ERRORCODE.PARAM_ERROR.getMessage());
 //        }
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         UniversityDetailDto universityDetailDto = null;
         try{
             universityDetailDto = universityExService.getUniversityDetail(code,batch,type,year,areaId);

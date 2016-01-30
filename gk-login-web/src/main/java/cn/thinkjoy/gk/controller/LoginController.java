@@ -1,16 +1,13 @@
 package cn.thinkjoy.gk.controller;
 
-import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
-import cn.thinkjoy.gk.constant.CookieConst;
-import cn.thinkjoy.gk.constant.CookieTimeConst;
+import cn.thinkjoy.gk.common.ZGKBaseController;
+import cn.thinkjoy.gk.common.DESUtil;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
+import cn.thinkjoy.gk.pojo.UserInfoPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IUserAccountExService;
-import cn.thinkjoy.gk.util.CookieUtil;
-import com.google.common.collect.Maps;
 import com.jlusoft.microschool.core.utils.MD5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,10 +20,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/login")
-public class LoginController extends BaseController {
+public class LoginController extends ZGKBaseController {
 
 	private static final Logger LOGGER= LoggerFactory.getLogger(LoginController.class);
 
@@ -39,11 +39,13 @@ public class LoginController extends BaseController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public long login(@RequestParam(value="account",required=false) String account,
+	public Map<String, Object> login(@RequestParam(value="account",required=false) String account,
 					  @RequestParam(value="password",required=false) String password) throws Exception {
 		LOGGER.debug("22222");
 		long id = 0l;
-		long areaId=getAreaCookieValue();
+		long areaId= getAreaId();
+		UserInfoPojo userInfoPojo=null;
+		Map<String, Object> resultMap = new HashMap<>();
 		try {
 			if (StringUtils.isEmpty(account)) {
 				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
@@ -51,8 +53,6 @@ public class LoginController extends BaseController {
 			if (StringUtils.isEmpty(password)) {
 				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入密码!");
 			}
-
-
 
 			UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account,areaId);
 
@@ -72,20 +72,24 @@ public class LoginController extends BaseController {
 
 			id = userAccountBean.getId();
 
-			String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
+			userInfoPojo=userAccountExService.getUserInfoPojoById(id);
+			String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), userInfoPojo.getAccount());
+			setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));
 
-			response.addCookie(CookieUtil.addCookie(domain,getCookieName(), String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
-
-//			response.addCookie(CookieUtil.addCookie(CookieConst.USER_COOKIE_NAME, String.valueOf(id), CookieTimeConst.DEFAULT_COOKIE));
-
-			setUserAccountPojo(userAccountBean);
-
+			if(null != userInfoPojo)
+			{
+				resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
+				userInfoPojo.setPassword(null);
+				userInfoPojo.setId(null);
+				userInfoPojo.setStatus(null);
+				resultMap.put("userInfo", userInfoPojo);
+			}
 		}catch(Exception e){
 			throw e;
 		}finally{
 
 		}
-		return id;
+		return resultMap;
 	}
 
 	/**
@@ -95,14 +99,14 @@ public class LoginController extends BaseController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout() throws Exception {
 //		boolean status = true;
-		try {
+//		try {
 //			RedisUtil.getInstance().del(UserRedisConst.USER_KEY + getCookieValue());
-			String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
-			response.addCookie(CookieUtil.addCookie(domain,getCookieName(), "", CookieTimeConst.CLEAN_COOKIE));
-		}catch(Exception e){
+//			String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
+//			response.addCookie(CookieUtil.addCookie(domain,getCookieName(), "", CookieTimeConst.CLEAN_COOKIE));
+//		}catch(Exception e){
 //			status = false;
-			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
-		}
+//			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
+//		}
 		return "index";
 	}
 

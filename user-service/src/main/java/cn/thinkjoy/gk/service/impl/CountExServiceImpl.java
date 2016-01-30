@@ -25,9 +25,7 @@ public class CountExServiceImpl implements ICountExService {
         Map<String,Object> map= Maps.newHashMap();
         map.put("projectId",projectId);
         map.put("type",type);
-        Map<String,Object> queryMap=Maps.newHashMap();
-        queryMap.put("condition",map);
-        Count count= (Count) countService.queryOne(queryMap);
+        Count count= (Count) countService.queryOne(map);
         if (operation.equals("add")){
             if (count==null){
                 count=new Count();

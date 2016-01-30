@@ -15,7 +15,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-;
+;import java.util.HashMap;
+import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:zgkwar-dubbo-consumer-test.xml")
@@ -25,13 +26,17 @@ public class GkScheduleTest {
     private IGkScheduleService gkScheduleService;
     @Test
     public void testGetGkScheduleList() {
-
-        Assert.notNull(gkScheduleService.getScheduleList(6));
-        System.out.println(gkScheduleService.getScheduleList(4));
+        Map<String, Object> conditions = new HashMap<>();
+        conditions.put("scheduleRows","4");
+        conditions.put("showMonth",9);
+        conditions.put("startMonth","2015-9");
+        conditions.put("boo",true);
+        Assert.notNull(gkScheduleService.getScheduleList(conditions, 6));
+//        System.out.println(gkScheduleService.getScheduleList(4));
     }
     @Test
     public void testGetGkScheduleInfo() {
-        Assert.notNull(gkScheduleService.getScheduleInfo("19"));
+        Assert.notNull(gkScheduleService.getScheduleInfo(new HashMap<String, Object>(),"1"));
     }
 
 }

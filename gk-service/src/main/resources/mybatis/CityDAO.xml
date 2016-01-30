@@ -30,7 +30,7 @@ selectList
         name
     </sql>
     <insert id="insert" parameterType="City">
-        INSERT INTO gk_city (
+        INSERT INTO zgk_city (
         status,
         provinceId,
         name
@@ -46,7 +46,7 @@ selectList
 
     <!-- 更新 -->
     <update id="update" parameterType="City">
-        UPDATE gk_city
+        UPDATE zgk_city
         <trim prefix="SET" suffixOverrides=",">
             <if test="status!=null">
                 status = #{status},
@@ -63,7 +63,7 @@ selectList
     </update>
 
     <update id="updateMap">
-        UPDATE gk_city
+        UPDATE zgk_city
         <trim prefix="SET" suffixOverrides=",">
             <if test="map.status!=null">
                 status = #{map.status},
@@ -80,7 +80,7 @@ selectList
     </update>
 
     <update id="updateByCondition">
-        UPDATE gk_city
+        UPDATE zgk_city
         <trim prefix="SET" suffixOverrides=",">
             <if test="update.status!=null">
                 status = #{update.status},
@@ -110,7 +110,7 @@ selectList
     </update>
 
     <insert id="insertMap" >
-        INSERT INTO gk_city (
+        INSERT INTO zgk_city (
                 status,
                 provinceId,
                 name
@@ -123,7 +123,7 @@ selectList
 
 
     <update id="updateNull" parameterType="City">
-        UPDATE gk_city
+        UPDATE zgk_city
         <trim prefix="SET" suffixOverrides=",">
             status = #{status},
             provinceId = #{provinceId},
@@ -135,7 +135,7 @@ selectList
 
     <!-- 按Id删除 -->
     <delete id="deleteById" parameterType="java.lang.Long">
-        DELETE FROM gk_city
+        DELETE FROM zgk_city
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -143,7 +143,7 @@ selectList
 
 
     <delete id="deleteByCondition" parameterType="java.util.Map">
-        DELETE FROM gk_city
+        DELETE FROM zgk_city
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id = #{id}
@@ -161,14 +161,14 @@ selectList
     </delete>
 
     <delete id="deleteByProperty" parameterType="java.util.Map">
-        DELETE FROM gk_city WHERE
+        DELETE FROM zgk_city WHERE
         ${property} = #{value}
     </delete>
 
     <select id="fetch" parameterType="java.lang.Long" resultType="City">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_city
+        FROM zgk_city
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -180,7 +180,7 @@ selectList
     <select id="findOne" parameterType="java.util.Map" resultType="City">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_city WHERE
+        FROM zgk_city WHERE
         ${property} = #{value}
         LIMIT 0,1
     </select>
@@ -188,7 +188,7 @@ selectList
     <select id="findList" parameterType="java.util.Map" resultType="City">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_city WHERE
+        FROM zgk_city WHERE
         ${property} = #{value}
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -198,7 +198,7 @@ selectList
     <select id="findAll" resultType="City">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_city
+        FROM zgk_city
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
         </if>
@@ -207,7 +207,7 @@ selectList
     <select id="queryPage" resultType="City">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_city
+        FROM zgk_city
         <where>
 
             <if test="condition.whereSql != null">
@@ -241,7 +241,7 @@ selectList
     <select id="like" parameterType="java.util.Map" resultType="City">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_city
+        FROM zgk_city
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id like CONCAT('%', #{id} , '%')
@@ -265,7 +265,7 @@ selectList
     <select id="queryList" parameterType="java.util.Map" resultType="City">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_city
+        FROM zgk_city
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="condition.id!=null">
                 AND id = #{condition.id}
@@ -288,7 +288,7 @@ selectList
     <select id="queryOne" parameterType="java.util.Map" resultType="City">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_city
+        FROM zgk_city
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id = #{id}
@@ -307,7 +307,7 @@ selectList
     </select>
 
     <select id="count" resultType="java.lang.Integer">
-        SELECT count(id) FROM gk_city
+        SELECT count(id) FROM zgk_city
        <where>
            <if test="id!=null">
                ${groupOp} id ${id.op}  #{id.data}
@@ -331,7 +331,7 @@ selectList
     <select id="selectMaxId" resultType="java.lang.Long">
         SELECT
         MAX(id)
-        FROM gk_city
+        FROM zgk_city
     </select>
 
 </mapper>

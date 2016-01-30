@@ -2,7 +2,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.CaptchaTimeConst;
 import cn.thinkjoy.gk.constant.RedisConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/captcha")
-public class CaptchaController extends BaseController {
+public class CaptchaController extends ZGKBaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(CaptchaController.class);
 
@@ -43,7 +43,7 @@ public class CaptchaController extends BaseController {
     @ResponseBody
     public String captcha(@RequestParam(value="account",required=false) String account,@RequestParam(value="type",required=false) Integer type) throws Exception {
 
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         JSONObject result = new JSONObject();
         try{
             if(StringUtils.isEmpty(account)){

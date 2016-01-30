@@ -34,11 +34,12 @@ public class LoginFilter implements Filter {
             chain.doFilter(request, response);
         }else {
 
-            String value = CookieUtil.getCookieValue(hrequest);
+            String value = hrequest.getParameter("token");
 
             String key = UserRedisConst.USER_KEY + value;
 
             boolean redisFlag = RedisUtil.getInstance().exists(key);
+
 
             if (StringUtils.isEmpty(value) || !redisFlag) {
 //			request.getRequestDispatcher().forward(request, response);

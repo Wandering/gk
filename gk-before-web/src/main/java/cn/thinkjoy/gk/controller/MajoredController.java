@@ -1,18 +1,17 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
-import cn.thinkjoy.gk.domain.UniversityDict;
 import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.MajoredQuery;
-import cn.thinkjoy.gk.service.IDataDictService;
-import cn.thinkjoy.gk.service.IMajoredRankExService;
-import cn.thinkjoy.gk.service.IMajoredService;
-import cn.thinkjoy.gk.service.IUniversityDictService;
+import cn.thinkjoy.gk.service.*;
+import cn.thinkjoy.zgk.dto.MajoredCategoryRemoteDTO;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -30,7 +29,7 @@ import java.util.*;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/majored")
-public class MajoredController extends BaseController {
+public class MajoredController extends ZGKBaseController {
 
     public static  final Logger log= LoggerFactory.getLogger(MajoredController.class);
 
@@ -39,9 +38,71 @@ public class MajoredController extends BaseController {
     @Autowired
     private IMajoredService  iMajoredService;
     @Autowired
-    private IUniversityDictService iUniversityDictService;
-    @Autowired
     private IDataDictService iDataDictService;
+
+    @Autowired
+    private IUserCollectExService userCollectExService;
+
+    @Autowired
+    private cn.thinkjoy.zgk.remote.IMajoredService iremoteMajoredService;
+
+    @RequestMapping(value = "getCategoryMajoredList",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getCategoryMajoredList(@RequestParam(value = "categoryId",required = true)long categoryId){
+        return iremoteMajoredService.getCategoryMajoredList(categoryId);
+    }
+
+    @RequestMapping(value = "getMajoredCategory",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getMajoredCategory(@RequestParam(value = "type",required = true)long type){
+        return iremoteMajoredService.getMajoredCategory(type);
+    }
+
+    @RequestMapping(value = "getMajoredByName",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getMajoredByName(@RequestParam(value = "majoredName",required = true)String majoredName,@RequestParam(value = "type",required = true)String type){
+        return iremoteMajoredService.getMajoredByName(majoredName,type);
+    }
+
+    @RequestMapping(value = "getMajoredInfoById",method = RequestMethod.GET)
+    @ResponseBody
+    public Map getMajoredInfoById(@RequestParam(value = "majoredId", required = true) int majoredId){
+        //专业Id、专业名称、就业率、薪资、专业代码、授予学位、修学年限、开设课程、专业解读、
+        return iremoteMajoredService.getMajoredInfoById(Long.valueOf(majoredId));
+    }
+
+    @RequestMapping(value = "/getMajorOpenUniversityList",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getMajorOpenUniversityList(@RequestParam(value = "majoredId",required = true)int majoredId,
+                                             @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
+                                             @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
+        List<Map<String,Object>> getUniversityList=iremoteMajoredService.getMajorOpenUniversityList(majoredId,offset,rows,null,null);
+//        int count=iremoteUniversityService.getUniversityCount(condition);
+        //如果用户已登录
+        UserAccountPojo userAccountPojo=getUserAccountPojo();
+        for (Map<String, Object> university : getUniversityList) {
+            String[] propertys=new String[1];
+            propertys[0]=university.get("property").toString();
+
+            university.put("property",propertys);
+            university.put("isCollect",0);
+            if(null!=userAccountPojo) {
+                long userId = userAccountPojo.getId();
+                //需要在收藏表中拼接收藏状态字段
+                Map<String,Object> param=Maps.newHashMap();
+//                param.put("userId",54);
+                param.put("userId",userId);
+                param.put("projectId",university.get("id"));
+                param.put("type",1);
+                university.put("isCollect",userCollectExService.isCollect(param));
+            }
+        }
+        Map<String,Object> returnMap=Maps.newHashMap();
+        returnMap.put("universityList", getUniversityList);
+//        returnMap.put("count", count);
+        return returnMap;
+    }
+
     /**
      * 获取初始化信息
      * @return
@@ -196,7 +257,7 @@ public class MajoredController extends BaseController {
 //        Calendar a=Calendar.getInstance();
 //        int year = a.get(Calendar.YEAR);
 
-        long areaId = getAreaCookieValue();
+        long areaId = getAreaId();
         // 改为获取有数据最近一年
         int year = majoredRankExService.getRecentlyByYear(majoredDto.getName(), areaId);
 

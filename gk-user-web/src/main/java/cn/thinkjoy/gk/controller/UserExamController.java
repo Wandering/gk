@@ -2,11 +2,9 @@ package cn.thinkjoy.gk.controller;
 
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.UserExam;
-import cn.thinkjoy.gk.domain.UserInfo;
-import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.*;
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/exam")
-public class UserExamController extends BaseController {
+public class UserExamController extends ZGKBaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(UserExamController.class);
 
@@ -40,7 +38,7 @@ public class UserExamController extends BaseController {
     @ResponseBody
     public boolean getUserInfo(UserExam userExam) throws Exception{
 
-        String id=getCookieValue();
+        String id=getAccoutId();
 
         if(StringUtils.isEmpty(id)){
             throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
@@ -68,7 +66,7 @@ public class UserExamController extends BaseController {
     @ResponseBody
     public UserExam findUserExam() throws Exception{
 
-        String id=getCookieValue();
+        String id=getAccoutId();
 
         if(StringUtils.isEmpty(id)){
             throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());

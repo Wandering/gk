@@ -26,4 +26,10 @@ public class DomainConst {
 	public static final String GX_DOMAIN = "gx.";
 	public static final String GX_DOMAIN_CODE = "450000";
 
+	/**
+	 * 浙江
+	 */
+	public static final String ZJ_DOMAIN = "zj.";
+	public static final String ZJ_DOMAIN_CODE = "330000";
+
 }

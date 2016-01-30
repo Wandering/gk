@@ -1,8 +1,8 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
 import cn.thinkjoy.gk.bean.QuestionAnswerBean;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.dto.AnswerDetailDto;
 import cn.thinkjoy.gk.dto.QuestionContentDto;
@@ -33,7 +33,7 @@ import java.util.List;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value="/answer")
-public class AnswerController extends BaseController {
+public class AnswerController extends ZGKBaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(AnswerController.class);
 

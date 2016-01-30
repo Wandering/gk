@@ -1,6 +1,5 @@
 package cn.thinkjoy.gk.test.policyInterpretation.service;
 
-import cn.thinkjoy.gk.dao.IAdmissionBatchDAO;
 import cn.thinkjoy.gk.domain.AdmissionBatch;
 import cn.thinkjoy.gk.service.IAdmissionBatchService;
 import com.google.common.collect.Maps;
