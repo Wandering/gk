@@ -13,10 +13,6 @@ define(['commonjs', 'tips', 'handlebars','cookie'], function (util, tips, handle
                 tips('#tips', '请先登录后再操作!');
                 return false;
             }
-            //if (cookie.getCookieValue('vipStatus')=='0') {
-            //    tips('#tips', '请先升级VIP再操作!');
-            //    return false;
-            //}
             var subjectV = $('.radio-subject[name="subject"]:checked').val(),
                 scoreV = $.trim($('#score').val())
             if (subjectV == "" || subjectV == undefined) {
@@ -32,7 +28,7 @@ define(['commonjs', 'tips', 'handlebars','cookie'], function (util, tips, handle
                 'type': subjectV,
                 'score': scoreV
             }, function (res) {
-                console.log(res)
+                console.log(res);
                 if (res.rtnCode === "0000000") {
                     $('#content-a').hide();
                     var template = handlebars.compile($("#temp-content").html());
@@ -50,6 +46,8 @@ define(['commonjs', 'tips', 'handlebars','cookie'], function (util, tips, handle
                     for(var k in res.bizData){
                         num += res.bizData[k].count;
                     }
+                    console.log(num)
+
                     $('#total-num').text(num);
 
                 } else {

@@ -7552,10 +7552,9 @@ ul, li, ol, ul li {
 }
 .footer-bg .links-nav {
   height: 256px;
-  overflow: hidden;
 }
 .footer-bg .links-nav .links {
-  width: 730px;
+  width: 735px;
   float: left;
   border-right: 1px solid #5b6166;
   margin-top: 40px;
@@ -7586,7 +7585,7 @@ ul, li, ol, ul li {
 }
 .footer-bg .links-nav .server-list {
   float: right;
-  width: 223px;
+  width: 245px;
   margin-top: 40px;
 }
 .footer-bg .links-nav .server-list dl.item {

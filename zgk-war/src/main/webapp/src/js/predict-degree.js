@@ -1,4 +1,4 @@
-define(['commonjs','tips','handlebars','cookie'], function (util,tips,handlebars,cookie) {
+define(['commonjs','tips','handlebars','cookie','noDataTips'], function (util,tips,handlebars,cookie,noDataTips) {
     require('../css/volunteer/volunteer-prediction.css');
 
     $(function () {
@@ -24,10 +24,6 @@ define(['commonjs','tips','handlebars','cookie'], function (util,tips,handlebars
                 tips('#tips', '请先登录后再操作!');
                 return false;
             }
-            //if (cookie.getCookieValue('vipStatus')=='0') {
-            //    tips('#tips', '请先升级VIP再操作!');
-            //    return false;
-            //}
 
             if (subjectV == "" || subjectV == undefined) {
                 tips('#tips', '请选择科目');
@@ -60,6 +56,9 @@ define(['commonjs','tips','handlebars','cookie'], function (util,tips,handlebars
                     }else{
                         $('#recommend').hide();
                     }
+                    if(res.bizData.probability==0){
+                        $('#star-list').html('暂无');
+                    }
                     var strArr = '';
                     for (var i = 0; i < res.bizData.probability; i++) {
                         var star = '<span class="star icon-star"></span>';
@@ -67,6 +66,15 @@ define(['commonjs','tips','handlebars','cookie'], function (util,tips,handlebars
                     }
                     $('#star-list').html(strArr);
                     res.bizData.type == '1' ? $('#type-subject').text('文史') : $('#type-subject').text('理工');
+
+                    if(res.bizData.historyList.length==0){
+                        $('.data-tips').html(noDataTips('真抱歉,暂无数据'));
+                    } else {
+                        $('.data-tips').html('');
+                    }
+
+
+
                 } else {
                     tips('#tips', res.msg);
                 }

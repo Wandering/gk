@@ -86,7 +86,7 @@ define(['commonjs','cookie'], function (util,cookie) {
                 return;
             }
 
-            util.ajaxFun(util.INTERFACE_URL.upgradeVipByCard, 'GET', {
+            util.ajaxFun(util.INTERFACE_URL.upgradeVipByCard, 'POST', {
                 "cardNumber": $('#pay-card').val(),
                 "password": $('#pay-password').val()
             }, function (res) {

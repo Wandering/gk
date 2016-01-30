@@ -81,7 +81,7 @@
                     <span id="star-list"></span>
                 </h3>
                 <div class="ul">
-                    <ul>
+                    <ul class="type-ul">
                         <li>科类：<span id="type-subject"></span></li>
                         <li>目标院校：{{universityName}}</li>
                         <li>分数：{{score}}</li>
@@ -113,12 +113,13 @@
                         <td>{{universityName}}</td>
                         <td>{{batch}}</td>
                         <td>{{enrollingNumber}}</td>
-                        <td>{{lowScore}}</td>
-                        <td>{{highScore}}</td>
+                        <td>{{minScore}}</td>
+                        <td>{{avgScore}}</td>
                     </tr>
                     {{/each}}
                     </tbody>
                 </table>
+                <div class="data-tips"></div>
                 <div class="volunteer-result-txt">
                     <strong>预测结论分析：</strong>
                     <p class="txt">根据目前您的分数，您考生一批本科的概率为0，您可以通过我们的在线课程提高成绩
