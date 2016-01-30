@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>高考互动</title><link href="48c7a611.news-online-interactive.min.css" rel="stylesheet"></head><body><section id="crumb" class="crumb"><ol class="breadcrumb w1000"><li><span class="icon-crumb breadcrumb-home"></span><a href="/">首页</a></li><li><a href="/static/news-hot.html">高考资讯</a></li><li class="active">在线互动</li></ol></section><div class="banner" id="banner"><div class="count w1000"><div class="box"><span class="num1">3829</span>位学生和家长在线提问 <span class="line">|</span> <span class="num2">6027</span>个问题得到了解答</div></div></div><div class="search w1000"><section class="search-box"><input id="query" class="" type="text" size="27" name="" autocomplete="off" placeholder="请输入院校名称" value=""> <a href="#" class="go"><span class="icon-query"></span></a></section><button class="btn btn-ask">我要提问</button></div><div class="interactive-container w1000"><div class="interactive"><h2 class="h2-t"><div class="toggle-title active" urlid="0">在线互动</div><span class="l">|</span><div class="toggle-title" urlid="1">已回答</div></h2><ul class="list online-interactive"></ul><script id="online-interactive" type="text/x-handlebars-template">{{#each bizData}}
+            <li>
+                <img src="{{question.userIcon}}" class="avatar-img">
+                <span class="yes-or-no">已回答</span>
+                <div class="user-name">
+                    <span class="name">{{question.userName}}</span>
+                    <span class="time">{{formatDate question.createTime}}</span>
+                </div>
+                {{#each question.questions}}
+                <div class="title">{{text}}</div>
+                {{/each}}
+                <div class="content">
+                    <div class="triangle"></div>
+                    <p class="eg">专家回答如下:</p>
+                    {{#each answer.answers}}
+                    <span class="txt">{{text}}</span>
+                    <img src="{{img}}" alt="">
+                    {{/each}}
+                </div>
+            </li>
+            {{/each}}</script><ul class="list online-hot dh"></ul><script id="online-hot" type="text/x-handlebars-template">{{#each bizData}}
+            <li>
+                <img src="{{question.userIcon}}" class="avatar-img">
+                <span class="yes-or-no">已回答</span>
+                <div class="user-name">
+                    <span class="name">{{question.userName}}</span>
+                    <span class="time">{{formatDate question.createTime}}</span>
+                </div>
+                {{#each question.questions}}
+                <div class="title">{{text}}</div>
+                {{/each}}
+                <div class="content">
+                    <div class="triangle"></div>
+                    <p class="eg">专家回答如下:</p>
+                    {{#each answer.answers}}
+                    <span class="txt">{{text}}</span>
+                    <img src="{{img}}" alt="">
+                    {{/each}}
+                </div>
+            </li>
+            {{/each}}
+            <!--<li>-->
+            <!--<img src="img/yxxx-img.png" class="avatar-img">-->
+            <!--<span class="yes-or-no">已回答</span>-->
+            <!--<div class="user-name">-->
+            <!--<span class="name">韩小韩同学</span>-->
+            <!--<span class="time">2天前</span>-->
+            <!--</div>-->
+            <!--<div class="title">行政管理专业与公共事业管理的区别在哪？</div>-->
+            <!--<div class="content">-->
+            <!--<div class="triangle"></div>-->
+            <!--<p class="eg">专家回答如下:</p>-->
+            <!--<span class="txt">行政管理专业是运用国家权力对社会事务的一种管理活动。也可以泛指一切企业、事业单位的行政事务管理工作。行政管理系统是一类组织系统。它是社会系统的一个重要分系统。</span>-->
+            <!--</div>-->
+            <!--</li>--></script></div><div class="hot-resolve"><h2 class="h2-t"><span>热门解答</span></h2><ul class="title-list"><script id="title-list" type="text/x-handlebars-template">{{#each bizData}}
+                    {{#each question.questions}}
+                    <li><a href="/static/news-online-detail.html?id={{../question.questionId}}">{{text}}</a></li>
+                    {{/each}}
+                {{/each}}</script></ul></div></div><script src="js/730f6a2d.news-online-interactive.min.js"></script></body></html>

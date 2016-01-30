@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>智高考首页</title>
+</head>
+<body>
+
+<div class="banner">
+    <div class="w1000 ui-location-reporting">
+        <div class="toggle-container-box">
+            <div class="toggle-title">
+                <span class="active">目标定位</span>
+                <!--<span>智能填报</span>-->
+            </div>
+            <div class="toggle-content ui-location">
+                <input type="text" class="input-common" id="target-score" placeholder="输入分数">
+                <input type="text" class="input-common" id="target-school" placeholder="目标院校">
+                <button class="btn btn-success btn-start" id="report-btn">开始定位</button>
+            </div>
+            <div class="toggle-content ui-reporting dh">
+                <input type="text" class="input-common" placeholder="当前分数">
+                <input type="text" class="input-common" placeholder="当前位次">
+                <label for="subject-w">文史&nbsp;&nbsp;<input type="radio" id="subject-w" name="wl"></label>
+                <label for="subject-l">理工&nbsp;&nbsp;<input type="radio" id="subject-l" name="wl"></label>
+                <button class="btn btn-success btn-start">填报</button>
+            </div>
+            <div id="tips" class="alert alert-danger" role="alert"></div>
+        </div>
+    </div>
+</div>
+<!--sub介绍跳转-->
+<div class="zgk-intro w1000">
+    <div class="intro-link pull-left">
+        <div class="intro-title">
+            智高考点亮梦想
+            <span class="text-tip">
+                你已完成25%的梦想计划
+            </span>
+        </div>
+        <ul class="section-1">
+            <i class="icon-dashed"></i>
+            我想去哪儿
+            <li><a href="">选院校</a></li>
+            <li><a href="">选专业</a></li>
+            <li><a href="">查分数</a></li>
+        </ul>
+        <ul class="section-2">
+            <i class="icon-dashed"></i>
+            我能去哪儿
+            <li><a href="">目标定位</a></li>
+            <li><a href="">录取难易预测</a></li>
+            <li><a href="">院校预测</a></li>
+            <li><a href="">专业测评</a></li>
+        </ul>
+        <ul class="section-3">
+            <i class="icon-dashed"></i>
+            我要去哪儿
+            <li><a href="">智能填报</a></li>
+            <li><a href="">志愿填报报考样例</a></li>
+        </ul>
+    </div>
+    <div class="intro-login pull-right">
+        <div class="login-module">
+            <p>Hi!欢迎登陆智高考!</p>
+            <div class="login-into">
+                <a href="/static/login.html" target="_blank" class="btn btn-login">登录</a>
+                <a href="/static/login.html" target="_blank" class="btn btn-register">注册</a>
+            </div>
+            <div class="login-after">
+                <p class="noVip">您还不是VIP,请<a href="/static/user-vip.html">升级VIP</a>!</p>
+                <p class="isVip">VIP会员您好!</p>
+            </div>
+
+        </div>
+        <div class="num-item"><span class="bg1">智</span>36567人使用智高考</div>
+        <div class="num-item"><span class="bg2">高</span>2,800院校信息</div>
+        <div class="num-item"><span class="bg3">考</span>147,330,270数据</div>
+    </div>
+</div>
+<!--高考头条-->
+<div class="gk-headlines w1000">
+    <h2 class="h2-t w1000"><span class="line"></span>高考头条</h2>
+    <div class="headlines-list" id="gk-top">
+
+    </div>
+    <div class="banner-advertise"></div>
+</div>
+<div class="w1000 clearfix">
+    <!--高考数据-->
+    <div class="gk-data">
+        <h2 class="h2-t"><span class="line"></span>高考数据</h2>
+        <div class="data-module">
+            <div class="box">
+                <a href="/static/data-school-info.html" class="img-link img-link-1">
+                    <!--<img src="img/yxxx-img.png" alt="">-->
+                </a>
+                <div class="txt">
+                    <a href="/static/data-school-info.html" class="link">院校信息</a>
+                    <p>多方式智能搜索，准确把握院校历年招生数据走势，对比分析重点锁定</p>
+                </div>
+            </div>
+
+            <div class="box">
+                <a href="/static/data-professional-info.html" class="img-link img-link-2">
+                    <!--<img src="img/zyxx-img.png" alt="">-->
+                </a>
+                <div class="txt">
+                    <a href="/static/data-professional-info.html" class="link">专业信息</a>
+                    <p>一键搜索专业信息，独家获取就业率及薪资水平，轻松规划职业方向</p>
+                </div>
+            </div>
+            <div class="box">
+                <a href="/static/data-school-enrollment.html" class="img-link img-link-3">
+                    <!--<img src="img/yxzsxx-img.png" alt="">-->
+                </a>
+                <div class="txt">
+                    <a href="/static/data-school-enrollment.html" class="link">院校招生信息</a>
+                    <p>全国2000多所院校3年招生信息，权威数据全面掌握</p>
+                </div>
+            </div>
+            <div class="box">
+                <a href="/static/data-gk-word.html" class="img-link img-link-4">
+                    <!--<img src="img/gkct-img.png" alt="">-->
+                </a>
+                <div class="txt">
+                    <a href="/static/data-gk-word.html" class="link">高考词条</a>
+                    <p>政策规则、报考知识、录取方式，全面了解，不踩雷区</p>
+                </div>
+            </div>
+            <div class="box">
+                <a href="/static/data-occupational-info.html" class="img-link img-link-5">
+                    <!--<img src="img/zyxxs-img.png" alt="">-->
+                </a>
+                <div class="txt">
+                    <a href="/static/data-occupational-info.html" class="link">职业信息</a>
+                    <p>从专业到职业，看前景查薪酬，热门职业系统掌握</p>
+                </div>
+            </div>
+            <div class="box">
+                <a href="/static/data-area-scores.html" class="img-link img-link-6">
+                    <!--<img src="img/dqpcx-img.png" alt="">-->
+                </a>
+                <div class="txt">
+                    <a href="/static/data-area-scores.html" class="link">地区批次线</a>
+                    <p>提供全国所有省市完整录取批次线，历年分数一键直达</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--高考日程-->
+    <div class="gk-schedule">
+        <h2 class="h2-t"><span class="line"></span>高考日程</h2>
+        <ul class="list" id="schedule-list">
+            <script id="gk-schedule-list" type="text/x-handlebars-template">
+                {{#each bizData}}
+                <li>
+                    <span>{{month}}月</span>
+                    <a href="/static/news-schedule.html?id={{schedules.[0].id}}" class="title">
+                        {{#if schedules.[0].title}}
+                        {{schedules.[0].title}}
+                        {{else}}
+                        暂无标题
+                        {{/if}}
+                    </a>
+                </li>
+                {{/each}}
+            </script>
+        </ul>
+    </div>
+</div>
+
+
+<!--热门去向-->
+<div class="hot-go-where">
+    <div class="w1000">
+        <!--<img src="img/map.png" alt="">-->
+        <div class="map-container">
+            <div id="map"></div>
+            <div id="mapTip"></div>
+            <div class="eg">
+                <span class="choose1">选择人数</span>
+                <div class="icon-map-color-lib"></div>
+                高低
+            </div>
+        </div>
+        <div class="go-where">
+            <div class="title">热门去向</div>
+            <ul>
+                <li>
+                    <span class="fadeR1">hot1</span>
+                    <span>北京</span>
+                    <span>30%</span>
+                </li>
+                <li>
+                    <span class="fadeR2">hot2</span>
+                    <span>陕西</span>
+                    <span>15%</span>
+                </li>
+                <li>
+                    <span class="fadeR3">hot3</span>
+                    <span>浙江</span>
+                    <span>10%</span>
+                </li>
+                <li>
+                    <span class="fadeR4">hot4</span>
+                    <span>山东</span>
+                    <span>8.7%</span>
+                </li>
+                <li>
+                    <span class="fadeR6">hot5</span>
+                    <span>江苏</span>
+                    <span>7.8%</span>
+                </li>
+                <li>
+                    <span class="fadeR6">hot6</span>
+                    <span>湖北</span>
+                    <span>6%</span>
+                </li>
+                <li>
+                    <span class="fadeR7">hot7</span>
+                    <span>湖南</span>
+                    <span>5.8%</span>
+                </li>
+                <li>
+                    <span class="fadeR8">hot8</span>
+                    <span>四川</span>
+                    <span>4.7%</span>
+                </li>
+                <li>
+                    <span class="fadeR9">hot9</span>
+                    <span>广东</span>
+                    <span>3.2%</span>
+                </li>
+                <li class="no-bt">
+                    <span class="fadeR10">hot10</span>
+                    <span>上海</span>
+                    <span>2%</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--底部宣传-->
+<div class="bottom-intro w1000">
+    <div class="list">
+        <i class="icon-bottom-person"></i>
+        <h3>志愿指导 个性化适配</h3>
+        <p>多维度剖析：考生分数、高考位次、专业测评
+            高适配指导：根据权威测评结果，个性化指导院校和专业填报</p>
+    </div>
+    <div class="list">
+        <i class="icon-bottom-book"></i>
+        <h3>智能报考 超全大数据</h3>
+        <p>精准权威数据：院校库、专业库、职业信息，2亿数据超全分析
+            独有算法研究中心:超前沿院校建模技术，精准提供智能指导方案</p>
+    </div>
+    <div class="list">
+        <i class="icon-bottom-arrow"></i>
+        <h3>专家服务 指导全方位</h3>
+        <p>备考全程助力：高质量视频课程，心理辅导、填报指导，高考问题一站式解决
+            专家一对一：全国顶级高考专家顾问和认证高考规划师团队，一对一全方位指导</p>
+    </div>
+</div>
+<script data-debug src="/__build/index.js"></script>
+<script id="gk-top-list" type="text/x-handlebars-template">
+    {{#each rows}}
+    <div class="box">
+        <a href="/static/news-detail.html?hid={{id}}" class="img-cover" target="_blank">
+            <img src="{{image}}" alt="{{title}}">
+        </a>
+        <h3><a href="/static/news-detail.html?id={{id}}" target="_blank">{{title}}</a></h3>
+        {{#if subContent}}
+        <p>{{subContent}}</p>
+        {{else}}
+        <p>暂无摘要</p>
+        {{/if}}
+        <p>时间：<span>{{hotDate}}</span></p>
+    </div>
+    {{/each}}
+</script>
+</body>
+</html>

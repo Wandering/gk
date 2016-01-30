@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>高考词条</title>
+</head>
+<body>
+<!--面包屑导航-->
+<section id="crumb" class="crumb">
+    <ol class="breadcrumb w1000">
+        <li><span class="icon-crumb breadcrumb-home"></span><a href="/">首页</a></li>
+        <li><a href="/static/data-school-info.html">数据查询</a></li>
+        <li class="active">高考词条</li>
+    </ol>
+</section>
+<!--高考词条-->
+<div class="banner" id="banner"></div>
+<!--search-->
+<div class="search w1000">
+    <section class="search-box">
+        <input id="query" class="" type="text" size="27" name="" autocomplete="off" placeholder="请输入您要检索的词条" value="">
+        <a href="#" class="go"><span class="icon-query"></span></a>
+    </section>
+</div>
+<!--高考词条list-->
+<div class="gk-policy w1000">
+    <div class="policy-list">
+        <!--<div class="box">-->
+        <!--<a href=""> <h3>2016陕西高考体检时间及体检结果查询入口</h3></a>-->
+        <!--<span class="time">2015-12-16 13:45:34</span>-->
+        <!--<p>2016陕西高考体检时间及体检结果查询入口 2016陕西高考体检时间预计在2016年3月中旬进行体检，具体的时间请关注各学校的通知和安排，陕西高考体检项目为体检表上所列的项目。</p>-->
+        <!--</div>-->
+    </div>
+    <script id="policy-list" type="text/x-handlebars-template">
+        {{#each rows}}
+        <div class="box">
+            <a href="/static/news-detail.html?wid={{id}}"><h3>{{title}}</h3></a>
+            <span class="time">{{formatDate lastModDate}}</span>
+            <p>{{summary}}</p>
+        </div>
+        {{/each}}
+    </script>
+    <div class="btn-more">
+        <button class="btn btn-next"></button>
+    </div>
+</div>
+<script data-debug src="/__build/data-gk-word.js"></script>
+</body>
+</html>
