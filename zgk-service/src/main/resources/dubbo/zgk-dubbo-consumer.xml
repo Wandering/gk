@@ -37,4 +37,8 @@
                      timeout="60000"/>
     <dubbo:reference id="gkEntryService" interface="cn.thinkjoy.zgk.remote.IGkEntryService" check="false"
                      timeout="60000"/>
+    <dubbo:reference id="zgkApeskService" interface="cn.thinkjoy.zgk.remote.IZgkApeskService" check="false"
+                     timeout="60000"/>
+    <dubbo:reference id="zgkApeskCourseService" interface="cn.thinkjoy.zgk.remote.IZgkApeskCourseService" check="false"
+                     timeout="60000"/>
 </beans>
