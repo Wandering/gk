@@ -32,7 +32,6 @@ define(['commonCss', 'jquery'], function () {
     $('#header-user-avatar,.user-avatar').attr('src', icon);
     $('#header-user-name,.user-name').text(userName);
     $('body').on('click', '#logout-btn',function () {
-        alert(88)
         cookie.deleteCookie('isLogin','');
         cookie.deleteCookie('token','');
         window.location.assign('http://' + window.location.host + '/index.html')
@@ -75,7 +74,6 @@ define(['commonCss', 'jquery'], function () {
             break;
     }
 
-
     function filterUrl() {
         var pathName = window.location.pathname.split('/');
         var pageName = pathName[pathName.length - 1];
@@ -114,46 +112,14 @@ define(['commonCss', 'jquery'], function () {
         for (var i in data) {
             strParameter += "&" + i + "=" + data[i];
         }
-        var Sys = {};
-        var ua = navigator.userAgent.toLowerCase();
-        var s;
-        (s = ua.match(/msie ([\d.]+)/)) ? Sys.ie = s[1] : 0;
-        var vesion = parseInt(Sys.ie);
-        if (Sys.ie && vesion >= 8 && vesion < 11) {
-        //if (Sys.ie && vesion == 8) {
-            //alert("ie:" + vesion)
-            xdr = new XDomainRequest();
-            xdr.open(method, url + "?browserType=IE" + strParameter);
-            xdr.send();
-            xdr.contentType="text/plain";
-            xdr.onload = function () {
-                var reaultData = JSON.parse(xdr.responseText);
-                callback(reaultData);
-            };
-            xdr.onerror = function () {
-                var reaultData = xdr.responseText;
-                if (callbackError && typeof(callbackError) === "function") {
-                    callbackError(reaultData);
-                }
-            }
-        } else {
-            $.ajax({
-                url: url,
-                type: method,
-                data: data || {},
-                dataType: 'json',
-                success: function (res) {
-                    var result = res;
-                    callback(res);
-                },
-                error: function (res) {
-                    var result = res;
-                    if (callbackError && typeof(callbackError) === "function") {
-                        callbackError(res);
-                    }
-                }
-            });
-        }
+        $.ajax({
+            url: url,
+            type: method,
+            data: data || {},
+            dataType: 'json',
+            success: callback,
+            error:callback
+        });
     };
 
 

@@ -19,11 +19,14 @@ public class CrossInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.addHeader("Access-Control-Allow-Origin","*");
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         response.setHeader("Access-Control-Max-Age", "1800");
+        if("IE".equals(request.getParameter("browserType"))) {
+            response.setContentType("text/plain");
+            response.addHeader("XDomainRequestAllowed","1");
+        }
         return true;
     }
 
@@ -32,6 +35,7 @@ public class CrossInterceptor extends HandlerInterceptorAdapter {
         if("IE".equals(request.getParameter("browserType")))
         {
             response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/plain");
             response.addHeader("XDomainRequestAllowed","1");
             System.out.println(ResponseContentHolder.getResponseContents().get());
         }
