@@ -78,7 +78,7 @@ define(['commonjs', '../css/index.css', 'handlebars','tips', 'chinaMap','cookie'
      * =============
      * */
     //var dataMapUrl = require("../mock/zgk-data.json");
-    $.get("../mock/zgk-data.json", function (rs) {
+    $.get("/src/mock/zgk-data.json", function (rs) {
         var data = rs.list;
         var flag;
         var arr = new Array();
