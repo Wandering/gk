@@ -39,6 +39,9 @@ public class ServletPathConst {
         MAPPING_URLS.add("/guide/report.do");
         MAPPING_URLS.add("/exam/updateUserExam.do");
         MAPPING_URLS.add("/exam/findUserExam.do");
+
+        MAPPING_URLS.add("/predict/predictProbability.do");
+        MAPPING_URLS.add("/predict/predictSchoolList.do");
         //杨永平--start
         MAPPING_URLS.add("/video/getGkVideoInfo.do");
         MAPPING_URLS.add("/forecast/getPerformanceDetail.do");
