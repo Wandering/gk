@@ -5,6 +5,5 @@
     <title>智高考</title>
 </head>
 <body>
-Hello world!
 </body>
 </html>
