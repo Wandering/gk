@@ -99,12 +99,11 @@
     </context-param>
     
 	<welcome-file-list>
-        <welcome-file>static/assets/index.html</welcome-file>
+        <welcome-file>/static/index.html</welcome-file>
     </welcome-file-list>
 
     <context-param>
         <param-name>log4jExposeWebAppRoot</param-name>
         <param-value>false</param-value>
     </context-param>
-    
 </web-app>
