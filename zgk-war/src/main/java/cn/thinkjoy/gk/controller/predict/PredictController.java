@@ -60,54 +60,106 @@ public class PredictController extends BaseCommonController{
         {
             throw new BizException("error", "请输入院校名称!");
         }
-        List universityList = universityService.getUniversityByName(name);
+        List<Map<String, String>> universityList = universityService.getUniversityByName(name);
         if(universityList.size()==0)
         {
             throw new BizException("error", "请输入正确的院校名称!");
         }
-        String uName = ((Map<String, String>)universityList.get(0)).get("label");
+        String uName = "";
+        if(universityList.size()==1)
+        {
+            uName = universityList.get(0).get("label");
+        }
+        if(universityList.size()>1)
+        {
+            for (Map<String, String> map : universityList) {
+                if(name.equals(map.get("label")))
+                {
+                    uName = map.get("label");
+                }
+            }
+        }
+        if("".equals(uName))
+        {
+            throw new BizException("error", "请输入正确的院校名称!");
+        }
         Map<String, Object> params = new HashMap<>();
         params.put("universityName", uName);
         params.put("score", score);
         params.put("type", type);
         params.put("areaId", getAreaId());
-        Map<String, Object> resultMap = universityService.getPredictProbability(params);
-//        Map<String, Object> resultMap = new HashMap<>();
-//        resultMap.put("batch","一本");
-//        resultMap.put("probability", 3);
-//        resultMap.put("universityName", uName);
-//        resultMap.put("score", score);
-//        resultMap.put("type", type);
-//        List<Map<String, String>> list = new ArrayList<>();
-//        Map<String, String> map = new HashMap<>();
-//        map.put("year","2015");
-//        map.put("universityName",uName);
-//        map.put("batch","一本");
-//        map.put("enrollingNumber","28");
-//        map.put("lowScore","635");
-//        map.put("avgScore","665");
-//        map.put("highScore","715");
-//        list.add(map);
-//        Map<String, String> map2 = new HashMap<>();
-//        map2.put("year","2014");
-//        map2.put("universityName",uName);
-//        map2.put("batch","一本");
-//        map2.put("enrollingNumber","28");
-//        map2.put("lowScore","635");
-//        map2.put("avgScore","665");
-//        map2.put("highScore","715");
-//        list.add(map2);
-//        Map<String, String> map3 = new HashMap<>();
-//        map3.put("year","2013");
-//        map3.put("universityName",uName);
-//        map3.put("batch","一本");
-//        map3.put("enrollingNumber","28");
-//        map3.put("lowScore","635");
-//        map3.put("avgScore","665");
-//        map3.put("highScore","715");
-//        list.add(map3);
-//        resultMap.put("historyList", list);
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            resultMap = universityService.getPredictProbability(params);
+        } catch (Exception e) {
+            setBatch(score, type, resultMap);
+            resultMap.put("probability", 0);
+            resultMap.put("universityName", uName);
+            resultMap.put("score", score);
+            resultMap.put("type", type);
+        }
         return resultMap;
+    }
+
+    private boolean isInteger(String value) {
+        try {
+            Integer.parseInt(value);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean isDouble(String value) {
+        try {
+            Double.parseDouble(value);
+            if (value.contains("."))
+                return true;
+            return false;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean isNumber(String value) {
+        return isInteger(value) || isDouble(value);
+    }
+
+    private void setBatch(@RequestParam(value = "score") int score, @RequestParam(value = "type") String type, Map<String, Object> resultMap) {
+        if("1".equals(type))
+        {
+            if(score>=626)
+            {
+                resultMap.put("batch", "一本");
+            }
+            else if(score>=472)
+            {
+                resultMap.put("batch", "二本");
+            }
+            else if(score>=400)
+            {
+                resultMap.put("batch", "三本");
+            }else{
+                resultMap.put("batch", "专科");
+            }
+        }
+        else
+        {
+            if(score>=605)
+            {
+                resultMap.put("batch", "一本");
+            }
+            else if(score>=428)
+            {
+                resultMap.put("batch", "二本");
+            }
+            else if(score>=380)
+            {
+                resultMap.put("batch", "三本");
+            }else{
+                resultMap.put("batch", "专科");
+            }
+        }
     }
 
     /**
@@ -129,62 +181,49 @@ public class PredictController extends BaseCommonController{
         params.put("score", score);
         params.put("type", type);
         params.put("areaId", getAreaId());
-        Map<String, Object> resultMap = universityService.getPredictUniversityInfo(params);
-//        Map<String, Object> resultMap = new LinkedHashMap<>();
-//        List<Map<String, String>> list = new ArrayList<>();
-//        Map<String, String> map = new HashMap<>();
-//        map.put("id","1");
-//        map.put("universityName","北京大学");
-//        map.put("province","北京");
-//        map.put("rank","1");
-//        map.put("feature","985,211,研,国,自");
-//        list.add(map);
-//        Map<String, String> map2 = new HashMap<>();
-//        map2.put("id","2");
-//        map2.put("universityName","清华大学");
-//        map2.put("province","北京");
-//        map2.put("rank","2");
-//        map2.put("feature","985,211,研,国,自");
-//        list.add(map2);
-//        Map<String, String> map3 = new HashMap<>();
-//        map3.put("id","3");
-//        map3.put("universityName","中国人民大学");
-//        map3.put("province","北京");
-//        map3.put("rank","3");
-//        map3.put("feature","985,211,研,国,自");
-//        list.add(map3);
-//        Map<String, Object> mp1 = new HashMap<>();
-//        mp1.put("count", list.size());
-//        mp1.put("list", list);
-//        mp1.put("star", 4);
-//        resultMap.put("4", mp1);
-//        List<Map<String, String>> list2 = new ArrayList<>();
-//        list2.add(map);
-//        list2.add(map2);
-//        list2.add(map3);
-//        Map<String, Object> mp2 = new HashMap<>();
-//        mp2.put("count", list2.size());
-//        mp2.put("list", list2);
-//        mp2.put("star", 3);
-//        resultMap.put("3", mp2);
-//        List<Map<String, String>> list3 = new ArrayList<>();
-//        list3.add(map);
-//        list3.add(map2);
-//        list3.add(map3);
-//        Map<String, Object> mp3 = new HashMap<>();
-//        mp3.put("count", list3.size());
-//        mp3.put("list", list3);
-//        mp3.put("star", 2);
-//        resultMap.put("2", mp3);
-//        List<Map<String, String>> list4 = new ArrayList<>();
-//        list4.add(map);
-//        list4.add(map2);
-//        list4.add(map3);
-//        Map<String, Object> mp4 = new HashMap<>();
-//        mp4.put("count", list4.size());
-//        mp4.put("list", list4);
-//        mp4.put("star", 1);
-//        resultMap.put("1", mp4);
+        Map<String, Object> resultMap = new LinkedHashMap<>();
+        try {
+            resultMap = universityService.getPredictUniversityInfo(params);
+        } catch (Exception e) {
+            resultMap.put("score", score);
+            resultMap.put("type", type);
+            List<Map<String, String>> list = new ArrayList<>();
+            Map<String, String> map = new HashMap<>();
+            list.add(map);
+            Map<String, String> map2 = new HashMap<>();
+            list.add(map2);
+            Map<String, String> map3 = new HashMap<>();
+            list.add(map3);
+            Map<String, Object> mp1 = new HashMap<>();
+            resultMap.put("4", mp1);
+            List<Map<String, String>> list2 = new ArrayList<>();
+            list2.add(map);
+            list2.add(map2);
+            list2.add(map3);
+            Map<String, Object> mp2 = new HashMap<>();
+            mp2.put("count", list2.size());
+            mp2.put("list", list2);
+            mp2.put("star", 3);
+            resultMap.put("3", mp2);
+            List<Map<String, String>> list3 = new ArrayList<>();
+            list3.add(map);
+            list3.add(map2);
+            list3.add(map3);
+            Map<String, Object> mp3 = new HashMap<>();
+            mp3.put("count", list3.size());
+            mp3.put("list", list3);
+            mp3.put("star", 2);
+            resultMap.put("2", mp3);
+            List<Map<String, String>> list4 = new ArrayList<>();
+            list4.add(map);
+            list4.add(map2);
+            list4.add(map3);
+            Map<String, Object> mp4 = new HashMap<>();
+            mp4.put("count", list4.size());
+            mp4.put("list", list4);
+            mp4.put("star", 1);
+            resultMap.put("1", mp4);
+        }
         return resultMap;
     }
 }
