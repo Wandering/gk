@@ -1,0 +1,31 @@
+@charset "UTF-8";
+/*
+通用variables定义
+*/
+/*
+list base color
+*/
+/*
+高考课堂详情
+*/
+.class-collage-detail h3 {
+  font-size: 20px;
+  color: #666666;
+  margin-bottom: 10px;
+}
+.class-collage-detail .video-container {
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+.class-collage-detail .video-container .video-class {
+  width: 100%;
+  height: 530px;
+}
+.class-collage-detail .video-container .video-about {
+  height: 45px;
+  line-height: 45px;
+  background-color: #818181;
+  text-align: right;
+  color: #ccc;
+  padding: 0 20px;
+}

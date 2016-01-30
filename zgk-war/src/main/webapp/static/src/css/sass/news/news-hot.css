@@ -1,0 +1,90 @@
+@charset "UTF-8";
+/*
+通用variables定义
+*/
+/*
+list base color
+*/
+.crumb {
+  margin-bottom: 10px;
+}
+
+.gk-headlines .headlines-list {
+  margin: 20px 0 0;
+}
+.gk-headlines .headlines-list .box {
+  margin-right: 20px;
+  margin-bottom: 10px;
+  float: left;
+  width: 235px;
+  height: 245px;
+  overflow: hidden;
+}
+.gk-headlines .headlines-list .box .img-cover img {
+  height: 145px;
+}
+.gk-headlines .headlines-list .box h3 {
+  padding: 0;
+  margin: 0;
+  line-height: 34px;
+}
+.gk-headlines .headlines-list .box h3 a {
+  font-size: 16px;
+  color: #333333;
+}
+.gk-headlines .headlines-list .box p {
+  color: #999;
+  font-size: 14px;
+  margin: 0;
+  line-height: 18px;
+}
+.gk-headlines .headlines-list .box p span {
+  line-height: 24px;
+}
+.gk-headlines .headlines-list .box:last-child {
+  margin-right: 0;
+}
+.gk-headlines .headlines-list .last-child {
+  margin-right: 0;
+}
+.gk-headlines .headlines-list .advertise {
+  clear: both;
+  margin: 20px 0 0;
+  width: 1000px;
+  height: 130px;
+  background-color: #f1f1f1;
+}
+
+.gk-hot-information .data-module .box {
+  padding: 20px 0 20px 0;
+  height: 160px;
+  border-bottom: 1px dashed #ccc;
+}
+.gk-hot-information .data-module .box img {
+  float: left;
+  width: 180px;
+  height: 120px;
+  margin-right: 20px;
+}
+.gk-hot-information .data-module .box .txt {
+  height: 85px;
+  width: 800px;
+  float: left;
+}
+.gk-hot-information .data-module .box .txt a {
+  color: #333333;
+}
+.gk-hot-information .data-module .box .txt h3 {
+  margin: 0;
+  line-height: 34px;
+  font-size: 16px;
+}
+.gk-hot-information .data-module .box .txt p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: #8f8f8f;
+}
+.gk-hot-information .data-module .box .txt .time {
+  margin-top: 20px;
+}

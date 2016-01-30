@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>智高考</title><link href="d419abe4.class-college-detail.min.css" rel="stylesheet"></head><body><section id="crumb" class="crumb"><ol class="breadcrumb w1000"><li><span class="icon-crumb breadcrumb-home"></span><a href="/">首页</a></li><li><a href="/news-hot.html">高考学堂</a></li><li class="active">志愿讲堂详情</li></ol></section><div class="main-container w1000"><script id="video-detail-info" type="text/x-handlebars-template"><div class="class-collage-detail">
+            <h3>{{gkVideoInfo.title}} <span>{{gkVideoInfo.teacher}}</span></h3>
+            <div class="video-container">
+                <div id="videoPlay-box"></div>
+                <div class="video-about">
+                    <span>{{gkVideoInfo.hit}}</span>人已经学习
+                    <span>10</span>人已经收藏
+                </div>
+            </div>
+        </div>
+        <div class="detail-container">
+            <div class="content-left">
+                <h3>课程目录 <b>[共{{gkVideos.length}}堂课程]</b></h3>
+                <ul class="related-courses clearfix" id="videoList">
+                    {{#each gkVideos}}
+                    <li class="select">
+                        <a href="javascript:;" class="video-item" url="{{fileUrl}}" poster="{{../gkVideoInfo.frontCover}}" courseid="{{id}}">第{{sectionSort}}集 - {{name}}</a>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+            <div class="content-right">
+                <h3 class="orangeTitle">专家简介</h3>
+                <div class="right-section">
+                    <ul>
+                        <li><b>课程名称：</b>{{gkVideoInfo.title}}</li>
+                        <li><b>课程介绍：</b>{{gkVideoInfo.subcontent}}</li>
+                        <!--<li><b>点播：</b>5538次</li>-->
+                    </ul>
+                </div>
+
+            </div>
+        </div></script></div><br><br><br><br><script src="js/a43673a0.class-college-detail.min.js"></script></body></html>

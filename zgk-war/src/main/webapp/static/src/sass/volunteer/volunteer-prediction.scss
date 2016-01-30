@@ -1,0 +1,354 @@
+@charset "utf-8";
+@import "../variables";
+
+.volunteer-banner {
+  height: 204px;
+  margin-bottom: 16px;
+}
+
+.volunteer-main .sidebar {
+  padding: 150px 0 0;
+  position: relative;
+  top: -16px;
+  li a {
+    font-size: 16px;
+    color: #0e5952;
+    font-weight: normal;
+  }
+  li.active a {
+    font-weight: bold;
+  }
+  .top-bg {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    width: 109px;
+    height: 109px;
+    margin: 0 0 0 -54px;
+  }
+}
+
+.content-main {
+  .t-bg {
+    width: 723px;
+    height: 102px;
+    background: url('../../img/volunteer-content-banner.png') no-repeat;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 102px;
+    font-size: 24px;
+    color: #65c88f;
+  }
+}
+
+.volunteer-form {
+  width: 385px;
+  margin: 28px auto 0;
+  .form-group {
+    width: 383px;
+    height: 40px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    .control-label {
+      font-size: 16px;
+      color: #333;
+      font-weight: normal;
+      padding: 7px 5px 0 0;
+    }
+    .col-sm-9 {
+      margin-top: 2px;
+      padding-left: 0;
+      .form-control {
+        border: none;
+        box-shadow: none;
+        font-size: 16px;
+        height: 33px;
+      }
+      .type-radio {
+        margin: 5px 14px 0;
+        font-size: 16px;
+        color: #333;
+        font-weight: normal;
+      }
+    }
+    .btn {
+      border: none;
+      line-height: 40px;
+      padding: 0;
+      color: #fff;
+      font-size: 20px;
+      //background: #65c88f;
+    }
+  }
+  .btn-form {
+    border: none;
+    position: relative;
+    .alert-danger{
+      display: none;
+      position: absolute;
+      top: -60px;
+      left: 0;
+      width: 100%;
+    }
+
+  }
+  .tips-txt {
+    font-size: 14px;
+    color: #666;
+
+  }
+}
+
+.content-b-header {
+  position: relative;
+  left: 0;
+  top: 0;
+  .title {
+    margin: 0;
+    font-size: 20px;
+    color: #666;
+    font-weight: normal;
+  }
+  .school-title {
+    span {
+      margin-right: 65px;
+    }
+  }
+
+  .ul {
+    width: 400px;
+    margin: 15px 0;
+    li {
+      float: left;
+      width: 170px;
+      line-height: 25px;
+      color: #666;
+      font-size: 16px;
+    }
+  }
+  .buttons {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    float: right;
+    .btn {
+      margin-right: 10px;
+    }
+  }
+}
+
+.line-bottom {
+  border-bottom: 2px solid #65c88f;
+  margin: 20px 0;
+}
+
+.content-b-body {
+  .title {
+    margin-bottom: 20px;
+  }
+  .volunteer-result-txt {
+    margin: 30px 0 20px;
+    strong {
+      color: #f49e28;
+      font-size: 18px;
+    }
+    .txt {
+      color: #666;
+      font-size: 14px;
+    }
+  }
+  .btn {
+    width: 60%;
+    margin: 0 auto 50px;
+  }
+}
+
+.school-info {
+  position: relative;
+  left: 0;
+  top: 0;
+  padding: 0 0 6px;
+
+  .icon-heart {
+    position: absolute;
+    top: 17px;
+    left: 10px;
+  }
+  .name {
+    text-align: left;
+    padding: 0 0 0 44px;
+    margin: 0 0 5px;
+    line-height: 20px;
+  }
+  .list-type {
+    padding: 0 0 0 44px;
+    text-align: left;
+    line-height: 20px;
+    span {
+      padding: 1px 3px;
+      border-radius: 1px;
+      margin-right: 2px;
+    }
+    .type-985 {
+      color: $listColor1;
+      border: 1px solid $listColor1;
+    }
+    .type-211 {
+      color: $listColor2;
+      border: 1px solid $listColor2;
+    }
+    .type-yan {
+      color: $listColor3;
+      border: 1px solid $listColor3;
+    }
+    .type-zi {
+      color: $listColor4;
+      border: 1px solid $listColor4;
+    }
+    .type-guo {
+      color: $listColor5;
+      border: 1px solid $listColor5;
+    }
+    .type-zhuo {
+      color: $listColor6;
+      border: 1px solid $listColor6;
+    }
+  }
+}
+
+.content-b-body .objective-btn {
+  width: 100%;
+  margin: 0 auto;
+}
+
+#reported-content-a {
+
+  .into-list {
+    height: 69px;
+    border: 1px solid #e8e8e8;
+    background: #f5f5f5;
+    position: relative;
+    margin-bottom: 11px;
+    strong {
+      position: absolute;
+      left: 20px;
+      top: 10px;
+      font-size: 18px;
+    }
+    .info {
+      position: absolute;
+      top: 35px;
+      left: 20px;
+      font-size: 14px;
+    }
+    .btn {
+      position: absolute;
+      right: 20px;
+      top: 13px;
+    }
+  }
+}
+
+#reported-content-c{
+  .volunteer-school-info{
+    .form-inline{
+      width:322px;
+      height:40px;
+      border:1px solid #e3e3e3;
+      padding:0;
+      margin:0 auto;
+      .school-txt{
+        width:239px;
+        height:38px;
+        float: left;
+        border: none;
+      }
+      .btn{
+        float: left;
+        width:81px;
+        height:38px;
+        background: #0e5952;
+        color: #FFF;
+        border: none;
+        border-radius: 0;
+      }
+    }
+    .info{
+      text-align: left;
+      line-height:24px;
+      padding:10px 0 0 18px;
+    }
+
+
+  }
+}
+
+
+
+// 专家测评
+.banner-bg-ceping {
+  width: 100%;
+}
+.ceping-banner {
+  margin: 0 auto;
+}
+.bg-gray {
+}
+.video-contentBox {
+  width: 100%;
+}
+.video-content {
+  width: auto;
+  margin: 0 auto;
+}
+.ceping-title {
+  background: url('../../img/cpTitle.png') no-repeat left 30px;
+  margin-bottom: 26px;
+  padding:30px 0 0 165px;
+  color: #777;
+  font-size: 15px;
+  font-weight: bold;
+}
+.ceping-content {
+  margin-bottom: 40px;
+}
+.ceping-content li {
+  height: 160px;
+  margin-bottom: 15px;
+  position: relative;
+}
+.ceping-content li .txtdescr {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 16px;
+  width: 400px;
+  /* opacity: 0.9; */
+}
+.ceping-content li h5 {
+  font-weight: bold;
+  color: #fff;
+  font-size: 15px;
+  margin-bottom: 5px;
+  margin-top: 0;
+}
+.ceping-content li p {
+  color: #fff;
+  font-size: 14px;
+  line-height: 18px;
+  text-indent: 24px;
+  margin: 0 0 10px;
+}
+a.cpbtn {
+  display: inline-block;
+  width: 150px;
+  padding: 5px 0;
+  color: #fff;
+  border: 1px solid #fff;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 8px;
+}
+.star{
+  display: inline-block;
+}
