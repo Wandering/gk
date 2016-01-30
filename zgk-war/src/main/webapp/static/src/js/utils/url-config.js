@@ -3,7 +3,8 @@
  * */
 //url接口地址
 //var BASE_URL = 'http://10.254.130.33:9080';
-var BASE_URL = 'http://172.16.130.99:8080';
+//var BASE_URL = 'http://172.16.130.99:8080';
+var BASE_URL = '';
 var interfaceUrl = {
     /*
      * 高考咨询
