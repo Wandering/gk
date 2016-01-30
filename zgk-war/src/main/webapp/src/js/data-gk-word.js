@@ -32,8 +32,6 @@ define(['commonjs', '../css/data/data-gk-word.css', 'handlebars', 'timeFormat','
                 });
                 if(res.bizData.rows.length == 0){
                     $('.policy-list').html(noDataTips('真抱歉,没有检索到相关的新闻'))
-                }else{
-                    $('.policy-list').html('');
                 }
                 var template = handlebars.compile($("#policy-list").html());
                 $('.policy-list').append(template(res.bizData));

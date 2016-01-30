@@ -66,11 +66,16 @@ define(['commonjs', 'handlebars'], function (util, handlebars) {
 
 
 //顶级名师团mock
+        var frontCover1 = require("../img/avatar-mock-1.png");
+        var frontCover2 = require("../img/avatar-mock-2.png");
+        var frontCover3 = require("../img/avatar-mock-3.png");
+        var frontCover4 = require("../img/avatar-mock-4.png");
+
         var topTeachTeamList = {
             "rows": [
                 {
                     "topTeachTeam": {
-                        "frontCover": "../img/avatar-mock-1.png",
+                        "frontCover": frontCover1,
                         "id": 29,
                         "from": "高级职业指导师",
                         "teacher": "黄李昌",
@@ -80,7 +85,7 @@ define(['commonjs', 'handlebars'], function (util, handlebars) {
                 },
                 {
                     "topTeachTeam": {
-                        "frontCover": "../img/avatar-mock-2.png",
+                        "frontCover": frontCover2,
                         "id": 29,
                         "from": "教育部阳光高考网站特聘专家",
                         "teacher": "吕迎春",
@@ -90,7 +95,7 @@ define(['commonjs', 'handlebars'], function (util, handlebars) {
                 },
                 {
                     "topTeachTeam": {
-                        "frontCover": "../img/avatar-mock-3.png",
+                        "frontCover": frontCover3,
                         "id": 29,
                         "from": "北京清大师德教育研究院执行院长",
                         "teacher": "王明祥",
@@ -100,7 +105,7 @@ define(['commonjs', 'handlebars'], function (util, handlebars) {
                 },
                 {
                     "topTeachTeam": {
-                        "frontCover": "../img/avatar-mock-4.png",
+                        "frontCover": frontCover4,
                         "id": 29,
                         "from": "北京智高考·志愿填报研究中心",
                         "teacher": "陈晟",
@@ -127,5 +132,6 @@ define(['commonjs', 'handlebars'], function (util, handlebars) {
         console.info(topTeachTeamList);
     })
 
-})
+
+});
 

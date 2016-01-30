@@ -29,8 +29,6 @@ define(['commonjs', '../css/news/news-policy.css', 'handlebars', 'timeFormat','n
                 });
                 if(res.bizData.rows.length == 0){
                     $('#policy-tpl').html(noDataTips('真抱歉,没有检索到相关的新闻'))
-                } else {
-                    $('#policy-tpl').html('');
                 }
                 var template = handlebars.compile($("#policy-list").html());
                 $('#policy-tpl').append(template(res.bizData));

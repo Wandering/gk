@@ -3,7 +3,7 @@
  * 使用require导入commonCss公用样式
  * require引入依赖库
  * */
-define(['commonjs', '../css/data/data-school-enrollment.css', 'handlebars','noDataTips'], function (util, dataSchoolEnrollmentCSS, handlebars,noDataTips) {
+define(['commonjs', '../css/data/data-school-enrollment.css', 'handlebars', 'noDataTips'], function (util, dataSchoolEnrollmentCSS, handlebars, noDataTips) {
 
     // 院校所属
     util.ajaxFun(util.INTERFACE_URL.getProvinceList, 'get', {}, function (res) {
@@ -55,7 +55,7 @@ define(['commonjs', '../css/data/data-school-enrollment.css', 'handlebars','noDa
         batch = '',
         type = 2,
         page = 1,
-        rows = 4;
+        rows = 6;
     var getLineListData = {
         "queryparam": queryparam,
         "year": year,
@@ -109,7 +109,9 @@ define(['commonjs', '../css/data/data-school-enrollment.css', 'handlebars','noDa
             }
         });
     }
-
+    //待优化,临时写
+    getLineListData.areaId = 330000;//浙江
+    getLineListData.batch = 1;//一批本科
     getLineList();
     $('.btn-next').on('click', function () {
         $('.btn-next').text('加载中...').attr('disabled', 'disabled');
