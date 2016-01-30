@@ -1,7 +1,0 @@
-/node_modules
-#/assets
-/.sass-cache
-/npm-debug.log
-.DS_Store
-/.idea/
-*.iml

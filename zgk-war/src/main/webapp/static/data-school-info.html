@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>院校信息</title><link href="90061ea9.data-school-info.min.css" rel="stylesheet"></head><body><section id="crumb" class="crumb"><ol class="breadcrumb w1000"><li><span class="icon-crumb breadcrumb-home"></span><a href="/">首页</a></li><li><a href="/static/data-school-info.html">数据查询</a></li><li class="active">院校信息</li></ol></section><div class="search w1000"><section class="search-box"><input id="query" class="" type="text" size="27" name="" autocomplete="off" placeholder="请输入院校名称" value=""> <a href="#" class="go"><span class="icon-query"></span></a></section></div><div class="select-box w1000"><div class="content" id="screening-main"><div class="comm-select school-address" id="province-list"><script id="temp-province-list" type="text/x-handlebars-template"><div class="left-title">
+                    <h2>院校属地</h2>
+                    <span>> </span>
+                </div>
+                <ul class="right-item h95" id="province-ul">
+                    <li class="all active _ml45">全部</li>
+                    {{#each bizData}}
+                    <li areaId="{{id}}">{{name}}</li>
+                    {{/each}}
+                </ul></script></div><div class="comm-select classification" id="college-list"><script id="temp-college-list" type="text/x-handlebars-template"><div class="left-title">
+                    <h2>院校分类</h2>
+                    <span>> </span>
+                </div>
+                <ul class="right-item h40" id="sort-ul">
+                    <li class="all active _ml45">全部</li>
+                    {{#each bizData}}
+                    <li sortId="{{dictId}}">{{name}}</li>
+                    {{/each}}
+                </ul></script></div><div class="comm-select education-level" id="degree-list"><script id="temp-degree-list" type="text/x-handlebars-template"><div class="left-title">
+                    <h2>学历层次</h2>
+                    <span>> </span>
+                </div>
+                <ul class="right-item h40" id="educationLevel-ul">
+                    <li class="all active _ml45">全部</li>
+                    {{#each bizData}}
+                    <li levelId="{{dictId}}">{{name}}</li>
+                    {{/each}}
+                </ul></script></div><div class="comm-select school-character" id="characteristic-list"><script id="temp-characteristic-list" type="text/x-handlebars-template"><div class="left-title">
+                    <h2>院校特征</h2>
+                    <span>> </span>
+                </div>
+                <ul class="right-item" id="property-ul">
+                    {{#each bizData}}
+                    <li propertyId="{{dictId}}">{{name}}</li>
+                    {{/each}}
+                </ul></script></div></div><div class="school-data-list clearfix"><div class="data-list"><div class="data-tips"></div><script id="temp-search-list" type="text/x-handlebars-template">{{#each bizData.universityList}}
+                <li>
+                    <img src="http://www.zhigaokao.cn/{{photoUrl}}" class="school-logo" sid="{{id}}">
+                    <div class="top">
+                        <span class="school-name" sid="{{id}}">{{name}}</span>
+                        {{#if  rank}}
+                        <i class="icon-flag"></i>全国排名：<span class="national-rank">{{rank}}</span>
+                        {{/if}}
+                        <a href="javascript:void(0)" target="_blank" class="collect">
+                            {{#if isCollect}}
+                            <i class="icon-heart"></i>已收藏{{else}}
+                            <i class="icon-heart-no"></i>未收藏
+                            {{/if}}
+                        </a>
+                    </div>
+                    <div class="middle">
+                        {{property}}
+                        <a target="_blank" href="/static/predict-degree.html" schoolName="{{name}}" class="btn forecasting">录取预测</a>
+                        <a target="_blank" href="/static/user-target.html" schoolName="{{name}}" class="btn set-target"
+                           setTarget="{{id}}">设为目标</a>
+                    </div>
+                    <div class="bottom">
+                        <i class="icon-location"></i>
+                        <span class="province">{{province}}</span>
+                        <b>隶属：</b><span class="belong">{{subjection}}</span>
+                        <b>院校类型：</b><span class="school-type">{{typeName}}</span>
+                        <a target="_blank" href="{{url}}" class="enter-site">
+                            <i class="icon-web"></i>
+                            <span>进入网站</span>
+                        </a>
+                    </div>
+                </li>
+                {{/each}}</script><ul class="" id="search-list-main"></ul><div class="btn-more"><button class="btn btn-next"></button></div></div><div class="recommend-school"><h4>推荐院校</h4><img src="img/side-banner1.png" class="side-banner"> <img src="img/side-banner2.png" class="side-banner"> <img src="img/side-banner1.png" class="side-banner"> <img src="img/side-banner2.png" class="side-banner"></div></div></div><script src="js/48f659e9.data-school-info.min.js"></script></body></html>
