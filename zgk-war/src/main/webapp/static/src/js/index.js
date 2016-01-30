@@ -18,12 +18,10 @@ define(['commonjs', '../css/index.css', 'handlebars','tips', 'chinaMap','cookie'
         var n = $(this).index();
         $('.toggle-content').hide().eq(n).fadeIn(500);
     });
-    alert(88)
     //获取高考头条
     util.ajaxFun(util.INTERFACE_URL.getGkTopList, 'GET', {
         'type':1
     }, function (res) {
-        alert(222)
         if (res.rtnCode == '0000000') {
             var template = handlebars.compile($("#gk-top-list").html());
             var list = res.bizData;
