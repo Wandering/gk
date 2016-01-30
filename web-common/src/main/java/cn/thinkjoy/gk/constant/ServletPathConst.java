@@ -42,6 +42,7 @@ public class ServletPathConst {
 
         MAPPING_URLS.add("/predict/predictProbability.do");
         MAPPING_URLS.add("/predict/predictSchoolList.do");
+        MAPPING_URLS.add("/apesk/queryApeskUrl.do");
         //杨永平--start
         MAPPING_URLS.add("/video/getGkVideoInfo.do");
         MAPPING_URLS.add("/forecast/getPerformanceDetail.do");
@@ -49,7 +50,6 @@ public class ServletPathConst {
         MAPPING_URLS.add("/forecast/getLastoFrecast.do");
         MAPPING_URLS.add("/forecast/getFormerYearsAdmission.do");
         MAPPING_URLS.add("/forecast/addFrecast.do");
-        MAPPING_URLS.add("/predict/predictProbability.do");
         //杨永平--end
 
         MAPPING_URLS.add("/userCollection/saveUserCollect.do");
