@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>专业测评</title>
+</head>
+
+<body>
+<!--面包屑导航-->
+<section id="crumb" class="crumb">
+    <ol class="breadcrumb w1000">
+        <li><span class="icon-crumb breadcrumb-home"></span><a href="/">首页</a></li>
+        <li><a href="/predict-degree.html">志愿填报</a></li>
+        <li class="active">专业测评</li>
+    </ol>
+</section>
+<div class="volunteer-banner" style="background: #84c9eb;"></div>
+<section class="volunteer-main info-detail-content  w1000">
+    <aside class="sidebar info-nav">
+        <div class="top-bg icon-nominate-icon"></div>
+        <h2></h2>
+        <ul>
+            <li>
+                <a href="/predict-degree.html">录取难易预测</a>
+                <i class="triangle-r"></i>
+            </li>
+            <li>
+                <a href="/predict-school.html">院校预测</a>
+                <i class="triangle-r"></i>
+            </li>
+            <li class="active">
+                <a href="/predict-professional.html">专业测评</a>
+                <i class="triangle-r"></i>
+            </li>
+        </ul>
+        <div class="side-bottom"></div>
+    </aside>
+    <section class="content-main content" id="comm-tpl">
+        <div class="banner-bg-ceping ng-scope">
+            <div class="ceping-banner" id="ceping-banner"></div>
+        </div>
+        <div class="video-contentBox bg-gray ng-scope">
+            <div class="video-content clearfix">
+                <div class="ceping">
+                    <div class="ceping-title">请按要求进行相应测试，这样测评会更科学更准确。</div>
+                    <div class="ceping-content">
+                        <ul>
+                            <li class="clearfix">
+                                <div id="img-responsive2"></div>
+                                <div class="txtdescr">
+                                    <h5><span>高中文理分科测评</span><span
+                                            style="margin-left:8px; color:#fff;font-weight:bold;font-size:14px;">（<span>适用于高一、高二学生</span>）</span>
+                                    </h5>
+                                    <p title="系统以心理测量学为基本方法，通过了解学生的兴趣、价值观、个性等特征，为高一学生在选择文理科，确定学习目标，以及规划专业学习方向上提供参考。"
+                                       class="ng-binding">
+                                        系统以心理测量学为基本方法，通过了解学生的兴趣、价值观、个性等特征，为高一学生在选择文理科，确定学习目标，以及规划专业学习方向上提供参考。</p>
+                                    <a target="_blank" href="volunteer-detail.html?Type=1" class="cpbtn"
+                                       cType="1">开始测试</a>
+                                </div>
+                            </li><!-- end ngRepeat: assess in AssessList -->
+                            <li class="clearfix ng-scope" ng-repeat="assess in AssessList">
+                                <div id="img-responsive1"></div>
+                                <div class="txtdescr">
+                                    <h5><span>理科生专业选择测评</span><span
+                                            style="margin-left:8px; color:#fff;font-weight:bold;font-size:14px;">（<span
+                                            ng-bind="assess.gradeDescribe" class="ng-binding">适用于高三理科学生</span>）</span>
+                                    </h5>
+                                    <p title="系统为理科生测试者提供了最适合的20种专业以及106种专业的适合度指数排行，通过评估个体与专业选择相关的兴趣、价值观、个性等因素，得出被测试者关于专业发展方向的指导性参数，为高中学填报大学志愿选择合适专业提供科学的参考。"
+                                       class="ng-binding">
+                                        系统为理科生测试者提供了最适合的20种专业以及106种专业的适合度指数排行，通过评估个体与专业选择相关的兴趣、价值观、个性等因素，得出被测试者关于专业……</p>
+                                    <a target="_blank" href="volunteer-detail.html?Type=2" class="cpbtn"
+                                       cType="2">开始测试</a>
+                                </div>
+                            </li><!-- end ngRepeat: assess in AssessList -->
+                            <li class="clearfix ng-scope" ng-repeat="assess in AssessList">
+                                <div id="img-responsive4"></div>
+                                <div class="txtdescr">
+                                    <h5><span>文科生专业选择测评</span><span
+                                            style="margin-left:8px; color:#fff;font-weight:bold;font-size:14px;">（<span
+                                            ng-bind="assess.gradeDescribe" class="ng-binding">适用于高三文科学生</span>）</span>
+                                    </h5>
+                                    <p title="文科生可供选择就读的大学专业相对理科生而言要少，家长和考生在填报志愿时更要谨慎，不要盲目的去选择，可以借助智高考引进的美国MBTI测评系统，通过专业选择测评精确定位文科生最适合就读的专业，用更加科学的方法选择未来！"
+                                       class="ng-binding">
+                                        文科生可供选择就读的大学专业相对理科生而言要少，家长和考生在填报志愿时更要谨慎，不要盲目的去选择，可以借助智高考引进的美国MBTI测评系统，通过专业选……</p>
+                                    <a target="_blank" href="volunteer-detail.html?Type=3" class="cpbtn"
+                                       cType="3">开始测试</a>
+                                </div>
+                            </li><!-- end ngRepeat: assess in AssessList -->
+                            <li class="clearfix ng-scope" ng-repeat="assess in AssessList">
+                                <div id="img-responsive3"></div>
+                                <div class="txtdescr">
+                                    <h5><span>霍兰德职业兴趣测试</span><span
+                                            style="margin-left:8px; color:#fff;font-weight:bold;font-size:14px;">（<span
+                                            ng-bind="assess.gradeDescribe" class="ng-binding">适用于所有年级</span>）</span>
+                                    </h5>
+                                    <p title="霍兰德提出的6种基本职业类型：实用型R、研究型I、艺术型A、社会型S、企业型E、常规型C，主要用于确定被测试者的职业兴趣倾向,进而用于指导被测试者选择适合自身职业兴趣的专业发展方向和职业发展方向，帮助高中生提前规划职业方向。"
+                                       class="ng-binding">
+                                        霍兰德提出的6种基本职业类型：实用型R、研究型I、艺术型A、社会型S、企业型E、常规型C，主要用于确定被测试者的职业兴趣倾向,进而用于指导被测试者选择……</p>
+                                    <a target="_blank" href="volunteer-detail.html?Type=4" class="cpbtn"
+                                       cType="4">开始测试</a>
+                                </div>
+                            </li><!-- end ngRepeat: assess in AssessList -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+<script data-debug src="/__build/predict-professional.js"></script>
+</body>
+</html>
