@@ -51,7 +51,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		if (StringUtils.isEmpty(value)||!redisFlag) {
 			throw new BizException("1000004","请先登录后再进行操作");
 		}
-		callWhenAuthenticationSuccess(request);
+		callWhenAuthenticationSuccess(key);
 		return true;
 	}
 
@@ -66,9 +66,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 //		System.out.println("===========HandlerInterceptor1 afterCompletion");
 	}
 
-	private void callWhenAuthenticationSuccess(HttpServletRequest request){
+	private void callWhenAuthenticationSuccess(String key){
 
-		UserContext.setCurrentUser(getUserAccountPojo(request));
+		UserContext.setCurrentUser(getUserAccountPojo(key));
 	}
 
 //	/**
@@ -86,37 +86,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	 * 获取用户信息
 	 * @return
 	 */
-	protected UserAccountPojo getUserAccountPojo(HttpServletRequest request) {
+	protected UserAccountPojo getUserAccountPojo(String key) {
 		UserAccountPojo userAccountBean  = null;
-		String value = request.getParameter("token");
-		if(null == value || "".equals(value))
-		{
-			return userAccountBean;
-		}
-		try{
-			String uInfo = cn.thinkjoy.gk.common.DESUtil.decrypt(value, cn.thinkjoy.gk.common.DESUtil.key);
-			String uid = cn.thinkjoy.gk.common.DESUtil.getUserInfo(uInfo)[0];
-			String key = UserRedisConst.USER_KEY + value;
-			if(!RedisUtil.getInstance().exists(key))
-			{
-				userAccountBean = userAccountExService.findUserAccountPojoById(Long.parseLong(uid));
-				if(null!=userAccountBean)
-				{
-					RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 5L, TimeUnit.HOURS);
-				}
-				else
-				{
-					throw new BizException("error","The token is invalid!");
-				}
-			}
-			else
-			{
-				userAccountBean = JSON.parseObject(RedisUtil.getInstance().get(key).toString(),UserAccountPojo.class);
-			}
-		}catch (Exception e)
-		{
-			throw new BizException("error","The token is invalid!");
-		}
+		userAccountBean = JSON.parseObject(RedisUtil.getInstance().get(key).toString(),UserAccountPojo.class);
 		return userAccountBean;
 	}
 }
