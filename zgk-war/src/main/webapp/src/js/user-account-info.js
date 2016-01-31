@@ -7,6 +7,7 @@ define(['commonjs', 'tips', 'timeFormat', 'uploadFun', 'cookie'], function (util
     var dialog = require('dialog');
     $(function () {
 
+        var phoneNum = cookie.getCookieValue('phone');
 
         $('#modify-pwd').on('click', function () {
             var formHtml = ''
@@ -14,7 +15,7 @@ define(['commonjs', 'tips', 'timeFormat', 'uploadFun', 'cookie'], function (util
                 + '    <div class="form-group">'
                 + '        <div class="col-sm-12">'
                 + '            <div class="account-number">'
-                + '        <b>登录账号</b><span class="number" id="user-phone"></span>'
+                + '        <b>登录账号</b><span class="number" id="user-phone">'+ phoneNum +'</span>'
                 + '    </div>'
                 + '        </div>'
                 + '    </div>'
@@ -47,7 +48,6 @@ define(['commonjs', 'tips', 'timeFormat', 'uploadFun', 'cookie'], function (util
             dialog('修改密码', formHtml);
 
 
-            $('#user-phone').text(cookie.getCookieValue('phone'));
             //修改密码
             $('body').on('click', '#modify-pwd-btn', function () {
                 var currentPsd = $('#current-psd');
@@ -104,13 +104,14 @@ define(['commonjs', 'tips', 'timeFormat', 'uploadFun', 'cookie'], function (util
             min: '1960-01-01 00:00:00',
             max: '2010-01-01 00:00:00'
         });
+        var avatar = require('../img/icon_default.png');
         //获取用户信息
         util.ajaxFun(util.INTERFACE_URL.getUserInfo, 'GET', {}, function (res) {
             if (res.rtnCode == '0000000') {
                 var personListData = res.bizData;
                 var avatar = '';
                 if (personListData.icon == '' || personListData.icon == null) {
-                    avatar = 'http://cdn.gaokao360.net/static/global/common/images/icon_default.png';
+                    avatar = avatar;
                 } else {
                     avatar = personListData.icon
                 }
