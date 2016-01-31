@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller.apesk;
 
 
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.annotation.VipMethonTag;
 import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.zgk.common.StringUtil;
@@ -126,6 +127,7 @@ public class ApeskController extends BaseCommonController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/queryApeskUrl.do")
+	@VipMethonTag
 	public Map<String, Object> queryApeskUrl(@RequestParam(value = "acId")Integer acId){
 		UserAccountPojo userAccountPojo = getUserAccountPojo();
 		Map<String, Object> returnJsonData= new HashMap<>();

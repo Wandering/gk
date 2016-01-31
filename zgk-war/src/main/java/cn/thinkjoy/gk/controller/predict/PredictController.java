@@ -89,13 +89,13 @@ public class PredictController extends BaseCommonController{
         params.put("type", type);
         params.put("areaId", getAreaId());
         Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("universityName", uName);
+        resultMap.put("score", score);
         try {
             resultMap = universityService.getPredictProbability(params);
         } catch (Exception e) {
             setBatch(score, type, resultMap);
             resultMap.put("probability", 0);
-            resultMap.put("universityName", uName);
-            resultMap.put("score", score);
             resultMap.put("type", type);
         }
         return resultMap;
@@ -185,10 +185,11 @@ public class PredictController extends BaseCommonController{
         try {
             resultMap = universityService.getPredictUniversityInfo(params);
         } catch (Exception e) {
-            resultMap.put("score", score);
-            resultMap.put("type", type);
             List<Map<String, String>> list = new ArrayList<>();
             Map<String, Object> mp1 = new HashMap<>();
+            mp1.put("count", list.size());
+            mp1.put("list", list);
+            mp1.put("star", 4);
             resultMap.put("4", mp1);
             List<Map<String, String>> list2 = new ArrayList<>();
             Map<String, Object> mp2 = new HashMap<>();
