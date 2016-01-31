@@ -17,9 +17,10 @@ define(['commonjs','cookie'], function (util,cookie) {
         if(vipStatus==0){
             $('#btn-vip,#user-type').show();
             $('#vip-box').hide();
+
         }else{
-            $('#btn-vip,#user-type').hide();
-            $('#vip-box').show();
+            $('#btn-vip,#user-type,.vip-end').hide();
+            $('#vip-box,.vip-end-text').show();
         }
 
 

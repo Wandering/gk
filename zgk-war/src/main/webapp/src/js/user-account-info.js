@@ -7,7 +7,7 @@ define(['commonjs', 'tips', 'timeFormat', 'uploadFun', 'cookie'], function (util
     var dialog = require('dialog');
     $(function () {
 
-        var phoneNum = cookie.getCookieValue('phone');
+
 
         $('#modify-pwd').on('click', function () {
             var formHtml = ''
@@ -101,6 +101,7 @@ define(['commonjs', 'tips', 'timeFormat', 'uploadFun', 'cookie'], function (util
 
 
         var cookie = require('cookie');
+        var phoneNum = cookie.getCookieValue('phone');
         var icon = cookie.getCookieValue('icon');
         var imgIco = require('../img/icon_default.png');
         if(icon=='undefined'){

@@ -45,62 +45,66 @@
     <div class="main" id="comm-tpl">
         <!--banner-->
         <div class="vip-module">
-            <img src="" class="vip-banner">
-            <h3>马上升级为VIP</h3>
-            <div class="row-box clearfix">
-                <!--在线升级-->
-                <div class="online-upgrade">
-                    <h4 class="title">
-                        <i class="icon-user-vip"></i>在线升级
-                    </h4>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon">充值账号:</div>
-                            <input type="text" class="form-control phone" placeholder="请输入充值卡账号">
+            <img src="" class="vip-banner" id="vipBanner">
+            <h3 class="vip-end-text">您已经是VIP会员!</h3>
+            <div class="vip-end">
+                <h3>马上升级为VIP</h3>
+                <div class="row-box clearfix">
+                    <!--在线升级-->
+                    <div class="online-upgrade">
+                        <h4 class="title">
+                            <i class="icon-user-vip"></i>在线升级
+                        </h4>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">充值账号:</div>
+                                <input type="text" class="form-control phone" placeholder="请输入充值卡账号">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
+                        <div class="form-group">
 
-                        <div class="input-group">
-                            <div class="input-group-addon">支付金额:</div>
-                            <div class="form-control money"><b class="pay">498</b>元</div>
+                            <div class="input-group">
+                                <div class="input-group-addon">支付金额:</div>
+                                <div class="form-control money"><b class="pay">498</b>元</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon">付款方式:</div>
-                            <select name="" id="" class="form-control">
-                                <option value="">支付宝</option>
-                                <option value="">微信</option>
-                            </select>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">付款方式:</div>
+                                <select name="" id="" class="form-control">
+                                    <option value="">支付宝</option>
+                                    <option value="">微信</option>
+                                </select>
+                            </div>
                         </div>
+                        <!--<div class="btn-yellow" id="createOrderBtn">升级</div>-->
                     </div>
-                    <!--<div class="btn-yellow" id="createOrderBtn">升级</div>-->
-                </div>
-                <!--高考志愿卡升级-->
-                <div class=" online-card-upgrade">
-                    <h4 class="title">
-                        <i class="icon-user-card"></i>在线升级
-                    </h4>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon">充值卡账号:</div>
-                            <input type="text" class="form-control accountNum phone"  placeholder="请输入充值卡账号">
+                    <!--高考志愿卡升级-->
+                    <div class=" online-card-upgrade">
+                        <h4 class="title">
+                            <i class="icon-user-card"></i>在线升级
+                        </h4>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">充值卡账号:</div>
+                                <input type="text" class="form-control accountNum phone" placeholder="请输入充值卡账号">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon">卡号:</div>
-                            <input type="text" class="form-control" id="pay-card" placeholder="请输入卡号">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">卡号:</div>
+                                <input type="text" class="form-control" id="pay-card" placeholder="请输入卡号">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon">密码:</div>
-                            <input type="password" class="form-control" id="pay-password" placeholder="请输入密码">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">密码:</div>
+                                <input type="password" class="form-control" id="pay-password" placeholder="请输入密码">
+                            </div>
                         </div>
+                        <div class="btn-yellow" id="accountBtn">升级</div>
+                        <div class="error-tips"></div>
                     </div>
-                    <div class="btn-yellow" id="accountBtn">升级</div><div class="error-tips"></div>
                 </div>
             </div>
             <h3>VIP介绍</h3>
@@ -128,9 +132,9 @@
                     <p>评测最适合自己的专业方向</p>
                 </div>
                 <!--<div class="list">-->
-                    <!--<i class="icon-vip-introl4"></i>-->
-                    <!--<h3><a target="_blank" href="predict-volunteer.html">智能填报</a></h3>-->
-                    <!--<p>根据分数和位次快速锁定院校</p>-->
+                <!--<i class="icon-vip-introl4"></i>-->
+                <!--<h3><a target="_blank" href="predict-volunteer.html">智能填报</a></h3>-->
+                <!--<p>根据分数和位次快速锁定院校</p>-->
                 <!--</div>-->
             </div>
         </div>

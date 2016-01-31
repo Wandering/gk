@@ -19,3 +19,4 @@ require('./components/login/login.js');
 // 注册
 require('./components/login/register.js');
 
+

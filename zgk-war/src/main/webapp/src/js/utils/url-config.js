@@ -3,9 +3,9 @@
  * */
 //url接口地址
 //var BASE_URL = 'http://10.254.130.33:9080';
-var BASE_URL = 'http://10.136.21.171:8080';
+//var BASE_URL = 'http://10.136.21.171:8080';
 //var BASE_URL = 'http://172.16.130.98:8085';
-//var BASE_URL = '';
+var BASE_URL = '';
 
 var interfaceUrl = {
     /*
@@ -62,6 +62,7 @@ var interfaceUrl = {
     postRegisterLogin: BASE_URL + '/register/account.do',   // 注册
     postConfirmAccountCode: BASE_URL + '/register/confirmAccount.do',  // 确认是否注册
     postVerificationCode: BASE_URL + '/captcha/captcha.do',   // 获取手机验证码
+    postRetrievePassword: BASE_URL + '/register/retrievePassword.do',   // 获取手机验证码
 
 
     /**
