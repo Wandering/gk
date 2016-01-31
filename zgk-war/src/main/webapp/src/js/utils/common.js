@@ -17,6 +17,10 @@ define(['commonCss', 'jquery'], function () {
             .prepend(require('html!../../header.html'))
             .append(require('html!../../footer.html'));
     }
+    var favicon = require('../../img/favicon.ico')
+    $('#broswer-ico').attr('href',favicon);
+
+
     var cookie = require('cookie');
     if (cookie.getCookieValue('isLogin') == 'true') {
         //alert(cookie.getCookieValue('isLogin'))
@@ -27,6 +31,7 @@ define(['commonCss', 'jquery'], function () {
         $('#login-end').hide();
         filterUrl();
     }
+
     var icon = cookie.getCookieValue('icon');
     var userName = cookie.getCookieValue('userName');
     var imgIco = require('../../img/icon_default.png');
