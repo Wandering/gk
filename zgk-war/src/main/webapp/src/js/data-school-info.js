@@ -37,7 +37,10 @@ define(['commonjs', '../css/data/data-school-info.css', 'handlebars', 'timeForma
                     if (util.isLogin()) {
                         $('.collect').attr('href','javascript:void(0)').css('cursor','inherit');
                     }else{
-                        $('.collect').attr('href','/static/login.html').css('cursor','pointer');
+                        $('.collect').attr({
+                            'href':'/static/login.html',
+                            'target':'_blank'
+                        }).css('cursor','pointer');
                     }
                 }, 100);
             }

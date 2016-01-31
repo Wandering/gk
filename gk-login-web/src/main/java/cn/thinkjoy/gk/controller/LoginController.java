@@ -45,6 +45,7 @@ public class LoginController extends ZGKBaseController {
 		long id = 0l;
 		long areaId= getAreaId();
 		UserInfoPojo userInfoPojo=null;
+		UserInfoPojo old=null;
 		Map<String, Object> resultMap = new HashMap<>();
 		try {
 			if (StringUtils.isEmpty(account)) {
@@ -55,27 +56,35 @@ public class LoginController extends ZGKBaseController {
 			}
 
 			UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account,areaId);
+			if(userAccountBean==null){
+				old=oldUserLogin(account,password);
+			}else {
 
-			if (userAccountBean == null) {
-				throw new BizException(ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getCode(),ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getMessage());
-			}
 
-			if (!"@@@@".equals(password)) {
-				if (!MD5Util.MD5Encode(password).equals(userAccountBean.getPassword())) {
-					throw new BizException(ERRORCODE.LOGIN_PASSWORD_ERROR.getCode(),ERRORCODE.LOGIN_PASSWORD_ERROR.getMessage());
+				if (!"@@@@".equals(password)) {
+					if (!MD5Util.MD5Encode(password).equals(userAccountBean.getPassword())) {
+						throw new BizException(ERRORCODE.LOGIN_PASSWORD_ERROR.getCode(), ERRORCODE.LOGIN_PASSWORD_ERROR.getMessage());
+					}
 				}
+
+				if (userAccountBean.getStatus() != 0) {
+					throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "用户状态异常，请联系管理员!");
+				}
+
+
+				id = userAccountBean.getId();
+
+				userInfoPojo=userAccountExService.getUserInfoPojoById(id);
+			}
+			if (userAccountBean == null && old==null) {
+				throw new BizException(ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getCode(), ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getMessage());
+			}
+			if(userInfoPojo==null){
+				userInfoPojo=old;
 			}
 
-			if (userAccountBean.getStatus() != 0) {
-				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "用户状态异常，请联系管理员!");
-			}
-
-			id = userAccountBean.getId();
-
-			userInfoPojo=userAccountExService.getUserInfoPojoById(id);
 			String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), userInfoPojo.getAccount());
 			setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));
-
 			if(null != userInfoPojo)
 			{
 				resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
@@ -110,4 +119,16 @@ public class LoginController extends ZGKBaseController {
 		return "index";
 	}
 
+	private UserInfoPojo oldUserLogin(String account,String password){
+		UserInfoPojo userAccountBean = userAccountExService.findOldUserAccountPojoByPhone(account);
+		if (userAccountBean == null) {
+			throw new BizException(ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getCode(),ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getMessage());
+		}
+		if (!"@@@@".equals(password)) {
+			if (!MD5Util.MD5Encode(password).equals(userAccountBean.getPassword())) {
+				throw new BizException(ERRORCODE.LOGIN_PASSWORD_ERROR.getCode(),ERRORCODE.LOGIN_PASSWORD_ERROR.getMessage());
+			}
+		}
+		return userAccountBean;
+	}
 }

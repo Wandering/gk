@@ -20,4 +20,6 @@ public interface IUserAccountExDAO {
 
     UserInfoPojo getUserInfoPojoById(Map<String, Object> params);
 
+    UserInfoPojo findOldUserAccountPojo(Map<String, Object> params);
+
 }

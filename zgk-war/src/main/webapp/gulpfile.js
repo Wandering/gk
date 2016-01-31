@@ -61,11 +61,10 @@ gulp.task('deploy', function () {
 
     return gulp.src(assets + '/**')
         .pipe(sftp({
-            host: '10.136.11.232',
-            remotePath: '/home/zgk/static/',
-            user: 'zgk',
-            pass: 'aka5af4Oeka86'
-            //pass: 'aka5af4Oeka86'
+            host: '10.136.21.171',
+            remotePath: '/var/lib/tomcat7/webapps/ROOT/static/',
+            user: 'ubuntu',
+            pass: '+YrRQ2tgpLY='
         }));
 });
 

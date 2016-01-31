@@ -9,21 +9,18 @@ define(['commonjs'], function (util) {
         }
 
         var acId = getUrLinKey('Type')
-        $.ajax({
-            url: util.INTERFACE_URL.postQueryApeskUrl,
-            type: 'post',
-            dataType: 'json',
-            data: {
-                acId: acId//测试类型
-            },
-            success: function (res) {
+
+        util.ajaxFun(util.INTERFACE_URL.postQueryApeskUrl, 'POST', {
+            acId: acId//测试类型
+        }, function (res) {
+            if (res.rtnCode == '0000000') {
                 console.log(res);
                 if (res.rtnCode == "0000000") {
                     $("#apeskIframe").attr("src", res.bizData.data);
                 } else {
                     alert(res.msg);
-                }
 
+                }
             }
         });
 
