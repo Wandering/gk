@@ -84,11 +84,11 @@ function makeConf(options) {
 
         plugins: [
             //new CommonsChunkPlugin({
-            //   name: 'common',
-            //   chunks: chunks,
-            //   // Modules must be shared between all entries
-            //   minChunks: chunks.length // 提取所有chunks共同依赖的模块
-            //}),
+            //    name: 'vendors',
+            //    chunks: chunks,
+            //    // Modules must be shared between all entries
+            //    minChunks: chunks.length // 提取所有chunks共同依赖的模块
+            //})
             //new CommonsChunkPlugin({
             //    name: 'common-bc',
             //    chunks: chunks,

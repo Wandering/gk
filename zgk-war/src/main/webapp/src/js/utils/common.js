@@ -144,7 +144,7 @@ define(['commonCss', 'jquery'], function () {
         ajaxFun: ajaxFun,//数据拉取
         getLinkey: getLinkey,//url获取参数
         INTERFACE_URL: INTERFACE_URL,
-        cookie: cookie,
+        cookie: cookie
     };
 
 
