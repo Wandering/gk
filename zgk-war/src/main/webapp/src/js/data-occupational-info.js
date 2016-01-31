@@ -96,7 +96,7 @@ define(['commonjs', 'handlebars','noDataTips'], function (common, handlebars,noD
                     var template = handlebars.compile($("#temp-professional-list").html());
                     $('#professional-list').append(template(res.bizData));
                     if (res.bizData.rows.length == 0) {
-                        $('.data-tips').html(noDataTips('真抱歉,没有查到相关专业'));
+                        $('.data-tips').html(noDataTips('真抱歉,没有查到相关职业'));
                     }else{
                         $('.data-tips').html('');
 

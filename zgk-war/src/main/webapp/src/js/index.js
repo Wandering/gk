@@ -115,25 +115,26 @@ define(['commonjs', '../css/index.css', 'handlebars','tips', 'chinaMap','cookie'
                 var val = data[i];//获取对应的值
 
                 st.animate({fill: fillcolor, stroke: "#FFF"});
-                if (val) {
-                    st[0].onmouseover = function (e) {
-                        st.animate({fill: "#FFE167", stroke: "#eee"}, 100);
-                        /*R.safari();*/
-                        $("#mapTip").css({
-                            "top": (e.pageY - xOffset - 10) + "px",
-                            "left": (e.pageX - yOffset) + "px"
-                        }).fadeIn("fast").html("在" + china[state]['name'] + "地区<br/>近七天共" + val + "人<br/>使用智高考服务");
-                    };
-                    st[0].onmouseout = function (e) {
-                        $("#mapTip").hide();
-                        st.animate({fill: fillcolor, stroke: "#FFF"}, 100);
-                        /*R.safari();*/
-                    };
-                    st[0].mousemove = function (e) {
-                        $("#mapTip").css({"top": (e.pageY - xOffset - 10) + "px", "left": (e.pageX - yOffset) + "px"});
-                        /*R.safari();*/
-                    };
-                }
+                //数据不可靠,暂时屏蔽掉
+                //if (val) {
+                //    st[0].onmouseover = function (e) {
+                //        st.animate({fill: "#FFE167", stroke: "#eee"}, 100);
+                //        /*R.safari();*/
+                //        $("#mapTip").css({
+                //            "top": (e.pageY - xOffset - 10) + "px",
+                //            "left": (e.pageX - yOffset) + "px"
+                //        }).fadeIn("fast").html("在" + china[state]['name'] + "地区<br/>近七天共" + val + "人<br/>使用智高考服务");
+                //    };
+                //    st[0].onmouseout = function (e) {
+                //        $("#mapTip").hide();
+                //        st.animate({fill: fillcolor, stroke: "#FFF"}, 100);
+                //        /*R.safari();*/
+                //    };
+                //    st[0].mousemove = function (e) {
+                //        $("#mapTip").css({"top": (e.pageY - xOffset - 10) + "px", "left": (e.pageX - yOffset) + "px"});
+                //        /*R.safari();*/
+                //    };
+                //}
 
             })(china[state]['path'], state);
             i++;
