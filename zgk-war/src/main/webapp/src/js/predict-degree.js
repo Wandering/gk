@@ -67,9 +67,10 @@ define(['commonjs','tips','handlebars','cookie','noDataTips'], function (util,ti
                     }else{
                         $('#recommend').hide();
                     }
-                    if(res.bizData.probability==0){
-                        alert(88)
-                        $('#star-list').html('暂无');
+                    if(res.bizData.probability == 0){
+                        $('#noData').text('暂无');
+                    }else{
+                        $('#noData').hide();
                     }
                     var strArr = '';
                     for (var i = 0; i < res.bizData.probability; i++) {
