@@ -122,5 +122,18 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         return userAccountExDAO.getUserInfoPojoById(params);
     }
 
+    @Override
+    public UserInfoPojo findOldUserAccountPojoById(long id) {
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("id",id);
+        return userAccountExDAO.findOldUserAccountPojo(params);
+    }
+
+    @Override
+    public UserInfoPojo findOldUserAccountPojoByPhone(String phone) {
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("account",phone);
+        return userAccountExDAO.findOldUserAccountPojo(params);
+    }
 
 }

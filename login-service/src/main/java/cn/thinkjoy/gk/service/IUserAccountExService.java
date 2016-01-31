@@ -19,9 +19,9 @@ public interface IUserAccountExService {
 
     UserAccountPojo findUserAccountPojoById(Long id);
 
-    UserAccountPojo findUserAccountPojoByPhone(String phone,long areaId);
+    UserAccountPojo findUserAccountPojoByPhone(String phone, long areaId);
 
-    int findUserAccountCountByPhone(String phone,long areaId);
+    int findUserAccountCountByPhone(String phone, long areaId);
 
     boolean insertUserAccount(UserAccount userAccount);
 
@@ -31,4 +31,7 @@ public interface IUserAccountExService {
 
     UserInfoPojo getUserInfoPojoById(long id);
 
+    UserInfoPojo findOldUserAccountPojoById(long id);
+
+    UserInfoPojo findOldUserAccountPojoByPhone(String phone);
 }
