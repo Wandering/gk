@@ -19,8 +19,9 @@ public class HttpVipTest extends TestCase{
             String url=host + upgradeVipByCard_url + "?cardNumber=0311240868&password=286940616&token=Na5QqNTNBAbNjFm%2FryG3YQ%3D%3D&userKey=zj\n";
             String result = RequestUtils.requestPost(url);
             assertTrue(result.contains("33"));
-     }
+            System.out.println("result = " + result);
 
+     }
 
 
 }

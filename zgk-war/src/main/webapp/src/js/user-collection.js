@@ -1,5 +1,5 @@
 define(['commonjs', '../css/user/user-account-info.css', 'handlebars','noDataTips'], function (util, collectionCss, handlebars,noDataTips) {
-    $('#banner-info').prepend(require('html!../static/user-banner.html'));
+    $('#banner-info').prepend(require('html!../user-banner.html'));
     // tab切换
     $('#tab-title').on('click', 'span', function () {
         $(this).addClass('active').siblings().removeClass('active');

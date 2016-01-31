@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.concurrent.TimeUnit;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
-
+	public int TOKEN_EXPIRE_TIME = 60*60;
 	private static final Logger LOGGER= LoggerFactory.getLogger(LoginInterceptor.class);
 	@Autowired
 	private IUserAccountExService userAccountExService;
@@ -45,7 +45,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		String key = UserRedisConst.USER_KEY+value;
 
 		boolean redisFlag = RedisUtil.getInstance().exists(key);
-
 		LOGGER.info("redis is exists:"+ redisFlag);
 
 		if (StringUtils.isEmpty(value)||!redisFlag) {
@@ -89,6 +88,17 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	protected UserAccountPojo getUserAccountPojo(String key) {
 		UserAccountPojo userAccountBean  = null;
 		userAccountBean = JSON.parseObject(RedisUtil.getInstance().get(key).toString(),UserAccountPojo.class);
+		//对token进行延期
+		store(key,userAccountBean);
 		return userAccountBean;
+	}
+
+	/**
+	 * 对token进行延期
+	 * @param key
+	 */
+	public void store(String key,UserAccountPojo userAccountBean)
+	{
+		RedisUtil.getInstance().set(key,userAccountBean,TOKEN_EXPIRE_TIME,TimeUnit.SECONDS);
 	}
 }
