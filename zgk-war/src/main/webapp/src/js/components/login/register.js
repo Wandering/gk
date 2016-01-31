@@ -37,8 +37,16 @@ define(['commonjs', 'tips','./verification-code.js'], function (util, tips) {
                 tips('#tips2', '两次密码输入不一致');
                 return false;
             }
+            var postUrl = '';
+            if($('.type-res:visible').attr('typeRes')=="1"){
+                alert(9)
+                postUrl = util.INTERFACE_URL.postRegisterLogin;
+            }else{
+                alert(8)
+                postUrl = util.INTERFACE_URL.postRetrievePassword;
+            }
 
-            util.ajaxFun(util.INTERFACE_URL.postRegisterLogin, 'POST', {
+            util.ajaxFun(postUrl, 'POST', {
                 account: registerPhoneV, //用户账号
                 captcha: verificationCodeV, //验证码
                 password: registerPwdV //密码

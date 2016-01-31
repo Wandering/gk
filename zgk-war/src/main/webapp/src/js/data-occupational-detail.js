@@ -9,6 +9,8 @@ define(['commonjs', 'handlebars'], function (common, handlebars) {
             if (res.rtnCode === "0000000") {
                 var template = handlebars.compile($("#temp-occupational-detail").html());
                 $('#occupational-detail').html(template(res.bizData));
+            }else{
+                alert(res.msg)
             }
         });
 
