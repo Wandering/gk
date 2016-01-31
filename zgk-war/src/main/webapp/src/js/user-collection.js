@@ -8,6 +8,24 @@ define(['commonjs', '../css/user/user-account-info.css', 'handlebars','noDataTip
         $('.content-list:eq(' + index + ')').addClass('active');
     });
 
+    var cookie = require('cookie');
+    var icon = cookie.getCookieValue('icon');
+    var imgIco = require('../img/icon_default.png');
+    if(icon=='undefined'){
+        icon = imgIco;
+    }
+    var userName = cookie.getCookieValue('userName');
+    var vipStatus = cookie.getCookieValue('vipStatus');
+    $('.user-avatar').attr('src',icon);
+    $('.user-name').text(userName);
+    if(vipStatus==0){
+        $('#btn-vip,#user-type').show();
+        $('#vip-box').hide();
+    }else{
+        $('#btn-vip,#user-type').hide();
+        $('#vip-box').show();
+    }
+
     /*
      * 收藏(院校收藏|课程收藏)
      * type:1（院校）或2（课程）
