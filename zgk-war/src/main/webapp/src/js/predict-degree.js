@@ -16,6 +16,12 @@ define(['commonjs','tips','handlebars','cookie','noDataTips'], function (util,ti
         $('.radio-subject[value="'+ subjectType +'"]').attr('checked','checked');
 
 
+        var volunteerBanner = require('../img/volunteer-banner.jpg');
+        var volunteerBannerImg = '<img src="' + volunteerBanner + '" />';
+        $('.volunteer-banner').html(volunteerBannerImg);
+
+
+
         $('#predict-degree-btn').on('click', function () {
             var subjectV = $('.radio-subject[name="subject"]:checked').val(),
                 scoreV = $.trim($('#score').val()),
@@ -62,6 +68,7 @@ define(['commonjs','tips','handlebars','cookie','noDataTips'], function (util,ti
                         $('#recommend').hide();
                     }
                     if(res.bizData.probability==0){
+                        alert(88)
                         $('#star-list').html('暂无');
                     }
                     var strArr = '';
