@@ -1,6 +1,7 @@
 define(['commonCss', 'jquery'], function () {
 
     //浏览器判断
+
     var Sys = {};
     var ua = navigator.userAgent.toLowerCase();
     var s;
@@ -11,25 +12,13 @@ define(['commonCss', 'jquery'], function () {
     }
     $('head').prepend(require('html!../../meta.html'));
     var noHeaderFooterUrl = window.location.pathname;
-    if (noHeaderFooterUrl != '/static/login.html') {
+    if (noHeaderFooterUrl != '/static/login.html' || noHeaderFooterUrl != '/static/volunteer-detail.html') {
         $('body')
             .prepend(require('html!../../header.html'))
             .append(require('html!../../footer.html'));
     }
-
-
-    //省份切换
-    //$('.current-province').mouseover(function () {
-    //    $(this).css({
-    //        'border-color':'#fff'
-    //    });
-    //    $('.select-province').fadeIn();
-    //});
-    //$('.logo').mouseout(function(){
-    //    $('.select-province').fadeOut();
-    //});
-
-
+    var favicon = require('../../img/favicon.ico')
+    $('#broswer-ico').attr('href',favicon);
 
 
     var cookie = require('cookie');
@@ -42,17 +31,18 @@ define(['commonCss', 'jquery'], function () {
         $('#login-end').hide();
         filterUrl();
     }
+
     var icon = cookie.getCookieValue('icon');
     var userName = cookie.getCookieValue('userName');
     var imgIco = require('../../img/icon_default.png');
-    if (icon == 'undefined') {
+    if(icon=='undefined'){
         icon = imgIco;
     }
     $('#header-user-avatar,.user-avatar').attr('src', icon);
     $('#header-user-name,.user-name').text(userName);
-    $('body').on('click', '#logout-btn', function () {
-        cookie.deleteCookie('isLogin', '');
-        cookie.deleteCookie('token', '');
+    $('body').on('click', '#logout-btn',function () {
+        cookie.deleteCookie('isLogin','');
+        cookie.deleteCookie('token','');
         window.location.assign('http://' + window.location.host + '/static/index.html')
     });
 
@@ -137,7 +127,7 @@ define(['commonCss', 'jquery'], function () {
             data: data || {},
             dataType: 'json',
             success: callback,
-            error: callback
+            error:callback
         });
     };
 

@@ -42,7 +42,7 @@ function makeConf(options) {
         resolve: {
             root: [srcDir, './node_modules'],
             alias: sourceMap,
-            extensions: ['', '.js', '.css', '.scss', '.tpl', '.png', '.jpg']
+            extensions: ['', '.js', '.css', '.scss', '.tpl', '.png', '.jpg','.ico']
         },
 
         resolveLoader: {
@@ -53,7 +53,7 @@ function makeConf(options) {
             noParse: ['jquery'],
             loaders: [
                 {
-                    test: /\.(jpe?g|png|gif|svg)$/i,
+                    test: /\.(jpe?g|png|gif|svg|ico)$/i,
                     loaders: [
                         'image?{bypassOnDebug: true, progressive:true, \
                             optimizationLevel: 3, pngquant:{quality: "65-80", speed: 4}}',
@@ -84,11 +84,11 @@ function makeConf(options) {
 
         plugins: [
             //new CommonsChunkPlugin({
-            //   name: 'common',
-            //   chunks: chunks,
-            //   // Modules must be shared between all entries
-            //   minChunks: chunks.length // 提取所有chunks共同依赖的模块
-            //}),
+            //    name: 'vendors',
+            //    chunks: chunks,
+            //    // Modules must be shared between all entries
+            //    minChunks: chunks.length // 提取所有chunks共同依赖的模块
+            //})
             //new CommonsChunkPlugin({
             //    name: 'common-bc',
             //    chunks: chunks,
@@ -161,10 +161,10 @@ function makeConf(options) {
                 var conf = {
                     template: path.resolve(srcDir, filename),
                     // @see https://github.com/kangax/html-minifier
-                    // minify: {
-                    //     collapseWhitespace: true,
-                    //     removeComments: true
-                    // },
+                     minify: {
+                         collapseWhitespace: true,
+                         removeComments: true
+                     },
                     filename: filename
                 };
 

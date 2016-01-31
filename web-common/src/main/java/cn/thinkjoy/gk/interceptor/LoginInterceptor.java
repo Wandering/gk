@@ -33,9 +33,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		UserAreaContext.setCurrentUserArea(request.getParameter("userKey"));
 		String url = request.getServletPath();
-		if(!ServletPathConst.MAPPING_URLS.contains(url)){
-			return true;
-		}
+
 
 		LOGGER.info("url:"+url);
 
@@ -46,11 +44,17 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 		boolean redisFlag = RedisUtil.getInstance().exists(key);
 		LOGGER.info("redis is exists:"+ redisFlag);
+		if(redisFlag)
+		{
+			callWhenAuthenticationSuccess(key);
+		}
+		if(!ServletPathConst.MAPPING_URLS.contains(url)){
+			return true;
+		}
 
 		if (StringUtils.isEmpty(value)||!redisFlag) {
 			throw new BizException("1000004","请先登录后再进行操作");
 		}
-		callWhenAuthenticationSuccess(key);
 		return true;
 	}
 
@@ -86,6 +90,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	 * @return
 	 */
 	protected UserAccountPojo getUserAccountPojo(String key) {
+		if(key==null)return null;
 		UserAccountPojo userAccountBean  = null;
 		userAccountBean = JSON.parseObject(RedisUtil.getInstance().get(key).toString(),UserAccountPojo.class);
 		//对token进行延期
@@ -99,6 +104,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	 */
 	public void store(String key,UserAccountPojo userAccountBean)
 	{
-		RedisUtil.getInstance().set(key,userAccountBean,TOKEN_EXPIRE_TIME,TimeUnit.SECONDS);
+		RedisUtil.getInstance().set(key,JSON.toJSONString(userAccountBean),TOKEN_EXPIRE_TIME,TimeUnit.SECONDS);
 	}
 }

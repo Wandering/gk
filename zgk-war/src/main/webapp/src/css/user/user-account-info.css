@@ -88,6 +88,9 @@
   top: -1;
   margin-right: 5px;
 }
+.banner-info .banner-user .btn-vip a {
+  color: #fff;
+}
 .banner-info .banner-user .vip-box {
   height: 30px;
   position: absolute;
