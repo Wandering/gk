@@ -182,14 +182,15 @@ define(['commonjs', '../css/data/data-school-info.css', 'handlebars', 'timeForma
         util.cookie.setCookie("targetSchool", thisSchool, 4, "");
     });
 
-
     //静态图片
     var sideBanner1 = require('../img/side-banner1.png');
     $('#side-banner1').attr('src', sideBanner1);
     var sideBanner2 = require('../img/side-banner2.png');
     $('#side-banner2').attr('src', sideBanner2);
-    $('#side-banner3').attr('src', sideBanner1);
-    $('#side-banner4').attr('src', sideBanner2);
+    var sideBanner3 = require('../img/side-banner3.png');
+    $('#side-banner3').attr('src', sideBanner3);
+    var sideBanner4 = require('../img/side-banner4.png');
+    $('#side-banner4').attr('src', sideBanner4);
 });
 
 
