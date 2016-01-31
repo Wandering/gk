@@ -34,6 +34,11 @@ define(['commonjs','tips','handlebars','cookie','noDataTips'], function (util,ti
                 tips('#tips', '请输入分数');
                 return false;
             }
+            var re = /^[1-9]+[0-9]*]*$/;
+            if (!re.test(scoreV)) {
+                tips('#tips', '请输入正确分数');
+                return false;
+            }
             if (universityNameV == "") {
                 tips('#tips', '请输入目标院校');
                 return false;

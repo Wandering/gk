@@ -2,7 +2,7 @@ define(['commonjs','handlebars','tips'], function (util,handlebars,tips) {
     require('../css/user/user-account-info.css');
 
     $(function () {
-        $('#banner-info').prepend(require('html!../static/user-banner.html'));
+        $('#banner-info').prepend(require('html!../user-banner.html'));
 
         var targetTypeImg = require('../img/user-target-jbtm.png');
         var targetJbtmTypeImg = require('../img/icon-jbtm.png');
@@ -28,10 +28,6 @@ define(['commonjs','handlebars','tips'], function (util,handlebars,tips) {
 
 
         function targetPos(val){
-            //if (util.cookie.getCookieValue('vipStatus')=='0') {
-            //    tips('#tips', '请先升级VIP再操作!');
-            //    return false;
-            //}
             var subjectV = $('.radio-subject[name="subject"]:checked').val(),
                 scoreV = $.trim($('#target-score').val()),
                 universityNameV = $.trim($('#target-school').val());
