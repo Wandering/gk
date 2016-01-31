@@ -104,14 +104,14 @@ define(['commonjs', 'tips', 'timeFormat', 'uploadFun', 'cookie'], function (util
             min: '1960-01-01 00:00:00',
             max: '2010-01-01 00:00:00'
         });
-        var avatar = require('../img/icon_default.png');
+        var avatarImg = require('../img/icon_default.png');
         //获取用户信息
         util.ajaxFun(util.INTERFACE_URL.getUserInfo, 'GET', {}, function (res) {
             if (res.rtnCode == '0000000') {
                 var personListData = res.bizData;
                 var avatar = '';
                 if (personListData.icon == '' || personListData.icon == null) {
-                    avatar = avatar;
+                    avatar = avatarImg;
                 } else {
                     avatar = personListData.icon
                 }
