@@ -1,4 +1,4 @@
-define(['commonjs','handlebars','tips'], function (util,handlebars,tips) {
+define(['commonjs','handlebars','tips','noDataTips'], function (util,handlebars,tips,noDataTips) {
     require('../css/user/user-account-info.css');
 
     $(function () {
@@ -95,13 +95,13 @@ define(['commonjs','handlebars','tips'], function (util,handlebars,tips) {
                         strArr += star;
                     }
                     $('#star-list').html(strArr);
-                    res.bizData.type == '1' ? $('#type-subject').text('理工') : $('#type-subject').text('文史');
+                    res.bizData.type == '1' ? $('#type-subject').text('文史') : $('#type-subject').text('理工');
                     var lowestNumLen = $('.lowest').length;
                     var lowestNum = 0;
                     for(var j=0;j<lowestNumLen;j++){
                         lowestNum += parseInt($('.lowest:eq('+ j +')').text());
                     }
-                    var averageLowest = lowestNum/3;
+                    var averageLowest = parseInt(lowestNum/3);
                     var resultNum = averageLowest-scoreV;
                     if(resultNum > 0){
                         $('#average-lowest').text(resultNum)
@@ -112,6 +112,14 @@ define(['commonjs','handlebars','tips'], function (util,handlebars,tips) {
                         $('.tips-target-p,.txt-link').hide();
                         $('.gt-target').show();
                     }
+
+                    if (res.bizData.historyList.length == 0) {
+                        $('.data-tips').html(noDataTips('真抱歉,没有查到相关信息'));
+                    } else {
+                        $('.data-tips').html('');
+                    }
+
+
                 } else {
                     tips('#tips', res.msg);
                 }
@@ -132,17 +140,12 @@ define(['commonjs','handlebars','tips'], function (util,handlebars,tips) {
                 lowestNum += parseInt($('.lowest:eq('+ j +')').text());
             }
             var averageLowest = lowestNum/3;
-
-
-
             var lowestScoreNumLen = $('.lowest-score').length;
             var lowestScoreNum = 0;
             for(var j=0;j<lowestScoreNumLen;j++){
                 lowestScoreNum += parseInt($('.lowest-score:eq('+ j +')').text());
             }
             var averageScoreLowest = lowestScoreNum/3;
-
-
             util.ajaxFun(util.INTERFACE_URL.postAddFrecast, 'POST', {
                 'typeId': subjectV,
                 'achievement': scoreV,
@@ -152,7 +155,7 @@ define(['commonjs','handlebars','tips'], function (util,handlebars,tips) {
             }, function (res) {
                 console.log(res)
                 if (res.rtnCode === "0000000") {
-
+                    util.cookie.setCookie("targetSchool", $('#tarSch').text(), 4, "");
 
                 } else {
                     tips('#tips', res.msg);
@@ -163,7 +166,8 @@ define(['commonjs','handlebars','tips'], function (util,handlebars,tips) {
 
 
         util.ajaxFun(util.INTERFACE_URL.getPerformanceDetail, 'GET', {}, function (res) {
-            console.log(res)
+            var template = handlebars.compile($("#temp-results-details").html());
+            $('#results-details').html(template(res.bizData));
 
         });
 

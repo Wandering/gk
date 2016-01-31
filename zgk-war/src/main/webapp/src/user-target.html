@@ -91,7 +91,7 @@
         </h3>
         <p>
             科类: <span class="wl" id="type-subject"></span>
-            目标院校: <span class="wl">{{universityName}}</span>
+            目标院校: <span class="wl" id="tarSch">{{universityName}}</span>
             分数: <span>{{score}}</span>
         </p>
         <div class="again-target" id="again-target">
@@ -124,7 +124,6 @@
                 <th>年份</th>
                 <th class="w250">院校</th>
                 <th>批次</th>
-                <th>录取人数</th>
                 <th>最低分</th>
                 <th>平均分</th>
             </tr>
@@ -135,66 +134,41 @@
                 <td>{{year}}</td>
                 <td>{{universityName}}</td>
                 <td>{{batch}}</td>
-                <td>{{enrollingNumber}}</td>
-                <td class="lowest-score">{{lowScore}}</td>
-                <td class="lowest">{{highScore}}</td>
+                <td class="lowest-score">{{minScore}}</td>
+                <td class="lowest">{{avgScore}}</td>
             </tr>
             {{/each}}
             </tbody>
         </table>
-        <!--<h3 class="ago-situation">成绩走势：</h3>-->
-        <h3 class="ago-situation">成绩明细：</h3>
-        <table class="table-list table-hover" id="results-details">
-            <thead>
-            <tr>
-                <th>年份</th>
-                <th class="w250">院校</th>
-                <th>批次</th>
-                <th>录取人数</th>
-                <th>最低分</th>
-                <th>平均分</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>2015</td>
-                <td>北京大学</td>
-                <td>一批本科</td>
-                <td>48</td>
-                <td>580</td>
-                <td>618</td>
-            </tr>
-            <tr>
-                <td>2014</td>
-                <td>北京大学</td>
-                <td>一批本科</td>
-                <td>48</td>
-                <td>580</td>
-                <td>618</td>
-            </tr>
-            <tr>
-                <td>2013</td>
-                <td>北京大学</td>
-                <td>一批本科</td>
-                <td>48</td>
-                <td>580</td>
-                <td>618</td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="data-tips"></div>
+
         <div class="btn btn-target-location" id="save-btn">保存</div>
     </div>
 </script>
-
-
-
-
-
-
-
-
-
-
-
+<!--<h3 class="ago-situation">成绩走势：</h3>-->
+<!--<h3 class="ago-situation">成绩明细：</h3>-->
+<!--<table class="table-list table-hover" id="results-details">-->
+<!--<thead>-->
+<!--<tr>-->
+<!--<th>年份</th>-->
+<!--<th class="w250">院校</th>-->
+<!--<th>批次</th>-->
+<!--<th>录取人数</th>-->
+<!--<th>最低分</th>-->
+<!--<th>平均分</th>-->
+<!--</tr>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--#temp-results-details-->
+<!--<tr>-->
+<!--<td>2015</td>-->
+<!--<td>北京大学</td>-->
+<!--<td>一批本科</td>-->
+<!--<td>48</td>-->
+<!--<td>580</td>-->
+<!--<td>618</td>-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->
 </body>
 </html>

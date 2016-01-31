@@ -12,7 +12,7 @@ define(['commonCss', 'jquery'], function () {
     }
     $('head').prepend(require('html!../../meta.html'));
     var noHeaderFooterUrl = window.location.pathname;
-    if (noHeaderFooterUrl != '/static/login.html' || noHeaderFooterUrl != '/static/class-college-detail.html') {
+    if (noHeaderFooterUrl != '/static/login.html' && noHeaderFooterUrl != '/static/class-college-detail.html') {
         $('body')
             .prepend(require('html!../../header.html'))
             .append(require('html!../../footer.html'));
