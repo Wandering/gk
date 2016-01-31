@@ -44,10 +44,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 		boolean redisFlag = RedisUtil.getInstance().exists(key);
 		LOGGER.info("redis is exists:"+ redisFlag);
-		if (!StringUtils.isEmpty(value)&&redisFlag) {
-			callWhenAuthenticationSuccess(key,value);
+		if(redisFlag)
+		{
+			callWhenAuthenticationSuccess(key);
 		}
-
 		if(!ServletPathConst.MAPPING_URLS.contains(url)){
 			return true;
 		}
@@ -69,9 +69,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 //		System.out.println("===========HandlerInterceptor1 afterCompletion");
 	}
 
-	private void callWhenAuthenticationSuccess(String key,String value){
+	private void callWhenAuthenticationSuccess(String key){
 
-		UserContext.setCurrentUser(getUserAccountPojo(key,value));
+		UserContext.setCurrentUser(getUserAccountPojo(key));
 	}
 
 //	/**
@@ -89,35 +89,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	 * 获取用户信息
 	 * @return
 	 */
-	protected UserAccountPojo getUserAccountPojo(String key,String value) {
+	protected UserAccountPojo getUserAccountPojo(String key) {
+		if(key==null)return null;
 		UserAccountPojo userAccountBean  = null;
-		if(null == value || "".equals(value))
-		{
-			return userAccountBean;
-		}
-		try{
-			String uInfo = cn.thinkjoy.gk.common.DESUtil.decrypt(value, cn.thinkjoy.gk.common.DESUtil.key);
-			String uid = cn.thinkjoy.gk.common.DESUtil.getUserInfo(uInfo)[0];
-			if(!RedisUtil.getInstance().exists(key))
-			{
-				userAccountBean = userAccountExService.findUserAccountPojoById(Long.parseLong(uid));
-				if(null!=userAccountBean)
-				{
-					RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 5L, TimeUnit.HOURS);
-				}
-				else
-				{
-					throw new BizException("error","The token is invalid!");
-				}
-			}
-			else
-			{
-				userAccountBean = JSON.parseObject(RedisUtil.getInstance().get(key).toString(),UserAccountPojo.class);
-			}
-		}catch (Exception e)
-		{
-			throw new BizException("error","The token is invalid!");
-		}
+		userAccountBean = JSON.parseObject(RedisUtil.getInstance().get(key).toString(),UserAccountPojo.class);
+		//对token进行延期
+		store(key,userAccountBean);
 		return userAccountBean;
 	}
 
@@ -127,6 +104,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	 */
 	public void store(String key,UserAccountPojo userAccountBean)
 	{
-		RedisUtil.getInstance().set(key,userAccountBean,TOKEN_EXPIRE_TIME,TimeUnit.SECONDS);
+		RedisUtil.getInstance().set(key,JSON.toJSONString(userAccountBean),TOKEN_EXPIRE_TIME,TimeUnit.SECONDS);
 	}
 }
