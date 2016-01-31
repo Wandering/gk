@@ -45,7 +45,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		boolean redisFlag = RedisUtil.getInstance().exists(key);
 		LOGGER.info("redis is exists:"+ redisFlag);
 		if (!StringUtils.isEmpty(value)&&redisFlag) {
-			callWhenAuthenticationSuccess(key);
+			callWhenAuthenticationSuccess(key,value);
 		}
 
 		if(!ServletPathConst.MAPPING_URLS.contains(url)){
@@ -69,9 +69,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 //		System.out.println("===========HandlerInterceptor1 afterCompletion");
 	}
 
-	private void callWhenAuthenticationSuccess(String key){
+	private void callWhenAuthenticationSuccess(String key,String value){
 
-		UserContext.setCurrentUser(getUserAccountPojo(key));
+		UserContext.setCurrentUser(getUserAccountPojo(key,value));
 	}
 
 //	/**
@@ -89,12 +89,35 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	 * 获取用户信息
 	 * @return
 	 */
-	protected UserAccountPojo getUserAccountPojo(String key) {
-		if(key==null)return null;
+	protected UserAccountPojo getUserAccountPojo(String key,String value) {
 		UserAccountPojo userAccountBean  = null;
-		userAccountBean = JSON.parseObject(RedisUtil.getInstance().get(key).toString(),UserAccountPojo.class);
-		//对token进行延期
-		store(key,userAccountBean);
+		if(null == value || "".equals(value))
+		{
+			return userAccountBean;
+		}
+		try{
+			String uInfo = cn.thinkjoy.gk.common.DESUtil.decrypt(value, cn.thinkjoy.gk.common.DESUtil.key);
+			String uid = cn.thinkjoy.gk.common.DESUtil.getUserInfo(uInfo)[0];
+			if(!RedisUtil.getInstance().exists(key))
+			{
+				userAccountBean = userAccountExService.findUserAccountPojoById(Long.parseLong(uid));
+				if(null!=userAccountBean)
+				{
+					RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 5L, TimeUnit.HOURS);
+				}
+				else
+				{
+					throw new BizException("error","The token is invalid!");
+				}
+			}
+			else
+			{
+				userAccountBean = JSON.parseObject(RedisUtil.getInstance().get(key).toString(),UserAccountPojo.class);
+			}
+		}catch (Exception e)
+		{
+			throw new BizException("error","The token is invalid!");
+		}
 		return userAccountBean;
 	}
 
