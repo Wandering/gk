@@ -44,7 +44,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 		boolean redisFlag = RedisUtil.getInstance().exists(key);
 		LOGGER.info("redis is exists:"+ redisFlag);
-		callWhenAuthenticationSuccess(key);
+		if (StringUtils.isEmpty(value)||!redisFlag) {
+			callWhenAuthenticationSuccess(key);
+		}
+
 		if(!ServletPathConst.MAPPING_URLS.contains(url)){
 			return true;
 		}
