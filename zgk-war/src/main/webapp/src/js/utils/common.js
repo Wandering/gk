@@ -12,7 +12,7 @@ define(['commonCss', 'jquery'], function () {
     }
     $('head').prepend(require('html!../../meta.html'));
     var noHeaderFooterUrl = window.location.pathname;
-    if (noHeaderFooterUrl != '/static/login.html') {
+    if (noHeaderFooterUrl != '/static/login.html' || noHeaderFooterUrl != '/static/volunteer-detail.html') {
         $('body')
             .prepend(require('html!../../header.html'))
             .append(require('html!../../footer.html'));
@@ -144,7 +144,7 @@ define(['commonCss', 'jquery'], function () {
         ajaxFun: ajaxFun,//数据拉取
         getLinkey: getLinkey,//url获取参数
         INTERFACE_URL: INTERFACE_URL,
-        cookie: cookie
+        cookie: cookie,
     };
 
 
