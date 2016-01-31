@@ -2,7 +2,6 @@ define(['commonCss', 'jquery'], function () {
 
     //浏览器判断
 
-    var BASE_PATH = '/static/';
     var Sys = {};
     var ua = navigator.userAgent.toLowerCase();
     var s;
