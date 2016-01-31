@@ -1,0 +1,30 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>我的收藏</title><link href="47c3d18f.user-collection.min.css" rel="stylesheet"></head><body><section id="crumb" class="crumb"><ol class="breadcrumb w1000"><li><span class="icon-crumb breadcrumb-home"></span><a href="/">首页</a></li><li><a href="/static/user-account-info.html">个人中心</a></li><li class="active">账号信息</li></ol></section><div class="banner-info" id="banner-info"></div><div class="main-container clearfix w1000"><div class="sidebar"><ul><div class="side-top"></div><li><a href="/static/user-account-info.html">账号信息</a> <i class="triangle-r"></i></li><li><a href="/static/user-vip.html">VIP特权</a> <i class="triangle-r"></i></li><li class="active"><a href="/static/user-collection.html">我的收藏</a> <i class="triangle-r"></i></li><li><a href="/static/user-target.html">目标定位</a> <i class="triangle-r"></i></li><li><a href="/static/user-service.html">服务中心</a> <i class="triangle-r"></i></li><div class="side-bottom"></div></ul></div><div class="main" id="comm-tpl"><div class="my-collection"><div class="tab-title" id="tab-title"><span class="active">院校收藏</span></div><ul class="school-data-list content-list active" id="school-collection"><div class="data-tips"></div></ul><div class="btn-more"><button class="btn btn-next hide" id="more-school">加载更多</button></div><script type="text/x-handlebars-template" id="school-collection-tpl">{{#each userCollectPojoList}}
+                <li id={{id}}>
+                    <img src="http://www.zhigaokao.cn{{universityLogo}}" class="school-logo">
+                    <div class="top">
+                        <span class="school-name">{{universityName}}</span>
+                        <i class="icon-flag"></i>全国排名：<span class="national-rank">30</span>
+                        <a href="javascript:void(0)" target="_blank" class="collect"><i class="icon-heart"></i>{{number}}已收藏</a>
+                    </div>
+                    <div class="middle">
+                        <!--<span class="type-985">985</span>-->
+                        <!--<span class="type-211">211</span>-->
+                        <!--<span class="type-yan">研</span>-->
+                        <!--<span class="type-zi">自</span>-->
+                        <!--<span class="type-guo">国</span>-->
+                        <!--<span class="type-zhuo">卓</span>-->
+                        <span>{{propertyName}}</span>
+                    </div>
+                    <div class="cancel-collection" cancel-id={{universityId}}>取消收藏</div>
+                    <div class="bottom">
+                        <i class="icon-location"></i>
+                        <span class="province">{{provinceName}}</span>
+                        <b>隶属：</b><span class="belong">{{subjection}}</span>
+                        <b>院校类型：</b><span class="school-type">{{universityType}}</span>
+                        <!--<a href="javascript:void(0)" class="enter-site">-->
+                            <!--<i class="icon-web"></i>-->
+                            <!--<span>进入网站</span>-->
+                        <!--</a>-->
+                    </div>
+                </li>
+                {{/each}}</script><ul class="subject-data-list content-list"><script src="js/f8956311.user-collection.min.js"></script></ul></div></div></div></body></html>
