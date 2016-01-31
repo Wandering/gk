@@ -29,6 +29,10 @@ define(['commonCss', 'jquery'], function () {
     }
     var icon = cookie.getCookieValue('icon');
     var userName = cookie.getCookieValue('userName');
+    var imgIco = require('../../img/icon_default.png');
+    if(icon=='undefined'){
+        icon = imgIco;
+    }
     $('#header-user-avatar,.user-avatar').attr('src', icon);
     $('#header-user-name,.user-name').text(userName);
     $('body').on('click', '#logout-btn',function () {
@@ -135,7 +139,6 @@ define(['commonCss', 'jquery'], function () {
         ajaxFun: ajaxFun,//数据拉取
         getLinkey: getLinkey,//url获取参数
         INTERFACE_URL: INTERFACE_URL,
-        //handlebars: handlebars,
         cookie: cookie,
     };
 
