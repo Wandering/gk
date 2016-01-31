@@ -62,7 +62,7 @@ define(['commonjs', '../css/data/data-school-detail.css', 'handlebars','cookie']
             };
             util.ajaxFun(url, 'get', data, function (res, strMsg) {
                 if (res.rtnCode == '0000000') {
-                    alert('操作成功!');
+                    //alert('操作成功!');
                 }
             });
         }
@@ -200,7 +200,6 @@ define(['commonjs', '../css/data/data-school-detail.css', 'handlebars','cookie']
         searchBatch = 1;
     $(document).on('change', '#professional-plan-year', function () {
         searchYear = $(this).val();
-        console.info(searchYear);
         majorEnrollingPlanList();
     });
     $(document).on('change', '#professional-plan-subject', function () {

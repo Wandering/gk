@@ -32,9 +32,19 @@ define(['commonjs', '../css/data/data-school-info.css', 'handlebars', 'timeForma
                 });
                 var template = handlebars.compile($(hdsDom).html());
                 $(htmlDom).html(template(res));
+                //是否登陆判断
+                setInterval(function () {
+                    if (util.isLogin()) {
+                        $('.collect').attr('href','javascript:void(0)').css('cursor','inherit');
+                    }else{
+                        $('.collect').attr('href','/static/login.html').css('cursor','pointer');
+                    }
+                }, 100);
             }
         });
     }
+
+
 
     //院校列表(筛选)
 
@@ -66,7 +76,7 @@ define(['commonjs', '../css/data/data-school-info.css', 'handlebars', 'timeForma
         "rows": rows
     };
 
-    function getSchoolList(msg) {
+    function getSchoolList() {
         util.ajaxFun(util.INTERFACE_URL.getSearchList, 'get', searchSchoolListData, function (res) {
             if (res.rtnCode == '0000000') {
 
