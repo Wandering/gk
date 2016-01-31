@@ -98,8 +98,6 @@ public class RegisterController extends ZGKBaseController {
 
             long id = userAccountBean.getId();
 
-            String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
-
             String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), account);
             setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));
             resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
@@ -123,11 +121,12 @@ public class RegisterController extends ZGKBaseController {
      */
     @RequestMapping(value = "/retrievePassword" ,method = RequestMethod.POST)
     @ResponseBody
-    public String retrievePassword(@RequestParam(value="account",required = false) String account,
+    public Map<String, Object>  retrievePassword(@RequestParam(value="account",required = false) String account,
                                    @RequestParam(value="captcha",required = false) String captcha,
                                    @RequestParam(value="password",required = false) String password)
             throws Exception{
         long areaId= getAreaId();
+        Map<String, Object> resultMap = new HashMap<>();
         try{
             if (StringUtils.isEmpty(account)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
@@ -159,12 +158,20 @@ public class RegisterController extends ZGKBaseController {
             }catch(Exception e){
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"密码重设失败");
             }
+            long id = userAccountBean.getId();
+
+            String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), account);
+            setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));
+            resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
+            userAccountBean.setPassword(null);
+            userAccountBean.setId(null);
+            resultMap.put("userInfo", userAccountBean);
         }catch (Exception e){
             throw e;
         }finally {
 
         }
-        return "success";
+        return resultMap;
     }
 
     /**
