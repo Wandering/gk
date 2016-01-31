@@ -88,7 +88,7 @@ define(function (require) {
             } else {
                 Dom.errorTip1.text('');
             }
-            alert(88)
+            //alert(88)
             $.ajax({
                 url: '/login/login.do',
                 type: 'POST',
@@ -99,7 +99,7 @@ define(function (require) {
                 },
                 success: function (res) {
                     if (res.rtnCode == '0000000') {
-                        alert(99)
+                        //alert(99)
                         //window.location.assign('http://' + window.location.host + '/index.jsp');
                         window.location.href = '/index.jsp';
                     } else {
