@@ -14,14 +14,14 @@ define(['commonjs', 'tips', 'timeFormat', 'uploadFun', 'cookie'], function (util
                 + '    <div class="form-group">'
                 + '        <div class="col-sm-12">'
                 + '            <div class="account-number">'
-                + '        <b>登录账号</b><span class="number" id="user-phone">15191580176</span>'
+                + '        <b>登录账号</b><span class="number" id="user-phone"></span>'
                 + '    </div>'
                 + '        </div>'
                 + '    </div>'
                 + '    <div class="form-group">'
                 + '        <label class="sr-only" for="current-psd">当前密码</label>'
                 + '        <div class="col-sm-12">'
-                + '            <input type="text" class="form-control" id="current-psd" placeholder="当前密码">'
+                + '            <input type="password" class="form-control" id="current-psd" placeholder="当前密码">'
                 + '        </div>'
                 + '    </div>'
                 + '    <div class="form-group">'
@@ -47,6 +47,7 @@ define(['commonjs', 'tips', 'timeFormat', 'uploadFun', 'cookie'], function (util
             dialog('修改密码', formHtml);
 
 
+            $('#user-phone').text(cookie.getCookieValue('phone'));
             //修改密码
             $('body').on('click', '#modify-pwd-btn', function () {
                 var currentPsd = $('#current-psd');
@@ -94,7 +95,8 @@ define(['commonjs', 'tips', 'timeFormat', 'uploadFun', 'cookie'], function (util
         });
 
 
-        $('#banner-info').prepend(require('html!../static/user-banner.html'));
+
+        $('#banner-info').prepend(require('html!../user-banner.html'));
         laydate({
             elem: '#user-birthday',
             festival: true,

@@ -37,8 +37,6 @@ define(['commonjs','tips'], function (util,tips) {
                     util.cookie.setCookie("vipStatus", vipStatus, 4, "");
                     util.cookie.setCookie("subjectType",subjectType, 4, "");
                     util.cookie.setCookie("phone",phone, 4, "");
-
-                    alert(99)
                     window.location.assign('http://' + window.location.host + '/static/index.html');
                 } else {
                     tips('#tips', res.msg);

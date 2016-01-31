@@ -24,6 +24,11 @@ define(['commonjs', 'tips', 'handlebars','cookie'], function (util, tips, handle
                 tips('#tips', '请输入分数');
                 return false;
             }
+            var re = /^[1-9]+[0-9]*]*$/;
+            if (!re.test(scoreV)) {
+                tips('#tips', '请输入正确分数');
+                return false;
+            }
             util.ajaxFun(util.INTERFACE_URL.getPredictSchoolList, 'POST', {
                 'type': subjectV,
                 'score': scoreV
@@ -31,6 +36,7 @@ define(['commonjs', 'tips', 'handlebars','cookie'], function (util, tips, handle
                 console.log(res);
                 if (res.rtnCode === "0000000") {
                     $('#content-a').hide();
+                    $('#content-b').show();
                     var template = handlebars.compile($("#temp-content").html());
                     handlebars.registerHelper('stars',function(val){
                         var star = '';

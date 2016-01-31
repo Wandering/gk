@@ -9,7 +9,6 @@
 
 var proxy = require('koa-proxy');
 
-var list = require('./mock/list');
 
 module.exports = function(router, app) {
     // mock api
