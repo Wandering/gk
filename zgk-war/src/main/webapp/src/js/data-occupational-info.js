@@ -108,6 +108,7 @@ define(['commonjs', 'handlebars','noDataTips'], function (common, handlebars,noD
 
         // 搜索
         $('#search-btn').on('click',function(){
+            $('#professional-list').html('');
             ListParameter.page = page;
             var queryV = $.trim($('#query').val());
             ListParameter.queryparam = queryV;
