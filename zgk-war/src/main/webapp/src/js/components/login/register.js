@@ -39,10 +39,10 @@ define(['commonjs', 'tips','./verification-code.js'], function (util, tips) {
             }
             var postUrl = '';
             if($('.type-res:visible').attr('typeRes')=="1"){
-                alert(9)
+                //alert(9)
                 postUrl = util.INTERFACE_URL.postRegisterLogin;
             }else{
-                alert(8)
+                //alert(8)
                 postUrl = util.INTERFACE_URL.postRetrievePassword;
             }
 
