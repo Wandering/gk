@@ -58,6 +58,7 @@ define(['commonCss', 'jquery'], function () {
         case 'news-policy.html':
         case 'news-schedule.html':
         case 'news-online-interactive.html':
+        case 'data-gk-word.html':
             $('#nav-news-hot').addClass('active');
             break;
         case 'data-school-info.html':
@@ -66,7 +67,6 @@ define(['commonCss', 'jquery'], function () {
         case 'data-occupational-info.html':
         case 'data-occupational-detail.html':
         case 'data-area-scores.html':
-        case 'data-gk-word.html':
             $('#nav-data-school-info').addClass('active');
             break;
         case 'class-college.html':
