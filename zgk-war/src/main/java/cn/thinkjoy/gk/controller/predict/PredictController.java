@@ -89,8 +89,6 @@ public class PredictController extends BaseCommonController{
         params.put("type", type);
         params.put("areaId", getAreaId());
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("universityName", uName);
-        resultMap.put("score", score);
         try {
             resultMap = universityService.getPredictProbability(params);
         } catch (Exception e) {
@@ -98,6 +96,8 @@ public class PredictController extends BaseCommonController{
             resultMap.put("probability", 0);
             resultMap.put("type", type);
         }
+        resultMap.put("universityName", uName);
+        resultMap.put("score", score);
         return resultMap;
     }
 

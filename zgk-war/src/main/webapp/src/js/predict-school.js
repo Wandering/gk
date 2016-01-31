@@ -1,13 +1,18 @@
-define(['commonjs', 'tips', 'handlebars','cookie'], function (util, tips, handlebars,cookie) {
+define(['commonjs', 'tips', 'handlebars', 'cookie'], function (util, tips, handlebars, cookie) {
 
     require('../css/volunteer/volunteer-prediction.css');
 
-    var  targetScoreV = util.cookie.getCookieValue('targetScore');
-    var  subjectType = util.cookie.getCookieValue('subjectType');
+    var targetScoreV = util.cookie.getCookieValue('targetScore');
+    var subjectType = util.cookie.getCookieValue('subjectType');
+
+    var volunteerBanner = require('../img/volunteer-banner.jpg');
+    var volunteerBannerImg = '<img src="' + volunteerBanner + '" />';
+    $('.volunteer-banner').html(volunteerBannerImg);
+
 
     $(function () {
         $('#score').val(targetScoreV);
-        $('.radio-subject[value="'+ subjectType +'"]').attr('checked','checked');
+        $('.radio-subject[value="' + subjectType + '"]').attr('checked', 'checked');
         $('#predict-school-btn').on('click', function () {
             if (!cookie.getCookieValue('isLogin')) {
                 tips('#tips', '请先登录后再操作!');
@@ -38,18 +43,18 @@ define(['commonjs', 'tips', 'handlebars','cookie'], function (util, tips, handle
                     $('#content-a').hide();
                     $('#content-b').show();
                     var template = handlebars.compile($("#temp-content").html());
-                    handlebars.registerHelper('stars',function(val){
+                    handlebars.registerHelper('stars', function (val) {
                         var star = '';
-                        for(var i =0;i<val;i++){
+                        for (var i = 0; i < val; i++) {
                             star += '<i class="icon-star"></i>'
                         }
                         return star;
                     });
                     $('#content-b').html(template(res.bizData));
                     $('#score-data').text(scoreV);
-                    subjectV=='1'?$('#type-subject').text('文史'):$('#type-subject').text('理工');
+                    subjectV == '1' ? $('#type-subject').text('文史') : $('#type-subject').text('理工');
                     var num = 0;
-                    for(var k in res.bizData){
+                    for (var k in res.bizData) {
                         num += res.bizData[k].count;
                     }
                     console.log(num)
@@ -68,20 +73,13 @@ define(['commonjs', 'tips', 'handlebars','cookie'], function (util, tips, handle
 
 
         // 设为目标
-        $('#content-b').on('click','.objective-btn',function(){
+        $('#content-b').on('click', '.objective-btn', function () {
             var schoolname = $(this).attr('schoolname');
             util.cookie.setCookie("subjectType", subjectType, 4, "");
             util.cookie.setCookie("targetScore", targetScoreV, 4, "");
             util.cookie.setCookie("targetSchool", schoolname, 4, "");
             window.location.assign('http://' + window.location.host + '/static/user-target.html');
         });
-
-
-
-
-
-
-
 
 
     });

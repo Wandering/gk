@@ -5,6 +5,10 @@ define(['commonjs'], function (util) {
         var $cepingBanner = $('<img />').attr('src', cepingBanner);
         $('.ceping-banner').html($cepingBanner);
 
+        var volunteerBanner = require('../img/volunteer-banner.jpg');
+        var volunteerBannerImg = '<img src="' + volunteerBanner + '" />';
+        $('.volunteer-banner').html(volunteerBannerImg);
+
 
         var imgResponsive1 = require('../img/ass01.jpg');
         var $imgResponsive1 = $('<img class="img-responsive" />').attr('src', imgResponsive1);
