@@ -3,7 +3,7 @@ define(['commonjs','cookie'], function (util,cookie) {
     require('../js/utils/pingpp-pc.js');
     $(function () {
         $('#banner-info').prepend(require('html!../user-banner.html'));
-        var vipBanner  = require('../../img/vip-module-banner.png');
+        var vipBanner  = require('../img/vip-module-banner.png');
         $('#vipBanner').attr('src',vipBanner)
         util.ajaxFun(util.INTERFACE_URL.getFindProduct, 'GET', {
             code: 10000001

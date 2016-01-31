@@ -94,7 +94,8 @@ define(['commonjs', 'tips', 'timeFormat', 'uploadFun', 'cookie'], function (util
         });
 
 
-        $('#banner-info').prepend(require('html!../static/user-banner.html'));
+
+        $('#banner-info').prepend(require('html!../user-banner.html'));
         laydate({
             elem: '#user-birthday',
             festival: true,
