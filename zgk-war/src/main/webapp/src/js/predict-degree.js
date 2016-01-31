@@ -78,7 +78,9 @@ define(['commonjs','tips','handlebars','cookie','noDataTips'], function (util,ti
                         strArr += star;
                     }
                     $('#star-list').html(strArr);
-                    res.bizData.type == '1' ? $('#type-subject').text('文史') : $('#type-subject').text('理工');
+                    var subjectType = $('.radio-subject[name="subject"]:checked').val();
+
+                    subjectType == '1' ? $('#type-subject').text('文史') : $('#type-subject').text('理工');
 
                     if(res.bizData.historyList.length==0){
                         $('.data-tips').html(noDataTips('真抱歉,暂无数据'));

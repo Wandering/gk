@@ -95,7 +95,8 @@ define(['commonjs','handlebars','tips','noDataTips'], function (util,handlebars,
                         strArr += star;
                     }
                     $('#star-list').html(strArr);
-                    res.bizData.type == '1' ? $('#type-subject').text('文史') : $('#type-subject').text('理工');
+                    var subjectType = $('.radio-subject[name="subject"]:checked').val();
+                    subjectType == '1' ? $('#type-subject').text('文史') : $('#type-subject').text('理工');
                     var lowestNumLen = $('.lowest').length;
                     var lowestNum = 0;
                     for(var j=0;j<lowestNumLen;j++){
