@@ -62,7 +62,7 @@ public class ApeskController extends BaseCommonController {
 	 * @return
 	 */
 //	@ResponseBody
-	@RequestMapping(value = "/returnurl.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/returnurl.do", method = RequestMethod.GET)
 	public ModelAndView returnurl(@RequestParam(value = "report_id") String report_id,
 								  @RequestParam(value = "liangbiao")String liangbiao, @RequestParam(value = "test_email")String test_email){
 		HashMap<String, Object>map=new HashMap<String, Object>();
