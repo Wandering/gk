@@ -152,7 +152,9 @@ public class UniversityController extends ZGKBaseController {
         selectorpage.put("majorName",1);
         selectorpage.put("educationLevel",1);
         selectorpage.put("gainDegree",1);
-        selectorpage.put("majorRank",1);
+//        selectorpage.put("majorRank",1);
+        selectorpage.put("salaryRank",1);
+        selectorpage.put("jobRank",1);
         List ll = iremoteUniversityService.queryPage("universityMajorExService", condition, offset, rows, "majorRank", "asc", selectorpage);
         Map<String,Object> condition2=Maps.newHashMap();
         condition2.put("groupOp","and");
@@ -185,28 +187,19 @@ public class UniversityController extends ZGKBaseController {
                                                     @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
                                                     @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
         Map<String,Object> condition=Maps.newHashMap();
-        condition.put("groupOp","and");
-        ConditionsUtil.setCondition(condition, "universityId", "=", String.valueOf(universityId));
+        condition.put("universityId", String.valueOf(universityId));
         if (StringUtils.isNotBlank(year)) {
-            ConditionsUtil.setCondition(condition, "year", "=", year);
+            condition.put("year", year);
         }
         if (batch!=null) {
-            ConditionsUtil.setCondition(condition, "batch", "=", String.valueOf(batch));
+            condition.put("batch", batch);
         }
         if (StringUtils.isNotBlank(universityMajorType)) {
-            ConditionsUtil.setCondition(condition, "universityMajorType", "=", universityMajorType);
+            condition.put("majorType", universityMajorType);
         }
-        Map<String,Object> selectorpage=Maps.newHashMap();
-        selectorpage.put("majorId",1);
-        selectorpage.put("majorName",1);
-        selectorpage.put("year",1);
-        selectorpage.put("batch",1);
-        selectorpage.put("admissionBatchId",1);
-        selectorpage.put("planEnrollingNumber",1);
-        selectorpage.put("lengthOfSchooling",1);
-        selectorpage.put("schoolFee",1);
-        selectorpage.put("universityMajorType",1);
-        List ll = iremoteUniversityService.queryPage("universityMajorEnrollingExService",condition, offset, rows, "id", "asc", selectorpage);
+        condition.put("offset", offset);
+        condition.put("rows", rows);
+        List ll=iremoteUniversityService.getUniversityMajorEnrollingPlanList(condition);
         return ll;
     }
 
@@ -239,7 +232,7 @@ public class UniversityController extends ZGKBaseController {
         selectorpage.put("majorName",1);
         selectorpage.put("year",1);
         selectorpage.put("batch",1);
-        selectorpage.put("admissionBatchId",1);
+        selectorpage.put("admissionFeature",1);
         selectorpage.put("realEnrollingNumber",1);
         selectorpage.put("universityMajorType",1);
         selectorpage.put("highestScore",1);
