@@ -22,6 +22,4 @@ public class HttpVipTest extends TestCase{
             System.out.println("result = " + result);
 
      }
-
-
 }

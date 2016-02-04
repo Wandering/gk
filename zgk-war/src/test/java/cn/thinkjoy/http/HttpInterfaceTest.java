@@ -8,7 +8,8 @@ import junit.framework.TestCase;
  */
 public class HttpInterfaceTest extends TestCase{
 //        String host="http://10.254.130.33:9080";
-        String host="http://localhost:8080";
+//        String host="http://localhost:8080";
+        String host="http://localhost:8088";
         String getGkAdmissionLineList_url="/admissionline/getGkAdmissionLineList.do";
         String getScheduleList_url="/schedule/getScheduleList.do";
         String getScheduleInfo_url="/schedule/getScheduleInfo.do";
@@ -29,18 +30,18 @@ public class HttpInterfaceTest extends TestCase{
         public void testGetGkAdmissionLineList(){
 
             long start=System.currentTimeMillis();
-            String url=host + getGkAdmissionLineList_url + "?batch=1&type=2&page=&rows=10&userKey=zj";
+            String url=host + getGkAdmissionLineList_url + "?batch=1&type=2&page=&rows=10&userKey=sn";
             String result = RequestUtils.requestGet(url);
             assertTrue(result.contains("一批本科"));
             assertTrue(result.contains("理工"));
-            url=host + getGkAdmissionLineList_url + "?batch=2&type=1&page=&rows=10&userKey=zj";
+            url=host + getGkAdmissionLineList_url + "?batch=2&type=1&page=&rows=10&userKey=sn";
             result = RequestUtils.requestGet(url);
             assertTrue(result.contains("二批本科"));
             assertTrue(result.contains("文史"));
-            url=host + getGkAdmissionLineList_url + "?batch=2&type=2&page=&rows=10&userKey=zj";
+            url=host + getGkAdmissionLineList_url + "?batch=2&type=2&page=&rows=10&userKey=sn";
             result = RequestUtils.requestGet(url);
             assertTrue(result.contains("理工"));
-            url=host + getGkAdmissionLineList_url + "?year=2014&batch=3&type=1&page=&rows=10&userKey=zj";
+            url=host + getGkAdmissionLineList_url + "?year=2014&batch=3&type=1&page=&rows=10&userKey=sn";
             result = RequestUtils.requestGet(url);
             assertTrue(result.contains("三批本科"));
             System.out.print(System.currentTimeMillis()-start);
@@ -158,13 +159,15 @@ public class HttpInterfaceTest extends TestCase{
     }
 
     public void testGetGkHotList(){
-        String url=host + getGkHotList_url + "?userKey=zj";
+        String url=host + getGkHotList_url + "?userKey=sn";
         String result = RequestUtils.requestGet(url);
         assertTrue(result.contains("高考即将拉开序幕"));
-        url=host + getGkHotList_url + "?type=1";
+        url=host + getGkHotList_url + "?type=1&userKey=hn";
         result = RequestUtils.requestGet(url);
-        assertTrue(result.contains("浙江新高考首考成绩出炉"));
-
+//        assertTrue(result.contains("浙江新高考首考成绩出炉"));
+        url=host + getGkHotList_url + "?type=1&userKey=fj";
+        result = RequestUtils.requestGet(url);
+//        assertTrue(result.contains("浙江新高考首考成绩出炉"));
         url=host + getGkHotList_url + "?type=0&page=2&rows=4";
         result = RequestUtils.requestGet(url);
         assertTrue(result.contains("改革首批试点省"));

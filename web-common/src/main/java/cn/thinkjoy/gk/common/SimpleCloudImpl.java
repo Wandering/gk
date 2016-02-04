@@ -8,8 +8,8 @@ package cn.thinkjoy.gk.common;
 
 import cn.thinkjoy.cloudstack.context.CloudContextFactory;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.zgk.cloudstack.BaseWhiteList;
 import cn.thinkjoy.zgk.cloudstack.ISimpleCloud;
-import cn.thinkjoy.zgk.cloudstack.InterfaceConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 @Scope(SpringMVCConst.SCOPE)
 public class SimpleCloudImpl implements ISimpleCloud{
 
+    @Autowired
+    BaseWhiteList baseWhiteList;
     @Override
     public String getCloudProduct() {
         return CloudContextFactory.getCloudContext().getProduct();
@@ -31,7 +33,7 @@ public class SimpleCloudImpl implements ISimpleCloud{
 
     @Override
     public boolean hasWhiteList(String clzName) {
-        return InterfaceConst.hasWhiteList(clzName);
+        return baseWhiteList.hasWhiteList(clzName);
     }
 
     @Override

@@ -8,8 +8,9 @@ import junit.framework.TestCase;
  */
 public class HttpInterfaceForecastTest extends TestCase{
 //        String host="http://10.254.130.33:9080";
-        String host="http://zjtest.zhigaokao.cn";
+//        String host="http://zjtest.zhigaokao.cn";
 //        String host="http://localhost:8080";
+        String host="http://localhost:8088";
         String getPerformanceDetail_url="/forecast/getPerformanceDetail.do";
         String getLastoFrecast_url="/forecast/getLastoFrecast.do";
         String getFormerYearsAdmission_url="/forecast/getFormerYearsAdmission.do";

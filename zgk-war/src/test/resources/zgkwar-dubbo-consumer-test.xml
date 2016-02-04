@@ -14,7 +14,7 @@
     <dubbo:application name="ucenterwebwar-test"  />
     <!-- 注册中心暴露服务地址 -->
     <!--<dubbo:registry address="zookeeper://10.172.7.71:2181" />-->
-    <dubbo:registry address="zookeeper://10.136.2.242:2181" file="/tmp/dubbo.cache"/>
+    <dubbo:registry address="zookeeper://mc.zk.thinkjoy.cn:2181" file="/tmp/dubbo.cache"/>
     <dubbo:protocol port="-1"/>
 
     <!--dubbo服务-->

@@ -7,6 +7,7 @@
 
 package cn.thinkjoy.rpc;
 
+import cn.thinkjoy.gk.common.UserAreaContext;
 import cn.thinkjoy.zgk.common.QueryUtil;
 import cn.thinkjoy.zgk.remote.IGkAdmissionLineService;
 import cn.thinkjoy.zgk.remote.IGkScheduleService;
@@ -28,6 +29,7 @@ public class GkAdmissionLineTest {
     private IGkAdmissionLineService gkAdmissionLineService;
     @Test
     public void testGetGkAdmissionLineList() {
+        UserAreaContext.setCurrentUserArea("sn");
         Map<String,Object> map=new HashMap<>();
         map.put("groupOp","and");
         map.put("orderBy","lastModDate");

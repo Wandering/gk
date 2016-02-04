@@ -7,6 +7,7 @@
 
 package cn.thinkjoy.rpc;
 
+import cn.thinkjoy.gk.common.UserAreaContext;
 import cn.thinkjoy.zgk.common.QueryUtil;
 import cn.thinkjoy.zgk.remote.IGkHotService;
 import org.junit.Test;
@@ -27,6 +28,7 @@ public class GkHotTest {
     private IGkHotService gkHotService;
     @Test
     public void testGetGkHotList() {
+        UserAreaContext.setCurrentUserArea("sn");
         Map<String,Object> map = new HashMap<>();
         map.put("groupOp","and");
         QueryUtil.setMapOp(map, "type", "=", 0);
