@@ -1,19 +1,13 @@
 package cn.thinkjoy.gk.common;
 
-import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.constant.DomainConst;
 import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IProvinceService;
-import cn.thinkjoy.gk.service.IUserAccountExService;
-import cn.thinkjoy.gk.util.DESUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.gk.util.UserContext;
-import com.alibaba.druid.pool.vendor.SybaseExceptionSorter;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,9 +27,6 @@ public class BaseCommonController {
 	@Autowired
 	private IProvinceService provinceService;
 	private Map<String, Long> areaMap = new HashMap<>();
-
-	@Autowired
-	private IUserAccountExService userAccountExService;
 
 	private Map<String, Long> getAreaMap()
 	{
@@ -85,7 +76,7 @@ public class BaseCommonController {
 		if(null!=userAccountBean){
 			String key = UserRedisConst.USER_KEY + token;
 			try{
-				RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean));
+				RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 4l, TimeUnit.HOURS);
 			}catch (Exception e)
 			{
 				e.printStackTrace();
