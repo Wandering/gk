@@ -45,7 +45,7 @@ public class PredictController extends BaseCommonController{
      * @param name
      * @return
      */
-    @RequestMapping(value = "/predictProbability",method = RequestMethod.POST)
+    @RequestMapping(value = "/predictProbability")
     @ResponseBody
     @VipMethonTag
     public Map<String, Object> predictProbability(@RequestParam(value = "universityName") String name,
@@ -167,7 +167,7 @@ public class PredictController extends BaseCommonController{
      * @param score
      * @param type
      */
-    @RequestMapping(value = "/predictSchoolList",method = RequestMethod.POST)
+    @RequestMapping(value = "/predictSchoolList")
     @ResponseBody
     @VipMethonTag
     public Map<String, Object> predictSchoolList(@RequestParam(value = "score", defaultValue = "") int score,

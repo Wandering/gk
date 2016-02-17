@@ -75,7 +75,7 @@ public class InfoController extends ZGKBaseController {
      * 更改个人信息
      * @return
      */
-    @RequestMapping(value = "updateUserInfo",method = RequestMethod.POST)
+    @RequestMapping(value = "updateUserInfo")
     @ResponseBody
     public String updateUserInfo(UserInfo userInfo) {
         try {
@@ -131,7 +131,7 @@ public class InfoController extends ZGKBaseController {
      * @param oldPassword
      * @return
      */
-    @RequestMapping(value = "confirmPassword",method = RequestMethod.POST)
+    @RequestMapping(value = "confirmPassword")
     @ResponseBody
     public String confirmPassword(@RequestParam(value = "oldPassword",required = true)String oldPassword){
         String id=getAccoutId();
@@ -151,7 +151,7 @@ public class InfoController extends ZGKBaseController {
      * @param password
      * @return
      */
-    @RequestMapping(value = "modifyPassword",method = RequestMethod.POST)
+    @RequestMapping(value = "modifyPassword")
     @ResponseBody
     public String modifyPassword(@RequestParam(value = "oldPassword",required = true)String oldPassword,
                                  @RequestParam(value="password",required = false) String password){

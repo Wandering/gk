@@ -34,7 +34,7 @@ public class UserExamController extends ZGKBaseController {
      * 更新个人考试成绩信息
      * @return
      */
-    @RequestMapping(value = "updateUserExam",method = RequestMethod.POST)
+    @RequestMapping(value = "updateUserExam")
     @ResponseBody
     public boolean getUserInfo(UserExam userExam) throws Exception{
 

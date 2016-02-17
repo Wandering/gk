@@ -52,7 +52,7 @@ public class TestController extends ZGKBaseController {
     @Autowired
     private IUniversityExService iUniversityExService;
 
-    @RequestMapping(value = "/test",method = RequestMethod.POST)
+    @RequestMapping(value = "/test")
     @ResponseBody
     public String test(@RequestParam(value = "type")String type,@RequestParam(value = "batch",required = false)Long batch,@RequestParam(value = "title")String title,@RequestParam(value="summary")String summary,@RequestParam(value="context")String context) throws Exception {
         long areaId= getAreaId();
@@ -121,7 +121,7 @@ public class TestController extends ZGKBaseController {
 //        }
     }
 
-    @RequestMapping(value = "uploadMajoredScoreLine",method = RequestMethod.POST)
+    @RequestMapping(value = "uploadMajoredScoreLine")
     @ResponseBody
     public String uploadMajoredScoreLine(HttpServletRequest request) throws Exception {
         List<Map<Integer, String>> data=getData(request, 8);

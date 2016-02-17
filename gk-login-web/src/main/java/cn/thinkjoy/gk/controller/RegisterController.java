@@ -48,7 +48,7 @@ public class RegisterController extends ZGKBaseController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/account",method = RequestMethod.POST)
+    @RequestMapping(value = "/account")
     @ResponseBody
     public Map<String, Object> registerAccount(@RequestParam(value="account",required = false) String account,
                                   @RequestParam(value="captcha",required = false) String captcha,
@@ -133,7 +133,7 @@ public class RegisterController extends ZGKBaseController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/retrievePassword" ,method = RequestMethod.POST)
+    @RequestMapping(value = "/retrievePassword" )
     @ResponseBody
     public Map<String, Object>  retrievePassword(@RequestParam(value="account",required = false) String account,
                                    @RequestParam(value="captcha",required = false) String captcha,
@@ -194,7 +194,7 @@ public class RegisterController extends ZGKBaseController {
      * @param account
      * @return
      */
-    @RequestMapping(value = "/confirmAccount",method = RequestMethod.POST)
+    @RequestMapping(value = "/confirmAccount")
     @ResponseBody
     public String confirmAccount(@RequestParam(value = "account",required = true) String account,
                                  @RequestParam(value = "type", required = true) int type) throws Exception{
