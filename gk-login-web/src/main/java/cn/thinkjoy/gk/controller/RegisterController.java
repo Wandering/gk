@@ -6,8 +6,12 @@ import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.common.DESUtil;
 import cn.thinkjoy.gk.constant.RedisConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
+import cn.thinkjoy.gk.service.ICityService;
+import cn.thinkjoy.gk.service.ICountyService;
+import cn.thinkjoy.gk.service.IProvinceService;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.RedisUtil;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -39,6 +44,12 @@ public class RegisterController extends ZGKBaseController {
 
     @Autowired
     private IUserAccountExService userAccountExService;
+    @Autowired
+    private IProvinceService provinceService;
+    @Autowired
+    private ICityService cityService;
+    @Autowired
+    private ICountyService countyService;
 
     /**
      * 注册账号
@@ -66,11 +77,26 @@ public class RegisterController extends ZGKBaseController {
             if (StringUtils.isEmpty(provinceId)||"00".equals(provinceId)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择省份!");
             }
+            List<Province> provinceList =provinceService.findList("id", provinceId);
+            if(provinceList.size()==0)
+            {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择正确省份!");
+            }
             if (StringUtils.isEmpty(cityId)||"00".equals(cityId)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择城市!");
             }
+            List<Province> cityIdList =cityService.findList("id", cityId);
+            if(cityIdList.size()==0)
+            {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择正确城市!");
+            }
             if (StringUtils.isEmpty(countyId)||"00".equals(countyId)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择区域!");
+            }
+            List<Province> countyList =countyService.findList("id", countyId);
+            if(countyList.size()==0)
+            {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择正确区域!");
             }
             if (StringUtils.isEmpty(captcha)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入验证码!");
