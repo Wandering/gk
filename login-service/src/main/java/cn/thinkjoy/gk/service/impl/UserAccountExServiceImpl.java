@@ -86,6 +86,9 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         String account = userAccount.getAccount();
         userInfo.setName("gk-" + account.substring(0,3)+"****"+account.substring(account.length()-4,account.length()));
         userInfo.setToken(UUID.randomUUID().toString());
+        userInfo.setProvinceId(userAccount.getProvinceId());
+        userInfo.setCityId(userAccount.getCityId());
+        userInfo.setCountyId(userAccount.getCountyId());
         userInfoExDAO.insertUserInfo(userInfo);
         UserVip userVip = new UserVip();
         userVip.setId(id);

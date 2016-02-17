@@ -53,7 +53,10 @@ public class RegisterController extends ZGKBaseController {
     @ResponseBody
     public Map<String, Object> registerAccount(@RequestParam(value="account",required = false) String account,
                                   @RequestParam(value="captcha",required = false) String captcha,
-                                  @RequestParam(value="password",required = false) String password)
+                                  @RequestParam(value="password",required = false) String password,
+                                  @RequestParam(value="provinceId",required = false) String provinceId,
+                                  @RequestParam(value="cityId",required = false) String cityId,
+                                  @RequestParam(value="countyId",required = false) String countyId)
             throws Exception{
         long areaId= getAreaId();
         Map<String, Object> resultMap = new HashMap<>();
@@ -85,6 +88,9 @@ public class RegisterController extends ZGKBaseController {
             userAccount.setStatus(0);
             userAccount.setAreaId(areaId);
             userAccount.setCanTargetSchool(true);
+            userAccount.setProvinceId(provinceId);
+            userAccount.setCityId(cityId);
+            userAccount.setCountyId(countyId);
             try{
                 boolean flag=userAccountExService.insertUserAccount(userAccount);
                 if (!flag){
