@@ -191,7 +191,7 @@ public class TestController extends ZGKBaseController {
     }
 
 
-    @RequestMapping(value = "uploadFile", method = RequestMethod.POST)
+    @RequestMapping(value = "uploadFile")
     @ResponseBody
     public String uploadFile() {
         String url = "http://cs-dev.thinkjoy.com.cn/rest/v1/uploadFile";
