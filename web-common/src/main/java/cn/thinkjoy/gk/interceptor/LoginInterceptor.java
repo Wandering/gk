@@ -32,7 +32,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        UserAreaContext.setCurrentUserArea(request.getParameter("userKey"));
+        UserAreaContext.setCurrentUserArea(request.getParameter("userKey")==null?"zj":request.getParameter("userKey"));
         String url = request.getServletPath();
         //兼容jsonp-start
         synchronized (this) {
