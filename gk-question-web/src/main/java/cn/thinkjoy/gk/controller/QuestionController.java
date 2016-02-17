@@ -370,7 +370,7 @@ public class QuestionController extends ZGKBaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    @RequestMapping(value = "/insert")
     @ResponseBody
     public Integer question(SendQuestionQuery sendQuestionQuery) throws Exception {
 
@@ -450,7 +450,7 @@ public class QuestionController extends ZGKBaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/updateBrowseNum", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateBrowseNum")
     @ResponseBody
     public boolean updateBrowseNum(@RequestParam(value="id",required=false) Long id) {
 

@@ -49,7 +49,7 @@ public class PayCallbackController extends ZGKBaseController {
     @Autowired
     private IUserVipService userVipService;
 
-    @RequestMapping(value = "payCallback", method = RequestMethod.POST)
+    @RequestMapping(value = "payCallback")
     public void payCallback(HttpServletRequest request, HttpServletResponse response) {
         String result = "fail";
         try {
@@ -151,7 +151,7 @@ public class PayCallbackController extends ZGKBaseController {
     }
 
 
-//    @RequestMapping(value = "payCallback", method = RequestMethod.POST)
+//    @RequestMapping(value = "payCallback")
 //    public void failPayCallback(){
 ////        UserAccountPojo userAccountPojo = getUserAccountPojo();
 ////        if(userAccountPojo==null){

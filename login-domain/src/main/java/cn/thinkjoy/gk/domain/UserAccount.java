@@ -25,6 +25,7 @@ public class UserAccount extends BaseDomain<Long>{
     private String account;
     private String password;
     private Integer userType;
+	/** 区域Id */
 	private Long areaId;
 	private boolean canTargetSchool;
 	/** 省份Id */

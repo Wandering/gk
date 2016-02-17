@@ -11,7 +11,6 @@ import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.RedisUtil;
-import com.jlusoft.microschool.core.utils.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,6 +63,15 @@ public class RegisterController extends ZGKBaseController {
             if (StringUtils.isEmpty(account)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
             }
+            if (StringUtils.isEmpty(provinceId)||"00".equals(provinceId)) {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择省份!");
+            }
+            if (StringUtils.isEmpty(cityId)||"00".equals(cityId)) {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择城市!");
+            }
+            if (StringUtils.isEmpty(countyId)||"00".equals(countyId)) {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择区域!");
+            }
             if (StringUtils.isEmpty(captcha)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入验证码!");
             }
@@ -81,7 +89,7 @@ public class RegisterController extends ZGKBaseController {
             //保存用户
             UserAccount userAccount = new UserAccount();
             userAccount.setAccount(account);
-            userAccount.setPassword(MD5Util.MD5Encode(password));
+            userAccount.setPassword(password);
             userAccount.setCreateDate(System.currentTimeMillis());
             userAccount.setLastModDate(System.currentTimeMillis());
             userAccount.setUserType(0);
@@ -153,7 +161,7 @@ public class RegisterController extends ZGKBaseController {
 
             //根据账号id查询账号
             UserAccount userAccount = userAccountExService.findUserAccountById(userAccountBean.getId());
-            userAccount.setPassword(MD5Util.MD5Encode(password));
+            userAccount.setPassword(password);
             userAccount.setLastModDate(System.currentTimeMillis());
             try{
                 //更新账号密码

@@ -6,6 +6,7 @@ import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.constant.ServletPathConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IUserAccountExService;
+import cn.thinkjoy.gk.util.CallbackContext;
 import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.gk.util.UserContext;
 import com.alibaba.fastjson.JSON;
@@ -30,12 +31,16 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 
     @Override
-	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
-		UserAreaContext.setCurrentUserArea(request.getParameter("userKey"));
-		String url = request.getServletPath();
-
-
-		LOGGER.info("url:"+url);
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        UserAreaContext.setCurrentUserArea(request.getParameter("userKey"));
+        String url = request.getServletPath();
+        //兼容jsonp-start
+        synchronized (this) {
+            String callback = request.getParameter("callback");
+            this.setCallback(callback);
+        }
+        //兼容jsonp-end
+        LOGGER.info("url:" + url);
 
 		String value = request.getParameter("token");
 
@@ -94,7 +99,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		UserAccountPojo userAccountBean  = null;
 		userAccountBean = JSON.parseObject(RedisUtil.getInstance().get(key).toString(),UserAccountPojo.class);
 		//对token进行延期
-		store(key,userAccountBean);
+		store(key, userAccountBean);
 		return userAccountBean;
 	}
 
@@ -104,6 +109,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	 */
 	public void store(String key,UserAccountPojo userAccountBean)
 	{
-		RedisUtil.getInstance().set(key,JSON.toJSONString(userAccountBean),TOKEN_EXPIRE_TIME,TimeUnit.SECONDS);
+		RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
+	}
+	private void setCallback(String callback) {
+		CallbackContext.setCallback(callback);
 	}
 }
