@@ -252,9 +252,13 @@ public class UniversityController extends ZGKBaseController {
      */
     @RequestMapping(value = "queryUniversityEnrollingChart",method = RequestMethod.GET)
     @ResponseBody
-    public List queryUniversityEnrollingChart(@RequestParam(value = "universityId",required = true)long universityId){
+    public List queryUniversityEnrollingChart(@RequestParam(value = "universityId",required = true)long universityId,
+                                              @RequestParam(value = "majorType",required = true)long majorType,
+                                              @RequestParam(value = "batch",required = true)long batch){
         Map<String,Object> map=Maps.newHashMap();
         map.put("universityId",universityId);
+        map.put("majorType",majorType);
+        map.put("batch",batch);
         return iremoteUniversityService.queryUniversityEnrollingChart(map);
     }
 
