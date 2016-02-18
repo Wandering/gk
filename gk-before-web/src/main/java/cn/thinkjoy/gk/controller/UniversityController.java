@@ -233,7 +233,7 @@ public class UniversityController extends ZGKBaseController {
                                                          @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
                                                          @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
         String userKey=request.getParameter("userKey");
-        String key="zgk_pe:"+userKey+"_uy:"+universityId+"_yr:"+year+"_me:"+universityMajorType+"_bh:"+batch+"_ot:0_rs:10:enrollingSituationDetailsList";
+        String key="zgk_pe:"+userKey+"_uy:"+universityId+"_yr:"+year+"_me:"+universityMajorType+"_bh:"+batch+"_ot:"+offset+"_rs:"+rows+":enrollingSituationDetailsList";
         Object object= RedisIsSaveUtil.existsKey(key);
         if(object==null){
             Map<String,Object> condition=Maps.newHashMap();
