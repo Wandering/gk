@@ -17,6 +17,7 @@ import cn.thinkjoy.gk.util.ConditionsUtil;
 import cn.thinkjoy.gk.util.RedisIsSaveUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.zgk.dto.UniversityPlanChartDTO;
+import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.alibaba.fastjson.JSON;
@@ -232,7 +233,7 @@ public class UniversityController extends ZGKBaseController {
                                                          @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
                                                          @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
         String userKey=request.getParameter("userKey");
-        String key="zgk_pe:"+userKey+"_uy:"+universityId+"_yr:"+year+"_me:"+universityMajorType+"_batch:"+batch+"_offset:0_rows:10:enrollingSituationDetailsList";
+        String key="zgk_pe:"+userKey+"_uy:"+universityId+"_yr:"+year+"_me:"+universityMajorType+"_bh:"+batch+"_ot:0_rs:10:enrollingSituationDetailsList";
         Object object= RedisIsSaveUtil.existsKey(key);
         if(object==null){
             Map<String,Object> condition=Maps.newHashMap();
@@ -277,7 +278,7 @@ public class UniversityController extends ZGKBaseController {
         map.put("majorType",majorType);
         map.put("batch",batch);
         String userKey=request.getParameter("userKey");
-        String key="zgk_pe:"+userKey+"_uy:"+universityId+"_majorType:"+majorType+"_batch:"+batch+":enrollingSituationDetailsList";
+        String key="zgk_pe:"+userKey+"_uy:"+universityId+"_me:"+majorType+"_bh:"+batch+":enrollingSituationDetailsList";
         Object object= RedisIsSaveUtil.existsKey(key);
         if(object==null){
             List list= iremoteUniversityService.queryUniversityEnrollingChart(map);
