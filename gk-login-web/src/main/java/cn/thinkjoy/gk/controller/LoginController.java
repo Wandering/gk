@@ -55,7 +55,7 @@ public class LoginController extends ZGKBaseController {
 				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入密码!");
 			}
 
-			UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account,areaId);
+			UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
 			if(userAccountBean==null){
 				old=oldUserLogin(account,password);
 			}else {

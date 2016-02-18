@@ -45,11 +45,11 @@ public class VipController extends ZGKBaseController {
         if(null!=vipStatus&&vipStatus==1){
             throw new BizException(ERRORCODE.VIP_EXIST.getCode(), ERRORCODE.VIP_EXIST.getMessage());
         }
-        long areaId= getAreaId();
+//        long areaId= getAreaId();
         Map<String,Object> map=new HashMap<String, Object>();
         map.put("cardNumber",cardPojo.getCardNumber());
         map.put("password",cardPojo.getPassword());
-        map.put("areaId",areaId);
+//        map.put("areaId",areaId);
         map.put("status",0);
         Card card=(Card)cardService.queryOne(map);
         if(null==card ){

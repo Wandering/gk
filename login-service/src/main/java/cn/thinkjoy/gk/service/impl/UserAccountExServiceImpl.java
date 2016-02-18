@@ -60,10 +60,9 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
     }
 
     @Override
-    public UserAccountPojo findUserAccountPojoByPhone(String account,long areaId) {
+    public UserAccountPojo findUserAccountPojoByPhone(String account) {
         Map<String,Object> params = new HashMap<String,Object>();
         params.put("account",account);
-        params.put("areaId",areaId);
         return  userAccountExDAO.findUserAccountPojo(params);
 
     }
