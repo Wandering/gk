@@ -15,11 +15,14 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.UniversityQuery;
 import cn.thinkjoy.gk.service.*;
 import cn.thinkjoy.gk.util.ConditionsUtil;
+import cn.thinkjoy.gk.util.RedisIsSaveUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.zgk.dto.UniversityPlanChartDTO;
 import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,7 +135,13 @@ public class UniversityController extends ZGKBaseController {
     @RequestMapping(value = "getRemoteUniversityById",method = RequestMethod.GET)
     @ResponseBody
     public Object getUniversityDTOById(@RequestParam(value = "universityId",required = true)long universityId){
-        return iremoteUniversityService.getUniversityById(universityId);
+        String key = "zgk_uy:"+universityId;
+        Object object= RedisIsSaveUtil.existsKey(key);
+        if(object==null){
+            object = iremoteUniversityService.getUniversityById(universityId);
+            RedisUtil.getInstance().set(key, JSON.toJSONString(object));
+        }
+        return JSON.parseObject(object.toString(),Object.class);
     }
 
     /**
@@ -241,29 +250,36 @@ public class UniversityController extends ZGKBaseController {
                                                          @RequestParam(value = "universityMajorType",required = true)String universityMajorType,//科类
                                                          @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
                                                          @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
-        Map<String,Object> condition=Maps.newHashMap();
-        condition.put("groupOp","and");
-        ConditionsUtil.setCondition(condition, "universityId", "=", String.valueOf(universityId));
-        ConditionsUtil.setCondition(condition,"year", "=", year);
-        ConditionsUtil.setCondition(condition, "batch", "=", String.valueOf(batch));
-        ConditionsUtil.setCondition(condition, "universityMajorType", "=", universityMajorType);
-        Map<String,Object> selectorpage=Maps.newHashMap();
-        selectorpage.put("majorId",1);
-        selectorpage.put("majorName",1);
-        selectorpage.put("year",1);
-        selectorpage.put("batch",1);
-        selectorpage.put("majorType",1);
-        selectorpage.put("admissionFeature",1);
-        selectorpage.put("realEnrollingNumber",1);
-        selectorpage.put("universityMajorType",1);
-        selectorpage.put("highestScore",1);
-        selectorpage.put("highestPrecedence",1);
-        selectorpage.put("lowestScore",1);
-        selectorpage.put("lowestPrecedence",1);
-        selectorpage.put("averageScore",1);
-        selectorpage.put("averagePrecedence",1);
-        List ll = iremoteUniversityService.queryPage("universityMajorEnrollingExService",condition, offset, rows, "id", "asc", selectorpage);
-        return ll;
+
+        String userKey=request.getParameter("userKey");
+        String key="zgk_pe:"+userKey+"_uy:"+universityId+"_yr:"+year+"_me:"+universityMajorType+"_bh:"+batch+"_ot:"+offset+"_rs:"+rows+":enrollingSituationDetailsList";
+        Object object= RedisIsSaveUtil.existsKey(key);
+        if(object==null){
+            Map<String,Object> condition=Maps.newHashMap();
+            condition.put("groupOp","and");
+            ConditionsUtil.setCondition(condition, "universityId", "=", String.valueOf(universityId));
+            ConditionsUtil.setCondition(condition,"year", "=", year);
+            ConditionsUtil.setCondition(condition, "batch", "=", String.valueOf(batch));
+            ConditionsUtil.setCondition(condition, "universityMajorType", "=", universityMajorType);
+            Map<String,Object> selectorpage=Maps.newHashMap();
+            selectorpage.put("majorId",1);
+            selectorpage.put("majorName",1);
+            selectorpage.put("year",1);
+            selectorpage.put("batch",1);
+            selectorpage.put("admissionFeature",1);
+            selectorpage.put("realEnrollingNumber",1);
+            selectorpage.put("universityMajorType",1);
+            selectorpage.put("highestScore",1);
+            selectorpage.put("highestPrecedence",1);
+            selectorpage.put("lowestScore",1);
+            selectorpage.put("lowestPrecedence",1);
+            selectorpage.put("averageScore",1);
+            selectorpage.put("averagePrecedence",1);
+            List ll = iremoteUniversityService.queryPage("universityMajorEnrollingExService",condition, offset, rows, "id", "asc", selectorpage);
+            RedisUtil.getInstance().set(key, JSONArray.toJSON(ll));
+            return ll;
+        }
+        return JSONArray.parseArray(object.toString());
     }
 
     /**
@@ -280,7 +296,15 @@ public class UniversityController extends ZGKBaseController {
         map.put("universityId",universityId);
         map.put("majorType",majorType);
         map.put("batch",batch);
-        return iremoteUniversityService.queryUniversityEnrollingChart(map);
+        String userKey=request.getParameter("userKey");
+        String key="zgk_pe:"+userKey+"_uy:"+universityId+"_me:"+majorType+"_bh:"+batch+":enrollingSituationDetailsList";
+        Object object= RedisIsSaveUtil.existsKey(key);
+        if(object==null){
+            List list= iremoteUniversityService.queryUniversityEnrollingChart(map);
+            RedisUtil.getInstance().set(key, JSONArray.toJSON(list));
+            return list;
+        }
+        return JSONArray.parseArray(object.toString());
     }
 
     /**
@@ -637,4 +661,6 @@ public class UniversityController extends ZGKBaseController {
 
         return universityDetailDto;
     }
+
+
 }
