@@ -232,6 +232,7 @@ public class UniversityController extends ZGKBaseController {
         selectorpage.put("majorName",1);
         selectorpage.put("year",1);
         selectorpage.put("batch",1);
+        selectorpage.put("majorType",1);
         selectorpage.put("admissionFeature",1);
         selectorpage.put("realEnrollingNumber",1);
         selectorpage.put("universityMajorType",1);
