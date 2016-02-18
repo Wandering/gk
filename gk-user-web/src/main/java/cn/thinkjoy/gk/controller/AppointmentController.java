@@ -57,7 +57,7 @@ public class AppointmentController extends ZGKBaseController {
      * @param appointmentPojo
      * @return
      */
-    @RequestMapping(value = "/addAppointment", method = RequestMethod.POST)
+    @RequestMapping(value = "/addAppointment")
     @ResponseBody
     public String addAppointment( AppointmentPojo appointmentPojo) {
         UserAccountPojo userAccountPojo=super.getUserAccountPojo();

@@ -39,7 +39,7 @@ public class CaptchaController extends ZGKBaseController {
     @Autowired
     private IUserAccountExService userAccountExService;
 
-    @RequestMapping(value = "/captcha",method = RequestMethod.POST)
+    @RequestMapping(value = "/captcha")
     @ResponseBody
     public String captcha(@RequestParam(value="account",required=false) String account,@RequestParam(value="type",required=false) Integer type) throws Exception {
 

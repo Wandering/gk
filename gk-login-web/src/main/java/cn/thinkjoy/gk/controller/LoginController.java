@@ -37,7 +37,7 @@ public class LoginController extends ZGKBaseController {
 	 * 登陆
 	 * @return
 	 */
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/login")
 	@ResponseBody
 	public Map<String, Object> login(@RequestParam(value="account",required=false) String account,
 					  @RequestParam(value="password",required=false) String password) throws Exception {
@@ -62,7 +62,7 @@ public class LoginController extends ZGKBaseController {
 
 
 				if (!"@@@@".equals(password)) {
-					if (!MD5Util.MD5Encode(password).equals(userAccountBean.getPassword())) {
+					if (password.equals(userAccountBean.getPassword())) {
 						throw new BizException(ERRORCODE.LOGIN_PASSWORD_ERROR.getCode(), ERRORCODE.LOGIN_PASSWORD_ERROR.getMessage());
 					}
 				}
@@ -126,7 +126,7 @@ public class LoginController extends ZGKBaseController {
 			throw new BizException(ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getCode(),ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getMessage());
 		}
 		if (!"@@@@".equals(password)) {
-			if (!MD5Util.MD5Encode(password).equals(userAccountBean.getPassword())) {
+			if (password.equals(userAccountBean.getPassword())) {
 				throw new BizException(ERRORCODE.LOGIN_PASSWORD_ERROR.getCode(),ERRORCODE.LOGIN_PASSWORD_ERROR.getMessage());
 			}
 		}

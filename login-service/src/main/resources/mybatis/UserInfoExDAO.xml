@@ -22,25 +22,29 @@
         token,
         name,
         icon,
-        countyId,
         schoolName,
         birthdayDate,
         sex,
         subjectType,
         mail,
-        qq
+        qq,
+        provinceId,
+        cityId,
+        countyId
         ) VALUES (
         #{id},
         #{token},
         #{name},
         #{icon},
-        #{countyId},
         #{schoolName},
         #{birthdayDate},
         #{sex},
         #{subjectType},
         #{mail},
-        #{qq}
+        #{qq},
+        #{provinceId},
+        #{cityId},
+        #{countyId}
         )
         <selectKey resultType="java.lang.Long" keyProperty="id">
             SELECT LAST_INSERT_ID() AS ID

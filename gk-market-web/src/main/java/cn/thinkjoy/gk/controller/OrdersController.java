@@ -52,7 +52,7 @@ public class OrdersController extends ZGKBaseController {
      * 下订单
      * @return
      */
-    @RequestMapping(value = "createOrders", method = RequestMethod.POST)
+    @RequestMapping(value = "createOrders")
     @ResponseBody
     public String createOrder(OrdersQuery ordersQuery) {
 

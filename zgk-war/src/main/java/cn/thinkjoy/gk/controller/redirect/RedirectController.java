@@ -51,7 +51,7 @@ public class RedirectController extends ZGKBaseController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/forward",method = RequestMethod.POST)
+    @RequestMapping(value = "/forward")
     public String forward(@RequestParam(value="params",required=false) String params,
                            @RequestParam(value="url",required=false) String url) throws Exception{
 

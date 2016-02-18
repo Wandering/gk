@@ -90,7 +90,7 @@ public class ForecastController extends BaseApiController{
      *添加用户定位信息
      * @return
      */
-    @RequestMapping(value = "/addFrecast",method = RequestMethod.POST)
+    @RequestMapping(value = "/addFrecast")
     @ResponseBody
     @VipMethonTag
     public boolean addFrecast(){

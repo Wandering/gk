@@ -34,7 +34,7 @@ public class VipController extends ZGKBaseController {
     @Autowired
     private ICardExService cardExService;
 
-    @RequestMapping(value = "/upgradeVipByCard",method = RequestMethod.POST)
+    @RequestMapping(value = "/upgradeVipByCard")
     @ResponseBody
     public String upgradeVipByCard(CardPojo cardPojo) throws Exception{
         UserAccountPojo userAccountPojo=super.getUserAccountPojo();

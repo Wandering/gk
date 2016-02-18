@@ -6,12 +6,15 @@ import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.common.DESUtil;
 import cn.thinkjoy.gk.constant.RedisConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
+import cn.thinkjoy.gk.service.ICityService;
+import cn.thinkjoy.gk.service.ICountyService;
+import cn.thinkjoy.gk.service.IProvinceService;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.RedisUtil;
-import com.jlusoft.microschool.core.utils.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -40,6 +44,12 @@ public class RegisterController extends ZGKBaseController {
 
     @Autowired
     private IUserAccountExService userAccountExService;
+    @Autowired
+    private IProvinceService provinceService;
+    @Autowired
+    private ICityService cityService;
+    @Autowired
+    private ICountyService countyService;
 
     /**
      * 注册账号
@@ -49,17 +59,44 @@ public class RegisterController extends ZGKBaseController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/account",method = RequestMethod.POST)
+    @RequestMapping(value = "/account")
     @ResponseBody
     public Map<String, Object> registerAccount(@RequestParam(value="account",required = false) String account,
                                   @RequestParam(value="captcha",required = false) String captcha,
-                                  @RequestParam(value="password",required = false) String password)
+                                  @RequestParam(value="password",required = false) String password,
+                                  @RequestParam(value="provinceId",required = false) String provinceId,
+                                  @RequestParam(value="cityId",required = false) String cityId,
+                                  @RequestParam(value="countyId",required = false) String countyId)
             throws Exception{
         long areaId= getAreaId();
         Map<String, Object> resultMap = new HashMap<>();
         try{
             if (StringUtils.isEmpty(account)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
+            }
+            if (StringUtils.isEmpty(provinceId)||"00".equals(provinceId)) {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择省份!");
+            }
+            List<Province> provinceList =provinceService.findList("id", provinceId);
+            if(provinceList.size()==0)
+            {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择正确省份!");
+            }
+            if (StringUtils.isEmpty(cityId)||"00".equals(cityId)) {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择城市!");
+            }
+            List<Province> cityIdList =cityService.findList("id", cityId);
+            if(cityIdList.size()==0)
+            {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择正确城市!");
+            }
+            if (StringUtils.isEmpty(countyId)||"00".equals(countyId)) {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择区域!");
+            }
+            List<Province> countyList =countyService.findList("id", countyId);
+            if(countyList.size()==0)
+            {
+                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择正确区域!");
             }
             if (StringUtils.isEmpty(captcha)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入验证码!");
@@ -78,13 +115,16 @@ public class RegisterController extends ZGKBaseController {
             //保存用户
             UserAccount userAccount = new UserAccount();
             userAccount.setAccount(account);
-            userAccount.setPassword(MD5Util.MD5Encode(password));
+            userAccount.setPassword(password);
             userAccount.setCreateDate(System.currentTimeMillis());
             userAccount.setLastModDate(System.currentTimeMillis());
             userAccount.setUserType(0);
             userAccount.setStatus(0);
             userAccount.setAreaId(areaId);
             userAccount.setCanTargetSchool(true);
+            userAccount.setProvinceId(provinceId);
+            userAccount.setCityId(cityId);
+            userAccount.setCountyId(countyId);
             try{
                 boolean flag=userAccountExService.insertUserAccount(userAccount);
                 if (!flag){
@@ -119,7 +159,7 @@ public class RegisterController extends ZGKBaseController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/retrievePassword" ,method = RequestMethod.POST)
+    @RequestMapping(value = "/retrievePassword" )
     @ResponseBody
     public Map<String, Object>  retrievePassword(@RequestParam(value="account",required = false) String account,
                                    @RequestParam(value="captcha",required = false) String captcha,
@@ -147,7 +187,7 @@ public class RegisterController extends ZGKBaseController {
 
             //根据账号id查询账号
             UserAccount userAccount = userAccountExService.findUserAccountById(userAccountBean.getId());
-            userAccount.setPassword(MD5Util.MD5Encode(password));
+            userAccount.setPassword(password);
             userAccount.setLastModDate(System.currentTimeMillis());
             try{
                 //更新账号密码
@@ -180,7 +220,7 @@ public class RegisterController extends ZGKBaseController {
      * @param account
      * @return
      */
-    @RequestMapping(value = "/confirmAccount",method = RequestMethod.POST)
+    @RequestMapping(value = "/confirmAccount")
     @ResponseBody
     public String confirmAccount(@RequestParam(value = "account",required = true) String account,
                                  @RequestParam(value = "type", required = true) int type) throws Exception{
