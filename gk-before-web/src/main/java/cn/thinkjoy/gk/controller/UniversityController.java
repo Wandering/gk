@@ -4,6 +4,7 @@ package cn.thinkjoy.gk.controller;
  * Created by wpliu on 15/9/25.
  */
 
+import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
@@ -14,7 +15,9 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.UniversityQuery;
 import cn.thinkjoy.gk.service.*;
 import cn.thinkjoy.gk.util.ConditionsUtil;
+import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.zgk.dto.UniversityPlanChartDTO;
+import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.google.common.collect.Maps;
@@ -153,18 +156,35 @@ public class UniversityController extends ZGKBaseController {
         selectorpage.put("educationLevel",1);
         selectorpage.put("gainDegree",1);
 //        selectorpage.put("majorRank",1);
-        selectorpage.put("salaryRank",1);
-        selectorpage.put("jobRank",1);
+        selectorpage.put("salaryRank", 1);
+        selectorpage.put("jobRank", 1);
+
+        //此接口读取静态数据，不做缓存处理
         List ll = iremoteUniversityService.queryPage("universityMajorExService", condition, offset, rows, "majorRank", "asc", selectorpage);
+
         Map<String,Object> condition2=Maps.newHashMap();
         condition2.put("groupOp","and");
-        ConditionsUtil.setCondition(condition2,"id","=",String.valueOf(universityId));
+        ConditionsUtil.setCondition(condition2, "id", "=", String.valueOf(universityId));
         Map<String,Object> selectorpage2=Maps.newHashMap();
-        selectorpage2.put("featureMajor",1);
-        List featureMajorList=iremoteUniversityService.queryPage("universityDetailService", condition2, 0, 10, "id", "asc", selectorpage2);
+        selectorpage2.put("featureMajor", 1);
+        List featureMajorList =null;
+        RedisRepository resUtil =  RedisUtil.getInstance();
+        String resKey = "zgk_university:"+universityId+"_offset:"+offset+"_rows:"+rows+":major";
+        if(resUtil.exists(resKey))
+        {
+            featureMajorList = (List) JSONUtils.parse(resUtil.get(resKey).toString());
+        }else
+        {
+            featureMajorList = iremoteUniversityService.queryPage("universityDetailService", condition2, 0, 10, "id", "asc", selectorpage2);
+            resUtil.set(resKey, JSONUtils.toJSONString(featureMajorList));
+
+        }
         Map<String,List> returnMap=Maps.newHashMap();
         returnMap.put("majorList",ll);
-        returnMap.put("featureMajorList",featureMajorList);
+        returnMap.put("featureMajorList", featureMajorList);
+
+
+
         return returnMap;
     }
 
