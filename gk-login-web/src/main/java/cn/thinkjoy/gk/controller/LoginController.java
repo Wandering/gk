@@ -41,9 +41,7 @@ public class LoginController extends ZGKBaseController {
 	@ResponseBody
 	public Map<String, Object> login(@RequestParam(value="account",required=false) String account,
 					  @RequestParam(value="password",required=false) String password) throws Exception {
-		LOGGER.debug("22222");
 		long id = 0l;
-		long areaId= getAreaId();
 		UserInfoPojo userInfoPojo=null;
 		UserInfoPojo old=null;
 		Map<String, Object> resultMap = new HashMap<>();

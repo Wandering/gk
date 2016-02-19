@@ -23,6 +23,7 @@ public class UserInfoPojo extends BaseDomain<Long> {
     private String province;
     private String city;
     private String county;
+    private String userKey;
 
     public String getAccount() {
         return account;
@@ -142,5 +143,13 @@ public class UserInfoPojo extends BaseDomain<Long> {
 
     public void setCounty(String county) {
         this.county = county;
+    }
+
+    public String getUserKey() {
+        return userKey;
+    }
+
+    public void setUserKey(String userKey) {
+        this.userKey = userKey;
     }
 }
