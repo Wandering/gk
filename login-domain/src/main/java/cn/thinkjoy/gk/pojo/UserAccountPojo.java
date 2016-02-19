@@ -16,6 +16,7 @@ public class UserAccountPojo extends BaseDomain<Long> {
     private Integer vipStatus;
     private Integer isReported;
     private Integer isSurvey;
+    private String userKey;
 
     public UserAccountPojo(){
     }
@@ -98,5 +99,13 @@ public class UserAccountPojo extends BaseDomain<Long> {
 
     public void setIsSurvey(Integer isSurvey) {
         this.isSurvey = isSurvey;
+    }
+
+    public String getUserKey() {
+        return userKey;
+    }
+
+    public void setUserKey(String userKey) {
+        this.userKey = userKey;
     }
 }
