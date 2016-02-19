@@ -120,7 +120,10 @@ public class InfoController extends ZGKBaseController {
             setUserAccountPojo(userAccountPojo, DESUtil.encrypt(token, DESUtil.key));
 
 //            userInfoExService.updateUserInfoById(userInfo);
-        } catch (Exception e) {
+        } catch (NoSuchMethodException e){
+
+        }
+        catch (Exception e) {
             throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
         }
         return "success";

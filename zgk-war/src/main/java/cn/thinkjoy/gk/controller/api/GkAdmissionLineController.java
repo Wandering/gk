@@ -89,11 +89,11 @@ public class GkAdmissionLineController extends BaseApiController {
         List list = new ArrayList();
         Calendar a=Calendar.getInstance();
         int year=a.get(Calendar.YEAR);
-        list.add(year);
+//        list.add(year);
         list.add(year-1);
         list.add(year-2);
         list.add(year-3);
-        list.add(year-4);
+//        list.add(year-4);
         return list;
     }
 
