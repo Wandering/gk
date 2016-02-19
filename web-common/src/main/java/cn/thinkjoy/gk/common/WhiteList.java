@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 public class WhiteList extends BaseWhiteList {
     @PostConstruct
     public void init() {
-        INTERFACEMETHODS.add("getGkVideoList");
+//        INTERFACEMETHODS.add("getGkVideoList");
         INTERFACEMETHODS.add("getGkAdmissionLineList");
     }
 }
