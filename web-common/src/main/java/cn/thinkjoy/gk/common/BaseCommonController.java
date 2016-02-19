@@ -90,7 +90,11 @@ public class BaseCommonController {
 	 */
 	protected Long getAreaId(){
 		//默认浙江省
-		return Long.valueOf(String.valueOf(getAreaMap().get(UserAreaContext.getCurrentUserArea())).toString());
+		try{
+			return Long.valueOf(String.valueOf(getAreaMap().get(UserAreaContext.getCurrentUserArea())).toString());
+		}catch (Exception e){
+			return Long.valueOf(String.valueOf(getAreaMap().get("zj")).toString());
+		}
 	}
 
 }
