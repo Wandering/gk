@@ -19,7 +19,7 @@ public interface IUserAccountExService {
 
     UserAccountPojo findUserAccountPojoById(Long id);
 
-    UserAccountPojo findUserAccountPojoByPhone(String phone, long areaId);
+    UserAccountPojo findUserAccountPojoByPhone(String phone);
 
     int findUserAccountCountByPhone(String phone, long areaId);
 

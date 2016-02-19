@@ -104,7 +104,7 @@ public class RegisterController extends ZGKBaseController {
             if (StringUtils.isEmpty(password)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入密码!");
             }
-            UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account,areaId);
+            UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
             if (userAccountBean!=null){
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号已被注册!");
             }
@@ -134,7 +134,7 @@ public class RegisterController extends ZGKBaseController {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"账户注册失败");
             }
 
-            userAccountBean = userAccountExService.findUserAccountPojoByPhone(account,areaId);
+            userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
 
             long id = userAccountBean.getId();
 
@@ -177,7 +177,7 @@ public class RegisterController extends ZGKBaseController {
             if (StringUtils.isEmpty(password)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入密码!");
             }
-            UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account,areaId);
+            UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
             if (userAccountBean==null){
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号尚未注册!");
             }
@@ -229,7 +229,7 @@ public class RegisterController extends ZGKBaseController {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
             }
             long areaId= getAreaId();
-            UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account,areaId);
+            UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
             if (type==0){
                 if (userAccountBean!=null){
                     throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号已经注册!");
