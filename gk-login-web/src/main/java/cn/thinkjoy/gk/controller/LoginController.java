@@ -62,7 +62,7 @@ public class LoginController extends ZGKBaseController {
 
 
 				if (!"@@@@".equals(password)) {
-					if (password.equals(userAccountBean.getPassword())) {
+					if (!password.equals(userAccountBean.getPassword())) {
 						throw new BizException(ERRORCODE.LOGIN_PASSWORD_ERROR.getCode(), ERRORCODE.LOGIN_PASSWORD_ERROR.getMessage());
 					}
 				}
@@ -126,7 +126,7 @@ public class LoginController extends ZGKBaseController {
 			throw new BizException(ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getCode(),ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getMessage());
 		}
 		if (!"@@@@".equals(password)) {
-			if (password.equals(userAccountBean.getPassword())) {
+			if (!password.equals(userAccountBean.getPassword())) {
 				throw new BizException(ERRORCODE.LOGIN_PASSWORD_ERROR.getCode(),ERRORCODE.LOGIN_PASSWORD_ERROR.getMessage());
 			}
 		}
