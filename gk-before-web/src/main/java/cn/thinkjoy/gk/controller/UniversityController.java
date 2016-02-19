@@ -178,7 +178,7 @@ public class UniversityController extends ZGKBaseController {
         selectorpage2.put("featureMajor", 1);
         List featureMajorList =null;
         RedisRepository resUtil =  RedisUtil.getInstance();
-        String resKey = "zgk_university:"+universityId+"_offset:"+offset+"_rows:"+rows+":major";
+        String resKey = "zgk_uy:"+universityId+"_ot:"+offset+"_rs:"+rows+":major";
         if(resUtil.exists(resKey))
         {
             featureMajorList = (List) JSONUtils.parse(resUtil.get(resKey).toString());
