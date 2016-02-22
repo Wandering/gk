@@ -39,4 +39,9 @@ public class SimpleCloudImpl implements ISimpleCloud{
     @Override
     public void setArea(String s) {
     }
+
+    @Override
+    public void clearArea() {
+
+    }
 }
