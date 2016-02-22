@@ -86,13 +86,14 @@ public class CaptchaController extends ZGKBaseController {
 
                 boolean smsResult =smsService.sendSMS(smsCheckCode,false);
 
-                if(smsResult) {
-                    String userCaptchaKey = RedisConst.USER_CAPTCHA_KEY+account;
-                    RedisUtil.getInstance().set(userCaptchaKey,randomString);
-                    RedisUtil.getInstance().expire(userCaptchaKey, 600, TimeUnit.SECONDS);
-                    RedisUtil.getInstance().set(timeKey, String.valueOf(System.currentTimeMillis()));
-                    RedisUtil.getInstance().expire(timeKey, 60, TimeUnit.SECONDS);
+                while(!smsResult) {
+                    smsResult = smsService.sendSMS(smsCheckCode,false);
                 }
+                String userCaptchaKey = RedisConst.USER_CAPTCHA_KEY+account;
+                RedisUtil.getInstance().set(userCaptchaKey,randomString);
+                RedisUtil.getInstance().expire(userCaptchaKey, 600, TimeUnit.SECONDS);
+                RedisUtil.getInstance().set(timeKey, String.valueOf(System.currentTimeMillis()));
+                RedisUtil.getInstance().expire(timeKey, 60, TimeUnit.SECONDS);
             }else{
                 time = time - ((System.currentTimeMillis() - Long.valueOf(RedisUtil.getInstance().get(timeKey).toString()))/1000);
             }
