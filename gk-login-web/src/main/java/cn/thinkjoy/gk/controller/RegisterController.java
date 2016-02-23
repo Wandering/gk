@@ -90,14 +90,6 @@ public class RegisterController extends ZGKBaseController {
             {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择正确城市!");
             }
-            if (StringUtils.isEmpty(countyId)||"00".equals(countyId)) {
-                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择区域!");
-            }
-            List<Province> countyList =countyService.findList("id", countyId);
-            if(countyList.size()==0)
-            {
-                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择正确区域!");
-            }
             if (StringUtils.isEmpty(captcha)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入验证码!");
             }
@@ -282,4 +274,5 @@ public class RegisterController extends ZGKBaseController {
         }
         return RedisUtil.getInstance().get(key).toString();
     }
+
 }
