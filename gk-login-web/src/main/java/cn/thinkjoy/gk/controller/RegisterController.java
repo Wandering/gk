@@ -46,10 +46,10 @@ public class RegisterController extends ZGKBaseController {
     private IUserAccountExService userAccountExService;
     @Autowired
     private IProvinceService provinceService;
-    @Autowired
-    private ICityService cityService;
-    @Autowired
-    private ICountyService countyService;
+//    @Autowired
+//    private ICityService cityService;
+//    @Autowired
+//    private ICountyService countyService;
 
     /**
      * 注册账号
@@ -82,14 +82,22 @@ public class RegisterController extends ZGKBaseController {
             {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择正确省份!");
             }
-            if (StringUtils.isEmpty(cityId)||"00".equals(cityId)) {
-                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择城市!");
-            }
-            List<Province> cityIdList =cityService.findList("id", cityId);
-            if(cityIdList.size()==0)
-            {
-                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择正确城市!");
-            }
+//            if (StringUtils.isEmpty(cityId)||"00".equals(cityId)) {
+//                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择城市!");
+//            }
+//            List<Province> cityIdList =cityService.findList("id", cityId);
+//            if(cityIdList.size()==0)
+//            {
+//                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择正确城市!");
+//            }
+//            if (StringUtils.isEmpty(countyId)||"00".equals(countyId)) {
+//                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择区域!");
+//            }
+//            List<Province> countyList =countyService.findList("id", countyId);
+//            if(countyList.size()==0)
+//            {
+//                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择正确区域!");
+//            }
             if (StringUtils.isEmpty(captcha)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入验证码!");
             }
