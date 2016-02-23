@@ -90,12 +90,12 @@ public class InfoController extends ZGKBaseController {
 
             boolean flag = false;
 
-            cn.thinkjoy.ss.domain.UserInfo ssUserInfo = new cn.thinkjoy.ss.domain.UserInfo();
+//            cn.thinkjoy.ss.domain.UserInfo ssUserInfo = new cn.thinkjoy.ss.domain.UserInfo();
 
             String icon = userInfo.getIcon();
 
             if (!StringUtils.isEmpty(icon)) {
-                ssUserInfo.setIcon(icon);
+//                ssUserInfo.setIcon(icon);
                 userAccountPojo.setIcon(icon);
                 flag = true;
             }
@@ -103,14 +103,14 @@ public class InfoController extends ZGKBaseController {
             String name = userInfo.getName();
 
             if (!StringUtils.isEmpty(name)) {
-                ssUserInfo.setName(name);
+//                ssUserInfo.setName(name);
                 userAccountPojo.setName(name);
                 flag = true;
             }
 
-            if (flag) {
-                userInfoApiService.updateUserInfo(ssUserInfo);
-            }
+//            if (flag) {
+//                userInfoApiService.updateUserInfo(ssUserInfo);
+//            }
 
             userInfo.setId(userAccountPojo.getId());
 
