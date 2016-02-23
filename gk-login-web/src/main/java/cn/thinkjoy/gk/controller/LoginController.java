@@ -8,7 +8,6 @@ import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.pojo.UserInfoPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IUserAccountExService;
-import com.jlusoft.microschool.core.utils.MD5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -267,4 +267,19 @@ public class RegisterController extends ZGKBaseController {
         return equals;
     }
 
+    /**
+     * 短信收不到验证码的时候,查询手机验证码接口
+     * @param account
+     * @return
+     */
+    @RequestMapping(value = "/getRegisterCaptcha")
+    @ResponseBody
+    public String getRegisterCaptcha(String account)
+    {
+        String key = RedisConst.USER_CAPTCHA_KEY+account;
+        if (RedisUtil.getInstance().get(key)==null){
+            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "验证码过期或不存在，请重新获取!");
+        }
+        return RedisUtil.getInstance().get(key).toString();
+    }
 }
