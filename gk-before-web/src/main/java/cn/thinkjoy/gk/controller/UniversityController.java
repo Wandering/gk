@@ -265,6 +265,7 @@ public class UniversityController extends ZGKBaseController {
             Map<String,Object> selectorpage=Maps.newHashMap();
             selectorpage.put("majorId",1);
             selectorpage.put("majorName",1);
+            selectorpage.put("majorType",1);
             selectorpage.put("year",1);
             selectorpage.put("batch",1);
             selectorpage.put("admissionFeature",1);
@@ -297,6 +298,7 @@ public class UniversityController extends ZGKBaseController {
         map.put("universityId",universityId);
         map.put("majorType",majorType);
         map.put("batch",batch);
+        map.put("areaId",getAreaId());
         String userKey=request.getParameter("userKey");
         String key="zgk_pe:"+userKey+"_uy:"+universityId+"_me:"+majorType+"_bh:"+batch+":enrollingSituationDetailsList";
         Object object= RedisIsSaveUtil.existsKey(key);
