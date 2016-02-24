@@ -9,7 +9,7 @@ import junit.framework.TestCase;
 public class HttpVipTest extends TestCase{
 //        String host="http://10.254.130.33:9080";
 //        String host="http://zjtest.zhigaokao.cn";
-        String host="http://localhost:8089";
+        String host="http://localhost:8086";
         String upgradeVipByCard_url="/vip/upgradeVipByCard.do";
         String updateUserInfo_url="/info/updateUserInfo.do";
 

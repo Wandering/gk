@@ -2,8 +2,11 @@ package cn.thinkjoy.gk.controller.predict;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseCommonController;
+import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.annotation.VipMethonTag;
+import cn.thinkjoy.gk.service.IUserInfoExService;
+import cn.thinkjoy.gk.util.UserContext;
 import cn.thinkjoy.zgk.remote.IUniversityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -25,7 +28,8 @@ public class PredictController extends BaseCommonController{
 
     @Autowired
     private IUniversityService universityService;
-
+    @Autowired
+    private IUserInfoExService userInfoExService;
     /**
      * 根据名称模糊查询院校接口
      * @param name
@@ -98,6 +102,78 @@ public class PredictController extends BaseCommonController{
         }
         resultMap.put("universityName", uName);
         resultMap.put("score", score);
+        return resultMap;
+    }
+
+    /**
+     * 目标定位
+     * @param name
+     * @param score
+     * @param name
+     * @return
+     */
+    @RequestMapping(value = "/tallyPredictProbability")
+    @ResponseBody
+    @VipMethonTag
+    public Map<String, Object> tallyPredictProbability(@RequestParam(value = "universityName") String name,
+                                                  @RequestParam(value = "score") int score,
+                                                  @RequestParam(value = "type") String type)
+    {
+        //判断是否今天定位过
+        boolean flag = userInfoExService.isPredictByUid(Long.parseLong(this.getAccoutId()));
+        if(!flag){
+            throw new BizException(ERRORCODE.HASPREDICT.getCode(),ERRORCODE.HASPREDICT.getMessage());
+        }
+        //end
+        if(score<=0 || score > 999)
+        {
+            throw new BizException("error", "请输入正确的分数!");
+        }
+        if(null==name || "".equals(name))
+        {
+            throw new BizException("error", "请输入院校名称!");
+        }
+        List<Map<String, String>> universityList = universityService.getUniversityByName(name);
+        if(universityList.size()==0)
+        {
+            throw new BizException("error", "请输入正确的院校名称!");
+        }
+        String uName = "";
+        if(universityList.size()==1)
+        {
+            uName = universityList.get(0).get("label");
+        }
+        if(universityList.size()>1)
+        {
+            for (Map<String, String> map : universityList) {
+                if(name.equals(map.get("label")))
+                {
+                    uName = map.get("label");
+                }
+            }
+        }
+        if("".equals(uName))
+        {
+            throw new BizException("error", "请输入正确的院校名称!");
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("universityName", uName);
+        params.put("score", score);
+        params.put("type", type);
+        params.put("areaId", getAreaId());
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            resultMap = universityService.getPredictProbability(params);
+        } catch (Exception e) {
+            setBatch(score, type, resultMap);
+            resultMap.put("probability", 0);
+            resultMap.put("type", type);
+        }
+        resultMap.put("universityName", uName);
+        resultMap.put("score", score);
+        //预测完成，添加计数
+        userInfoExService.updateUserCanTargetByUid(Long.parseLong(this.getAccoutId()));
+        //end
         return resultMap;
     }
 
