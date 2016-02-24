@@ -140,6 +140,7 @@ public class UniversityController extends ZGKBaseController {
         if(object==null){
             object = iremoteUniversityService.getUniversityById(universityId);
             RedisUtil.getInstance().set(key, JSON.toJSONString(object));
+            return object;
         }
         return JSON.parseObject(object.toString(),Object.class);
     }
