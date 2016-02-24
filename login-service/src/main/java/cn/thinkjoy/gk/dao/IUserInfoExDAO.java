@@ -16,4 +16,8 @@ public interface IUserInfoExDAO {
 
     long insertUserInfo(UserInfo userInfo);
 
+    void updateUserCanTargetByUid(long uid);
+
+    boolean isPredictByUid(long uid);
+
 }
