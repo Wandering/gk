@@ -7,6 +7,7 @@
 package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.gk.dao.IUserInfoDAO;
+import cn.thinkjoy.gk.dao.IUserInfoExDAO;
 import cn.thinkjoy.gk.domain.UserInfo;
 import cn.thinkjoy.gk.service.IUserInfoExService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class UserInfoExServiceImpl implements IUserInfoExService {
     @Autowired
     private IUserInfoDAO userInfoDAO;
 
+    @Autowired
+    private IUserInfoExDAO userInfoExDAO;
+
     @Override
     public UserInfo findUserInfoById(long id) {
         return userInfoDAO.fetch(id);
@@ -30,5 +34,15 @@ public class UserInfoExServiceImpl implements IUserInfoExService {
         userInfoDAO.update(userInfo);
         flag = true;
         return flag;
+    }
+
+    @Override
+    public void updateUserCanTargetByUid(long uid) {
+        userInfoExDAO.updateUserCanTargetByUid(uid);
+    }
+
+    @Override
+    public boolean isPredictByUid(long uid) {
+        return userInfoExDAO.isPredictByUid(uid);
     }
 }

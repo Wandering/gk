@@ -10,7 +10,8 @@ public enum ERRORCODE {
     RESOURCEOCCUPY("0100003", "资源被占用"),
     RESOURCEISNULL("0100005", "资源不存在"),
     DELETEEXCEPTION("0100006", "删除异常"),
-    ADDEXCEPTION("0100004", "添加异常");
+    ADDEXCEPTION("0100004", "添加异常"),
+    HASPREDICT("0100007", "您今天已经预测过了，请明天再来！");
     /** The code. */
     private final String code;
 

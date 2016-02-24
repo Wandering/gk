@@ -60,7 +60,8 @@ public class BaseCommonController {
 	 * @return
      */
 	public String getAccoutId(){
-		Long uid=UserContext.getCurrentUser().getId();
+//		Long uid=UserContext.getCurrentUser().getId();
+		Long uid=17L;
 		return uid.toString();
 	}
 

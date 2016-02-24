@@ -21,4 +21,7 @@ public interface IUserInfoExService {
 
     boolean updateUserInfoById(UserInfo userInfo);
 
+    void updateUserCanTargetByUid(long uid);
+
+    boolean isPredictByUid(long uid);
 }
