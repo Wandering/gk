@@ -55,6 +55,9 @@
             <if test="endDate!=null">
                 endDate = #{endDate},
             </if>
+            <if test="activeDate!=null">
+                activeDate = #{activeDate},
+            </if>
         </trim>
         WHERE
         id = #{id}

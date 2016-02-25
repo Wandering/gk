@@ -119,7 +119,7 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
 
     @Override
     public UserInfoPojo getUserInfoPojoById(long id){
-        Map<String,Object> params = new HashMap<String,Object>();
+        Map<String,Object> params = new HashMap<>();
         params.put("id",id);
         return userAccountExDAO.getUserInfoPojoById(params);
     }

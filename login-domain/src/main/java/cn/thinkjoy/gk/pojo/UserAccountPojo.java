@@ -17,8 +17,25 @@ public class UserAccountPojo extends BaseDomain<Long> {
     private Integer isReported;
     private Integer isSurvey;
     private String userKey;
-
+    private String vipActiveDate;
+    private String vipEndDate;
     public UserAccountPojo(){
+    }
+
+    public String getVipActiveDate() {
+        return vipActiveDate;
+    }
+
+    public void setVipActiveDate(String vipActiveDate) {
+        this.vipActiveDate = vipActiveDate;
+    }
+
+    public String getVipEndDate() {
+        return vipEndDate;
+    }
+
+    public void setVipEndDate(String vipEndDate) {
+        this.vipEndDate = vipEndDate;
     }
 
     public String getAccount() {

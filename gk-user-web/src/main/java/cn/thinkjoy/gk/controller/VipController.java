@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,15 +30,12 @@ import java.util.Map;
 @RequestMapping(value = "/vip")
 public class VipController extends ZGKBaseController {
 
-    private static final Logger LOGGER= LoggerFactory.getLogger(VipController.class);
-    @Autowired
-    private ICardService cardService;
     @Autowired
     private ICardExService cardExService;
 
     @RequestMapping(value = "/upgradeVipByCard")
     @ResponseBody
-    public String upgradeVipByCard(CardPojo cardPojo) throws Exception{
+    public UserAccountPojo upgradeVipByCard(CardPojo cardPojo) throws Exception{
         UserAccountPojo userAccountPojo=super.getUserAccountPojo();
         if(null==userAccountPojo){
             throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
@@ -45,41 +44,50 @@ public class VipController extends ZGKBaseController {
         if(null!=vipStatus&&vipStatus==1){
             throw new BizException(ERRORCODE.VIP_EXIST.getCode(), ERRORCODE.VIP_EXIST.getMessage());
         }
-//        long areaId= getAreaId();
-        Map<String,Object> map=new HashMap<String, Object>();
+        Map<String,String> map=new HashMap<>();
         map.put("cardNumber",cardPojo.getCardNumber());
         map.put("password",cardPojo.getPassword());
-//        map.put("areaId",areaId);
-        map.put("status",0);
-        Card card=(Card)cardService.queryOne(map);
+        map.put("status", "0");
+        Card card=cardExService.getVipCardInfo(map);
         if(null==card ){
             throw new BizException(ERRORCODE.VIP_CARD_NOT_INVALID.getCode(), ERRORCODE.VIP_CARD_NOT_INVALID.getMessage());
         }
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(System.currentTimeMillis());
-        c.add(Calendar.YEAR, 1);
-        c.set(Calendar.MONTH, 8);
-        c.set(Calendar.DAY_OF_MONTH, 1);
-        if(card.getEndDate()>=c.getTimeInMillis()){
-            throw new BizException(ERRORCODE.VIP_CARD_NOT_INVALID.getCode(), ERRORCODE.VIP_CARD_NOT_INVALID.getMessage());
-        }
+        Calendar c = getVipEndDate(card.getCardType());
+        card.setEndDate(c.getTimeInMillis());
         cardExService.updateUserVip(card.getId(),userAccountPojo.getId(),card.getEndDate());
         userAccountPojo.setVipStatus(1);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        userAccountPojo.setVipActiveDate(format.format(new Date(System.currentTimeMillis())));
+        userAccountPojo.setVipEndDate(format.format(new Date(card.getEndDate())));
         try {
             String token = DESUtil.getEightByteMultypleStr(String.valueOf(userAccountPojo.getId()), userAccountPojo.getAccount());
             setUserAccountPojo(userAccountPojo, DESUtil.encrypt(token, DESUtil.key));
         } catch(Exception e) {
             throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
         }
+        return userAccountPojo;
+    }
 
-//        新增卡号的时候添加
-//        Calendar c1 = Calendar.getInstance();
-//        c1.setTimeInMillis(System.currentTimeMillis());
-//        c1.add(Calendar.YEAR, 1);
-//        c1.set(Calendar.MONTH, 8);
-//        c1.set(Calendar.DAY_OF_MONTH, 1);
-
-        return  "success";
+    private Calendar getVipEndDate(String cardType) {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(System.currentTimeMillis());
+        /**
+         * 体验帐号激活1个月后失效,其他帐号失效日期为激活年份往后推三年的九月一号
+         */
+        if("4".equals(cardType))
+        {
+            c.add(Calendar.MONTH, 1);
+        }
+        else
+        {
+            c.add(Calendar.YEAR, 3);
+            c.set(Calendar.MONTH, 8);
+            c.set(Calendar.DAY_OF_MONTH, 1);
+        }
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        return c;
     }
 
     /**

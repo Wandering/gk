@@ -24,6 +24,24 @@ public class UserInfoPojo extends BaseDomain<Long> {
     private String city;
     private String county;
     private String userKey;
+    private String endDate;
+    private String activeDate;
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getActiveDate() {
+        return activeDate;
+    }
+
+    public void setActiveDate(String activeDate) {
+        this.activeDate = activeDate;
+    }
 
     public String getAccount() {
         return account;

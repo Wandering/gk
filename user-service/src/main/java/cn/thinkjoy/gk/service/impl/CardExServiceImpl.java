@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.Map;
 
 
 @Service("CardExServiceImpl")
@@ -34,6 +35,7 @@ public class CardExServiceImpl implements ICardExService {
         userVip.setId(userId);
         userVip.setStatus(1);
         userVip.setEndDate(endDate);
+        userVip.setActiveDate(System.currentTimeMillis());
         userVipDAO.update(userVip);
         Card card = new Card();
         card.setId(cardId);
@@ -43,5 +45,11 @@ public class CardExServiceImpl implements ICardExService {
         flag = true;
         return flag;
     }
+
+    @Override
+    public Card getVipCardInfo(Map<String, String> params) {
+        return cardDAO.queryCardInfo(params);
+    }
+
 
 }

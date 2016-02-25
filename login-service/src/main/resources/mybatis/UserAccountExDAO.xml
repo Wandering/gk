@@ -20,7 +20,9 @@
         info.provinceId as province,
         info.cityId as city,
         info.countyId as county,
-        pro.code as userKey
+        pro.code as userKey,
+        vip.endDate,
+        vip.activeDate
         FROM zgk_user_account acc
         left join zgk_user_vip vip on acc.id = vip.id
         left join zgk_user_info info on acc.id = info.id
@@ -55,7 +57,9 @@
           exam.isReported,
           exam.isSurvey,
           vip.status as vipStatus,
-          pro.code as userKey
+          pro.code as userKey,
+          vip.endDate,
+          vip.activeDate
         FROM zgk_user_account acc
         left join zgk_user_vip vip on acc.id = vip.id
         left join zgk_user_info info on acc.id = info.id

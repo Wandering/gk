@@ -262,7 +262,7 @@ public class UniversityController extends ZGKBaseController {
             ConditionsUtil.setCondition(condition,"year", "=", year);
             ConditionsUtil.setCondition(condition, "batch", "=", String.valueOf(batch));
             ConditionsUtil.setCondition(condition, "areaId", "=", getAreaId().toString());
-            ConditionsUtil.setCondition(condition, "universityMajorType", "=", universityMajorType);
+            ConditionsUtil.setCondition(condition, "majorType", "=", universityMajorType);
             Map<String,Object> selectorpage=Maps.newHashMap();
             selectorpage.put("majorId",1);
             selectorpage.put("majorName",1);
