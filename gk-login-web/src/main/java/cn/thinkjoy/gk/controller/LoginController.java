@@ -56,21 +56,15 @@ public class LoginController extends ZGKBaseController {
 			if(userAccountBean==null){
 				old=oldUserLogin(account,password);
 			}else {
-
-
 				if (!"@@@@".equals(password)) {
 					if (!password.equals(userAccountBean.getPassword())) {
 						throw new BizException(ERRORCODE.LOGIN_PASSWORD_ERROR.getCode(), ERRORCODE.LOGIN_PASSWORD_ERROR.getMessage());
 					}
 				}
-
 				if (userAccountBean.getStatus() != 0) {
 					throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "用户状态异常，请联系管理员!");
 				}
-
-
 				id = userAccountBean.getId();
-
 				userInfoPojo=userAccountExService.getUserInfoPojoById(id);
 			}
 			if (userAccountBean == null && old==null) {
@@ -79,11 +73,20 @@ public class LoginController extends ZGKBaseController {
 			if(userInfoPojo==null){
 				userInfoPojo=old;
 			}
-
-			String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), userInfoPojo.getAccount());
-			setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));
 			if(null != userInfoPojo)
 			{
+				/**
+				 * 判断VIP用户是否失效
+				 */
+				if("1".equals(userInfoPojo.getVipStatus()))
+				{
+					if(null != userInfoPojo.getEndDate() && System.currentTimeMillis() > Long.parseLong(userInfoPojo.getEndDate()))
+					{
+						userInfoPojo.setVipStatus("0");
+					}
+				}
+				String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), userInfoPojo.getAccount());
+				setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));
 				resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
 				userInfoPojo.setPassword(null);
 				userInfoPojo.setId(null);
@@ -95,7 +98,6 @@ public class LoginController extends ZGKBaseController {
 		}finally{
 
 		}
-
 		return resultMap;
 	}
 

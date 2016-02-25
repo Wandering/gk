@@ -742,5 +742,45 @@ selectList
         FROM zgk_card
     </select>
 
+    <select id="queryCardInfo" resultType="Card">
+        SELECT
+        id as id ,
+        status as status ,
+        creator as creator ,
+        createDate as createDate ,
+        lastModifier as lastModifier ,
+        lastModDate as lastModDate ,
+        endDate as endDate ,
+        cardNumber as cardNumber ,
+        password as password ,
+        userId as userId ,
+        areaId as areaId,
+        cardType as cardType
+        FROM zgk_card
+        <where>
+            1=1
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="status!=null">
+                AND status = #{status}
+            </if>
+            <if test="cardNumber!=null">
+                AND cardNumber = #{cardNumber}
+            </if>
+            <if test="password!=null">
+                AND password = #{password}
+            </if>
+            <if test="userId!=null">
+                AND userId = #{userId}
+            </if>
+            <if test="areaId!=null">
+                AND areaId = #{areaId}
+            </if>
+            <if test="cardType!=null">
+                AND cardType = #{cardType}
+            </if>
+        </where>
+    </select>
 </mapper>
 

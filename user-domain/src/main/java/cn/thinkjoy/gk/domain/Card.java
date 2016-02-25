@@ -26,13 +26,25 @@ public class Card extends CreateBaseDomain<Long>{
 	private String cardNumber;
 	/** 信息标题 */
 	private String password;
-	/**  */
+	/**  激活用户ID*/
 	private Long userId;
 	/** 区域Id */
 	private Long areaId;
-
+	/**
+	 * 卡号类型，1为正式，2为演示（贾静静用），3为测试（杨甜用）,4为体验（薛延松用）
+	 */
+	private String cardType;
 	public Card(){
 	}
+
+	public String getCardType() {
+		return cardType;
+	}
+
+	public void setCardType(String cardType) {
+		this.cardType = cardType;
+	}
+
 	public void setEndDate(Long value) {
 		this.endDate = value;
 	}
@@ -82,6 +94,7 @@ public class Card extends CreateBaseDomain<Long>{
 				.append("Password",getPassword())
 				.append("UserId",getUserId())
 				.append("AreaId",getAreaId())
+				.append("CardType",getCardType())
 				.toString();
 	}
 
