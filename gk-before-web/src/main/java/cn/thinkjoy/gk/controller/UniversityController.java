@@ -665,6 +665,4 @@ public class UniversityController extends ZGKBaseController {
 
         return universityDetailDto;
     }
-
-
 }

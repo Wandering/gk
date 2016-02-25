@@ -33,6 +33,8 @@ public class GkAdmissionLineTest {
         Map<String,Object> map=new HashMap<>();
         map.put("groupOp","and");
         map.put("orderBy","lastModDate");
+        map.put("universityOrderBy","rank");
+        map.put("universitySortBy","desc");
         map.put("sortBy","desc");
         Assert.notNull(gkAdmissionLineService.getGkAdmissionLineList(map, null, 4));
         map=new HashMap<>();

@@ -75,6 +75,8 @@ public class GkAdmissionLineController extends BaseApiController {
         }
 //        文史/理工
          QueryUtil.setMapOp(map, "entype", "=", type);
+        map.put("orderBy","rank IS NULL,rank,year");
+        map.put("sortBy","asc");
 
         return gkAdmissionLineService.getGkAdmissionLineList(map,page,rows);
     }
