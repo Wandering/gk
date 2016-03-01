@@ -72,7 +72,7 @@ public class VipController extends ZGKBaseController {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(System.currentTimeMillis());
         /**
-         * 体验帐号激活1个月后失效,其他帐号失效日期为激活年份往后推三年的九月一号
+         * 体验帐号激活1个月后失效,其他帐号失效日期为激活年份往后推一年的九月一号
          */
         if("4".equals(cardType))
         {
@@ -80,13 +80,14 @@ public class VipController extends ZGKBaseController {
         }
         else
         {
-            c.add(Calendar.YEAR, 3);
+            c.add(Calendar.YEAR, 1);
             c.set(Calendar.MONTH, 8);
             c.set(Calendar.DAY_OF_MONTH, 1);
         }
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND,0);
         return c;
     }
 
