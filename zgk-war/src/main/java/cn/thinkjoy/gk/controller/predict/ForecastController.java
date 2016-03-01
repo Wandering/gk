@@ -105,6 +105,17 @@ public class ForecastController extends BaseApiController{
         while (names.hasMoreElements()) {
             prop = names.nextElement();
             dataMap.put(prop, request.getParameter(prop));
+            if("lowestScore".equals(prop)){
+                String lowestScore=request.getParameter(prop);
+                if("NaN".equals(lowestScore)){
+                    dataMap.put(prop, 0);
+                }
+            } if("averageScore".equals(prop)){
+                String lowestScore=request.getParameter(prop);
+                if("NaN".equals(lowestScore)){
+                    dataMap.put(prop, 0);
+                }
+            }
         }
         dataMap.put("creator", this.getAccoutId());
         dataMap.put("createDate", System.currentTimeMillis());
