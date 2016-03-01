@@ -9,6 +9,7 @@ package cn.thinkjoy.gk.controller.predict;
 
 import cn.thinkjoy.common.domain.BizStatusEnum;
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.common.utils.SqlOrderEnum;
 import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
 import cn.thinkjoy.gk.service.IForecastService;
@@ -63,8 +64,10 @@ public class ForecastController extends BaseApiController{
     public Object getLastoFrecast(){
         Map<String,Object> map = new HashMap<>();
         map.put("userId",this.getAccoutId());
-        return forecastService.queryOne(map);
+        return forecastService.queryOne(map,"lastModDate", SqlOrderEnum.DESC);
     }
+
+
 
     /**
      *用户定位院校历年分数线

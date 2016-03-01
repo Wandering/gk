@@ -45,6 +45,17 @@ public class UserInfo extends BaseDomain<Long>{
     /** QQ号 */
     private String qq;
 
+    /**成绩预测start**/
+    /** 文理 */
+    private String type;
+    /** 院校 */
+    private String universityName;
+    /** 成绩 */
+    private String achievement;
+    /** 成绩 */
+    private Integer typeId;
+    /**成绩预测end**/
+
     public UserInfo(){
     }
     public void setToken(String value) {
@@ -132,6 +143,38 @@ public class UserInfo extends BaseDomain<Long>{
         return this.qq;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getUniversityName() {
+        return universityName;
+    }
+
+    public void setUniversityName(String universityName) {
+        this.universityName = universityName;
+    }
+
+    public String getAchievement() {
+        return achievement;
+    }
+
+    public void setAchievement(String achievement) {
+        this.achievement = achievement;
+    }
+
+    public Integer getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
+    }
+
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
                 .append("Id",getId())
@@ -147,6 +190,10 @@ public class UserInfo extends BaseDomain<Long>{
                 .append("SubjectType",getSubjectType())
                 .append("Mail",getMail())
                 .append("Qq",getQq())
+                .append("Type",getType())
+                .append("UniversityName",getUniversityName())
+                .append("Achievement",getAchievement())
+                .append("typeId",getTypeId())
                 .toString();
     }
 

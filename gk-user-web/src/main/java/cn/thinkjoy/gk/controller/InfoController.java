@@ -2,8 +2,10 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.DESUtil;
+import cn.thinkjoy.gk.common.IForecase;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.domain.Forecast;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.domain.UserInfo;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
@@ -35,6 +37,8 @@ public class InfoController extends ZGKBaseController {
     private static final Logger LOGGER= LoggerFactory.getLogger(InfoController.class);
 
     @Autowired
+    private IForecase forecase;
+    @Autowired
     private IUserInfoService userInfoService;
 
     @Autowired
@@ -58,6 +62,15 @@ public class InfoController extends ZGKBaseController {
     public UserInfo getUserInfo() {
         String id=getAccoutId();
         UserInfo userInfo=userInfoExService.findUserInfoById(Long.valueOf(id));
+        try {
+            Forecast forecast=(Forecast)forecase.getLastoFrecast(userInfo.getId().toString());
+            userInfo.setAchievement(forecast.getAchievement().toString());
+            userInfo.setType(forecast.getType());
+            userInfo.setUniversityName(forecast.getUniversityName());
+            userInfo.setTypeId(forecast.getTypeId());
+        }catch (Exception e){
+            LOGGER.debug("获取成绩信息失败！");
+        }
         return userInfo;
     }
 
