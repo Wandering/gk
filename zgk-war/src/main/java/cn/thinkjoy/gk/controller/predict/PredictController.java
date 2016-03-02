@@ -185,7 +185,7 @@ public class PredictController extends BaseApiController {
 
 
         //由于压测需要，特别添加用户Id=363，账号18291920831用户为无限目标定位用户
-        if (Long.parseLong(this.getAccoutId())==363L) {
+        if (Long.parseLong(this.getAccoutId())!=363L) {
             //预测完成，添加计数
             userInfoExService.updateUserCanTargetByUid(Long.parseLong(this.getAccoutId()));
         }
