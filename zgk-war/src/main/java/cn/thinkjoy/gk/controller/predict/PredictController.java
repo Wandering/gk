@@ -1,13 +1,17 @@
 package cn.thinkjoy.gk.controller.predict;
 
+import cn.thinkjoy.common.domain.BizStatusEnum;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.annotation.VipMethonTag;
+import cn.thinkjoy.gk.controller.api.base.BaseApiController;
+import cn.thinkjoy.gk.service.IForecastService;
 import cn.thinkjoy.gk.service.IUserInfoExService;
 import cn.thinkjoy.gk.util.UserContext;
 import cn.thinkjoy.zgk.remote.IUniversityService;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -24,8 +28,10 @@ import java.util.*;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/predict")
-public class PredictController extends BaseCommonController{
+public class PredictController extends BaseApiController {
 
+    @Autowired
+    private IForecastService forecastService;
     @Autowired
     private IUniversityService universityService;
     @Autowired
@@ -121,9 +127,9 @@ public class PredictController extends BaseCommonController{
     {
         //判断是否今天定位过
         boolean flag = userInfoExService.isPredictByUid(Long.parseLong(this.getAccoutId()));
-        if(!flag){
-            throw new BizException(ERRORCODE.HASPREDICT.getCode(),ERRORCODE.HASPREDICT.getMessage());
-        }
+//        if(!flag){
+//            throw new BizException(ERRORCODE.HASPREDICT.getCode(),ERRORCODE.HASPREDICT.getMessage());
+//        }
         //end
         if(score<=0 || score > 999)
         {
@@ -139,9 +145,11 @@ public class PredictController extends BaseCommonController{
             throw new BizException("error", "请输入正确的院校名称!");
         }
         String uName = "";
+        String uId = "";
         if(universityList.size()==1)
         {
             uName = universityList.get(0).get("label");
+            uId = String.valueOf(universityList.get(0).get("id"));
         }
         if(universityList.size()>1)
         {
@@ -171,6 +179,10 @@ public class PredictController extends BaseCommonController{
         }
         resultMap.put("universityName", uName);
         resultMap.put("score", score);
+
+        addFrecast(resultMap,uId,uName,score,type);
+
+
         //预测完成，添加计数
         userInfoExService.updateUserCanTargetByUid(Long.parseLong(this.getAccoutId()));
         //end
@@ -287,5 +299,75 @@ public class PredictController extends BaseCommonController{
             resultMap.put("1", mp4);
         }
         return resultMap;
+    }
+
+
+    private boolean addFrecast(Map<String, Object> resultMap,String uId,String uName,int score,String type){
+        //保存预测情况
+        List<Map<String, Object>> list1=(List<Map<String, Object>>)resultMap.get("historyList");
+        Iterator<Map<String, Object>> iterator=list1.iterator();
+        Map<String, Object> map1=null;
+        int i1=0;
+        int i2=0;
+        int t1=0;
+        int t2=0;
+        while (iterator.hasNext()){
+            map1= iterator.next();
+            String minScore =map1.get("minScore").toString();
+            String avgScore =map1.get("avgScore").toString();
+            if(!("-".equals(minScore)||"0".equals(minScore))){
+                t1++;
+                i1+=Integer.valueOf(minScore);
+            }
+            if(!("-".equals(avgScore)||"0".equals(avgScore))){
+                t2++;
+                i2+=Integer.valueOf(avgScore);
+            }
+        }
+        Map<String,Object>  dataMap=new HashMap<>();
+        dataMap.put("lowestScore",i1/t1);
+        dataMap.put("averageScore",i2/t2);
+        dataMap.put("achievement",score);
+        dataMap.put("universityName",uName);
+        dataMap.put("universityId",uId);
+        dataMap.put("typeId",type);
+        //TODO   支持多对象保存
+        dataMap.put("creator", this.getAccoutId());
+        dataMap.put("createDate", System.currentTimeMillis());
+        dataMap.put("lastModifier", this.getAccoutId());
+        dataMap.put("lastModDate", System.currentTimeMillis());
+        if(dataMap.get("status") == null || ((String)dataMap.get("status")).trim().length() == 0){
+            dataMap.put("status", BizStatusEnum.N.getCode());
+        }
+
+//        typeId 科类ID(文史理工)
+//        universityId 院校ID
+//        universityName 院校名称
+//        achievement 成绩
+//        lowestScore 最低分
+//        averageScore 平均分
+        Map<String,Object> map = new HashMap<>();
+
+        map.put("typeId","科类ID");
+        map.put("universityName","院校名称");
+        map.put("achievement","成绩");
+        map.put("lowestScore","最低分");
+        map.put("averageScore", "平均分");
+        //参数校验
+        this.paramCheck(map,dataMap);
+        //模拟测试数据
+        dataMap.put("userId", this.getAccoutId());
+        if("1".equals(dataMap.get("typeId")))
+        {
+            dataMap.put("type","文史");
+        }else {
+            dataMap.put("type","理工");
+        }
+        try {
+            forecastService.insertMap(dataMap);
+        }catch (Exception e){
+            throw new BizException(ERRORCODE.ADDEXCEPTION.getCode(),ERRORCODE.ADDEXCEPTION.getMessage());
+        }
+        return true;
     }
 }

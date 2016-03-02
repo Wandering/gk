@@ -5,4 +5,5 @@ package cn.thinkjoy.gk.common;
  */
 public interface IForecase {
     Object getLastoFrecast(String uid);
+    boolean isFrecast();
 }

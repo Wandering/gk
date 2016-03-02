@@ -54,6 +54,8 @@ public class UserInfo extends BaseDomain<Long>{
     private String achievement;
     /** 成绩 */
     private Integer typeId;
+    /** 是否预测*/
+    private boolean isForecaset;
     /**成绩预测end**/
 
     public UserInfo(){
@@ -175,10 +177,18 @@ public class UserInfo extends BaseDomain<Long>{
         this.typeId = typeId;
     }
 
+    public boolean isForecaset() {
+        return isForecaset;
+    }
+
+    public void setIsForecaset(boolean isForecaset) {
+        this.isForecaset = isForecaset;
+    }
+
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
                 .append("Id",getId())
-                .append("Token",getToken())
+                .append("Token", getToken())
                 .append("Name",getName())
                 .append("Icon",getIcon())
                 .append("ProvinceId",getProvinceId())
@@ -194,6 +204,7 @@ public class UserInfo extends BaseDomain<Long>{
                 .append("UniversityName",getUniversityName())
                 .append("Achievement",getAchievement())
                 .append("typeId",getTypeId())
+                .append("isForecaset",isForecaset())
                 .toString();
     }
 
