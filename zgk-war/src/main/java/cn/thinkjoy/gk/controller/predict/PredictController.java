@@ -121,9 +121,9 @@ public class PredictController extends BaseCommonController{
     {
         //判断是否今天定位过
         boolean flag = userInfoExService.isPredictByUid(Long.parseLong(this.getAccoutId()));
-//        if(!flag){
-//            throw new BizException(ERRORCODE.HASPREDICT.getCode(),ERRORCODE.HASPREDICT.getMessage());
-//        }
+        if(!flag){
+            throw new BizException(ERRORCODE.HASPREDICT.getCode(),ERRORCODE.HASPREDICT.getMessage());
+        }
         //end
         if(score<=0 || score > 999)
         {
