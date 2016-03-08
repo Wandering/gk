@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller.predict;
 
 import cn.thinkjoy.common.domain.BizStatusEnum;
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.common.utils.SqlOrderEnum;
 import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
@@ -164,21 +165,7 @@ public class PredictController extends BaseApiController {
         {
             throw new BizException("error", "请输入正确的院校名称!");
         }
-        Map<String, Object> params = new HashMap<>();
-        params.put("universityName", uName);
-        params.put("score", score);
-        params.put("type", type);
-        params.put("areaId", getAreaId());
-        Map<String, Object> resultMap = new HashMap<>();
-        try {
-            resultMap = universityService.getPredictProbability(params);
-        } catch (Exception e) {
-            setBatch(score, type, resultMap);
-            resultMap.put("probability", 0);
-            resultMap.put("type", type);
-        }
-        resultMap.put("universityName", uName);
-        resultMap.put("score", score);
+        Map<String,Object> resultMap=getUniversityPredict(uName,score,type);
 
         //保存预测结果
         addFrecast(resultMap,uId,uName,score,type);
@@ -370,5 +357,51 @@ public class PredictController extends BaseApiController {
             throw new BizException(ERRORCODE.ADDEXCEPTION.getCode(),ERRORCODE.ADDEXCEPTION.getMessage());
         }
         return true;
+    }
+
+
+    /**
+     * 根据分数获取目标定位院校预测
+     * @param uName
+     * @param score
+     * @param type
+     * @return
+     */
+    private Map<String,Object> getUniversityPredict(String uName,int score,String type){
+        Map<String, Object> params = new HashMap<>();
+        params.put("universityName", uName);
+        params.put("score", score);
+        params.put("type", type);
+        params.put("areaId", getAreaId());
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            resultMap = universityService.getPredictProbability(params);
+        } catch (Exception e) {
+            setBatch(score, type, resultMap);
+            resultMap.put("probability", 0);
+            resultMap.put("type", type);
+        }
+        resultMap.put("universityName", uName);
+        resultMap.put("score", score);
+        return resultMap;
+    }
+
+
+    /**
+     * 获取当前用户最后一次预测结果
+     * @return
+     */
+    @RequestMapping(value = "/predictResults")
+    @ResponseBody
+    @VipMethonTag
+    public Map<String, Object> predictResults(){
+        Map<String,Object> map = new HashMap<>();
+        map.put("userId",this.getAccoutId());
+        cn.thinkjoy.gk.domain.Forecast forecast=(cn.thinkjoy.gk.domain.Forecast)forecastService.queryOne(map, "lastModDate", SqlOrderEnum.DESC);
+        if(forecast==null){
+            throw new BizException(ERRORCODE.RESOURCEISNULL.getCode(),ERRORCODE.RESOURCEISNULL.getMessage());
+        }
+        Map<String,Object> resultMap=getUniversityPredict(forecast.getUniversityName(),forecast.getAchievement(),forecast.getTypeId().toString());
+        return resultMap;
     }
 }

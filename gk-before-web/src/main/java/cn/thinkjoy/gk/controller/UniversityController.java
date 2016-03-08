@@ -33,10 +33,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -47,7 +45,7 @@ import java.util.Map;
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/university")
 public class UniversityController extends ZGKBaseController {
-
+    public int TOKEN_EXPIRE_TIME = 60*60;
     public static final Logger LOGGER= LoggerFactory.getLogger(UniversityController.class);
 
     @Autowired
@@ -113,7 +111,25 @@ public class UniversityController extends ZGKBaseController {
                 propertys[0] = university.get("property").toString();
                 university.put("property",propertys);
             }
+            String[] propertys2= null;
+            Map<String,Object> propertyMap=new HashMap();
+            if(StringUtils.isNotEmpty(university.get("property").toString())){
+                propertys2=propertys[0].toString().split(",");
+                Map<String,Object> propertysMap =getPropertys();
 
+                for(String str:propertys2){
+                    Iterator<String> propertysIterator=propertysMap.keySet().iterator();
+                    while (propertysIterator.hasNext()){
+                        String key = propertysIterator.next();
+                        String value=propertysMap.get(key).toString();
+                        if(str.indexOf(value)>-1){
+                            propertyMap.put(key,value);
+                        }
+                    }
+                }
+            }
+
+            university.put("propertys",propertyMap);
             university.put("isCollect",0);
             if(null!=userAccountPojo) {
                 long userId = userAccountPojo.getId();
@@ -664,5 +680,25 @@ public class UniversityController extends ZGKBaseController {
         }
 
         return universityDetailDto;
+    }
+
+
+    private Map<String,Object> getPropertys(){
+        List<Map<String,Object>> list=null;
+        Map<String,Object> propertysMap=new HashMap<>();
+
+        String key="universityPropertys";
+        RedisRepository redisRepository=RedisUtil.getInstance();
+        boolean flag=redisRepository.exists(key);
+        if(flag){
+            propertysMap=JSON.parseObject(redisRepository.get(key).toString(),Map.class);
+        }else {
+            list=iremoteUniversityService.getDataDictListByType("FEATURE");
+            for(Map<String,Object> map:list){
+                propertysMap.put(map.get("dictId").toString(),map.get("name").toString());
+            }
+            redisRepository.set(key,JSON.toJSON(propertysMap),TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
+        }
+        return propertysMap;
     }
 }
