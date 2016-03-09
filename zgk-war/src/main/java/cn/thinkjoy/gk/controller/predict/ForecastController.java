@@ -9,6 +9,7 @@ package cn.thinkjoy.gk.controller.predict;
 
 import cn.thinkjoy.common.domain.BizStatusEnum;
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
 import cn.thinkjoy.common.utils.SqlOrderEnum;
 import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
@@ -47,11 +48,20 @@ public class ForecastController extends BaseApiController{
     @RequestMapping(value = "/getPerformanceDetail",method = RequestMethod.GET)
     @ResponseBody
     @VipMethonTag
-    public Object getPerformanceDetail(){
+    public Object getPerformanceDetail( @ApiParam(param="page", desc="页数",required = false) @RequestParam(defaultValue = "1",required = false) Integer page,
+                                         @ApiParam(param="rows", desc="每页条数",required = false) @RequestParam(defaultValue = "10",required = false) Integer rows){
+
+
     //实际接口
-        Map<String,Object> map=new HashMap<>();
-        map.put("userId", this.getAccoutId());
-        return forecastService.queryList(map, "lastModDate", "desc");
+        if(page==null || rows==null) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("userId", this.getAccoutId());
+            return forecastService.queryList(map, "lastModDate", "desc");
+        }else {
+            Map<String, Object> map = new HashMap<>();
+            QueryUtil.setMapOp(map,"userId","=",this.getAccoutId());
+            return doPage(map,forecastService,page,rows);
+        }
     }
 
     /**
