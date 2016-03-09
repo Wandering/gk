@@ -129,7 +129,7 @@ public class PredictController extends BaseApiController {
         //判断是否今天定位过
         boolean flag = userInfoExService.isPredictByUid(Long.parseLong(this.getAccoutId()));
         if(!flag){
-            throw new BizException(ERRORCODE.HASPREDICT.getCode(),ERRORCODE.HASPREDICT.getMessage());
+//            throw new BizException(ERRORCODE.HASPREDICT.getCode(),ERRORCODE.HASPREDICT.getMessage());
         }
         //end
         if(score<=0 || score > 999)
@@ -317,8 +317,16 @@ public class PredictController extends BaseApiController {
             }
         }
         Map<String,Object>  dataMap=new HashMap<>();
-        dataMap.put("lowestScore",i1/t1);
-        dataMap.put("averageScore",i2/t2);
+        int sum1=0;
+        if(i1!=0 && t1!=0) {
+            sum1 = i1 / t1;
+        }
+        int sum2=0;
+        if(i2!=0 && t2!=0) {
+            sum2 = i2 / t2;
+        }
+        dataMap.put("lowestScore",sum1);
+        dataMap.put("averageScore",sum2);
         dataMap.put("achievement",score);
         dataMap.put("universityName",uName);
         dataMap.put("universityId",uId);
