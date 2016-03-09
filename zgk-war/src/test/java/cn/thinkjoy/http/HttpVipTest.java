@@ -12,6 +12,7 @@ public class HttpVipTest extends TestCase{
         String host="http://localhost:8086";
         String upgradeVipByCard_url="/vip/upgradeVipByCard.do";
         String updateUserInfo_url="/info/updateUserInfo.do";
+        String tallyPredictProbability_url="/predict/tallyPredictProbability.do";
 
     /**
      * 升级VIP
@@ -31,5 +32,12 @@ public class HttpVipTest extends TestCase{
         assertTrue(result.contains("33"));
         System.out.println("result = " + result);
 
+    }
+
+    public void testTallyPredictProbability(){
+        String url=host + tallyPredictProbability_url + "?universityName=长安大学&score=500&type=1&token=SJjPPT5sDZEzAFvH5A4pjg%3D%3D&&userKey=sn";
+        String result = RequestUtils.requestPost(url);
+        assertTrue(result.contains("33"));
+        System.out.println("result = " + result);
     }
 }

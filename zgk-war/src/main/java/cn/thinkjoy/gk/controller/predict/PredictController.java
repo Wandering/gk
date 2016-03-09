@@ -129,7 +129,7 @@ public class PredictController extends BaseApiController {
         //判断是否今天定位过
         boolean flag = userInfoExService.isPredictByUid(Long.parseLong(this.getAccoutId()));
         if(!flag){
-            throw new BizException(ERRORCODE.HASPREDICT.getCode(),ERRORCODE.HASPREDICT.getMessage());
+//            throw new BizException(ERRORCODE.HASPREDICT.getCode(),ERRORCODE.HASPREDICT.getMessage());
         }
         //end
         if(score<=0 || score > 999)
@@ -158,6 +158,7 @@ public class PredictController extends BaseApiController {
                 if(name.equals(map.get("label")))
                 {
                     uName = map.get("label");
+                    uId = String.valueOf(universityList.get(0).get("id"));
                 }
             }
         }
