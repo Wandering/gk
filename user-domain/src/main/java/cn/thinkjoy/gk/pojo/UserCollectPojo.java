@@ -14,6 +14,8 @@ package cn.thinkjoy.gk.pojo;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import java.util.Map;
+
 public class UserCollectPojo{
 	/** ID */
 	private long id;
@@ -36,6 +38,8 @@ public class UserCollectPojo{
 	private String subjection;
 	/** 院校特征 */
 	private String propertyName;
+	/** 院校特征 */
+	private Map<String,Object> propertys;
 	/** 收藏人数 */
 	private int number;
 
@@ -128,6 +132,15 @@ public class UserCollectPojo{
 
 	public void setNumber(int number) {
 		this.number = number;
+	}
+
+
+	public Map<String, Object> getPropertys() {
+		return propertys;
+	}
+
+	public void setPropertys(Map<String, Object> propertys) {
+		this.propertys = propertys;
 	}
 
 	public int hashCode() {
