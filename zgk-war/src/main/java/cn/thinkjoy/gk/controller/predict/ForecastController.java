@@ -19,6 +19,8 @@ import cn.thinkjoy.zgk.common.QueryUtil;
 import cn.thinkjoy.zgk.domain.BizData4Page;
 import cn.thinkjoy.zgk.remote.IGkAdmissionLineService;
 import cn.thinkjoy.zgk.remote.IUniversityService;
+import com.alibaba.fastjson.JSON;
+import cn.thinkjoy.gk.domain.Forecast;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +28,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.text.resources.FormatData;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -53,15 +58,23 @@ public class ForecastController extends BaseApiController{
 
 
     //实际接口
-        if(page==null || rows==null) {
+//        if(page==null || rows==null) {
             Map<String, Object> map = new HashMap<>();
             map.put("userId", this.getAccoutId());
-            return forecastService.queryList(map, "lastModDate", "desc");
-        }else {
-            Map<String, Object> map = new HashMap<>();
-            QueryUtil.setMapOp(map,"userId","=",this.getAccoutId());
-            return doPage(map,forecastService,page,rows);
-        }
+            Map<String,Object> results = new HashMap<>();
+            List<Forecast> forecasts=forecastService.queryList(map, "lastModDate", "desc");
+            results.put("forecasts",forecasts);
+            results.put("chart",chart(forecasts));
+            return results;
+//        }else {
+//            Map<String, Object> map = new HashMap<>();
+//            Map<String,Object> results = new HashMap<>();
+//            QueryUtil.setMapOp(map,"userId","=",this.getAccoutId());
+//            BizData4Page<Forecast> bizData4Page=doPage(map,forecastService,page,rows);
+//            results.put("forecasts",bizData4Page);
+//            results.put("chart",chart(bizData4Page.getRows()));
+//            return results;
+//        }
     }
 
     /**
@@ -178,4 +191,58 @@ public class ForecastController extends BaseApiController{
         return true;
     }
 
+
+    private Map<String,Object> chart(List<Forecast> list){
+        if(list==null){
+            return null;
+        }
+        Map<String,Object> map= new HashMap<>();
+
+        //存放学校
+        Map<String,Object> legendMap=new HashMap<>();
+        Set<String> names=new HashSet<>();
+        legendMap.put("data",names);
+        //存放时间
+        Map<String,Object> xAxisMap=new HashMap<>();
+        xAxisMap.put("type","category");
+        xAxisMap.put("boundaryGap",true);
+        StringBuilder dateStrings=new StringBuilder();
+        DateFormat dateFormat=new SimpleDateFormat("yyyy.MM.dd");
+        //存放学校对应分数
+        Map<String,StringBuffer> seriesMap=new HashMap<>();
+        List<Map<String,Object>> seriesList=new ArrayList<>();
+
+        for(Forecast forecast:list){
+            names.add(forecast.getUniversityName());
+            dateStrings.append(dateFormat.format(new Date(forecast.getLastModDate()))).append(",");
+            if(!seriesMap.containsKey(forecast.getUniversityName())) {
+                StringBuffer stringBuffer=new StringBuffer(forecast.getAchievement().toString());
+                seriesMap.put(forecast.getUniversityName(),stringBuffer);
+            }else {
+                seriesMap.get(forecast.getUniversityName()).append(",").append(forecast.getAchievement().toString());
+            }
+        }
+        xAxisMap.put("data",dateStrings.toString().split(","));
+        Map<String,Object> serie=null;
+        Iterator<String> iterator=seriesMap.keySet().iterator();
+        while (iterator.hasNext()){
+            String key=iterator.next();
+            String value=seriesMap.get(key).toString();
+            serie = new HashMap<>();
+            serie.put("name",key);
+            serie.put("stack","总量");
+            serie.put("type","line");
+            serie.put("data",value.split(","));
+            seriesList.add(serie);
+        }
+        //存放学校
+        map.put("legend", legendMap);
+
+        //存放时间
+        map.put("xAxis",xAxisMap);
+
+        //存放学校对应分数
+        map.put("series", seriesList);
+        return map;
+    }
 }
