@@ -94,8 +94,8 @@ public class ForecastController extends BaseApiController{
     public Object getLastoFrecast(){
         Map<String,Object> map = new HashMap<>();
         map.put("userId",this.getAccoutId());
-//        Forecast forecast=(Forecast)forecastService.queryOne(map,"lastModDate", SqlOrderEnum.DESC);
-        Forecast forecast=(Forecast)null;
+        Forecast forecast=(Forecast)forecastService.queryOne(map,"lastModDate", SqlOrderEnum.DESC);
+//        Forecast forecast=(Forecast)null;
         Map<String,Object> forecastMap=(Map<String,Object>)JSON.parse(JSON.toJSONString(forecast));
         if(forecastMap!=null) {
             getWanting(forecastMap);
