@@ -10,6 +10,6 @@ import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.gk.domain.Forecast;
 
 public interface IForecastDAO extends IBaseDAO<Forecast>{
-	
 
+    int getFillingNumber(String universityId);
 }

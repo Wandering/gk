@@ -29,6 +29,11 @@ public class ForecastServiceImpl extends AbstractPageService<IBaseDAO<Forecast>,
         return forecastDAO;
     }
 
+    @Override
+    public int getFillingNumber(String universityId) {
+        return forecastDAO.getFillingNumber(universityId);
+    }
+
 //    @Override
 //    public void insert(BaseDomain entity) {
 //

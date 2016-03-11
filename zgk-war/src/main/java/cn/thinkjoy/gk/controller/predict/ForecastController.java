@@ -62,8 +62,15 @@ public class ForecastController extends BaseApiController{
             Map<String, Object> map = new HashMap<>();
             map.put("userId", this.getAccoutId());
             Map<String,Object> results = new HashMap<>();
-            List<Forecast> forecasts=forecastService.queryList(map, "lastModDate", "desc");
-            results.put("forecasts",forecasts);
+            List forecasts=forecastService.queryList(map, "lastModDate", "desc");
+            List<Map<String,Object>> forecastsList = null;
+            forecastsList=(List<Map<String,Object>>)JSON.parse(JSON.toJSONString(forecasts));
+            if(forecastsList!=null) {
+                for (Map<String, Object> forecastMap : forecastsList) {
+                    getWanting(forecastMap);
+                }
+            }
+            results.put("forecasts",forecastsList);
             results.put("chart",chart(forecasts));
             return results;
 //        }else {
@@ -87,7 +94,11 @@ public class ForecastController extends BaseApiController{
     public Object getLastoFrecast(){
         Map<String,Object> map = new HashMap<>();
         map.put("userId",this.getAccoutId());
-        return forecastService.queryOne(map,"lastModDate", SqlOrderEnum.DESC);
+        Forecast forecast=(Forecast)forecastService.queryOne(map,"lastModDate", SqlOrderEnum.DESC);
+        Map<String,Object> forecastMap=(Map<String,Object>)JSON.parse(JSON.toJSONString(forecast));
+        getWanting(forecastMap);
+        setFillingNumber(forecastMap);
+        return forecastMap;
     }
 
 
@@ -244,5 +255,27 @@ public class ForecastController extends BaseApiController{
         //存放学校对应分数
         map.put("series", seriesList);
         return map;
+    }
+
+    private void getWanting(Map<String,Object> forecastMap){
+        Integer averageScore=Integer.parseInt(forecastMap.get("averageScore").toString());
+        Integer lowestScore=Integer.parseInt(forecastMap.get("lowestScore").toString());
+        Integer achievement=Integer.parseInt(forecastMap.get("achievement").toString());
+        Integer wanting=0;
+        if(averageScore==0){
+            if(lowestScore==0){
+                forecastMap.put("wanting","-");
+            }else {
+                wanting=lowestScore-achievement;
+                forecastMap.put("wanting",wanting);
+            }
+        }else {
+            wanting=averageScore-achievement;
+            forecastMap.put("wanting",wanting);
+        }
+    }
+
+    private void setFillingNumber(Map<String,Object> forecastMap){
+        forecastMap.put("fillingNumber",forecastService.getFillingNumber(forecastMap.get("universityId").toString()));
     }
 }
