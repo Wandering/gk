@@ -273,10 +273,12 @@ public class ForecastController extends BaseApiController{
             }else {
                 wanting=lowestScore-achievement;
                 forecastMap.put("wanting",wanting);
+                forecastMap.put("countType","lowestScore");
             }
         }else {
             wanting=averageScore-achievement;
             forecastMap.put("wanting",wanting);
+            forecastMap.put("countType","averageScore");
         }
     }
 

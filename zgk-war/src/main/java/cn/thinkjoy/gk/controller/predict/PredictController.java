@@ -8,10 +8,12 @@ import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.annotation.VipMethonTag;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
+import cn.thinkjoy.gk.domain.*;
 import cn.thinkjoy.gk.service.IForecastService;
 import cn.thinkjoy.gk.service.IUserInfoExService;
 import cn.thinkjoy.gk.util.UserContext;
 import cn.thinkjoy.zgk.remote.IUniversityService;
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -178,6 +180,10 @@ public class PredictController extends BaseApiController {
             userInfoExService.updateUserCanTargetByUid(Long.parseLong(this.getAccoutId()));
         }
         //end
+        //附加分差和预测人数
+        getWanting(resultMap);
+        setFillingNumber(resultMap);
+        //附加分差和预测人数-end
         return resultMap;
     }
 
@@ -414,6 +420,49 @@ public class PredictController extends BaseApiController {
             throw new BizException(ERRORCODE.RESOURCEISNULL.getCode(),ERRORCODE.RESOURCEISNULL.getMessage());
         }
         Map<String,Object> resultMap=getUniversityPredict(forecast.getUniversityName(),forecast.getAchievement(),forecast.getTypeId().toString());
+        getWanting(resultMap);
+        setFillingNumber(resultMap);
         return resultMap;
+    }
+
+
+    private void getWanting(Map<String,Object> forecastMap){
+        Map<String,Object> lastforecastMap=getLastoFrecast();
+        if(lastforecastMap!=null && lastforecastMap.containsKey("averageScore")) {
+
+            Integer averageScore = Integer.parseInt(lastforecastMap.get("averageScore").toString());
+            Integer lowestScore = Integer.parseInt(lastforecastMap.get("lowestScore").toString());
+            Integer achievement = Integer.parseInt(lastforecastMap.get("achievement").toString());
+            Integer wanting = 0;
+            if (averageScore == 0) {
+                if (lowestScore == 0) {
+                    forecastMap.put("wanting", "-");
+                } else {
+                    wanting = lowestScore - achievement;
+                    forecastMap.put("wanting", wanting);
+                    forecastMap.put("countType", "lowestScore");
+                }
+            } else {
+                wanting = averageScore - achievement;
+                forecastMap.put("wanting", wanting);
+                forecastMap.put("countType", "averageScore");
+            }
+        }
+    }
+
+    private void setFillingNumber(Map<String,Object> forecastMap){
+        Map<String,Object> lastforecastMap=getLastoFrecast();
+        if(lastforecastMap!=null && lastforecastMap.containsKey("universityId")) {
+            forecastMap.put("fillingNumber", forecastService.getFillingNumber(lastforecastMap.get("universityId").toString()));
+        }
+    }
+
+    public Map<String,Object> getLastoFrecast(){
+        Map<String,Object> map = new HashMap<>();
+        map.put("userId",this.getAccoutId());
+        cn.thinkjoy.gk.domain.Forecast forecast=(cn.thinkjoy.gk.domain.Forecast)forecastService.queryOne(map,"lastModDate", SqlOrderEnum.DESC);
+//        Forecast forecast=(Forecast)null;
+        Map<String,Object> forecastMap=(Map<String,Object>) JSON.parse(JSON.toJSONString(forecast));
+        return forecastMap;
     }
 }
