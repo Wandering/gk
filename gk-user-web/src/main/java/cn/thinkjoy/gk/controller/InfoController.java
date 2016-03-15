@@ -69,8 +69,10 @@ public class InfoController extends ZGKBaseController {
             userInfo.setUniversityName(forecast.getUniversityName());
             userInfo.setTypeId(forecast.getTypeId());
         }catch (Exception e){
-            userInfo.setIsForecaset(forecase.isFrecast());
+
             LOGGER.debug("获取成绩信息失败！");
+        }finally {
+            userInfo.setIsForecaset(forecase.isFrecast());
         }
         return userInfo;
     }
