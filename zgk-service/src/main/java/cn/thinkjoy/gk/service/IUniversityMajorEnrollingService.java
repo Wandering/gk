@@ -8,6 +8,6 @@ import java.util.Map;
 /**
  * Created by douzy on 16/3/15.
  */
-public interface IUniversityMajoyEnrollingService {
+public interface IUniversityMajorEnrollingService {
     List<SpecialtyView> selectList(Map map);
 }

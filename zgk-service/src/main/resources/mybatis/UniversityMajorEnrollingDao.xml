@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.thinkjoy.gk.dao.IUniversityMajoyEnrollingPlanDao">
-    <resultMap id="BaseResultMap" type="cn.thinkjoy.gk.entity.UniversityMajoyEnrollingPlan">
+<mapper namespace="cn.thinkjoy.gk.dao.IUniversityMajorEnrollingPlanDao">
+    <resultMap id="BaseResultMap" type="cn.thinkjoy.gk.entity.UniversityMajorEnrollingPlan">
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="universityName" property="universityName" jdbcType="VARCHAR" />
         <result column="universityId" property="universityName" jdbcType="BIGINT" />
@@ -20,7 +20,7 @@
         id,universityName,universityId,year,areaId,batch,majorType,majorName,planEnrolling,lengthOfSchooling,schoolFee,majorId
     </sql>
 
-    <select id="selectList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.UniversityMajoyEnrollingPlan">
+    <select id="selectList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.UniversityMajorEnrollingPlan">
         SELECT <include refid="Base_Column_List" />  from zgk_university_major_enrolling_plan
         <where>
             <if test="id!=null">

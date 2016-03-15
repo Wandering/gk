@@ -6,7 +6,7 @@ import cn.thinkjoy.common.domain.CreateBaseDomain;
  * 专业信息
  * Created by douzy on 16/3/15.
  */
-public class UniversityMajoyEnrollingPlan extends CreateBaseDomain<Long> {
+public class UniversityMajorEnrollingPlan extends CreateBaseDomain<Long> {
     private Long id;
     /**
      * 学校名称
