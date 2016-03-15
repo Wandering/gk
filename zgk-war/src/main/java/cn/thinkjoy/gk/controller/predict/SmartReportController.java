@@ -3,8 +3,10 @@ package cn.thinkjoy.gk.controller.predict;
 import cn.thinkjoy.gk.common.ReportUtil;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
 import cn.thinkjoy.gk.pojo.BatchView;
+import cn.thinkjoy.gk.pojo.SpecialtyView;
 import cn.thinkjoy.gk.service.ISystemParmasService;
 import cn.thinkjoy.gk.service.IUniversityInfoService;
+import cn.thinkjoy.gk.service.IUniversityMajoyEnrollingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -29,6 +31,8 @@ public class SmartReportController {
     IUniversityInfoService iUniversityInfoService;
     @Resource
     ISystemParmasService iSystemParmasService;
+    @Resource
+    IUniversityMajoyEnrollingService iUniversityMajoyEnrollingService;
 
     /**
      * 获取批次及批次控制线信息
@@ -57,6 +61,22 @@ public class SmartReportController {
         return resultMap;
     }
 
+    /**
+     * 根绝院校ID获取专业信息
+     * @return
+     */
+    @RequestMapping("/get/specialty")
+    @ResponseBody
+    public Map<String,Object> getSpecialty(@RequestParam(value = "uId") Integer uId
+                                           ,@RequestParam(value = "cate") Integer cate) {
+        Map parmasMap = new HashMap();
+        parmasMap.put("universityId", uId);
+        parmasMap.put("majorType", cate);
+        List<SpecialtyView> universityMajoyEnrollingPlans = iUniversityMajoyEnrollingService.selectList(parmasMap);
+        Map resultMap = new HashMap();
+        resultMap.put("specialtys", universityMajoyEnrollingPlans);
+        return resultMap;
+    }
     /**
      * 智能填报主入口
      * 获取用户  输入分数、位次、文理 过滤院校清单
@@ -95,4 +115,6 @@ public class SmartReportController {
         LOGGER.info("=======智能填报主入口 End=======");
         return resultMap;
     }
+
+
 }
