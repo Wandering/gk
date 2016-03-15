@@ -6,7 +6,7 @@ import cn.thinkjoy.gk.pojo.BatchView;
 import cn.thinkjoy.gk.pojo.SpecialtyView;
 import cn.thinkjoy.gk.service.ISystemParmasService;
 import cn.thinkjoy.gk.service.IUniversityInfoService;
-import cn.thinkjoy.gk.service.IUniversityMajoyEnrollingService;
+import cn.thinkjoy.gk.service.IUniversityMajorEnrollingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -32,7 +32,7 @@ public class SmartReportController {
     @Resource
     ISystemParmasService iSystemParmasService;
     @Resource
-    IUniversityMajoyEnrollingService iUniversityMajoyEnrollingService;
+    IUniversityMajorEnrollingService iUniversityMajorEnrollingService;
 
     /**
      * 获取批次及批次控制线信息
@@ -72,7 +72,7 @@ public class SmartReportController {
         Map parmasMap = new HashMap();
         parmasMap.put("universityId", uId);
         parmasMap.put("majorType", cate);
-        List<SpecialtyView> universityMajoyEnrollingPlans = iUniversityMajoyEnrollingService.selectList(parmasMap);
+        List<SpecialtyView> universityMajoyEnrollingPlans = iUniversityMajorEnrollingService.selectList(parmasMap);
         Map resultMap = new HashMap();
         resultMap.put("specialtys", universityMajoyEnrollingPlans);
         return resultMap;
