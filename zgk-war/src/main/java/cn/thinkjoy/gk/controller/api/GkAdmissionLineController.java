@@ -1,13 +1,17 @@
 package cn.thinkjoy.gk.controller.api;
 
+import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
+import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.zgk.common.QueryUtil;
 import cn.thinkjoy.zgk.domain.BizData4Page;
 import cn.thinkjoy.zgk.domain.GkAdmissionLine;
 import cn.thinkjoy.zgk.remote.IGkAdmissionLineService;
+import com.alibaba.fastjson.JSON;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 历年分数线controller
@@ -26,12 +31,13 @@ import java.util.*;
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/admissionline")
 public class GkAdmissionLineController extends BaseApiController {
-
+    public int TOKEN_EXPIRE_TIME = 60*60;
     /**行默认**/
     private static int ROWSDEFAULT=4;
     @Autowired
     private IGkAdmissionLineService gkAdmissionLineService;
-
+    @Autowired
+    private cn.thinkjoy.zgk.remote.IUniversityService iremoteUniversityService;
     /**
      * 获取批次线分页方法
      * @return
@@ -78,7 +84,31 @@ public class GkAdmissionLineController extends BaseApiController {
         map.put("orderBy","rank IS NULL,rank,year");
         map.put("sortBy","asc");
 
-        return gkAdmissionLineService.getGkAdmissionLineList(map,page,rows);
+
+        BizData4Page<GkAdmissionLine> bizData4Page=gkAdmissionLineService.getGkAdmissionLineList(map,page,rows);
+        for(GkAdmissionLine gkAdmissionLine:bizData4Page.getRows()){
+            String[] propertys2= null;
+            Map<String,Object> propertyMap=new HashMap();
+            if(StringUtils.isNotEmpty(gkAdmissionLine.getProperty().toString())){
+                propertys2=gkAdmissionLine.getProperty().split(",");
+                Map<String,Object> propertysMap =getPropertys();
+
+                for(String str:propertys2){
+                    Iterator<String> propertysIterator=propertysMap.keySet().iterator();
+                    while (propertysIterator.hasNext()){
+                        String key = propertysIterator.next();
+                        String value=propertysMap.get(key).toString();
+                        if(str.indexOf(value)>-1){
+                            propertyMap.put(key,value);
+                        }
+                    }
+                }
+            }
+            gkAdmissionLine.setPropertys(propertyMap);
+        }
+
+
+        return bizData4Page;
     }
     /**
      * 获取批次线分页方法
@@ -99,4 +129,22 @@ public class GkAdmissionLineController extends BaseApiController {
         return list;
     }
 
+    private Map<String,Object> getPropertys(){
+        List<Map<String,Object>> list=null;
+        Map<String,Object> propertysMap=new HashMap<>();
+
+        String key="universityPropertys";
+        RedisRepository redisRepository= RedisUtil.getInstance();
+        boolean flag=redisRepository.exists(key);
+        if(flag){
+            propertysMap= JSON.parseObject(redisRepository.get(key).toString(), Map.class);
+        }else {
+            list=iremoteUniversityService.getDataDictListByType("FEATURE");
+            for(Map<String,Object> map:list){
+                propertysMap.put(map.get("dictId").toString(),map.get("name").toString());
+            }
+            redisRepository.set(key,JSON.toJSON(propertysMap),TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
+        }
+        return propertysMap;
+    }
 }

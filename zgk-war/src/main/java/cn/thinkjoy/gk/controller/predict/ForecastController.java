@@ -9,6 +9,7 @@ package cn.thinkjoy.gk.controller.predict;
 
 import cn.thinkjoy.common.domain.BizStatusEnum;
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
 import cn.thinkjoy.common.utils.SqlOrderEnum;
 import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
@@ -18,6 +19,8 @@ import cn.thinkjoy.zgk.common.QueryUtil;
 import cn.thinkjoy.zgk.domain.BizData4Page;
 import cn.thinkjoy.zgk.remote.IGkAdmissionLineService;
 import cn.thinkjoy.zgk.remote.IUniversityService;
+import com.alibaba.fastjson.JSON;
+import cn.thinkjoy.gk.domain.Forecast;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +28,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.text.resources.FormatData;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -47,11 +53,35 @@ public class ForecastController extends BaseApiController{
     @RequestMapping(value = "/getPerformanceDetail",method = RequestMethod.GET)
     @ResponseBody
     @VipMethonTag
-    public Object getPerformanceDetail(){
+    public Object getPerformanceDetail( @ApiParam(param="page", desc="页数",required = false) @RequestParam(defaultValue = "1",required = false) Integer page,
+                                         @ApiParam(param="rows", desc="每页条数",required = false) @RequestParam(defaultValue = "10",required = false) Integer rows){
+
+
     //实际接口
-        Map<String,Object> map=new HashMap<>();
-        map.put("userId", this.getAccoutId());
-        return forecastService.queryList(map, "lastModDate", "desc");
+//        if(page==null || rows==null) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("userId", this.getAccoutId());
+            Map<String,Object> results = new HashMap<>();
+            List forecasts=forecastService.queryList(map, "lastModDate", "desc");
+            List<Map<String,Object>> forecastsList = null;
+            forecastsList=(List<Map<String,Object>>)JSON.parse(JSON.toJSONString(forecasts));
+            if(forecastsList!=null) {
+                for (Map<String, Object> forecastMap : forecastsList) {
+                    getWanting(forecastMap);
+                }
+            }
+            results.put("forecasts",forecastsList);
+            results.put("chart",chart(forecasts));
+            return results;
+//        }else {
+//            Map<String, Object> map = new HashMap<>();
+//            Map<String,Object> results = new HashMap<>();
+//            QueryUtil.setMapOp(map,"userId","=",this.getAccoutId());
+//            BizData4Page<Forecast> bizData4Page=doPage(map,forecastService,page,rows);
+//            results.put("forecasts",bizData4Page);
+//            results.put("chart",chart(bizData4Page.getRows()));
+//            return results;
+//        }
     }
 
     /**
@@ -64,7 +94,16 @@ public class ForecastController extends BaseApiController{
     public Object getLastoFrecast(){
         Map<String,Object> map = new HashMap<>();
         map.put("userId",this.getAccoutId());
-        return forecastService.queryOne(map,"lastModDate", SqlOrderEnum.DESC);
+        Forecast forecast=(Forecast)forecastService.queryOne(map,"lastModDate", SqlOrderEnum.DESC);
+//        Forecast forecast=(Forecast)null;
+        Map<String,Object> forecastMap=(Map<String,Object>)JSON.parse(JSON.toJSONString(forecast));
+        if(forecastMap!=null) {
+            getWanting(forecastMap);
+            setFillingNumber(forecastMap);
+        }else {
+            forecastMap=new HashMap<>();
+        }
+        return forecastMap;
     }
 
 
@@ -168,4 +207,82 @@ public class ForecastController extends BaseApiController{
         return true;
     }
 
+
+    private Map<String,Object> chart(List<Forecast> list){
+        if(list==null){
+            return null;
+        }
+        Map<String,Object> map= new HashMap<>();
+
+        //存放学校
+        Map<String,Object> legendMap=new HashMap<>();
+        Set<String> names=new HashSet<>();
+        legendMap.put("data",names);
+        //存放时间
+        Map<String,Object> xAxisMap=new HashMap<>();
+        xAxisMap.put("type","category");
+        xAxisMap.put("boundaryGap",true);
+        StringBuilder dateStrings=new StringBuilder();
+        DateFormat dateFormat=new SimpleDateFormat("yyyy.MM.dd");
+        //存放学校对应分数
+        Map<String,StringBuffer> seriesMap=new HashMap<>();
+        List<Map<String,Object>> seriesList=new ArrayList<>();
+
+        for(Forecast forecast:list){
+            names.add(forecast.getUniversityName());
+            dateStrings.append(dateFormat.format(new Date(forecast.getLastModDate()))).append(",");
+            if(!seriesMap.containsKey(forecast.getUniversityName())) {
+                StringBuffer stringBuffer=new StringBuffer(forecast.getAchievement().toString());
+                seriesMap.put(forecast.getUniversityName(),stringBuffer);
+            }else {
+                seriesMap.get(forecast.getUniversityName()).append(",").append(forecast.getAchievement().toString());
+            }
+        }
+        xAxisMap.put("data",dateStrings.toString().split(","));
+        Map<String,Object> serie=null;
+        Iterator<String> iterator=seriesMap.keySet().iterator();
+        while (iterator.hasNext()){
+            String key=iterator.next();
+            String value=seriesMap.get(key).toString();
+            serie = new HashMap<>();
+            serie.put("name",key);
+            serie.put("stack","总量");
+            serie.put("type","line");
+            serie.put("data",value.split(","));
+            seriesList.add(serie);
+        }
+        //存放学校
+        map.put("legend", legendMap);
+
+        //存放时间
+        map.put("xAxis",xAxisMap);
+
+        //存放学校对应分数
+        map.put("series", seriesList);
+        return map;
+    }
+
+    private void getWanting(Map<String,Object> forecastMap){
+        Integer averageScore=Integer.parseInt(forecastMap.get("averageScore").toString());
+        Integer lowestScore=Integer.parseInt(forecastMap.get("lowestScore").toString());
+        Integer achievement=Integer.parseInt(forecastMap.get("achievement").toString());
+        Integer wanting=0;
+        if(averageScore==0){
+            if(lowestScore==0){
+                forecastMap.put("wanting","-");
+            }else {
+                wanting=lowestScore-achievement;
+                forecastMap.put("wanting",wanting);
+                forecastMap.put("countType","lowestScore");
+            }
+        }else {
+            wanting=averageScore-achievement;
+            forecastMap.put("wanting",wanting);
+            forecastMap.put("countType","averageScore");
+        }
+    }
+
+    private void setFillingNumber(Map<String,Object> forecastMap){
+        forecastMap.put("fillingNumber",forecastService.getFillingNumber(forecastMap.get("universityId").toString()));
+    }
 }

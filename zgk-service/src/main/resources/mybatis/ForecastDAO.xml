@@ -885,6 +885,13 @@ selectList
         MAX(id)
         FROM zgk_forecast
     </select>
+    <select id="getFillingNumber" resultType="java.lang.Integer">
+        SELECT count(1) FROM (SELECT MAX(t.lastModDate),t.userId,t.universityId FROM
+        (SELECT lastModDate,universityId,id,userId  FROM zgk_forecast ORDER BY lastModDate DESC) t  GROUP BY t.userId) t
+        WHERE t.universityId=#{universityId}
+    </select>
+
+
 
 </mapper>
 

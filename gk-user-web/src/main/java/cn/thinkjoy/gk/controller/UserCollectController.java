@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.controller;
 
+import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
@@ -11,6 +12,9 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.ICountExService;
 import cn.thinkjoy.gk.service.IUserCollectExService;
 import cn.thinkjoy.gk.service.IUserCollectService;
+import cn.thinkjoy.gk.util.RedisUtil;
+import com.alibaba.druid.util.StringUtils;
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +23,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by zuohao on 15/11/2.
@@ -29,7 +36,7 @@ import java.util.Map;
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "userCollection")
 public class UserCollectController extends ZGKBaseController {
-
+    public int TOKEN_EXPIRE_TIME = 60 * 60;
     private static final Logger LOGGER= LoggerFactory.getLogger(UserCollectController.class);
 
     @Autowired
@@ -40,6 +47,8 @@ public class UserCollectController extends ZGKBaseController {
 
     @Autowired
     private ICountExService countExService;
+    @Autowired
+    private cn.thinkjoy.zgk.remote.IUniversityService iremoteUniversityService;
 
     /**
      * 保存当前用户的收藏项目（学校或课程）
@@ -132,6 +141,7 @@ public class UserCollectController extends ZGKBaseController {
         if(type.equals("1")) {
             int sum = userCollectExService.getUserCollectCount(param);
             List<UserCollectPojo> userCollectPojoList = userCollectExService.getUserCollectUniversityPojoList(param);
+            userCollectPojoList=lists(userCollectPojoList);
             returnParam.put("sum", sum);
             returnParam.put("userCollectPojoList", userCollectPojoList);
         }
@@ -164,6 +174,44 @@ public class UserCollectController extends ZGKBaseController {
         param.put("type",type);
         return userCollectExService.isCollect(param);
     }
+    private Map<String, Object> getPropertys() {
+        List<Map<String, Object>> list = null;
+        Map<String, Object> propertysMap = new HashMap<>();
 
+        String key = "universityPropertys";
+        RedisRepository redisRepository = RedisUtil.getInstance();
+        boolean flag = redisRepository.exists(key);
+        if (flag) {
+            propertysMap = JSON.parseObject(redisRepository.get(key).toString(), Map.class);
+        } else {
+            list = iremoteUniversityService.getDataDictListByType("FEATURE");
+            for (Map<String, Object> map : list) {
+                propertysMap.put(map.get("dictId").toString(), map.get("name").toString());
+            }
+            redisRepository.set(key, JSON.toJSON(propertysMap), TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
+        }
+        return propertysMap;
+    }
 
+    private List lists(List<UserCollectPojo> userCollectPojoList){
+        for(UserCollectPojo userCollectPojo:userCollectPojoList){
+            Map<String, Object> propertysMap = getPropertys();
+
+            if(!StringUtils.isEmpty(userCollectPojo.getPropertyName())) {
+                for (String str :userCollectPojo.getPropertyName().split(",")) {
+                    Iterator<String> propertysIterator = propertysMap.keySet().iterator();
+                    while (propertysIterator.hasNext()) {
+                        String key = propertysIterator.next();
+                        String value = propertysMap.get(key).toString();
+                        if (str.indexOf(value) > -1) {
+                            propertysMap.put(key, value);
+                        }
+                    }
+                }
+            }
+            userCollectPojo.setPropertys(propertysMap);
+
+        }
+        return userCollectPojoList;
+    }
 }
