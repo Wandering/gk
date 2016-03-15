@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IUniversityMajoyEnrollingPlanDao">
+    <resultMap id="BaseResultMap" type="cn.thinkjoy.gk.entity.UniversityMajoyEnrollingPlan">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="universityName" property="universityName" jdbcType="VARCHAR" />
+        <result column="universityId" property="universityName" jdbcType="BIGINT" />
+        <result column="year" property="year" jdbcType="INTEGER" />
+        <result column="areaId" property="areaId" jdbcType="BIGINT" />
+        <result column="batch" property="batch" jdbcType="VARCHAR" />
+        <result column="majorType" property="majorType" jdbcType="VARCHAR" />
+        <result column="majorName" property="majorName" jdbcType="VARCHAR" />
+        <result column="planEnrolling" property="planEnrolling" jdbcType="INTEGER" />
+        <result column="lengthOfSchooling" property="lengthOfSchooling" jdbcType="INTEGER" />
+        <result column="schoolFee" property="schoolFee" jdbcType="INTEGER" />
+        <result column="majorId" property="majorId" jdbcType="BIGINT" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,universityName,universityId,year,areaId,batch,majorType,majorName,planEnrolling,lengthOfSchooling,schoolFee,majorId
+    </sql>
+
+    <select id="selectList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.UniversityMajoyEnrollingPlan">
+        SELECT <include refid="Base_Column_List" />  from zgk_university_major_enrolling_plan
+        <where>
+            <if test="id!=null">
+                and id=#{id,jdbcType=BIGINT}
+            </if>
+            <if test="universityName!=null">
+                and universityName=#{universityName,jdbcType=VARCHAR}
+            </if>
+            <if test="universityId!=null">
+                and universityId=#{universityId,jdbcType=BIGINT}
+            </if>
+            <if test="year!=null">
+                and year=#{year,jdbcType=INTEGER}
+            </if>
+            <if test="areaId!=null">
+                and areaId=#{areaId,jdbcType=BIGINT}
+            </if>
+            <if test="batch!=null">
+                and batch=#{batch,jdbcType=VARCHAR}
+            </if>
+            <if test="majorType!=null">
+                and majorType=#{majorType,jdbcType=VARCHAR}
+            </if>
+            <if test="majorName!=null">
+                and majorName=#{majorName,jdbcType=VARCHAR}
+            </if>
+            <if test="planEnrolling!=null">
+                and planEnrolling=#{planEnrolling,jdbcType=VARCHAR}
+            </if>
+            <if test="lengthOfSchooling!=null">
+                and lengthOfSchooling=#{lengthOfSchooling,jdbcType=VARCHAR}
+            </if>
+            <if test="schoolFee!=null">
+                and schoolFee=#{schoolFee,jdbcType=VARCHAR}
+            </if>
+            <if test="majorId!=null">
+                and majorId=#{majorId,jdbcType=BIGINT}
+            </if>
+        </where>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+</mapper>

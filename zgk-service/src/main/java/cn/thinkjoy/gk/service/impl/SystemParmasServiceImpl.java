@@ -98,6 +98,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
 
                 Integer batch1 = Integer.valueOf(batchLine);
                 Integer batch2 = getBatchNumberLine(batch, systemParmasL.getConfigValue());
+
                 if (c == ReportEnum.categories.LI.getValue()) {
                     batchView.setWenLine(batch2);
                     batchView.setLiLine(batch1);

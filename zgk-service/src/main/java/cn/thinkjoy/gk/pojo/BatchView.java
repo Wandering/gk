@@ -6,7 +6,6 @@ import java.io.Serializable;
  * Created by douzy on 16/3/14.
  */
 public class BatchView implements Serializable {
-
     /**
      * 批次
      */
@@ -19,7 +18,6 @@ public class BatchView implements Serializable {
      * 理科控制线
      */
     private Integer liLine;
-
 
     public Integer getBatch() {
         return batch;
