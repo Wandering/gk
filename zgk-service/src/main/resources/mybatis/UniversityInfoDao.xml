@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IUniversityInfoDao">
+
+    <resultMap id="BaseResultMap" type="cn.thinkjoy.gk.entity.UniversityInfoView">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="universityId" property="universityId" jdbcType="BIGINT" />
+        <result column="universityName" property="universityName" jdbcType="VARCHAR" />
+        <result column="scoreDiff" property="scoreDiff" jdbcType="INTEGER" />
+        <result column="preScoreDiff" property="preScoreDiff" jdbcType="INTEGER" />
+        <result column="enrollRate" property="enrollRate" jdbcType="NUMERIC" />
+        <result column="scoreUseRate" property="scoreUseRate" jdbcType="NUMERIC" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,universityId,universityName,scoreDiff,preScoreDiff,enrollRate,scoreUseRate
+    </sql>
+
+    <select id="selectUniversityInfo" resultMap="BaseResultMap" parameterType="java.util.Map" statementType="STATEMENT">
+        select <include refid="Base_Column_List" /> from ${tableName}
+        <where>
+            <if test="id!=null">
+               and id=${id}
+            </if>
+            <if test="universityId!=null">
+                and universityId=${universityId}
+            </if>
+            <if test="universityName!=null">
+                and universityName=${universityName}
+            </if>
+            <if test="scoreDiff!=null">
+                and scoreDiff=${scoreDiff}
+            </if>
+            <if test="preScoreDiff!=null">
+               and  preScoreDiff=${preScoreDiff}
+            </if>
+            <if test="enrollRateBegin!=null and enrollRateEnd!=null">
+               and  left(enrollRate*100,7)&gt;=${enrollRateBegin} and left(enrollRate*100,7)&lt;=${enrollRateEnd}
+            </if>
+            <if test="scoreUseRateBegin!=null and scoreUseRateEnd!=null">
+                and left(scoreUseRate*100,7)&gt;=${scoreUseRateBegin} and left(scoreUseRate*100,7)&lt;=${scoreUseRateEnd}
+            </if>
+        </where>
+    </select>
+</mapper>
