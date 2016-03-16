@@ -15,7 +15,7 @@ import java.util.Map;
  * Created by douzy on 16/3/15.
  */
 @Service
-public class IUniversityMajorEnrollingServiceImpl implements IUniversityMajorEnrollingService {
+public class UniversityMajorEnrollingServiceImpl implements IUniversityMajorEnrollingService {
     @Resource
     IUniversityMajorEnrollingPlanDao iUniversityMajorEnrollingPlanDao;
     @Override

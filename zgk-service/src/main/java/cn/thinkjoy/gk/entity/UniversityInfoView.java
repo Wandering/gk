@@ -20,7 +20,7 @@ public class UniversityInfoView extends CreateBaseDomain<Long> {
     /**
      * 批次
      */
-    private Integer batch;
+    private String batch;
     /**
      * 院校ID
      */
@@ -51,6 +51,18 @@ public class UniversityInfoView extends CreateBaseDomain<Long> {
      */
     private Integer sequence;
 
+    private byte isProportion;
+    private byte isRange;
+    private String rankTrend;
+    private String subjection;
+    private Integer type;
+    private String property;
+    private String code;
+    private Integer planEnrolling;
+    private Integer averageScore;
+
+
+
     @Override
     public Long getId() {
         return id;
@@ -75,14 +87,6 @@ public class UniversityInfoView extends CreateBaseDomain<Long> {
 
     public void setMajorType(String majorType) {
         this.majorType = majorType;
-    }
-
-    public Integer getBatch() {
-        return batch;
-    }
-
-    public void setBatch(Integer batch) {
-        this.batch = batch;
     }
 
     public Long getUniversityId() {
@@ -139,5 +143,81 @@ public class UniversityInfoView extends CreateBaseDomain<Long> {
 
     public void setSequence(Integer sequence) {
         this.sequence = sequence;
+    }
+
+    public void setBatch(String batch) {
+        this.batch = batch;
+    }
+
+    public byte getIsProportion() {
+        return isProportion;
+    }
+
+    public void setIsProportion(byte isProportion) {
+        this.isProportion = isProportion;
+    }
+
+    public byte getIsRange() {
+        return isRange;
+    }
+
+    public void setIsRange(byte isRange) {
+        this.isRange = isRange;
+    }
+
+    public String getRankTrend() {
+        return rankTrend;
+    }
+
+    public void setRankTrend(String rankTrend) {
+        this.rankTrend = rankTrend;
+    }
+
+    public String getSubjection() {
+        return subjection;
+    }
+
+    public void setSubjection(String subjection) {
+        this.subjection = subjection;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getProperty() {
+        return property;
+    }
+
+    public void setProperty(String property) {
+        this.property = property;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Integer getPlanEnrolling() {
+        return planEnrolling;
+    }
+
+    public void setPlanEnrolling(Integer planEnrolling) {
+        this.planEnrolling = planEnrolling;
+    }
+
+    public Integer getAverageScore() {
+        return averageScore;
+    }
+
+    public void setAverageScore(Integer averageScore) {
+        this.averageScore = averageScore;
     }
 }

@@ -68,6 +68,19 @@ public class UniversityInfoServiceImpl implements IUniversityInfoService {
     }
 
     /**
+     * 院校风险标签
+     * @return
+     */
+    private Map converUniversiTag(Map map) {
+        LOGGER.info("=====院校风险标签 Start=====");
+        SystemParmas systemParmas = iSystemParmasService.getRoleByKey(ReportUtil.UNIVERSITY_ENROLL_YEAR_KEY);
+        if (systemParmas != null) {
+            map.put("year", systemParmas.getConfigValue());
+        }
+        LOGGER.info("=====院校风险标签 End=====");
+        return map;
+    }
+    /**
      * 院校清单List
      * @param map
      * @return

@@ -1,9 +1,12 @@
 package cn.thinkjoy.gk.controller.predict;
 
+import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.common.ReportUtil;
+import cn.thinkjoy.gk.entity.ReportResult;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
 import cn.thinkjoy.gk.pojo.BatchView;
 import cn.thinkjoy.gk.pojo.SpecialtyView;
+import cn.thinkjoy.gk.service.IReportResultService;
 import cn.thinkjoy.gk.service.ISystemParmasService;
 import cn.thinkjoy.gk.service.IUniversityInfoService;
 import cn.thinkjoy.gk.service.IUniversityMajorEnrollingService;
@@ -12,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -25,7 +29,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/report")
-public class SmartReportController {
+public class SmartReportController extends BaseCommonController {
     private static final Logger LOGGER= LoggerFactory.getLogger(SmartReportController.class);
     @Resource
     IUniversityInfoService iUniversityInfoService;
@@ -33,7 +37,8 @@ public class SmartReportController {
     ISystemParmasService iSystemParmasService;
     @Resource
     IUniversityMajorEnrollingService iUniversityMajorEnrollingService;
-
+    @Resource
+    IReportResultService iReportResultService;
     /**
      * 获取批次及批次控制线信息
      * @param score
@@ -42,7 +47,7 @@ public class SmartReportController {
      * @param modelMap
      * @return
      */
-    @RequestMapping("/get/batch")
+    @RequestMapping(value ="/get/batch",method=RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> report(@RequestParam(value = "score",required = false) Integer score,
                                      @RequestParam(value = "cate",required = false) Integer cate,
@@ -62,10 +67,10 @@ public class SmartReportController {
     }
 
     /**
-     * 根绝院校ID获取专业信息
+     * 根据院校ID获取专业信息
      * @return
      */
-    @RequestMapping("/get/specialty")
+    @RequestMapping(value = "/get/specialty",method=RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> getSpecialty(@RequestParam(value = "uId") Integer uId
                                            ,@RequestParam(value = "cate") Integer cate) {
@@ -82,7 +87,7 @@ public class SmartReportController {
      * 获取用户  输入分数、位次、文理 过滤院校清单
      * @return
      */
-    @RequestMapping("/main")
+    @RequestMapping(value = "/main",method=RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> reportMain(
                              @RequestParam(value = "batch") Integer batch,
@@ -107,7 +112,9 @@ public class SmartReportController {
         Map map = new HashMap<>();
         map.put("tableName", tbName);
         map.put("scoreDiff", lineDiff);
-        map.put("province", province);
+        map.put("code", "'" + province + "'");  //db
+        map.put("province", province);//key
+        map.put("majorType", categorie);
         List<UniversityInfoView> universityInfoViewList = iUniversityInfoService.selectUniversityInfo(map);
         Map resultMap = new HashMap();
         resultMap.put("universityInfoViewList", universityInfoViewList);
@@ -116,5 +123,21 @@ public class SmartReportController {
         return resultMap;
     }
 
+    /**
+     * 智能报告保存
+     * @param reportResult
+     * @return
+     */
+    @RequestMapping(value = "/save",method=RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> reportSave(ReportResult reportResult) {
+        //reportResult.setUserId(Integer.valueOf(super.getAccoutId()));
+        reportResult.setUserId(Integer.valueOf(22));
+        reportResult.setCreateTime(System.currentTimeMillis());
+        Integer result = iReportResultService.insertSelective(reportResult);
+        Map map = new HashMap();
 
+        map.put("result", result);
+        return map;
+    }
 }

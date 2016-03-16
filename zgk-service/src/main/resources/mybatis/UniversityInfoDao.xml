@@ -5,6 +5,15 @@
 
     <resultMap id="BaseResultMap" type="cn.thinkjoy.gk.entity.UniversityInfoView">
         <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="isProportion" property="isProportion" jdbcType="BIT" />
+        <result column="isRange" property="isRange" jdbcType="BIT" />
+        <result column="rankTrend" property="rankTrend" jdbcType="VARCHAR" />
+        <result column="subjection" property="subjection" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="property" property="property" jdbcType="VARCHAR" />
+        <result column="code" property="code" jdbcType="VARCHAR" />
+        <result column="planEnrolling" property="planEnrolling" jdbcType="INTEGER" />
+        <result column="averageScore" property="averageScore" jdbcType="INTEGER" />
         <result column="universityId" property="universityId" jdbcType="BIGINT" />
         <result column="universityName" property="universityName" jdbcType="VARCHAR" />
         <result column="scoreDiff" property="scoreDiff" jdbcType="INTEGER" />
@@ -16,31 +25,52 @@
     <sql id="Base_Column_List">
         id,universityId,universityName,scoreDiff,preScoreDiff,enrollRate,scoreUseRate
     </sql>
-
+    <sql id="Search_Column_List">
+         bData.*,zgk_university.isProportion,zgk_university.isRange,zgk_university.rankTrend,zgk_university.subjection,zgk_university.type,zgk_university.property,
+        zgk_university_enroll.averageScore ,sum(enrollingPlan.planEnrolling) as planEnrolling,province.code as code
+    </sql>
     <select id="selectUniversityInfo" resultMap="BaseResultMap" parameterType="java.util.Map" statementType="STATEMENT">
-        select <include refid="Base_Column_List" /> from ${tableName}
+        select <include refid="Search_Column_List" /> from ${tableName} as bData
+        left join zgk_university as zgk_university on bData.universityId=zgk_university.id
+        left join zgk_university_enrolling as zgk_university_enroll on bData.universityId=zgk_university_enroll.universityId
+        left join zgk_province as province on zgk_university_enroll.areaId=province.id
+        left join zgk_university_major_enrolling_plan as enrollingPlan on bData.universityId=enrollingPlan.universityId
         <where>
-            <if test="id!=null">
-               and id=${id}
-            </if>
-            <if test="universityId!=null">
-                and universityId=${universityId}
-            </if>
-            <if test="universityName!=null">
-                and universityName=${universityName}
-            </if>
             <if test="scoreDiff!=null">
-                and scoreDiff=${scoreDiff}
+                and bData.scoreDiff=${scoreDiff}
             </if>
-            <if test="preScoreDiff!=null">
-               and  preScoreDiff=${preScoreDiff}
+            <if test="year!=null">
+                and zgk_university_enroll.year=${year}
+            </if>
+            <if test="code!=null">
+                and province.code=${code}
+            </if>
+            <if test="majorType!=null">
+                 and zgk_university_enroll.majorType=${majorType}
             </if>
             <if test="enrollRateBegin!=null and enrollRateEnd!=null">
-               and  left(enrollRate*100,7)&gt;=${enrollRateBegin} and left(enrollRate*100,7)&lt;=${enrollRateEnd}
+                and  left(bData.enrollRate*100,7)&gt;=${enrollRateBegin} and left(bData.enrollRate*100,7)&lt;=${enrollRateEnd}
             </if>
             <if test="scoreUseRateBegin!=null and scoreUseRateEnd!=null">
-                and left(scoreUseRate*100,7)&gt;=${scoreUseRateBegin} and left(scoreUseRate*100,7)&lt;=${scoreUseRateEnd}
+                and left(bData.scoreUseRate*100,7)&gt;=${scoreUseRateBegin} and left(bData.scoreUseRate*100,7)&lt;=${scoreUseRateEnd}
             </if>
+            and enrollingPlan.planEnrolling is not null
+            group by enrollingPlan.universityId
+            <!--<if test="id!=null">-->
+               <!--and id=${id}-->
+            <!--</if>-->
+            <!--<if test="universityId!=null">-->
+                <!--and universityId=${universityId}-->
+            <!--</if>-->
+            <!--<if test="universityName!=null">-->
+                <!--and universityName=${universityName}-->
+            <!--</if>-->
+            <!--<if test="scoreDiff!=null">-->
+                <!--and scoreDiff=${scoreDiff}-->
+            <!--</if>-->
+            <!--<if test="preScoreDiff!=null">-->
+               <!--and  preScoreDiff=${preScoreDiff}-->
+            <!--</if>-->
         </where>
     </select>
 </mapper>

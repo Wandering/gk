@@ -28,6 +28,10 @@ public class ReportUtil {
      * 利用率梯度筛选规则
      */
     public static final String VOLUNTEER_USED_KEY="VOLUNTEER_USED";
+    /**
+     * 往年院校年份
+     */
+    public static final String UNIVERSITY_ENROLL_YEAR_KEY="UNIVERSITY_ENROLL_YEAR";
 
     /**
      * 规则值拆分符
@@ -43,6 +47,7 @@ public class ReportUtil {
      * 梯度规则分隔符
      */
     public static final String VOLUNTEER_KEY_SPLIT_SYMBOL="\\|";
+
     /**
      * 组装表名
      * @param provinceCode
