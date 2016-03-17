@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.controller.predict;
 
+import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.domain.BizStatusEnum;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.common.utils.SqlOrderEnum;
@@ -11,10 +12,12 @@ import cn.thinkjoy.gk.controller.api.base.BaseApiController;
 import cn.thinkjoy.gk.domain.*;
 import cn.thinkjoy.gk.service.IForecastService;
 import cn.thinkjoy.gk.service.IUserInfoExService;
+import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.gk.util.UserContext;
 import cn.thinkjoy.zgk.remote.IUniversityService;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by liusven on 16/1/13.
@@ -32,13 +36,15 @@ import java.util.*;
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/predict")
 public class PredictController extends BaseApiController {
-
+    public int TOKEN_EXPIRE_TIME = 60 * 60;
     @Autowired
     private IForecastService forecastService;
     @Autowired
     private IUniversityService universityService;
     @Autowired
     private IUserInfoExService userInfoExService;
+
+
     /**
      * 根据名称模糊查询院校接口
      * @param name
@@ -270,6 +276,24 @@ public class PredictController extends BaseApiController {
         Map<String, Object> resultMap = new LinkedHashMap<>();
         try {
             resultMap = universityService.getPredictUniversityInfo(params);
+            Map<String, Object> propertyMap = new HashMap();
+            if (StringUtils.isNotEmpty(resultMap.get("property").toString())) {
+                String[] propertys = resultMap.get("property").toString().split(",");
+                Map<String, Object> propertysMap = getPropertys();
+
+                for (String str : propertys) {
+                    Iterator<String> propertysIterator = propertysMap.keySet().iterator();
+                    while (propertysIterator.hasNext()) {
+                        String key = propertysIterator.next();
+                        String value = propertysMap.get(key).toString();
+                        if (str.indexOf(value) > -1) {
+                            propertyMap.put(key, value);
+                        }
+                    }
+                }
+            }
+
+            resultMap.put("propertys", propertyMap);
         } catch (Exception e) {
             List<Map<String, String>> list = new ArrayList<>();
             Map<String, Object> mp1 = new HashMap<>();
@@ -464,5 +488,24 @@ public class PredictController extends BaseApiController {
 //        Forecast forecast=(Forecast)null;
         Map<String,Object> forecastMap=(Map<String,Object>) JSON.parse(JSON.toJSONString(forecast));
         return forecastMap;
+    }
+
+    private Map<String, Object> getPropertys() {
+        List<Map<String, Object>> list = null;
+        Map<String, Object> propertysMap = new HashMap<>();
+
+        String key = "universityPropertys";
+        RedisRepository redisRepository = RedisUtil.getInstance();
+        boolean flag = redisRepository.exists(key);
+        if (flag) {
+            propertysMap = JSON.parseObject(redisRepository.get(key).toString(), Map.class);
+        } else {
+            list = universityService.getDataDictListByType("FEATURE");
+            for (Map<String, Object> map : list) {
+                propertysMap.put(map.get("dictId").toString(), map.get("name").toString());
+            }
+            redisRepository.set(key, JSON.toJSON(propertysMap), TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
+        }
+        return propertysMap;
     }
 }
