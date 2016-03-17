@@ -71,4 +71,12 @@ public interface ISystemParmasService {
      * @return
      */
     ArrayList<Integer> getUsedRate(String proCode);
+
+    /**
+     * 获取批次控制线key
+     * @param batch
+     * @param provinceCode
+     * @return
+     */
+    String getBatchKey(Integer batch,String provinceCode);
 }

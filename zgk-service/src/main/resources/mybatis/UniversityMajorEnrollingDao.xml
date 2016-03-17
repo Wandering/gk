@@ -64,4 +64,14 @@
             ORDER BY ${orderBy} ${sortBy}
         </if>
     </select>
+    <select id="lowestScoreAvg" parameterType="java.util.Map" resultType="java.lang.Integer">
+      select Left(sum(low)/count(1),6) as lowestScoreAvg
+      from (select Min(lowestScore) as low ,year from zgk_university_enrolling
+        <where>
+            <if test="universityId!=null">
+                universityId=#{universityId}
+            </if>
+        </where>
+      group by year)t
+    </select>
 </mapper>

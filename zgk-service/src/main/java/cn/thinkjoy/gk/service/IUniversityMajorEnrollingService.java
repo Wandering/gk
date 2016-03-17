@@ -10,4 +10,5 @@ import java.util.Map;
  */
 public interface IUniversityMajorEnrollingService {
     List<SpecialtyView> selectList(Map map);
+    Integer lowestScoreAvg(Map map);
 }

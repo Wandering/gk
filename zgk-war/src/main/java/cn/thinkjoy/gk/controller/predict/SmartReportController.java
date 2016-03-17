@@ -5,11 +5,14 @@ import cn.thinkjoy.gk.common.ReportUtil;
 import cn.thinkjoy.gk.entity.ReportResult;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
 import cn.thinkjoy.gk.pojo.BatchView;
+import cn.thinkjoy.gk.pojo.ReportInfoView;
+import cn.thinkjoy.gk.pojo.SelfReportResultView;
 import cn.thinkjoy.gk.pojo.SpecialtyView;
 import cn.thinkjoy.gk.service.IReportResultService;
 import cn.thinkjoy.gk.service.ISystemParmasService;
 import cn.thinkjoy.gk.service.IUniversityInfoService;
 import cn.thinkjoy.gk.service.IUniversityMajorEnrollingService;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,6 +86,26 @@ public class SmartReportController extends BaseCommonController {
         resultMap.put("specialtys", universityMajoyEnrollingPlans);
         return resultMap;
     }
+
+    /**
+     * 志愿报告清单
+     * @return
+     */
+    @RequestMapping(value = "/get/info",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> getUserReport(@RequestParam(value = "score") Integer score) throws IOException {
+
+        Map map = new HashMap();
+        map.put("userId", 22);
+        map.put("orderBy", "id");
+        map.put("sortBy", "desc");
+        map.put("size", 1);
+        map.put("score",score);
+        ReportInfoView reportInfoView = iReportResultService.getReportInfoView(map);
+        Map resultMap = new HashMap();
+        resultMap.put("reportInfoView", reportInfoView);
+        return resultMap;
+    }
     /**
      * 智能填报主入口
      * 获取用户  输入分数、位次、文理 过滤院校清单
@@ -140,4 +164,91 @@ public class SmartReportController extends BaseCommonController {
         map.put("result", result);
         return map;
     }
+
+    /**
+     * 智能报告保存
+     * @param reportResult
+     * @return
+     */
+    @RequestMapping(value = "/test",method=RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> reportJson() throws IOException {
+//        ReportInfoView reportInfoView=new ReportInfoView();
+//        ReportResultView reportResult=new ReportResultView();
+//        reportResult.setUserId(123);
+//        reportResult.setUserName("测试");
+//        reportResult.setComplete(true);
+//        reportResult.setReasonable(true);
+//        reportResult.setScore(450);
+//        reportResult.setMajorType(1);
+//        reportResult.setReportResultJson("");
+//        reportResult.setPrecedence(29);
+//        reportResult.setControllLine("550-400-300");
+//        reportInfoView.setReportResultView(reportResult);
+//
+//
+//        List<ReportUniversityView> reportUniversityViews=new ArrayList<>();
+//        for(int i=0;i<2;i++) {
+//
+//            ReportUniversityView reportUniversityView = new ReportUniversityView();
+//            reportUniversityView.setUniversityName(i == 0 ? "北京大学" : "复旦大学");
+//            reportUniversityView.setRange(true);
+//            reportUniversityView.setAverageScoreAvg(i == 0 ? 429 : 500);
+//            reportUniversityView.setEnrollingNumber(19);
+//            reportUniversityView.setEnrollRate(BigDecimal.valueOf(80));
+//            reportUniversityView.setLowestScoreAvg(i == 0 ? 450 : 600);
+//            reportUniversityView.setProperty("985/211");
+//            reportUniversityView.setRanking(28);
+//            reportUniversityView.setRankTrend("1-2");
+//            reportUniversityView.setScoreUseRate(BigDecimal.valueOf(67));
+//            reportUniversityView.setEnrollRate(BigDecimal.valueOf(76));
+//            reportUniversityView.setSequence(2);
+//            reportUniversityViews.add(reportUniversityView);
+//
+//        }
+//        reportInfoView.setReportUniversityViewList(reportUniversityViews);
+//
+        //院校
+
+//        SelfReportResultView selfReportResultView=new SelfReportResultView();
+//
+//        List<SelfReportMajorView> selfReportMajorViews=new ArrayList<>();
+//        SelfReportMajorView selfReportMajorView=new SelfReportMajorView();
+//        selfReportMajorView.setId(176);
+//        selfReportMajorView.setName("德语");
+//        SelfReportMajorView selfReportMajorView1=new SelfReportMajorView();
+//        selfReportMajorView1.setId(177);
+//        selfReportMajorView1.setName("机械设计制造及其自动化");
+//        selfReportMajorViews.add(selfReportMajorView);
+//
+//
+//        List<SelfReportUniversityView> selfReportUniversityViews=new ArrayList<>();
+//
+//        SelfReportUniversityView selfReportUniversityView=new SelfReportUniversityView();
+//        selfReportUniversityView.setId(10);
+//        selfReportUniversityView.setName("四川大学锦江学院");
+//        selfReportUniversityView.setSelfReportMajorViewList(selfReportMajorViews);
+//        selfReportUniversityView.setAverageScore(129);
+//        selfReportUniversityView.setEnrollingNumber(23);
+//        selfReportUniversityView.setIsComplied(0);
+//        selfReportUniversityView.setSubjection("教育部");
+//        selfReportUniversityView.setEnrollRate(BigDecimal.valueOf(0.3));
+//        selfReportUniversityView.setType(1);
+//
+//        selfReportUniversityViews.add(selfReportUniversityView);
+//
+//        selfReportResultView.setSequence(3);
+//        selfReportResultView.setSelfReportUniversityViewList(selfReportUniversityViews);
+
+        String latlngs =new String("[{\"selfReportUniversityViewList\": [{\"averageScore\": 129,\"enrollRate\": 0.3,\"enrollingNumber\": 23,\"id\": 10,\"isComplied\": 0,\"name\": \"四川大学锦江学院\",\"selfReportMajorViewList\": [{\"id\": 176,\"name\": \"德语\"}],\"subjection\": \"教育部\",\"type\": 1}],\"sequence\": 3}]");
+        ObjectMapper mapper = new ObjectMapper();
+        List<SelfReportResultView> selfReportResultView= mapper.readValue(latlngs, List.class);
+//        List<SelfReportResultView> selfReportResultViewList= JsonUtil.deserialize(latlngs,List<SelfReportResultView>);
+        Map map = new HashMap();
+                      map.put("result",selfReportResultView);
+//        map.put("result", selfReportResultView);
+        return map;
+    }
+
+
 }

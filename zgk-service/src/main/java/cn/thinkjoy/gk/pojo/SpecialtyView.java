@@ -6,6 +6,7 @@ import java.io.Serializable;
  * Created by douzy on 16/3/15.
  */
 public class SpecialtyView implements Serializable {
+
     /**
      * 院校ID
      */
@@ -22,6 +23,16 @@ public class SpecialtyView implements Serializable {
      * 专业名称
      */
     private String specialtyName;
+
+    /**
+     * 招生计划数
+     */
+    private Integer planEnrolling;
+
+    /**
+     * 科类
+     */
+    private String majorType;
 
     public Long getUniversityId() {
         return universityId;
@@ -53,5 +64,21 @@ public class SpecialtyView implements Serializable {
 
     public void setSpecialtyName(String specialtyName) {
         this.specialtyName = specialtyName;
+    }
+
+    public Integer getPlanEnrolling() {
+        return planEnrolling;
+    }
+
+    public void setPlanEnrolling(Integer planEnrolling) {
+        this.planEnrolling = planEnrolling;
+    }
+
+    public String getMajorType() {
+        return majorType;
+    }
+
+    public void setMajorType(String majorType) {
+        this.majorType = majorType;
     }
 }

@@ -1,16 +1,24 @@
-package cn.thinkjoy.gk.entity;
+package cn.thinkjoy.gk.pojo;
 
-import cn.thinkjoy.common.domain.CreateBaseDomain;
+import java.io.Serializable;
 
 /**
- * Created by douzy on 16/3/16.
+ * 志愿报告结果  扩展
+ * Created by douzy on 16/3/17.
  */
-public class ReportResult extends CreateBaseDomain<Long> {
-    private Long id;
+public class ReportResultView implements Serializable {
     /**
      * 用户ID
      */
     private Integer userId;
+    /**
+     * 用户名
+     */
+    private String userName;
+    /**
+     * 省控线
+     */
+    private String controllLine;
     /**
      * 分数
      */
@@ -37,28 +45,9 @@ public class ReportResult extends CreateBaseDomain<Long> {
     private String reportResultJson;
 
     /**
-     * 省份
-     */
-    private String provinceCode;
-
-    /**
-     * 批次
-     */
-    private Integer batch;
-    /**
      * 评测日期
      */
     private Long createTime;
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Integer getUserId() {
         return userId;
@@ -66,6 +55,22 @@ public class ReportResult extends CreateBaseDomain<Long> {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getControllLine() {
+        return controllLine;
+    }
+
+    public void setControllLine(String controllLine) {
+        this.controllLine = controllLine;
     }
 
     public Integer getScore() {
@@ -114,22 +119,6 @@ public class ReportResult extends CreateBaseDomain<Long> {
 
     public void setReportResultJson(String reportResultJson) {
         this.reportResultJson = reportResultJson;
-    }
-
-    public String getProvinceCode() {
-        return provinceCode;
-    }
-
-    public void setProvinceCode(String provinceCode) {
-        this.provinceCode = provinceCode;
-    }
-
-    public Integer getBatch() {
-        return batch;
-    }
-
-    public void setBatch(Integer batch) {
-        this.batch = batch;
     }
 
     public Long getCreateTime() {

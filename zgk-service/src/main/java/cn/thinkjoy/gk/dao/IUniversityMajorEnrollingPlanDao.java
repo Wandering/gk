@@ -12,4 +12,7 @@ import java.util.Map;
 public interface IUniversityMajorEnrollingPlanDao extends IBaseDAO<UniversityMajorEnrollingPlan> {
 
     public List<UniversityMajorEnrollingPlan> selectList(Map map);
+
+    Integer lowestScoreAvg(Map map);
+
 }

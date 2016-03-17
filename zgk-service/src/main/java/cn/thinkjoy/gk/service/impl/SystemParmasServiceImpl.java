@@ -131,7 +131,8 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
      * 获取批次控制线 key
      * @return
      */
-    private String getBatchKey(Integer batch,String provinceCode) {
+    @Override
+    public String getBatchKey(Integer batch,String provinceCode) {
         return provinceCode.toUpperCase() + ReportUtil.ROLE_KEY_SPLIT_SYMBOL + batch +ReportUtil.ROLE_KEY_SPLIT_SYMBOL+ ReportUtil.BATCHLINEKEY;
     }
 

@@ -33,7 +33,7 @@
         select <include refid="Search_Column_List" /> from ${tableName} as bData
         left join zgk_university as zgk_university on bData.universityId=zgk_university.id
         left join zgk_university_enrolling as zgk_university_enroll on bData.universityId=zgk_university_enroll.universityId
-        left join zgk_province as province on zgk_university_enroll.areaId=province.id
+        left join zgk_province as province on zgk_university.provinceCode=province.id
         left join zgk_university_major_enrolling_plan as enrollingPlan on bData.universityId=enrollingPlan.universityId
         <where>
             <if test="scoreDiff!=null">

@@ -27,8 +27,17 @@ public class UniversityMajorEnrollingServiceImpl implements IUniversityMajorEnro
             specialtyView.setUniversityId(universityMajorEnrollingPlan.getUniversityId());
             specialtyView.setUniversityName(universityMajorEnrollingPlan.getUniversityName());
             specialtyView.setSpecialtyName(universityMajorEnrollingPlan.getMajorName());
+            specialtyView.setSpecialtyId(universityMajorEnrollingPlan.getId());
+            specialtyView.setMajorType(universityMajorEnrollingPlan.getMajorType());
+            specialtyView.setPlanEnrolling(universityMajorEnrollingPlan.getPlanEnrolling());
             specialtyViews.add(specialtyView);
         }
         return specialtyViews;
     }
+
+    @Override
+    public Integer lowestScoreAvg(Map map) {
+        return iUniversityMajorEnrollingPlanDao.lowestScoreAvg(map);
+    }
+
 }
