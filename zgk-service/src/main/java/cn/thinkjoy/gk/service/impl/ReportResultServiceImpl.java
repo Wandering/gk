@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.service.impl;
 
+import cn.thinkjoy.gk.common.ReportUtil;
 import cn.thinkjoy.gk.dao.IReportResultDao;
 import cn.thinkjoy.gk.entity.ReportResult;
 import cn.thinkjoy.gk.entity.SystemParmas;
@@ -65,7 +66,25 @@ public class ReportResultServiceImpl implements IReportResultService {
         reportInfoView.setReportUniversityViewList(reportUniversityViews);
         return reportInfoView;
     }
+    @Override
+    public List<Integer> selectPrecedence(Map map){
+        return  iReportResultDao.selectPrecedence(map);
+    }
 
+    /**
+     * 获取位次信息
+     * @return
+     */
+    @Override
+    public Integer getPrecedence(String tableName,Integer precedence) {
+        Map map=new HashMap();
+        map.put("tableName",tableName);
+        List<Integer> preList = selectPrecedence(map);
+        final Integer size = preList.size();
+        Integer[] preArr = (Integer[]) preList.toArray(new Integer[size]);
+        Integer result = ReportUtil.binarysearchKey(preArr, precedence);
+        return result;
+    }
     /**
      * 评估结果输出----获取报告展示 -- 用户信息部分
      * @return

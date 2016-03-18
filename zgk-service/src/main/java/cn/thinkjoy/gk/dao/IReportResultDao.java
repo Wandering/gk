@@ -3,6 +3,7 @@ package cn.thinkjoy.gk.dao;
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.gk.entity.ReportResult;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,4 +15,5 @@ public interface IReportResultDao extends IBaseDAO<ReportResult> {
     ReportResult selectModelOne(Map map);
 
     Integer selectRanking(Map map);
+    List<Integer> selectPrecedence(Map map);
 }

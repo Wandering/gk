@@ -4,6 +4,7 @@ import cn.thinkjoy.gk.entity.ReportResult;
 import cn.thinkjoy.gk.pojo.ReportInfoView;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,4 +31,19 @@ public interface IReportResultService {
      * @return
      */
     ReportResult  selectModelOne(Map map);
+
+    /**
+     * 获取位次列表
+     * @param map
+     * @return
+     */
+    List<Integer> selectPrecedence(Map map);
+
+    /**
+     * 获取位次列表
+     * @param map
+     * @param precedence
+     * @return
+     */
+    Integer getPrecedence(String tableName,Integer precedence);
 }

@@ -99,9 +99,9 @@ public class UniversityInfoServiceImpl implements IUniversityInfoService {
         List<UniversityInfoView> universityInfoViews1 = gradientSplit(map.get("province").toString(), universityInfoViews);
 
         LOGGER.info("梯度规则-筛选后院校总数:" + universityInfoViews1.size());
-//        List<UniversityInfoView> universityInfoViewsResult = setUniversityProper(universityInfoViews1);
+        List<UniversityInfoView> universityInfoViewsResult = setUniversityProper(universityInfoViews1);
         LOGGER.info("=====院校清单 End=====");
-        return universityInfoViews1;
+        return universityInfoViewsResult;
     }
     /**
      * 梯度拆分

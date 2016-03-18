@@ -17,6 +17,7 @@
         <result column="universityId" property="universityId" jdbcType="BIGINT" />
         <result column="universityName" property="universityName" jdbcType="VARCHAR" />
         <result column="scoreDiff" property="scoreDiff" jdbcType="INTEGER" />
+        <result column="precedence" property="precedence"  jdbcType="INTEGER"/>
         <result column="preScoreDiff" property="preScoreDiff" jdbcType="INTEGER" />
         <result column="enrollRate" property="enrollRate" jdbcType="NUMERIC" />
         <result column="scoreUseRate" property="scoreUseRate" jdbcType="NUMERIC" />
@@ -38,9 +39,14 @@
         left join zgk_province as province on zgk_university.provinceCode=province.id
 --         left join zgk_university_major_enrolling_plan as enrollingPlan on bData.universityId=enrollingPlan.universityId
         <where>
-            <if test="scoreDiff!=null">
-                and bData.scoreDiff=${scoreDiff}
-            </if>
+            <choose>
+                <when test="precedence!=null">
+                    and bData.precedence=${precedence}
+                </when>
+                <otherwise>
+                    and bData.scoreDiff=${scoreDiff}
+                </otherwise>
+            </choose>
             <if test="year!=null">
                 and zgk_university_enroll.year=${year}
             </if>
@@ -84,4 +90,5 @@
                 </if>
             </where>
     </select>
+
 </mapper>

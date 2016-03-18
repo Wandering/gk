@@ -114,4 +114,7 @@
     <select id="selectRanking" resultType="java.lang.Integer" parameterType="java.util.Map">
          select (select count(Distinct(score)) from zgk_report_result where score>#{score})+1 as ranking
     </select>
+    <select id="selectPrecedence" resultType="java.lang.Integer"  parameterType="java.util.Map" statementType="STATEMENT">
+        select distinct(precedence) from ${tableName} order by precedence asc
+    </select>
 </mapper>

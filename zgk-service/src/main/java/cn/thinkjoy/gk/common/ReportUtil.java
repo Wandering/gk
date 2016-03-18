@@ -1,6 +1,6 @@
 package cn.thinkjoy.gk.common;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Created by douzy on 16/3/14.
@@ -49,17 +49,35 @@ public class ReportUtil {
     public static final String VOLUNTEER_KEY_SPLIT_SYMBOL="\\|";
 
     /**
-     * 组装表名
+     * 批次表后缀
+     */
+    public static final String PRECEDENCE_KEY_SYMBOL="w";
+
+    /**
+     * 组装表名   - 线差表
      * @param provinceCode
      * @param categorie
-     * @param score
+     * @param batch
      * @return
      */
-    public static String getTableName(String provinceCode,Integer categorie,Integer score) {
-
-        return provinceCode + "_" + score + "_" + categorie;
+    public static String getTableName(String provinceCode,Integer categorie,Integer batch,boolean isPrecedence) {
+        if (isPrecedence)
+            return provinceCode + ROLE_KEY_SPLIT_SYMBOL + categorie + ROLE_KEY_SPLIT_SYMBOL + batch + ROLE_KEY_SPLIT_SYMBOL + PRECEDENCE_KEY_SYMBOL;
+        else
+            return provinceCode + ROLE_KEY_SPLIT_SYMBOL + categorie + ROLE_KEY_SPLIT_SYMBOL + batch;
     }
 
+    /**
+     * 组装位次表名
+     * @param provinceCode
+     * @param categorie
+     * @param batch
+     * @param symbol
+     * @return
+     */
+    public static String getTableName(String provinceCode,Integer categorie,Integer batch,String symbol) {
+        return provinceCode + ROLE_KEY_SPLIT_SYMBOL + categorie + ROLE_KEY_SPLIT_SYMBOL + batch + ROLE_KEY_SPLIT_SYMBOL + PRECEDENCE_KEY_SYMBOL;
+    }
     /**
      * 获取指定梯度规则
      * @param configValue  梯度规则串
@@ -86,10 +104,65 @@ public class ReportUtil {
         return (configValue.split(VOLUNTEER_KEY_SPLIT_SYMBOL)).length;
     }
 
+    /**
+     * 获取位次
+     * @return
+     */
+    public static Integer getPrecedence() {
+
+        Integer result = 5;
+
+        return result;
+    }
     public static void main(String[] arg)
     {
         String s="30-50|30-50|60-80|60-80|80-100|80-100";
         String[] arr= s.split(VOLUNTEER_KEY_SPLIT_SYMBOL);
-        System.out.print( arr.length);
+//        System.out.print( arr.length);
+
+        Integer[] num=new Integer[]{900,1000,1500,2000,3000,10000,13000};
+
+
+         Integer a= binarysearchKey(num,10000);
     }
+
+
+    /**
+     * 查找最接近目标值的数，并返回
+     * @param array
+     * @param targetNum
+     * @return
+     */
+    public static Integer binarysearchKey(Integer[] array, int targetNum) {
+        Map<Integer, Integer> resultMap = new TreeMap<Integer, Integer>(
+                new Comparator<Integer>() {
+                    public int compare(Integer obj1, Integer obj2) {
+                        // 降序排序
+                        return obj1.compareTo(obj2);
+                    }
+                }
+        );
+        Integer result = 0;
+        Arrays.sort(array);
+        Integer starNum = array[0],
+                endNum = array[(array.length - 1)];
+        Integer[] xResult = new Integer[array.length];
+        for (int i = 0; i < array.length; i++) {
+            if (targetNum <= starNum)
+                return starNum;
+            if (targetNum >= endNum)
+                return endNum;
+            Integer num1 = array[i];
+            Integer x1 = Math.abs(targetNum - num1);
+            xResult[i] = x1;
+            resultMap.put(x1, array[i]);
+        }
+
+        for (Map.Entry<Integer, Integer> entry : resultMap.entrySet()) {
+            result = entry.getValue();
+            break;
+        }
+        return result;
+    }
+
 }

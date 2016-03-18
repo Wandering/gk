@@ -33,6 +33,11 @@ public class UniversityInfoView extends CreateBaseDomain<Long> {
      * 线差
      */
     private Integer scoreDiff;
+
+    /**
+     * 位次
+     */
+    private Integer precedence;
     /**
      * 预测线差
      */
@@ -128,6 +133,14 @@ public class UniversityInfoView extends CreateBaseDomain<Long> {
 
     public void setUniversityName(String universityName) {
         this.universityName = universityName;
+    }
+
+    public Integer getPrecedence() {
+        return precedence;
+    }
+
+    public void setPrecedence(Integer precedence) {
+        this.precedence = precedence;
     }
 
     public Integer getScoreDiff() {
