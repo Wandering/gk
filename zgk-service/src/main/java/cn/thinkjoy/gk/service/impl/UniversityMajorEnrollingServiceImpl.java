@@ -3,6 +3,7 @@ package cn.thinkjoy.gk.service.impl;
 import cn.thinkjoy.gk.dao.IUniversityMajorEnrollingPlanDao;
 import cn.thinkjoy.gk.entity.UniversityMajorEnrollingPlan;
 import cn.thinkjoy.gk.pojo.SpecialtyView;
+import cn.thinkjoy.gk.pojo.UniversityEnrollingView;
 import cn.thinkjoy.gk.service.IUniversityMajorEnrollingService;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +40,8 @@ public class UniversityMajorEnrollingServiceImpl implements IUniversityMajorEnro
     public Integer lowestScoreAvg(Map map) {
         return iUniversityMajorEnrollingPlanDao.lowestScoreAvg(map);
     }
-
+    @Override
+    public UniversityEnrollingView selectUniversityAverageScore(Map map){
+        return iUniversityMajorEnrollingPlanDao.selectUniversityAverageScore(map);
+    }
 }

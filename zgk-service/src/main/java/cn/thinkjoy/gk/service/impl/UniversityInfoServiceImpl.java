@@ -4,8 +4,10 @@ import cn.thinkjoy.gk.common.ReportUtil;
 import cn.thinkjoy.gk.dao.IUniversityInfoDao;
 import cn.thinkjoy.gk.entity.SystemParmas;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
+import cn.thinkjoy.gk.pojo.UniversityEnrollingView;
 import cn.thinkjoy.gk.service.ISystemParmasService;
 import cn.thinkjoy.gk.service.IUniversityInfoService;
+import cn.thinkjoy.gk.service.IUniversityMajorEnrollingService;
 import com.alibaba.dubbo.common.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +30,8 @@ public class UniversityInfoServiceImpl implements IUniversityInfoService {
 
     @Resource
     ISystemParmasService iSystemParmasService;
-
+    @Resource
+    IUniversityMajorEnrollingService iUniversityMajorEnrollingService;
 
 
     /**
@@ -93,10 +96,12 @@ public class UniversityInfoServiceImpl implements IUniversityInfoService {
         List<UniversityInfoView> universityInfoViews = iUniversityInfoDao.selectUniversityInfo(map);
         LOGGER.info("录取&利用-筛选后院校总数:" + universityInfoViews.size());
 
-        universityInfoViews = gradientSplit(map.get("province").toString(), universityInfoViews);
+        List<UniversityInfoView> universityInfoViews1 = gradientSplit(map.get("province").toString(), universityInfoViews);
 
+        LOGGER.info("梯度规则-筛选后院校总数:" + universityInfoViews1.size());
+//        List<UniversityInfoView> universityInfoViewsResult = setUniversityProper(universityInfoViews1);
         LOGGER.info("=====院校清单 End=====");
-        return universityInfoViews;
+        return universityInfoViews1;
     }
     /**
      * 梯度拆分
@@ -108,7 +113,7 @@ public class UniversityInfoServiceImpl implements IUniversityInfoService {
             return null;
         if (oldUniversityInfos == null)
             return null;
-        List<UniversityInfoView> universityInfoViews = new ArrayList<>();
+        List<UniversityInfoView> universityInfoViews = new ArrayList<UniversityInfoView>();
 
         //获取录取率梯度规则
         SystemParmas enrollSystemParmas = iSystemParmasService.getThresoldModel(province, ReportUtil.VOLUNTEER_ENROLL_KEY);
@@ -121,12 +126,13 @@ public class UniversityInfoServiceImpl implements IUniversityInfoService {
         LOGGER.info("共分"+volunteerSize+"个梯度");
         BigDecimal maxDec=new BigDecimal(100);
         for(UniversityInfoView universityInfoView:oldUniversityInfos) {
+//            UniversityInfoView resultUniversity=new UniversityInfoView();
             //录取率
             BigDecimal enroll = universityInfoView.getEnrollRate(),
-                    used = universityInfoView.getEnrollRate();
-            double erollD = enroll.multiply(maxDec).doubleValue(),
-                    usedD = used.multiply(maxDec).doubleValue();
-            UniversityInfoView resultUniversity=universityInfoView;
+                    used = universityInfoView.getScoreUseRate();
+            double erollD = enroll.multiply(maxDec).intValue(),
+                    usedD = used.multiply(maxDec).intValue();
+//            resultUniversity=universityInfoView;
             LOGGER.info("当前院校录取率:" +enroll);
             LOGGER.info("当前院校利用率:" + usedD);
             for (int i = 0; i < volunteerSize; i++) {
@@ -142,15 +148,48 @@ public class UniversityInfoServiceImpl implements IUniversityInfoService {
                 LOGGER.info("第" + (i + 1) + "利用率梯度规则End:" + used1);
 
                 //利用率达标
-                if ((erollD >= enroll0 && erollD <= enroll1)
-                        &&(usedD>=used0&&usedD<=used1)) {
-                    resultUniversity.setSequence((i + 1));
+                if (erollD >= enroll0 && erollD <= enroll1
+                        &&usedD>=used0&&usedD<=used1) {
+                    //为了去除循环应用$ref  暂时这样处理 。  属于业务问题 ， 一个院校被分配到了多个梯度
+//                    UniversityInfoView resultUniversity=new UniversityInfoView();
+//                    resultUniversity=universityInfoView;
+                    universityInfoView.setSequence((i + 1));
 
-                    universityInfoViews.add(resultUniversity);
+                    universityInfoViews.add(universityInfoView);
+                    i= volunteerSize; //符合一个梯度后  不会再向下匹配
                 }
             }
         }
         LOGGER.info("=====梯度拆分规则 End=====");
+        return universityInfoViews;
+    }
+
+    /**
+     * 填充院校个别属性 -- 后期新增属性 在此方法扩展 不操作其他逻辑块
+     * @param oldUniversityInfos
+     * @return
+     */
+    private List<UniversityInfoView> setUniversityProper(List<UniversityInfoView> oldUniversityInfos) {
+        LOGGER.info("=====填充院校个别属性 Start=====");
+        List<UniversityInfoView> universityInfoViews = new ArrayList<UniversityInfoView>();
+
+        for(UniversityInfoView universityInfoView:oldUniversityInfos) {
+            Map planMap = new HashMap();
+            planMap.put("universityId", universityInfoView.getUniversityId());
+            Integer PlanEnrolling = selectPlanEnrolling(planMap);
+            LOGGER.info("计划招生人数:" + PlanEnrolling);
+            universityInfoView.setPlanEnrolling(PlanEnrolling);
+            Map averageMap = new HashMap();
+            averageMap.put("universityId", universityInfoView.getUniversityId());
+            averageMap.put("areaId", universityInfoView.getAreaId());
+            averageMap.put("majorType", (universityInfoView.getMajorType().equals("文科") ? 1 : 2));
+            averageMap.put("averageScore", 0);//固定给0
+            UniversityEnrollingView universityEnrollingView = iUniversityMajorEnrollingService.selectUniversityAverageScore(averageMap);
+            universityInfoView.setAverageScore(universityEnrollingView==null?0:universityEnrollingView.getAverageScore());
+            universityInfoView.setAverageYear(universityEnrollingView == null ? 0 : universityEnrollingView.getAverageYear());
+            universityInfoViews.add(universityInfoView);
+        }
+        LOGGER.info("=====填充院校个别属性 Start=====");
         return universityInfoViews;
     }
 
@@ -163,4 +202,9 @@ public class UniversityInfoServiceImpl implements IUniversityInfoService {
         Integer controleLine = iSystemParmasService.getControleLine(batch, cate, provinceCode);
         return (score - controleLine);
     }
+    @Override
+    public Integer selectPlanEnrolling(Map map) {
+        return iUniversityInfoDao.selectPlanEnrolling(map);
+    }
+
 }

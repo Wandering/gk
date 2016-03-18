@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.dao;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.gk.entity.UniversityMajorEnrollingPlan;
+import cn.thinkjoy.gk.pojo.UniversityEnrollingView;
 
 import java.util.List;
 import java.util.Map;
@@ -14,5 +15,7 @@ public interface IUniversityMajorEnrollingPlanDao extends IBaseDAO<UniversityMaj
     public List<UniversityMajorEnrollingPlan> selectList(Map map);
 
     Integer lowestScoreAvg(Map map);
+
+    UniversityEnrollingView selectUniversityAverageScore(Map map);
 
 }

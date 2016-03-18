@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.service;
 
 import cn.thinkjoy.gk.pojo.SpecialtyView;
+import cn.thinkjoy.gk.pojo.UniversityEnrollingView;
 
 import java.util.List;
 import java.util.Map;
@@ -11,4 +12,5 @@ import java.util.Map;
 public interface IUniversityMajorEnrollingService {
     List<SpecialtyView> selectList(Map map);
     Integer lowestScoreAvg(Map map);
+    UniversityEnrollingView selectUniversityAverageScore(Map map);
 }

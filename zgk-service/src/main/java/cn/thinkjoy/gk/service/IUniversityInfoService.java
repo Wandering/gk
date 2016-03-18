@@ -11,6 +11,7 @@ import java.util.Map;
 public interface IUniversityInfoService {
     /**
      * 院校清单List
+     *
      * @param map
      * @return
      */
@@ -18,11 +19,20 @@ public interface IUniversityInfoService {
 
     /**
      * 根据分数及控制线 计算线差
-     * @param batch 批次
-     * @param score 分数
-     * @param cate  科类
+     *
+     * @param batch        批次
+     * @param score        分数
+     * @param cate         科类
      * @param provinceCode 省份
      * @return
      */
-    Integer getLineDiff(Integer batch,Integer score,Integer cate, String provinceCode);
+    Integer getLineDiff(Integer batch, Integer score, Integer cate, String provinceCode);
+
+    /**
+     * 获取招生计划数
+     *
+     * @param map
+     * @return
+     */
+    public Integer selectPlanEnrolling(Map map);
 }

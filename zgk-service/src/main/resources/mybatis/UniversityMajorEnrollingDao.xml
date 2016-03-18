@@ -16,6 +16,10 @@
         <result column="schoolFee" property="schoolFee" jdbcType="INTEGER" />
         <result column="majorId" property="majorId" jdbcType="BIGINT" />
     </resultMap>
+    <resultMap id="UniversityAverageScoreMap" type="cn.thinkjoy.gk.pojo.UniversityEnrollingView">
+        <result column="averageScore" property="averageScore" jdbcType="INTEGER" />
+        <result column="year" property="averageYear" jdbcType="INTEGER" />
+    </resultMap>
     <sql id="Base_Column_List">
         id,universityName,universityId,year,areaId,batch,majorType,majorName,planEnrolling,lengthOfSchooling,schoolFee,majorId
     </sql>
@@ -73,5 +77,24 @@
             </if>
         </where>
       group by year)t
+    </select>
+    <select id="selectUniversityAverageScore" parameterType="java.util.Map" resultMap="UniversityAverageScoreMap">
+        select averageScore,year from zgk_university_enrolling
+        <where>
+             <if test="universityId!=null">
+                 and universityId=#{universityId,jdbcType=INTEGER}
+             </if>
+            <if test="areaId!=null">
+                and areaId=#{areaId,jdbcType=INTEGER}
+            </if>
+            <if test="majorType!=null">
+                and  majorType=#{majorType,jdbcType=INTEGER}
+            </if>
+            <if test="averageScore!=null">
+                and averageScore>#{averageScore,jdbcType=INTEGER}
+            </if>
+        </where>
+        order by year desc limit 1
+        <!--where universityId=30 and areaId=450000 and majorType=1 and averageScore>0 order by year desc limit 1-->
     </select>
 </mapper>

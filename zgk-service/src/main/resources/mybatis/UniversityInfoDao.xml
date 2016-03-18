@@ -20,21 +20,23 @@
         <result column="preScoreDiff" property="preScoreDiff" jdbcType="INTEGER" />
         <result column="enrollRate" property="enrollRate" jdbcType="NUMERIC" />
         <result column="scoreUseRate" property="scoreUseRate" jdbcType="NUMERIC" />
+        <result column="areaId" property="areaId" jdbcType="INTEGER" />
     </resultMap>
 
     <sql id="Base_Column_List">
         id,universityId,universityName,scoreDiff,preScoreDiff,enrollRate,scoreUseRate
     </sql>
     <sql id="Search_Column_List">
-         bData.*,zgk_university.isProportion,zgk_university.isRange,zgk_university.rankTrend,zgk_university.subjection,zgk_university.type,zgk_university.property,
-        zgk_university_enroll.averageScore ,sum(enrollingPlan.planEnrolling) as planEnrolling,province.code as code
+         bData.*,zgk_university.isProportion,zgk_university.isRange,zgk_university.rankTrend,zgk_university.subjection,zgk_university.type,zgk_university.property,province.id as areaId,
+        zgk_university_enroll.averageScore ,province.code as code
+--         sum(enrollingPlan.planEnrolling) as planEnrolling,
     </sql>
     <select id="selectUniversityInfo" resultMap="BaseResultMap" parameterType="java.util.Map" statementType="STATEMENT">
         select <include refid="Search_Column_List" /> from ${tableName} as bData
         left join zgk_university as zgk_university on bData.universityId=zgk_university.id
         left join zgk_university_enrolling as zgk_university_enroll on bData.universityId=zgk_university_enroll.universityId
         left join zgk_province as province on zgk_university.provinceCode=province.id
-        left join zgk_university_major_enrolling_plan as enrollingPlan on bData.universityId=enrollingPlan.universityId
+--         left join zgk_university_major_enrolling_plan as enrollingPlan on bData.universityId=enrollingPlan.universityId
         <where>
             <if test="scoreDiff!=null">
                 and bData.scoreDiff=${scoreDiff}
@@ -42,9 +44,9 @@
             <if test="year!=null">
                 and zgk_university_enroll.year=${year}
             </if>
-            <if test="code!=null">
-                and province.code=${code}
-            </if>
+            <!--<if test="code!=null">-->
+                <!--and province.code=${code}-->
+            <!--</if>-->
             <if test="majorType!=null">
                  and zgk_university_enroll.majorType=${majorType}
             </if>
@@ -54,8 +56,8 @@
             <if test="scoreUseRateBegin!=null and scoreUseRateEnd!=null">
                 and left(bData.scoreUseRate*100,7)&gt;=${scoreUseRateBegin} and left(bData.scoreUseRate*100,7)&lt;=${scoreUseRateEnd}
             </if>
-            and enrollingPlan.planEnrolling is not null
-            group by enrollingPlan.universityId
+--             and enrollingPlan.planEnrolling is not null
+            group by bData.universityId
             <!--<if test="id!=null">-->
                <!--and id=${id}-->
             <!--</if>-->
@@ -72,5 +74,14 @@
                <!--and  preScoreDiff=${preScoreDiff}-->
             <!--</if>-->
         </where>
+    </select>
+
+    <select id="selectPlanEnrolling" parameterType="java.util.Map" resultType="java.lang.Integer">
+            select sum(planEnrolling) from zgk_university_major_enrolling_plan
+            <where>
+                <if test="universityId!=null">
+                    universityId=#{universityId}
+                </if>
+            </where>
     </select>
 </mapper>

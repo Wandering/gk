@@ -50,16 +50,41 @@ public class UniversityInfoView extends CreateBaseDomain<Long> {
      * 梯度
      */
     private Integer sequence;
-
+    /**
+     * 是否1.2
+     */
     private byte isProportion;
+    /**
+     * 是否极差
+     */
     private byte isRange;
+    /**
+     * 院校热度
+     */
     private String rankTrend;
+    /**
+     * 院校隶属
+     */
     private String subjection;
     private Integer type;
+    /**
+     * 院校特征
+     */
     private String property;
+    private Integer areaId;
     private String code;
+    /**
+     * 招生人数
+     */
     private Integer planEnrolling;
+    /**
+     * 平均分
+     */
     private Integer averageScore;
+    /**
+     * 平均分年份
+     */
+    private Integer averageYear;
 
 
 
@@ -205,6 +230,14 @@ public class UniversityInfoView extends CreateBaseDomain<Long> {
         this.code = code;
     }
 
+    public Integer getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(Integer areaId) {
+        this.areaId = areaId;
+    }
+
     public Integer getPlanEnrolling() {
         return planEnrolling;
     }
@@ -219,5 +252,13 @@ public class UniversityInfoView extends CreateBaseDomain<Long> {
 
     public void setAverageScore(Integer averageScore) {
         this.averageScore = averageScore;
+    }
+
+    public Integer getAverageYear() {
+        return averageYear;
+    }
+
+    public void setAverageYear(Integer averageYear) {
+        this.averageYear = averageYear;
     }
 }

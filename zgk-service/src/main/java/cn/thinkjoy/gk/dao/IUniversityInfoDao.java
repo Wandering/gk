@@ -16,4 +16,11 @@ public interface IUniversityInfoDao extends IBaseDAO<UniversityInfoView> {
      * @return
      */
     public List<UniversityInfoView> selectUniversityInfo(Map map);
+
+    /**
+     * 获取计划招生数
+     * @param map
+     * @return
+     */
+    Integer selectPlanEnrolling(Map map);
 }

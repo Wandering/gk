@@ -113,12 +113,11 @@ public class SmartReportController extends BaseCommonController {
      */
     @RequestMapping(value = "/main",method=RequestMethod.GET)
     @ResponseBody
-    public Map<String,Object> reportMain(
+    public List reportMain(
                              @RequestParam(value = "batch") Integer batch,
                              @RequestParam(value = "score") Integer score,
                              @RequestParam(value = "province",required = false) String province,
-                             @RequestParam(value = "categorie") Integer categorie,
-                             ModelMap modelMap) {
+                             @RequestParam(value = "categorie") Integer categorie) {
         LOGGER.info("=======智能填报主入口 Start=======");
         LOGGER.info("分数:" + score);
         LOGGER.info("科类:" + categorie);
@@ -140,11 +139,11 @@ public class SmartReportController extends BaseCommonController {
         map.put("province", province);//key
         map.put("majorType", categorie);
         List<UniversityInfoView> universityInfoViewList = iUniversityInfoService.selectUniversityInfo(map);
-        Map resultMap = new HashMap();
-        resultMap.put("universityInfoViewList", universityInfoViewList);
+//        Map resultMap = new HashMap();
+//        resultMap.put("universityInfoViewList", universityInfoViewList);
         LOGGER.info("最终输出:" + universityInfoViewList.size() + "个院校清单");
         LOGGER.info("=======智能填报主入口 End=======");
-        return resultMap;
+        return universityInfoViewList;
     }
 
     /**
