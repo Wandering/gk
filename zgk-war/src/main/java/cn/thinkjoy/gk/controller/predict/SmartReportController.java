@@ -116,28 +116,37 @@ public class SmartReportController extends BaseCommonController {
     public List reportMain(
                              @RequestParam(value = "batch") Integer batch,
                              @RequestParam(value = "score") Integer score,
-                             @RequestParam(value = "province",required = false) String province,
-                             @RequestParam(value = "categorie") Integer categorie) {
+                             @RequestParam(value = "province") String province,
+                             @RequestParam(value = "categorie") Integer categorie,
+                             @RequestParam(value="precedence") Integer precedence) {
         LOGGER.info("=======智能填报主入口 Start=======");
         LOGGER.info("分数:" + score);
         LOGGER.info("科类:" + categorie);
         LOGGER.info("省份:" + province);
         LOGGER.info("批次:" + batch);
 
-        LOGGER.info("==线差计算 Start==");
-        //根据分数及控制线 计算线差
-        Integer lineDiff = iUniversityInfoService.getLineDiff(batch, score, categorie, province);
-        LOGGER.info("线差为:" + lineDiff);
-        LOGGER.info("==线差计算 End==");
+        String tbName = ReportUtil.getTableName(province, categorie, batch, (precedence > 0 ? true : false));
 
-        String tbName = ReportUtil.getTableName(province, categorie, batch);
         LOGGER.info("tableName:" + tbName);
         Map map = new HashMap<>();
         map.put("tableName", tbName);
-        map.put("scoreDiff", lineDiff);
-        map.put("code", "'" + province + "'");  //db
+//        map.put("code", "'" + province + "'");  //db
         map.put("province", province);//key
         map.put("majorType", categorie);
+
+        LOGGER.info("用户输入位次:"+precedence);
+        if (precedence > 0) {
+            Integer result=iReportResultService.getPrecedence(tbName, precedence);
+            map.put("precedence", result);
+
+        }else {
+            LOGGER.info("==线差计算 Start==");
+            //根据分数及控制线 计算线差
+            Integer lineDiff = iUniversityInfoService.getLineDiff(batch, score, categorie, province);
+            LOGGER.info("线差为:" + lineDiff);
+            LOGGER.info("==线差计算 End==");
+            map.put("scoreDiff", lineDiff);
+        }
         List<UniversityInfoView> universityInfoViewList = iUniversityInfoService.selectUniversityInfo(map);
 //        Map resultMap = new HashMap();
 //        resultMap.put("universityInfoViewList", universityInfoViewList);
