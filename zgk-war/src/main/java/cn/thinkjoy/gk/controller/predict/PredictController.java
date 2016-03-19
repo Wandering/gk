@@ -278,7 +278,9 @@ public class PredictController extends BaseApiController {
             resultMap = universityService.getPredictUniversityInfo(params);
 
             for(Integer i=1;i<resultMap.size()+1;i++) {
+                if(resultMap.get(i.toString())==null)continue;
                 Map<String, Object> dataMap = (Map<String, Object>) resultMap.get(i.toString());
+                if(dataMap.get("list")==null)continue;
                 List<Map<String, Object>> list = (List<Map<String, Object>>) dataMap.get("list");
                 for (Map<String, Object> map1 : list) {
                     Map<String, Object> propertyMap = new HashMap();
