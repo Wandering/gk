@@ -48,11 +48,14 @@ public class VipController extends ZGKBaseController implements Watched {
         }
         Map<String,String> map=new HashMap<>();
         map.put("cardNumber",cardPojo.getCardNumber());
-        map.put("password",cardPojo.getPassword());
+
         map.put("status", "0");
         Card card=cardExService.getVipCardInfo(map);
         if(null==card ){
             throw new BizException(ERRORCODE.VIP_CARD_NOT_INVALID.getCode(), ERRORCODE.VIP_CARD_NOT_INVALID.getMessage());
+        }
+        if(card.getPassword().equals(cardPojo.getPassword())){
+            throw new BizException("error","密码错误！");
         }
         Calendar c = getVipEndDate(card.getCardType());
         card.setEndDate(c.getTimeInMillis());
