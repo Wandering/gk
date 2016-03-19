@@ -40,7 +40,7 @@ public class HttpInterfaceForecastTest extends TestCase{
             assertTrue(result.contains("true"));
         }
     public void testyuce(){
-        String url=host + yuce_url + "?type=1&score=400&token=6jTVV1EGuG2OEcjheOOkDw%3D%3D&userKey=he";
+        String url=host + yuce_url + "?type=1&score=700&token=6jTVV1EGuG2OEcjheOOkDw%3D%3D&userKey=gd";
         String result = RequestUtils.requestPost(url);
         assertTrue(result.contains("true"));
     }
