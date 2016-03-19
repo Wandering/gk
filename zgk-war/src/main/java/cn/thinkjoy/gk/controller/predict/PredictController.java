@@ -276,24 +276,32 @@ public class PredictController extends BaseApiController {
         Map<String, Object> resultMap = new LinkedHashMap<>();
         try {
             resultMap = universityService.getPredictUniversityInfo(params);
-            Map<String, Object> propertyMap = new HashMap();
-            if (StringUtils.isNotEmpty(resultMap.get("property").toString())) {
-                String[] propertys = resultMap.get("property").toString().split(",");
-                Map<String, Object> propertysMap = getPropertys();
 
-                for (String str : propertys) {
-                    Iterator<String> propertysIterator = propertysMap.keySet().iterator();
-                    while (propertysIterator.hasNext()) {
-                        String key = propertysIterator.next();
-                        String value = propertysMap.get(key).toString();
-                        if (str.indexOf(value) > -1) {
-                            propertyMap.put(key, value);
+            for(Integer i=1;i<resultMap.size()+1;i++) {
+                Map<String, Object> dataMap = (Map<String, Object>) resultMap.get(i.toString());
+                List<Map<String, Object>> list = (List<Map<String, Object>>) dataMap.get("list");
+                for (Map<String, Object> map1 : list) {
+                    Map<String, Object> propertyMap = new HashMap();
+                    if (StringUtils.isNotEmpty((String) map1.get("feature"))) {
+                        String[] propertys = map1.get("feature").toString().split(",");
+                        Map<String, Object> propertysMap = getPropertys();
+
+                        for (String str : propertys) {
+                            Iterator<String> propertysIterator = propertysMap.keySet().iterator();
+                            while (propertysIterator.hasNext()) {
+                                String key = propertysIterator.next();
+                                String value = propertysMap.get(key).toString();
+                                if (str.indexOf(value) > -1) {
+                                    propertyMap.put(key, value);
+                                }
+                            }
                         }
                     }
+                    map1.put("propertys", propertyMap);
                 }
+
             }
 
-            resultMap.put("propertys", propertyMap);
         } catch (Exception e) {
             List<Map<String, String>> list = new ArrayList<>();
             Map<String, Object> mp1 = new HashMap<>();
