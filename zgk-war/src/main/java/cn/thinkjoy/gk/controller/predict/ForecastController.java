@@ -220,8 +220,6 @@ public class ForecastController extends BaseApiController{
         legendMap.put("data",names);
         //存放时间
         Map<String,Object> xAxisMap=new HashMap<>();
-        xAxisMap.put("type","category");
-        xAxisMap.put("boundaryGap",true);
         StringBuilder dateStrings=new StringBuilder();
         DateFormat dateFormat=new SimpleDateFormat("yyyy.MM.dd");
         //存放学校对应分数

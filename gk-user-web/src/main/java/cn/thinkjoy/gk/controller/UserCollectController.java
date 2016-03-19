@@ -212,6 +212,9 @@ public class UserCollectController extends ZGKBaseController {
             userCollectPojo.setPropertys(propertysMap);
 
         }
+
+
         return userCollectPojoList;
     }
+
 }
