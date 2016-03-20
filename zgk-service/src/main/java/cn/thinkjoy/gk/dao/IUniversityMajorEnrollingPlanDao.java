@@ -18,4 +18,5 @@ public interface IUniversityMajorEnrollingPlanDao extends IBaseDAO<UniversityMaj
 
     UniversityEnrollingView selectUniversityAverageScore(Map map);
 
+    Integer selectUniversityPlanEnrollingNumber(Map map);
 }

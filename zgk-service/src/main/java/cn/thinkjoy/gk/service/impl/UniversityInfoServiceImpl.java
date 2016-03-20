@@ -176,7 +176,8 @@ public class UniversityInfoServiceImpl implements IUniversityInfoService {
         for(UniversityInfoView universityInfoView:oldUniversityInfos) {
             Map planMap = new HashMap();
             planMap.put("universityId", universityInfoView.getUniversityId());
-            Integer PlanEnrolling = selectPlanEnrolling(planMap);
+            Integer PlanEnrolling = iUniversityMajorEnrollingService.selectUniversityPlanEnrollingNumber(planMap);
+//            Integer PlanEnrolling = selectPlanEnrolling(planMap);
             LOGGER.info("计划招生人数:" + PlanEnrolling);
             universityInfoView.setPlanEnrolling(PlanEnrolling);
             Map averageMap = new HashMap();
@@ -185,7 +186,7 @@ public class UniversityInfoServiceImpl implements IUniversityInfoService {
             averageMap.put("majorType", (universityInfoView.getMajorType().equals("文科") ? 1 : 2));
             averageMap.put("averageScore", 0);//固定给0
             UniversityEnrollingView universityEnrollingView = iUniversityMajorEnrollingService.selectUniversityAverageScore(averageMap);
-            universityInfoView.setAverageScore(universityEnrollingView==null?0:universityEnrollingView.getAverageScore());
+            universityInfoView.setAverageScore(universityEnrollingView == null ? 0 : universityEnrollingView.getAverageScore());
             universityInfoView.setAverageYear(universityEnrollingView == null ? 0 : universityEnrollingView.getAverageYear());
             universityInfoViews.add(universityInfoView);
         }

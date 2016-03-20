@@ -44,4 +44,8 @@ public class UniversityMajorEnrollingServiceImpl implements IUniversityMajorEnro
     public UniversityEnrollingView selectUniversityAverageScore(Map map){
         return iUniversityMajorEnrollingPlanDao.selectUniversityAverageScore(map);
     }
+    @Override
+    public Integer selectUniversityPlanEnrollingNumber(Map map) {
+        return iUniversityMajorEnrollingPlanDao.selectUniversityPlanEnrollingNumber(map);
+    }
 }
