@@ -48,7 +48,7 @@
             <if test="reportResultJson != null">
                 report_result_json,
             </if>
-            <if test="province_code!=null">
+            <if test="provinceCode!=null">
                 province_code,
             </if>
             <if test="batch!=null">

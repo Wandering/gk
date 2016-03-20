@@ -15,7 +15,7 @@ public class SelfReportResultView implements Serializable {
     /**
      * 院校集
      */
-    private List<SelfReportUniversityView> selfReportUniversityViewList;
+    private SelfReportUniversityView selfReportUniversityViewList;
 
     public Integer getSequence() {
         return sequence;
@@ -25,11 +25,11 @@ public class SelfReportResultView implements Serializable {
         this.sequence = sequence;
     }
 
-    public List<SelfReportUniversityView> getSelfReportUniversityViewList() {
+    public SelfReportUniversityView getSelfReportUniversityViewList() {
         return selfReportUniversityViewList;
     }
 
-    public void setSelfReportUniversityViewList(List<SelfReportUniversityView> selfReportUniversityViewList) {
+    public void setSelfReportUniversityViewList(SelfReportUniversityView selfReportUniversityViewList) {
         this.selfReportUniversityViewList = selfReportUniversityViewList;
     }
 }

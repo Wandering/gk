@@ -145,9 +145,9 @@ public class ReportResultServiceImpl implements IReportResultService {
             reportUniversityView.setSequence(reportResultViews.getSequence());
 
             //此处后期优化 -- 其实院校不需要List 保存对象即可  因为每个志愿梯度 只能保存一个院校
-            List<SelfReportUniversityView> selfReportUniversityViews = reportResultViews.getSelfReportUniversityViewList();
+            SelfReportUniversityView selfReportUniversityView = reportResultViews.getSelfReportUniversityViewList();
 
-            for (SelfReportUniversityView selfReportUniversityView : selfReportUniversityViews) {
+//            for (SelfReportUniversityView selfReportUniversityView : selfReportUniversityViews) {
                 reportUniversityView.setProperty(selfReportUniversityView.getProperty());
                 reportUniversityView.setUniversityName(selfReportUniversityView.getName());
                 reportUniversityView.setEnrollRate(selfReportUniversityView.getEnrollRate());
@@ -157,11 +157,11 @@ public class ReportResultServiceImpl implements IReportResultService {
                 reportUniversityView.setRange(selfReportUniversityView.isRange());
                 reportUniversityView.setRankTrend(selfReportUniversityView.getRankTrend());
 
-                Map map=new HashMap();
-                map.put("universityId",selfReportUniversityView.getId());
-                Integer lowestScoreAvg=iUniversityMajorEnrollingService.lowestScoreAvg(map);
+                Map universityMap=new HashMap();
+            universityMap.put("universityId",selfReportUniversityView.getId());
+                Integer lowestScoreAvg=iUniversityMajorEnrollingService.lowestScoreAvg(universityMap);
                 reportUniversityView.setLowestScoreAvg(lowestScoreAvg);
-            }
+//            }
 
             Map map=new HashMap();
             map.put("score",score);
