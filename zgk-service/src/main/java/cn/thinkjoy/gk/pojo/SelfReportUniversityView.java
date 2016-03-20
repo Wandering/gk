@@ -28,6 +28,11 @@ public class SelfReportUniversityView implements Serializable {
      * 院校类别
      */
     private Integer type;
+
+    /**
+     * 院校名称
+     */
+    private String typeName;
     /**
      * 院校录取率
      */
@@ -103,6 +108,14 @@ public class SelfReportUniversityView implements Serializable {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     public BigDecimal getEnrollRate() {

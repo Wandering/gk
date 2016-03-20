@@ -1,5 +1,10 @@
 package cn.thinkjoy.gk.common;
 
+import cn.thinkjoy.gk.pojo.SelfReportResultView;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
+
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -114,16 +119,19 @@ public class ReportUtil {
 
         return result;
     }
-    public static void main(String[] arg)
-    {
-        String s="30-50|30-50|60-80|60-80|80-100|80-100";
-        String[] arr= s.split(VOLUNTEER_KEY_SPLIT_SYMBOL);
-//        System.out.print( arr.length);
-
-        Integer[] num=new Integer[]{900,1000,1500,2000,3000,10000,13000};
-
-
-         Integer a= binarysearchKey(num,10000);
+    public static void main(String[] arg) throws IOException {
+        String s="[{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"\",\"averageScore\":\"\",\"enrollRate\":\"\",\"name\":\"\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[],\"property\":\"\",\"subjection\":\"\",\"type\":\"\",\"typeName\":\"\"},\"sequence\":1},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"\",\"averageScore\":\"\",\"enrollRate\":\"\",\"name\":\"\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[],\"property\":\"\",\"subjection\":\"\",\"type\":\"\",\"typeName\":\"\"},\"sequence\":2},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"\",\"averageScore\":\"\",\"enrollRate\":\"\",\"name\":\"\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[],\"property\":\"\",\"subjection\":\"\",\"type\":\"\",\"typeName\":\"\"},\"sequence\":3},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"\",\"averageScore\":\"\",\"enrollRate\":\"\",\"name\":\"\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[],\"property\":\"\",\"subjection\":\"\",\"type\":\"\",\"typeName\":\"\"},\"sequence\":4},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"\",\"averageScore\":\"\",\"enrollRate\":\"\",\"name\":\"\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[],\"property\":\"\",\"subjection\":\"\",\"type\":\"\",\"typeName\":\"\"},\"sequence\":5},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"\",\"averageScore\":\"\",\"enrollRate\":\"\",\"name\":\"\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[],\"property\":\"\",\"subjection\":\"\",\"type\":\"\",\"typeName\":\"\"},\"sequence\":6}]";
+        ObjectMapper mapper = new ObjectMapper();
+        List<SelfReportResultView> selfReportResultViews = mapper.readValue(s, new TypeReference<List<SelfReportResultView>>(){});
+         System.out.print(selfReportResultViews);
+//         selfReportResultViews;
+//        String[] arr= s.split(VOLUNTEER_KEY_SPLIT_SYMBOL);
+////        System.out.print( arr.length);
+//
+//        Integer[] num=new Integer[]{900,1000,1500,2000,3000,10000,13000};
+//
+//
+//         Integer a= binarysearchKey(num,10000);
     }
 
 
