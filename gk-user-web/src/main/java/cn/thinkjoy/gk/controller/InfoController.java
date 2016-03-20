@@ -118,6 +118,10 @@ public class InfoController extends ZGKBaseController {
 
             String name = userInfo.getName();
 
+            if (StringUtils.isEmpty(userInfo.getBirthdayDate().toString())) {
+                throw new BizException("error","出生日期不能为空");
+            }
+
             if (!StringUtils.isEmpty(name)) {
 //                ssUserInfo.setName(name);
                 userAccountPojo.setName(name);
@@ -138,6 +142,9 @@ public class InfoController extends ZGKBaseController {
 //            userInfoExService.updateUserInfoById(userInfo);
         } catch (NoSuchMethodException e){
 
+        }
+        catch (BizException e) {
+            throw e;
         }
         catch (Exception e) {
             throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());

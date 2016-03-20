@@ -213,15 +213,13 @@ public class ForecastController extends BaseApiController{
             return null;
         }
         Map<String,Object> map= new HashMap<>();
-
+        Collections.reverse(list);
         //存放学校
         Map<String,Object> legendMap=new HashMap<>();
         Set<String> names=new HashSet<>();
         legendMap.put("data",names);
         //存放时间
         Map<String,Object> xAxisMap=new HashMap<>();
-        xAxisMap.put("type","category");
-        xAxisMap.put("boundaryGap",true);
         StringBuilder dateStrings=new StringBuilder();
         DateFormat dateFormat=new SimpleDateFormat("yyyy.MM.dd");
         //存放学校对应分数
@@ -232,13 +230,14 @@ public class ForecastController extends BaseApiController{
             names.add(forecast.getUniversityName());
             dateStrings.append(dateFormat.format(new Date(forecast.getLastModDate()))).append(",");
             if(!seriesMap.containsKey(forecast.getUniversityName())) {
-                StringBuffer stringBuffer=new StringBuffer(forecast.getAchievement().toString());
+                StringBuffer stringBuffer=new StringBuffer(forecast.getAchievement().toString()).append("-").append(dateFormat.format(new Date(forecast.getLastModDate())));
                 seriesMap.put(forecast.getUniversityName(),stringBuffer);
             }else {
-                seriesMap.get(forecast.getUniversityName()).append(",").append(forecast.getAchievement().toString());
+                seriesMap.get(forecast.getUniversityName()).append(",").append(forecast.getAchievement().toString()).append("-").append(dateFormat.format(new Date(forecast.getLastModDate())));
             }
         }
-        xAxisMap.put("data",dateStrings.toString().split(","));
+        String[] dates=dateStrings.toString().split(",");
+        xAxisMap.put("data",dates);
         Map<String,Object> serie=null;
         Iterator<String> iterator=seriesMap.keySet().iterator();
         while (iterator.hasNext()){
@@ -248,7 +247,22 @@ public class ForecastController extends BaseApiController{
             serie.put("name",key);
             serie.put("stack","总量");
             serie.put("type","line");
-            serie.put("data",value.split(","));
+            StringBuilder dateStringBuilder=new StringBuilder();
+            for(String dateStr:dates){
+                boolean flag=false;
+                for(String tt:value.split(",")){
+                    String[] str1=tt.split("-");
+                    if(dateStr.equals(str1[1])){
+                        dateStringBuilder.append(str1[0]).append(",");
+                        flag=true;
+                    }
+                }
+                if(!flag){
+                    dateStringBuilder.append("").append(",");
+                }
+
+            }
+            serie.put("data",dateStringBuilder.toString().split(","));
             seriesList.add(serie);
         }
         //存放学校

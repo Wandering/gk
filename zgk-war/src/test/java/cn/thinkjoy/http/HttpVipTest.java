@@ -19,7 +19,7 @@ public class HttpVipTest extends TestCase{
      * 升级VIP
      */
      public void testGetPerformanceDetail(){
-         String url=host + updateUserInfo_url + "?cardNumber=0311240868&password=286940616&token=Na5QqNTNBAbNjFm%2FryG3YQ%3D%3D&userKey=zj\n";
+         String url=host + upgradeVipByCard_url + "?cardNumber=GK154923&password=681u7142gz&token=SJjPPT5sDZEzAFvH5A4pjg%3D%3D&userKey=zj\n";
          String result = RequestUtils.requestPost(url);
             assertTrue(result.contains("33"));
             System.out.println("result = " + result);

@@ -71,5 +71,7 @@ dependencies {
 //    compile project(':qky-api')
     compile "cn.thinkjoy.gaokao360:gaokao360-api:$gaokao360Version"
 
+    compile "cn.thinkjoy.zgk.statistics:agents-api:0.0.1-SNAPSHOT"
+    compile "cn.thinkjoy.zgk.statistics:agents-domain:0.0.1-SNAPSHOT"
 
 }

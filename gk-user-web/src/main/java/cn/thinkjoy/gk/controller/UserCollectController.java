@@ -198,20 +198,25 @@ public class UserCollectController extends ZGKBaseController {
             Map<String, Object> propertysMap = getPropertys();
 
             if(!StringUtils.isEmpty(userCollectPojo.getPropertyName())) {
+                Map<String, Object> propertysMap2=new HashMap<>();
                 for (String str :userCollectPojo.getPropertyName().split(",")) {
                     Iterator<String> propertysIterator = propertysMap.keySet().iterator();
                     while (propertysIterator.hasNext()) {
                         String key = propertysIterator.next();
                         String value = propertysMap.get(key).toString();
                         if (str.indexOf(value) > -1) {
-                            propertysMap.put(key, value);
+                            propertysMap2.put(key, value);
                         }
                     }
                 }
+                userCollectPojo.setPropertys(propertysMap2);
             }
-            userCollectPojo.setPropertys(propertysMap);
+
 
         }
+
+
         return userCollectPojoList;
     }
+
 }

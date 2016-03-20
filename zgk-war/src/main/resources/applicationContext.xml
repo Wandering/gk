@@ -13,6 +13,8 @@
     <import resource="classpath:dubbo/zgk-dubbo-provider.xml" />
     <import resource="classpath:dubbo/zgk-dubbo-consumer.xml" />
 
+    <import resource="classpath:dubbo/gk-dubbo-consumer.xml" />
+
 
     <bean id="redisUtil" class="cn.thinkjoy.gk.util.RedisUtil">
         <property name="redisRepository" ref="redisRepository"/>

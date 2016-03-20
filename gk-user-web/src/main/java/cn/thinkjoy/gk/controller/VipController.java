@@ -3,6 +3,8 @@ package cn.thinkjoy.gk.controller;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.DESUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
+import cn.thinkjoy.gk.common.observer.Watched;
+import cn.thinkjoy.gk.common.observer.Watcher;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Card;
 import cn.thinkjoy.gk.pojo.CardPojo;
@@ -19,17 +21,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/vip")
-public class VipController extends ZGKBaseController {
+public class VipController extends ZGKBaseController implements Watched {
 
+    @Autowired
+    private Watcher watcher;
     @Autowired
     private ICardExService cardExService;
 
@@ -46,11 +48,14 @@ public class VipController extends ZGKBaseController {
         }
         Map<String,String> map=new HashMap<>();
         map.put("cardNumber",cardPojo.getCardNumber());
-        map.put("password",cardPojo.getPassword());
+
         map.put("status", "0");
         Card card=cardExService.getVipCardInfo(map);
         if(null==card ){
             throw new BizException(ERRORCODE.VIP_CARD_NOT_INVALID.getCode(), ERRORCODE.VIP_CARD_NOT_INVALID.getMessage());
+        }
+        if(!card.getPassword().equals(cardPojo.getPassword())){
+            throw new BizException("error","卡密码错误！");
         }
         Calendar c = getVipEndDate(card.getCardType());
         card.setEndDate(c.getTimeInMillis());
@@ -65,6 +70,13 @@ public class VipController extends ZGKBaseController {
         } catch(Exception e) {
             throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
         }
+        /**
+         * 当所有操作执行完成之后通知该更新代理商后台了
+         */
+        Map<String,Object> notify=new HashMap();
+        notify.put("cardNumber",card.getCardNumber());
+        notify.put("userId",userAccountPojo.getId());
+//        notifyWatchers(notify);
         return userAccountPojo;
     }
 
@@ -106,4 +118,29 @@ public class VipController extends ZGKBaseController {
         return  userAccountPojo;
     }
 
+    // 存放观察者
+    private List<Watcher> list = new ArrayList<Watcher>();
+
+    @Override
+    public void addWatcher(Watcher watcher) {
+        list.add(watcher);
+    }
+
+    @Override
+    public void removeWatcher(Watcher watcher) {
+        list.remove(watcher);
+    }
+
+    @Override
+    public void notifyWatchers(Map<String,Object> map) {
+        // 自动调用实际上是主题进行调用的
+        for (Watcher watcher : list)
+        {
+            watcher.update(map);
+        }
+    }
+    @PostConstruct
+    public void init(){
+        addWatcher(watcher);
+    }
 }
