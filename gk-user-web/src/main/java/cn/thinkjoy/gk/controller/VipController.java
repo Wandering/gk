@@ -76,7 +76,7 @@ public class VipController extends ZGKBaseController implements Watched {
         Map<String,Object> notify=new HashMap();
         notify.put("cardNumber",card.getCardNumber());
         notify.put("userId",userAccountPojo.getId());
-        notifyWatchers(notify);
+//        notifyWatchers(notify);
         return userAccountPojo;
     }
 
