@@ -1,13 +1,12 @@
 package cn.thinkjoy.gk.controller.predict;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.common.ReportUtil;
 import cn.thinkjoy.gk.entity.ReportResult;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
-import cn.thinkjoy.gk.pojo.BatchView;
-import cn.thinkjoy.gk.pojo.ReportInfoView;
-import cn.thinkjoy.gk.pojo.SelfReportResultView;
-import cn.thinkjoy.gk.pojo.SpecialtyView;
+import cn.thinkjoy.gk.pojo.*;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IReportResultService;
 import cn.thinkjoy.gk.service.ISystemParmasService;
 import cn.thinkjoy.gk.service.IUniversityInfoService;
@@ -95,13 +94,19 @@ public class SmartReportController extends BaseCommonController {
     @ResponseBody
     public Map<String,Object> getUserReport(@RequestParam(value = "score") Integer score) throws IOException {
 
+
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
         Map map = new HashMap();
-        map.put("userId", Integer.valueOf( super.getAccoutId()));
+        map.put("userId", userAccountPojo.getId());
         map.put("orderBy", "id");
         map.put("sortBy", "desc");
         map.put("size", 1);
         map.put("score",score);
-        map.put("userName",super.getUserAccountPojo().getName());
+        map.put("userName", userAccountPojo.getName());
         ReportInfoView reportInfoView = iReportResultService.getReportInfoView(map);
         Map resultMap = new HashMap();
         resultMap.put("reportInfoView", reportInfoView);
@@ -165,7 +170,12 @@ public class SmartReportController extends BaseCommonController {
     @ResponseBody
     public Map<String,Object> reportSave(ReportResult reportResult) {
         //reportResult.setUserId(Integer.valueOf(super.getAccoutId()));
-        reportResult.setUserId(Integer.valueOf( super.getAccoutId()));
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+        reportResult.setUserId( Integer.valueOf(userAccountPojo.getId().toString()));
         reportResult.setCreateTime(System.currentTimeMillis());
         Integer result = iReportResultService.insertSelective(reportResult);
         Map map = new HashMap();
