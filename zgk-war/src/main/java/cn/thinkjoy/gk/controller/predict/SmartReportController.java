@@ -96,11 +96,12 @@ public class SmartReportController extends BaseCommonController {
     public Map<String,Object> getUserReport(@RequestParam(value = "score") Integer score) throws IOException {
 
         Map map = new HashMap();
-        map.put("userId", 22);
+        map.put("userId", Integer.valueOf( super.getAccoutId()));
         map.put("orderBy", "id");
         map.put("sortBy", "desc");
         map.put("size", 1);
         map.put("score",score);
+        map.put("userName",super.getUserAccountPojo().getName());
         ReportInfoView reportInfoView = iReportResultService.getReportInfoView(map);
         Map resultMap = new HashMap();
         resultMap.put("reportInfoView", reportInfoView);
@@ -164,7 +165,7 @@ public class SmartReportController extends BaseCommonController {
     @ResponseBody
     public Map<String,Object> reportSave(ReportResult reportResult) {
         //reportResult.setUserId(Integer.valueOf(super.getAccoutId()));
-        reportResult.setUserId(Integer.valueOf(22));
+        reportResult.setUserId(Integer.valueOf( super.getAccoutId()));
         reportResult.setCreateTime(System.currentTimeMillis());
         Integer result = iReportResultService.insertSelective(reportResult);
         Map map = new HashMap();

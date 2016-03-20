@@ -98,13 +98,13 @@ public class ReportResultServiceImpl implements IReportResultService {
         reportResultView.setUserId(reportResult.getUserId());
 
         //获取批次控制线
-        String controllLine = iSystemParmasService.getBatchKey(reportResult.getBatch(), reportResult.getProvinceCode());
+        String controllLine = iSystemParmasService.getBatchKey(reportResult.getMajorType(), reportResult.getProvinceCode());
 
         SystemParmas systemParmas = iSystemParmasService.getRoleByKey(controllLine);
 
 
         reportResultView.setControllLine(systemParmas.getConfigValue());
-        reportResultView.setUserName("测试");
+        reportResultView.setUserName(map.get("userName").toString());
         reportResultView.setMajorType(reportResult.getMajorType());
         reportResultView.setCreateTime(reportResult.getCreateTime());
         reportResultView.setPrecedence(reportResult.getPrecedence());
