@@ -3,6 +3,8 @@ package cn.thinkjoy.gk.controller.predict;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.common.ReportUtil;
+import cn.thinkjoy.gk.common.ZGKBaseController;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.entity.ReportResult;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
 import cn.thinkjoy.gk.pojo.*;
@@ -14,6 +16,7 @@ import cn.thinkjoy.gk.service.IUniversityMajorEnrollingService;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,8 +34,9 @@ import java.util.Map;
  * Created by douzy on 16/3/14.
  */
 @Controller
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/report")
-public class SmartReportController extends BaseCommonController {
+public class SmartReportController extends ZGKBaseController {
     private static final Logger LOGGER= LoggerFactory.getLogger(SmartReportController.class);
     @Resource
     IUniversityInfoService iUniversityInfoService;
@@ -56,6 +60,17 @@ public class SmartReportController extends BaseCommonController {
                                      @RequestParam(value = "cate",required = false) Integer cate,
                                          @RequestParam(value = "province",required = false) String province,
                                          ModelMap modelMap) {
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if(vipStatus==null||vipStatus==0){
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
 
         LOGGER.info("=======批次及批次控制线信息 Start=======");
         LOGGER.info("分数:" + score);
@@ -77,6 +92,17 @@ public class SmartReportController extends BaseCommonController {
     @ResponseBody
     public Map<String,Object> getSpecialty(@RequestParam(value = "uId") Integer uId
                                            ,@RequestParam(value = "cate") Integer cate) {
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if(vipStatus==null||vipStatus==0){
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
         Map parmasMap = new HashMap();
         parmasMap.put("universityId", uId);
         parmasMap.put("majorType", cate);
@@ -97,8 +123,14 @@ public class SmartReportController extends BaseCommonController {
 
         UserAccountPojo userAccountPojo = getUserAccountPojo();
 
+
         if(userAccountPojo==null){
             throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if(vipStatus==null||vipStatus==0){
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
         }
         Map map = new HashMap();
         map.put("userId", userAccountPojo.getId());
@@ -125,6 +157,14 @@ public class SmartReportController extends BaseCommonController {
                              @RequestParam(value = "province") String province,
                              @RequestParam(value = "categorie") Integer categorie,
                              @RequestParam(value="precedence") Integer precedence) {
+
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if(vipStatus==null||vipStatus==0){
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
+
         LOGGER.info("=======智能填报主入口 Start=======");
         LOGGER.info("分数:" + score);
         LOGGER.info("科类:" + categorie);
@@ -172,8 +212,14 @@ public class SmartReportController extends BaseCommonController {
         //reportResult.setUserId(Integer.valueOf(super.getAccoutId()));
         UserAccountPojo userAccountPojo = getUserAccountPojo();
 
+
         if(userAccountPojo==null){
             throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if(vipStatus==null||vipStatus==0){
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
         }
         reportResult.setUserId( Integer.valueOf(userAccountPojo.getId().toString()));
         reportResult.setCreateTime(System.currentTimeMillis());
