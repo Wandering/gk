@@ -176,6 +176,8 @@ public class UniversityInfoServiceImpl implements IUniversityInfoService {
         for(UniversityInfoView universityInfoView:oldUniversityInfos) {
             Map planMap = new HashMap();
             planMap.put("universityId", universityInfoView.getUniversityId());
+            planMap.put("majorType",(universityInfoView.getMajorType().equals("文科") ? 1 : 2));
+            planMap.put("areaId",universityInfoView.getAreaId());
             Integer PlanEnrolling = iUniversityMajorEnrollingService.selectUniversityPlanEnrollingNumber(planMap);
 //            Integer PlanEnrolling = selectPlanEnrolling(planMap);
             LOGGER.info("计划招生人数:" + PlanEnrolling);
