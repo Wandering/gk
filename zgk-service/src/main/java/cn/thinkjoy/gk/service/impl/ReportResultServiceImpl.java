@@ -8,6 +8,7 @@ import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.service.IReportResultService;
 import cn.thinkjoy.gk.service.ISystemParmasService;
 import cn.thinkjoy.gk.service.IUniversityMajorEnrollingService;
+import com.alibaba.dubbo.common.utils.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.springframework.stereotype.Service;
@@ -101,6 +102,7 @@ public class ReportResultServiceImpl implements IReportResultService {
 
         SystemParmas systemParmas = iSystemParmasService.getRoleByKey(controllLine);
 
+
         reportResultView.setControllLine(systemParmas.getConfigValue());
         reportResultView.setUserName("测试");
         reportResultView.setMajorType(reportResult.getMajorType());
@@ -146,6 +148,8 @@ public class ReportResultServiceImpl implements IReportResultService {
 
             //此处后期优化 -- 其实院校不需要List 保存对象即可  因为每个志愿梯度 只能保存一个院校
             SelfReportUniversityView selfReportUniversityView = reportResultViews.getSelfReportUniversityViewList();
+            if(!StringUtils.isBlank(selfReportUniversityView.getName())) {
+
 
 //            for (SelfReportUniversityView selfReportUniversityView : selfReportUniversityViews) {
                 reportUniversityView.setProperty(selfReportUniversityView.getProperty());
@@ -157,18 +161,19 @@ public class ReportResultServiceImpl implements IReportResultService {
                 reportUniversityView.setRange(selfReportUniversityView.isRange());
                 reportUniversityView.setRankTrend(selfReportUniversityView.getRankTrend());
 
-                Map universityMap=new HashMap();
-            universityMap.put("universityId",selfReportUniversityView.getId());
-                Integer lowestScoreAvg=iUniversityMajorEnrollingService.lowestScoreAvg(universityMap);
+                Map universityMap = new HashMap();
+                universityMap.put("universityId", selfReportUniversityView.getId());
+                Integer lowestScoreAvg = iUniversityMajorEnrollingService.lowestScoreAvg(universityMap);
                 reportUniversityView.setLowestScoreAvg(lowestScoreAvg);
 //            }
 
-            Map map=new HashMap();
-            map.put("score",score);
-            Integer  ranking =iReportResultDao.selectRanking(map);
+                Map map = new HashMap();
+                map.put("score", score);
+                Integer ranking = iReportResultDao.selectRanking(map);
 
-            reportUniversityView.setRanking(ranking);
-            reportUniversityViews.add(reportUniversityView);
+                reportUniversityView.setRanking(ranking);
+                reportUniversityViews.add(reportUniversityView);
+            }
         }
         return reportUniversityViews;
     }
