@@ -67,6 +67,8 @@
             and dict.type='UNIVERSITY_TYPE'
 --             and enrollingPlan.planEnrolling is not null
             group by bData.universityId
+
+            order by bData.enrollRate desc,bData.preScoreDiff desc   limit 60
             <!--<if test="id!=null">-->
                <!--and id=${id}-->
             <!--</if>-->
