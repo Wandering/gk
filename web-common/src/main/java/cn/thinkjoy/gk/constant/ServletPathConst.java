@@ -57,6 +57,7 @@ public class ServletPathConst {
         //智能填报
         MAPPING_URLS.add("/report/get/batch.do");
         MAPPING_URLS.add("/report/get/specialty.do");
+        MAPPING_URLS.add("/report/get/info.do");
         MAPPING_URLS.add("/report/main.do");
         MAPPING_URLS.add("/report/save.do");
 
