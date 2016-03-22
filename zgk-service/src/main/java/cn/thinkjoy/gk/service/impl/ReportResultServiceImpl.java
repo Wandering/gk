@@ -80,6 +80,7 @@ public class ReportResultServiceImpl implements IReportResultService {
     public Integer getPrecedence(String tableName,Integer precedence) {
         Map map=new HashMap();
         map.put("tableName",tableName);
+        map.put("preceden",precedence);
         List<Integer> preList = selectPrecedence(map);
         final Integer size = preList.size();
         Integer[] preArr = (Integer[]) preList.toArray(new Integer[size]);

@@ -1,7 +1,6 @@
 package cn.thinkjoy.gk.controller.predict;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.common.ReportUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
