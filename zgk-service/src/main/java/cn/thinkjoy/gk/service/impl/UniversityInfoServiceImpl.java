@@ -65,7 +65,11 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
                 universityInfoViews =  super.selectUniversityInfo(map);
                 break;
             case 2:    //排名法
-                map.put("precedence", precedence);
+                if (precedence > 0) {
+                    Integer result = iReportResultService.getPrecedence(tbName, precedence);
+                    map.put("precedenceParmas", result);  // 计算线差
+                }
+                map.put("precedence", precedence); //user precedence
                 map.put("first", first);
                 universityInfoViews =  super.selectUniversityInfoByRanking(map);
                 break;

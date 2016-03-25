@@ -87,7 +87,7 @@
         <include refid="Base_Join_Search_Column"/>
         <where>
             <if test="rankStart!=null and rankEnd!=null">
-                and   zgk_university.rank &gt;=${rankStart}   and zgk_university.rank &lt;=${rankEnd}
+                and  zgk_university.rank &gt;=${rankStart}   and zgk_university.rank &lt;=${rankEnd}
             </if>
             <if test="enrollStart!=null and enrollEnd!=null">
                 <choose>
@@ -98,6 +98,9 @@
                         and  left(bData.enrollRate*100,7)&gt;=${enrollStart} and  left(bData.enrollRate*100,7)&lt;${enrollEnd}
                     </otherwise>
                 </choose>
+            </if>
+            <if test="precedenceParmas!=null">
+                and bData.precedence=${precedenceParmas}
             </if>
             <if test="isRank==true">
               and zgk_university.rank is not null

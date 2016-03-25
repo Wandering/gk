@@ -147,6 +147,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
             map.put("tableName",initMap.get("tableName"));
             map.put("province", initMap.get("province"));//key
             map.put("majorType", initMap.get("majorType"));
+            map.put("precedenceParmas", initMap.get("precedenceParmas"));
             //院校排名规则
             if (rankingRoleParmas.getWhoDim() == ReportEnum.RankDim.RANK.getValue()) {
                 ArrayList<Integer> roleArr = ReportUtil.strSplit(rankingRoleParmas.getRankRuleParmas(), ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
