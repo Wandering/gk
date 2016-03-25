@@ -58,7 +58,7 @@ public class ServletPathConst {
         MAPPING_URLS.add("/report/get/batch.do");
         MAPPING_URLS.add("/report/get/specialty.do");
         MAPPING_URLS.add("/report/get/info.do");
-        MAPPING_URLS.add("/report/main.do");
+//        MAPPING_URLS.add("/report/main.do");
         MAPPING_URLS.add("/report/save.do");
 
 //        JSP_URLS.put("/guide/guide.jsp","");

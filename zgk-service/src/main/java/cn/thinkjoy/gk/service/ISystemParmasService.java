@@ -79,4 +79,12 @@ public interface ISystemParmasService {
      * @return
      */
     String getBatchKey(Integer batch,String provinceCode);
+
+    /**
+     *  获取当前位次符合的排名规则区间下标
+     * @param proCode 省份Code
+     * @param precedence  输入位次
+     * @return
+     */
+    Integer getRankingRangeIndex(String proCode,Integer precedence);
 }

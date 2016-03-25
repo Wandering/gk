@@ -167,4 +167,22 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
         LOGGER.info("========利用率规则 End=======");
         return enrollRateArr;
     }
+
+    /**
+     * 获取当前位次符合的排名规则区间下标
+     * @return
+     */
+    @Override
+    public Integer getRankingRangeIndex(String proCode,Integer precedence) {
+        LOGGER.info("========获取排名规则区间下标 start=======");
+        LOGGER.info("输入位次:" + precedence);
+        SystemParmas systemParmas = getThresoldModel(proCode, ReportUtil.VOLUNTEER_BATCH_PRECEDENCE_KEY);
+        if (systemParmas == null)
+            return -1;
+        LOGGER.info("组装排名VALUE:" + systemParmas.getConfigValue());
+        Integer index = ReportUtil.getRankingRuleIndex(systemParmas.getConfigValue(), precedence);
+        LOGGER.info("拆分取得下标:" + index);
+        LOGGER.info("========获取排名规则区间下标 end=======");
+        return index;
+    }
 }
