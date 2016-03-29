@@ -48,4 +48,24 @@ public class ReportEnum {
 
         public abstract int getValue();
     }
+
+    /**
+     * 位次法搜索维度  - 0 院校排名   1 录取率排名
+     */
+    public enum RankDim {
+        RANK {
+            @Override
+            public byte getValue() {
+                return 0;
+            }
+        },
+        ENROLLING {
+            @Override
+            public byte getValue() {
+                return 1;
+            }
+        };
+
+        public abstract byte getValue();
+    }
 }

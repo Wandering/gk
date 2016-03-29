@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IRankingRoleParmasDao">
+    <resultMap id="BaseResultMap" type="cn.thinkjoy.gk.entity.RankingRoleParmas">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="precedence_index" property="precedenceIndex" jdbcType="INTEGER" />
+        <result column="who_first" property="whoFirst" jdbcType="TINYINT" />
+        <result column="who_dim" property="whoDim" jdbcType="TINYINT" />
+        <result column="province_code" property="provinceCode" jdbcType="VARCHAR"/>
+        <result column="rank_rule_parmas" property="rankRuleParmas" jdbcType="VARCHAR" />
+        <result  column="enrolling_rule_parmas" property="enrollingRuleParmas" jdbcType="VARCHAR"/>
+        <result column="limit_parmas" property="limitParmas" jdbcType="VARCHAR" />
+        <result column="order_parmas" property="orderParmas" jdbcType="TINYINT" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,precedence_index,who_first,who_dim,province_code,rank_rule_parmas,enrolling_rule_parmas,limit_parmas,order_parmas
+    </sql>
+
+    <select id="selectModel" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT <include refid="Base_Column_List" />  from zgk_ranking_role_parmas
+        <where>
+            <if test="id!=null">
+                and id=#{id,jdbcType=BIGINT}
+            </if>
+            <if test="precedenceIndex!=null and precedence_index>=0">
+               and precedence_index=#{precedenceIndex,jdbcType=INTEGER}
+            </if>
+            <if test="whoFirst!=null">
+                and who_first=#{whoFirst,jdbcType=TINYINT}
+            </if>
+            <if test="whoDim!=null">
+                and  who_dim=#{whoDim,jdbcType=TINYINT}
+            </if>
+            <if test="provinceCode!=null">
+                and   province_code=#{provinceCode,jdbcType=VARCHAR}
+            </if>
+            <if test="rankRuleParmas!=null">
+                and  rank_rule_parmas=#{rankRuleParmas,jdbcType=VARCHAR}
+            </if>
+            <if test="enrollingRuleParmas!=null">
+                and   enrolling_rule_parmas=#{enrollingRuleParmas,jdbcType=VARCHAR}
+            </if>
+            <if test="limitParmas!=null">
+                and   limit_parmas=#{limitParmas,jdbcType=VARCHAR}
+            </if>
+            <if test="orderParmas!=null">
+                and   order_parmas=#{orderParmas,jdbcType=TINYINT}
+            </if>
+        </where>
+    </select>
+    <select id="selectRankingRuleParmasList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT <include refid="Base_Column_List" />  from zgk_ranking_role_parmas
+        <where>
+            <if test="id!=null">
+                and id=#{id,jdbcType=BIGINT}
+            </if>
+            <if test="precedenceIndex!=null and precedence_index>=0">
+                and precedence_index=#{precedenceIndex,jdbcType=INTEGER}
+            </if>
+            <if test="whoFirst!=null">
+                and who_first=#{whoFirst,jdbcType=TINYINT}
+            </if>
+            <if test="whoDim!=null">
+                and  who_dim=#{whoDim,jdbcType=TINYINT}
+            </if>
+            <if test="provinceCode!=null">
+                and   province_code=#{provinceCode,jdbcType=VARCHAR}
+            </if>
+            <if test="rankRuleParmas!=null">
+                and  rank_rule_parmas=#{rankRuleParmas,jdbcType=VARCHAR}
+            </if>
+            <if test="enrollingRuleParmas!=null">
+                and   enrolling_rule_parmas=#{enrollingRuleParmas,jdbcType=VARCHAR}
+            </if>
+            <if test="limitParmas!=null">
+                and   limit_parmas=#{limitParmas,jdbcType=VARCHAR}
+            </if>
+            <if test="orderParmas!=null">
+                and   order_parmas=#{orderParmas,jdbcType=TINYINT}
+            </if>
+        </where>
+    </select>
+</mapper>

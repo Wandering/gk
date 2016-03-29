@@ -1,9 +1,7 @@
 package cn.thinkjoy.gk.constant;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by clei on 15/8/8.
@@ -56,6 +54,13 @@ public class ServletPathConst {
         MAPPING_URLS.add("/userCollection/getUserCollectList.do");
         MAPPING_URLS.add("/userCollection/deleteUserCollect.do");
         MAPPING_URLS.add("/userCollection/isUniversityCollect.do");
+        //智能填报
+        MAPPING_URLS.add("/report/get/batch.do");
+        MAPPING_URLS.add("/report/get/specialty.do");
+        MAPPING_URLS.add("/report/get/info.do");
+//        MAPPING_URLS.add("/report/main.do");
+        MAPPING_URLS.add("/report/save.do");
+
 //        JSP_URLS.put("/guide/guide.jsp","");
         JSP_URLS.add("/user/personal-info.jsp");
         JSP_URLS.add("/user/modify-psd.jsp");

@@ -1,20 +1,17 @@
 package cn.thinkjoy.gk.controller.predict;
 
-import cn.thinkjoy.gk.common.BaseCommonController;
-import cn.thinkjoy.gk.common.ReportUtil;
+import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.common.ZGKBaseController;
+import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.entity.ReportResult;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
-import cn.thinkjoy.gk.pojo.BatchView;
-import cn.thinkjoy.gk.pojo.ReportInfoView;
-import cn.thinkjoy.gk.pojo.SelfReportResultView;
-import cn.thinkjoy.gk.pojo.SpecialtyView;
-import cn.thinkjoy.gk.service.IReportResultService;
-import cn.thinkjoy.gk.service.ISystemParmasService;
-import cn.thinkjoy.gk.service.IUniversityInfoService;
-import cn.thinkjoy.gk.service.IUniversityMajorEnrollingService;
+import cn.thinkjoy.gk.pojo.*;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.service.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +29,9 @@ import java.util.Map;
  * Created by douzy on 16/3/14.
  */
 @Controller
+@Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/report")
-public class SmartReportController extends BaseCommonController {
+public class SmartReportController extends ZGKBaseController {
     private static final Logger LOGGER= LoggerFactory.getLogger(SmartReportController.class);
     @Resource
     IUniversityInfoService iUniversityInfoService;
@@ -57,6 +55,17 @@ public class SmartReportController extends BaseCommonController {
                                      @RequestParam(value = "cate",required = false) Integer cate,
                                          @RequestParam(value = "province",required = false) String province,
                                          ModelMap modelMap) {
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if(vipStatus==null||vipStatus==0){
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
 
         LOGGER.info("=======批次及批次控制线信息 Start=======");
         LOGGER.info("分数:" + score);
@@ -78,6 +87,17 @@ public class SmartReportController extends BaseCommonController {
     @ResponseBody
     public Map<String,Object> getSpecialty(@RequestParam(value = "uId") Integer uId
                                            ,@RequestParam(value = "cate") Integer cate) {
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if(vipStatus==null||vipStatus==0){
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
         Map parmasMap = new HashMap();
         parmasMap.put("universityId", uId);
         parmasMap.put("majorType", cate);
@@ -95,12 +115,25 @@ public class SmartReportController extends BaseCommonController {
     @ResponseBody
     public Map<String,Object> getUserReport(@RequestParam(value = "score") Integer score) throws IOException {
 
+
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if(vipStatus==null||vipStatus==0){
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
         Map map = new HashMap();
-        map.put("userId", 22);
+        map.put("userId", userAccountPojo.getId());
         map.put("orderBy", "id");
         map.put("sortBy", "desc");
         map.put("size", 1);
         map.put("score",score);
+        map.put("userName", userAccountPojo.getName());
         ReportInfoView reportInfoView = iReportResultService.getReportInfoView(map);
         Map resultMap = new HashMap();
         resultMap.put("reportInfoView", reportInfoView);
@@ -118,38 +151,52 @@ public class SmartReportController extends BaseCommonController {
                              @RequestParam(value = "score") Integer score,
                              @RequestParam(value = "province") String province,
                              @RequestParam(value = "categorie") Integer categorie,
-                             @RequestParam(value="precedence") Integer precedence) {
+                             @RequestParam(value="precedence") Integer precedence,
+                             @RequestParam(value="first") Integer first,
+                             @RequestParam(value = "version") Integer version) {
+
+//        UserAccountPojo userAccountPojo = getUserAccountPojo();
+//        Integer vipStatus = userAccountPojo.getVipStatus();
+//
+//        if(vipStatus==null||vipStatus==0){
+//            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+//        }
+
         LOGGER.info("=======智能填报主入口 Start=======");
         LOGGER.info("分数:" + score);
         LOGGER.info("科类:" + categorie);
         LOGGER.info("省份:" + province);
         LOGGER.info("批次:" + batch);
-
-        String tbName = ReportUtil.getTableName(province, categorie, batch, (precedence > 0 ? true : false));
-
-        LOGGER.info("tableName:" + tbName);
-        Map map = new HashMap<>();
-        map.put("tableName", tbName);
-//        map.put("code", "'" + province + "'");  //db
-        map.put("province", province);//key
-        map.put("majorType", categorie);
-
         LOGGER.info("用户输入位次:"+precedence);
-        if (precedence > 0) {
-            Integer result=iReportResultService.getPrecedence(tbName, precedence);
-            map.put("precedence", result);
+        LOGGER.info("专业OR院校:"+first);
+        LOGGER.info("version:"+version);
+//        String tbName = ReportUtil.getTableName(province, categorie, batch, (precedence > 0 ? true : false));
+//
+//        LOGGER.info("tableName:" + tbName);
+//        Map map = new HashMap<>();
+//        map.put("tableName", tbName);
+////        map.put("code", "'" + province + "'");  //db
+//        map.put("province", province);//key
+//        map.put("majorType", categorie);
 
-        }else {
-            LOGGER.info("==线差计算 Start==");
-            //根据分数及控制线 计算线差
-            Integer lineDiff = iUniversityInfoService.getLineDiff(batch, score, categorie, province);
-            LOGGER.info("线差为:" + lineDiff);
-            LOGGER.info("==线差计算 End==");
-            map.put("scoreDiff", lineDiff);
-        }
-        List<UniversityInfoView> universityInfoViewList = iUniversityInfoService.selectUniversityInfo(map);
-//        Map resultMap = new HashMap();
-//        resultMap.put("universityInfoViewList", universityInfoViewList);
+
+        List<UniversityInfoView> universityInfoViewList=iUniversityInfoService.selectUniversityInfoViewByVersion(version,score,categorie,province,batch,precedence,first);
+
+//        if (precedence > 0) {
+//            Integer result=iReportResultService.getPrecedence(tbName, precedence);
+//            map.put("precedence", result);
+//
+//        }else {
+//            LOGGER.info("==线差计算 Start==");
+//            //根据分数及控制线 计算线差
+//            Integer lineDiff = iUniversityInfoService.getLineDiff(batch, score, categorie, province);
+//            LOGGER.info("线差为:" + lineDiff);
+//            LOGGER.info("==线差计算 End==");
+//            map.put("scoreDiff", lineDiff);
+//        }
+
+//        List<UniversityInfoView> universityInfoViewList = iUniversityInfoService.selectUniversityInfo(map);
+
         LOGGER.info("最终输出:" + universityInfoViewList.size() + "个院校清单");
         LOGGER.info("=======智能填报主入口 End=======");
         return universityInfoViewList;
@@ -164,7 +211,18 @@ public class SmartReportController extends BaseCommonController {
     @ResponseBody
     public Map<String,Object> reportSave(ReportResult reportResult) {
         //reportResult.setUserId(Integer.valueOf(super.getAccoutId()));
-        reportResult.setUserId(Integer.valueOf(22));
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if(vipStatus==null||vipStatus==0){
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
+        reportResult.setUserId( Integer.valueOf(userAccountPojo.getId().toString()));
         reportResult.setCreateTime(System.currentTimeMillis());
         Integer result = iReportResultService.insertSelective(reportResult);
         Map map = new HashMap();
