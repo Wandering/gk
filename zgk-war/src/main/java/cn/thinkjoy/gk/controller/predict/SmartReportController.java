@@ -155,12 +155,12 @@ public class SmartReportController extends ZGKBaseController {
                              @RequestParam(value="first") Integer first,
                              @RequestParam(value = "version") Integer version) {
 
-//        UserAccountPojo userAccountPojo = getUserAccountPojo();
-//        Integer vipStatus = userAccountPojo.getVipStatus();
-//
-//        if(vipStatus==null||vipStatus==0){
-//            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
-//        }
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if(vipStatus==null||vipStatus==0){
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
 
         LOGGER.info("=======智能填报主入口 Start=======");
         LOGGER.info("分数:" + score);
