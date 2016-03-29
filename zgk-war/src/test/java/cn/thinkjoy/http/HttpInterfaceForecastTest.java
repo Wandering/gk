@@ -16,6 +16,7 @@ public class HttpInterfaceForecastTest extends TestCase{
         String getFormerYearsAdmission_url="/forecast/getFormerYearsAdmission.do";
         String addFrecast_url="/forecast/addFrecast.do";
         String yuce_url="/predict/predictSchoolList.do";
+        String mubiaodingwei_url="/predict/tallyPredictProbability.do ";
 
         public void testGetPerformanceDetail(){
                 String url=host + getPerformanceDetail_url + "";
@@ -45,4 +46,9 @@ public class HttpInterfaceForecastTest extends TestCase{
         assertTrue(result.contains("true"));
     }
 
+    public void testmbdw(){
+        String url=host + mubiaodingwei_url + "?type=1&score=700&token=6jTVV1EGuG2OEcjheOOkDw%3D%3D&userKey=gd";
+        String result = RequestUtils.requestPost(url);
+        assertTrue(result.contains("true"));
+    }
 }
