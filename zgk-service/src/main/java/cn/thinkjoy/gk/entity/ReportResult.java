@@ -26,11 +26,11 @@ public class ReportResult extends CreateBaseDomain<Long> {
     /**
      * 是否完整
      */
-    private boolean isComplete;
+    private byte isComplete;
     /**
      * 是否合理
      */
-    private boolean isReasonable;
+    private byte isReasonable;
     /**
      * 报告结果
      */
@@ -92,19 +92,19 @@ public class ReportResult extends CreateBaseDomain<Long> {
         this.precedence = precedence;
     }
 
-    public boolean isComplete() {
+    public byte isComplete() {
         return isComplete;
     }
 
-    public void setComplete(boolean isComplete) {
+    public void setComplete(byte isComplete) {
         this.isComplete = isComplete;
     }
 
-    public boolean isReasonable() {
+    public byte isReasonable() {
         return isReasonable;
     }
 
-    public void setReasonable(boolean isReasonable) {
+    public void setReasonable(byte isReasonable) {
         this.isReasonable = isReasonable;
     }
 

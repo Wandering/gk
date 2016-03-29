@@ -66,6 +66,11 @@ public class SelfReportUniversityView implements Serializable {
     private Integer isComplied;
 
     /**
+     * 冲稳保垫标示 [冲,稳,保,垫] 0,1,2,3
+     */
+    private Integer sequence;
+
+    /**
      * 专业集
      */
     private List<SelfReportMajorView> selfReportMajorViewList;
@@ -172,6 +177,14 @@ public class SelfReportUniversityView implements Serializable {
 
     public void setIsComplied(Integer isComplied) {
         this.isComplied = isComplied;
+    }
+
+    public Integer getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(Integer sequence) {
+        this.sequence = sequence;
     }
 
     public List<SelfReportMajorView> getSelfReportMajorViewList() {

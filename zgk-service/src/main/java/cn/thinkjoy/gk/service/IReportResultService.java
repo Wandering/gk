@@ -46,4 +46,11 @@ public interface IReportResultService {
      * @return
      */
     Integer getPrecedence(String tableName,Integer precedence);
+
+    /**
+     * 梯度合理性判断
+     * @param reportJson
+     * @return
+     */
+     boolean reportIsReasonable(String reportJson);
 }

@@ -87,6 +87,30 @@ public class ReportResultServiceImpl implements IReportResultService {
         Integer result = ReportUtil.binarysearchKey(preArr, precedence);
         return result;
     }
+
+    /**
+     * 合理性评估
+     * @return
+     */
+    @Override
+    public boolean reportIsReasonable(String reportJson) {
+        boolean result = true;
+        List<SelfReportResultView> selfReportResultViews = getUnSerializableReports(reportJson);
+
+        for (int i = 0; i < selfReportResultViews.size(); i++) {
+            SelfReportResultView prevSelfReportResultView = selfReportResultViews.get(i);
+
+            Integer prevSeq = prevSelfReportResultView.getSelfReportUniversityViewList().getSequence();
+            for (int j = i + 1; j < selfReportResultViews.size(); j++) {
+                SelfReportResultView nextSelfReportResultView = selfReportResultViews.get(j);
+                Integer nextSeq = nextSelfReportResultView.getSelfReportUniversityViewList().getSequence();
+                if (prevSeq > nextSeq) {
+                    return false;
+                }
+            }
+        }
+        return result;
+    }
     /**
      * 评估结果输出----获取报告展示 -- 用户信息部分
      * @return
@@ -115,6 +139,7 @@ public class ReportResultServiceImpl implements IReportResultService {
         reportResultView.setReportResultJson(reportResult.getReportResultJson());
         return reportResultView;
     }
+
 
     /**
      * 评估结果输出----获取用户所选院校及专业反序列化后List集

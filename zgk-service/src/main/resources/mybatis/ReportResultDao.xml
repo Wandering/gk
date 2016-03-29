@@ -8,8 +8,8 @@
         <result column="score" property="score" jdbcType="INTEGER"/>
         <result column="major_type" property="majorType" jdbcType="INTEGER"/>
         <result column="precedence" property="precedence" jdbcType="INTEGER"/>
-        <result column="is_complete" property="isComplete" jdbcType="BIT"/>
-        <result column="is_reasonable" property="isReasonable" jdbcType="BIT"/>
+        <result column="is_complete" property="isComplete" jdbcType="TINYINT"/>
+        <result column="is_reasonable" property="isReasonable" jdbcType="TINYINT"/>
         <result column="report_result_json" property="reportResultJson" jdbcType="VARCHAR"/>
         <result column="batch" property="batch" jdbcType="INTEGER"/>
         <result column="province_code" property="provinceCode" jdbcType="VARCHAR"/>
@@ -75,10 +75,10 @@
                 #{precedence,jdbcType=INTEGER},
             </if>
             <if test="isComplete != null">
-                #{isComplete,jdbcType=BIT},
+                #{isComplete,jdbcType=TINYINT},
             </if>
             <if test="isReasonable != null">
-                #{isReasonable,jdbcType=BIT},
+                #{isReasonable,jdbcType=TINYINT},
             </if>
             <if test="reportResultJson != null">
                 #{reportResultJson,jdbcType=VARCHAR},
