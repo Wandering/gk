@@ -30,6 +30,8 @@ import java.util.*;
 @RequestMapping(value = "/vip")
 public class VipController extends ZGKBaseController implements Watched {
 
+    private static Logger logger=LoggerFactory.getLogger(VipController.class);
+
     @Autowired
     private Watcher watcher;
     @Autowired
@@ -76,7 +78,11 @@ public class VipController extends ZGKBaseController implements Watched {
         Map<String,Object> notify=new HashMap();
         notify.put("cardNumber",card.getCardNumber());
         notify.put("userId",userAccountPojo.getId());
-//        notifyWatchers(notify);
+        try {
+            notifyWatchers(notify);
+        }catch (Exception e){
+            logger.info("卡号异常防窜货代理商系统调用失败！");
+        }
         return userAccountPojo;
     }
 
