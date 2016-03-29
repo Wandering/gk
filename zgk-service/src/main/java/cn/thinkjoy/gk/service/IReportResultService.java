@@ -52,5 +52,5 @@ public interface IReportResultService {
      * @param reportJson
      * @return
      */
-     boolean reportIsReasonable(String reportJson);
+     boolean reportIsReasonable(ReportResult reportResult);
 }

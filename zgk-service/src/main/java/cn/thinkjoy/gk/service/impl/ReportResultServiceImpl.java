@@ -93,14 +93,21 @@ public class ReportResultServiceImpl implements IReportResultService {
      * @return
      */
     @Override
-    public boolean reportIsReasonable(String reportJson) {
+    public boolean reportIsReasonable(ReportResult reportResult) {
         boolean result = true;
-        List<SelfReportResultView> selfReportResultViews = getUnSerializableReports(reportJson);
+        List<SelfReportResultView> selfReportResultViews = getUnSerializableReports(reportResult.getReportResultJson());
 
+        //获取规则阀值
+        SystemParmas systemParmas= iSystemParmasService.getThresoldModel(reportResult.getProvinceCode(), ReportUtil.VOLUNTEER_RANKING_VALUE_KEY);
+        if(systemParmas==null)
+            return false;
+         Integer rankingValue= Integer.valueOf(systemParmas.getConfigValue());
+        List<Integer> reportSeq=new ArrayList<>();
         for (int i = 0; i < selfReportResultViews.size(); i++) {
             SelfReportResultView prevSelfReportResultView = selfReportResultViews.get(i);
 
             Integer prevSeq = prevSelfReportResultView.getSelfReportUniversityViewList().getSequence();
+            reportSeq.add(prevSeq);
             for (int j = i + 1; j < selfReportResultViews.size(); j++) {
                 SelfReportResultView nextSelfReportResultView = selfReportResultViews.get(j);
                 Integer nextSeq = nextSelfReportResultView.getSelfReportUniversityViewList().getSequence();
@@ -108,6 +115,18 @@ public class ReportResultServiceImpl implements IReportResultService {
                     return false;
                 }
             }
+        }
+        //大于阀值
+        if(reportResult.getPrecedence()>=rankingValue) {
+            SystemParmas classifySysParmas = iSystemParmasService.getThresoldModel(reportResult.getProvinceCode(), ReportUtil.CLASSIFY_TAG_KEY);
+            String[] arr = classifySysParmas.getConfigValue().split(ReportUtil.VOLUNTEER_KEY_SPLIT_SYMBOL);
+
+            for (int i = 0; i < arr.length; i++) {
+                if (!reportSeq.contains(i)) {
+                    return false;
+                }
+            }
+
         }
         return result;
     }
@@ -186,7 +205,7 @@ public class ReportResultServiceImpl implements IReportResultService {
                 reportUniversityView.setProportion(selfReportUniversityView.isProportion());
                 reportUniversityView.setRange(selfReportUniversityView.isRange());
                 reportUniversityView.setRankTrend(selfReportUniversityView.getRankTrend());
-
+                reportUniversityView.setSeq(selfReportUniversityView.getSequence());
                 Map universityMap = new HashMap();
                 universityMap.put("universityId", selfReportUniversityView.getId());
                 Integer lowestScoreAvg = iUniversityMajorEnrollingService.lowestScoreAvg(universityMap);

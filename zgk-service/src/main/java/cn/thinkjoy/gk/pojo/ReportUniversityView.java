@@ -59,6 +59,11 @@ public class ReportUniversityView implements Serializable {
      */
     private Integer ranking;
 
+    /**
+     * 冲稳保垫
+     */
+    private Integer seq;
+
 
 
 
@@ -158,4 +163,11 @@ public class ReportUniversityView implements Serializable {
         this.ranking = ranking;
     }
 
+    public Integer getSeq() {
+        return seq;
+    }
+
+    public void setSeq(Integer seq) {
+        this.seq = seq;
+    }
 }

@@ -222,7 +222,9 @@ public class SmartReportController extends ZGKBaseController {
         if(vipStatus==null||vipStatus==0){
             throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
         }
-        boolean isReasonable=iReportResultService.reportIsReasonable(reportResult.getReportResultJson());
+
+
+        boolean isReasonable=iReportResultService.reportIsReasonable(reportResult);
         reportResult.setUserId( Integer.valueOf(userAccountPojo.getId().toString()));
         reportResult.setCreateTime(System.currentTimeMillis());
         reportResult.setReasonable((isReasonable?(byte)1:(byte)0));
