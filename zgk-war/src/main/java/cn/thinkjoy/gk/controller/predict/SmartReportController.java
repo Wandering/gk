@@ -214,20 +214,24 @@ public class SmartReportController extends ZGKBaseController {
         UserAccountPojo userAccountPojo = getUserAccountPojo();
 
 
-        if(userAccountPojo==null){
-            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        if (userAccountPojo == null) {
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
         }
         Integer vipStatus = userAccountPojo.getVipStatus();
 
-        if(vipStatus==null||vipStatus==0){
-            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        if (vipStatus == null || vipStatus == 0) {
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(), ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
         }
 
+        //合理性评估
+        boolean isReasonable = iReportResultService.reportIsReasonable(reportResult);
 
-        boolean isReasonable=iReportResultService.reportIsReasonable(reportResult);
-        reportResult.setUserId( Integer.valueOf(userAccountPojo.getId().toString()));
+        //完整性评估   --只要存在专业名称为空的  就是不完整
+        boolean isCompl = iReportResultService.reportIsComplete(reportResult);
+        reportResult.setUserId(Integer.valueOf(userAccountPojo.getId().toString()));
         reportResult.setCreateTime(System.currentTimeMillis());
-        reportResult.setReasonable((isReasonable?(byte)1:(byte)0));
+        reportResult.setReasonable((isReasonable ? (byte) 1 : (byte) 0));
+        reportResult.setComplete((isCompl ? (byte) 1 : (byte) 0));
         Integer result = iReportResultService.insertSelective(reportResult);
         Map map = new HashMap();
 

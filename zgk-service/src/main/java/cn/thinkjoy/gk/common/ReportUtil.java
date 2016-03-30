@@ -46,7 +46,14 @@ public class ReportUtil {
      * 排名法 ---位次阀值
      */
     public static final String VOLUNTEER_RANKING_VALUE_KEY="RANKING_VALUE";
-
+    /**
+     * 专业限制数 ---用于完整性判断
+     */
+    public static final String SPECIALITY_NUMVER="SPECIALITY_NUMVER";
+    /**
+     * 专业调剂限制数 ---用于完整性判断
+     */
+    public static final String SWAP_NUMBER="SWAP_NUMBER";
     /**
      * 冲稳保垫
      */

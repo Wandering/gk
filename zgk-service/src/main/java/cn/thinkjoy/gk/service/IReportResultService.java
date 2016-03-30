@@ -53,4 +53,11 @@ public interface IReportResultService {
      * @return
      */
      boolean reportIsReasonable(ReportResult reportResult);
+
+    /**
+     * 完整性评估
+     * @param reportResult
+     * @return
+     */
+    boolean reportIsComplete(ReportResult reportResult);
 }

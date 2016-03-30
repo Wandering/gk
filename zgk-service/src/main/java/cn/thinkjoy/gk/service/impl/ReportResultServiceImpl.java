@@ -130,6 +130,42 @@ public class ReportResultServiceImpl implements IReportResultService {
         }
         return result;
     }
+
+    /**
+     * 完整性评估
+     * @return
+     */
+    @Override
+    public boolean reportIsComplete(ReportResult reportResult) {
+        boolean result = true;
+        List<SelfReportResultView> selfReportResultViews = getUnSerializableReports(reportResult.getReportResultJson());
+//        /**
+//         * 获取专业最大限制数
+//         */
+//        SystemParmas specialtyParmas = iSystemParmasService.getThresoldModel(reportResult.getProvinceCode(), ReportUtil.SPECIALITY_NUMVER);
+//        if (specialtyParmas == null) {
+//            return false;
+//        }
+//        SystemParmas swapParmas = iSystemParmasService.getThresoldModel(reportResult.getProvinceCode(), ReportUtil.SWAP_NUMBER);
+//        if (swapParmas == null) {
+//            return false;
+//        }
+//        Integer specialtyNum = Integer.valueOf(specialtyParmas.getConfigValue()),
+//                swapNum = Integer.valueOf(swapParmas.getConfigValue());
+
+        for (int i = 0; i < selfReportResultViews.size(); i++) {
+            SelfReportResultView prevSelfReportResultView = selfReportResultViews.get(i);
+            List<SelfReportMajorView> selfReportMajorViews = prevSelfReportResultView.getSelfReportUniversityViewList().getSelfReportMajorViewList();
+
+            for (SelfReportMajorView selfReportMajorView : selfReportMajorViews) {
+                if (StringUtils.isBlank(selfReportMajorView.getName())) {
+                    return false;
+                }
+            }
+        }
+
+        return result;
+    }
     /**
      * 评估结果输出----获取报告展示 -- 用户信息部分
      * @return
