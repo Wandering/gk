@@ -170,6 +170,15 @@ public class SmartReportController extends ZGKBaseController {
         LOGGER.info("用户输入位次:"+precedence);
         LOGGER.info("专业OR院校:"+first);
         LOGGER.info("version:"+version);
+
+        UniversityInfoParmasView universityInfoParmasView=new UniversityInfoParmasView();
+        universityInfoParmasView.setBatch(batch);
+        universityInfoParmasView.setCategorie(categorie);
+        universityInfoParmasView.setFirst(first);
+        universityInfoParmasView.setVersion(version);
+        universityInfoParmasView.setPrecedence(precedence);
+        universityInfoParmasView.setProvince(province);
+        universityInfoParmasView.setScore(score);
 //        String tbName = ReportUtil.getTableName(province, categorie, batch, (precedence > 0 ? true : false));
 //
 //        LOGGER.info("tableName:" + tbName);
@@ -180,7 +189,7 @@ public class SmartReportController extends ZGKBaseController {
 //        map.put("majorType", categorie);
 
 
-        List<UniversityInfoView> universityInfoViewList=iUniversityInfoService.selectUniversityInfoViewByVersion(version,score,categorie,province,batch,precedence,first);
+        List<UniversityInfoView> universityInfoViewList=iUniversityInfoService.selectUniversityInfoViewByVersion(universityInfoParmasView);
 
 //        if (precedence > 0) {
 //            Integer result=iReportResultService.getPrecedence(tbName, precedence);

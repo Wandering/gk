@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.service;
 
 import cn.thinkjoy.gk.entity.UniversityInfoView;
+import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 
 import java.util.List;
 import java.util.Map;
@@ -18,5 +19,5 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
      */
     public Integer selectPlanEnrolling(Map map);
 
-    public List<UniversityInfoView> selectUniversityInfoViewByVersion(Integer version,Integer score,Integer categorie,String province,Integer batch,Integer precedence,Integer first);
+    public List<UniversityInfoView> selectUniversityInfoViewByVersion(UniversityInfoParmasView universityInfoParmasView);
 }

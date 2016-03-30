@@ -101,21 +101,21 @@
         select<include refid="Base_Column_List" /> from zgk_report_result
         <where>
             <if test="userId!=null">
-                user_id=#{userId}
+                user_id=#{userId,jdbcType=INTEGER}
             </if>
         </where>
         <if test="orderBy!=null">
-            ORDER BY ${orderBy} ${sortBy}
+            ORDER BY #{orderBy,jdbcType=VARCHAR} ${sortBy,jdbcType=VARCHAR}
         </if>
         <if test="size!=null">
-            limit #{size}
+            limit #{size,jdbcType=INTEGER}
         </if>
     </select>
     <select id="selectRanking" resultType="java.lang.Integer" parameterType="java.util.Map">
-         select (select count(Distinct(score)) from zgk_report_result where score>#{score})+1 as ranking
+         select (select count(Distinct(score)) from zgk_report_result where score>#{score,jdbcType=INTEGER})+1 as ranking
     </select>
-    <select id="selectPrecedence" resultType="java.lang.Integer"  parameterType="java.util.Map" statementType="STATEMENT">
-        (select distinct(precedence) from ${tableName} where precedence&lt;=${preceden} order by precedence desc limit 1) union
-        (select distinct(precedence) from ${tableName} where precedence&gt;${preceden} order by precedence asc limit 1)
+    <select id="selectPrecedence" resultType="java.lang.Integer"  parameterType="java.util.Map" >
+        (select distinct(precedence) from ${tableName} where precedence&lt;=#{preceden,jdbcType=INTEGER} order by precedence desc limit 1) union
+        (select distinct(precedence) from ${tableName} where precedence&gt;#{preceden,jdbcType=INTEGER} order by precedence asc limit 1)
     </select>
 </mapper>

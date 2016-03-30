@@ -43,7 +43,7 @@
         left join zgk_data_dict as dict on zgk_university.type=dict.dictId
     </sql>
     <!--按位次-->
-    <select id="selectUniversityInfo" resultMap="BaseResultMap" parameterType="java.util.Map" statementType="STATEMENT">
+    <select id="selectUniversityInfo" resultMap="BaseResultMap" parameterType="java.util.Map" >
         select <include refid="Search_Column_List" /> from ${tableName} as bData
         left join zgk_university as zgk_university on bData.universityId=zgk_university.id
         left join zgk_university_enrolling as zgk_university_enroll on bData.universityId=zgk_university_enroll.universityId
@@ -53,26 +53,26 @@
         <where>
             <choose>
                 <when test="precedence!=null">
-                    and bData.precedence=${precedence}
+                    and bData.precedence=#{precedence,jdbcType=INTEGER}
                 </when>
                 <otherwise>
-                    and bData.scoreDiff=${scoreDiff}
+                    and bData.scoreDiff=#{scoreDiff,jdbcType=INTEGER}
                 </otherwise>
             </choose>
             <if test="year!=null">
-                and zgk_university_enroll.year=${year}
+                and zgk_university_enroll.year=#{year,jdbcType=INTEGER}
             </if>
             <!--<if test="code!=null">-->
                 <!--and province.code=${code}-->
             <!--</if>-->
             <if test="majorType!=null">
-                 and zgk_university_enroll.majorType=${majorType}
+                 and zgk_university_enroll.majorType=#{majorType,jdbcType=INTEGER}
             </if>
             <if test="enrollRateBegin!=null and enrollRateEnd!=null">
-                and  left(bData.enrollRate*100,7)&gt;=${enrollRateBegin} and left(bData.enrollRate*100,7)&lt;=${enrollRateEnd}
+                and  left(bData.enrollRate*100,7)&gt;=#{enrollRateBegin,jdbcType=INTEGER} and left(bData.enrollRate*100,7)&lt;=#{enrollRateEnd,jdbcType=INTEGER}
             </if>
             <if test="scoreUseRateBegin!=null and scoreUseRateEnd!=null">
-                and left(bData.scoreUseRate*100,7)&gt;=${scoreUseRateBegin} and left(bData.scoreUseRate*100,7)&lt;=${scoreUseRateEnd}
+                and left(bData.scoreUseRate*100,7)&gt;=#{scoreUseRateBegin,jdbcType=INTEGER} and left(bData.scoreUseRate*100,7)&lt;=#{scoreUseRateEnd,jdbcType=INTEGER}
             </if>
             and dict.type='UNIVERSITY_TYPE'
 --             and enrollingPlan.planEnrolling is not null
@@ -82,25 +82,25 @@
         </where>
     </select>
     <!--按排名-->
-    <select id="selectUniversityInfoByRanking" resultMap="BaseResultMap" parameterType="java.util.Map" statementType="STATEMENT">
+    <select id="selectUniversityInfoByRanking" resultMap="BaseResultMap" parameterType="java.util.Map" >
         select <include refid="Search_Column_List_Ranking" /> from ${tableName} as bData
         <include refid="Base_Join_Search_Column"/>
         <where>
             <if test="rankStart!=null and rankEnd!=null">
-                and  zgk_university.rank &gt;=${rankStart}   and zgk_university.rank &lt;=${rankEnd}
+                and  zgk_university.rank &gt;=#{rankStart,jdbcType=INTEGER}   and zgk_university.rank &lt;=#{rankEnd,jdbcType=INTEGER}
             </if>
             <if test="enrollStart!=null and enrollEnd!=null">
                 <choose>
                     <when test="enrollStart==100 and enrollEnd==100">
-                        and  left(bData.enrollRate*100,7)=${enrollEnd}
+                        and  left(bData.enrollRate*100,7)=#{enrollEnd,,jdbcType=INTEGER}
                     </when>
                     <otherwise>
-                        and  left(bData.enrollRate*100,7)&gt;=${enrollStart} and  left(bData.enrollRate*100,7)&lt;${enrollEnd}
+                        and  left(bData.enrollRate*100,7)&gt;=#{enrollStart,jdbcType=INTEGER} and  left(bData.enrollRate*100,7)&lt;#{enrollEnd,jdbcType=INTEGER}
                     </otherwise>
                 </choose>
             </if>
             <if test="precedenceParmas!=null">
-                and bData.precedence=${precedenceParmas}
+                and bData.precedence=#{precedenceParmas,jdbcType=INTEGER}
             </if>
             <if test="isRank==true">
               and zgk_university.rank is not null
@@ -111,16 +111,12 @@
             <if test="isRank==true">
               order by zgk_university.rank asc
             </if>
-            <if test="isEnrolling==true">
-                <if test="enrollOrder!=null and scoreDiffOrder!=null">
-                    order by bData.enrollRate ${enrollOrder},preScoreDiff ${scoreDiffOrder}
-                </if>
+            <if test="isEnrolling==true and enrollOrder!=null and scoreDiffOrder!=null">
+                order by bData.enrollRate #{enrollOrder,jdbcType=INTEGER},preScoreDiff #{scoreDiffOrder,jdbcType=INTEGER}
             </if>
         </where>
-        <if test="isEnrolling==true">
-            <if test="begin!=null and end!=null">
-                limit ${begin},${end}
-            </if>
+        <if test="isEnrolling==true and begin!=null and end!=null">
+            limit #{begin,jdbcType=INTEGER},#{end,jdbcType=INTEGER}
         </if>
     </select>
     <select id="selectPlanEnrolling" parameterType="java.util.Map" resultType="java.lang.Integer">
@@ -130,10 +126,10 @@
                     universityId=#{universityId}
                 </if>
                 <if test="enrollRateBegin!=null and enrollRateEnd!=null">
-                    and  left(bData.enrollRate*100,7)&gt;=${enrollRateBegin} and left(bData.enrollRate*100,7)&lt;=${enrollRateEnd}
+                    and  left(bData.enrollRate*100,7)&gt;=#{enrollRateBegin,jdbcType=INTEGER} and left(bData.enrollRate*100,7)&lt;=#{enrollRateEnd,jdbcType=INTEGER}
                 </if>
                 <if test="scoreUseRateBegin!=null and scoreUseRateEnd!=null">
-                    and left(bData.scoreUseRate*100,7)&gt;=${scoreUseRateBegin} and left(bData.scoreUseRate*100,7)&lt;=${scoreUseRateEnd}
+                    and left(bData.scoreUseRate*100,7)&gt;=#{scoreUseRateBegin,jdbcType=INTEGER} and left(bData.scoreUseRate*100,7)&lt;=#{scoreUseRateEnd,jdbcType=INTEGER}
                 </if>
                 and dict.type='UNIVERSITY_TYPE'
             </where>

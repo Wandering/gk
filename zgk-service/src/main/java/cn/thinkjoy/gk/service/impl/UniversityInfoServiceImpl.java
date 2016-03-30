@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.gk.common.ReportUtil;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
+import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 import cn.thinkjoy.gk.service.IReportResultService;
 import cn.thinkjoy.gk.service.IUniversityInfoService;
 import org.slf4j.Logger;
@@ -32,46 +33,48 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
 
     /**
      * 版本控制
-     * @param version
-     * @param map
+     * @param
+     * @param
      * @return
      */
     @Override
-    public List<UniversityInfoView> selectUniversityInfoViewByVersion(Integer version,Integer score,Integer categorie,String province,Integer batch,Integer precedence,Integer first) {
+    public List<UniversityInfoView> selectUniversityInfoViewByVersion(UniversityInfoParmasView universityInfoParmasView) {
         List<UniversityInfoView> universityInfoViews = new ArrayList<>();
 
-        String tbName = ReportUtil.getTableName(province, categorie, batch, (precedence > 0 ? true : false));
+        String tbName = ReportUtil.getTableName(universityInfoParmasView.getProvince(), universityInfoParmasView.getCategorie(),
+                universityInfoParmasView.getBatch(), (universityInfoParmasView.getPrecedence() > 0 ? true : false));
 
         Map map = new HashMap<>();
         map.put("tableName", tbName);
         LOGGER.info("tableName:" + tbName);
-        map.put("province", province);//key
-        map.put("majorType", categorie);
+        map.put("province", universityInfoParmasView.getProvince());//key
+        map.put("majorType", universityInfoParmasView.getCategorie());
 
-        switch (version) {
+        switch (universityInfoParmasView.getVersion()) {
             case 1:               //线差及位次法
-                if (precedence > 0) {
-                    Integer result = iReportResultService.getPrecedence(tbName, precedence);
+                if (universityInfoParmasView.getPrecedence() > 0) {
+                    Integer result = iReportResultService.getPrecedence(tbName, universityInfoParmasView.getPrecedence());
                     map.put("precedence", result);
 
                 } else {
                     LOGGER.info("==线差计算 Start==");
                     //根据分数及控制线 计算线差
-                    Integer lineDiff = super.getLineDiff(batch, score, categorie, province);
+                    Integer lineDiff = super.getLineDiff(universityInfoParmasView.getBatch(), universityInfoParmasView.getScore(),
+                            universityInfoParmasView.getCategorie(), universityInfoParmasView.getProvince());
                     LOGGER.info("线差为:" + lineDiff);
                     LOGGER.info("==线差计算 End==");
                     map.put("scoreDiff", lineDiff);
                 }
-                universityInfoViews =  super.selectUniversityInfo(map);
+                universityInfoViews = super.selectUniversityInfo(map);
                 break;
             case 2:    //排名法
-                if (precedence > 0) {
-                    Integer result = iReportResultService.getPrecedence(tbName, precedence);
+                if (universityInfoParmasView.getPrecedence() > 0) {
+                    Integer result = iReportResultService.getPrecedence(tbName, universityInfoParmasView.getPrecedence());
                     map.put("precedenceParmas", result);  // 计算线差
                 }
-                map.put("precedence", precedence); //user precedence
-                map.put("first", first);
-                universityInfoViews =  super.selectUniversityInfoByRanking(map);
+                map.put("precedence", universityInfoParmasView.getPrecedence()); //user precedence
+                map.put("first", universityInfoParmasView.getFirst());
+                universityInfoViews = super.selectUniversityInfoByRanking(map);
                 break;
         }
         return universityInfoViews;
