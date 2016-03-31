@@ -113,8 +113,13 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         if (StringUtils.isBlank(proCode) && StringUtils.isBlank(precedence)
                 && StringUtils.isBlank(first))
             return null;
+         SystemParmas systemParmas=iSystemParmasService.getThresoldModel(proCode, ReportUtil.VOLUNTEER_RANKING_VALUE_KEY);
+        if(systemParmas==null)
+            return null;
+        //1:一批 2：二批 3：高职高专 4:三批
+        Integer batch= Integer.valueOf(map.get("batch").toString());
 
-        Integer preNum = Integer.valueOf(precedence), firstValue = Integer.valueOf(first);
+        Integer preNum = (batch==3?Integer.valueOf(systemParmas.getConfigValue()):Integer.valueOf(precedence)), firstValue = Integer.valueOf(first);
 
         Integer rangeIndex = iSystemParmasService.getRankingRangeIndex(proCode, preNum);
 

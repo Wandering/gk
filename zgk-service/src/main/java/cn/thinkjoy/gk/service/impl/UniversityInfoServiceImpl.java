@@ -74,6 +74,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
                 }
                 map.put("precedence", universityInfoParmasView.getPrecedence()); //user precedence
                 map.put("first", universityInfoParmasView.getFirst());
+                map.put("batch",universityInfoParmasView.getBatch());
                 universityInfoViews = super.selectUniversityInfoByRanking(map);
                 break;
         }
