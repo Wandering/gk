@@ -92,7 +92,7 @@
             <if test="enrollStart!=null and enrollEnd!=null">
                 <choose>
                     <when test="enrollStart==100 and enrollEnd==100">
-                        and  left(bData.enrollRate*100,7)=#{enrollEnd,,jdbcType=INTEGER}
+                        and  left(bData.enrollRate*100,7)=#{enrollEnd,jdbcType=INTEGER}
                     </when>
                     <otherwise>
                         and  left(bData.enrollRate*100,7)&gt;=#{enrollStart,jdbcType=INTEGER} and  left(bData.enrollRate*100,7)&lt;#{enrollEnd,jdbcType=INTEGER}
@@ -112,7 +112,7 @@
               order by zgk_university.rank asc
             </if>
             <if test="isEnrolling==true and enrollOrder!=null and scoreDiffOrder!=null">
-                order by bData.enrollRate #{enrollOrder,jdbcType=INTEGER},preScoreDiff #{scoreDiffOrder,jdbcType=INTEGER}
+                order by bData.enrollRate ${enrollOrder},preScoreDiff ${scoreDiffOrder}
             </if>
         </where>
         <if test="isEnrolling==true and begin!=null and end!=null">

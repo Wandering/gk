@@ -101,11 +101,11 @@
         select<include refid="Base_Column_List" /> from zgk_report_result
         <where>
             <if test="userId!=null">
-                user_id=#{userId,jdbcType=INTEGER}
+                user_id=#{userId}
             </if>
         </where>
         <if test="orderBy!=null">
-            ORDER BY #{orderBy,jdbcType=VARCHAR} ${sortBy,jdbcType=VARCHAR}
+            ORDER BY ${orderBy} ${sortBy}
         </if>
         <if test="size!=null">
             limit #{size,jdbcType=INTEGER}
