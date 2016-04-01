@@ -56,10 +56,8 @@ public class LoginController extends ZGKBaseController {
 			if(userAccountBean==null){
 				old=oldUserLogin(account,password);
 			}else {
-				if (!"@@@@".equals(password)) {
-					if (!password.equals(userAccountBean.getPassword())) {
-						throw new BizException(ERRORCODE.LOGIN_PASSWORD_ERROR.getCode(), ERRORCODE.LOGIN_PASSWORD_ERROR.getMessage());
-					}
+				if (!password.equals(userAccountBean.getPassword())) {
+					throw new BizException(ERRORCODE.LOGIN_PASSWORD_ERROR.getCode(), ERRORCODE.LOGIN_PASSWORD_ERROR.getMessage());
 				}
 				if (userAccountBean.getStatus() != 0) {
 					throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "用户状态异常，请联系管理员!");
@@ -124,10 +122,8 @@ public class LoginController extends ZGKBaseController {
 		if (userAccountBean == null) {
 			throw new BizException(ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getCode(),ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getMessage());
 		}
-		if (!"@@@@".equals(password)) {
-			if (!password.equals(userAccountBean.getPassword())) {
-				throw new BizException(ERRORCODE.LOGIN_PASSWORD_ERROR.getCode(),ERRORCODE.LOGIN_PASSWORD_ERROR.getMessage());
-			}
+		if (!password.equals(userAccountBean.getPassword())) {
+			throw new BizException(ERRORCODE.LOGIN_PASSWORD_ERROR.getCode(),ERRORCODE.LOGIN_PASSWORD_ERROR.getMessage());
 		}
 		return userAccountBean;
 	}
