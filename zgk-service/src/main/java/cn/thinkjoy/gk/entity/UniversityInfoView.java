@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 /**
  * Created by douzy on 16/3/14.
  */
-public class UniversityInfoView extends CreateBaseDomain<Long> {
+public class UniversityInfoView extends CreateBaseDomain<Long> implements Comparable<UniversityInfoView> {
     private Long id;
     /**
      * 年份
@@ -91,6 +91,7 @@ public class UniversityInfoView extends CreateBaseDomain<Long> {
      * 平均分年份
      */
     private Integer averageYear;
+
 
 
 
@@ -282,5 +283,10 @@ public class UniversityInfoView extends CreateBaseDomain<Long> {
 
     public void setAverageYear(Integer averageYear) {
         this.averageYear = averageYear;
+    }
+
+    @Override
+    public int compareTo(UniversityInfoView universityInfoView) {
+        return this.sequence.compareTo(universityInfoView.getSequence());
     }
 }

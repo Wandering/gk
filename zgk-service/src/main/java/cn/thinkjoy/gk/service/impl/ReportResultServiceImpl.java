@@ -80,10 +80,90 @@ public class ReportResultServiceImpl implements IReportResultService {
     public Integer getPrecedence(String tableName,Integer precedence) {
         Map map=new HashMap();
         map.put("tableName",tableName);
+        map.put("preceden",precedence);
         List<Integer> preList = selectPrecedence(map);
         final Integer size = preList.size();
         Integer[] preArr = (Integer[]) preList.toArray(new Integer[size]);
         Integer result = ReportUtil.binarysearchKey(preArr, precedence);
+        return result;
+    }
+
+    /**
+     * 合理性评估
+     * @return
+     */
+    @Override
+    public boolean reportIsReasonable(ReportResult reportResult) {
+        boolean result = true;
+        List<SelfReportResultView> selfReportResultViews = getUnSerializableReports(reportResult.getReportResultJson());
+
+        //获取规则阀值
+        SystemParmas systemParmas= iSystemParmasService.getThresoldModel(reportResult.getProvinceCode(), ReportUtil.VOLUNTEER_RANKING_VALUE_KEY);
+        if(systemParmas==null)
+            return false;
+         Integer rankingValue= Integer.valueOf(systemParmas.getConfigValue());
+        List<Integer> reportSeq=new ArrayList<>();
+        for (int i = 0; i < selfReportResultViews.size(); i++) {
+            SelfReportResultView prevSelfReportResultView = selfReportResultViews.get(i);
+
+            Integer prevSeq = prevSelfReportResultView.getSelfReportUniversityViewList().getSequence();
+            reportSeq.add(prevSeq);
+            for (int j = i + 1; j < selfReportResultViews.size(); j++) {
+                SelfReportResultView nextSelfReportResultView = selfReportResultViews.get(j);
+                Integer nextSeq = nextSelfReportResultView.getSelfReportUniversityViewList().getSequence();
+                if (prevSeq > nextSeq) {
+                    return false;
+                }
+            }
+        }
+        //大于阀值
+        if(reportResult.getPrecedence()>=rankingValue) {
+            SystemParmas classifySysParmas = iSystemParmasService.getThresoldModel(reportResult.getProvinceCode(), ReportUtil.CLASSIFY_TAG_KEY);
+            String[] arr = classifySysParmas.getConfigValue().split(ReportUtil.VOLUNTEER_KEY_SPLIT_SYMBOL);
+
+            for (int i = 0; i < arr.length; i++) {
+                if (!reportSeq.contains(i)) {
+                    return false;
+                }
+            }
+
+        }
+        return result;
+    }
+
+    /**
+     * 完整性评估
+     * @return
+     */
+    @Override
+    public boolean reportIsComplete(ReportResult reportResult) {
+        boolean result = true;
+        List<SelfReportResultView> selfReportResultViews = getUnSerializableReports(reportResult.getReportResultJson());
+//        /**
+//         * 获取专业最大限制数
+//         */
+//        SystemParmas specialtyParmas = iSystemParmasService.getThresoldModel(reportResult.getProvinceCode(), ReportUtil.SPECIALITY_NUMVER);
+//        if (specialtyParmas == null) {
+//            return false;
+//        }
+//        SystemParmas swapParmas = iSystemParmasService.getThresoldModel(reportResult.getProvinceCode(), ReportUtil.SWAP_NUMBER);
+//        if (swapParmas == null) {
+//            return false;
+//        }
+//        Integer specialtyNum = Integer.valueOf(specialtyParmas.getConfigValue()),
+//                swapNum = Integer.valueOf(swapParmas.getConfigValue());
+
+        for (int i = 0; i < selfReportResultViews.size(); i++) {
+            SelfReportResultView prevSelfReportResultView = selfReportResultViews.get(i);
+            List<SelfReportMajorView> selfReportMajorViews = prevSelfReportResultView.getSelfReportUniversityViewList().getSelfReportMajorViewList();
+
+            for (SelfReportMajorView selfReportMajorView : selfReportMajorViews) {
+                if (StringUtils.isBlank(selfReportMajorView.getName())) {
+                    return false;
+                }
+            }
+        }
+
         return result;
     }
     /**
@@ -114,6 +194,7 @@ public class ReportResultServiceImpl implements IReportResultService {
         reportResultView.setReportResultJson(reportResult.getReportResultJson());
         return reportResultView;
     }
+
 
     /**
      * 评估结果输出----获取用户所选院校及专业反序列化后List集
@@ -160,7 +241,7 @@ public class ReportResultServiceImpl implements IReportResultService {
                 reportUniversityView.setProportion(selfReportUniversityView.isProportion());
                 reportUniversityView.setRange(selfReportUniversityView.isRange());
                 reportUniversityView.setRankTrend(selfReportUniversityView.getRankTrend());
-
+                reportUniversityView.setSeq(selfReportUniversityView.getSequence());
                 Map universityMap = new HashMap();
                 universityMap.put("universityId", selfReportUniversityView.getId());
                 Integer lowestScoreAvg = iUniversityMajorEnrollingService.lowestScoreAvg(universityMap);

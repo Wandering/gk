@@ -1,18 +1,13 @@
 package cn.thinkjoy.gk.controller.predict;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseCommonController;
-import cn.thinkjoy.gk.common.ReportUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.entity.ReportResult;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
 import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.service.IReportResultService;
-import cn.thinkjoy.gk.service.ISystemParmasService;
-import cn.thinkjoy.gk.service.IUniversityInfoService;
-import cn.thinkjoy.gk.service.IUniversityMajorEnrollingService;
+import cn.thinkjoy.gk.service.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -156,7 +151,9 @@ public class SmartReportController extends ZGKBaseController {
                              @RequestParam(value = "score") Integer score,
                              @RequestParam(value = "province") String province,
                              @RequestParam(value = "categorie") Integer categorie,
-                             @RequestParam(value="precedence") Integer precedence) {
+                             @RequestParam(value="precedence") Integer precedence,
+                             @RequestParam(value="first") Integer first,
+                             @RequestParam(value = "version") Integer version) {
 
         UserAccountPojo userAccountPojo = getUserAccountPojo();
         Integer vipStatus = userAccountPojo.getVipStatus();
@@ -170,32 +167,45 @@ public class SmartReportController extends ZGKBaseController {
         LOGGER.info("科类:" + categorie);
         LOGGER.info("省份:" + province);
         LOGGER.info("批次:" + batch);
-
-        String tbName = ReportUtil.getTableName(province, categorie, batch, (precedence > 0 ? true : false));
-
-        LOGGER.info("tableName:" + tbName);
-        Map map = new HashMap<>();
-        map.put("tableName", tbName);
-//        map.put("code", "'" + province + "'");  //db
-        map.put("province", province);//key
-        map.put("majorType", categorie);
-
         LOGGER.info("用户输入位次:"+precedence);
-        if (precedence > 0) {
-            Integer result=iReportResultService.getPrecedence(tbName, precedence);
-            map.put("precedence", result);
+        LOGGER.info("专业OR院校:"+first);
+        LOGGER.info("version:"+version);
 
-        }else {
-            LOGGER.info("==线差计算 Start==");
-            //根据分数及控制线 计算线差
-            Integer lineDiff = iUniversityInfoService.getLineDiff(batch, score, categorie, province);
-            LOGGER.info("线差为:" + lineDiff);
-            LOGGER.info("==线差计算 End==");
-            map.put("scoreDiff", lineDiff);
-        }
-        List<UniversityInfoView> universityInfoViewList = iUniversityInfoService.selectUniversityInfo(map);
-//        Map resultMap = new HashMap();
-//        resultMap.put("universityInfoViewList", universityInfoViewList);
+        UniversityInfoParmasView universityInfoParmasView=new UniversityInfoParmasView();
+        universityInfoParmasView.setBatch(batch);
+        universityInfoParmasView.setCategorie(categorie);
+        universityInfoParmasView.setFirst(first);
+        universityInfoParmasView.setVersion(version);
+        universityInfoParmasView.setPrecedence(precedence);
+        universityInfoParmasView.setProvince(province);
+        universityInfoParmasView.setScore(score);
+//        String tbName = ReportUtil.getTableName(province, categorie, batch, (precedence > 0 ? true : false));
+//
+//        LOGGER.info("tableName:" + tbName);
+//        Map map = new HashMap<>();
+//        map.put("tableName", tbName);
+////        map.put("code", "'" + province + "'");  //db
+//        map.put("province", province);//key
+//        map.put("majorType", categorie);
+
+
+        List<UniversityInfoView> universityInfoViewList=iUniversityInfoService.selectUniversityInfoViewByVersion(universityInfoParmasView);
+
+//        if (precedence > 0) {
+//            Integer result=iReportResultService.getPrecedence(tbName, precedence);
+//            map.put("precedence", result);
+//
+//        }else {
+//            LOGGER.info("==线差计算 Start==");
+//            //根据分数及控制线 计算线差
+//            Integer lineDiff = iUniversityInfoService.getLineDiff(batch, score, categorie, province);
+//            LOGGER.info("线差为:" + lineDiff);
+//            LOGGER.info("==线差计算 End==");
+//            map.put("scoreDiff", lineDiff);
+//        }
+
+//        List<UniversityInfoView> universityInfoViewList = iUniversityInfoService.selectUniversityInfo(map);
+
         LOGGER.info("最终输出:" + universityInfoViewList.size() + "个院校清单");
         LOGGER.info("=======智能填报主入口 End=======");
         return universityInfoViewList;
@@ -213,16 +223,24 @@ public class SmartReportController extends ZGKBaseController {
         UserAccountPojo userAccountPojo = getUserAccountPojo();
 
 
-        if(userAccountPojo==null){
-            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        if (userAccountPojo == null) {
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
         }
         Integer vipStatus = userAccountPojo.getVipStatus();
 
-        if(vipStatus==null||vipStatus==0){
-            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        if (vipStatus == null || vipStatus == 0) {
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(), ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
         }
-        reportResult.setUserId( Integer.valueOf(userAccountPojo.getId().toString()));
+
+        //合理性评估
+        boolean isReasonable = iReportResultService.reportIsReasonable(reportResult);
+
+        //完整性评估   --只要存在专业名称为空的  就是不完整
+        boolean isCompl = iReportResultService.reportIsComplete(reportResult);
+        reportResult.setUserId(Integer.valueOf(userAccountPojo.getId().toString()));
         reportResult.setCreateTime(System.currentTimeMillis());
+        reportResult.setReasonable((isReasonable ? (byte) 1 : (byte) 0));
+        reportResult.setComplete((isCompl ? (byte) 1 : (byte) 0));
         Integer result = iReportResultService.insertSelective(reportResult);
         Map map = new HashMap();
 
