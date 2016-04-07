@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +43,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
     public SystemParmas getThresoldModel(String proCode,String keyEnum) {
         Map parmasMap = new HashMap();
         parmasMap.put("configKey", proCode.toUpperCase()+ ReportUtil.ROLE_KEY_SPLIT_SYMBOL + keyEnum);
-
+        parmasMap.put("provinceCode",proCode);
         SystemParmas systemParmas = selectModel(parmasMap);
 
         return systemParmas;
@@ -75,6 +74,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
         String batchKey = getBatchKey(cate, provinceCode);
         Map parmasMap = new HashMap();
         parmasMap.put("configKey", batchKey);
+        parmasMap.put("provinceCode",provinceCode);
         SystemParmas systemParmas = selectModel(parmasMap);
         return systemParmas;
     }
