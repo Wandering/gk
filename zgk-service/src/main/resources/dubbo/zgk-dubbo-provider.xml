@@ -10,7 +10,7 @@
 
     <dubbo:registry address="${dubbo_zk_url}" file="/tmp/dubbo.cache"/>
 
-    <dubbo:protocol name="dubbo" port="20880" />
+    <dubbo:protocol name="dubbo" port="-1" />
 
     <dubbo:reference id="answerService" interface="cn.thinkjoy.ss.api.IAnswerService" check="false" retries="0" timeout="600000"/>
 
