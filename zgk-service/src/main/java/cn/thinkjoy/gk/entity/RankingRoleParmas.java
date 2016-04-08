@@ -25,6 +25,11 @@ public class RankingRoleParmas extends CreateBaseDomain<Long> implements Seriali
      * 省份code
      */
     private String provinceCode;
+
+    /**
+     * 1：文 2：理
+     */
+    private byte majorType;
     /**
      * 院校排名规则参数
      */
@@ -41,6 +46,11 @@ public class RankingRoleParmas extends CreateBaseDomain<Long> implements Seriali
      * 0:asc 1:desc
      */
     private byte orderParmas;
+
+    /**
+     * 0:位次法  1:分数补充法
+     */
+    private byte isScore;
 
     @Override
     public Long getId() {
@@ -84,6 +94,14 @@ public class RankingRoleParmas extends CreateBaseDomain<Long> implements Seriali
         this.provinceCode = provinceCode;
     }
 
+    public byte getMajorType() {
+        return majorType;
+    }
+
+    public void setMajorType(byte majorType) {
+        this.majorType = majorType;
+    }
+
     public String getRankRuleParmas() {
         return rankRuleParmas;
     }
@@ -114,5 +132,13 @@ public class RankingRoleParmas extends CreateBaseDomain<Long> implements Seriali
 
     public void setOrderParmas(byte orderParmas) {
         this.orderParmas = orderParmas;
+    }
+
+    public byte getIsScore() {
+        return isScore;
+    }
+
+    public void setIsScore(byte isScore) {
+        this.isScore = isScore;
     }
 }

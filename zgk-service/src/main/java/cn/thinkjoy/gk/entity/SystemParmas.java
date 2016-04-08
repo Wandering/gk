@@ -10,6 +10,7 @@ public class SystemParmas extends CreateBaseDomain<Long> {
     private String provinceCode;
     private String configKey;
     private String configValue;
+    private byte majorType;
 
     @Override
     public Long getId() {
@@ -43,5 +44,13 @@ public class SystemParmas extends CreateBaseDomain<Long> {
 
     public void setConfigValue(String configValue) {
         this.configValue = configValue;
+    }
+
+    public byte getMajorType() {
+        return majorType;
+    }
+
+    public void setMajorType(byte majorType) {
+        this.majorType = majorType;
     }
 }
