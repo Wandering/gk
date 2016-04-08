@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.service;
 
 import cn.thinkjoy.gk.entity.UniversityInfoView;
+import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 
 import java.util.List;
 import java.util.Map;
@@ -15,13 +16,14 @@ import java.util.Map;
 public interface IBaseUniversityInfoService {
     /**
      * 根据分数及控制线 计算线差
-     * @param batch 批次
-     * @param score 分数
-     * @param cate  科类
+     *
+     * @param batch        批次
+     * @param score        分数
+     * @param cate         科类
      * @param provinceCode 省份
      * @return
      */
-    public  Integer getLineDiff(Integer batch,Integer score,Integer cate, String provinceCode);
+    public Integer getLineDiff(Integer batch, Integer score, Integer cate, String provinceCode);
 
     /**
      * 线差法
@@ -29,18 +31,42 @@ public interface IBaseUniversityInfoService {
      * 2.根据动态参数[录取率、利用率]初次筛选
      * 3.根据梯度规则进行二次筛选[梯度规则见DB]
      * 4.输出清单
+     *
      * @param map
      * @return
      */
-    public  List<UniversityInfoView> selectUniversityInfo(Map map);
+    public List<UniversityInfoView> selectUniversityInfo(Map map);
 
     /**
      * 位次法
      * 1.判断用户位次是否大于设置阀值[值见DB]
      * 2.大于阀值 走线差法
      * 3.小于阀值 根据位次规则输出清单[规则见DB]
+     *
      * @param map
      * @return
      */
-    public  List<UniversityInfoView> selectUniversityInfoByRanking(Map map);
+    public List<UniversityInfoView> selectUniversityInfoByRanking(Map map);
+
+    /**
+     * 分数补充法
+     * 1.判断用户输入分数
+     * 2.如果在批次限制范围 则走此分数法
+     * 3.如果不在批次限制范围  则走位次法
+     *
+     * @param map
+     * @return
+     */
+    public List<UniversityInfoView> selectUniversityInfoByScore(Map map);
+
+    /**
+     * 是否匹配分数补充法   --由此来判定算法的最终走向.
+     * 1.判断用户输入分数
+     * 2.是否匹配分数补充法  匹配 return true; 否则 result false
+     * @param universityInfoParmasView
+     * @return
+     */
+    public boolean isScoreSupplementary(UniversityInfoParmasView universityInfoParmasView);
+
+
 }

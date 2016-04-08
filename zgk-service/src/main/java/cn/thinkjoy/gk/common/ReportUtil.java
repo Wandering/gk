@@ -47,6 +47,18 @@ public class ReportUtil {
      */
     public static final String VOLUNTEER_RANKING_VALUE_KEY="RANKING_VALUE";
     /**
+     * 分数补充法 开关
+     */
+    public static final String SCORE_ROLE_KEY="SCORE_ROLE";
+    /**
+     * 分数补充法 批次设置
+     */
+    public static final String SCORE_BATCH_ROLE_KEY="SCORE_BATCH_ROLE";
+    /**
+     * 批次线追加分数
+     */
+    public static final String CON_LINE_PLUS_VALUE_KEY="CON_LINE_PLUS_VALUE";
+    /**
      * 专业限制数 ---用于完整性判断
      */
     public static final String SPECIALITY_NUMVER="SPECIALITY_NUMVER";
@@ -155,6 +167,25 @@ public class ReportUtil {
             Integer rankStar = Integer.valueOf(rankRangeArr[0]);
             Integer rankEnd = Integer.valueOf(rankRangeArr[1]);
             if (precedence >= rankStar && precedence <= rankEnd)
+                return i;
+        }
+        return -1;
+    }
+
+    /**
+     * 根据批次获取  批次配置下标
+     * @param batch
+     * @param rankingRuleStr
+     * @return
+     */
+    public static Integer  getRankingRuleIndex(Integer batch,String rankingRuleStr) {
+        if (batch <= 0)
+            return -1;
+        String[] rankingRuleArr = rankingRuleStr.split(VOLUNTEER_KEY_SPLIT_SYMBOL);
+        for (int i = 0; i < rankingRuleArr.length; i++) {
+            String batchStr = rankingRuleArr[i];
+
+            if (Integer.valueOf(batchStr).equals(batch))
                 return i;
         }
         return -1;

@@ -40,10 +40,11 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
     }
 
     @Override
-    public SystemParmas getThresoldModel(String proCode,String keyEnum) {
+    public SystemParmas getThresoldModel(String proCode,String keyEnum,Integer majorType) {
         Map parmasMap = new HashMap();
         parmasMap.put("configKey", proCode.toUpperCase()+ ReportUtil.ROLE_KEY_SPLIT_SYMBOL + keyEnum);
         parmasMap.put("provinceCode",proCode);
+        parmasMap.put("majorType",majorType);
         SystemParmas systemParmas = selectModel(parmasMap);
 
         return systemParmas;
@@ -60,9 +61,11 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
     }
 
     @Override
-    public  SystemParmas getRoleByKey(String configKey) {
+    public  SystemParmas getRoleByKey(String proCode,String configKey,Integer majorType) {
         Map map = new HashMap();
         map.put("configKey", configKey);
+        map.put("provinceCode",proCode);
+        map.put("majorType",majorType);
         return selectModel(map);
     }
     /**
@@ -74,7 +77,8 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
         String batchKey = getBatchKey(cate, provinceCode);
         Map parmasMap = new HashMap();
         parmasMap.put("configKey", batchKey);
-        parmasMap.put("provinceCode",provinceCode);
+        parmasMap.put("provinceCode", provinceCode);
+        parmasMap.put("majorType", cate);
         SystemParmas systemParmas = selectModel(parmasMap);
         return systemParmas;
     }
@@ -142,9 +146,9 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
      * @return
      */
     @Override
-    public   ArrayList<Integer> getEnrollRate(String proCode) {
+    public   ArrayList<Integer> getEnrollRate(String proCode,Integer majorType) {
         LOGGER.info("========录取率规则 start=======");
-        SystemParmas systemParmas = getRoleByKey(proCode.toUpperCase() + ReportUtil.ROLE_KEY_SPLIT_SYMBOL + ReportUtil.THRESHOLD_ENROLL_KEY);
+        SystemParmas systemParmas = getRoleByKey(proCode,proCode.toUpperCase() + ReportUtil.ROLE_KEY_SPLIT_SYMBOL + ReportUtil.THRESHOLD_ENROLL_KEY,majorType);
         LOGGER.info("省份:" + proCode);
         LOGGER.info("规则串:" + systemParmas.getConfigValue());
         ArrayList<Integer> enrollRateArr = roleSplit(systemParmas.getConfigValue());
@@ -158,9 +162,9 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
      * @return
      */
     @Override
-    public   ArrayList<Integer> getUsedRate(String proCode) {
+    public   ArrayList<Integer> getUsedRate(String proCode,Integer majorType) {
         LOGGER.info("========利用率规则 start=======");
-        SystemParmas systemParmas = getRoleByKey(proCode.toUpperCase() + ReportUtil.ROLE_KEY_SPLIT_SYMBOL + ReportUtil.THRESHOLD_USED_KEY);
+        SystemParmas systemParmas = getRoleByKey(proCode,proCode.toUpperCase() + ReportUtil.ROLE_KEY_SPLIT_SYMBOL + ReportUtil.THRESHOLD_USED_KEY,majorType);
         LOGGER.info("省份:" + proCode);
         LOGGER.info("规则串:" + systemParmas.getConfigValue());
         ArrayList<Integer> enrollRateArr = roleSplit(systemParmas.getConfigValue());
@@ -169,14 +173,14 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
     }
 
     /**
-     * 获取当前位次符合的排名规则区间下标
+     * 获取当前位次符合的排名规则区间下标   By 位次
      * @return
      */
     @Override
-    public Integer getRankingRangeIndex(String proCode,Integer precedence) {
+    public Integer getRankingRangeIndex(String proCode,Integer precedence,Integer majorType) {
         LOGGER.info("========获取排名规则区间下标 start=======");
         LOGGER.info("输入位次:" + precedence);
-        SystemParmas systemParmas = getThresoldModel(proCode, ReportUtil.VOLUNTEER_BATCH_PRECEDENCE_KEY);
+        SystemParmas systemParmas = getThresoldModel(proCode, ReportUtil.VOLUNTEER_BATCH_PRECEDENCE_KEY,majorType);
         if (systemParmas == null)
             return -1;
         LOGGER.info("组装排名VALUE:" + systemParmas.getConfigValue());
@@ -184,5 +188,25 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
         LOGGER.info("拆分取得下标:" + index);
         LOGGER.info("========获取排名规则区间下标 end=======");
         return index;
+    }
+
+    /**
+     * 获取当前位次符合的排名规则区间下标  By 批次
+     * @param batch
+     * @param proCode
+     * @param majorType
+     * @return
+     */
+    @Override
+    public Integer getRankingRangeIndex(Integer batch,String proCode,Integer majorType) {
+        LOGGER.info("========获取排名规则区间下标 start=======");
+        SystemParmas systemParmas = getThresoldModel(proCode, ReportUtil.SCORE_BATCH_ROLE_KEY, majorType);
+        if (systemParmas == null)
+            return -1;
+        LOGGER.info("组装排名VALUE:" + systemParmas.getConfigValue());
+        Integer index = ReportUtil.getRankingRuleIndex(batch, systemParmas.getConfigValue());
+        LOGGER.info("拆分取得下标:" + index);
+        LOGGER.info("========获取排名规则区间下标 start=======");
+        return 0;
     }
 }

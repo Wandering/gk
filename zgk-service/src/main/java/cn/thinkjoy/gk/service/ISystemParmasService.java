@@ -42,7 +42,7 @@ public interface ISystemParmasService {
      * @param keyEnum
      * @return
      */
-    SystemParmas getThresoldModel(String proCode,String keyEnum);
+    SystemParmas getThresoldModel(String proCode,String keyEnum,Integer majorType);
 
     /**
      * 规则值拆分
@@ -56,21 +56,21 @@ public interface ISystemParmasService {
      * @param configKey
      * @return
      */
-    SystemParmas getRoleByKey(String configKey);
+    SystemParmas getRoleByKey(String proCode,String configKey,Integer majorType);
 
     /**
      * 录取率规则
      * @param proCode
      * @return
      */
-    ArrayList<Integer> getEnrollRate(String proCode);
+    ArrayList<Integer> getEnrollRate(String proCode,Integer majorType);
 
     /**
      * 利用率规则
      * @param proCode
      * @return
      */
-    ArrayList<Integer> getUsedRate(String proCode);
+    ArrayList<Integer> getUsedRate(String proCode,Integer majorType);
 
     /**
      * 获取批次控制线key
@@ -86,5 +86,14 @@ public interface ISystemParmasService {
      * @param precedence  输入位次
      * @return
      */
-    Integer getRankingRangeIndex(String proCode,Integer precedence);
+    Integer getRankingRangeIndex(String proCode,Integer precedence,Integer majorType);
+
+    /**
+     * 获取当前位次符合的规则区间下标  By 批次
+     * @param batch  批次
+     * @param proCode  省份
+     * @param majorType   科类
+     * @return
+     */
+    Integer getRankingRangeIndex(Integer batch,String proCode,Integer majorType);
 }

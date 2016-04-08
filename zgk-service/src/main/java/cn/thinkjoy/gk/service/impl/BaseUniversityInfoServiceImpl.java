@@ -7,6 +7,7 @@ import cn.thinkjoy.gk.entity.RankingRoleParmas;
 import cn.thinkjoy.gk.entity.SystemParmas;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
 import cn.thinkjoy.gk.pojo.UniversityEnrollingView;
+import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 import cn.thinkjoy.gk.service.IBaseUniversityInfoService;
 import cn.thinkjoy.gk.service.IRankingRoleParmasService;
 import cn.thinkjoy.gk.service.ISystemParmasService;
@@ -17,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -52,10 +52,12 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         List<UniversityInfoView> universityInfoViews = iUniversityInfoDao.selectUniversityInfo(map);
         LOGGER.info("录取&利用-筛选后院校总数:" + universityInfoViews.size());
 
-        List<UniversityInfoView> universityInfoViews1 = gradientSplit(map.get("province").toString(), universityInfoViews);
+        Integer cate=Integer.valueOf(map.get("majorType").toString());
+
+        List<UniversityInfoView> universityInfoViews1 = gradientSplit(map.get("province").toString(),cate, universityInfoViews);
 
         LOGGER.info("梯度规则-筛选后院校总数:" + universityInfoViews1.size());
-        List<UniversityInfoView> universityInfoViewsResult = setUniversityProper(map.get("province").toString(),universityInfoViews1);
+        List<UniversityInfoView> universityInfoViewsResult = setUniversityProper(map.get("province").toString(),cate,universityInfoViews1);
         LOGGER.info("=====院校清单--线差法 End=====");
         return universityInfoViewsResult;
     }
@@ -72,13 +74,15 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         List<RankingRoleParmas> rankingRoleParmases= getRankingParmasByPrecedence(map);
         LOGGER.info("动态参数集Size:"+rankingRoleParmases.size());
         //筛选参数集
-        List<Map> parmasMapList=getParmasMapByRoleParmas(map,rankingRoleParmases);
+        List<Map> parmasMapList=getParmasMapByRoleParmas(map, rankingRoleParmases);
         LOGGER.info("db参数集:"+ parmasMapList.size());
         //清单组合
         List<UniversityInfoView> universityInfoViewsResult =getUniversityByRoleMap(parmasMapList);
 
+        Integer cate=Integer.valueOf(map.get("majorType").toString());
+
         //set部分额外属性
-        List<UniversityInfoView> universityInfoViewList= setUniversityProper(map.get("province").toString(),universityInfoViewsResult);
+        List<UniversityInfoView> universityInfoViewList= setUniversityProper(map.get("province").toString(),cate,universityInfoViewsResult);
 
         //按冲稳保垫排序
         Collections.sort(universityInfoViewList);
@@ -87,6 +91,98 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         return universityInfoViewList;
     }
 
+    /**
+     * 院校清单List【分数法】 --若用户分数在批次线限制范围 走此规则   ， 不在限制范围 走位次发
+     * @param map
+     * @return
+     */
+    @Override
+    public List<UniversityInfoView> selectUniversityInfoByScore(Map map) {
+        LOGGER.info("=====院校清单--分数补充法 Start=====");
+        //根据用户位次 搜索相应动态参数规则
+        List<RankingRoleParmas> rankingRoleParmases=getRankingParmasByBatch(map);
+        //筛选参数集
+        List<Map> parmasMapList=getParmasMapByRoleParmas(map, rankingRoleParmases);
+        LOGGER.info("db参数集:"+ parmasMapList.size());
+        //清单组合
+        List<UniversityInfoView> universityInfoViewsResult =getUniversityByRoleMap(parmasMapList);
+        Integer cate=Integer.valueOf(map.get("majorType").toString());
+
+        //set部分额外属性
+        List<UniversityInfoView> universityInfoViewList= setUniversityProper(map.get("province").toString(),cate,universityInfoViewsResult);
+
+        //按冲稳保垫排序
+        Collections.sort(universityInfoViewList);
+
+        LOGGER.info("=====院校清单--分数补充法 End=====");
+        return universityInfoViewList;
+    }
+    /**
+     * 根据批次信息获取排位法动态参数
+     * @param map
+     * @return
+     */
+    private List<RankingRoleParmas> getRankingParmasByBatch(Map map) {
+        LOGGER.info("=====根据位次信息获取排位法动态参数 Start=====");
+        String proCode = map.get("province").toString(), first = map.get("first").toString();
+        String cate = map.get("majorType").toString(), batchStr = map.get("batch").toString();
+        LOGGER.info("province:" + proCode);
+        LOGGER.info("first:" + first);
+        LOGGER.info("majorType:" + cate);
+        LOGGER.info("batchStr:" + batchStr);
+
+        Integer firstValue = Integer.valueOf(first), batch = Integer.valueOf(batchStr), majorType = Integer.valueOf(cate);
+        Integer rangeIndex = iSystemParmasService.getRankingRangeIndex(batch, proCode, majorType);
+
+        LOGGER.info("rangeIndex:" + rangeIndex);
+
+        if (rangeIndex < 0)
+            return null;
+
+
+        Map searchMap = new HashMap();
+        searchMap.put("precedenceIndex", rangeIndex);
+        searchMap.put("provinceCode", proCode);
+        searchMap.put("whoFirst", firstValue);
+        searchMap.put("majorType", cate);
+        searchMap.put("isScore", 1);//标示为分数补充法
+        List<RankingRoleParmas> rankingRoleParmas = iRankingRoleParmasService.selectRankingRuleParmasList(searchMap);
+
+        LOGGER.info("参数集总数:" + rankingRoleParmas.size());
+        LOGGER.info("=====根据位次信息获取排位法动态参数 End=====");
+        return rankingRoleParmas;
+    }
+
+    /**
+     * 是否与分数补充法规则匹配
+     * @param parmasView
+     * @return
+     */
+    @Override
+    public boolean isScoreSupplementary(UniversityInfoParmasView parmasView) {
+        boolean result = false;
+        //获取对应配置信息
+        SystemParmas systemParmas = iSystemParmasService.getThresoldModel(parmasView.getProvince(), ReportUtil.SCORE_ROLE_KEY, parmasView.getCategorie());
+        if (systemParmas == null)
+            return false;
+        Integer isScore = Integer.valueOf(systemParmas.getConfigValue());
+        //1:为开启分数补充法
+        if (isScore == 1) {
+            Integer conLineScore = iSystemParmasService.getControleLine(parmasView.getBatch(), parmasView.getCategorie(), parmasView.getProvince());
+            //用户分数大于 批次线
+            if (parmasView.getScore() > conLineScore) {
+                SystemParmas conLinePlusScoreParmas = iSystemParmasService.getThresoldModel(parmasView.getProvince(), ReportUtil.CON_LINE_PLUS_VALUE_KEY, parmasView.getCategorie());
+                if (conLinePlusScoreParmas == null)
+                    return false;
+                //批次线追加分
+                Integer plusScore = Integer.valueOf(conLinePlusScoreParmas.getConfigValue());
+                //用户分数小于(批次线+批次线追加分)
+                if (parmasView.getScore() < conLineScore + plusScore)
+                    result = true;
+            }
+        }
+        return result;
+    }
     /**
      * 根据分数及控制线 计算线差
      *
@@ -106,22 +202,35 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
      * @return
      */
     private List<RankingRoleParmas> getRankingParmasByPrecedence(Map map) {
-
+        LOGGER.info("=====根据位次信息获取排位法动态参数 Start=====");
         //省份 , 位次 , 专业or院校 ?
         String proCode = map.get("province").toString(), precedence = map.get("precedence").toString(), first = map.get("first").toString();
+        String cate = map.get("majorType").toString();
+
+        LOGGER.info("province:" + proCode);
+        LOGGER.info("precedence:" + precedence);
+        LOGGER.info("first:" + first);
+        LOGGER.info("cate:" + cate);
+
 
         if (StringUtils.isBlank(proCode) && StringUtils.isBlank(precedence)
                 && StringUtils.isBlank(first))
             return null;
-         SystemParmas systemParmas=iSystemParmasService.getThresoldModel(proCode, ReportUtil.VOLUNTEER_RANKING_VALUE_KEY);
-        if(systemParmas==null)
+        SystemParmas systemParmas = iSystemParmasService.getThresoldModel(proCode, ReportUtil.VOLUNTEER_RANKING_VALUE_KEY, Integer.valueOf(cate));
+        if (systemParmas == null)
             return null;
         //1:一批 2：二批 3：高职高专 4:三批
-        Integer batch= Integer.valueOf(map.get("batch").toString());
+        Integer batch = Integer.valueOf(map.get("batch").toString());
 
-        Integer preNum = (batch==3?Integer.valueOf(systemParmas.getConfigValue()):Integer.valueOf(precedence)), firstValue = Integer.valueOf(first);
+        LOGGER.info("batch:" + batch);
 
-        Integer rangeIndex = iSystemParmasService.getRankingRangeIndex(proCode, preNum);
+        Integer preNum = (batch == 3 ? Integer.valueOf(systemParmas.getConfigValue()) : Integer.valueOf(precedence)), firstValue = Integer.valueOf(first);
+
+        LOGGER.info("阀值:" + preNum);
+
+        Integer rangeIndex = iSystemParmasService.getRankingRangeIndex(proCode, preNum, Integer.valueOf(cate));
+
+        LOGGER.info("rangeIndex:" + rangeIndex);
 
         if (rangeIndex < 0)
             return null;
@@ -130,9 +239,12 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         searchMap.put("precedenceIndex", rangeIndex);
         searchMap.put("provinceCode", proCode);
         searchMap.put("whoFirst", firstValue);
-
+        searchMap.put("majorType", cate);
+        searchMap.put("isScore", 0);
         List<RankingRoleParmas> rankingRoleParmas = iRankingRoleParmasService.selectRankingRuleParmasList(searchMap);
 
+        LOGGER.info("参数集总数:" + rankingRoleParmas.size());
+        LOGGER.info("=====根据位次信息获取排位法动态参数 end=====");
         return rankingRoleParmas;
 
     }
@@ -143,28 +255,44 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
      * @return
      */
     private List<Map> getParmasMapByRoleParmas(Map initMap,List<RankingRoleParmas> rankingRoleParmases) {
+        LOGGER.info("=====生成DB Parmas集 Start=====");
         if (rankingRoleParmases == null)
             return null;
-        List<Map>  parmasMaps=new ArrayList<>();
+        LOGGER.info("RankingRoleParmas Size:" + rankingRoleParmases.size());
+        List<Map> parmasMaps = new ArrayList<>();
+
+        LOGGER.info("tableName:" + initMap.get("tableName"));
+        LOGGER.info("province:" + initMap.get("province"));
+        LOGGER.info("majorType:" + initMap.get("majorType"));
+        LOGGER.info("precedenceParmas:" + initMap.get("precedenceParmas"));
 
         for (RankingRoleParmas rankingRoleParmas : rankingRoleParmases) {
             Map map = new HashMap();
-            map.put("tableName",initMap.get("tableName"));
+            map.put("tableName", initMap.get("tableName"));
             map.put("province", initMap.get("province"));//key
             map.put("majorType", initMap.get("majorType"));
             map.put("precedenceParmas", initMap.get("precedenceParmas"));
             //院校排名规则
             if (rankingRoleParmas.getWhoDim() == ReportEnum.RankDim.RANK.getValue()) {
+                LOGGER.info("-------走排名规则 start-------");
                 ArrayList<Integer> roleArr = ReportUtil.strSplit(rankingRoleParmas.getRankRuleParmas(), ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
                 map.put("rankStart", roleArr.get(0));
                 map.put("rankEnd", roleArr.get(1));
-                map.put("isRank",true);
+                map.put("isRank", true);
+                LOGGER.info("rankStart:"+roleArr.get(0));
+                LOGGER.info("rankEnd:"+ roleArr.get(1));
+                LOGGER.info("-------走排名规则 end-------");
             }
             //院校录取率规则
             if (rankingRoleParmas.getWhoDim() == ReportEnum.RankDim.ENROLLING.getValue()) {
+                LOGGER.info("-------走录取率规则 start-------");
                 ArrayList<Integer> roleArr = ReportUtil.strSplit(rankingRoleParmas.getEnrollingRuleParmas(), ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
                 map.put("enrollStart", roleArr.get(0));
                 map.put("enrollEnd", roleArr.get(1));
+
+                LOGGER.info("enrollStart:"+roleArr.get(0));
+                LOGGER.info("enrollEnd:"+roleArr.get(1));
+
                 if (rankingRoleParmas.getOrderParmas() == 0) {
                     map.put("enrollOrder", "asc");     //录取率从小到大
                     map.put("scoreDiffOrder", "desc"); //线差从大到小
@@ -172,14 +300,26 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
                     map.put("enrollOrder", "desc");  //录取率从大到小
                     map.put("scoreDiffOrder", "asc");//线差从小到大
                 }
+
+                LOGGER.info("-------排序规则 start-------");
+                LOGGER.info("enrollOrder:"+map.get("enrollOrder"));
+                LOGGER.info("scoreDiffOrder:"+map.get("scoreDiffOrder"));
+                LOGGER.info("-------排序规则 end--------");
+
                 ArrayList<Integer> limitArr = ReportUtil.strSplit(rankingRoleParmas.getLimitParmas(), ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
-                map.put("begin",limitArr.get(0));
-                map.put("end",limitArr.get(1));
-                map.put("isEnrolling",true);
+                map.put("begin", limitArr.get(0));
+                map.put("end", limitArr.get(1));
+                map.put("isEnrolling", true);
+
+                LOGGER.info("-------走录取率规则 end-------");
             }
-            map.put("whoDim",rankingRoleParmas.getWhoDim());
+            map.put("whoDim", rankingRoleParmas.getWhoDim());
+            map.put("isScore",initMap.get("isScore"));
             parmasMaps.add(map);
         }
+        LOGGER.info("共生成" + parmasMaps.size() + "组参数集");
+
+        LOGGER.info("=====生成DB Parmas集 Start=====");
         return parmasMaps;
     }
 
@@ -204,12 +344,16 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
      * @param universityInfoView
      * @return
      */
-    private Integer setUniversityTag(String proCode,UniversityInfoView universityInfoView) {
+    private Integer setUniversityTag(String proCode,Integer cate,UniversityInfoView universityInfoView) {
+        LOGGER.info("-------冲稳保垫标签 start-------");
         if (universityInfoView == null)
             return -1;
         BigDecimal enrollRate = universityInfoView.getEnrollRate();
+        LOGGER.info("proCode:" + proCode);
+        LOGGER.info("cate:" + cate);
+        LOGGER.info("录取率:" + enrollRate);
 
-        SystemParmas systemParmas = iSystemParmasService.getThresoldModel(proCode, ReportUtil.CLASSIFY_TAG_KEY);
+        SystemParmas systemParmas = iSystemParmasService.getThresoldModel(proCode, ReportUtil.CLASSIFY_TAG_KEY, cate);
 
         if (systemParmas == null)
             return -1;
@@ -218,6 +362,8 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
 
         Integer enroll = enrollRate.multiply(maxBigDec).intValue();
         String classifyTagRole = systemParmas.getConfigValue();
+        LOGGER.info("录取率转化后:" + enroll);
+        LOGGER.info("冲稳保垫层级:" + classifyTagRole);
         String[] classifyArr = classifyTagRole.split(ReportUtil.VOLUNTEER_KEY_SPLIT_SYMBOL);
         for (int i = 0; i < classifyArr.length; i++) {
             String str = classifyArr[i];
@@ -229,6 +375,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
             if (enroll >= start && enroll <= end)
                 return i;
         }
+        LOGGER.info("-------冲稳保垫标签 end-------");
         return -1;
     }
     /*************************************************排位法*************************************************/
@@ -241,13 +388,14 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
     private Map converThreshold(Map map) {
         LOGGER.info("=====录取率&利用率规则 Start=====");
         String proCode = map.get("province").toString();
+        Integer majorType= Integer.valueOf(map.get("majorType").toString());
         LOGGER.info("省份:" + proCode);
         if (!StringUtils.isBlank(proCode)) {
 
             //录取率规则
-            ArrayList<Integer> enrollRateArr = iSystemParmasService.getEnrollRate(proCode);
+            ArrayList<Integer> enrollRateArr = iSystemParmasService.getEnrollRate(proCode,majorType);
             //利用率规则
-            ArrayList<Integer> scoreUsedArr = iSystemParmasService.getUsedRate(proCode);
+            ArrayList<Integer> scoreUsedArr = iSystemParmasService.getUsedRate(proCode,majorType);
 
             if (enrollRateArr == null || scoreUsedArr == null)
                 return map;
@@ -270,7 +418,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
      *
      * @return
      */
-    private List<UniversityInfoView> gradientSplit(String province, List<UniversityInfoView> oldUniversityInfos) {
+    private List<UniversityInfoView> gradientSplit(String province, Integer cate, List<UniversityInfoView> oldUniversityInfos) {
         LOGGER.info("=====梯度拆分规则 Start=====");
         if (StringUtils.isBlank(province))
             return null;
@@ -279,9 +427,9 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         List<UniversityInfoView> universityInfoViews = new ArrayList<UniversityInfoView>();
 
         //获取录取率梯度规则
-        SystemParmas enrollSystemParmas = iSystemParmasService.getThresoldModel(province, ReportUtil.VOLUNTEER_ENROLL_KEY);
+        SystemParmas enrollSystemParmas = iSystemParmasService.getThresoldModel(province, ReportUtil.VOLUNTEER_ENROLL_KEY,cate);
         //获取利用率梯度规则
-        SystemParmas usedSystemParmas = iSystemParmasService.getThresoldModel(province, ReportUtil.VOLUNTEER_USED_KEY);
+        SystemParmas usedSystemParmas = iSystemParmasService.getThresoldModel(province, ReportUtil.VOLUNTEER_USED_KEY,cate);
         LOGGER.info("录取率规则串:" + enrollSystemParmas.getConfigValue());
         LOGGER.info("利用率规则串:" + usedSystemParmas.getConfigValue());
         //梯度范围
@@ -333,14 +481,14 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
      * @param oldUniversityInfos
      * @return
      */
-    private List<UniversityInfoView> setUniversityProper(String proCode,List<UniversityInfoView> oldUniversityInfos) {
+    private List<UniversityInfoView> setUniversityProper(String proCode,Integer cate,List<UniversityInfoView> oldUniversityInfos) {
         LOGGER.info("=====填充院校个别属性 Start=====");
         List<UniversityInfoView> universityInfoViews = new ArrayList<UniversityInfoView>();
 
         for (UniversityInfoView universityInfoView : oldUniversityInfos) {
             Map planMap = new HashMap();
             planMap.put("universityId", universityInfoView.getUniversityId());
-            planMap.put("majorType", (universityInfoView.getMajorType().equals("文科") ? 1 : 2));
+            planMap.put("majorType", converMajorType(universityInfoView.getMajorType()));
             planMap.put("areaId", universityInfoView.getAreaId());
             Integer PlanEnrolling = iUniversityMajorEnrollingService.selectUniversityPlanEnrollingNumber(planMap);
 //            Integer PlanEnrolling = selectPlanEnrolling(planMap);
@@ -349,20 +497,22 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
             Map averageMap = new HashMap();
             averageMap.put("universityId", universityInfoView.getUniversityId());
             averageMap.put("areaId", universityInfoView.getAreaId());
-            averageMap.put("majorType", (universityInfoView.getMajorType().equals("文科") ? 1 : 2));
+            averageMap.put("majorType", converMajorType(universityInfoView.getMajorType()));
             averageMap.put("averageScore", 0);//固定给0
             UniversityEnrollingView universityEnrollingView = iUniversityMajorEnrollingService.selectUniversityAverageScore(averageMap);
             universityInfoView.setAverageScore(universityEnrollingView == null ? 0 : universityEnrollingView.getAverageScore());
             universityInfoView.setAverageYear(universityEnrollingView == null ? 0 : universityEnrollingView.getAverageYear());
-            Integer seq = setUniversityTag(proCode, universityInfoView); //冲稳保垫
-
+            Integer seq = setUniversityTag(proCode, cate, universityInfoView); //冲稳保垫
+            LOGGER.info("冲稳保垫Tag:" + seq);
             universityInfoView.setSequence(seq);
             universityInfoViews.add(universityInfoView);
         }
         LOGGER.info("=====填充院校个别属性 Start=====");
         return universityInfoViews;
     }
-
+    private Integer converMajorType(String major) {
+        return (major.equals("文科") ? 1 : 2);
+    }
 
     /**
      * 院校风险标签
@@ -371,10 +521,10 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
      */
     private Map converUniversiTag(Map map) {
         LOGGER.info("=====院校风险标签 Start=====");
-        SystemParmas systemParmas = iSystemParmasService.getRoleByKey(ReportUtil.UNIVERSITY_ENROLL_YEAR_KEY);
-        if (systemParmas != null) {
-            map.put("year", systemParmas.getConfigValue());
-        }
+//        SystemParmas systemParmas = iSystemParmasService.getRoleByKey(ReportUtil.UNIVERSITY_ENROLL_YEAR_KEY);
+//        if (systemParmas != null) {
+//            map.put("year", systemParmas.getConfigValue());
+//        }
         LOGGER.info("=====院校风险标签 End=====");
         return map;
     }

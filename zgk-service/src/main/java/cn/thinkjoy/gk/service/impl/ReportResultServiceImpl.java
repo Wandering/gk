@@ -98,7 +98,7 @@ public class ReportResultServiceImpl implements IReportResultService {
         List<SelfReportResultView> selfReportResultViews = getUnSerializableReports(reportResult.getReportResultJson());
 
         //获取规则阀值
-        SystemParmas systemParmas= iSystemParmasService.getThresoldModel(reportResult.getProvinceCode(), ReportUtil.VOLUNTEER_RANKING_VALUE_KEY);
+        SystemParmas systemParmas= iSystemParmasService.getThresoldModel(reportResult.getProvinceCode(), ReportUtil.VOLUNTEER_RANKING_VALUE_KEY,reportResult.getMajorType());
         if(systemParmas==null)
             return false;
          Integer rankingValue= Integer.valueOf(systemParmas.getConfigValue());
@@ -118,7 +118,7 @@ public class ReportResultServiceImpl implements IReportResultService {
         }
         //大于阀值
         if(reportResult.getPrecedence()>=rankingValue) {
-            SystemParmas classifySysParmas = iSystemParmasService.getThresoldModel(reportResult.getProvinceCode(), ReportUtil.CLASSIFY_TAG_KEY);
+            SystemParmas classifySysParmas = iSystemParmasService.getThresoldModel(reportResult.getProvinceCode(), ReportUtil.CLASSIFY_TAG_KEY,reportResult.getMajorType());
             String[] arr = classifySysParmas.getConfigValue().split(ReportUtil.VOLUNTEER_KEY_SPLIT_SYMBOL);
 
             for (int i = 0; i < arr.length; i++) {
@@ -173,6 +173,8 @@ public class ReportResultServiceImpl implements IReportResultService {
     private ReportResultView getReportResultView(Map map) throws IOException {
         ReportResultView reportResultView = new ReportResultView();
 
+        Integer majorType = Integer.valueOf(map.get("majorType").toString());
+        String proCode=map.get("province").toString();
         ReportResult reportResult = selectModelOne(map);
 
         reportResultView.setUserId(reportResult.getUserId());
@@ -180,7 +182,7 @@ public class ReportResultServiceImpl implements IReportResultService {
         //获取批次控制线
         String controllLine = iSystemParmasService.getBatchKey(reportResult.getMajorType(), reportResult.getProvinceCode());
 
-        SystemParmas systemParmas = iSystemParmasService.getRoleByKey(controllLine);
+        SystemParmas systemParmas = iSystemParmasService.getRoleByKey(proCode,controllLine,majorType);
 
 
         reportResultView.setControllLine(systemParmas.getConfigValue());

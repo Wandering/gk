@@ -8,13 +8,15 @@
         <result column="who_first" property="whoFirst" jdbcType="TINYINT" />
         <result column="who_dim" property="whoDim" jdbcType="TINYINT" />
         <result column="province_code" property="provinceCode" jdbcType="VARCHAR"/>
+        <result column="major_type" property="majorType" jdbcType="TINYINT"/>
         <result column="rank_rule_parmas" property="rankRuleParmas" jdbcType="VARCHAR" />
         <result  column="enrolling_rule_parmas" property="enrollingRuleParmas" jdbcType="VARCHAR"/>
         <result column="limit_parmas" property="limitParmas" jdbcType="VARCHAR" />
         <result column="order_parmas" property="orderParmas" jdbcType="TINYINT" />
+        <result column="is_score" property="isScore" jdbcType="TINYINT" />
     </resultMap>
     <sql id="Base_Column_List">
-        id,precedence_index,who_first,who_dim,province_code,rank_rule_parmas,enrolling_rule_parmas,limit_parmas,order_parmas
+        id,precedence_index,who_first,who_dim,province_code,major_type,rank_rule_parmas,enrolling_rule_parmas,limit_parmas,order_parmas,is_score
     </sql>
 
     <select id="selectModel" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -47,6 +49,12 @@
             <if test="orderParmas!=null">
                 and   order_parmas=#{orderParmas,jdbcType=TINYINT}
             </if>
+            <if test="majorType!=null">
+                and major_type=#{majorType,jdbcType=TINYINT}
+            </if>
+            <if test="isScore!=null">
+                and is_score=#{isScore,jdbcType=TINYINT}
+            </if>
         </where>
     </select>
     <select id="selectRankingRuleParmasList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -78,6 +86,12 @@
             </if>
             <if test="orderParmas!=null">
                 and   order_parmas=#{orderParmas,jdbcType=TINYINT}
+            </if>
+            <if test="majorType!=null">
+                and major_type=#{majorType,jdbcType=TINYINT}
+            </if>
+            <if test="isScore!=null">
+                and is_score=#{isScore,jdbcType=TINYINT}
             </if>
         </where>
     </select>

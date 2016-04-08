@@ -4,11 +4,12 @@
 <mapper namespace="cn.thinkjoy.gk.dao.ISystemParmasDao">
 
     <sql id="Base_Column_List">
-        id,province_code,config_key,config_value
+        id,province_code,config_key,config_value,major_type
     </sql>
     <resultMap id="BaseResultMap" type="cn.thinkjoy.gk.entity.SystemParmas">
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="province_code" property="provinceCode" jdbcType="VARCHAR" />
+        <result column="major_type" property="majorType" jdbcType="TINYINT"/>
         <result column="config_key" property="configKey" jdbcType="VARCHAR" />
         <result column="config_value" property="configValue" jdbcType="VARCHAR" />
     </resultMap>
@@ -26,6 +27,9 @@
             </if>
             <if test="configValue!=null">
                 and config_value=#{configValue,jdbcType=VARCHAR}
+            </if>
+            <if test="majorType!=null">
+                and major_type=#{majorType,jdbcType=INTEGER}
             </if>
         </where>
     </select>

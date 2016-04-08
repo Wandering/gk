@@ -74,8 +74,15 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
                 }
                 map.put("precedence", universityInfoParmasView.getPrecedence()); //user precedence
                 map.put("first", universityInfoParmasView.getFirst());
-                map.put("batch",universityInfoParmasView.getBatch());
-                universityInfoViews = super.selectUniversityInfoByRanking(map);
+                map.put("batch", universityInfoParmasView.getBatch());
+
+                //判定算法走向
+                boolean isScore = super.isScoreSupplementary(universityInfoParmasView);
+
+                if (isScore) // true 走分数补充发    false 走位次法
+                    universityInfoViews = super.selectUniversityInfoByScore(map);
+                else
+                    universityInfoViews = super.selectUniversityInfoByRanking(map);
                 break;
         }
         return universityInfoViews;
