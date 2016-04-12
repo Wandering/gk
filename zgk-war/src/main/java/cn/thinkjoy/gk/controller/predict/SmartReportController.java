@@ -113,7 +113,9 @@ public class SmartReportController extends ZGKBaseController {
      */
     @RequestMapping(value = "/get/info",method = RequestMethod.GET)
     @ResponseBody
-    public Map<String,Object> getUserReport(@RequestParam(value = "score") Integer score) throws IOException {
+    public Map<String,Object> getUserReport(@RequestParam(value = "score") Integer score,
+                                            @RequestParam(value = "cate") Integer cate,
+                                            @RequestParam(value = "province") String province) throws IOException {
 
 
         UserAccountPojo userAccountPojo = getUserAccountPojo();
@@ -133,6 +135,8 @@ public class SmartReportController extends ZGKBaseController {
         map.put("sortBy", "desc");
         map.put("size", 1);
         map.put("score",score);
+        map.put("majorType",cate);
+        map.put("province",province);
         map.put("userName", userAccountPojo.getName());
         ReportInfoView reportInfoView = iReportResultService.getReportInfoView(map);
         Map resultMap = new HashMap();
