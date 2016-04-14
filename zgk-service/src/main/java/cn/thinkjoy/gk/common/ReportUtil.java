@@ -166,7 +166,7 @@ public class ReportUtil {
             String[] rankRangeArr = rankStr.split(ROLE_VALUE_SPLIT_SYMBOL);
             Integer rankStar = Integer.valueOf(rankRangeArr[0]);
             Integer rankEnd = Integer.valueOf(rankRangeArr[1]);
-            if (precedence > rankStar && precedence <= rankEnd)
+            if (precedence >= rankStar && precedence <= rankEnd)
                 return i;
         }
         return -1;
