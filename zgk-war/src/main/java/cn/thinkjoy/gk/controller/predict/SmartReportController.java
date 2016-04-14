@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +73,8 @@ public class SmartReportController extends ZGKBaseController {
         LOGGER.info("科类:" + cate);
         LOGGER.info("省份:" + province);
         List<BatchView> batchViews = iSystemParmasService.selectSystemParmas(cate, score, province);
+
+        Collections.sort(batchViews);
         LOGGER.info("该学生达标:" + batchViews.size() + "个批次");
         Map resultMap = new HashMap();
         resultMap.put("batchViews", batchViews);
