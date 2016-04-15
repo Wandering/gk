@@ -168,6 +168,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         Integer isScore = Integer.valueOf(systemParmas.getConfigValue());
         //1:为开启分数补充法
         if (isScore == 1) {
+
             Integer conLineScore = iSystemParmasService.getControleLine(parmasView.getBatch(), parmasView.getCategorie(), parmasView.getProvince());
             //用户分数大于 批次线
             if (parmasView.getScore() >= conLineScore) {
