@@ -8,4 +8,5 @@ dependencies {
     compile project(':gk-service')
 
     compile group:"cn.thinkjoy.gaokao360",name:"gaokao360-api",version:"$gaokao360Version", changing: true
+    compile group:"cn.thinkjoy.gaokao360",name:"gaokao360-domain",version:"$gaokao360Version", changing: true
 }
