@@ -168,16 +168,17 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         Integer isScore = Integer.valueOf(systemParmas.getConfigValue());
         //1:为开启分数补充法
         if (isScore == 1) {
+
             Integer conLineScore = iSystemParmasService.getControleLine(parmasView.getBatch(), parmasView.getCategorie(), parmasView.getProvince());
             //用户分数大于 批次线
-            if (parmasView.getScore() > conLineScore) {
+            if (parmasView.getScore() >= conLineScore) {
                 SystemParmas conLinePlusScoreParmas = iSystemParmasService.getThresoldModel(parmasView.getProvince(), ReportUtil.CON_LINE_PLUS_VALUE_KEY, parmasView.getCategorie());
                 if (conLinePlusScoreParmas == null)
                     return false;
                 //批次线追加分
                 Integer plusScore = Integer.valueOf(conLinePlusScoreParmas.getConfigValue());
                 //用户分数小于(批次线+批次线追加分)
-                if (parmasView.getScore() < conLineScore + plusScore)
+                if (parmasView.getScore() <= conLineScore + plusScore)
                     result = true;
             }
         }

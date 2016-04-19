@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by douzy on 16/3/14.
  */
-public class BatchView implements Serializable {
+public class BatchView implements Serializable,Comparable<BatchView> {
     /**
      * 批次
      */
@@ -41,5 +41,10 @@ public class BatchView implements Serializable {
 
     public void setLiLine(Integer liLine) {
         this.liLine = liLine;
+    }
+
+    @Override
+    public   int compareTo(BatchView batchView) {
+        return batchView.getWenLine().compareTo(this.wenLine);
     }
 }
