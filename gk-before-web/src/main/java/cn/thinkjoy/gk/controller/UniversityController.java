@@ -111,23 +111,12 @@ public class UniversityController extends ZGKBaseController {
         List<UniversityDTO> getUniversityList1= iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
         for (UniversityDTO universityDTO:getUniversityList1){
             Map<String,Object> university= Maps.newHashMap();
-            Field[] fields=universityDTO.getClass().getFields();
-            for (Field field:fields){
-                String name=field.getName();
-                String name2 = name.substring(0, 1).toUpperCase() + name.substring(1);
-                Method m = null;
-                try {
-                    m = universityDTO.getClass().getMethod("get" + name2);
-                    String value = (String) m.invoke(universityDTO);
-                    university.put(name,value);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e){
-                    e.printStackTrace();
-                }
-            }
+            Class class1=universityDTO.getClass();
+            getEntryMap(universityDTO, university, class1);
+            Class class2=class1.getSuperclass();
+            getEntryMap(universityDTO, university, class2);
+            Class class3=class2.getSuperclass();
+            getEntryMap(universityDTO, university, class3);
             getUniversityList.add(university);
         }
         int count = iremoteUniversityService.getUniversityCount(condition);
@@ -174,6 +163,28 @@ public class UniversityController extends ZGKBaseController {
         returnMap.put("universityList", getUniversityList);
         returnMap.put("count", count);
         return returnMap;
+    }
+
+    private void getEntryMap(UniversityDTO universityDTO, Map<String, Object> university, Class class1) {
+        Field[] fields=class1.getFields();
+        for (Field field:fields){
+            String name=field.getName();
+            String name2 = name.substring(0, 1).toUpperCase() + name.substring(1);
+            Method m = null;
+            try {
+                m = universityDTO.getClass().getMethod("get" + name2);
+                String value = (String) m.invoke(universityDTO);
+                if (StringUtils.isNotBlank(value)) {
+                    university.put(name, value);
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e){
+                e.printStackTrace();
+            }
+        }
     }
 
     @RequestMapping(value = "getRemoteUniversityById", method = RequestMethod.GET)
