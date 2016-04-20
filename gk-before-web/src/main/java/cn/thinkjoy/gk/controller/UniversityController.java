@@ -6,6 +6,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gaokao360.dto.UniversityDTO;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Province;
@@ -23,7 +24,9 @@ import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -33,6 +36,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -101,7 +107,29 @@ public class UniversityController extends ZGKBaseController {
         selectorpage.put("subjection", 1);
         selectorpage.put("typeName", 1);
         selectorpage.put("url", 1);
-        List<Map<String, Object>> getUniversityList = iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
+        List<Map<String, Object>> getUniversityList= Lists.newArrayList();
+        List<UniversityDTO> getUniversityList1= iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
+        for (UniversityDTO universityDTO:getUniversityList1){
+            Map<String,Object> university= Maps.newHashMap();
+            Field[] fields=universityDTO.getClass().getDeclaredFields();
+            for (Field field:fields){
+                String name=field.getName();
+                String name2 = name.substring(0, 1).toUpperCase() + name.substring(1);
+                Method m = null;
+                try {
+                    m = universityDTO.getClass().getMethod("get" + name2);
+                    String value = (String) m.invoke(universityDTO);
+                    university.put(name,value);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e){
+                    e.printStackTrace();
+                }
+            }
+            getUniversityList.add(university);
+        }
         int count = iremoteUniversityService.getUniversityCount(condition);
         //如果用户已登录
         UserAccountPojo userAccountPojo = getUserAccountPojo();
