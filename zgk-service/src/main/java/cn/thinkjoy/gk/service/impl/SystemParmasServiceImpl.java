@@ -104,13 +104,20 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
                 Integer batch2 = getBatchNumberLine(batch, systemParmasL.getConfigValue());
 
                 if (c == ReportEnum.categories.LI.getValue()) {
+
                     batchView.setWenLine(batch2);
                     batchView.setLiLine(batch1);
+
                 }
                 if (c == ReportEnum.categories.WEN.getValue()) {
                     batchView.setWenLine(batch1);
                     batchView.setLiLine(batch2);
                 }
+                //获取对应配置信息
+                SystemParmas wenSystemParmas = getThresoldModel(provinceCode, ReportUtil.CON_LINE_PLUS_VALUE_KEY, 1);
+                SystemParmas liSystemParmas = getThresoldModel(provinceCode, ReportUtil.CON_LINE_PLUS_VALUE_KEY, 2);
+                batchView.setWenPlus(wenSystemParmas==null?0:Integer.valueOf(wenSystemParmas.getConfigValue()));
+                batchView.setLiPlus(liSystemParmas==null?0:Integer.valueOf(liSystemParmas.getConfigValue()));
                 batchViews.add(batchView);
             }
         }

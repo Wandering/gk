@@ -19,6 +19,15 @@ public class BatchView implements Serializable,Comparable<BatchView> {
      */
     private Integer liLine;
 
+    /**
+     * 文科压线生追加分数
+     */
+    private Integer wenPlus;
+    /**
+     * 理科压线生追加分数
+     */
+    private Integer liPlus;
+
     public Integer getBatch() {
         return batch;
     }
@@ -43,8 +52,24 @@ public class BatchView implements Serializable,Comparable<BatchView> {
         this.liLine = liLine;
     }
 
+    public Integer getWenPlus() {
+        return wenPlus;
+    }
+
+    public void setWenPlus(Integer wenPlus) {
+        this.wenPlus = wenPlus;
+    }
+
+    public Integer getLiPlus() {
+        return liPlus;
+    }
+
+    public void setLiPlus(Integer liPlus) {
+        this.liPlus = liPlus;
+    }
+
     @Override
-    public   int compareTo(BatchView batchView) {
+    public int compareTo(BatchView batchView) {
         return batchView.getWenLine().compareTo(this.wenLine);
     }
 }
