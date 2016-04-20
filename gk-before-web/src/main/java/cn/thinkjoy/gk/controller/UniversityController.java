@@ -112,11 +112,11 @@ public class UniversityController extends ZGKBaseController {
         for (UniversityDTO universityDTO:getUniversityList1){
             Map<String,Object> university= Maps.newHashMap();
             Class class1=universityDTO.getClass();
-            getEntryMap(universityDTO, university, class1);
+            getEntryMap(universityDTO,university, class1);
             Class class2=class1.getSuperclass();
-            getEntryMap(universityDTO, university, class2);
+            getEntryMap(universityDTO,university, class2);
             Class class3=class2.getSuperclass();
-            getEntryMap(universityDTO, university, class3);
+            getEntryMap(universityDTO,university, class3);
             getUniversityList.add(university);
         }
         int count = iremoteUniversityService.getUniversityCount(condition);
@@ -165,16 +165,16 @@ public class UniversityController extends ZGKBaseController {
         return returnMap;
     }
 
-    private void getEntryMap(UniversityDTO universityDTO, Map<String, Object> university, Class class1) {
-        Field[] fields=class1.getFields();
+    private void getEntryMap(UniversityDTO universityDTO,Map<String, Object> university, Class class1) {
+        Field[] fields=class1.getDeclaredFields();
         for (Field field:fields){
             String name=field.getName();
             String name2 = name.substring(0, 1).toUpperCase() + name.substring(1);
             Method m = null;
             try {
                 m = universityDTO.getClass().getMethod("get" + name2);
-                String value = (String) m.invoke(universityDTO);
-                if (StringUtils.isNotBlank(value)) {
+                if (m.invoke(universityDTO)!=null) {
+                    String value = m.invoke(universityDTO).toString();
                     university.put(name, value);
                 }
             } catch (IllegalAccessException e) {
