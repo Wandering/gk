@@ -120,7 +120,6 @@ public class UniversityController extends ZGKBaseController {
                     m = universityDTO.getClass().getMethod("get" + name2);
                     String value = (String) m.invoke(universityDTO);
                     university.put(name,value);
-                    getUniversityList.add(university);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 } catch (InvocationTargetException e) {
@@ -129,6 +128,7 @@ public class UniversityController extends ZGKBaseController {
                     e.printStackTrace();
                 }
             }
+            getUniversityList.add(university);
         }
         int count = iremoteUniversityService.getUniversityCount(condition);
         //如果用户已登录
