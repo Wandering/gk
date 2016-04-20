@@ -111,7 +111,7 @@ public class UniversityController extends ZGKBaseController {
         List<UniversityDTO> getUniversityList1= iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
         for (UniversityDTO universityDTO:getUniversityList1){
             Map<String,Object> university= Maps.newHashMap();
-            Field[] fields=universityDTO.getClass().getDeclaredFields();
+            Field[] fields=universityDTO.getClass().getFields();
             for (Field field:fields){
                 String name=field.getName();
                 String name2 = name.substring(0, 1).toUpperCase() + name.substring(1);
