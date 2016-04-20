@@ -130,7 +130,7 @@ public class UniversityController extends ZGKBaseController {
             }
             String[] propertys2 = null;
             Map<String, Object> propertyMap = new HashMap();
-            if (StringUtils.isNotEmpty(university.get("property").toString())) {
+            if (university.containsKey("property")&&StringUtils.isNotEmpty(university.get("property").toString())) {
                 propertys2 = propertys[0].toString().split(",");
                 Map<String, Object> propertysMap = getPropertys();
 
