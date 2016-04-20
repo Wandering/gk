@@ -4,6 +4,7 @@ import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.domain.BizStatusEnum;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.common.utils.SqlOrderEnum;
+import cn.thinkjoy.gaokao360.dto.GkQueryDomain;
 import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
@@ -79,7 +80,7 @@ public class PredictController extends BaseApiController {
         {
             throw new BizException("error", "请输入院校名称!");
         }
-        List<Map<String, String>> universityList = universityService.getUniversityByName(name);
+        List<GkQueryDomain> universityList = universityService.getUniversityByName(name);
         if(universityList.size()==0)
         {
             throw new BizException("error", "请输入正确的院校名称!");
@@ -87,14 +88,14 @@ public class PredictController extends BaseApiController {
         String uName = "";
         if(universityList.size()==1)
         {
-            uName = universityList.get(0).get("label");
+            uName = universityList.get(0).getLabel();
         }
         if(universityList.size()>1)
         {
-            for (Map<String, String> map : universityList) {
-                if(name.equals(map.get("label")))
+            for (GkQueryDomain map : universityList) {
+                if(name.equals(map.getLabel()))
                 {
-                    uName = map.get("label");
+                    uName = map.getLabel();
                 }
             }
         }
