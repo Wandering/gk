@@ -6,6 +6,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gaokao360.domain.DataDict;
 import cn.thinkjoy.gaokao360.dto.UniversityDTO;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
@@ -759,7 +760,7 @@ public class UniversityController extends ZGKBaseController {
 
 
     private Map<String, Object> getPropertys() {
-        List<Map<String, Object>> list = null;
+        List<DataDict> list = null;
         Map<String, Object> propertysMap = new HashMap<>();
 
         String key = "universityPropertys";
@@ -769,8 +770,8 @@ public class UniversityController extends ZGKBaseController {
             propertysMap = JSON.parseObject(redisRepository.get(key).toString(), Map.class);
         } else {
             list = iremoteUniversityService.getDataDictListByType("FEATURE");
-            for (Map<String, Object> map : list) {
-                propertysMap.put(map.get("dictId").toString(), map.get("name").toString());
+            for (DataDict map : list) {
+                propertysMap.put(map.getDictId().toString(), map.getName().toString());
             }
             redisRepository.set(key, JSON.toJSON(propertysMap), TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
         }
