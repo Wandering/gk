@@ -118,6 +118,8 @@ public class UniversityController extends ZGKBaseController {
             getEntryMap(universityDTO,university, class2);
             Class class3=class2.getSuperclass();
             getEntryMap(universityDTO,university, class3);
+            Class class4=class3.getSuperclass();
+            getEntryMap(universityDTO,university, class4);
             getUniversityList.add(university);
         }
         int count = iremoteUniversityService.getUniversityCount(condition);
