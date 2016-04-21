@@ -6,8 +6,6 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gaokao360.domain.DataDict;
-import cn.thinkjoy.gaokao360.dto.UniversityDTO;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Province;
@@ -25,9 +23,7 @@ import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -37,9 +33,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -108,20 +101,7 @@ public class UniversityController extends ZGKBaseController {
         selectorpage.put("subjection", 1);
         selectorpage.put("typeName", 1);
         selectorpage.put("url", 1);
-        List<Map<String, Object>> getUniversityList= Lists.newArrayList();
-        List<UniversityDTO> getUniversityList1= iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
-        for (UniversityDTO universityDTO:getUniversityList1){
-            Map<String,Object> university= Maps.newHashMap();
-            Class class1=universityDTO.getClass();
-            getEntryMap(universityDTO,university, class1);
-            Class class2=class1.getSuperclass();
-            getEntryMap(universityDTO,university, class2);
-            Class class3=class2.getSuperclass();
-            getEntryMap(universityDTO,university, class3);
-            Class class4=class3.getSuperclass();
-            getEntryMap(universityDTO,university, class4);
-            getUniversityList.add(university);
-        }
+        List<Map<String, Object>> getUniversityList = iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
         int count = iremoteUniversityService.getUniversityCount(condition);
         //如果用户已登录
         UserAccountPojo userAccountPojo = getUserAccountPojo();
@@ -133,7 +113,7 @@ public class UniversityController extends ZGKBaseController {
             }
             String[] propertys2 = null;
             Map<String, Object> propertyMap = new HashMap();
-            if (university.containsKey("property")&&StringUtils.isNotEmpty(university.get("property").toString())) {
+            if (StringUtils.isNotEmpty(university.get("property").toString())) {
                 propertys2 = propertys[0].toString().split(",");
                 Map<String, Object> propertysMap = getPropertys();
 
@@ -166,28 +146,6 @@ public class UniversityController extends ZGKBaseController {
         returnMap.put("universityList", getUniversityList);
         returnMap.put("count", count);
         return returnMap;
-    }
-
-    private void getEntryMap(UniversityDTO universityDTO,Map<String, Object> university, Class class1) {
-        Field[] fields=class1.getDeclaredFields();
-        for (Field field:fields){
-            String name=field.getName();
-            String name2 = name.substring(0, 1).toUpperCase() + name.substring(1);
-            Method m = null;
-            try {
-                m = universityDTO.getClass().getMethod("get" + name2);
-                if (m.invoke(universityDTO)!=null) {
-                    String value = m.invoke(universityDTO).toString();
-                    university.put(name, value);
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e){
-                e.printStackTrace();
-            }
-        }
     }
 
     @RequestMapping(value = "getRemoteUniversityById", method = RequestMethod.GET)
@@ -762,7 +720,7 @@ public class UniversityController extends ZGKBaseController {
 
 
     private Map<String, Object> getPropertys() {
-        List<DataDict> list = null;
+        List<Map<String, Object>> list = null;
         Map<String, Object> propertysMap = new HashMap<>();
 
         String key = "universityPropertys";
@@ -772,8 +730,8 @@ public class UniversityController extends ZGKBaseController {
             propertysMap = JSON.parseObject(redisRepository.get(key).toString(), Map.class);
         } else {
             list = iremoteUniversityService.getDataDictListByType("FEATURE");
-            for (DataDict map : list) {
-                propertysMap.put(map.getDictId().toString(), map.getName().toString());
+            for (Map<String, Object> map : list) {
+                propertysMap.put(map.get("dictId").toString(), map.get("name").toString());
             }
             redisRepository.set(key, JSON.toJSON(propertysMap), TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
         }
