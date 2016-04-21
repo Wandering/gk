@@ -223,7 +223,7 @@ public class SmartReportController extends ZGKBaseController {
      * @param reportResult
      * @return
      */
-    @RequestMapping(value = "/save",method=RequestMethod.GET)
+    @RequestMapping(value = "/save",method=RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> reportSave(ReportResult reportResult) {
         //reportResult.setUserId(Integer.valueOf(super.getAccoutId()));
