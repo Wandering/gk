@@ -172,9 +172,8 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
             String conLineScore = iSystemParmasService.getControleLine(parmasView.getBatch(), parmasView.getCategorie(), parmasView.getProvince());
 
             String[] conLineArr=conLineScore.split(ReportUtil.VOLUNTEER_KEY_SPLIT_SYMBOL);
-
+            String[] batArr = ReportUtil.getBatchArr(parmasView.getBatch());
             if(conLineArr.length>1) {
-                String[] batArr = ReportUtil.getBatchArr(parmasView.getBatch());
                 Integer line = Integer.valueOf(conLineArr[Integer.valueOf(batArr[1]) - 1]);
                 if (parmasView.getScore() >= line) {
                     SystemParmas conLinePlusScoreParmas = iSystemParmasService.getThresoldModel(parmasView.getProvince(), ReportUtil.CON_LINE_PLUS_VALUE_KEY, parmasView.getCategorie());
