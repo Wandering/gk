@@ -23,7 +23,7 @@ public interface IBaseUniversityInfoService {
      * @param provinceCode 省份
      * @return
      */
-    public Integer getLineDiff(Integer batch, Integer score, Integer cate, String provinceCode);
+    public Integer getLineDiff(String batch, Integer score, Integer cate, String provinceCode);
 
     /**
      * 线差法

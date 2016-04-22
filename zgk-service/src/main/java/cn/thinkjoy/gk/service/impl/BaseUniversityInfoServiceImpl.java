@@ -131,8 +131,8 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         LOGGER.info("majorType:" + cate);
         LOGGER.info("batchStr:" + batchStr);
 
-        Integer firstValue = Integer.valueOf(first), batch = Integer.valueOf(batchStr), majorType = Integer.valueOf(cate);
-        Integer rangeIndex = iSystemParmasService.getRankingRangeIndex(batch, proCode, majorType);
+        Integer firstValue = Integer.valueOf(first),  majorType = Integer.valueOf(cate);
+        Integer rangeIndex = iSystemParmasService.getRankingRangeIndex(batchStr, proCode, majorType);
 
         LOGGER.info("rangeIndex:" + rangeIndex);
 
@@ -169,17 +169,36 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         //1:为开启分数补充法
         if (isScore == 1) {
 
-            Integer conLineScore = iSystemParmasService.getControleLine(parmasView.getBatch(), parmasView.getCategorie(), parmasView.getProvince());
-            //用户分数大于 批次线
-            if (parmasView.getScore() >= conLineScore) {
-                SystemParmas conLinePlusScoreParmas = iSystemParmasService.getThresoldModel(parmasView.getProvince(), ReportUtil.CON_LINE_PLUS_VALUE_KEY, parmasView.getCategorie());
-                if (conLinePlusScoreParmas == null)
-                    return false;
-                //批次线追加分
-                Integer plusScore = Integer.valueOf(conLinePlusScoreParmas.getConfigValue());
-                //用户分数小于(批次线+批次线追加分)
-                if (parmasView.getScore() <= conLineScore + plusScore)
-                    result = true;
+            String conLineScore = iSystemParmasService.getControleLine(parmasView.getBatch(), parmasView.getCategorie(), parmasView.getProvince());
+
+            String[] conLineArr=conLineScore.split(ReportUtil.VOLUNTEER_KEY_SPLIT_SYMBOL);
+
+            if(conLineArr.length>1) {
+                String[] batArr = ReportUtil.getBatchArr(parmasView.getBatch());
+                Integer line = Integer.valueOf(conLineArr[Integer.valueOf(batArr[1]) - 1]);
+                if (parmasView.getScore() >= line) {
+                    SystemParmas conLinePlusScoreParmas = iSystemParmasService.getThresoldModel(parmasView.getProvince(), ReportUtil.CON_LINE_PLUS_VALUE_KEY, parmasView.getCategorie());
+                    if (conLinePlusScoreParmas == null)
+                        return false;
+                    //批次线追加分
+                    Integer plusScore = Integer.valueOf(conLinePlusScoreParmas.getConfigValue());
+                    //用户分数小于(批次线+批次线追加分)
+                    if (parmasView.getScore() <= Integer.valueOf(line) + plusScore) {
+                        result = true;
+                    }
+                }
+            }else {
+                //用户分数大于 批次线
+                if (parmasView.getScore() >= Integer.valueOf(conLineScore)) {
+                    SystemParmas conLinePlusScoreParmas = iSystemParmasService.getThresoldModel(parmasView.getProvince(), ReportUtil.CON_LINE_PLUS_VALUE_KEY, parmasView.getCategorie());
+                    if (conLinePlusScoreParmas == null)
+                        return false;
+                    //批次线追加分
+                    Integer plusScore = Integer.valueOf(conLinePlusScoreParmas.getConfigValue());
+                    //用户分数小于(批次线+批次线追加分)
+                    if (parmasView.getScore() <= Integer.valueOf(conLineScore) + plusScore)
+                        result = true;
+                }
             }
         }
         return result;
@@ -190,9 +209,17 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
      * @return
      */
     @Override
-    public Integer getLineDiff(Integer batch, Integer score, Integer cate, String provinceCode) {
-        Integer controleLine = iSystemParmasService.getControleLine(batch, cate, provinceCode);
-        return (score - controleLine);
+    public Integer getLineDiff(String batch, Integer score, Integer cate, String provinceCode) {
+        String[] bch = batch.split(ReportUtil.VOLUNTEER_KEY_SPLIT_SYMBOL);
+        String controleLine = iSystemParmasService.getControleLine(bch[0], cate, provinceCode);
+        String[] conLineArr = controleLine.split(ReportUtil.VOLUNTEER_KEY_SPLIT_SYMBOL);
+        Integer line = 0;
+        if (conLineArr.length > 1) {
+            line = (score - Integer.valueOf(conLineArr[Integer.valueOf(bch[1])]));
+        } else
+            line = (score - Integer.valueOf(conLineArr[0]));
+
+        return line;
     }
 
     /*************************************************排位法*************************************************/
@@ -221,7 +248,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         if (systemParmas == null)
             return null;
         //1:一批 2：二批 3：高职高专 4:三批
-        Integer batch = Integer.valueOf(map.get("batch").toString());
+        Integer batch = Integer.valueOf(ReportUtil.getBatchArr(map.get("batch").toString())[0]);
 
         LOGGER.info("batch:" + batch);
 

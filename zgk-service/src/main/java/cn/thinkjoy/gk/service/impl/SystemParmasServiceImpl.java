@@ -92,51 +92,71 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
         List<BatchView> batchViews = new ArrayList<>();
         for (int i = 0; i < batchArr.length; i++) {
             String batchLine = batchArr[i];
-            if (score >= Integer.valueOf(batchLine)) {
-                int batch = (i + 1);
-                BatchView batchView = new BatchView();
-                batchView.setBatch(batch);
 
-                int ct = c == ReportEnum.categories.LI.getValue() ? ReportEnum.categories.WEN.getValue() : ReportEnum.categories.LI.getValue();
-                SystemParmas systemParmasL = selectSystemParmas(ct, provinceCode);//理
+            String[] batchLineArr = batchLine.split("\\|");
 
-                Integer batch1 = Integer.valueOf(batchLine);
-                Integer batch2 = getBatchNumberLine(batch, systemParmasL.getConfigValue());
-
-                if (c == ReportEnum.categories.LI.getValue()) {
-
-                    batchView.setWenLine(batch2);
-                    batchView.setLiLine(batch1);
-
+            if (batchLineArr.length > 1) {  // 区分 A B类
+                for (int x = 0; x < batchLineArr.length; x++) {
+                    Integer line = Integer.valueOf(batchLineArr[x]);
+                    if (score >= line && line > 0) {
+                        String btc = (i + 1) + "-" + String.valueOf(x + 1);
+                        batchViews.add(ss(c, btc,x, provinceCode, batchLine));
+                    }
                 }
-                if (c == ReportEnum.categories.WEN.getValue()) {
-                    batchView.setWenLine(batch1);
-                    batchView.setLiLine(batch2);
+            } else {
+                Integer btLine = Integer.valueOf(batchLine);
+                if (score >= btLine && btLine > 0) {
+                    int batch = (i + 1);
+                    batchViews.add(ss(c, String.valueOf(batch),0, provinceCode, batchLine));
                 }
-                //获取对应配置信息
-                SystemParmas wenSystemParmas = getThresoldModel(provinceCode, ReportUtil.CON_LINE_PLUS_VALUE_KEY, 1);
-                SystemParmas liSystemParmas = getThresoldModel(provinceCode, ReportUtil.CON_LINE_PLUS_VALUE_KEY, 2);
-                batchView.setWenPlus(wenSystemParmas==null?0:Integer.valueOf(wenSystemParmas.getConfigValue()));
-                batchView.setLiPlus(liSystemParmas==null?0:Integer.valueOf(liSystemParmas.getConfigValue()));
-                batchViews.add(batchView);
             }
         }
         return batchViews;
     }
+    private BatchView ss(Integer c,String viewBatch,Integer tagIndex ,String provinceCode,String batchLine) {
+        BatchView batchView = new BatchView();
+        batchView.setBatch(viewBatch);
+
+        int ct = c == ReportEnum.categories.LI.getValue() ? ReportEnum.categories.WEN.getValue() : ReportEnum.categories.LI.getValue();
+        SystemParmas systemParmasL = selectSystemParmas(ct, provinceCode);//理
+
+        String batch1 = batchLine;
+        String batch2 = getBatchNumberLine(viewBatch, systemParmasL.getConfigValue());
+        String[] bthArr1= ReportUtil.getBatchTagArr(batch1);
+        String[] bthArr2= ReportUtil.getBatchTagArr(batch2);
+
+        if (c == ReportEnum.categories.LI.getValue()) {
+
+            batchView.setWenLine(bthArr2[tagIndex]);
+            batchView.setLiLine(bthArr1[tagIndex]);
+
+        }
+        if (c == ReportEnum.categories.WEN.getValue()) {
+            batchView.setWenLine(bthArr1[tagIndex]);
+            batchView.setLiLine(bthArr2[tagIndex]);
+        }
+        //获取对应配置信息
+        SystemParmas wenSystemParmas = getThresoldModel(provinceCode, ReportUtil.CON_LINE_PLUS_VALUE_KEY, 1);
+        SystemParmas liSystemParmas = getThresoldModel(provinceCode, ReportUtil.CON_LINE_PLUS_VALUE_KEY, 2);
+        batchView.setWenPlus(wenSystemParmas == null ? 0 : Integer.valueOf(wenSystemParmas.getConfigValue()));
+        batchView.setLiPlus(liSystemParmas == null ? 0 : Integer.valueOf(liSystemParmas.getConfigValue()));
+        return batchView;
+    }
 
     @Override
-    public Integer getControleLine(Integer batch,int cate,String provinceCode) {
+    public String getControleLine(String batch,int cate,String provinceCode) {
         SystemParmas systemParmas = selectSystemParmas(cate, provinceCode);
-        return systemParmas != null ? getBatchNumberLine(batch, systemParmas.getConfigValue()) : 0;
+        return systemParmas != null ? getBatchNumberLine(batch, systemParmas.getConfigValue()) : "0";
     }
 
     /**
      * 获取某批次下控制线
      * @return
      */
-    private Integer getBatchNumberLine(Integer batch,String configValue) {
+    private String getBatchNumberLine(String batch,String configValue) {
         String[] lines = configValue.split(ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
-        return Integer.valueOf(lines[(batch - 1)]);
+        String[] arr = ReportUtil.getBatchArr(batch);
+        return lines[(Integer.valueOf(arr[0]) - 1)];
     }
     /**
      * 获取批次控制线 key
@@ -205,7 +225,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
      * @return
      */
     @Override
-    public Integer getRankingRangeIndex(Integer batch,String proCode,Integer majorType) {
+    public Integer getRankingRangeIndex(String batch,String proCode,Integer majorType) {
         LOGGER.info("========获取排名规则区间下标 start=======");
         SystemParmas systemParmas = getThresoldModel(proCode, ReportUtil.SCORE_BATCH_ROLE_KEY, majorType);
         if (systemParmas == null)
@@ -214,6 +234,6 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
         Integer index = ReportUtil.getRankingRuleIndex(batch, systemParmas.getConfigValue());
         LOGGER.info("拆分取得下标:" + index);
         LOGGER.info("========获取排名规则区间下标 start=======");
-        return 0;
+        return index;
     }
 }

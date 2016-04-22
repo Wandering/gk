@@ -154,7 +154,7 @@ public class SmartReportController extends ZGKBaseController {
     @RequestMapping(value = "/main",method=RequestMethod.GET)
     @ResponseBody
     public List reportMain(
-                             @RequestParam(value = "batch") Integer batch,
+                             @RequestParam(value = "batch") String batch,
                              @RequestParam(value = "score") Integer score,
                              @RequestParam(value = "province") String province,
                              @RequestParam(value = "categorie") Integer categorie,

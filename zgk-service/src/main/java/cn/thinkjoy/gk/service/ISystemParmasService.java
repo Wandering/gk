@@ -34,7 +34,7 @@ public interface ISystemParmasService {
      * @param provinceCode 省份
      * @return
      */
-    Integer getControleLine(Integer batch,int cate,String provinceCode);
+    String getControleLine(String batch,int cate,String provinceCode);
 
     /**
      * 获取规则  key规则为: 省份-key
@@ -95,5 +95,5 @@ public interface ISystemParmasService {
      * @param majorType   科类
      * @return
      */
-    Integer getRankingRangeIndex(Integer batch,String proCode,Integer majorType);
+    Integer getRankingRangeIndex(String batch,String proCode,Integer majorType);
 }
