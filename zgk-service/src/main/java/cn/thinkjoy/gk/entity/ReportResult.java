@@ -44,7 +44,7 @@ public class ReportResult extends CreateBaseDomain<Long> {
     /**
      * 批次
      */
-    private Integer batch;
+    private String batch;
     /**
      * 评测日期
      */
@@ -124,11 +124,11 @@ public class ReportResult extends CreateBaseDomain<Long> {
         this.provinceCode = provinceCode;
     }
 
-    public Integer getBatch() {
+    public String getBatch() {
         return batch;
     }
 
-    public void setBatch(Integer batch) {
+    public void setBatch(String batch) {
         this.batch = batch;
     }
 

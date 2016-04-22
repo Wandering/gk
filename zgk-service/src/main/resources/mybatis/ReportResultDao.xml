@@ -11,7 +11,7 @@
         <result column="is_complete" property="isComplete" jdbcType="TINYINT"/>
         <result column="is_reasonable" property="isReasonable" jdbcType="TINYINT"/>
         <result column="report_result_json" property="reportResultJson" jdbcType="VARCHAR"/>
-        <result column="batch" property="batch" jdbcType="INTEGER"/>
+        <result column="batch" property="batch" jdbcType="VARCHAR"/>
         <result column="province_code" property="provinceCode" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="BIGINT"/>
     </resultMap>
@@ -87,7 +87,7 @@
                 #{provinceCode,jdbcType=VARCHAR},
             </if>
             <if test="batch!=null">
-                #{batch,jdbcType=INTEGER},
+                #{batch,jdbcType=VARCHAR},
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
