@@ -260,6 +260,7 @@ public class UniversityController extends ZGKBaseController {
         if (StringUtils.isNotBlank(universityMajorType)) {
             condition.put("majorType", universityMajorType);
         }
+        condition.put("areaId",getAreaId().toString());
         condition.put("offset", offset);
         condition.put("rows", rows);
         List ll = iremoteUniversityService.getUniversityMajorEnrollingPlanList(condition);
