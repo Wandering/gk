@@ -26,9 +26,9 @@ public class UniversityInfoParmasView implements Serializable {
      */
     private String province;
     /**
-     * 批次  1 :一批 2: 二批 3: 高职 4:三批
+     * 批次  1 :一批 2: 二批 2-0:二批A类 2-1:二批B类.... 3: 高职 4:三批
      */
-    private Integer batch;
+    private String batch;
     /**
      * 用户输入位次
      */
@@ -71,11 +71,11 @@ public class UniversityInfoParmasView implements Serializable {
         this.province = province;
     }
 
-    public Integer getBatch() {
+    public String getBatch() {
         return batch;
     }
 
-    public void setBatch(Integer batch) {
+    public void setBatch(String batch) {
         this.batch = batch;
     }
 

@@ -9,15 +9,15 @@ public class BatchView implements Serializable,Comparable<BatchView> {
     /**
      * 批次
      */
-    private Integer batch;
+    private String batch;
     /**
      * 文科控制线
      */
-    private Integer wenLine;
+    private String wenLine;
     /**
      * 理科控制线
      */
-    private Integer liLine;
+    private String liLine;
 
     /**
      * 文科压线生追加分数
@@ -28,27 +28,27 @@ public class BatchView implements Serializable,Comparable<BatchView> {
      */
     private Integer liPlus;
 
-    public Integer getBatch() {
+    public String getBatch() {
         return batch;
     }
 
-    public void setBatch(Integer batch) {
+    public void setBatch(String batch) {
         this.batch = batch;
     }
 
-    public Integer getWenLine() {
+    public String getWenLine() {
         return wenLine;
     }
 
-    public void setWenLine(Integer wenLine) {
+    public void setWenLine(String wenLine) {
         this.wenLine = wenLine;
     }
 
-    public Integer getLiLine() {
+    public String getLiLine() {
         return liLine;
     }
 
-    public void setLiLine(Integer liLine) {
+    public void setLiLine(String liLine) {
         this.liLine = liLine;
     }
 

@@ -100,13 +100,31 @@ public class ReportUtil {
      * @param batch
      * @return
      */
-    public static String getTableName(String provinceCode,Integer categorie,Integer batch,boolean isPrecedence) {
+    public static String getTableName(String provinceCode,Integer categorie,String batch,boolean isPrecedence) {
+        String[] batchArr = getBatchArr(batch);
         if (isPrecedence)
-            return provinceCode + ROLE_KEY_SPLIT_SYMBOL + categorie + ROLE_KEY_SPLIT_SYMBOL + batch + ROLE_KEY_SPLIT_SYMBOL + PRECEDENCE_KEY_SYMBOL;
+            return provinceCode + ROLE_KEY_SPLIT_SYMBOL + categorie + ROLE_KEY_SPLIT_SYMBOL + batchArr[0] + ROLE_KEY_SPLIT_SYMBOL + PRECEDENCE_KEY_SYMBOL;
         else
-            return provinceCode + ROLE_KEY_SPLIT_SYMBOL + categorie + ROLE_KEY_SPLIT_SYMBOL + batch;
+            return provinceCode + ROLE_KEY_SPLIT_SYMBOL + categorie + ROLE_KEY_SPLIT_SYMBOL + batchArr[0];
     }
 
+    /**
+     * 批次规则拆分
+     * @param batchStr
+     * @return
+     */
+    public static String[] getBatchArr(String batchStr) {
+        return batchStr.split(ROLE_VALUE_SPLIT_SYMBOL);
+    }
+
+    /**
+     * 批次标记拆分
+     * @param batchTag
+     * @return
+     */
+    public static String[] getBatchTagArr(String batchTag){
+        return batchTag.split(VOLUNTEER_KEY_SPLIT_SYMBOL);
+    }
     /**
      * 组装位次表名
      * @param provinceCode
@@ -178,14 +196,14 @@ public class ReportUtil {
      * @param rankingRuleStr
      * @return
      */
-    public static Integer  getRankingRuleIndex(Integer batch,String rankingRuleStr) {
-        if (batch <= 0)
+    public static Integer  getRankingRuleIndex(String batch,String rankingRuleStr) {
+        if (StringUtils.isBlank(batch))
             return -1;
         String[] rankingRuleArr = rankingRuleStr.split(VOLUNTEER_KEY_SPLIT_SYMBOL);
         for (int i = 0; i < rankingRuleArr.length; i++) {
             String batchStr = rankingRuleArr[i];
 
-            if (Integer.valueOf(batchStr).equals(batch))
+            if (batchStr.equals(batch))
                 return i;
         }
         return -1;
