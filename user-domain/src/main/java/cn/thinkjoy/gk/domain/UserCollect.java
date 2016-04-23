@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
- * Project Name: gk
- * $Id:  UserCollect.java 2015-11-02 14:42:04 $
+ * Project Name: gaokao360
+ * $Id:  UserCollect.java 2015-12-24 15:27:50 $
  */
 
 
@@ -19,30 +19,34 @@ import cn.thinkjoy.common.domain.BaseDomain;
 
 import java.util.*;
 
-public class UserCollect extends BaseDomain{
+public class UserCollect extends BaseDomain<Long>{
     /** 用户Id */
-    private Long userId;
+    private long userId;
     /** 收藏院校ID */
-    private Long universityId;
+    private long projectId;
 	/** 收藏创建时间 */
-	private Long createDate;
+	private long createDate;
+	/** 1为院校收藏（默认），2为课程收藏 */
+	private String type;
 
 	public UserCollect(){
 	}
-    public void setUserId(Long value) {
-        this.userId = value;
-    }
 
-    public Long getUserId() {
-        return this.userId;
-    }
-    public void setUniversityId(Long value) {
-        this.universityId = value;
-    }
+	public Long getUserId() {
+		return userId;
+	}
 
-    public Long getUniversityId() {
-        return this.universityId;
-    }
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public Long getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(Long projectId) {
+		this.projectId = projectId;
+	}
 
 	public Long getCreateDate() {
 		return createDate;
@@ -52,28 +56,27 @@ public class UserCollect extends BaseDomain{
 		this.createDate = createDate;
 	}
 
-	public String toString() {
-		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-			.append("Id",getId())
-			.append("CreateDate",getCreateDate())
-			.append("UserId",getUserId())
-			.append("UniversityId",getUniversityId())
-			.toString();
+	public String getType() {
+		return type;
 	}
-	
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public int hashCode() {
 		return new HashCodeBuilder()
-			.append(getId())
-			.toHashCode();
+				.append(getId())
+				.toHashCode();
 	}
-	
+
 	public boolean equals(Object obj) {
 		if(obj instanceof UserCollect == false) return false;
 		if(this == obj) return true;
 		UserCollect other = (UserCollect)obj;
 		return new EqualsBuilder()
-			.append(getId(),other.getId())
-			.isEquals();
+				.append(getId(),other.getId())
+				.isEquals();
 	}
 }
 

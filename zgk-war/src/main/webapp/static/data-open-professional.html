@@ -1,0 +1,36 @@
+<div id="open-professional"><script id="open-professional-tpl" type="text/x-handlebars-template"><div class="special-profession">
+            <div class="title">
+                <p class="professional-sub-title bt3">特色专业</p>
+            </div>
+            <div class="special-content">
+                {{#each featureMajorList}}
+                <span>{{{featureMajor}}}</span>
+                {{/each}}
+            </div>
+        </div>
+        <div class="open-pro">
+            <h3>开设专业</h3>
+            <table class="table-list table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>专业名称</th>
+                    <th>学历层次</th>
+                    <th>获得学位</th>
+                    <th>专业排名</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each majorList}}
+                <tr>
+                    <td>{{majorName}}</td>
+                    <td>{{educationLevelName}}</td>
+                    <td>{{gainDegreeName}}</td>
+                    <td>{{majorRank}}</td>
+                </tr>
+                {{/each}}
+                </tbody>
+            </table>
+            <div class="btn-more">
+                <button class="btn btn-next">加载更多</button>
+            </div>
+        </div></script></div>

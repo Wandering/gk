@@ -17,7 +17,7 @@ import cn.thinkjoy.common.domain.BaseDomain;
 
 import java.util.*;
 
-public class UserAccount extends BaseDomain{
+public class UserAccount extends BaseDomain<Long>{
 
 	private Integer status;
 	private Long createDate;
@@ -27,6 +27,45 @@ public class UserAccount extends BaseDomain{
     private Integer userType;
 	/** 区域Id */
 	private Long areaId;
+	private boolean canTargetSchool;
+	/** 省份Id */
+	private String provinceId;
+	/** 城市Id */
+	private String cityId;
+	/** 区域Id */
+	private String countyId;
+
+	public String getProvinceId() {
+		return provinceId;
+	}
+
+	public void setProvinceId(String provinceId) {
+		this.provinceId = provinceId;
+	}
+
+	public String getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(String cityId) {
+		this.cityId = cityId;
+	}
+
+	public String getCountyId() {
+		return countyId;
+	}
+
+	public void setCountyId(String countyId) {
+		this.countyId = countyId;
+	}
+
+	public boolean isCanTargetSchool() {
+		return canTargetSchool;
+	}
+
+	public void setCanTargetSchool(boolean canTargetSchool) {
+		this.canTargetSchool = canTargetSchool;
+	}
 
 	public UserAccount(){
 	}
@@ -94,6 +133,7 @@ public class UserAccount extends BaseDomain{
 			.append("LastModDate",getLastModDate())
 			.append("Password",getPassword())
 			.append("UserType",getUserType())
+			.append("CanTargetSchool",isCanTargetSchool())
 			.toString();
 	}
 	

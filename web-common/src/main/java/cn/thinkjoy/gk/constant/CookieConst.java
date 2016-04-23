@@ -23,6 +23,11 @@ public class CookieConst {
 	public static final String HA_USER_COOKIE_NAME = "hauser";
 
 	/**
+	 * 用户cookie名称 浙江
+	 */
+	public static final String ZJ_USER_COOKIE_NAME = "zjuser";
+
+	/**
 	 * 显示类型名称
 	 */
 	public static final String VIEW_TYPE_COOKIE_NAME = "view_type";
@@ -30,6 +35,6 @@ public class CookieConst {
 	/**
 	 * 高考360域名
 	 */
-	public static final String DOMAIN_GAOKAO360_NET = "gaokao360.net";
+	public static final String DOMAIN_GAOKAO360_NET = "zhigaokao.net";
 
 }

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.Map;
 
 
 @Service("CardExServiceImpl")
@@ -29,31 +30,26 @@ public class CardExServiceImpl implements ICardExService {
 
     @Override
     public boolean updateUserVip(Long cardId, Long userId,Long endDate) {
-        boolean flag = false;
-//        Calendar c = Calendar.getInstance();
-        try{
-//            UserVip uv = userVipDAO.findOne("id", userId);
-//            Long endDate = uv.getEndDate();
-//            if(null==endDate){
-//                endDate = System.currentTimeMillis();
-//            }
-//            c.setTimeInMillis(endDate.longValue());
-//            c.add(Calendar.YEAR,1);
-            UserVip userVip = new UserVip();
-            userVip.setId(userId);
-            userVip.setStatus(1);
-            userVip.setEndDate(endDate);
-            userVipDAO.update(userVip);
-            Card card = new Card();
-            card.setId(cardId);
-            card.setUserId(userId);
-            card.setStatus(1);
-            cardDAO.update(card);
-            flag = true;
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        boolean flag;
+        UserVip userVip = new UserVip();
+        userVip.setId(userId);
+        userVip.setStatus(1);
+        userVip.setEndDate(endDate);
+        userVip.setActiveDate(System.currentTimeMillis());
+        userVipDAO.update(userVip);
+        Card card = new Card();
+        card.setId(cardId);
+        card.setUserId(userId);
+        card.setStatus(1);
+        cardDAO.update(card);
+        flag = true;
         return flag;
     }
+
+    @Override
+    public Card getVipCardInfo(Map<String, String> params) {
+        return cardDAO.queryCardInfo(params);
+    }
+
 
 }

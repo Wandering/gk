@@ -19,7 +19,7 @@ import cn.thinkjoy.common.domain.BaseDomain;
 
 import java.util.*;
 
-public class UserInfo extends BaseDomain{
+public class UserInfo extends BaseDomain<Long>{
     /** 预留 */
     private String token;
     /** 用户名 */
@@ -44,6 +44,19 @@ public class UserInfo extends BaseDomain{
     private String mail;
     /** QQ号 */
     private String qq;
+
+    /**成绩预测start**/
+    /** 文理 */
+    private String type;
+    /** 院校 */
+    private String universityName;
+    /** 成绩 */
+    private String achievement;
+    /** 成绩 */
+    private Integer typeId;
+    /** 是否预测*/
+    private boolean isForecaset;
+    /**成绩预测end**/
 
     public UserInfo(){
     }
@@ -132,10 +145,50 @@ public class UserInfo extends BaseDomain{
         return this.qq;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getUniversityName() {
+        return universityName;
+    }
+
+    public void setUniversityName(String universityName) {
+        this.universityName = universityName;
+    }
+
+    public String getAchievement() {
+        return achievement;
+    }
+
+    public void setAchievement(String achievement) {
+        this.achievement = achievement;
+    }
+
+    public Integer getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
+    }
+
+    public boolean isForecaset() {
+        return isForecaset;
+    }
+
+    public void setIsForecaset(boolean isForecaset) {
+        this.isForecaset = isForecaset;
+    }
+
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
                 .append("Id",getId())
-                .append("Token",getToken())
+                .append("Token", getToken())
                 .append("Name",getName())
                 .append("Icon",getIcon())
                 .append("ProvinceId",getProvinceId())
@@ -147,6 +200,11 @@ public class UserInfo extends BaseDomain{
                 .append("SubjectType",getSubjectType())
                 .append("Mail",getMail())
                 .append("Qq",getQq())
+                .append("Type",getType())
+                .append("UniversityName",getUniversityName())
+                .append("Achievement",getAchievement())
+                .append("typeId",getTypeId())
+                .append("isForecaset",isForecaset())
                 .toString();
     }
 

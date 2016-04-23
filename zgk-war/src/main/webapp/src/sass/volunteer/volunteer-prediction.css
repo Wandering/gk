@@ -1,0 +1,278 @@
+.volunteer-banner {
+  height: 204px;
+  margin-bottom: 16px; }
+
+.volunteer-main .sidebar {
+  padding: 150px 0 0;
+  position: relative;
+  top: -16px; }
+  .volunteer-main .sidebar li a {
+    font-size: 16px;
+    color: #0e5952;
+    font-weight: normal; }
+  .volunteer-main .sidebar li.active a {
+    font-weight: bold; }
+  .volunteer-main .sidebar .top-bg {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    width: 109px;
+    height: 109px;
+    margin: 0 0 0 -54px; }
+
+.content-main .t-bg {
+  width: 723px;
+  height: 102px;
+  background: url("../../img/volunteer-content-banner.png") no-repeat;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 102px;
+  font-size: 24px;
+  color: #65c88f; }
+
+.volunteer-form {
+  width: 385px;
+  margin: 28px auto 0; }
+  .volunteer-form .form-group {
+    width: 383px;
+    height: 40px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px; }
+    .volunteer-form .form-group .control-label {
+      font-size: 16px;
+      color: #333;
+      font-weight: normal;
+      padding: 7px 5px 0 0; }
+    .volunteer-form .form-group .col-sm-9 {
+      margin-top: 2px;
+      padding-left: 0; }
+      .volunteer-form .form-group .col-sm-9 .form-control {
+        border: none;
+        box-shadow: none;
+        font-size: 16px;
+        height: 33px; }
+      .volunteer-form .form-group .col-sm-9 .type-radio {
+        margin: 5px 14px 0;
+        font-size: 16px;
+        color: #333;
+        font-weight: normal; }
+    .volunteer-form .form-group .btn {
+      border: none;
+      line-height: 40px;
+      padding: 0;
+      color: #fff;
+      font-size: 20px; }
+  .volunteer-form .btn-form {
+    border: none;
+    position: relative; }
+    .volunteer-form .btn-form .alert-danger {
+      display: none;
+      position: absolute;
+      top: -60px;
+      left: 0;
+      width: 100%; }
+  .volunteer-form .tips-txt {
+    font-size: 14px;
+    color: #666; }
+
+.content-b-header {
+  position: relative;
+  left: 0;
+  top: 0; }
+  .content-b-header .title {
+    margin: 0;
+    font-size: 20px;
+    color: #666;
+    font-weight: normal; }
+  .content-b-header .school-title span {
+    margin-right: 65px; }
+  .content-b-header .ul {
+    width: 400px;
+    margin: 15px 0; }
+    .content-b-header .ul li {
+      float: left;
+      width: 170px;
+      line-height: 25px;
+      color: #666;
+      font-size: 16px; }
+  .content-b-header .buttons {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    float: right; }
+    .content-b-header .buttons .btn {
+      margin-right: 10px; }
+
+.line-bottom {
+  border-bottom: 2px solid #65c88f;
+  margin: 20px 0; }
+
+.content-b-body .title {
+  margin-bottom: 20px; }
+.content-b-body .volunteer-result-txt {
+  margin: 30px 0 20px; }
+  .content-b-body .volunteer-result-txt strong {
+    color: #f49e28;
+    font-size: 18px; }
+  .content-b-body .volunteer-result-txt .txt {
+    color: #666;
+    font-size: 14px; }
+.content-b-body .btn {
+  width: 60%;
+  margin: 0 auto 50px; }
+
+.school-info {
+  position: relative;
+  left: 0;
+  top: 0;
+  padding: 0 0 6px; }
+  .school-info .icon-heart {
+    position: absolute;
+    top: 17px;
+    left: 10px; }
+  .school-info .name {
+    text-align: left;
+    padding: 0 0 0 44px;
+    margin: 0 0 5px;
+    line-height: 20px; }
+  .school-info .list-type {
+    padding: 0 0 0 44px;
+    text-align: left;
+    line-height: 20px; }
+    .school-info .list-type span {
+      padding: 1px 3px;
+      border-radius: 1px;
+      margin-right: 2px; }
+    .school-info .list-type .type-985 {
+      color: #18a4a4;
+      border: 1px solid #18a4a4; }
+    .school-info .list-type .type-211 {
+      color: #38abf3;
+      border: 1px solid #38abf3; }
+    .school-info .list-type .type-yan {
+      color: #4bc37e;
+      border: 1px solid #4bc37e; }
+    .school-info .list-type .type-zi {
+      color: #5ca9f0;
+      border: 1px solid #5ca9f0; }
+    .school-info .list-type .type-guo {
+      color: #5bc3f4;
+      border: 1px solid #5bc3f4; }
+    .school-info .list-type .type-zhuo {
+      color: #33cccc;
+      border: 1px solid #33cccc; }
+
+.content-b-body .objective-btn {
+  width: 100%;
+  margin: 0 auto; }
+
+#reported-content-a .into-list {
+  height: 69px;
+  border: 1px solid #e8e8e8;
+  background: #f5f5f5;
+  position: relative;
+  margin-bottom: 11px; }
+  #reported-content-a .into-list strong {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    font-size: 18px; }
+  #reported-content-a .into-list .info {
+    position: absolute;
+    top: 35px;
+    left: 20px;
+    font-size: 14px; }
+  #reported-content-a .into-list .btn {
+    position: absolute;
+    right: 20px;
+    top: 13px; }
+
+#reported-content-c .volunteer-school-info .form-inline {
+  width: 322px;
+  height: 40px;
+  border: 1px solid #e3e3e3;
+  padding: 0;
+  margin: 0 auto; }
+  #reported-content-c .volunteer-school-info .form-inline .school-txt {
+    width: 239px;
+    height: 38px;
+    float: left;
+    border: none; }
+  #reported-content-c .volunteer-school-info .form-inline .btn {
+    float: left;
+    width: 81px;
+    height: 38px;
+    background: #0e5952;
+    color: #FFF;
+    border: none;
+    border-radius: 0; }
+#reported-content-c .volunteer-school-info .info {
+  text-align: left;
+  line-height: 24px;
+  padding: 10px 0 0 18px; }
+
+.banner-bg-ceping {
+  width: 100%; }
+
+.ceping-banner {
+  margin: 0 auto; }
+
+.video-contentBox {
+  width: 100%; }
+
+.video-content {
+  width: auto;
+  margin: 0 auto; }
+
+.ceping-title {
+  background: url("../../img/cpTitle.png") no-repeat left 30px;
+  margin-bottom: 26px;
+  padding: 30px 0 0 165px;
+  color: #777;
+  font-size: 15px;
+  font-weight: bold; }
+
+.ceping-content {
+  margin-bottom: 40px; }
+
+.ceping-content li {
+  height: 160px;
+  margin-bottom: 15px;
+  position: relative; }
+
+.ceping-content li .txtdescr {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 16px;
+  width: 400px;
+  /* opacity: 0.9; */ }
+
+.ceping-content li h5 {
+  font-weight: bold;
+  color: #fff;
+  font-size: 15px;
+  margin-bottom: 5px;
+  margin-top: 0; }
+
+.ceping-content li p {
+  color: #fff;
+  font-size: 14px;
+  line-height: 18px;
+  text-indent: 24px;
+  margin: 0 0 10px; }
+
+a.cpbtn {
+  display: inline-block;
+  width: 150px;
+  padding: 5px 0;
+  color: #fff;
+  border: 1px solid #fff;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 8px; }
+
+.star {
+  display: inline-block; }
+
+/*# sourceMappingURL=volunteer-prediction.css.map */

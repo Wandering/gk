@@ -6,12 +6,14 @@
  */
 package cn.thinkjoy.gk.service.impl;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.dao.*;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.domain.UserExam;
 import cn.thinkjoy.gk.domain.UserInfo;
 import cn.thinkjoy.gk.domain.UserVip;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
+import cn.thinkjoy.gk.pojo.UserInfoPojo;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,10 +60,9 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
     }
 
     @Override
-    public UserAccountPojo findUserAccountPojoByPhone(String account,long areaId) {
+    public UserAccountPojo findUserAccountPojoByPhone(String account) {
         Map<String,Object> params = new HashMap<String,Object>();
         params.put("account",account);
-        params.put("areaId",areaId);
         return  userAccountExDAO.findUserAccountPojo(params);
 
     }
@@ -76,43 +77,38 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
 
     @Override
     public boolean insertUserAccount(UserAccount userAccount) {
-        boolean flag = false;
-        try{
-            userAccountDAO.insert(userAccount);
-            long id = userAccount.getId();
-            UserInfo userInfo = new UserInfo();
-            userInfo.setId(id);
-            String account = userAccount.getAccount();
-            userInfo.setName("gk-" + account.substring(0,3)+"****"+account.substring(account.length()-4,account.length()));
-            userInfo.setToken(UUID.randomUUID().toString());
-            userInfoExDAO.insertUserInfo(userInfo);
-            UserVip userVip = new UserVip();
-            userVip.setId(id);
-            userVip.setStatus(0);
-            userVip.setCreateDate(System.currentTimeMillis());
-//            userVip.setEndDate(System.currentTimeMillis());
-            userVipDAO.insert(userVip);
-            UserExam userExam = new UserExam();
-            userExam.setId(id);
-            userExam.setIsReported(0);
-            userExam.setIsSurvey(0);
-            userExamDAO.insert(userExam);
-            flag = true;
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        boolean flag;
+        userAccountDAO.insert(userAccount);
+        long id = userAccount.getId();
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(id);
+        String account = userAccount.getAccount();
+        userInfo.setName("gk-" + account.substring(0,3)+"****"+account.substring(account.length()-4,account.length()));
+        userInfo.setToken(UUID.randomUUID().toString());
+        userInfo.setProvinceId(userAccount.getProvinceId());
+        userInfo.setCityId(userAccount.getCityId());
+        userInfo.setCountyId(userAccount.getCountyId());
+        userInfoExDAO.insertUserInfo(userInfo);
+        UserVip userVip = new UserVip();
+        userVip.setId(id);
+        userVip.setStatus(0);
+        userVip.setCreateDate(System.currentTimeMillis());
+        userVipDAO.insert(userVip);
+        UserExam userExam = new UserExam();
+        userExam.setId(id);
+        userExam.setIsReported(0);
+        userExam.setIsSurvey(0);
+        userExamDAO.insert(userExam);
+        flag = true;
+
         return flag;
     }
 
     @Override
     public boolean updateUserAccount(UserAccount userAccount){
         boolean flag = false;
-        try {
-            userAccountDAO.update(userAccount);
-            flag = true;
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        userAccountDAO.update(userAccount);
+        flag = true;
         return flag;
     }
 
@@ -121,5 +117,25 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         return userAccountDAO.fetch(id);
     }
 
+    @Override
+    public UserInfoPojo getUserInfoPojoById(long id){
+        Map<String,Object> params = new HashMap<>();
+        params.put("id",id);
+        return userAccountExDAO.getUserInfoPojoById(params);
+    }
+
+    @Override
+    public UserInfoPojo findOldUserAccountPojoById(long id) {
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("id",id);
+        return userAccountExDAO.findOldUserAccountPojo(params);
+    }
+
+    @Override
+    public UserInfoPojo findOldUserAccountPojoByPhone(String phone) {
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("account",phone);
+        return userAccountExDAO.findOldUserAccountPojo(params);
+    }
 
 }

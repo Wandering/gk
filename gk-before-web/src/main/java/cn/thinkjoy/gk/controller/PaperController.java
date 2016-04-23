@@ -1,8 +1,7 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseCommonController;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.ExaminationPaper;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
@@ -25,7 +24,7 @@ import java.util.List;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/before/paper")
-public class PaperController extends BaseController {
+public class PaperController extends ZGKBaseController {
     @Autowired
     private IExaminationPaperService iExaminationPaperService;
     @Autowired
@@ -43,7 +42,7 @@ public class PaperController extends BaseController {
         String subjectId = request.getParameter("subjectId");
         String years = request.getParameter("years");
         String searchName = request.getParameter("searchName");
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         List<ExaminationPaper> papers = iexPaperService.getPaperPage(StringUtils.isBlank(subjectId)? null : Long.valueOf(subjectId),Integer.parseInt(sortType),years,searchName,Integer.parseInt(pageNo)*Integer.parseInt(pageSize),Integer.parseInt(pageSize),areaId);
         if(papers == null || papers.size() == 0){
             throw new BizException(ERRORCODE.NO_RECORD.getCode(),ERRORCODE.NO_RECORD.getMessage());

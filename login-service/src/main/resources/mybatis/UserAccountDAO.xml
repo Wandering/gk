@@ -32,17 +32,19 @@
         lastModDate as lastModDate ,
         password as password ,
         userType as userType ,
-        areaId as areaId
+        areaId as areaId,
+        canTargetSchool as canTargetSchool
     </sql>
     <insert id="insert" parameterType="UserAccount">
-        INSERT INTO gk_user_account (
+        INSERT INTO zgk_user_account (
         status,
         createDate,
         account,
         lastModDate,
         password,
         userType,
-        areaId
+        areaId,
+        canTargetSchool
         ) VALUES (
         #{status},
         #{createDate},
@@ -50,7 +52,8 @@
         #{lastModDate},
         #{password},
         #{userType},
-        #{areaId}
+        #{areaId},
+        #{canTargetSchool}
         )
         <selectKey resultType="java.lang.Long" keyProperty="id">
             SELECT LAST_INSERT_ID() AS ID
@@ -59,7 +62,7 @@
 
     <!-- 更新 -->
     <update id="update" parameterType="UserAccount">
-        UPDATE gk_user_account
+        UPDATE zgk_user_account
         <trim prefix="SET" suffixOverrides=",">
             <if test="status!=null">
                 status = #{status},
@@ -82,13 +85,16 @@
             <if test="areaId!=null">
                 areaId = #{areaId},
             </if>
+            <if test="canTargetSchool!=null">
+                canTargetSchool = #{canTargetSchool},
+            </if>
         </trim>
         WHERE
         id = #{id}
     </update>
 
     <update id="updateMap">
-        UPDATE gk_user_account
+        UPDATE zgk_user_account
         <trim prefix="SET" suffixOverrides=",">
             <if test="map.status!=null">
                 status = #{map.status},
@@ -111,13 +117,16 @@
             <if test="map.areaId!=null">
                 areaId = #{map.areaId},
             </if>
+            <if test="map.canTargetSchool!=null">
+                canTargetSchool = #{map.canTargetSchool},
+            </if>
         </trim>
         WHERE
         id = #{map.id}
     </update>
 
     <update id="updateByCondition">
-        UPDATE gk_user_account
+        UPDATE zgk_user_account
         <trim prefix="SET" suffixOverrides=",">
             <if test="update.status!=null">
                 status = #{update.status},
@@ -139,6 +148,9 @@
             </if>
             <if test="update.areaId!=null">
                 areaId = #{update.areaId},
+            </if>
+            <if test="update.canTargetSchool!=null">
+                canTargetSchool = #{update.canTargetSchool},
             </if>
         </trim>
 
@@ -167,18 +179,22 @@
             <if test="condition.areaId!=null">
                 AND areaId = #{condition.areaId}
             </if>
+            <if test="condition.canTargetSchool!=null">
+                AND canTargetSchool = #{condition.canTargetSchool}
+            </if>
         </trim>
     </update>
 
     <insert id="insertMap" >
-        INSERT INTO gk_user_account (
+        INSERT INTO zgk_user_account (
         status,
         createDate,
         account,
         lastModDate,
         password,
         userType,
-        areaId
+        areaId,
+        canTargetSchool
         ) VALUES (
         #{map.status},
         #{map.createDate},
@@ -186,13 +202,14 @@
         #{map.lastModDate},
         #{map.password},
         #{map.userType},
-        #{map.areaId}
+        #{map.areaId},
+        #{map.canTargetSchool}
         )
     </insert>
 
 
     <update id="updateNull" parameterType="UserAccount">
-        UPDATE gk_user_account
+        UPDATE zgk_user_account
         <trim prefix="SET" suffixOverrides=",">
             status = #{status},
             createDate = #{createDate},
@@ -201,6 +218,7 @@
             password = #{password},
             userType = #{userType},
             areaId = #{areaId},
+            canTargetSchool = #{canTargetSchool},
         </trim>
         WHERE
         id = #{id}
@@ -208,7 +226,7 @@
 
     <!-- 按Id删除 -->
     <delete id="deleteById" parameterType="java.lang.Long">
-        DELETE FROM gk_user_account
+        DELETE FROM zgk_user_account
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -216,7 +234,7 @@
 
 
     <delete id="deleteByCondition" parameterType="java.util.Map">
-        DELETE FROM gk_user_account
+        DELETE FROM zgk_user_account
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id = #{id}
@@ -246,14 +264,14 @@
     </delete>
 
     <delete id="deleteByProperty" parameterType="java.util.Map">
-        DELETE FROM gk_user_account WHERE
+        DELETE FROM zgk_user_account WHERE
         ${property} = #{value}
     </delete>
 
     <select id="fetch" parameterType="java.lang.Long" resultType="UserAccount">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_account
+        FROM zgk_user_account
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -262,7 +280,7 @@
     <select id="findOne" parameterType="java.util.Map" resultType="UserAccount">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_account WHERE
+        FROM zgk_user_account WHERE
         ${property} = #{value}
         LIMIT 0,1
     </select>
@@ -270,7 +288,7 @@
     <select id="findList" parameterType="java.util.Map" resultType="UserAccount">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_account WHERE
+        FROM zgk_user_account WHERE
         ${property} = #{value}
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -280,7 +298,7 @@
     <select id="findAll" resultType="UserAccount">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_account
+        FROM zgk_user_account
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
         </if>
@@ -289,7 +307,7 @@
     <select id="queryPage" resultType="UserAccount">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_account
+        FROM zgk_user_account
         <where>
 
             <if test="condition.whereSql != null">
@@ -334,7 +352,7 @@
     <select id="like" parameterType="java.util.Map" resultType="UserAccount">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_account
+        FROM zgk_user_account
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="condition.id!=null">
                 AND id like CONCAT('%', #{condition.id} , '%')
@@ -370,7 +388,7 @@
     <select id="queryList" parameterType="java.util.Map" resultType="UserAccount">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_account
+        FROM zgk_user_account
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="condition.id!=null">
                 AND id = #{condition.id}
@@ -405,7 +423,7 @@
     <select id="queryOne" parameterType="java.util.Map" resultType="UserAccount">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_account
+        FROM zgk_user_account
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="condition.id!=null">
                 AND id = #{condition.id}
@@ -439,7 +457,7 @@
     </select>
 
     <select id="count" resultType="java.lang.Integer">
-        SELECT count(id) FROM gk_user_account
+        SELECT count(id) FROM zgk_user_account
         <where>
             <if test="id!=null">
                 ${groupOp} ${id.field} ${id.op}  #{id.data}
@@ -472,7 +490,7 @@
     <select id="selectMaxId" resultType="java.lang.Long">
         SELECT
         MAX(id)
-        FROM gk_user_account
+        FROM zgk_user_account
     </select>
 
 </mapper>

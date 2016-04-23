@@ -17,7 +17,7 @@ import cn.thinkjoy.common.domain.BaseDomain;
 
 import java.util.*;
 
-public class UserExam extends BaseDomain{
+public class UserExam extends BaseDomain<Long>{
     private Integer scores;
     private Integer ranking;
     private Integer isSurvey;

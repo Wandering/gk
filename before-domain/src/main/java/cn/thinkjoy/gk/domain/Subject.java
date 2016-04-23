@@ -17,7 +17,7 @@ import cn.thinkjoy.common.domain.CreateBaseDomain;
 
 import java.util.*;
 
-public class Subject extends CreateBaseDomain{
+public class Subject extends CreateBaseDomain<Long>{
 	/** 科目名称 */
 	private String subjectName;
 	/** 区域Id */

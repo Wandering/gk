@@ -6,7 +6,7 @@ package cn.thinkjoy.gk.controller;
 
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.query.ProductQuery;
 import cn.thinkjoy.gk.domain.Product;
@@ -18,13 +18,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -33,7 +31,7 @@ import java.util.List;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value="/product")
-public class ProductController extends BaseController{
+public class ProductController extends ZGKBaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(ProductController.class);
 

@@ -1,7 +1,7 @@
 package cn.thinkjoy.gk.controller;
 
 
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Agent;
 import cn.thinkjoy.gk.pojo.AgentPojo;
@@ -24,7 +24,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/agent")
-public class AgentController extends BaseController{
+public class AgentController extends ZGKBaseController {
 
 	private static final Logger LOGGER= LoggerFactory.getLogger(AgentController.class);
 	@Autowired
@@ -37,7 +37,7 @@ public class AgentController extends BaseController{
 	@RequestMapping(value = "/getAgent" , method = RequestMethod.GET)
 	@ResponseBody
 	public List<AgentPojo> getAgent() throws Exception{
-		long areaId = getAreaCookieValue();
+		long areaId = getAreaId();
 		Map<String, Object> conditions = Maps.newHashMap();
 		conditions.put("areaId", areaId);
 		List<Agent> list=  agentService.queryList(conditions, null, null);

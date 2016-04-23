@@ -9,7 +9,9 @@ package cn.thinkjoy.gk.dao;
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.gk.domain.Card;
 
-public interface ICardDAO extends IBaseDAO<Card>{
-	
+import java.util.Map;
 
+public interface ICardDAO extends IBaseDAO<Card>{
+
+    Card queryCardInfo(Map<String, String> params);
 }

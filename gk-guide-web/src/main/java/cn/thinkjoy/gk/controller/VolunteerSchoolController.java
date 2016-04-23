@@ -2,8 +2,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.domain.SearchField;
 import cn.thinkjoy.common.domain.view.BizData4Page;
-import cn.thinkjoy.gk.common.BaseCommonController;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.VolunteerSchool;
 import cn.thinkjoy.gk.domain.VolunteerSchoolCategory;
@@ -27,7 +26,7 @@ import java.util.Map;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("volunteerSchool")
-public class VolunteerSchoolController extends BaseController {
+public class VolunteerSchoolController extends ZGKBaseController {
 
     @Autowired
     private IVolunteerSchoolCategoryService volunteerSchoolCategoryService;
@@ -38,7 +37,7 @@ public class VolunteerSchoolController extends BaseController {
     @RequestMapping(value = "/categories", method = RequestMethod.GET)
     @ResponseBody
     public List<VolunteerSchoolCategory> getCategorys() throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         Map<String, Object> conditions = Maps.newHashMap();
         conditions.put("status", 1);
         conditions.put("areaId", areaId);
@@ -49,7 +48,7 @@ public class VolunteerSchoolController extends BaseController {
     @ResponseBody
     public BizData4Page<VolunteerSchool> getArticles(HttpServletRequest request,
                                                      @RequestParam("pn") int pn,@RequestParam("ps") int ps) throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         long cateId = ServletRequestUtils.getLongParameter(request, "cateId", 0);
         String keyword = request.getParameter("kw");
         if (pn == 0) pn = 1;
@@ -112,7 +111,7 @@ public class VolunteerSchoolController extends BaseController {
     @RequestMapping(value = "/ranks", method = RequestMethod.GET)
     @ResponseBody
     public List<VolunteerSchool> articleRanks(HttpServletRequest request) throws Exception{
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         long cateId = ServletRequestUtils.getLongParameter(request, "cateId", 0);
         int ps = ServletRequestUtils.getIntParameter(request, "ps", 3);
         Map<String, Object> conditions = Maps.newHashMap();

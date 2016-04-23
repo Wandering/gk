@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>专业信息详情</title>
+</head>
+<body>
+<!--面包屑导航-->
+
+<section id="crumb" class="crumb mb30">
+    <ol class="breadcrumb w1000">
+        <li><span class="icon-crumb breadcrumb-home"></span><a href="/">首页</a></li>
+        <li><a href="/static/data-school-info.html">数据查询</a></li>
+        <li class="active">专业信息详情</li>
+    </ol>
+</section>
+<div class="main-container w1000">
+    <div class="majored-detail">
+        <div class="" id="majored-category-detail"></div>
+    </div>
+</div>
+<script data-debug src="/__build/data-professional-detail.js"></script>
+<script type="text/x-handlebars-template" id="temp-majored-detail">
+    <div class="title">
+        <p class="t-name">{{majorName}}</p>
+        <!--就业排名:<span class="rate">{{employmentRate}}</span>-->
+        <!--薪资排名:<span class="salary">{{salary}}</span>-->
+    </div>
+    <div class="main">
+        <div class="info">
+            专业代码:<b>{{majorCode}}</b>
+            授予学位:<b>{{degreeOffered}}</b>
+            修学年限:<b>{{schoolingDuration}}</b>
+            <p>开设课程:</p>
+            <span class="open-course">{{offerCourses}}</span>
+        </div>
+        <div class="sub-title">
+            <b class="detail-tab active">专业解读<i class="triangle-bottom"></i></b>
+            <!--<b class="detail-tab">开设院校<i class="triangle-bottom"></i></b>-->
+        </div>
+        <div class="content">
+            <div class="sub-content">{{{majorIntroduce}}}</div>
+            <div class="sub-content" id="open-universities-detail"></div>
+        </div>
+    </div>
+</script>
+</body>
+</html>

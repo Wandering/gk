@@ -1,0 +1,16 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>详情</title><link href="bc10512d.news-detail.min.css" rel="stylesheet"></head><body><section id="crumb" class="crumb"><ol class="breadcrumb w1000"><li><span class="icon-crumb breadcrumb-home"></span><a href="/">首页</a></li><li><a href="/static/news-hot.html">高考资讯</a></li><li class="active">资讯详情</li></ol></section><div class="article-container w1000"><script id="gk-new-detail" type="text/x-handlebars-template"><h3 class="title">{{title}}</h3>
+        <p class="title-info">
+            时间:
+            <span>
+                {{#if lastModDate}}{{formatDate lastModDate}}{{/if}}
+            {{#if hotDate}}{{hotDate}}{{/if}}
+            </span>
+        </p>
+        <div class="main">
+            <div class="img">
+                <img src="{{image}}">
+            </div>
+            <div class="content">
+                {{{content}}}
+            </div>
+        </div></script></div><script src="js/36ed7b96.news-detail.min.js"></script></body></html>
