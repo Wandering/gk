@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>目标定位</title><link href="47c3d18f.user-target.min.css" rel="stylesheet"></head><body><section id="crumb" class="crumb"><ol class="breadcrumb w1000"><li><span class="icon-crumb breadcrumb-home"></span><a href="/static/">首页</a></li><li><a href="/static/user-account-info.html">个人中心</a></li><li class="active">账号信息</li></ol></section><div class="banner-info" id="banner-info"></div><div class="main-container clearfix w1000"><div class="sidebar"><ul><div class="side-top"></div><li><a href="/static/user-account-info.html">账号信息</a> <i class="triangle-r"></i></li><li><a href="/static/user-vip.html">VIP特权</a> <i class="triangle-r"></i></li><li><a href="/static/user-collection.html">我的收藏</a> <i class="triangle-r"></i></li><li class="active"><a href="/static/user-target.html">目标定位</a> <i class="triangle-r"></i></li><li><a href="/static/user-service.html">服务中心</a> <i class="triangle-r"></i></li><div class="side-bottom"></div></ul></div><div class="main" id="comm-tpl"><div class="target-location"><div class="section1" id="section1"><div class="target-title-banner"><span>目标定位</span></div><form class="form-group target-item"><div class="form-group"><div class="form-control"><span class="mr20">科&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类&nbsp;:</span><label class="mr30"><input type="radio" name="subject" class="radio-subject" value="1" class="mr30"> &nbsp;&nbsp;文科</label><label class="mr30"><input type="radio" name="subject" class="radio-subject" value="2">&nbsp;&nbsp;理科</label></div></div><div class="form-group"><div class="input-group"><span class="input-group-addon">分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数&nbsp;:</span> <input type="text" class="form-control" id="target-score" placeholder="请输入分数"></div></div><div class="form-group"><div class="input-group"><span class="input-group-addon">目标院校&nbsp;:</span> <input type="text" class="form-control" id="target-school" placeholder="自动默认设立的目标院校"></div></div><div id="tips" class="alert alert-danger" role="alert"></div><div class="btn btn-target-location" id="predict-btn">目标定位</div><p class="tips">温馨提示：录取难易预测的用处和原则</p></form></div><div class="section2" id="section2"></div><div class="section" id="section3"></div></div></div></div><script type="text/x-handlebars-template" id="temp-content-section2"><div class="title-info">
+        <h3 class="easy-title" id="easy-title">录取难易程度:
+            <span id="star-list"></span>
+        </h3>
+        <h3 class="time-out-title" id="time-out-title">
+            距离上次定位时间：56天
+        </h3>
+        <p>
+            科类: <span class="wl" id="type-subject"></span>
+            目标院校: <span class="wl" id="tarSch">{{universityName}}</span>
+            分数: <span>{{score}}</span>
+        </p>
+        <div class="again-target" id="again-target">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label class="sr-only" for="target-score-input">分数:</label>
+                    <input type="text" class="form-control" id="target-score-input" placeholder="输入分数">
+                </div>
+                <button type="button" class="btn target-score-btn" id="target-score-btn">定位</button>
+            </form>
+        </div>
+        <div class="btn btn-recommend" id="recommend">系统推荐院校</div>
+        <a href="/static/user-target.html" class="btn target-score-btn update-target-btn" id="update-target-btn">更新目标</a>
+    </div>
+    <div class="about-target-content">
+        <img src="" class="user-target-img" id="user-target-img">
+        <div class="target-content">
+            <div class="txt" id="tips-target">距离目标的距离：</div>
+            <!--系统中填报该院校的人数：<b class="person-num">5</b>人-->
+            <span class="tips-target-p">
+                您还有 <b class="score" id="average-lowest">30</b>分的距离，能达到往年的录取最低分！！！<br/>
+            </span>
+            <p class="gt-target">您可以设置更高的目标,去超越哦!</p>
+            <a class="txt-link" target="_blank" href="/static/class-college.html">建议去高考课程学习，加油~</a>
+        </div>
+        <h3 class="ago-situation ago-situation-title">往年录取情况：</h3>
+        <table class="table-list table-hover">
+            <thead>
+            <tr>
+                <th>年份</th>
+                <th class="w250">院校</th>
+                <th>批次</th>
+                <th>最低分</th>
+                <th>平均分</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each historyList}}
+            <tr>
+                <td>{{year}}</td>
+                <td>{{universityName}}</td>
+                <td>{{batch}}</td>
+                <td class="lowest-score">{{minScore}}</td>
+                <td class="lowest">{{avgScore}}</td>
+            </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        <div class="data-tips"></div>
+
+        <div class="btn btn-target-location" id="save-btn">保存</div>
+    </div></script><script src="js/ecebf812.user-target.min.js"></script></body></html>

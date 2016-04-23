@@ -7,4 +7,5 @@ dependencies {
 
     compile project(':gk-service')
 
+
 }

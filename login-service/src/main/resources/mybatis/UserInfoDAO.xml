@@ -40,7 +40,7 @@
         qq as qq
     </sql>
     <insert id="insert" parameterType="UserInfo">
-        INSERT INTO gk_user_info (
+        INSERT INTO zgk_user_info (
         token,
         name,
         icon,
@@ -74,7 +74,7 @@
 
     <!-- 更新 -->
     <update id="update" parameterType="UserInfo">
-        UPDATE gk_user_info
+        UPDATE zgk_user_info
         <trim prefix="SET" suffixOverrides=",">
             <if test="token!=null">
                 token = #{token},
@@ -118,7 +118,7 @@
     </update>
 
     <update id="updateMap">
-        UPDATE gk_user_info
+        UPDATE zgk_user_info
         <trim prefix="SET" suffixOverrides=",">
             <if test="map.token!=null">
                 token = #{map.token},
@@ -162,7 +162,7 @@
     </update>
 
     <update id="updateByCondition">
-        UPDATE gk_user_info
+        UPDATE zgk_user_info
         <trim prefix="SET" suffixOverrides=",">
             <if test="update.token!=null">
                 token = #{update.token},
@@ -246,7 +246,7 @@
     </update>
 
     <insert id="insertMap" >
-        INSERT INTO gk_user_info (
+        INSERT INTO zgk_user_info (
         token,
         name,
         icon,
@@ -277,7 +277,7 @@
 
 
     <update id="updateNull" parameterType="UserInfo">
-        UPDATE gk_user_info
+        UPDATE zgk_user_info
         <trim prefix="SET" suffixOverrides=",">
             token = #{token},
             name = #{name},
@@ -298,7 +298,7 @@
 
     <!-- 按Id删除 -->
     <delete id="deleteById" parameterType="java.lang.Long">
-        DELETE FROM gk_user_info
+        DELETE FROM zgk_user_info
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -306,7 +306,7 @@
 
 
     <delete id="deleteByCondition" parameterType="java.util.Map">
-        DELETE FROM gk_user_info
+        DELETE FROM zgk_user_info
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id = #{id}
@@ -351,14 +351,14 @@
     </delete>
 
     <delete id="deleteByProperty" parameterType="java.util.Map">
-        DELETE FROM gk_user_info WHERE
+        DELETE FROM zgk_user_info WHERE
         ${property} = #{value}
     </delete>
 
     <select id="fetch" parameterType="java.lang.Long" resultType="UserInfo">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_info
+        FROM zgk_user_info
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -367,7 +367,7 @@
     <select id="findOne" parameterType="java.util.Map" resultType="UserInfo">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_info WHERE
+        FROM zgk_user_info WHERE
         ${property} = #{value}
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -378,7 +378,7 @@
     <select id="findList" parameterType="java.util.Map" resultType="UserInfo">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_info WHERE
+        FROM zgk_user_info WHERE
         ${property} = #{value}
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -388,7 +388,7 @@
     <select id="findAll" resultType="UserInfo">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_info
+        FROM zgk_user_info
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
         </if>
@@ -397,7 +397,7 @@
     <select id="queryPage" resultType="UserInfo">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_info
+        FROM zgk_user_info
         <where>
 
             <if test="condition.whereSql != null">
@@ -457,7 +457,7 @@
     <select id="like" parameterType="java.util.Map" resultType="UserInfo">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_info
+        FROM zgk_user_info
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="condition.id!=null">
                 AND id like CONCAT('%', #{condition.id} , '%')
@@ -508,7 +508,7 @@
     <select id="queryList" parameterType="java.util.Map" resultType="UserInfo">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_info
+        FROM zgk_user_info
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="condition.id!=null">
                 AND id = #{condition.id}
@@ -558,7 +558,7 @@
     <select id="queryOne" parameterType="java.util.Map" resultType="UserInfo">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_user_info
+        FROM zgk_user_info
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="condition.id!=null">
                 AND id = #{condition.id}
@@ -607,7 +607,7 @@
     </select>
 
     <select id="count" resultType="java.lang.Integer">
-        SELECT count(id) FROM gk_user_info
+        SELECT count(id) FROM zgk_user_info
         <where>
             <if test="id!=null">
                 ${groupOp} ${id.field} ${id.op}  #{id.data}
@@ -655,7 +655,7 @@
     <select id="selectMaxId" resultType="java.lang.Long">
         SELECT
         MAX(id)
-        FROM gk_user_info
+        FROM zgk_user_info
     </select>
 
     <insert id="insertTelSchoolInfo" parameterType="java.util.HashMap">

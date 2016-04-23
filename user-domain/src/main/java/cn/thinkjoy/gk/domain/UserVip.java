@@ -17,12 +17,22 @@ import cn.thinkjoy.common.domain.CreateBaseDomain;
 
 import java.util.*;
 
-public class UserVip extends CreateBaseDomain{
+public class UserVip extends CreateBaseDomain<Long>{
     private Long endDate;
+	private Long activeDate;
 
 	public UserVip(){
 	}
-    public void setEndDate(Long value) {
+
+	public Long getActiveDate() {
+		return activeDate;
+	}
+
+	public void setActiveDate(Long activeDate) {
+		this.activeDate = activeDate;
+	}
+
+	public void setEndDate(Long value) {
         this.endDate = value;
     }
 
@@ -39,6 +49,7 @@ public class UserVip extends CreateBaseDomain{
 			.append("LastModifier",getLastModifier())
 			.append("LastModDate",getLastModDate())
 			.append("EndDate",getEndDate())
+			.append("ActiveDate",getActiveDate())
 			.toString();
 	}
 	

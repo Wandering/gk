@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.ISystemParmasDao">
+
+    <sql id="Base_Column_List">
+        id,province_code,config_key,config_value,major_type
+    </sql>
+    <resultMap id="BaseResultMap" type="cn.thinkjoy.gk.entity.SystemParmas">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="province_code" property="provinceCode" jdbcType="VARCHAR" />
+        <result column="major_type" property="majorType" jdbcType="TINYINT"/>
+        <result column="config_key" property="configKey" jdbcType="VARCHAR" />
+        <result column="config_value" property="configValue" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="selectModel" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT <include refid="Base_Column_List"  /> from zgk_system_parmas
+        <where>
+            <if test="id!=null">
+                and id=#{id,jdbcType=BIGINT}
+            </if>
+            <if test="provinceCode!=null">
+                and province_code=#{provinceCode,jdbcType=VARCHAR}
+            </if>
+            <if test="configKey!=null">
+                and config_key=#{configKey,jdbcType=VARCHAR}
+            </if>
+            <if test="configValue!=null">
+                and config_value=#{configValue,jdbcType=VARCHAR}
+            </if>
+            <if test="majorType!=null">
+                and major_type=#{majorType,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+</mapper>

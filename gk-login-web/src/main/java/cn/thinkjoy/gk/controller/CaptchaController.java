@@ -2,7 +2,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.BaseController;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.CaptchaTimeConst;
 import cn.thinkjoy.gk.constant.RedisConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/captcha")
-public class CaptchaController extends BaseController {
+public class CaptchaController extends ZGKBaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(CaptchaController.class);
 
@@ -39,11 +39,11 @@ public class CaptchaController extends BaseController {
     @Autowired
     private IUserAccountExService userAccountExService;
 
-    @RequestMapping(value = "/captcha",method = RequestMethod.POST)
+    @RequestMapping(value = "/captcha")
     @ResponseBody
     public String captcha(@RequestParam(value="account",required=false) String account,@RequestParam(value="type",required=false) Integer type) throws Exception {
 
-        long areaId=getAreaCookieValue();
+        long areaId= getAreaId();
         JSONObject result = new JSONObject();
         try{
             if(StringUtils.isEmpty(account)){
@@ -86,13 +86,14 @@ public class CaptchaController extends BaseController {
 
                 boolean smsResult =smsService.sendSMS(smsCheckCode,false);
 
-                if(smsResult) {
-                    String userCaptchaKey = RedisConst.USER_CAPTCHA_KEY+account;
-                    RedisUtil.getInstance().set(userCaptchaKey,randomString);
-                    RedisUtil.getInstance().expire(userCaptchaKey, 600, TimeUnit.SECONDS);
-                    RedisUtil.getInstance().set(timeKey, String.valueOf(System.currentTimeMillis()));
-                    RedisUtil.getInstance().expire(timeKey, 60, TimeUnit.SECONDS);
+                while(!smsResult) {
+                    smsResult = smsService.sendSMS(smsCheckCode,false);
                 }
+                String userCaptchaKey = RedisConst.USER_CAPTCHA_KEY+account;
+                RedisUtil.getInstance().set(userCaptchaKey,randomString);
+                RedisUtil.getInstance().expire(userCaptchaKey, 600, TimeUnit.SECONDS);
+                RedisUtil.getInstance().set(timeKey, String.valueOf(System.currentTimeMillis()));
+                RedisUtil.getInstance().expire(timeKey, 60, TimeUnit.SECONDS);
             }else{
                 time = time - ((System.currentTimeMillis() - Long.valueOf(RedisUtil.getInstance().get(timeKey).toString()))/1000);
             }

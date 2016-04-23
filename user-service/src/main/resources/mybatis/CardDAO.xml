@@ -2,27 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.thinkjoy.gk.dao.ICardDAO">
-    <!--
-    insert
-    update
-    updateNull
-    deleteById
-    deleteByCondition
-    deleteByProperty
-    fetch
-    findOne
-    findList
-    findAll
-    queryPage
-    like
-    queryList
-    queryOne
-    count
-    selectMaxId
-    updateOrSave
-    selectOne
-    selectList
-    -->
+<!--
+insert
+update
+updateNull
+deleteById
+deleteByCondition
+deleteByProperty
+fetch
+findOne
+findList
+findAll
+queryPage
+like
+queryList
+queryOne
+count
+selectMaxId
+updateOrSave
+selectOne
+selectList
+-->
 
     <sql id="Base_Column_List">
         id as id ,
@@ -35,10 +35,10 @@
         cardNumber as cardNumber ,
         password as password ,
         userId as userId ,
-        areaId as areaId
+        areaId as areaId 
     </sql>
     <insert id="insert" parameterType="Card">
-        INSERT INTO gk_card (
+        INSERT INTO zgk_card (
         status,
         creator,
         createDate,
@@ -61,14 +61,14 @@
         #{userId},
         #{areaId}
         )
-        <selectKey resultType="java.lang.Long" keyProperty="id">
-            SELECT LAST_INSERT_ID() AS ID
-        </selectKey>
+            <selectKey resultType="java.lang.Long" keyProperty="id">
+                SELECT LAST_INSERT_ID() AS ID
+            </selectKey>
     </insert>
 
     <!-- 更新 -->
     <update id="update" parameterType="Card">
-        UPDATE gk_card
+        UPDATE zgk_card
         <trim prefix="SET" suffixOverrides=",">
             <if test="status!=null">
                 status = #{status},
@@ -106,7 +106,7 @@
     </update>
 
     <update id="updateMap">
-        UPDATE gk_card
+        UPDATE zgk_card
         <trim prefix="SET" suffixOverrides=",">
             <if test="map.status!=null">
                 status = #{map.status},
@@ -144,7 +144,7 @@
     </update>
 
     <update id="updateByCondition">
-        UPDATE gk_card
+        UPDATE zgk_card
         <trim prefix="SET" suffixOverrides=",">
             <if test="update.status!=null">
                 status = #{update.status},
@@ -216,34 +216,34 @@
     </update>
 
     <insert id="insertMap" >
-        INSERT INTO gk_card (
-        status,
-        creator,
-        createDate,
-        lastModifier,
-        lastModDate,
-        endDate,
-        cardNumber,
-        password,
-        userId,
-        areaId
+        INSERT INTO zgk_card (
+                status,
+                creator,
+                createDate,
+                lastModifier,
+                lastModDate,
+                endDate,
+                cardNumber,
+                password,
+                userId,
+                areaId
         ) VALUES (
-        #{map.status},
-        #{map.creator},
-        #{map.createDate},
-        #{map.lastModifier},
-        #{map.lastModDate},
-        #{map.endDate},
-        #{map.cardNumber},
-        #{map.password},
-        #{map.userId},
-        #{map.areaId}
+                    #{map.status},
+                    #{map.creator},
+                    #{map.createDate},
+                    #{map.lastModifier},
+                    #{map.lastModDate},
+                    #{map.endDate},
+                    #{map.cardNumber},
+                    #{map.password},
+                    #{map.userId},
+                    #{map.areaId}
         )
     </insert>
 
 
     <update id="updateNull" parameterType="Card">
-        UPDATE gk_card
+        UPDATE zgk_card
         <trim prefix="SET" suffixOverrides=",">
             status = #{status},
             creator = #{creator},
@@ -257,12 +257,12 @@
             areaId = #{areaId},
         </trim>
         WHERE
-        id = #{id}
+        id = #{id} 
     </update>
 
     <!-- 按Id删除 -->
     <delete id="deleteById" parameterType="java.lang.Long">
-        DELETE FROM gk_card
+        DELETE FROM zgk_card
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -270,7 +270,7 @@
 
 
     <delete id="deleteByCondition" parameterType="java.util.Map">
-        DELETE FROM gk_card
+        DELETE FROM zgk_card
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id = #{id}
@@ -309,14 +309,14 @@
     </delete>
 
     <delete id="deleteByProperty" parameterType="java.util.Map">
-        DELETE FROM gk_card WHERE
+        DELETE FROM zgk_card WHERE
         ${property} = #{value}
     </delete>
 
     <select id="fetch" parameterType="java.lang.Long" resultType="Card">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_card
+        FROM zgk_card
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -325,7 +325,7 @@
     <select id="findOne" parameterType="java.util.Map" resultType="Card">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_card WHERE
+        FROM zgk_card WHERE
         ${property} = #{value}
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -336,7 +336,7 @@
     <select id="findList" parameterType="java.util.Map" resultType="Card">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_card WHERE
+        FROM zgk_card WHERE
         ${property} = #{value}
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -346,7 +346,7 @@
     <select id="findAll" resultType="Card">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_card
+        FROM zgk_card
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
         </if>
@@ -354,8 +354,47 @@
 
     <select id="queryPage" resultType="Card">
         SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                        <if test="selector.id!=null">
+                            , id
+                        </if>
+                        <if test="selector.status!=null">
+                            , status
+                        </if>
+                        <if test="selector.creator!=null">
+                            , creator
+                        </if>
+                        <if test="selector.createDate!=null">
+                            , createDate
+                        </if>
+                        <if test="selector.lastModifier!=null">
+                            , lastModifier
+                        </if>
+                        <if test="selector.lastModDate!=null">
+                            , lastModDate
+                        </if>
+                        <if test="selector.endDate!=null">
+                            , endDate
+                        </if>
+                        <if test="selector.cardNumber!=null">
+                            , cardNumber
+                        </if>
+                        <if test="selector.password!=null">
+                            , password
+                        </if>
+                        <if test="selector.userId!=null">
+                            , userId
+                        </if>
+                        <if test="selector.areaId!=null">
+                            , areaId
+                        </if>
+            </trim>
+        </if>
+        <if test="selector==null">
         <include refid="Base_Column_List" />
-        FROM gk_card
+        </if>
+        FROM zgk_card
         <where>
 
             <if test="condition.whereSql != null">
@@ -397,9 +436,9 @@
             </if>
 
 
-        </where>
+    </where>
         <if test="orderBy!=null">
-            ORDER BY ${orderBy} ${sortBy}
+        ORDER BY ${orderBy} ${sortBy}
         </if>
         <if test="offset != null">
             limit ${offset}, ${rows}
@@ -408,8 +447,47 @@
 
     <select id="like" parameterType="java.util.Map" resultType="Card">
         SELECT
-        <include refid="Base_Column_List" />
-        FROM gk_card
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                    <if test="selector.id!=null">
+                        , id
+                    </if>
+                    <if test="selector.status!=null">
+                        , status
+                    </if>
+                    <if test="selector.creator!=null">
+                        , creator
+                    </if>
+                    <if test="selector.createDate!=null">
+                        , createDate
+                    </if>
+                    <if test="selector.lastModifier!=null">
+                        , lastModifier
+                    </if>
+                    <if test="selector.lastModDate!=null">
+                        , lastModDate
+                    </if>
+                    <if test="selector.endDate!=null">
+                        , endDate
+                    </if>
+                    <if test="selector.cardNumber!=null">
+                        , cardNumber
+                    </if>
+                    <if test="selector.password!=null">
+                        , password
+                    </if>
+                    <if test="selector.userId!=null">
+                        , userId
+                    </if>
+                    <if test="selector.areaId!=null">
+                        , areaId
+                    </if>
+            </trim>
+        </if>
+        <if test="selector==null">
+            <include refid="Base_Column_List" />
+        </if>
+        FROM zgk_card
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="condition.id!=null">
                 AND id like CONCAT('%', #{condition.id} , '%')
@@ -446,15 +524,54 @@
             </if>
         </trim>
         <if test="orderBy!=null">
-            ORDER BY ${orderBy} ${sortBy}
+        ORDER BY ${orderBy} ${sortBy}
         </if>
     </select>
 
 
     <select id="queryList" parameterType="java.util.Map" resultType="Card">
         SELECT
-        <include refid="Base_Column_List" />
-        FROM gk_card
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.status!=null">
+                    , status
+                </if>
+                <if test="selector.creator!=null">
+                    , creator
+                </if>
+                <if test="selector.createDate!=null">
+                    , createDate
+                </if>
+                <if test="selector.lastModifier!=null">
+                    , lastModifier
+                </if>
+                <if test="selector.lastModDate!=null">
+                    , lastModDate
+                </if>
+                <if test="selector.endDate!=null">
+                    , endDate
+                </if>
+                <if test="selector.cardNumber!=null">
+                    , cardNumber
+                </if>
+                <if test="selector.password!=null">
+                    , password
+                </if>
+                <if test="selector.userId!=null">
+                    , userId
+                </if>
+                <if test="selector.areaId!=null">
+                    , areaId
+                </if>
+        </trim>
+    </if>
+<if test="selector==null">
+<include refid="Base_Column_List" />
+</if>
+        FROM zgk_card
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="condition.id!=null">
                 AND id = #{condition.id}
@@ -491,35 +608,162 @@
             </if>
         </trim>
         <if test="orderBy!=null">
-            ORDER BY ${orderBy} ${sortBy}
+        ORDER BY ${orderBy} ${sortBy}
         </if>
     </select>
 
     <select id="queryOne" parameterType="java.util.Map" resultType="Card">
         SELECT
-        <include refid="Base_Column_List" />
-        FROM gk_card
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                    <if test="selector.id!=null">
+                        , id
+                    </if>
+                    <if test="selector.status!=null">
+                        , status
+                    </if>
+                    <if test="selector.creator!=null">
+                        , creator
+                    </if>
+                    <if test="selector.createDate!=null">
+                        , createDate
+                    </if>
+                    <if test="selector.lastModifier!=null">
+                        , lastModifier
+                    </if>
+                    <if test="selector.lastModDate!=null">
+                        , lastModDate
+                    </if>
+                    <if test="selector.endDate!=null">
+                        , endDate
+                    </if>
+                    <if test="selector.cardNumber!=null">
+                        , cardNumber
+                    </if>
+                    <if test="selector.password!=null">
+                        , password
+                    </if>
+                    <if test="selector.userId!=null">
+                        , userId
+                    </if>
+                    <if test="selector.areaId!=null">
+                        , areaId
+                    </if>
+            </trim>
+        </if>
+        <if test="selector==null">
+            <include refid="Base_Column_List" />
+        </if>
+        FROM zgk_card
         <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.endDate!=null">
+                AND endDate = #{condition.endDate}
+            </if>
+            <if test="condition.cardNumber!=null">
+                AND cardNumber = #{condition.cardNumber}
+            </if>
+            <if test="condition.password!=null">
+                AND password = #{condition.password}
+            </if>
+            <if test="condition.userId!=null">
+                AND userId = #{condition.userId}
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(id) FROM zgk_card
+       <where>
+           <if test="id!=null">
+               ${groupOp} ${id.field} ${id.op}  #{id.data}
+           </if>
+           <if test="status!=null">
+               ${groupOp} ${status.field} ${status.op}  #{status.data}
+           </if>
+           <if test="creator!=null">
+               ${groupOp} ${creator.field} ${creator.op}  #{creator.data}
+           </if>
+           <if test="createDate!=null">
+               ${groupOp} ${createDate.field} ${createDate.op}  #{createDate.data}
+           </if>
+           <if test="lastModifier!=null">
+               ${groupOp} ${lastModifier.field} ${lastModifier.op}  #{lastModifier.data}
+           </if>
+           <if test="lastModDate!=null">
+               ${groupOp} ${lastModDate.field} ${lastModDate.op}  #{lastModDate.data}
+           </if>
+           <if test="endDate!=null">
+               ${groupOp} ${endDate.field} ${endDate.op}  #{endDate.data}
+           </if>
+           <if test="cardNumber!=null">
+               ${groupOp} ${cardNumber.field} ${cardNumber.op}  #{cardNumber.data}
+           </if>
+           <if test="password!=null">
+               ${groupOp} ${password.field} ${password.op}  #{password.data}
+           </if>
+           <if test="userId!=null">
+               ${groupOp} ${userId.field} ${userId.op}  #{userId.data}
+           </if>
+           <if test="areaId!=null">
+               ${groupOp} ${areaId.field} ${areaId.op}  #{areaId.data}
+           </if>
+
+       </where>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Long">
+        SELECT
+        MAX(id)
+        FROM zgk_card
+    </select>
+
+    <select id="queryCardInfo" resultType="Card">
+        SELECT
+        id as id ,
+        status as status ,
+        creator as creator ,
+        createDate as createDate ,
+        lastModifier as lastModifier ,
+        lastModDate as lastModDate ,
+        endDate as endDate ,
+        cardNumber as cardNumber ,
+        password as password ,
+        userId as userId ,
+        areaId as areaId,
+        cardType as cardType
+        FROM zgk_card
+        <where>
+            1=1
             <if test="id!=null">
                 AND id = #{id}
             </if>
             <if test="status!=null">
                 AND status = #{status}
-            </if>
-            <if test="creator!=null">
-                AND creator = #{creator}
-            </if>
-            <if test="createDate!=null">
-                AND createDate = #{createDate}
-            </if>
-            <if test="lastModifier!=null">
-                AND lastModifier = #{lastModifier}
-            </if>
-            <if test="lastModDate!=null">
-                AND lastModDate = #{lastModDate}
-            </if>
-            <if test="endDate!=null">
-                AND endDate = #{endDate}
             </if>
             <if test="cardNumber!=null">
                 AND cardNumber = #{cardNumber}
@@ -533,58 +777,10 @@
             <if test="areaId!=null">
                 AND areaId = #{areaId}
             </if>
-        </trim>
-        <if test="orderBy!=null">
-            ORDER BY ${orderBy} ${sortBy}
-        </if>
-        limit 0,1
-    </select>
-
-    <select id="count" resultType="java.lang.Integer">
-        SELECT count(id) FROM gk_card
-        <where>
-            <if test="id!=null">
-                ${groupOp} ${id.field} ${id.op}  #{id.data}
+            <if test="cardType!=null">
+                AND cardType = #{cardType}
             </if>
-            <if test="status!=null">
-                ${groupOp} ${status.field} ${status.op}  #{status.data}
-            </if>
-            <if test="creator!=null">
-                ${groupOp} ${creator.field} ${creator.op}  #{creator.data}
-            </if>
-            <if test="createDate!=null">
-                ${groupOp} ${createDate.field} ${createDate.op}  #{createDate.data}
-            </if>
-            <if test="lastModifier!=null">
-                ${groupOp} ${lastModifier.field} ${lastModifier.op}  #{lastModifier.data}
-            </if>
-            <if test="lastModDate!=null">
-                ${groupOp} ${lastModDate.field} ${lastModDate.op}  #{lastModDate.data}
-            </if>
-            <if test="endDate!=null">
-                ${groupOp} ${endDate.field} ${endDate.op}  #{endDate.data}
-            </if>
-            <if test="cardNumber!=null">
-                ${groupOp} ${cardNumber.field} ${cardNumber.op}  #{cardNumber.data}
-            </if>
-            <if test="password!=null">
-                ${groupOp} ${password.field} ${password.op}  #{password.data}
-            </if>
-            <if test="userId!=null">
-                ${groupOp} ${userId.field} ${userId.op}  #{userId.data}
-            </if>
-            <if test="areaId!=null">
-                ${groupOp} ${areaId.field} ${areaId.op}  #{areaId.data}
-            </if>
-
         </where>
     </select>
-
-    <select id="selectMaxId" resultType="java.lang.Long">
-        SELECT
-        MAX(id)
-        FROM gk_card
-    </select>
-
 </mapper>
 

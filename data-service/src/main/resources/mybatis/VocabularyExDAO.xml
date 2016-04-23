@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.thinkjoy.gk.dao.IVocabularyExDAO">
+    <select id="getVocabularyPojoList" resultType="VocabularyPojo" parameterType="java.util.Map">
+        SELECT
+        id as id ,
+        categoryId as categoryId ,
+        title as title ,
+        summary as summary ,
+        content as content ,
+        sortId as sortId ,
+        createDate as createDate ,
+        lastModDate as lastModDate ,
+        hits as hits ,
+        areaId as areaId
+        FROM zgk_vocabulary
+        <where>
+
+            <if test="categoryId!=null">
+                AND categoryId = #{categoryId}
+            </if>
+            <if test="title!=null">
+                AND title = #{title}
+            </if>
+            <if test="summary!=null">
+                AND summary = #{summary}
+            </if>
+            <if test="content!=null">
+                AND content = #{content}
+            </if>
+            <if test="sortId!=null">
+                AND sortId = #{sortId}
+            </if>
+            <if test="status!=null">
+                AND status = #{status}
+            </if>
+            <if test="creator!=null">
+                AND creator = #{creator}
+            </if>
+            <if test="createDate!=null">
+                AND createDate = #{createDate}
+            </if>
+            <if test="lastModifier!=null">
+                AND lastModifier = #{lastModifier}
+            </if>
+            <if test="lastModDate!=null">
+                AND lastModDate = #{lastModDate}
+            </if>
+            <if test="hits!=null">
+                AND hits = #{hits}
+            </if>
+            <if test="areaId!=null">
+                AND areaId = #{areaId}
+            </if>
+
+
+        </where>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,34 @@
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    compile group: "cn.thinkjoy.common", name: "thinkjoy-web-common", version: "0.1.9-SNAPSHOT", changing: true
+    testCompile "org.springframework:spring-test:$springVersion"
+    testCompile "org.freemarker:freemarker:$freemarkerVersion"
+
+    compile "org.jsoup:jsoup:1.8.1"
+
+    compile "org.apache.poi:poi:3.9"
+
+    compile group: "redis.clients", name: "jedis", version: "2.8.0"
+
+    compile project(':web-common')
+
+    compile project(':gk-service')
+
+    compile project(':zgk-service')
+
+    compile project(':gk-before-web')
+
+    compile project(':gk-consult-web')
+
+    compile project(':gk-guide-web')
+
+    compile project(':gk-login-web')
+
+    compile project(':gk-user-web')
+
+    compile project(':gk-market-web')
+
+    compile project(':gk-question-web')
+
+}

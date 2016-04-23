@@ -15,7 +15,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import cn.thinkjoy.common.domain.CreateBaseDomain;
 
-public class Appointment extends CreateBaseDomain{
+public class Appointment extends CreateBaseDomain<Long>{
     private String title;
     private Long startDate;
     private Long endDate;
