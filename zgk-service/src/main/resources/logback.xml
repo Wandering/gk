@@ -81,6 +81,6 @@
     <!--</logger>-->
 
     <root level="error">
-        <appender-ref ref="STDOUT-APPENDER" additivity="false"/>
+        <appender-ref ref="STDOUT-APPENDER" />
     </root>
 </configuration>
