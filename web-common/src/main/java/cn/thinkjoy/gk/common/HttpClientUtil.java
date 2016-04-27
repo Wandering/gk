@@ -34,6 +34,7 @@ public class HttpClientUtil {
                     params.setParameter(entry.getKey(), entry.getValue());
                 }
             }
+            httpget.setParams(params);
             CloseableHttpResponse response = httpclient.execute(httpget);
             try {
                 HttpEntity entity = response.getEntity();
