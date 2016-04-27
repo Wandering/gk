@@ -143,7 +143,7 @@ public class RegisterController extends ZGKBaseController {
             //注册高考学堂
             String registResult = HttpClientUtil.getContents(gkxtRegistUrl);
 
-            if(registResult.indexOf("200")==-1)
+            if(registResult.indexOf("\"ret\":\"200\"")==-1)
             {
                 LOGGER.error("帐号"+account+", 注册高考学堂失败.....");
             }else
