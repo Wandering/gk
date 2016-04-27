@@ -38,7 +38,7 @@ public class PayCallbackController extends ZGKBaseController {
 
     @RequestMapping(value = "payCallback", method = RequestMethod.GET)
     public String payCallback(HttpServletRequest request) {
-        String returnUrl = "www.zhigaokao.cn";
+        String returnUrl = "www.zhigaokao.cn1111";
         Map<String, String> paramMap = Maps.newHashMap();
         String prop;
         Enumeration<String> names = request.getParameterNames();
