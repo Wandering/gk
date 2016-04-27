@@ -140,7 +140,7 @@ public class RegisterController extends ZGKBaseController {
 
             Map<String, Object> paramMap = new HashMap<>();
             paramMap.put("mobile", account);
-            paramMap.put("password", Base64.encodeBase64("123123".getBytes()));
+            paramMap.put("password", new String(Base64.encodeBase64("123123".getBytes()),"utf-8"));
 
             //注册高考学堂
             String registResult = HttpClientUtil.getContents(gkxtRegistUrl, paramMap);
