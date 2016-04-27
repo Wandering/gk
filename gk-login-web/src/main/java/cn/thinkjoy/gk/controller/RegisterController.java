@@ -49,6 +49,7 @@ public class RegisterController extends ZGKBaseController {
     @Autowired
     private IProvinceService provinceService;
 
+    //高考学堂注册接口
     private String gkxtRegistUrl = "http://zhigaokao.kongkonghou.cn/userapi/reg?mobile=%s&password=%s";
 //    @Autowired
 //    private ICityService cityService;
@@ -70,7 +71,8 @@ public class RegisterController extends ZGKBaseController {
                                   @RequestParam(value="password",required = false) String password,
                                   @RequestParam(value="provinceId",required = false) String provinceId,
                                   @RequestParam(value="cityId",required = false) String cityId,
-                                  @RequestParam(value="countyId",required = false) String countyId)
+                                  @RequestParam(value="countyId",required = false) String countyId,
+                                  @RequestParam(value="basePassword",required = false) String basePassword)
             throws Exception{
         long areaId= getAreaId();
         Map<String, Object> resultMap = new HashMap<>();
@@ -137,7 +139,7 @@ public class RegisterController extends ZGKBaseController {
             }catch(Exception e){
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"账户注册失败");
             }
-            gkxtRegistUrl = String.format(gkxtRegistUrl, account, new String(Base64.encodeBase64("123123".getBytes()),"utf-8"));
+            gkxtRegistUrl = String.format(gkxtRegistUrl, account, basePassword);
             //注册高考学堂
             String registResult = HttpClientUtil.getContents(gkxtRegistUrl);
 
