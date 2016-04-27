@@ -4,6 +4,7 @@ import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Orders;
 import cn.thinkjoy.gk.service.IOrdersService;
+import cn.thinkjoy.gk.util.RedisUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,7 +55,7 @@ public class PayCallbackController extends ZGKBaseController {
 
             if( null != payResult) {
                 long orderNo = payResult.getLong("orderNo");
-                returnUrl = payResult.getString("returnUrl");
+
                 Map<String,Object> dataMap = new HashMap();
                 dataMap.put("orderNo", orderNo);
                 Orders order =(Orders) ordersService.queryOne(dataMap);
@@ -65,11 +67,20 @@ public class PayCallbackController extends ZGKBaseController {
                     update.setLastModDate(System.currentTimeMillis());
                     ordersService.update(update);
                 }
+                long userId = payResult.getLong("userId");
+                String urlKey = "pay_return_url_"+userId;
+                //获取回调url
+                if(RedisUtil.getInstance().exists(urlKey))
+                {
+                    returnUrl = String.valueOf(RedisUtil.getInstance().get(urlKey));
+                    returnUrl = URLDecoder.decode(returnUrl, "UTF-8");
+                    RedisUtil.getInstance().del(urlKey);
+                }
             }
         } catch (Exception e) {
             LOGGER.error("error",e);
         }
-        return "redirect:"+ returnUrl;
+        return "redirect:http://"+ returnUrl;
     }
 
 }

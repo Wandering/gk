@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.common.HttpClientUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.common.DESUtil;
 import cn.thinkjoy.gk.constant.RedisConst;
@@ -15,6 +16,7 @@ import cn.thinkjoy.gk.service.IProvinceService;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.RedisUtil;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +48,8 @@ public class RegisterController extends ZGKBaseController {
     private IUserAccountExService userAccountExService;
     @Autowired
     private IProvinceService provinceService;
+
+    private final String gkxtRegistUrl = "http://zhigaokao.kongkonghou.cn/userapi/reg";
 //    @Autowired
 //    private ICityService cityService;
 //    @Autowired
@@ -132,6 +136,21 @@ public class RegisterController extends ZGKBaseController {
                 }
             }catch(Exception e){
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"账户注册失败");
+            }
+
+            Map<String, Object> paramMap = new HashMap<>();
+            paramMap.put("mobile", account);
+            paramMap.put("password", Base64.encodeBase64("123123".getBytes()));
+
+            //注册高考学堂
+            String registResult = HttpClientUtil.getContents(gkxtRegistUrl, paramMap);
+
+            if(registResult.indexOf("200")==-1)
+            {
+                LOGGER.error("帐号"+account+", 注册高考学堂失败.....");
+            }else
+            {
+                LOGGER.debug("帐号"+account+"注册高考学堂成功!");
             }
 
             userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
