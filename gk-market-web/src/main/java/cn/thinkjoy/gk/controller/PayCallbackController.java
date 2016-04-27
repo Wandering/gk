@@ -1,11 +1,11 @@
 package cn.thinkjoy.gk.controller;
 
+import cn.thinkjoy.gk.common.HttpClientUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Orders;
 import cn.thinkjoy.gk.service.IOrdersService;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import cn.thinkjoy.gk.util.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,44 +32,59 @@ public class PayCallbackController extends ZGKBaseController {
     @Autowired
     private IOrdersService ordersService;
 
+    //高考学堂注册接口
+    private String gkxtActiveUrl = "http://zhigaokao.kongkonghou.cn/userapi/tovip?mobile=%s&duration=12&unit=month&levelId=1";
+
     @RequestMapping(value = "payCallback", method = RequestMethod.GET)
     public String payCallback(HttpServletRequest request) {
         String returnUrl = "www.zhigaokao.cn";
+        Map<String, String> paramMap = new HashMap<>();
+        for (Map.Entry<String, String[]> entry: request.getParameterMap().entrySet()) {
+            String[] values = entry.getValue();
+            if(null != values && values.length > 0)
+            {
+                paramMap.put(entry.getKey(), values[0]);
+            }
+        }
         try {
             request.setCharacterEncoding("UTF-8");
 
-            BufferedReader reader = request.getReader();
-            StringBuilder builder = new StringBuilder();
 
-            String s;
-            while ((s = reader.readLine()) != null) {
-                builder.append(s);
-            }
-            reader.close();
+            if(!paramMap.isEmpty()) {
 
-            JSONObject payResult = JSON.parseObject(builder.toString());
+                String orderNo = paramMap.get("out_trade_no");
 
-            LOGGER.info("====pay /payCallback payResult: "+payResult);
-
-            if( null != payResult) {
-                long orderNo = payResult.getLong("orderNo");
-                returnUrl = payResult.getString("returnUrl");
-                Map<String,Object> dataMap = new HashMap();
-                dataMap.put("orderNo", orderNo);
-                Orders order =(Orders) ordersService.queryOne(dataMap);
+                Orders order =(Orders) ordersService.findOne("orderNo", orderNo);
                 if(order !=null&&order.getPayStatus()==0){
-                    Orders update = new Orders();
-                    update.setId(orderNo);
-                    update.setPayStatus(1);
-                    update.setStatus(1);
-                    update.setLastModDate(System.currentTimeMillis());
-                    ordersService.update(update);
+                    order.setPayStatus(1);
+                    order.setStatus(1);
+                    order.setLastModDate(System.currentTimeMillis());
+                    ordersService.update(order);
+                }
+                String account = getUserAccountPojo().getAccount();
+                long userId = getUserAccountPojo().getId();
+                gkxtActiveUrl = String.format(gkxtActiveUrl, account);
+                String result = HttpClientUtil.getContents(gkxtActiveUrl);
+                if(result.indexOf("\"ret\":\"200\"")==-1)
+                {
+                    LOGGER.error("帐号"+account+", 激活高考学堂会员失败.....");
+                }else
+                {
+                    LOGGER.debug("帐号"+account+"激活高考学堂会员成功!");
+                }
+                String urlKey = "pay_return_url_"+userId;
+                //获取回调url
+                if(RedisUtil.getInstance().exists(urlKey))
+                {
+                    returnUrl = String.valueOf(RedisUtil.getInstance().get(urlKey));
+                    returnUrl = URLDecoder.decode(returnUrl, "UTF-8");
+                    RedisUtil.getInstance().del(urlKey);
                 }
             }
         } catch (Exception e) {
             LOGGER.error("error",e);
         }
-        return "redirect:"+ returnUrl;
+        return "redirect:http://"+ returnUrl;
     }
 
 }

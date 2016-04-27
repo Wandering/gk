@@ -15,6 +15,7 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IOrdersService;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
 import cn.thinkjoy.gk.util.IPUtil;
+import cn.thinkjoy.gk.util.RedisUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -33,6 +34,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 订单
@@ -68,7 +70,9 @@ public class OrdersController extends ZGKBaseController {
         }
 
         Long userId = userAccountPojo.getId();
+        String returnUrl = ordersQuery.getReturnUrl();
 
+        RedisUtil.getInstance().set("pay_return_url_"+userId, returnUrl, 1l, TimeUnit.HOURS);
         //判断用户是否已经是VIP，如果已经是VIP则返回提示
         if (userAccountPojo.getVipStatus()==1){
             throw new BizException(ERRORCODE.VIP_EXIST.getCode(),ERRORCODE.VIP_EXIST.getMessage());
@@ -198,8 +202,6 @@ public class OrdersController extends ZGKBaseController {
 
     /**
      * 订单详情查询
-     * @param response
-     * @param paramMap
      * @return
      */
     @RequestMapping(value = "getOrderDetail", method = RequestMethod.GET)

@@ -10,7 +10,7 @@ public class OrdersQuery implements Serializable{
     private String channel;
     private String products;
     private String extra;
-
+    private String returnUrl;
     public String getChannel() {
         return channel;
     }
@@ -33,5 +33,13 @@ public class OrdersQuery implements Serializable{
 
     public void setExtra(String extra) {
         this.extra = extra;
+    }
+
+    public String getReturnUrl() {
+        return returnUrl;
+    }
+
+    public void setReturnUrl(String returnUrl) {
+        this.returnUrl = returnUrl;
     }
 }
