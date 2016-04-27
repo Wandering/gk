@@ -49,7 +49,7 @@ public class PayCallbackController extends ZGKBaseController {
     @Autowired
     private IUserVipService userVipService;
 
-    @RequestMapping(value = "payCallback")
+    @RequestMapping(value = "payCallbackTwo")
     public void payCallback(HttpServletRequest request, HttpServletResponse response) {
         String result = "fail";
         try {
