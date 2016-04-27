@@ -6,6 +6,7 @@ import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Orders;
 import cn.thinkjoy.gk.service.IOrdersService;
 import cn.thinkjoy.gk.util.RedisUtil;
+import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URLDecoder;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,14 +40,14 @@ public class PayCallbackController extends ZGKBaseController {
     @RequestMapping(value = "payCallback", method = RequestMethod.GET)
     public String payCallback(HttpServletRequest request) {
         String returnUrl = "www.zhigaokao.cn";
-        Map<String, String> paramMap = new HashMap<>();
-        for (Map.Entry<String, String[]> entry: request.getParameterMap().entrySet()) {
-            String[] values = entry.getValue();
-            if(null != values && values.length > 0)
-            {
-                paramMap.put(entry.getKey(), values[0]);
-            }
+        Map<String, String> paramMap = Maps.newHashMap();
+        String prop;
+        Enumeration<String> names = request.getParameterNames();
+        while (names.hasMoreElements()) {
+            prop = names.nextElement();
+            paramMap.put(prop, request.getParameter(prop));
         }
+
         try {
             request.setCharacterEncoding("UTF-8");
 
