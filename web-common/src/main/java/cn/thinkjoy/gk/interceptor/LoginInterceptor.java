@@ -2,8 +2,8 @@ package cn.thinkjoy.gk.interceptor;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.UserAreaContext;
-import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.constant.ServletPathConst;
+import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.CallbackContext;
@@ -19,6 +19,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
@@ -43,6 +44,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         LOGGER.info("url:" + url);
 
 		String value = request.getParameter("token");
+		String reqType = request.getParameter("req");
 
 		LOGGER.info("cookie:"+value);
 		String key = UserRedisConst.USER_KEY+value;
@@ -58,7 +60,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		}
 
 		if (StringUtils.isEmpty(value)||!redisFlag) {
-			throw new BizException("1000004","请先登录后再进行操作");
+			if (reqType != null && reqType.equals("ajax")) {
+				PrintWriter out = response.getWriter();
+				out.print("{\"rtnCode\":\"1000004\",\"msg\":\"请先登录后再进行操作\"}");
+
+			} else
+				throw new BizException("1000004","请先登录后再进行操作");
+
 		}
 		return true;
 	}
