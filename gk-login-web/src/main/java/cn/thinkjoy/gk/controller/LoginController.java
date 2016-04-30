@@ -34,7 +34,7 @@ public class LoginController extends ZGKBaseController {
 	private IUserAccountExService userAccountExService;
 
 	//高考学堂注册接口
-	private String gkxtRegistUrl = "http://zhigaokao.kongkonghou.cn/userapi/reg?mobile=%s&password=%s";
+	private String gkxtRegistUrl = "http://xuetang.zhigaokao.cn/userapi/reg?mobile=%s&password=%s";
 
 	/**
 	 * 登陆

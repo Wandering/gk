@@ -34,7 +34,7 @@ public class PayCallbackController extends ZGKBaseController {
     private IOrdersService ordersService;
 
     //高考学堂注册接口
-    private String gkxtActiveUrl = "http://zhigaokao.kongkonghou.cn/userapi/tovip?mobile=%s&duration=12&unit=month&levelId=1";
+    private String gkxtActiveUrl = "http://xuetang.zhigaokao.cn/userapi/tovip?mobile=%s&duration=12&unit=month&levelId=1";
 
     @RequestMapping(value = "payCallback", method = RequestMethod.GET)
     public String payCallback(HttpServletRequest request) {
