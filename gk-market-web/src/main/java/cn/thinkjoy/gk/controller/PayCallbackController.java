@@ -34,7 +34,7 @@ public class PayCallbackController extends ZGKBaseController {
     private IOrdersService ordersService;
 
     //高考学堂注册接口
-    private String gkxtActiveUrl = "http://zhigaokao.kongkonghou.cn/userapi/tovip?mobile=%s&duration=12&unit=month&levelId=1";
+    private String gkxtActiveUrl = "http://xuetang.zhigaokao.cn/userapi/tovip?mobile=%s&duration=12&unit=month&levelId=1";
 
     @RequestMapping(value = "payCallback", method = RequestMethod.GET)
     public String payCallback(HttpServletRequest request) {
@@ -66,11 +66,15 @@ public class PayCallbackController extends ZGKBaseController {
                 long userId = getUserAccountPojo().getId();
                 gkxtActiveUrl = String.format(gkxtActiveUrl, account);
                 String result = HttpClientUtil.getContents(gkxtActiveUrl);
+                //激活状态,0为未激活,1为激活
+                int status = 0;
                 if(result.indexOf("\"ret\":\"200\"")==-1)
                 {
+                    status = 0;
                     LOGGER.error("帐号"+account+", 激活高考学堂会员失败.....");
                 }else
                 {
+                    status = 1;
                     LOGGER.debug("帐号"+account+"激活高考学堂会员成功!");
                 }
                 String urlKey = "pay_return_url_"+userId;
@@ -79,6 +83,13 @@ public class PayCallbackController extends ZGKBaseController {
                 {
                     returnUrl = String.valueOf(RedisUtil.getInstance().get(urlKey));
                     returnUrl = URLDecoder.decode(returnUrl, "UTF-8");
+                    if(returnUrl.indexOf("?")>0)
+                    {
+                        returnUrl += "&status="+status;
+                    }else
+                    {
+                        returnUrl += "?status="+status;
+                    }
                     RedisUtil.getInstance().del(urlKey);
                 }
             }

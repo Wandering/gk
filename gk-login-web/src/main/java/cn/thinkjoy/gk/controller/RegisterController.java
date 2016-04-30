@@ -50,7 +50,7 @@ public class RegisterController extends ZGKBaseController {
     private IProvinceService provinceService;
 
     //高考学堂注册接口
-    private String gkxtRegistUrl = "http://zhigaokao.kongkonghou.cn/userapi/reg?mobile=%s&password=%s";
+    private String gkxtRegistUrl = "http://xuetang.zhigaokao.cn/userapi/reg?mobile=%s&password=%s";
 //    @Autowired
 //    private ICityService cityService;
 //    @Autowired
