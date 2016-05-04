@@ -6,8 +6,8 @@
  */
 package cn.thinkjoy.gk.service.impl;
 
-import cn.thinkjoy.gk.common.MatrixToImageWriter;
-import cn.thinkjoy.gk.common.StaticSource;
+import cn.thinkjoy.gk.Utils.MatrixToImageWriter;
+import cn.thinkjoy.gk.Utils.StaticSource;
 import cn.thinkjoy.gk.dao.*;
 import cn.thinkjoy.gk.domain.*;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;

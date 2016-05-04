@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.common;
+package cn.thinkjoy.gk.Utils;
 
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 

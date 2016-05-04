@@ -9,8 +9,6 @@ dependencies {
 
     compile project(':gk-domain')
 
-    compile project(':gk-login-web')
-
     compile "com.google.zxing:core:3.2.1"
 
     compile "cn.thinkjoy.notify:notify-service:jx0.0.1-SNAPSHOT"
