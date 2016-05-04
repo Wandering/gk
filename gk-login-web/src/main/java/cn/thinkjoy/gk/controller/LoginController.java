@@ -45,7 +45,7 @@ public class LoginController extends ZGKBaseController {
 	public Map<String, Object> login(@RequestParam(value="account",required=false) String account,
 					  @RequestParam(value="password",required=false) String password,
 					  @RequestParam(value="basePassword",required = false) String basePassword) throws Exception {
-		long id = 0l;
+		long id = 0L;
 		UserInfoPojo userInfoPojo=null;
 		UserInfoPojo old=null;
 		Map<String, Object> resultMap = new HashMap<>();
@@ -79,6 +79,14 @@ public class LoginController extends ZGKBaseController {
 			if(null != userInfoPojo)
 			{
 				/**
+				 * 老用户生成二维码
+				 */
+				if(null == userInfoPojo.getAccountId() && null == userInfoPojo.getQrCodeUrl())
+				{
+					userAccountExService.insertUserMarketInfo(0L, 0 , id);
+					userInfoPojo=userAccountExService.getUserInfoPojoById(id);
+				}
+				/**
 				 * 判断VIP用户是否失效
 				 */
 				if("1".equals(userInfoPojo.getVipStatus()))
@@ -96,15 +104,17 @@ public class LoginController extends ZGKBaseController {
 				userInfoPojo.setStatus(null);
 				resultMap.put("userInfo", userInfoPojo);
 				gkxtRegistUrl = String.format(gkxtRegistUrl, account, basePassword);
-				//注册高考学堂
+				/**
+				 * 注册高考学堂
+				 */
 				String registResult = HttpClientUtil.getContents(gkxtRegistUrl);
 
-				if(registResult.indexOf("\"ret\":\"200\"")==-1)
+				if(!registResult.contains("\"ret\":\"200\""))
 				{
-					LOGGER.error("帐号"+account+", 注册高考学堂失败.....");
+					LOGGER.error("帐号"+account+", 注册高考学堂失败!");
 				}else
 				{
-					LOGGER.debug("帐号"+account+"注册高考学堂成功!");
+					LOGGER.debug("帐号"+account+", 注册高考学堂成功!");
 				}
 			}
 		}catch(Exception e){

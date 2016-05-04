@@ -111,6 +111,15 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         userExam.setIsReported(0);
         userExam.setIsSurvey(0);
         userExamDAO.insert(userExam);
+        insertUserMarketInfo(sharerId, sharerType, id);
+        flag = true;
+
+        return flag;
+    }
+
+    @Override
+    public boolean insertUserMarketInfo(Long sharerId, Integer sharerType, long id) throws WriterException, IOException {
+        boolean flag;
         UserMarket userMarket = new UserMarket();
         userMarket.setAccountId(id);
         Integer agentLevel = 0;
@@ -134,7 +143,7 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         Map hints = new HashMap();
         hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
         BitMatrix bitMatrix = multiFormatWriter.encode(loginUrl, BarcodeFormat.QR_CODE, 400, 400,hints);
-        String path=Thread.currentThread().getContextClassLoader().getResource("").toString();
+        String path = Thread.currentThread().getContextClassLoader().getResource("").toString();
         path=path.substring(1, path.indexOf("classes")).replaceFirst("ile:","");
         String fileName = id+".jpg";
         File file = new File(path,fileName);
@@ -150,7 +159,7 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         param.add("dirId", "0");
         template.getMessageConverters().add(new FastJsonHttpMessageConverter());
         String returnJson = template.postForObject(uploadUrl, param, String.class);
-        UploadFileReturn  uploadFileReturn = JsonMapper.buildNormalMapper().fromJson(returnJson, UploadFileReturn.class);
+        UploadFileReturn uploadFileReturn = JsonMapper.buildNormalMapper().fromJson(returnJson, UploadFileReturn.class);
         if(uploadFileReturn !=null && "0000000".equals(uploadFileReturn.getRtnCode())){
             userMarket.setQrcodeUrl(uploadFileReturn.getBizData().getFile().getFileUrl());//二维码地址
             file.delete();

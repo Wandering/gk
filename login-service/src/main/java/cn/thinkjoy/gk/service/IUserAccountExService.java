@@ -28,6 +28,8 @@ public interface IUserAccountExService {
 
     boolean insertUserAccount(UserAccount userAccount, Long sharerId, Integer sharerType) throws WriterException, IOException;
 
+    boolean insertUserMarketInfo(Long sharerId, Integer sharerType, long id) throws WriterException, IOException;
+
     boolean updateUserAccount(UserAccount userAccount);
 
     UserAccount findUserAccountById(long id);
