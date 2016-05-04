@@ -347,11 +347,11 @@ public class PredictController extends BaseApiController {
             map1= iterator.next();
             String minScore =map1.get("minScore").toString();
             String avgScore =map1.get("avgScore").toString();
-            if(!("-".equals(minScore)||"0".equals(minScore))){
+            if(!("-".equals(minScore)||!"".equals(minScore))){
                 t1++;
                 i1+=Integer.valueOf(minScore);
             }
-            if(!("-".equals(avgScore)||"0".equals(avgScore))){
+            if(!("-".equals(avgScore)||!"".equals(avgScore))){
                 t2++;
                 i2+=Integer.valueOf(avgScore);
             }
