@@ -72,7 +72,9 @@ public class RegisterController extends ZGKBaseController {
                                   @RequestParam(value="provinceId",required = false) String provinceId,
                                   @RequestParam(value="cityId",required = false) String cityId,
                                   @RequestParam(value="countyId",required = false) String countyId,
-                                  @RequestParam(value="basePassword",required = false) String basePassword)
+                                  @RequestParam(value="basePassword",required = false) String basePassword,
+                                  @RequestParam(value = "sharerId",required = false) Long sharerId,
+                                  @RequestParam(value = "sharerType",required = false) Integer sharerType)
             throws Exception{
         long areaId= getAreaId();
         Map<String, Object> resultMap = new HashMap<>();
@@ -132,7 +134,15 @@ public class RegisterController extends ZGKBaseController {
             userAccount.setCityId(cityId);
             userAccount.setCountyId(countyId);
             try{
-                boolean flag=userAccountExService.insertUserAccount(userAccount);
+                if(null == sharerType)
+                {
+                    sharerType = 0;
+                }
+                if(null == sharerId)
+                {
+                    sharerId = 0l;
+                }
+                boolean flag=userAccountExService.insertUserAccount(userAccount,sharerId,sharerType);
                 if (!flag){
                     throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"账户注册失败");
                 }
