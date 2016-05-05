@@ -70,4 +70,6 @@ dependencies {
 
     compile project(':user-service')
 
+    compile project(':web-common')
+
 }

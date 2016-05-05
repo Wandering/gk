@@ -6,9 +6,14 @@
  */
 package cn.thinkjoy.gk.service.impl;
 
+import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.gk.dao.IUniversityExDAO;
+import cn.thinkjoy.gk.domain.University;
 import cn.thinkjoy.gk.pojo.UniversityDetailDto;
 import cn.thinkjoy.gk.service.IUniversityExService;
+import cn.thinkjoy.gk.util.RedisUtil;
+import cn.thinkjoy.zgk.common.MD5Util;
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -86,5 +91,28 @@ public class UniversityExServiceImpl implements IUniversityExService{
     @Override
     public void saveMajoredScoreLine(Map<String,Object> map){
         universityExDAO.saveMajoredScoreLine(map);
+    }
+
+    @Override
+    public Map<String, String> getUniversityInfoByKeywords(String keywords) {
+
+        Map<String,String> map = Maps.newHashMap();
+
+        String key = MD5Util.md5String(keywords);
+        RedisRepository redisRepository = RedisUtil.getInstance();
+        boolean flag = redisRepository.exists(key);
+        if (flag) {
+            map = JSON.parseObject(redisRepository.get(key).toString(), Map.class);
+        } else {
+
+            List<University> universities = universityExDAO.getUniversityInfoByKeywords(keywords);
+
+            for(University university : universities){
+                map.put(university.getId().toString(),university.getName());
+            }
+
+            redisRepository.set(key,JSON.toJSON(map));
+        }
+        return map;
     }
 }
