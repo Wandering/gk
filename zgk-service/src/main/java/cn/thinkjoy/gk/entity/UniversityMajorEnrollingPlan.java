@@ -25,10 +25,6 @@ public class UniversityMajorEnrollingPlan extends CreateBaseDomain<Long> {
      */
     private Long areaId;
     /**
-     * 批次
-     */
-    private String batch;
-    /**
      * 科类，1文科，2理科
      */
     private String majorType;
@@ -40,6 +36,10 @@ public class UniversityMajorEnrollingPlan extends CreateBaseDomain<Long> {
      * 计划招生数
      */
     private Integer planEnrolling;
+    /**
+     * 招生性质
+     */
+    private String enrollType;
     /**
      * 学年
      */
@@ -95,14 +95,6 @@ public class UniversityMajorEnrollingPlan extends CreateBaseDomain<Long> {
         this.areaId = areaId;
     }
 
-    public String getBatch() {
-        return batch;
-    }
-
-    public void setBatch(String batch) {
-        this.batch = batch;
-    }
-
     public String getMajorType() {
         return majorType;
     }
@@ -125,6 +117,14 @@ public class UniversityMajorEnrollingPlan extends CreateBaseDomain<Long> {
 
     public void setPlanEnrolling(Integer planEnrolling) {
         this.planEnrolling = planEnrolling;
+    }
+
+    public String getEnrollType() {
+        return enrollType;
+    }
+
+    public void setEnrollType(String enrollType) {
+        this.enrollType = enrollType;
     }
 
     public Integer getLengthOfSchooling() {

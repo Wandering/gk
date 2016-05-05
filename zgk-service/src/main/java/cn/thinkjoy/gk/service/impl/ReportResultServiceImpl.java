@@ -4,10 +4,12 @@ import cn.thinkjoy.gk.common.ReportUtil;
 import cn.thinkjoy.gk.dao.IReportResultDao;
 import cn.thinkjoy.gk.entity.ReportResult;
 import cn.thinkjoy.gk.entity.SystemParmas;
+import cn.thinkjoy.gk.entity.ReportUserInfo;
 import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.service.IReportResultService;
 import cn.thinkjoy.gk.service.ISystemParmasService;
 import cn.thinkjoy.gk.service.IUniversityMajorEnrollingService;
+import cn.thinkjoy.gk.service.IReportUserInfoService;
 import com.alibaba.dubbo.common.utils.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
@@ -32,6 +34,8 @@ public class ReportResultServiceImpl implements IReportResultService {
     ISystemParmasService iSystemParmasService;
     @Resource
     IUniversityMajorEnrollingService iUniversityMajorEnrollingService;
+    @Resource
+    IReportUserInfoService iReportUserInfoService;
 
     /**
      * 保存志愿报告
@@ -48,6 +52,7 @@ public class ReportResultServiceImpl implements IReportResultService {
         return iReportResultDao.selectModelOne(map);
     }
 
+
     /**
      * 评估结果输出
      * @param map
@@ -57,13 +62,15 @@ public class ReportResultServiceImpl implements IReportResultService {
     @Override
     public ReportInfoView getReportInfoView(Map map) throws IOException {
 
-        Integer score= Integer.valueOf(map.get("score").toString());
+//        Integer score= Integer.valueOf(map.get("score").toString());
 
         ReportInfoView reportInfoView = new ReportInfoView();
         ReportResultView reportResultView = getReportResultView(map);
+
         reportInfoView.setReportResultView(reportResultView);
+
         List<SelfReportResultView> selfReportResultViews = getUnSerializableReports(reportResultView.getReportResultJson());
-        List<ReportUniversityView> reportUniversityViews = getReportUniversityView(score,selfReportResultViews);
+        List<ReportUniversityView> reportUniversityViews = getReportUniversityView(reportResultView.getScore(),selfReportResultViews);
         reportInfoView.setReportUniversityViewList(reportUniversityViews);
         return reportInfoView;
     }
@@ -166,6 +173,27 @@ public class ReportResultServiceImpl implements IReportResultService {
 
         return result;
     }
+
+    @Override
+    public UserReportResultView getUserReportResultView(Long userId) {
+        Map map = new HashMap();
+        map.put("userId", userId);
+        map.put("orderBy", "id");
+        map.put("sortBy", "desc");
+        map.put("size", 1);
+        ReportResult reportResult = selectModelOne(map);
+        UserReportResultView userReportResultView = new UserReportResultView();
+        userReportResultView.setExistReport((reportResult == null ? false : true));
+        if (userReportResultView.isExistReport()) {
+            userReportResultView.setBatch(reportResult.getBatch());
+            userReportResultView.setMajorType(reportResult.getMajorType());
+            userReportResultView.setPrecedence(reportResult.getPrecedence());
+            userReportResultView.setProvinceCode(reportResult.getProvinceCode());
+            userReportResultView.setScore(reportResult.getScore());
+            userReportResultView.setUserId(reportResult.getUserId());
+        }
+        return userReportResultView;
+    }
     /**
      * 评估结果输出----获取报告展示 -- 用户信息部分
      * @return
@@ -173,18 +201,20 @@ public class ReportResultServiceImpl implements IReportResultService {
     private ReportResultView getReportResultView(Map map) throws IOException {
         ReportResultView reportResultView = new ReportResultView();
 
-        Integer majorType = Integer.valueOf(map.get("majorType").toString());
-        String proCode=map.get("province").toString();
         ReportResult reportResult = selectModelOne(map);
+
+        Integer majorType = reportResult.getMajorType();
+        String proCode = reportResult.getProvinceCode();
 
         reportResultView.setUserId(reportResult.getUserId());
 
         //获取批次控制线
-        String controllLine = iSystemParmasService.getBatchKey(reportResult.getMajorType(), reportResult.getProvinceCode());
+        String controllLine = iSystemParmasService.getBatchKey(majorType, proCode);
 
-        SystemParmas systemParmas = iSystemParmasService.getRoleByKey(proCode,controllLine,majorType);
-
-
+        SystemParmas systemParmas = iSystemParmasService.getRoleByKey(proCode, controllLine, majorType);
+//        Map searMap=new HashMap();
+//        searMap.put("userId",map.get("userId").toString());
+//        ReportUserInfo reportUserInfo = iReportUserInfoService.getUserInfoByUserId(searMap);
         reportResultView.setControllLine(systemParmas.getConfigValue());
         reportResultView.setUserName(map.get("userName").toString());
         reportResultView.setMajorType(reportResult.getMajorType());
@@ -244,6 +274,7 @@ public class ReportResultServiceImpl implements IReportResultService {
                 reportUniversityView.setRange(selfReportUniversityView.isRange());
                 reportUniversityView.setRankTrend(selfReportUniversityView.getRankTrend());
                 reportUniversityView.setSeq(selfReportUniversityView.getSequence());
+
                 Map universityMap = new HashMap();
                 universityMap.put("universityId", selfReportUniversityView.getId());
                 Integer lowestScoreAvg = iUniversityMajorEnrollingService.lowestScoreAvg(universityMap);
