@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.gk.common.ReportUtil;
+import cn.thinkjoy.gk.dao.IUniversityInfoDao;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
 import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 import cn.thinkjoy.gk.service.IReportResultService;
@@ -86,6 +87,21 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
                 break;
         }
         return universityInfoViews;
+    }
+
+    @Override
+    public List<Map<String, Object>> getUniversityEnrollingConditions(Map<String, String> map) {
+        return iUniversityInfoDao.getUniversityEnrollingConditions(map);
+    }
+
+    @Override
+    public List<Map<String, Object>> getMajorEnrollingConditions(Map<String, String> map) {
+        return iUniversityInfoDao.getMajorEnrollingConditions(map);
+    }
+
+    @Override
+    public List<Map<String, Object>> getMajorPlanConditions(Map<String, String> map) {
+        return iUniversityInfoDao.getMajorPlanConditions(map);
     }
 
 }
