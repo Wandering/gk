@@ -26,4 +26,12 @@ public interface IMajoredService {
 
     List<MajorDetailPojo> getMajorDetailList(String code,String batch,Integer year,String subject);
 
+    /**
+     * 根据关键词查询专业基本信息
+     *
+     * @param keywords
+     * @return
+     */
+    Map<String,String> getMajoredInfoByKeywords(String keywords);
+
 }

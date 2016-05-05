@@ -7,6 +7,7 @@
 package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.gk.dao.IUniversityExDAO;
+import cn.thinkjoy.gk.domain.University;
 import cn.thinkjoy.gk.pojo.UniversityDetailDto;
 import cn.thinkjoy.gk.service.IUniversityExService;
 import com.google.common.collect.Maps;
@@ -86,5 +87,17 @@ public class UniversityExServiceImpl implements IUniversityExService{
     @Override
     public void saveMajoredScoreLine(Map<String,Object> map){
         universityExDAO.saveMajoredScoreLine(map);
+    }
+
+    @Override
+    public Map<String, String> getUniversityInfoByKeywords(String keywords) {
+        // TODO 加入redis缓存
+        Map<String,String> map = Maps.newHashMap();
+
+        List<University> universities = universityExDAO.getUniversityInfoByKeywords(keywords);
+        for(University university : universities){
+            map.put(university.getId().toString(),university.getName());
+        }
+        return map;
     }
 }

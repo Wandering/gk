@@ -6,6 +6,7 @@ import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
 import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
+import cn.thinkjoy.gk.service.IProfessionService;
 import cn.thinkjoy.zgk.common.QueryUtil;
 import cn.thinkjoy.zgk.domain.BizData4Page;
 import cn.thinkjoy.zgk.domain.GkProfessional;
@@ -33,6 +34,9 @@ public class GkProfessionalController extends BaseApiController<GkProfessionDTO>
 
     @Autowired
     private IGkProfessionalService gkProfessionalService;
+
+    @Autowired
+    private IProfessionService professionService;
 
     /**
      * 获取视频列表
@@ -85,5 +89,13 @@ public class GkProfessionalController extends BaseApiController<GkProfessionDTO>
             map.put("pid", pid);
         }
         return gkProfessionalService.getProfessionCategory(map);
+    }
+
+
+    @ResponseBody
+    @ApiDesc(value = "根据关键词搜索职业基本信息",owner = "杨国荣")
+    @RequestMapping(value = "/getProfessionalInfoByKeywords", method = RequestMethod.GET)
+    public Map<String,String> getProfessionalInfoByKeywords(@RequestParam(value = "keywords") String keywords) {
+        return professionService.getProfessionalInfoByKeywords(keywords);
     }
 }

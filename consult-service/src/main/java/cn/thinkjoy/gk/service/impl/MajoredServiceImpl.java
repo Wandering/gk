@@ -6,6 +6,7 @@ import cn.thinkjoy.gk.pojo.MajoredDto;
 import cn.thinkjoy.gk.pojo.SubjectDto;
 import cn.thinkjoy.gk.query.MajoredQuery;
 import cn.thinkjoy.gk.service.IMajoredService;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,4 +58,15 @@ public class MajoredServiceImpl implements IMajoredService {
         return majoredDAO.getMajorDetailList(params);
     }
 
+    @Override
+    public Map<String, String> getMajoredInfoByKeywords(String keywords) {
+        // TODO 加入redis缓存
+        Map<String,String> map = Maps.newHashMap();
+
+        List<MajorDetailPojo> pojos = majoredDAO.getMajoredInfoByKeywords(keywords);
+        for(MajorDetailPojo pojo : pojos){
+            map.put(pojo.getId().toString(),pojo.getName());
+        }
+        return map;
+    }
 }

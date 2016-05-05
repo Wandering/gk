@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.pojo.*;
@@ -301,5 +302,12 @@ public class MajoredController extends ZGKBaseController {
         return lists;
     }
 
+
+    @ResponseBody
+    @ApiDesc(value = "根据关键词搜索专业基本信息",owner = "杨国荣")
+    @RequestMapping(value = "/getMajoredInfoByKeywords", method = RequestMethod.GET)
+    public Map<String,String> getMajoredInfoByKeywords(@RequestParam(value = "keywords") String keywords) {
+        return iMajoredService.getMajoredInfoByKeywords(keywords);
+    }
 
 }
