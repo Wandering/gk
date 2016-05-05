@@ -20,4 +20,5 @@ public interface IUserInfoExDAO {
 
     boolean isPredictByUid(long uid);
 
+    UserInfo getUserInfoById(long id);
 }

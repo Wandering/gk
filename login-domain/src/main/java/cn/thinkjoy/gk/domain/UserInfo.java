@@ -58,6 +58,12 @@ public class UserInfo extends BaseDomain<Long>{
     private boolean isForecaset;
     /**成绩预测end**/
 
+    private Long accountId;
+    private String qrCodeUrl;
+    private Long sharerId;
+    private String sharerType;
+    private String agentLevel;
+
     public UserInfo(){
     }
     public void setToken(String value) {
@@ -183,6 +189,50 @@ public class UserInfo extends BaseDomain<Long>{
 
     public void setIsForecaset(boolean isForecaset) {
         this.isForecaset = isForecaset;
+    }
+
+    public void setForecaset(boolean forecaset) {
+        isForecaset = forecaset;
+    }
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getQrCodeUrl() {
+        return qrCodeUrl;
+    }
+
+    public void setQrCodeUrl(String qrCodeUrl) {
+        this.qrCodeUrl = qrCodeUrl;
+    }
+
+    public Long getSharerId() {
+        return sharerId;
+    }
+
+    public void setSharerId(Long sharerId) {
+        this.sharerId = sharerId;
+    }
+
+    public String getSharerType() {
+        return sharerType;
+    }
+
+    public void setSharerType(String sharerType) {
+        this.sharerType = sharerType;
+    }
+
+    public String getAgentLevel() {
+        return agentLevel;
+    }
+
+    public void setAgentLevel(String agentLevel) {
+        this.agentLevel = agentLevel;
     }
 
     public String toString() {

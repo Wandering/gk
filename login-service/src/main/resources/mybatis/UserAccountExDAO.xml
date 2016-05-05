@@ -65,12 +65,18 @@
           vip.status as vipStatus,
           pro.code as userKey,
           vip.endDate,
-          vip.activeDate
+          vip.activeDate,
+          market.accountId,
+          market.qrCodeUrl,
+          market.sharerId,
+          market.sharerType,
+          market.agentLevel
         FROM zgk_user_account acc
         left join zgk_user_vip vip on acc.id = vip.id
         left join zgk_user_info info on acc.id = info.id
         left join zgk_user_exam exam on acc.id = exam.id
         left join zgk_province pro on pro.id = info.provinceId
+        left join zgk_user_market market on acc.id=market.accountId
         <where>
             acc.userType = 0
             <if test="token!=null">
