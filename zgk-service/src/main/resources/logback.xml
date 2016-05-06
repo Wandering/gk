@@ -65,7 +65,7 @@
 
     <appender name="STDOUT-APPENDER" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <Pattern>%d{yyyyMMdd-HH:mm:ss.SSSZ}|%contextName|%thread|%-5level|%logger|%msg%n
+            <Pattern>%d{yyyy-MM-dd-HH:mm:ss.SSSZ}|%contextName|%thread|%-5level|%logger|%msg%n
             </Pattern>
         </encoder>
     </appender>
@@ -75,10 +75,10 @@
     </logger>
 
     <!-- 这里平时的level为WARN，跟踪问题时才设置为DEBUG -->
-    <!--<logger name="cn.thinkjoy.gk" level="WARN">-->
-    <!--<appender-ref ref="DEBUG-FILE-APPENDER"/>-->
-    <!--<appender-ref ref="WARN-FILE-APPENDER" />-->
-    <!--</logger>-->
+    <logger name="cn.thinkjoy.gk" level="WARN">
+        <appender-ref ref="DEBUG-FILE-APPENDER"/>
+        <appender-ref ref="WARN-FILE-APPENDER" />
+    </logger>
 
     <root level="error">
         <appender-ref ref="STDOUT-APPENDER" />
