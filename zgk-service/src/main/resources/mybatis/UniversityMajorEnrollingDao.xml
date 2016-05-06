@@ -8,9 +8,9 @@
         <result column="universityId" property="universityName" jdbcType="BIGINT" />
         <result column="year" property="year" jdbcType="INTEGER" />
         <result column="areaId" property="areaId" jdbcType="BIGINT" />
-        <result column="batch" property="batch" jdbcType="VARCHAR" />
         <result column="majorType" property="majorType" jdbcType="VARCHAR" />
         <result column="majorName" property="majorName" jdbcType="VARCHAR" />
+        <result column="enrollType" property="enrollType" jdbcType="VARCHAR" />
         <result column="planEnrolling" property="planEnrolling" jdbcType="INTEGER" />
         <result column="lengthOfSchooling" property="lengthOfSchooling" jdbcType="INTEGER" />
         <result column="schoolFee" property="schoolFee" jdbcType="INTEGER" />
@@ -21,7 +21,7 @@
         <result column="year" property="averageYear" jdbcType="INTEGER" />
     </resultMap>
     <sql id="Base_Column_List">
-        id,universityName,universityId,year,areaId,batch,majorType,majorName,planEnrolling,lengthOfSchooling,schoolFee,majorId
+        id,universityName,universityId,year,areaId,majorType,majorName,planEnrolling,enrollType,lengthOfSchooling,schoolFee,majorId
     </sql>
 
     <select id="selectList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.UniversityMajorEnrollingPlan">
@@ -41,9 +41,6 @@
             </if>
             <if test="areaId!=null">
                 and areaId=#{areaId,jdbcType=BIGINT}
-            </if>
-            <if test="batch!=null">
-                and batch=#{batch,jdbcType=VARCHAR}
             </if>
             <if test="majorType!=null">
                 and majorType=#{majorType,jdbcType=VARCHAR}

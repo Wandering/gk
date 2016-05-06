@@ -17,7 +17,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -42,6 +45,58 @@ public class SmartReportController extends ZGKBaseController {
     IUniversityMajorEnrollingService iUniversityMajorEnrollingService;
     @Resource
     IReportResultService iReportResultService;
+
+    /**
+     * 查询用户是否已经填报
+     * @return
+     */
+    @RequestMapping(value = "/exist",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> getReportByUser() {
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+        if (userAccountPojo == null) {
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
+        }
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if (vipStatus == null || vipStatus == 0) {
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(), ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
+        UserReportResultView userReportResultView = iReportResultService.getUserReportResultView( Long.valueOf(userAccountPojo.getId()));
+        Map resultMap = new HashMap();
+        resultMap.put("report", userReportResultView);
+        return resultMap;
+    }
+    /**
+     * 获取用户最后一次填报结果
+     * @return
+     */
+    @RequestMapping(value = "/get/result",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> getReportResult() throws IOException {
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+
+        if (userAccountPojo == null) {
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
+        }
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if (vipStatus == null || vipStatus == 0) {
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(), ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
+        Map map=new HashMap();
+        map.put("userId", userAccountPojo.getId());
+        map.put("orderBy", "id");
+        map.put("sortBy", "desc");
+        map.put("size", 1);
+
+        ReportInfoView reportInfoView = iReportResultService.getReportInfoView(map);
+        Map resultMap = new HashMap();
+        resultMap.put("reportInfoView", reportInfoView);
+        return resultMap;
+    }
+
     /**
      * 获取批次及批次控制线信息
      * @param score
@@ -116,9 +171,7 @@ public class SmartReportController extends ZGKBaseController {
      */
     @RequestMapping(value = "/get/info",method = RequestMethod.GET)
     @ResponseBody
-    public Map<String,Object> getUserReport(@RequestParam(value = "score") Integer score,
-                                            @RequestParam(value = "cate") Integer cate,
-                                            @RequestParam(value = "province") String province) throws IOException {
+    public Map<String,Object> getUserReport() throws IOException {
 
 
         UserAccountPojo userAccountPojo = getUserAccountPojo();
@@ -137,9 +190,9 @@ public class SmartReportController extends ZGKBaseController {
         map.put("orderBy", "id");
         map.put("sortBy", "desc");
         map.put("size", 1);
-        map.put("score",score);
-        map.put("majorType",cate);
-        map.put("province",province);
+//        map.put("score",score);
+//        map.put("majorType",cate);
+//        map.put("province",province);
         map.put("userName", userAccountPojo.getName());
         ReportInfoView reportInfoView = iReportResultService.getReportInfoView(map);
         Map resultMap = new HashMap();

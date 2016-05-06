@@ -61,8 +61,15 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 		if (StringUtils.isEmpty(value)||!redisFlag) {
 			if (reqType != null && reqType.equals("ajax")) {
-				PrintWriter out = response.getWriter();
-				out.print("{\"rtnCode\":\"1000004\",\"msg\":\"请先登录后再进行操作\"}");
+
+				/**************后期优化**************/
+				try {
+					PrintWriter out = response.getWriter();
+					out.print("{\"rtnCode\":\"1000004\",\"msg\":\"请先登录后再进行操作\"}");
+				} catch (Exception e) {
+					throw new BizException("1000004", "请先登录后再进行操作");
+				}
+				/**************后期优化**************/
 
 			} else
 				throw new BizException("1000004","请先登录后再进行操作");

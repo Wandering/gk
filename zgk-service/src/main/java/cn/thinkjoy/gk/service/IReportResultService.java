@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.service;
 
 import cn.thinkjoy.gk.entity.ReportResult;
 import cn.thinkjoy.gk.pojo.ReportInfoView;
+import cn.thinkjoy.gk.pojo.UserReportResultView;
 
 import java.io.IOException;
 import java.util.List;
@@ -60,4 +61,11 @@ public interface IReportResultService {
      * @return
      */
     boolean reportIsComplete(ReportResult reportResult);
+
+    /**
+     * 当前用户是否已经进行填报
+     * @param userId
+     * @return
+     */
+    UserReportResultView getUserReportResultView(Long userId);
 }

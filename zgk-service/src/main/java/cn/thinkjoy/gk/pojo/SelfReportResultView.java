@@ -1,7 +1,6 @@
 package cn.thinkjoy.gk.pojo;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by douzy on 16/3/17.
@@ -11,6 +10,11 @@ public class SelfReportResultView implements Serializable {
      * 梯度
      */
     private Integer sequence;
+
+//    /**
+//     * 梯度title
+//     */
+//    private String title;
 
     /**
      * 院校集
@@ -24,6 +28,14 @@ public class SelfReportResultView implements Serializable {
     public void setSequence(Integer sequence) {
         this.sequence = sequence;
     }
+
+//    public String getTitle() {
+//        return title;
+//    }
+//
+//    public void setTitle(String title) {
+//        this.title = title;
+//    }
 
     public SelfReportUniversityView getSelfReportUniversityViewList() {
         return selfReportUniversityViewList;
