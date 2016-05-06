@@ -10,7 +10,7 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.zgk.common.StringUtil;
 import cn.thinkjoy.zgk.domain.ZgkApesk;
 import cn.thinkjoy.zgk.domain.ZgkApeskCourse;
-import cn.thinkjoy.zgk.dto.ZgkApeskDTO;
+//import cn.thinkjoy.zgk.dto.ZgkApeskDTO;
 import cn.thinkjoy.zgk.remote.IZgkApeskCourseService;
 import cn.thinkjoy.zgk.remote.IZgkApeskService;
 import org.springframework.beans.factory.annotation.Autowired;
