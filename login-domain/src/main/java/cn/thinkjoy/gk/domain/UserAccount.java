@@ -34,6 +34,16 @@ public class UserAccount extends BaseDomain<Long>{
 	private String cityId;
 	/** 区域Id */
 	private String countyId;
+	/** 年级。1：高中一年级；2：高中二年级；3：高中三年级 */
+	private int grade;
+
+	public int getGrade() {
+		return grade;
+	}
+
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
 
 	public String getProvinceId() {
 		return provinceId;

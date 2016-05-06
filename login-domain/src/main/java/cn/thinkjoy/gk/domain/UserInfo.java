@@ -34,6 +34,8 @@ public class UserInfo extends BaseDomain<Long>{
     private String countyId;
     /** 学校名称 */
     private String schoolName;
+    /** 年级。1：高中一年级；2：高中二年级；3：高中三年级 */
+    private int grade;
     /** 生日 */
     private Long birthdayDate;
     /** 性别，0女，1男 */
@@ -117,6 +119,14 @@ public class UserInfo extends BaseDomain<Long>{
     }
     public void setBirthdayDate(Long value) {
         this.birthdayDate = value;
+    }
+
+    public int getGrade() {
+        return grade;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
     }
 
     public Long getBirthdayDate() {
