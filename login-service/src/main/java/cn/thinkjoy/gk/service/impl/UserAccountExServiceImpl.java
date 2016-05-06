@@ -100,6 +100,7 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         userInfo.setProvinceId(userAccount.getProvinceId());
         userInfo.setCityId(userAccount.getCityId());
         userInfo.setCountyId(userAccount.getCountyId());
+        userInfo.setGrade(userAccount.getGrade());
         userInfoExDAO.insertUserInfo(userInfo);
         UserVip userVip = new UserVip();
         userVip.setId(id);
