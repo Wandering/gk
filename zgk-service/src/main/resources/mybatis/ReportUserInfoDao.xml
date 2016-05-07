@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.thinkjoy.gk.dao.IReportUserInfoDao">
+    <resultMap id="BaseResultMap" type="cn.thinkjoy.gk.entity.ReportUserInfo">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="token" property="token" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="provinceId" property="provinceId" jdbcType="VARCHAR"/>
+        <result column="cityId" property="cityId" jdbcType="VARCHAR"/>
+        <result column="countyId" property="countyId" jdbcType="VARCHAR"/>
+        <result column="schoolName" property="schoolName" jdbcType="VARCHAR"/>
+        <result column="subjectType" property="subjectType" jdbcType="TINYINT"/>
+        <result column="sex" property="sex" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,token,name,provinceId,cityId,countyId,schoolName,subjectType,sex
+    </sql>
+    <select id="getUserInfoByUserId" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select<include refid="Base_Column_List" /> from zgk_user_info
+        <where>
+            <if test="userId!=null">
+                 id=#{userId,jdbcType=INTEGER}
+            </if>
+        </where>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="size!=null">
+            limit #{size,jdbcType=INTEGER}
+        </if>
+    </select>
+</mapper>

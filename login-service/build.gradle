@@ -7,6 +7,12 @@ dependencies {
 
     compile project(':user-service')
 
+    compile project(':gk-domain')
+
+    compile "com.google.zxing:core:3.2.1"
+
+    compile "cn.thinkjoy:microschool-core:1.4.7"
+
     compile "cn.thinkjoy.notify:notify-service:jx0.0.1-SNAPSHOT"
 
 }

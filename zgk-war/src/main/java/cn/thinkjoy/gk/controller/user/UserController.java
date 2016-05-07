@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.controller.user;
 
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -136,4 +138,12 @@ public class UserController extends ZGKBaseController{
         style.setFont(font);
         return style;
     }
+
+    @ResponseBody
+    @ApiDesc(value = "获取首页各种用户数（注册基数为36627）",owner = "杨国荣")
+    @RequestMapping(value = "/getIndexUserCount", method = RequestMethod.GET)
+    public Map<String,Integer> getIndexUserCount() {
+        return userVipExService.getIndexUserCount();
+    }
+
 }

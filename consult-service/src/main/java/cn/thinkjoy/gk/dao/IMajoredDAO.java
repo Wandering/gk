@@ -25,4 +25,12 @@ public interface IMajoredDAO {
     List<Map<String,Object>> getUniversityByCode(@Param("code")String majoredCode, @Param("batchName")String name);
 
     List<MajorDetailPojo> getMajorDetailList(Map<String,Object> params);
+
+    /**
+     * 根据关键词查询专业基本信息
+     *
+     * @param keywords
+     * @return
+     */
+    List<MajorDetailPojo> getMajoredInfoByKeywords(@Param("keywords") String keywords);
 }

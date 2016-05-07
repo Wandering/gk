@@ -40,8 +40,8 @@ dependencies {
 
     compile ("cn.thinkjoy.notify:notify-service:jx0.0.1-SNAPSHOT"){
         exclude group: 'cn.thinkjoy.common', module: 'thinkjoy-mu-common'
+        exclude group: 'org.springframework'
     }
-
     compile ("cn.thinkjoy:microschool-core:1.4.7"){
         exclude group: 'org.springframework'
         exclude group: 'org.codehaus.jackson'
@@ -69,5 +69,7 @@ dependencies {
     compile project(':market-service')
 
     compile project(':user-service')
+
+    compile project(':web-common')
 
 }

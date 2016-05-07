@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.common.HttpClientUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.common.DESUtil;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
@@ -32,6 +33,9 @@ public class LoginController extends ZGKBaseController {
 	@Autowired
 	private IUserAccountExService userAccountExService;
 
+	//高考学堂注册接口
+	private String gkxtRegistUrl = "http://xuetang.zhigaokao.cn/userapi/reg?mobile=%s&password=%s";
+
 	/**
 	 * 登陆
 	 * @return
@@ -39,8 +43,9 @@ public class LoginController extends ZGKBaseController {
 	@RequestMapping(value = "/login")
 	@ResponseBody
 	public Map<String, Object> login(@RequestParam(value="account",required=false) String account,
-					  @RequestParam(value="password",required=false) String password) throws Exception {
-		long id = 0l;
+					  @RequestParam(value="password",required=false) String password,
+					  @RequestParam(value="basePassword",required = false) String basePassword) throws Exception {
+		long id = 0L;
 		UserInfoPojo userInfoPojo=null;
 		UserInfoPojo old=null;
 		Map<String, Object> resultMap = new HashMap<>();
@@ -74,6 +79,14 @@ public class LoginController extends ZGKBaseController {
 			if(null != userInfoPojo)
 			{
 				/**
+				 * 老用户生成二维码
+				 */
+				if(null == userInfoPojo.getAccountId() && null == userInfoPojo.getQrCodeUrl())
+				{
+					userAccountExService.insertUserMarketInfo(0L, 0 , id);
+					userInfoPojo=userAccountExService.getUserInfoPojoById(id);
+				}
+				/**
 				 * 判断VIP用户是否失效
 				 */
 				if("1".equals(userInfoPojo.getVipStatus()))
@@ -90,6 +103,19 @@ public class LoginController extends ZGKBaseController {
 				userInfoPojo.setId(null);
 				userInfoPojo.setStatus(null);
 				resultMap.put("userInfo", userInfoPojo);
+				gkxtRegistUrl = String.format(gkxtRegistUrl, account, basePassword);
+				/**
+				 * 注册高考学堂
+				 */
+				String registResult = HttpClientUtil.getContents(gkxtRegistUrl);
+
+				if(!registResult.contains("\"ret\":\"200\""))
+				{
+					LOGGER.error("帐号"+account+", 注册高考学堂失败!");
+				}else
+				{
+					LOGGER.debug("帐号"+account+", 注册高考学堂成功!");
+				}
 			}
 		}catch(Exception e){
 			throw e;

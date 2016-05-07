@@ -7,4 +7,5 @@ dependencies {
 
     compile project(':gk-service')
 
+    compile 'Pingplusplus:pingpp-java:2.0.7'
 }

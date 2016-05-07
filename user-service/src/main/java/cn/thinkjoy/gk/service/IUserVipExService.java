@@ -8,4 +8,9 @@ import java.util.Map;
  */
 public interface IUserVipExService {
     List<Map<String, String>> getVipInfoListByArea(Map<String, String> paramMap);
+
+    /**
+     * 获取首页各种用户数
+     */
+    Map<String,Integer> getIndexUserCount();
 }

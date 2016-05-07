@@ -135,4 +135,61 @@
             </where>
     </select>
 
+    <select id="getUniversityEnrollingConditions" parameterType="java.util.Map" resultType="java.util.Map">
+        select case when majorType='1' then '文科'
+                    when majorType='2' then '理科' else '' end as majorType,
+               case when batch='1' then '一批本科'
+                    when batch='2' then '二批本科'
+                    when batch='4' then '三批本科'
+                    when batch='8' then '高职(专科)'else '' end as batch
+        from zgk_university_enrolling
+        <where>
+            <if test="universityId!=null">
+                universityId=#{universityId}
+            </if>
+            <if test="areaId!=null">
+                and areaId=#{areaId}
+            </if>
+        </where>
+        group by majorType, batch
+        order by cast(majorType AS UNSIGNED) asc, cast(batch AS UNSIGNED)  asc
+    </select>
+
+    <select id="getMajorEnrollingConditions" parameterType="java.util.Map" resultType="java.util.Map">
+        select  year,
+                case when majorType='1' then '文科'
+                     when majorType='2' then '理科' else '' end as majorType,
+                case when batch='1' then '一批本科'
+                     when batch='2' then '二批本科'
+                     when batch='4' then '三批本科'
+                     when batch='8' then '高职(专科)'else '' end as batch
+        from zgk_university_major_enrolling
+        <where>
+            <if test="universityId!=null">
+                universityId=#{universityId}
+            </if>
+            <if test="areaId!=null">
+                and areaId=#{areaId}
+            </if>
+        </where>
+        group by year, majorType, batch
+        order by year desc, cast(majorType AS UNSIGNED) asc, cast(batch AS UNSIGNED)  asc
+    </select>
+
+    <select id="getMajorPlanConditions" parameterType="java.util.Map" resultType="java.util.Map">
+        select  year,
+                case when majorType='1' then '文科'
+                     when majorType='2' then '理科' else '' end as majorType
+        from zgk_university_major_enrolling_plan
+        <where>
+            <if test="universityId!=null">
+                universityId=#{universityId}
+            </if>
+            <if test="areaId!=null">
+                and areaId=#{areaId}
+            </if>
+        </where>
+        group by year, majorType
+        order by year desc, cast(majorType AS UNSIGNED) asc
+    </select>
 </mapper>

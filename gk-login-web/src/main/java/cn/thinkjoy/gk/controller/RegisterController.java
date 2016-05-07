@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.common.HttpClientUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.common.DESUtil;
 import cn.thinkjoy.gk.constant.RedisConst;
@@ -15,6 +16,7 @@ import cn.thinkjoy.gk.service.IProvinceService;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.RedisUtil;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +48,9 @@ public class RegisterController extends ZGKBaseController {
     private IUserAccountExService userAccountExService;
     @Autowired
     private IProvinceService provinceService;
+
+    //高考学堂注册接口
+    private String gkxtRegistUrl = "http://xuetang.zhigaokao.cn/userapi/reg?mobile=%s&password=%s";
 //    @Autowired
 //    private ICityService cityService;
 //    @Autowired
@@ -66,7 +71,11 @@ public class RegisterController extends ZGKBaseController {
                                   @RequestParam(value="password",required = false) String password,
                                   @RequestParam(value="provinceId",required = false) String provinceId,
                                   @RequestParam(value="cityId",required = false) String cityId,
-                                  @RequestParam(value="countyId",required = false) String countyId)
+                                  @RequestParam(value="countyId",required = false) String countyId,
+                                  @RequestParam(value="grade",required = true) int grade,
+                                  @RequestParam(value="basePassword",required = false) String basePassword,
+                                  @RequestParam(value = "sharerId",required = false) Long sharerId,
+                                  @RequestParam(value = "sharerType",required = false) Integer sharerType)
             throws Exception{
         long areaId= getAreaId();
         Map<String, Object> resultMap = new HashMap<>();
@@ -125,13 +134,33 @@ public class RegisterController extends ZGKBaseController {
             userAccount.setProvinceId(provinceId);
             userAccount.setCityId(cityId);
             userAccount.setCountyId(countyId);
+            userAccount.setGrade(grade);
             try{
-                boolean flag=userAccountExService.insertUserAccount(userAccount);
+                if(null == sharerType)
+                {
+                    sharerType = 0;
+                }
+                if(null == sharerId)
+                {
+                    sharerId = 0l;
+                }
+                boolean flag=userAccountExService.insertUserAccount(userAccount,sharerId,sharerType);
                 if (!flag){
                     throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"账户注册失败");
                 }
             }catch(Exception e){
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"账户注册失败");
+            }
+            gkxtRegistUrl = String.format(gkxtRegistUrl, account, basePassword);
+            //注册高考学堂
+            String registResult = HttpClientUtil.getContents(gkxtRegistUrl);
+
+            if(registResult.indexOf("\"ret\":\"200\"")==-1)
+            {
+                LOGGER.error("帐号"+account+", 注册高考学堂失败.....");
+            }else
+            {
+                LOGGER.debug("帐号"+account+"注册高考学堂成功!");
             }
 
             userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);

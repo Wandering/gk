@@ -29,5 +29,24 @@ public interface IUniversityInfoDao extends IBaseDAO<UniversityInfoView> {
      */
     Integer selectPlanEnrolling(Map map);
 
+    /**
+     * 院校录取信息查询条件
+     * @param map
+     * @return
+     */
+    List<Map<String, Object>> getUniversityEnrollingConditions(Map<String, String> map);
 
+    /**
+     * 专业录取信息查询条件
+     * @param map
+     * @return
+     */
+    List<Map<String, Object>> getMajorEnrollingConditions(Map<String, String> map);
+
+    /**
+     * 专业招生信息查询条件
+     * @param map
+     * @return
+     */
+    List<Map<String, Object>> getMajorPlanConditions(Map<String, String> map);
 }

@@ -38,7 +38,7 @@
         channel
     </sql>
     <insert id="insert" parameterType="Orders">
-        INSERT INTO gk_orders (
+        INSERT INTO zgk_orders (
         createDate,
         lastModDate,
         invalidDate,
@@ -68,7 +68,7 @@
 
     <!-- 更新 -->
     <update id="update" parameterType="Orders">
-        UPDATE gk_orders
+        UPDATE zgk_orders
         <trim prefix="SET" suffixOverrides=",">
             <if test="status!=null">
                 status = #{status},
@@ -109,7 +109,7 @@
     </update>
 
     <update id="updateMap">
-        UPDATE gk_orders
+        UPDATE zgk_orders
         <trim prefix="SET" suffixOverrides=",">
             <if test="map.status!=null">
                 status = #{map.status},
@@ -150,7 +150,7 @@
     </update>
 
     <update id="updateByCondition">
-        UPDATE gk_orders
+        UPDATE zgk_orders
         <trim prefix="SET" suffixOverrides=",">
             <if test="update.status!=null">
                 status = #{update.status},
@@ -228,7 +228,7 @@
     </update>
 
     <insert id="insertMap" >
-        INSERT INTO gk_orders (
+        INSERT INTO zgk_orders (
         status,
         createDate,
         lastModDate,
@@ -257,7 +257,7 @@
 
 
     <update id="updateNull" parameterType="Orders">
-        UPDATE gk_orders
+        UPDATE zgk_orders
         <trim prefix="SET" suffixOverrides=",">
             status = #{status},
             createDate = #{createDate},
@@ -277,7 +277,7 @@
 
     <!-- 按Id删除 -->
     <delete id="deleteById" parameterType="java.lang.Long">
-        DELETE FROM gk_orders
+        DELETE FROM zgk_orders
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -285,7 +285,7 @@
 
 
     <delete id="deleteByCondition" parameterType="java.util.Map">
-        DELETE FROM gk_orders
+        DELETE FROM zgk_orders
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id = #{id}
@@ -327,14 +327,14 @@
     </delete>
 
     <delete id="deleteByProperty" parameterType="java.util.Map">
-        DELETE FROM gk_orders WHERE
+        DELETE FROM zgk_orders WHERE
         ${property} = #{value}
     </delete>
 
     <select id="fetch" parameterType="java.lang.Long" resultType="Orders">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_orders
+        FROM zgk_orders
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
@@ -346,7 +346,7 @@
     <select id="findOne" parameterType="java.util.Map" resultType="Orders">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_orders WHERE
+        FROM zgk_orders WHERE
         ${property} = #{value}
         LIMIT 0,1
     </select>
@@ -354,7 +354,7 @@
     <select id="findList" parameterType="java.util.Map" resultType="Orders">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_orders WHERE
+        FROM zgk_orders WHERE
         ${property} = #{value}
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -364,7 +364,7 @@
     <select id="findAll" resultType="Orders">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_orders
+        FROM zgk_orders
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
         </if>
@@ -373,7 +373,7 @@
     <select id="queryPage" resultType="Orders">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_orders
+        FROM zgk_orders
         <where>
 
             <if test="condition.whereSql != null">
@@ -431,7 +431,7 @@
     <select id="like" parameterType="java.util.Map" resultType="Orders">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_orders
+        FROM zgk_orders
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id like CONCAT('%', #{id} , '%')
@@ -479,7 +479,7 @@
     <select id="queryList" parameterType="java.util.Map" resultType="Orders">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_orders
+        FROM zgk_orders
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="condition.id!=null">
                 AND id = #{condition.id}
@@ -526,7 +526,7 @@
     <select id="queryOne" parameterType="java.util.Map" resultType="Orders">
         SELECT
         <include refid="Base_Column_List" />
-        FROM gk_orders
+        FROM zgk_orders
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="id!=null">
                 AND id = #{id}
@@ -569,7 +569,7 @@
     </select>
 
     <select id="count" resultType="java.lang.Integer">
-        SELECT count(id) FROM gk_orders
+        SELECT count(id) FROM zgk_orders
         <where>
             <if test="id!=null">
                 ${groupOp} id ${id.op}  #{id.data}
@@ -617,7 +617,7 @@
     <select id="selectMaxId" resultType="java.lang.Long">
         SELECT
         MAX(id)
-        FROM gk_orders
+        FROM zgk_orders
     </select>
 
     <select id="selectOrderDetail" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -647,7 +647,7 @@
         ELSE '其他渠道'
         END as channel,
         od.createDate
-        from gk_orders od
+        from zgk_orders od
         left join gk_user_account usr on od.userId = usr.id
         left join gk_province pro on usr.areaId = pro.id
         where usr.id is not null
@@ -675,7 +675,7 @@
         </if>
     </select>
     <select id="selectOrderStatisticsData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        select pro.`name` as provinceName, sum(od.amount) totleAmount from gk_orders od
+        select pro.`name` as provinceName, sum(od.amount) totleAmount from zgk_orders od
         left join gk_user_account usr on od.userId= usr.id
         left join gk_province pro on usr.areaId = pro.id
         where od.userId is not null

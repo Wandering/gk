@@ -25,7 +25,7 @@ public class UserInfoExServiceImpl implements IUserInfoExService {
 
     @Override
     public UserInfo findUserInfoById(long id) {
-        return userInfoDAO.fetch(id);
+        return userInfoExDAO.getUserInfoById(id);
     }
 
     @Override

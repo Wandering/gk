@@ -23,6 +23,7 @@
         name,
         icon,
         schoolName,
+        grade,
         birthdayDate,
         sex,
         subjectType,
@@ -37,6 +38,7 @@
         #{name},
         #{icon},
         #{schoolName},
+        #{grade},
         #{birthdayDate},
         #{sex},
         #{subjectType},
@@ -66,6 +68,32 @@
         SELECT
         canTargetSchool
         FROM zgk_user_account WHERE id=#{uid}
+    </select>
+
+
+    <select id="getUserInfoById" parameterType="java.lang.Long" resultType="UserInfo">
+        select
+        info.token as token ,
+        info.name as name ,
+        info.icon as icon ,
+        info.provinceId as provinceId,
+        info.cityId as cityId,
+        info.countyId as countyId ,
+        info.schoolName as schoolName ,
+        info.grade as grade,
+        info.birthdayDate as birthdayDate ,
+        info.sex as sex ,
+        info.subjectType as subjectType ,
+        info.mail as mail ,
+        info.qq as qq,
+        market.accountId,
+        market.qrCodeUrl,
+        market.sharerId,
+        market.sharerType,
+        market.agentLevel
+        from zgk_user_info info
+        left join zgk_user_market market on info.id=market.accountId
+        WHERE info.id=#{id}
     </select>
     <!--end-->
 </mapper>
