@@ -100,6 +100,9 @@ selectList
             <if test="areaId!=null">
                 areaId = #{areaId},
             </if>
+            <if test="activeDate!=null">
+                activeDate = #{activeDate},
+            </if>
         </trim>
         WHERE
         id = #{id}
