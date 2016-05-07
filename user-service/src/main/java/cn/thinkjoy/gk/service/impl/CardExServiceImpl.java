@@ -41,6 +41,7 @@ public class CardExServiceImpl implements ICardExService {
         card.setId(cardId);
         card.setUserId(userId);
         card.setStatus(1);
+        card.setActiveDate(userVip.getActiveDate());
         cardDAO.update(card);
         flag = true;
         return flag;
