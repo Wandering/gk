@@ -30,6 +30,11 @@ public class SpecialtyView implements Serializable {
     private Integer planEnrolling;
 
     /**
+     * 招生性质
+     */
+    private String  enrollType;
+
+    /**
      * 科类
      */
     private String majorType;
@@ -72,6 +77,14 @@ public class SpecialtyView implements Serializable {
 
     public void setPlanEnrolling(Integer planEnrolling) {
         this.planEnrolling = planEnrolling;
+    }
+
+    public String getEnrollType() {
+        return enrollType;
+    }
+
+    public void setEnrollType(String enrollType) {
+        this.enrollType = enrollType;
     }
 
     public String getMajorType() {

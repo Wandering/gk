@@ -82,7 +82,10 @@
         </where>
     </select>
 
-
+    <!-- 根据关键词查询专业基本信息 -->
+    <select id="getMajoredInfoByKeywords" parameterType="java.util.Map" resultType="MajorDetailPojo">
+        select id,major_name as name from zgk_major where major_name like CONCAT('%',#{keywords},'%') LIMIT 5
+    </select>
 
 </mapper>
 

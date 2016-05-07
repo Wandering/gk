@@ -6,6 +6,7 @@
  */
 package cn.thinkjoy.gk.dao;
 
+import cn.thinkjoy.gk.domain.University;
 import cn.thinkjoy.gk.pojo.MajoredScoreLinePojo;
 import cn.thinkjoy.gk.pojo.OpenMajoredPojo;
 import cn.thinkjoy.gk.pojo.UniversityDetailDto;
@@ -36,5 +37,13 @@ public interface IUniversityExDAO{
     List<Integer> getRecentlyEnrollInfoByYear(Map<String,Object> params);
 
     void saveMajoredScoreLine(Map<String,Object> map);
+
+    /**
+     * 根据关键词查询学校基本信息
+     *
+     * @param keywords
+     * @return
+     */
+    List<University> getUniversityInfoByKeywords(@Param("keywords") String keywords);
 
 }

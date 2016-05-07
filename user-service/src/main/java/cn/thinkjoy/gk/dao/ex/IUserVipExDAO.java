@@ -15,4 +15,11 @@ import java.util.Map;
 public interface IUserVipExDAO extends IBaseDAO<UserVip>{
 	
     List<Map<String, String>> findVipInfoListByArea(Map<String, String> paramMap);
+
+    /**
+     * 获取用户注册总数
+     *
+     * @return
+     */
+    Integer getRegisteUserCount();
 }

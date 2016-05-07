@@ -6,6 +6,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Province;
@@ -89,7 +90,7 @@ public class UniversityController extends ZGKBaseController {
             ConditionsUtil.setCondition(condition, "educationLevel", "=", educationLevel.toString());
         if (StringUtils.isNotBlank(property))
             ConditionsUtil.setCondition(condition, "property", "like", "%" + property + "%");
-        String orederBy = null;
+        String orederBy = "rank";
         String sqlOrderEnumStr = "asc";
         Map<String, Object> selectorpage = Maps.newHashMap();
         selectorpage.put("photoUrl", 1);
@@ -737,5 +738,13 @@ public class UniversityController extends ZGKBaseController {
             redisRepository.set(key, JSON.toJSON(propertysMap), TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
         }
         return propertysMap;
+    }
+
+
+    @ResponseBody
+    @ApiDesc(value = "根据关键词搜索学校基本信息",owner = "杨国荣")
+    @RequestMapping(value = "/getUniversityInfoByKeywords", method = RequestMethod.GET)
+    public Map<String,String> getUniversityInfoByKeywords(@RequestParam(value = "keywords") String keywords) {
+        return universityExService.getUniversityInfoByKeywords(keywords);
     }
 }

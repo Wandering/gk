@@ -5,4 +5,6 @@ dependencies {
 
     compile project(':consult-domain')
 
+    compile project(':web-common')
+
 }

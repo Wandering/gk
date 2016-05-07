@@ -71,6 +71,7 @@ public class ServletPathConst {
         JSP_URLS.add("/forward.do");
         JSP_URLS.add("/user/online-answer.jsp?method=ask");
         JSP_URLS.add("/user/vip-service.jsp");
+        JSP_URLS.add("/apesk/getResult.do");
 //        JSP_URLS.put("/question/question_detile.jsp","");
 
 

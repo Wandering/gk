@@ -23,4 +23,12 @@ public interface IUniversityExService{
     List<Integer> getRecentlyEnrollInfoByYear(String universityId,long areaId);
 
     void saveMajoredScoreLine(Map<String,Object> map);
+
+    /**
+     * 根据关键词查询学校基本信息
+     *
+     * @param keywords
+     * @return
+     */
+    Map<String,String> getUniversityInfoByKeywords(String keywords);
 }
