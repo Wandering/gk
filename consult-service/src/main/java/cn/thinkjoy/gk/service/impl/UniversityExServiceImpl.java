@@ -98,7 +98,7 @@ public class UniversityExServiceImpl implements IUniversityExService{
 
         Map<String,String> map = Maps.newHashMap();
 
-        String key = MD5Util.md5String(keywords);
+        String key = "university" + MD5Util.md5String(keywords);
         RedisRepository redisRepository = RedisUtil.getInstance();
         boolean flag = redisRepository.exists(key);
         if (flag) {

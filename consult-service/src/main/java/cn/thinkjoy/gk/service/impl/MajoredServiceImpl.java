@@ -67,7 +67,7 @@ public class MajoredServiceImpl implements IMajoredService {
 
         Map<String,String> map = Maps.newHashMap();
 
-        String key = MD5Util.md5String(keywords);
+        String key = "majored" + MD5Util.md5String(keywords);
         RedisRepository redisRepository = RedisUtil.getInstance();
         boolean flag = redisRepository.exists(key);
         if (flag) {
