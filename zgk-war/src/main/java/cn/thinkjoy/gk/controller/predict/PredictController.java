@@ -347,11 +347,11 @@ public class PredictController extends BaseApiController {
             map1= iterator.next();
             String minScore =map1.get("minScore").toString();
             String avgScore =map1.get("avgScore").toString();
-            if(!("-".equals(minScore)||!"".equals(minScore))){
+            if(isLegalScore(minScore)){
                 t1++;
                 i1+=Integer.valueOf(minScore);
             }
-            if(!("-".equals(avgScore)||!"".equals(avgScore))){
+            if(isLegalScore(avgScore)){
                 t2++;
                 i2+=Integer.valueOf(avgScore);
             }
@@ -409,6 +409,10 @@ public class PredictController extends BaseApiController {
             throw new BizException(ERRORCODE.ADDEXCEPTION.getCode(),ERRORCODE.ADDEXCEPTION.getMessage());
         }
         return true;
+    }
+
+    private boolean isLegalScore(String avgScoreStr) {
+        return StringUtils.isNotEmpty(avgScoreStr) && isNumber(avgScoreStr) && !"0".equals(avgScoreStr);
     }
 
 
