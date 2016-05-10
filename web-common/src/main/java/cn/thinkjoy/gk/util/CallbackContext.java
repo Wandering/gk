@@ -1,6 +1,5 @@
 package cn.thinkjoy.gk.util;
 
-import cn.thinkjoy.gk.pojo.UserAccountPojo;
 
 /**
  * 用户上下文

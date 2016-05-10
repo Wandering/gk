@@ -90,7 +90,7 @@ public class UniversityController extends ZGKBaseController {
             ConditionsUtil.setCondition(condition, "educationLevel", "=", educationLevel.toString());
         if (StringUtils.isNotBlank(property))
             ConditionsUtil.setCondition(condition, "property", "like", "%" + property + "%");
-        String orederBy = null;
+        String orederBy = "rank";
         String sqlOrderEnumStr = "asc";
         Map<String, Object> selectorpage = Maps.newHashMap();
         selectorpage.put("photoUrl", 1);

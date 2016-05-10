@@ -72,6 +72,7 @@ public class RegisterController extends ZGKBaseController {
                                   @RequestParam(value="provinceId",required = false) String provinceId,
                                   @RequestParam(value="cityId",required = false) String cityId,
                                   @RequestParam(value="countyId",required = false) String countyId,
+                                  @RequestParam(value="grade",required = true) int grade,
                                   @RequestParam(value="basePassword",required = false) String basePassword,
                                   @RequestParam(value = "sharerId",required = false) Long sharerId,
                                   @RequestParam(value = "sharerType",required = false) Integer sharerType)
@@ -133,6 +134,7 @@ public class RegisterController extends ZGKBaseController {
             userAccount.setProvinceId(provinceId);
             userAccount.setCityId(cityId);
             userAccount.setCountyId(countyId);
+            userAccount.setGrade(grade);
             try{
                 if(null == sharerType)
                 {
