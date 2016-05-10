@@ -193,7 +193,7 @@ public class SmartReportController extends ZGKBaseController {
 //        map.put("score",score);
 //        map.put("majorType",cate);
 //        map.put("province",province);
-        map.put("userName", userAccountPojo.getName());
+//        map.put("userName", userAccountPojo.getName());
         ReportInfoView reportInfoView = iReportResultService.getReportInfoView(map);
         Map resultMap = new HashMap();
         resultMap.put("reportInfoView", reportInfoView);
