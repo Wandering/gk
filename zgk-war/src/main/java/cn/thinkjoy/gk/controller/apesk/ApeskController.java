@@ -6,9 +6,11 @@ import cn.thinkjoy.gk.annotation.VipMethonTag;
 import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.zgk.common.StringUtil;
 import cn.thinkjoy.zgk.domain.ZgkApesk;
 import cn.thinkjoy.zgk.domain.ZgkApeskCourse;
+import cn.thinkjoy.zgk.dto.ZgkApeskDTO;
 import cn.thinkjoy.zgk.remote.IZgkApeskCourseService;
 import cn.thinkjoy.zgk.remote.IZgkApeskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,21 +49,21 @@ public class ApeskController extends BaseCommonController {
 	private static final String  APESK_CHECKCODE = "O1I194H5LAHLJR2DIJ";
 	private static final String  APESK_HRUSERID = "13726081881";
 
-//	@ResponseBody
-//	@RequestMapping(value = "/queryApeskResult.do",method = RequestMethod.GET)
-//	public Map<String,Object> getApeskResult() {
-//		UserAccountPojo userAccountPojo = getUserAccountPojo();
-//		if (userAccountPojo == null) {
-//			throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
-//		}
-//
-//		Map map = new HashMap();
-//		map.put("userId", userAccountPojo.getId());
-//		List<ZgkApeskDTO> zgkApeskDTOList = zgkApeskService.selectUserApeskResult(map);
-//		Map resultMap = new HashMap();
-//		resultMap.put("apeskObj", zgkApeskDTOList);
-//		return resultMap;
-//	}
+	@ResponseBody
+	@RequestMapping(value = "/queryApeskResult.do",method = RequestMethod.GET)
+	public Map<String,Object> getApeskResult() {
+		UserAccountPojo userAccountPojo = getUserAccountPojo();
+		if (userAccountPojo == null) {
+			throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
+		}
+
+		Map map = new HashMap();
+		map.put("userId", userAccountPojo.getId());
+		List<ZgkApeskDTO> zgkApeskDTOList = zgkApeskService.selectUserApeskResult(map);
+		Map resultMap = new HashMap();
+		resultMap.put("apeskObj", zgkApeskDTOList);
+		return resultMap;
+	}
 
 	/**查询测试列表
 	 * @return
