@@ -64,6 +64,8 @@ public class UniversityController extends ZGKBaseController {
     @Autowired
     private cn.thinkjoy.zgk.remote.IUniversityService iremoteUniversityService;
 
+    @Autowired
+    private IUniversityInfoService universityInfoService;
     /**
      * 智高考院校信息列表
      *
@@ -206,8 +208,15 @@ public class UniversityController extends ZGKBaseController {
         selectorpage.put("jobRank", 1);
 
         //此接口读取静态数据，不做缓存处理
-        List ll = iremoteUniversityService.queryPage("universityMajorExService", condition, offset, rows, "majorRank", "asc", selectorpage);
-
+//        List ll = iremoteUniversityService.queryPage("universityMajorExService", condition, offset, rows, "majorRank", "asc", selectorpage);
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("universityId", String.valueOf(universityId));
+        paramMap.put("majorFeature", "特色专业");
+        List<Map<String, Object>> ll = universityInfoService.getUniversityMajors(paramMap);
+        List<String> majorList = new ArrayList<>();
+        for (int i = 0; i <ll.size() ; i++) {
+            majorList.add(ll.get(i).get("majorName") + "");
+        }
         Map<String, Object> condition2 = Maps.newHashMap();
         condition2.put("groupOp", "and");
         ConditionsUtil.setCondition(condition2, "id", "=", String.valueOf(universityId));
@@ -224,7 +233,7 @@ public class UniversityController extends ZGKBaseController {
 
         }
         Map<String, List> returnMap = Maps.newHashMap();
-        returnMap.put("majorList", ll);
+        returnMap.put("majorList", majorList);
         returnMap.put("featureMajorList", featureMajorList);
 
 
