@@ -309,8 +309,9 @@ public class SmartReportController extends ZGKBaseController {
         reportResult.setReasonable((isReasonable ? (byte) 1 : (byte) 0));
         reportResult.setComplete((isCompl ? (byte) 1 : (byte) 0));
         Integer result = iReportResultService.insertSelective(reportResult);
+        if (result > 0)
+            iReportResultService.InsertRiskForecast(reportResult);         //同步信息至动态风险表
         Map map = new HashMap();
-
         map.put("result", result);
         return map;
     }
