@@ -8,12 +8,14 @@
 package cn.thinkjoy.gk.service;
 
 
+import cn.thinkjoy.gk.domain.Department;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.pojo.UserInfoPojo;
 import com.google.zxing.WriterException;
 
 import java.io.IOException;
+import java.util.Map;
 
 
 public interface IUserAccountExService {
@@ -39,4 +41,8 @@ public interface IUserAccountExService {
     UserInfoPojo findOldUserAccountPojoById(long id);
 
     UserInfoPojo findOldUserAccountPojoByPhone(String phone);
+
+    Map<String,Object> findUserInfo(Map<String, String> paramMap);
+
+    Department findDepartMent(Map<String, String> paramMap);
 }

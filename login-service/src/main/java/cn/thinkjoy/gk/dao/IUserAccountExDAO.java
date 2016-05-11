@@ -7,6 +7,7 @@
 package cn.thinkjoy.gk.dao;
 
 
+import cn.thinkjoy.gk.domain.Department;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.pojo.UserInfoPojo;
 
@@ -22,4 +23,7 @@ public interface IUserAccountExDAO {
 
     UserInfoPojo findOldUserAccountPojo(Map<String, Object> params);
 
+    Map<String,Object> findUserInfo(Map<String, String> paramMap);
+
+    Department findDepartMent(Map<String, String> paramMap);
 }
