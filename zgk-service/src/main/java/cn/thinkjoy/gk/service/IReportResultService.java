@@ -68,4 +68,12 @@ public interface IReportResultService {
      * @return
      */
     UserReportResultView getUserReportResultView(Long userId);
+
+
+    /**
+     * 同步院校跟专业信息至  动态风险表
+     * @param reportResult
+     * @return
+     */
+    boolean InsertRiskForecast(ReportResult reportResult);
 }
