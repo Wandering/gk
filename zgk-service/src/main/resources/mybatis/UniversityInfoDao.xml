@@ -180,7 +180,7 @@
         order by year desc, cast(majorType AS UNSIGNED) asc
     </select>
 
-    <select id="getUniversityMajors" parameterType="java.util.Map" resultType="java.util.Map">
+    <select id="getUniversityMajors" parameterType="java.util.Map" resultType="java.lang.String">
         select t.majorName
         from zgk_university_major t
         <where>
@@ -188,7 +188,7 @@
                 t.universityId=#{universityId}
             </if>
             <if test="majorFeature!=null">
-                and t.majorFeature=#{majorFeature}
+                and t.majorFeature like CONCAT('%', #{majorFeature} , '%')
             </if>
         </where>
     </select>

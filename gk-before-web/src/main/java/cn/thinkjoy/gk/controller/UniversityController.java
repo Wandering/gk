@@ -34,6 +34,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -193,8 +196,9 @@ public class UniversityController extends ZGKBaseController {
     @RequestMapping(value = "getRemoteUniversityMajorListByUniversityId", method = RequestMethod.GET)
     @ResponseBody
     public Map getUniversityMajorListByUniversityId(@RequestParam(value = "universityId", required = true) long universityId,
+                                                    @RequestParam(value = "majorFeature", required = true) String majorFeature,
                                                     @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-                                                    @RequestParam(value = "rows", required = false, defaultValue = "10") Integer rows) {
+                                                    @RequestParam(value = "rows", required = false, defaultValue = "10") Integer rows) throws UnsupportedEncodingException {
         Map<String, Object> condition = Maps.newHashMap();
         condition.put("groupOp", "and");
         ConditionsUtil.setCondition(condition, "universityId", "=", String.valueOf(universityId));
@@ -208,15 +212,10 @@ public class UniversityController extends ZGKBaseController {
         selectorpage.put("jobRank", 1);
 
         //此接口读取静态数据，不做缓存处理
-//        List ll = iremoteUniversityService.queryPage("universityMajorExService", condition, offset, rows, "majorRank", "asc", selectorpage);
+        List ll = iremoteUniversityService.queryPage("universityMajorExService", condition, offset, rows, "majorRank", "asc", selectorpage);
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("universityId", String.valueOf(universityId));
-        paramMap.put("majorFeature", "特色专业");
-        List<Map<String, Object>> ll = universityInfoService.getUniversityMajors(paramMap);
-        List<String> majorList = new ArrayList<>();
-        for (int i = 0; i <ll.size() ; i++) {
-            majorList.add(ll.get(i).get("majorName") + "");
-        }
+        paramMap.put("majorFeature", encodeStr(majorFeature));
         Map<String, Object> condition2 = Maps.newHashMap();
         condition2.put("groupOp", "and");
         ConditionsUtil.setCondition(condition2, "id", "=", String.valueOf(universityId));
@@ -224,22 +223,28 @@ public class UniversityController extends ZGKBaseController {
         selectorpage2.put("featureMajor", 1);
         List featureMajorList = null;
         RedisRepository resUtil = RedisUtil.getInstance();
-        String resKey = "zgk_uy:" + universityId + "_ot:" + offset + "_rs:" + rows + ":major";
+        String resKey = "zgk_uy:" + universityId + "_ot:" + offset + "_rs:" + rows +"_mf"+majorFeature+ ":major";
         if (resUtil.exists(resKey)) {
             featureMajorList = (List) JSONUtils.parse(resUtil.get(resKey).toString());
         } else {
-            featureMajorList = iremoteUniversityService.queryPage("universityDetailService", condition2, 0, 10, "id", "asc", selectorpage2);
+            featureMajorList = universityInfoService.getUniversityMajors(paramMap);
             resUtil.set(resKey, JSONUtils.toJSONString(featureMajorList));
-
         }
         Map<String, List> returnMap = Maps.newHashMap();
-        returnMap.put("majorList", majorList);
+        returnMap.put("majorList", ll);
         returnMap.put("featureMajorList", featureMajorList);
-
 
         return returnMap;
     }
 
+    public static String encodeStr(String str) {
+        try {
+            return new String(str.getBytes("ISO-8859-1"), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     /**
      * 招生计划列表获取
      *
