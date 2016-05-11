@@ -85,15 +85,17 @@ public class SmartReportController extends ZGKBaseController {
         if (vipStatus == null || vipStatus == 0) {
             throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(), ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
         }
-        Map map=new HashMap();
+        Map map = new HashMap();
         map.put("userId", userAccountPojo.getId());
         map.put("orderBy", "id");
         map.put("sortBy", "desc");
         map.put("size", 1);
-
-        ReportInfoView reportInfoView = iReportResultService.getReportInfoView(map);
+        ReportResult reportResult = iReportResultService.selectModelOne(map);
+        ReportLastResultView reportLastResultView = new ReportLastResultView();
+        reportLastResultView.setReport((reportResult == null ? false : true));
+        reportLastResultView.setCreateTime((reportResult == null ? null : reportResult.getCreateTime()));
         Map resultMap = new HashMap();
-        resultMap.put("reportInfoView", reportInfoView);
+        resultMap.put("reportObj", reportLastResultView);
         return resultMap;
     }
 
@@ -193,7 +195,7 @@ public class SmartReportController extends ZGKBaseController {
 //        map.put("score",score);
 //        map.put("majorType",cate);
 //        map.put("province",province);
-//        map.put("userName", userAccountPojo.getName());
+        map.put("userName", userAccountPojo.getName());
         ReportInfoView reportInfoView = iReportResultService.getReportInfoView(map);
         Map resultMap = new HashMap();
         resultMap.put("reportInfoView", reportInfoView);

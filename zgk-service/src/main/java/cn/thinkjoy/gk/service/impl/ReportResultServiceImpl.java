@@ -212,11 +212,11 @@ public class ReportResultServiceImpl implements IReportResultService {
         String controllLine = iSystemParmasService.getBatchKey(majorType, proCode);
 
         SystemParmas systemParmas = iSystemParmasService.getRoleByKey(proCode, controllLine, majorType);
-        Map searMap=new HashMap();
-        searMap.put("userId",map.get("userId").toString());
-        ReportUserInfo reportUserInfo = iReportUserInfoService.getUserInfoByUserId(searMap);
+//        Map searMap=new HashMap();
+//        searMap.put("userId",map.get("userId").toString());
+//        ReportUserInfo reportUserInfo = iReportUserInfoService.getUserInfoByUserId(searMap);
         reportResultView.setControllLine(systemParmas.getConfigValue());
-        reportResultView.setUserName(reportUserInfo.getName());
+        reportResultView.setUserName(map.get("userName").toString());
         reportResultView.setMajorType(reportResult.getMajorType());
         reportResultView.setCreateTime(reportResult.getCreateTime());
         reportResultView.setPrecedence(reportResult.getPrecedence());
