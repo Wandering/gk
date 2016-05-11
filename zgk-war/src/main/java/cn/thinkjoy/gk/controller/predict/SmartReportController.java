@@ -94,6 +94,9 @@ public class SmartReportController extends ZGKBaseController {
         ReportLastResultView reportLastResultView = new ReportLastResultView();
         reportLastResultView.setReport((reportResult == null ? false : true));
         reportLastResultView.setCreateTime((reportResult == null ? null : reportResult.getCreateTime()));
+        reportLastResultView.setBatch((reportResult == null ? null : reportResult.getBatch()));
+        reportLastResultView.setMajorType((reportResult == null ? null : reportResult.getMajorType()));
+        reportLastResultView.setProvinceCode((reportResult == null ? null : reportResult.getProvinceCode()));
         Map resultMap = new HashMap();
         resultMap.put("reportObj", reportLastResultView);
         return resultMap;
@@ -146,7 +149,8 @@ public class SmartReportController extends ZGKBaseController {
     @RequestMapping(value = "/get/specialty",method=RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> getSpecialty(@RequestParam(value = "uId") Integer uId
-                                           ,@RequestParam(value = "cate") Integer cate) {
+                                           ,@RequestParam(value = "cate") Integer cate
+                                            ,@RequestParam(value = "code") String code) {
         UserAccountPojo userAccountPojo = getUserAccountPojo();
 
 
@@ -161,6 +165,7 @@ public class SmartReportController extends ZGKBaseController {
         Map parmasMap = new HashMap();
         parmasMap.put("universityId", uId);
         parmasMap.put("majorType", cate);
+        parmasMap.put("province", code);
         List<SpecialtyView> universityMajoyEnrollingPlans = iUniversityMajorEnrollingService.selectList(parmasMap);
         Map resultMap = new HashMap();
         resultMap.put("specialtys", universityMajoyEnrollingPlans);
