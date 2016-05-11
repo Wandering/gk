@@ -215,13 +215,13 @@ public class UniversityController extends ZGKBaseController {
         List ll = iremoteUniversityService.queryPage("universityMajorExService", condition, offset, rows, "majorRank", "asc", selectorpage);
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("universityId", String.valueOf(universityId));
-        paramMap.put("majorFeature", encodeStr(majorFeature));
+        paramMap.put("majorFeature", majorFeature);
         Map<String, Object> condition2 = Maps.newHashMap();
         condition2.put("groupOp", "and");
         ConditionsUtil.setCondition(condition2, "id", "=", String.valueOf(universityId));
         Map<String, Object> selectorpage2 = Maps.newHashMap();
         selectorpage2.put("featureMajor", 1);
-        List featureMajorList = null;
+        List featureMajorList;
         RedisRepository resUtil = RedisUtil.getInstance();
         String resKey = "zgk_uy:" + universityId + "_ot:" + offset + "_rs:" + rows +"_mf"+majorFeature+ ":major";
         if (resUtil.exists(resKey)) {
@@ -237,14 +237,6 @@ public class UniversityController extends ZGKBaseController {
         return returnMap;
     }
 
-    public static String encodeStr(String str) {
-        try {
-            return new String(str.getBytes("ISO-8859-1"), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
     /**
      * 招生计划列表获取
      *
