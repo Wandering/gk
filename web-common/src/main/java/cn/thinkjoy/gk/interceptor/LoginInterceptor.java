@@ -17,10 +17,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
@@ -66,7 +66,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				response.setCharacterEncoding("UTF-8");
 				try {
 					response.reset();
-					ServletOutputStream out = response.getOutputStream();
+					PrintWriter out = response.getWriter();
 					out.print("{\"rtnCode\":\"1000004\",\"msg\":\"请先登录后再进行操作\"}");
 					out.flush();
 					out.close();
