@@ -65,7 +65,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				/**************后期优化**************/
 				response.setCharacterEncoding("UTF-8");
 				try {
-					response.reset();
 					PrintWriter out = response.getWriter();
 					out.print("{\"rtnCode\":\"1000004\",\"msg\":\"请先登录后再进行操作\"}");
 					out.flush();
