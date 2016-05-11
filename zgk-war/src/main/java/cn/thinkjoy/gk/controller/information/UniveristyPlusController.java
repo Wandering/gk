@@ -56,7 +56,7 @@ public class UniveristyPlusController extends ZGKBaseController{
         List<Map<String, Object>> list = universityInfoService.getUniversityEnrollingConditions(paramMap);
         Map<String, List<String>> resultMap = new LinkedHashMap<>();
         for (Map<String, Object> map: list) {
-            String majorType = (String) map.get("majorType");
+            String majorType =  map.get("majorType")+"";
             List<String> batchList = resultMap.get(majorType);
             String batch = (String) map.get("batch");
             if(null == batchList)
@@ -97,8 +97,8 @@ public class UniveristyPlusController extends ZGKBaseController{
         Map<String, Map<String, List<String>>> resultMap = new LinkedHashMap<>();
         for (Map<String, Object> map: list) {
             String year =  map.get("year") + "";
-            String majorType = (String) map.get("majorType");
-            String batch = (String) map.get("batch");
+            String majorType =  map.get("majorType") +"";
+            String batch =  map.get("batch") + "";
             Map<String, List<String>> majorTypeMap = resultMap.get(year);
             if(null == majorTypeMap)
             {
@@ -140,7 +140,7 @@ public class UniveristyPlusController extends ZGKBaseController{
         Map<String, List<String>> resultMap = new LinkedHashMap<>();
         for (Map<String, Object> map: list) {
             String year =  map.get("year") + "";
-            String majorType = (String) map.get("majorType");
+            String majorType =  map.get("majorType")+"";
             List<String> majorTypeList = resultMap.get(year);
             if(null == majorTypeList)
             {

@@ -10,7 +10,7 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.zgk.common.StringUtil;
 import cn.thinkjoy.zgk.domain.ZgkApesk;
 import cn.thinkjoy.zgk.domain.ZgkApeskCourse;
-//import cn.thinkjoy.zgk.dto.ZgkApeskDTO;
+import cn.thinkjoy.zgk.dto.ZgkApeskDTO;
 import cn.thinkjoy.zgk.remote.IZgkApeskCourseService;
 import cn.thinkjoy.zgk.remote.IZgkApeskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,12 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+//import cn.thinkjoy.zgk.dto.ZgkApeskDTO;
 
 /**
  * @author huangshengqing
@@ -44,21 +49,21 @@ public class ApeskController extends BaseCommonController {
 	private static final String  APESK_CHECKCODE = "O1I194H5LAHLJR2DIJ";
 	private static final String  APESK_HRUSERID = "13726081881";
 
-//	@ResponseBody
-//	@RequestMapping(value = "/queryApeskResult.do",method = RequestMethod.GET)
-//	public Map<String,Object> getApeskResult() {
-//		UserAccountPojo userAccountPojo = getUserAccountPojo();
-//		if (userAccountPojo == null) {
-//			throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
-//		}
-//
-//		Map map = new HashMap();
-//		map.put("userId", userAccountPojo.getId());
-//		List<ZgkApeskDTO> zgkApeskDTOList = zgkApeskService.selectUserApeskResult(map);
-//		Map resultMap = new HashMap();
-//		resultMap.put("apeskObj", zgkApeskDTOList);
-//		return resultMap;
-//	}
+	@ResponseBody
+	@RequestMapping(value = "/queryApeskResult.do",method = RequestMethod.GET)
+	public Map<String,Object> getApeskResult() {
+		UserAccountPojo userAccountPojo = getUserAccountPojo();
+		if (userAccountPojo == null) {
+			throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
+		}
+
+		Map map = new HashMap();
+		map.put("userId", userAccountPojo.getId());
+		List<ZgkApeskDTO> zgkApeskDTOList = zgkApeskService.selectUserApeskResult(map);
+		Map resultMap = new HashMap();
+		resultMap.put("apeskObj", zgkApeskDTOList);
+		return resultMap;
+	}
 
 	/**查询测试列表
 	 * @return
@@ -159,22 +164,22 @@ public class ApeskController extends BaseCommonController {
 					String testName= userAccountPojo.getAccount();
 					String testEmail=apeskCourse.getBatch()+"_"+testName+"_"+ userAccountPojo.getId();
 					List<ZgkApesk> apList= zgkApeskService.query(userAccountPojo.getId() ,acId, liangbiao,testEmail);
-					if(apList==null||apList.size()<2){//小于2条记录，开始做题
-						ZgkApesk apesk=new ZgkApesk();
+					if(apList==null||apList.size()<2) {//小于2条记录，开始做题
+						ZgkApesk apesk = new ZgkApesk();
 						apesk.setUserId(userAccountPojo.getId());
 						apesk.setLiangBiao(liangbiao);
 						apesk.setTestEmail(testEmail);
 						apesk.setCreateDate(new Date());
 						apesk.setState(0);
-						apesk.setAcId(Long.parseLong(acId+""));
+						apesk.setAcId(Long.parseLong(acId + ""));
 						zgkApeskService.insertSelective(apesk);
 						setData(testName, returnJsonData, liangbiao, testEmail);
-					}else{//有记录的查看报表
-						ZgkApesk apesk=apList.get(0);
-						if(apesk.getReportId()==null){
+					}else {//有记录的查看报表
+						ZgkApesk apesk = apList.get(0);
+						if (apesk.getReportId() == null) {
 							setData(testName, returnJsonData, liangbiao, testEmail);
-						}else{
-							returnJsonData.put("data",apeskCourse.getReportUrl()+apesk.getReportId());
+						} else {
+							returnJsonData.put("data", apeskCourse.getReportUrl() + apesk.getReportId());
 						}
 					}
 				}else{

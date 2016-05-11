@@ -41,4 +41,11 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
      * @return
      */
     List<Map<String, Object>> getMajorPlanConditions(Map<String, String> map);
+
+    /**
+     * 专业招生信息查询条件
+     * @param map
+     * @return
+     */
+    List<Map<String, Object>> getUniversityMajors(Map<String, String> map);
 }
