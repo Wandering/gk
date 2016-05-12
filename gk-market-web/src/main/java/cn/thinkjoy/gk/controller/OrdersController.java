@@ -146,7 +146,10 @@ public class OrdersController extends ZGKBaseController {
     }
 
     private String getPrice(String orderNo) {
-        Orders order = getOrderByNo(orderNo);
+        Orders order = (Orders) ordersService.findOne("orderNo", orderNo);
+        if (null == order) {
+            throw new BizException("0000010", "订单号无效!");
+        }
         return order.getAmount().multiply(new BigDecimal(100)).setScale(0 , BigDecimal.ROUND_HALF_EVEN).toString();
     }
 
@@ -225,7 +228,7 @@ public class OrdersController extends ZGKBaseController {
         chargeParams.put("currency", "cny");
         if ("alipay_pc_direct".equals(channel)) {
             Map<String, Object> extraMap = new HashMap<>();
-            extraMap.put("success_url", "http://dev.service.zhigaokao.cn/payCallback.do?token=" + paramMap.get("token"));
+            extraMap.put("success_url", "http://dev.service.zhigaokao.cn/payCallback.do");
             chargeParams.put("extra", extraMap);
         } else if ("wx_pub_qr".equals(channel)) {
             Map<String, Object> extraMap = new HashMap<>();
@@ -434,9 +437,11 @@ public class OrdersController extends ZGKBaseController {
     public Map<String, String> getOrderDetail(@RequestParam(value = "orderNo", required = true)String orderNo,
                                               @RequestParam(value = "token", required = true)String token)
     {
-        Orders order = getOrderByNo(orderNo);
-        String detail = order.getDetail();
-        JSONArray obj = JSON.parseArray(detail);
+        Orders order = (Orders) ordersService.findOne("orderNo", orderNo);
+        if (null == order) {
+            throw new BizException("0000010", "订单号无效!");
+        }
+
         Map<String, String> resultMap = new HashMap<>();
         resultMap.put("orderNo", orderNo);
         BigDecimal amount = order.getAmount();
@@ -449,6 +454,8 @@ public class OrdersController extends ZGKBaseController {
         }
         resultMap.put("createTime", order.getCreateDate().toString());
         resultMap.put("payStatus",order.getPayStatus().toString());
+        String detail = order.getDetail();
+        JSONArray obj = JSON.parseArray(detail);
         Object object = obj.get(0);
         if(null != object)
         {
@@ -470,11 +477,4 @@ public class OrdersController extends ZGKBaseController {
         return resultMap;
     }
 
-    private Orders getOrderByNo(String orderNo) {
-        Orders order = (Orders) ordersService.findOne("orderNo", orderNo);
-        if (null == order) {
-            throw new BizException("0000010", "订单号无效!");
-        }
-        return order;
-    }
 }
