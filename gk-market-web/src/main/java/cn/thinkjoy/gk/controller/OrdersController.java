@@ -222,7 +222,7 @@ public class OrdersController extends ZGKBaseController {
         chargeParams.put("currency", "cny");
         if ("alipay_pc_direct".equals(channel)) {
             Map<String, Object> extraMap = new HashMap<>();
-            extraMap.put("success_url", "http://dev.service.zhigaokao.cn/aLiPayCallback.do");
+            extraMap.put("success_url", "http://dev.service.zhigaokao.cn/aLiPayCallback.do?token="+paramMap.get("token"));
             chargeParams.put("extra", extraMap);
         } else if ("wx_pub_qr".equals(channel)) {
             Map<String, Object> extraMap = new HashMap<>();
