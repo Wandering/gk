@@ -85,7 +85,7 @@ public class OrdersController extends ZGKBaseController {
         }
         Long userId = userAccountPojo.getId();
         String returnUrl = ordersQuery.getReturnUrl();
-        RedisUtil.getInstance().set("pay_return_url_" + userId, returnUrl, 1l, TimeUnit.HOURS);
+        RedisUtil.getInstance().set("pay_return_url_" + userId, returnUrl, 24l, TimeUnit.HOURS);
         //判断用户是否已经是VIP，如果已经是VIP则返回提示
         if (userAccountPojo.getVipStatus() == 1) {
             throw new BizException(ERRORCODE.VIP_EXIST.getCode(), ERRORCODE.VIP_EXIST.getMessage());

@@ -41,14 +41,13 @@ public class PayCallbackController extends ZGKBaseController {
     //高考学堂注册接口
     private String gkxtActiveUrl = "http://xuetang.zhigaokao.cn/userapi/tovip?mobile=%s&duration=12&unit=month&levelId=1";
 
+    /**
+     * 微信支付回调
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "payCallback", method = RequestMethod.POST)
-    public String payCallback(HttpServletRequest request) {
-        String returnUrl = doCallBack(request);
-        return "redirect:http://"+ returnUrl;
-    }
-
-    private String doCallBack(HttpServletRequest request) {
-        String returnUrl = "www.zhigaokao.cn";
+    public void payCallback(HttpServletRequest request) {
         int contentLength = request.getContentLength();
         if(contentLength<0){
             throw new BizException(ERRORCODE.FAIL.getCode(), "回调参数为空!");
@@ -77,6 +76,11 @@ public class PayCallbackController extends ZGKBaseController {
                 {
                     status=1;
                     LOGGER.debug("订单号:"+orderNo+"支付成功!支付金额为"+price.toString());
+                    response.setStatus(200);
+                }else if ("refund.succeeded".equals(result)) {
+                    response.setStatus(200);
+                } else {
+                    response.setStatus(500);
                 }
 
                 Orders order =(Orders) ordersService.findOne("orderNo", orderNo);
@@ -88,7 +92,6 @@ public class PayCallbackController extends ZGKBaseController {
                     ordersService.update(order);
                     LOGGER.debug("订单号:"+orderNo+"状态跟新成功!");
                 }
-                long userId = getUserAccountPojo().getId();
 //                String account = getUserAccountPojo().getAccount();
 //                gkxtActiveUrl = String.format(gkxtActiveUrl, account);
 //                String result = HttpClientUtil.getContents(gkxtActiveUrl);
@@ -103,29 +106,17 @@ public class PayCallbackController extends ZGKBaseController {
 //                    status = 1;
 //                    LOGGER.debug("帐号"+account+"激活高考学堂会员成功!");
 //                }
-                String urlKey = "pay_return_url_"+userId;
-                //获取回调url
-                if(RedisUtil.getInstance().exists(urlKey))
-                {
-                    returnUrl = String.valueOf(RedisUtil.getInstance().get(urlKey));
-                    returnUrl = URLDecoder.decode(returnUrl, "UTF-8");
-                    if(returnUrl.indexOf("?")>0)
-                    {
-                        returnUrl += "&status="+status;
-                    }else
-                    {
-                        returnUrl += "?status="+status;
-                    }
-                    RedisUtil.getInstance().del(urlKey);
-                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
-        return returnUrl;
     }
 
+    /**
+     * 支付宝支付回调
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "aLiPayCallback", method = RequestMethod.GET)
     public String aLiPayCallback(HttpServletRequest request) {
         String returnUrl = "www.zhigaokao.cn";
@@ -136,7 +127,6 @@ public class PayCallbackController extends ZGKBaseController {
             prop = names.nextElement();
             paramMap.put(prop, request.getParameter(prop));
         }
-
         try {
             request.setCharacterEncoding("UTF-8");
             if(!paramMap.isEmpty()) {
@@ -156,6 +146,7 @@ public class PayCallbackController extends ZGKBaseController {
                 {
                     returnUrl = String.valueOf(RedisUtil.getInstance().get(urlKey));
                     returnUrl = URLDecoder.decode(returnUrl, "UTF-8");
+                    RedisUtil.getInstance().del(urlKey);
                 }
             }
         } catch (Exception e) {
