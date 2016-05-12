@@ -97,7 +97,6 @@ public class OrdersController extends ZGKBaseController {
         Map<String, String> resultMap = new HashMap<>();
         try {
             resultMap.put("orderNo", order.getOrderNo());
-            resultMap.put("amount", String.valueOf(order.getAmount().doubleValue()*100));
             ordersService.insert(order);
             LOGGER.info("create orders :" + orderNo);
             return resultMap;
@@ -115,11 +114,7 @@ public class OrdersController extends ZGKBaseController {
     @RequestMapping(value = "aliOrderPay")
     @ResponseBody
     public String aliOrder(@RequestParam(value = "orderNo", required = true) String orderNo,
-                           @RequestParam(value = "token", required = true) String token) throws Exception {
-        Orders order = (Orders) ordersService.findOne("orderNo", orderNo);
-        if (null == order) {
-            throw new BizException("0000010", "订单号无效!");
-        }
+                           @RequestParam(value = "token", required = true) String token){
         UserAccountPojo userAccountPojo = getUserAccountPojo();
         if (userAccountPojo == null) {
             throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
@@ -128,7 +123,12 @@ public class OrdersController extends ZGKBaseController {
         paramMap.put("channel", "alipay_pc_direct");
         paramMap.put("orderNo", orderNo);
         paramMap.put("token", token);
-        Charge charge = getCharge(paramMap);
+        Charge charge;
+        try {
+            charge = getCharge(paramMap);
+        } catch (Exception e) {
+            throw new BizException(ERRORCODE.FAIL.getCode(), e.getMessage());
+        }
         String payResult = JSON.toJSONString(charge);
         LOGGER.info("====pay /orders/createOrder payResult: " + payResult);
         if (StringUtils.isNotBlank(payResult)) {
@@ -147,10 +147,6 @@ public class OrdersController extends ZGKBaseController {
     public void wxOrder(@RequestParam(value = "orderNo", required = true) String orderNo,
                         @RequestParam(value = "token", required = true) String token,
                         @RequestParam(value = "qrSize", required = false) String size, HttpServletResponse response) {
-        Orders order = (Orders) ordersService.findOne("orderNo", orderNo);
-        if (null == order) {
-            throw new BizException("0000010", "订单号无效!");
-        }
         int width = 200;
         int height = 200;
         if (null != size) {
@@ -165,12 +161,8 @@ public class OrdersController extends ZGKBaseController {
         }
         try {
             getQrCode(orderNo, token, response, width, height);
-        } catch (WriterException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (BizException e) {
+            throw new BizException(e.getErrorCode(), e.getMsg());
         }
     }
 
@@ -231,7 +223,7 @@ public class OrdersController extends ZGKBaseController {
         return Charge.create(chargeParams);
     }
 
-    private void getQrCode(String orderNo, String token, HttpServletResponse response, int width, int height) throws Exception {
+    private void getQrCode(String orderNo, String token, HttpServletResponse response, int width, int height) {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         Map params = new HashMap();
         params.put(EncodeHintType.CHARACTER_SET, "UTF-8");
@@ -239,14 +231,28 @@ public class OrdersController extends ZGKBaseController {
         paramMap.put("channel", "wx_pub_qr");
         paramMap.put("orderNo", orderNo);
         paramMap.put("token", token);
-        Charge charge = getCharge(paramMap);
+        Charge charge;
+        try {
+            charge = getCharge(paramMap);
+        } catch (Exception e) {
+            throw new BizException(ERRORCODE.FAIL.getCode(), e.getMessage());
+        }
         String strCharge = JSON.toJSONString(charge);
         JSONObject obj = JSON.parseObject(strCharge);
         String credential = (String) obj.get("credential");
         JSONObject credentialObj = JSON.parseObject(credential);
         String url = (String) credentialObj.get("wx_pub_qr");
-        BitMatrix bitMatrix = multiFormatWriter.encode(url, BarcodeFormat.QR_CODE, width, height, params);
-        MatrixToImageWriter.writeToStream(bitMatrix, MatrixToImageWriter.FORMAT, response.getOutputStream());
+        BitMatrix bitMatrix;
+        try {
+            bitMatrix = multiFormatWriter.encode(url, BarcodeFormat.QR_CODE, width, height, params);
+        } catch (WriterException e) {
+            throw new BizException(ERRORCODE.FAIL.getCode(), "生成二维码错误!");
+        }
+        try {
+            MatrixToImageWriter.writeToStream(bitMatrix, MatrixToImageWriter.FORMAT, response.getOutputStream());
+        } catch (IOException e) {
+            throw new BizException(ERRORCODE.FAIL.getCode(), "传输二维码错误!");
+        }
     }
 
     /**
@@ -402,5 +408,50 @@ public class OrdersController extends ZGKBaseController {
 
     private boolean isValideAreaId(Object countyId) {
         return null != countyId && !"00".equals(countyId) && String.valueOf(countyId).length() == 6;
+    }
+
+    /**
+     * 下订单时获取离用户最近的取货代理商信息
+     * @param token
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="getOrderInfo")
+    public Map<String, String> getOrderDetail(@RequestParam(value = "orderNo", required = true)String orderNo,
+                                              @RequestParam(value = "token", required = true)String token)
+    {
+        Orders order = getOrderByNo(orderNo);
+        String detail = order.getDetail();
+        JSONArray obj = JSON.parseArray(detail);
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("orderNo", orderNo);
+        BigDecimal amount = order.getAmount();
+        if(null != amount)
+        {
+            resultMap.put("amount", amount.toString());
+        }else
+        {
+            resultMap.put("amount", "未知");
+        }
+        resultMap.put("createTime", order.getCreateDate().toString());
+        resultMap.put("payStatus",order.getPayStatus().toString());
+        Object object = obj.get(0);
+        if(null != object)
+        {
+            JSONObject jsonObject = JSON.parseObject(object.toString());
+            resultMap.put("unitPrice", jsonObject.getString("unitPrice"));
+            resultMap.put("productNum", jsonObject.getString("productNum"));
+            resultMap.put("goodsAddress", jsonObject.getString("goodsAddress"));
+            resultMap.put("contactPhoneNumber", jsonObject.getString("contactPhoneNumber"));
+        }
+        return resultMap;
+    }
+
+    private Orders getOrderByNo(String orderNo) {
+        Orders order = (Orders) ordersService.findOne("orderNo", orderNo);
+        if (null == order) {
+            throw new BizException("0000010", "订单号无效!");
+        }
+        return order;
     }
 }
