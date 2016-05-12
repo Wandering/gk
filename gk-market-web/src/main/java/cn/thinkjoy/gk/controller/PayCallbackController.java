@@ -145,6 +145,7 @@ public class PayCallbackController extends ZGKBaseController {
                 if(order !=null&&order.getPayStatus()==0){
                     order.setPayStatus(1);
                     order.setStatus(1);
+                    order.setChannel("alipay_pc_direct");
                     order.setLastModDate(System.currentTimeMillis());
                     ordersService.update(order);
                 }
