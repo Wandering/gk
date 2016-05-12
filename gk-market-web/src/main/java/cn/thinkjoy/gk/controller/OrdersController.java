@@ -124,10 +124,12 @@ public class OrdersController extends ZGKBaseController {
         if (userAccountPojo == null) {
             throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
         }
+        String price = getPrice(orderNo);
         Map<String,String> paramMap = new HashMap<>();
         paramMap.put("channel", "alipay_pc_direct");
         paramMap.put("orderNo", orderNo);
         paramMap.put("token", token);
+        paramMap.put("amount", price);
         Charge charge;
         try {
             charge = getCharge(paramMap);
@@ -141,6 +143,11 @@ public class OrdersController extends ZGKBaseController {
         } else {
             throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
         }
+    }
+
+    private String getPrice(String orderNo) {
+        Orders order = getOrderByNo(orderNo);
+        return order.getAmount().multiply(new BigDecimal(100)).setScale(0 , BigDecimal.ROUND_HALF_EVEN).toString();
     }
 
     /**
@@ -209,7 +216,7 @@ public class OrdersController extends ZGKBaseController {
         Map<String, String> app = new HashMap<>();
         app.put("id", appid);
         chargeParams.put("order_no", paramMap.get("orderNo"));
-        chargeParams.put("amount", 1);
+        chargeParams.put("amount", paramMap.get("amount"));
         chargeParams.put("app", app);
         chargeParams.put("channel", channel);
         chargeParams.put("client_ip", IPUtil.getRemortIP(request));
@@ -232,10 +239,12 @@ public class OrdersController extends ZGKBaseController {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         Map params = new HashMap();
         params.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+        String price = getPrice(orderNo);
         Map<String,String> paramMap = new HashMap<>();
         paramMap.put("channel", "wx_pub_qr");
         paramMap.put("orderNo", orderNo);
         paramMap.put("token", token);
+        paramMap.put("amount", price);
         Charge charge;
         try {
             charge = getCharge(paramMap);
