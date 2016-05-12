@@ -118,7 +118,7 @@ public class OrdersController extends ZGKBaseController {
      */
     @RequestMapping(value = "aliOrderPay")
     @ResponseBody
-    public String aliOrder(@RequestParam(value = "orderNo", required = true) String orderNo,
+    public Charge aliOrder(@RequestParam(value = "orderNo", required = true) String orderNo,
                            @RequestParam(value = "token", required = true) String token){
         UserAccountPojo userAccountPojo = getUserAccountPojo();
         if (userAccountPojo == null) {
@@ -136,13 +136,7 @@ public class OrdersController extends ZGKBaseController {
         } catch (Exception e) {
             throw new BizException(ERRORCODE.FAIL.getCode(), e.getMessage());
         }
-        String payResult = JSON.toJSONString(charge);
-        LOGGER.info("====pay /orders/createOrder payResult: " + payResult);
-        if (StringUtils.isNotBlank(payResult)) {
-            return payResult;
-        } else {
-            throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
-        }
+        return charge;
     }
 
     private String getPrice(String orderNo) {
