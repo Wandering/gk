@@ -10,11 +10,13 @@ import cn.thinkjoy.gk.common.MatrixToImageWriter;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Department;
+import cn.thinkjoy.gk.domain.Product;
 import cn.thinkjoy.gk.query.OrdersQuery;
 import cn.thinkjoy.gk.domain.Orders;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IOrdersService;
+import cn.thinkjoy.gk.service.IProductService;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.IPUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
@@ -61,6 +63,9 @@ public class OrdersController extends ZGKBaseController {
 
     @Autowired
     private IUserAccountExService userAccountExService;
+
+    @Autowired
+    private IProductService productService;
     /**
      * 下订单
      *
@@ -443,6 +448,15 @@ public class OrdersController extends ZGKBaseController {
             resultMap.put("productNum", jsonObject.getString("productNum"));
             resultMap.put("goodsAddress", jsonObject.getString("goodsAddress"));
             resultMap.put("contactPhoneNumber", jsonObject.getString("contactPhoneNumber"));
+            String code = jsonObject.getString("productCode");
+            if(null != code)
+            {
+                Product product = (Product)productService.findOne("code", code);
+                if(null != product)
+                {
+                    resultMap.put("productName", product.getName());
+                }
+            }
         }
         return resultMap;
     }
