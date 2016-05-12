@@ -1,11 +1,14 @@
 package cn.thinkjoy.gk.controller;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.HttpClientUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Orders;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IOrdersService;
 import cn.thinkjoy.gk.util.RedisUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.Enumeration;
 import java.util.Map;
@@ -39,21 +43,32 @@ public class PayCallbackController extends ZGKBaseController {
     @RequestMapping(value = "payCallback", method = RequestMethod.POST)
     public String payCallback(HttpServletRequest request) {
         String returnUrl = "www.zhigaokao.cn";
-        Map<String, String> paramMap = Maps.newHashMap();
-        String prop;
-        Enumeration<String> names = request.getParameterNames();
-        while (names.hasMoreElements()) {
-            prop = names.nextElement();
-            paramMap.put(prop, request.getParameter(prop));
+        int contentLength = request.getContentLength();
+        if(contentLength<0){
+            throw new BizException(ERRORCODE.FAIL.getCode(), "回调参数为空!");
         }
-        try {
-            request.setCharacterEncoding("UTF-8");
-            if(!paramMap.isEmpty()) {
-                String orderNo = paramMap.get("out_trade_no");
+        byte buffer[] = new byte[contentLength];
+        for (int i = 0; i < contentLength;) {
+            int readlen = 0;
+            try {
+                readlen = request.getInputStream().read(buffer, i,
+                        contentLength - i);
+                if (readlen == -1) {
+                    break;
+                }
+                i += readlen;
+
+                String requestJson=new String(buffer,"UTF-8");
+                JSONObject object=   JSONObject.parseObject(requestJson);
+
+                Map<String,Object> callBackMap= (Map) ((Map)object.get("data")).get("object");
+                String orderNo = callBackMap.get("order_no").toString();
+                String channel = callBackMap.get("channel").toString();
                 Orders order =(Orders) ordersService.findOne("orderNo", orderNo);
                 if(order !=null&&order.getPayStatus()==0){
                     order.setPayStatus(1);
                     order.setStatus(1);
+                    order.setChannel(channel);
                     order.setLastModDate(System.currentTimeMillis());
                     ordersService.update(order);
                 }
@@ -87,9 +102,10 @@ public class PayCallbackController extends ZGKBaseController {
                     }
                     RedisUtil.getInstance().del(urlKey);
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            LOGGER.error("error",e);
+
         }
         return "redirect:http://"+ returnUrl;
     }
