@@ -36,7 +36,7 @@ public class PayCallbackController extends ZGKBaseController {
     //高考学堂注册接口
     private String gkxtActiveUrl = "http://xuetang.zhigaokao.cn/userapi/tovip?mobile=%s&duration=12&unit=month&levelId=1";
 
-    @RequestMapping(value = "payCallback", method = RequestMethod.GET)
+    @RequestMapping(value = "payCallback", method = RequestMethod.POST)
     public String payCallback(HttpServletRequest request) {
         String returnUrl = "www.zhigaokao.cn";
         Map<String, String> paramMap = Maps.newHashMap();
@@ -46,15 +46,10 @@ public class PayCallbackController extends ZGKBaseController {
             prop = names.nextElement();
             paramMap.put(prop, request.getParameter(prop));
         }
-
         try {
             request.setCharacterEncoding("UTF-8");
-
-
             if(!paramMap.isEmpty()) {
-
                 String orderNo = paramMap.get("out_trade_no");
-
                 Orders order =(Orders) ordersService.findOne("orderNo", orderNo);
                 if(order !=null&&order.getPayStatus()==0){
                     order.setPayStatus(1);
