@@ -149,35 +149,13 @@ public class PayCallbackController extends ZGKBaseController {
                     order.setLastModDate(System.currentTimeMillis());
                     ordersService.update(order);
                 }
-                String account = getUserAccountPojo().getAccount();
                 long userId = getUserAccountPojo().getId();
-                gkxtActiveUrl = String.format(gkxtActiveUrl, account);
-                String result = HttpClientUtil.getContents(gkxtActiveUrl);
-                //激活状态,0为未激活,1为激活
-                int status = 0;
-                if(result.indexOf("\"ret\":\"200\"")==-1)
-                {
-                    status = 0;
-                    LOGGER.error("帐号"+account+", 激活高考学堂会员失败.....");
-                }else
-                {
-                    status = 1;
-                    LOGGER.debug("帐号"+account+"激活高考学堂会员成功!");
-                }
                 String urlKey = "pay_return_url_"+userId;
                 //获取回调url
                 if(RedisUtil.getInstance().exists(urlKey))
                 {
                     returnUrl = String.valueOf(RedisUtil.getInstance().get(urlKey));
                     returnUrl = URLDecoder.decode(returnUrl, "UTF-8");
-                    if(returnUrl.indexOf("?")>0)
-                    {
-                        returnUrl += "&status="+status;
-                    }else
-                    {
-                        returnUrl += "?status="+status;
-                    }
-                    RedisUtil.getInstance().del(urlKey);
                 }
             }
         } catch (Exception e) {
