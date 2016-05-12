@@ -1,6 +1,5 @@
 package cn.thinkjoy.gk.controller;
 
-import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.HttpClientUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
@@ -10,13 +9,11 @@ import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
-import cn.thinkjoy.gk.service.ICityService;
-import cn.thinkjoy.gk.service.ICountyService;
+import cn.thinkjoy.gk.protocol.ModeUtil;
 import cn.thinkjoy.gk.service.IProvinceService;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.util.RedisUtil;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -286,7 +282,7 @@ public class RegisterController extends ZGKBaseController {
         boolean equals=false;
         String key = RedisConst.USER_CAPTCHA_KEY+account;
         if (RedisUtil.getInstance().get(key)==null){
-            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "验证码过期或不存在，请重新获取!");
+            ModeUtil.throwException(ERRORCODE.CHECK_SMSCODE_NOT_EXIST);
         }
         String cap=RedisUtil.getInstance().get(key).toString();
         if (captcha.equals(cap)){
@@ -305,11 +301,12 @@ public class RegisterController extends ZGKBaseController {
     @ResponseBody
     public String getRegisterCaptcha(String account)
     {
-        String key = RedisConst.USER_CAPTCHA_KEY+account;
-        if (RedisUtil.getInstance().get(key)==null){
-            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "验证码过期或不存在，请重新获取!");
+        String key = RedisConst.USER_CAPTCHA_KEY + account;
+        Object value = RedisUtil.getInstance().get(key);
+        if (value == null){
+            ModeUtil.throwException(ERRORCODE.CHECK_SMSCODE_NOT_EXIST);
         }
-        return RedisUtil.getInstance().get(key).toString();
+        return value.toString();
     }
 
 }

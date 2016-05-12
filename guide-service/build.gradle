@@ -1,7 +1,7 @@
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
-    compile group: "cn.thinkjoy.common", name: "thinkjoy-biz-common", version: "$thinkjoyCommonVersion", changing: true
+//    compile group: "cn.thinkjoy.common", name: "thinkjoy-biz-common", version: "$thinkjoyCommonVersion", changing: true
 
     compile project(':guide-domain')
 

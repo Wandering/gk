@@ -13,9 +13,9 @@ public class JedisCommonPool {
 	
 	static {
 		JedisPoolConfig config = new JedisPoolConfig();
-		config.setMaxActive(RedisPoolConst.MAX_ACTIVE);
+//		config.setMaxActive(RedisPoolConst.MAX_ACTIVE);
 		config.setMaxIdle(RedisPoolConst.MAX_IDLE);
-		config.setMaxWait(RedisPoolConst.MAX_WAIT);
+//		config.setMaxWait(RedisPoolConst.MAX_WAIT);
 		config.setTestOnBorrow(RedisPoolConst.TEST_ON_BORROW);
 		config.setTestOnReturn(RedisPoolConst.TEST_ON_RETURN);
 		jedisPool = new JedisPool(config, RedisPoolConst.HOST, RedisPoolConst.PORT, RedisPoolConst.TIME_OUT);
