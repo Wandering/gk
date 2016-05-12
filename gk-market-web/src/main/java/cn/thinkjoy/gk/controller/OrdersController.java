@@ -9,11 +9,13 @@ import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.MatrixToImageWriter;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.domain.Department;
 import cn.thinkjoy.gk.query.OrdersQuery;
 import cn.thinkjoy.gk.domain.Orders;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IOrdersService;
+import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.IPUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import com.alibaba.fastjson.JSON;
@@ -57,6 +59,8 @@ public class OrdersController extends ZGKBaseController {
     @Autowired
     private IOrdersService ordersService;
 
+    @Autowired
+    private IUserAccountExService userAccountExService;
     /**
      * 下订单
      *
@@ -93,7 +97,7 @@ public class OrdersController extends ZGKBaseController {
         Map<String, String> resultMap = new HashMap<>();
         try {
             resultMap.put("orderNo", order.getOrderNo());
-            resultMap.put("amount", order.getAmount().toString());
+            resultMap.put("amount", String.valueOf(order.getAmount().doubleValue()*100));
             ordersService.insert(order);
             LOGGER.info("create orders :" + orderNo);
             return resultMap;
@@ -227,7 +231,7 @@ public class OrdersController extends ZGKBaseController {
         return Charge.create(chargeParams);
     }
 
-    private void getQrCode(@RequestParam(value = "orderNo", required = true) String orderNo, @RequestParam(value = "token", required = true) String token, HttpServletResponse response, int width, int height) throws Exception {
+    private void getQrCode(String orderNo, String token, HttpServletResponse response, int width, int height) throws Exception {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         Map params = new HashMap();
         params.put(EncodeHintType.CHARACTER_SET, "UTF-8");
@@ -299,5 +303,104 @@ public class OrdersController extends ZGKBaseController {
                 pw.close();
             }
         }
+    }
+
+    /**
+     * 下订单时获取离用户最近的取货代理商信息
+     * @param token
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="getAgentInfo")
+    public Department getAgentInfo(@RequestParam(value = "token", required = true)String token)
+    {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("accountId", getUserAccountPojo().getId()+"");
+        Map<String, Object> userAccountMap =  userAccountExService.findUserInfo(paramMap);
+        if(null == userAccountMap)
+        {
+            throw new BizException("100001", "帐号ID错误!");
+        }
+        Object countyId = userAccountMap.get("countyId");
+        Object cityId = userAccountMap.get("cityId");
+        Object provinceId = userAccountMap.get("provinceId");
+        Department countyDepartment;
+        Department cityDepartment;
+        Department provinceDepartment;
+        Map<String, String> params = new HashMap<>();
+        if(isValideAreaId(countyId))
+        {
+            String countyIdStr = String.valueOf(countyId);
+            params.put("areaCode", countyIdStr);
+            countyDepartment =  userAccountExService.findDepartMent(params);
+            if(null != countyDepartment)
+            {
+                return fixReturnValue(countyDepartment);
+            }
+            params.put("areaCode", countyIdStr.substring(0,4));
+            cityDepartment =  userAccountExService.findDepartMent(params);
+            if(null != cityDepartment)
+            {
+                return fixReturnValue(cityDepartment);
+            }
+            params.put("areaCode", countyIdStr.substring(0,2));
+            provinceDepartment =  userAccountExService.findDepartMent(params);
+            if(null != provinceDepartment)
+            {
+                return fixReturnValue(provinceDepartment);
+            }
+            throw new BizException("100001", "未查找到相关代理商!");
+        }else if(isValideAreaId(cityId))
+        {
+            String cityIdStr = String.valueOf(cityId);
+            params.put("areaCode", cityIdStr.substring(0,4));
+            cityDepartment =  userAccountExService.findDepartMent(params);
+            if(null != cityDepartment)
+            {
+                return fixReturnValue(cityDepartment);
+            }
+            params.put("areaCode", cityIdStr.substring(0,2));
+            provinceDepartment =  userAccountExService.findDepartMent(params);
+            if(null != provinceDepartment)
+            {
+                return fixReturnValue(provinceDepartment);
+            }
+            throw new BizException("100001", "未查找到相关代理商!");
+        }else if(isValideAreaId(provinceId))
+        {
+            String provinceIdStr = String.valueOf(provinceId);
+            params.put("areaCode", provinceIdStr.substring(0,2));
+            provinceDepartment =  userAccountExService.findDepartMent(params);
+            if(null != provinceDepartment)
+            {
+                return fixReturnValue(provinceDepartment);
+            }
+            throw new BizException("100001", "未查找到相关代理商!");
+        }
+        throw new BizException("100001", "未查找到相关代理商,用户区域信息有误!");
+    }
+
+    private Department fixReturnValue(Department countyDepartment) {
+        countyDepartment.setCompanyCode(null);
+        countyDepartment.setDepartmentCode(null);
+        countyDepartment.setDepartmentPrincipal(null);
+        countyDepartment.setDescription(null);
+        countyDepartment.setParentCode(null);
+        countyDepartment.setSeqSort(null);
+        countyDepartment.setCreator(null);
+        countyDepartment.setRoleType(null);
+        countyDepartment.setCreateDate(null);
+        countyDepartment.setCreatorName(null);
+        countyDepartment.setLastModDate(null);
+        countyDepartment.setLastModifier(null);
+        countyDepartment.setLastModifierName(null);
+        countyDepartment.setStatus(null);
+        countyDepartment.setAreaCode(null);
+        countyDepartment.setDepartmentFax(null);
+        return countyDepartment;
+    }
+
+    private boolean isValideAreaId(Object countyId) {
+        return null != countyId && !"00".equals(countyId) && String.valueOf(countyId).length() == 6;
     }
 }

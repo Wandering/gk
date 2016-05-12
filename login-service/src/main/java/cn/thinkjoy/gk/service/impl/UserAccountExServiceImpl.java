@@ -205,4 +205,14 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         return userAccountExDAO.findOldUserAccountPojo(params);
     }
 
+    @Override
+    public Map<String, Object> findUserInfo(Map<String, String> paramMap) {
+        return userAccountExDAO.findUserInfo(paramMap);
+    }
+
+    @Override
+    public Department findDepartMent(Map<String, String> paramMap) {
+        return userAccountExDAO.findDepartMent(paramMap);
+    }
+
 }

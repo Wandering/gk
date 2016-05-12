@@ -84,4 +84,15 @@ public class ProductController extends ZGKBaseController {
         return product;
     }
 
+    /**
+     * 获取商品详情
+     * @return
+     */
+    @RequestMapping(value = "findAllProduct", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Product> findAllProduct() {
+        List<Product> productList = productService.findAll();
+        return productList;
+    }
+
 }
