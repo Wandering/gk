@@ -43,6 +43,17 @@ public class PayCallbackController extends ZGKBaseController {
 
     @RequestMapping(value = "payCallback", method = RequestMethod.POST)
     public String payCallback(HttpServletRequest request) {
+        String returnUrl = doCallBack(request);
+        return "redirect:http://"+ returnUrl;
+    }
+
+    @RequestMapping(value = "aLiPayCallback", method = RequestMethod.GET)
+    public String aLiPayCallback(HttpServletRequest request) {
+        String returnUrl = doCallBack(request);
+        return "redirect:http://"+ returnUrl;
+    }
+
+    private String doCallBack(HttpServletRequest request) {
         String returnUrl = "www.zhigaokao.cn";
         int contentLength = request.getContentLength();
         if(contentLength<0){
@@ -118,66 +129,7 @@ public class PayCallbackController extends ZGKBaseController {
             }
 
         }
-        return "redirect:http://"+ returnUrl;
+        return returnUrl;
     }
 
-
-    @RequestMapping(value = "aLiPayCallback", method = RequestMethod.GET)
-    public String aLiPayCallback(HttpServletRequest request) {
-        String returnUrl = "www.zhigaokao.cn";
-        Map<String, String> paramMap = Maps.newHashMap();
-        String prop;
-        Enumeration<String> names = request.getParameterNames();
-        while (names.hasMoreElements()) {
-            prop = names.nextElement();
-            paramMap.put(prop, request.getParameter(prop));
-        }
-
-        try {
-            request.setCharacterEncoding("UTF-8");
-            if(!paramMap.isEmpty()) {
-                String orderNo = paramMap.get("out_trade_no");
-                Orders order =(Orders) ordersService.findOne("orderNo", orderNo);
-                if(order !=null&&order.getPayStatus()==0){
-                    order.setPayStatus(1);
-                    order.setStatus(1);
-                    order.setLastModDate(System.currentTimeMillis());
-                    ordersService.update(order);
-                }
-                String account = getUserAccountPojo().getAccount();
-                long userId = getUserAccountPojo().getId();
-                gkxtActiveUrl = String.format(gkxtActiveUrl, account);
-                String result = HttpClientUtil.getContents(gkxtActiveUrl);
-                //激活状态,0为未激活,1为激活
-                int status = 0;
-                if(result.indexOf("\"ret\":\"200\"")==-1)
-                {
-                    status = 0;
-                    LOGGER.error("帐号"+account+", 激活高考学堂会员失败.....");
-                }else
-                {
-                    status = 1;
-                    LOGGER.debug("帐号"+account+"激活高考学堂会员成功!");
-                }
-                String urlKey = "pay_return_url_"+userId;
-                //获取回调url
-                if(RedisUtil.getInstance().exists(urlKey))
-                {
-                    returnUrl = String.valueOf(RedisUtil.getInstance().get(urlKey));
-                    returnUrl = URLDecoder.decode(returnUrl, "UTF-8");
-                    if(returnUrl.indexOf("?")>0)
-                    {
-                        returnUrl += "&status="+status;
-                    }else
-                    {
-                        returnUrl += "?status="+status;
-                    }
-                    RedisUtil.getInstance().del(urlKey);
-                }
-            }
-        } catch (Exception e) {
-            LOGGER.error("error",e);
-        }
-        return "redirect:http://"+ returnUrl;
-    }
 }
