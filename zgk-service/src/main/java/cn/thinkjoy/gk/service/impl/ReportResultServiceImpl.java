@@ -211,13 +211,15 @@ public class ReportResultServiceImpl implements IReportResultService {
             SelfReportUniversityView selfReportUniversityView = selfReportResultView.getSelfReportUniversityViewList();
             riskForecast.setUniversityId(Long.valueOf(selfReportUniversityView.getId()));
             riskForecast.setUniversityName(selfReportUniversityView.getName());
-            riskForecast.setPlanEnrolling(selfReportUniversityView.getEnrollingNumber());
             //专业
             List<SelfReportMajorView> selfReportMajorViews = selfReportResultView.getSelfReportUniversityViewList().getSelfReportMajorViewList();
             for (SelfReportMajorView selfReportMajorView : selfReportMajorViews) {
-                riskForecast.setMajorName(selfReportMajorView.getName());
-                riskForecast.setCreateTime(System.currentTimeMillis());
-                result = iRiskForecastDAO.insert(riskForecast);
+                if (!StringUtils.isBlank(selfReportMajorView.getName())) {
+                    riskForecast.setMajorName(selfReportMajorView.getName());
+                    riskForecast.setPlanEnrolling(selfReportMajorView.getPlanEnrolling());
+                    riskForecast.setCreateTime(System.currentTimeMillis());
+                    result = iRiskForecastDAO.insert(riskForecast);
+                }
             }
 
         }

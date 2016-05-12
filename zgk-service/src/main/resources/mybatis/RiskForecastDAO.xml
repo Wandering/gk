@@ -4,18 +4,15 @@
 <mapper namespace="cn.thinkjoy.gk.dao.IRiskForecastDAO">
     <insert id="insert" parameterType="cn.thinkjoy.gk.entity.RiskForecast">
         INSERT INTO zgk_risk_forecast (
-        id,
         university_id,
         university_name,
         major_name,
         plan_enrolling,
         create_time
         ) VALUES (
-        #{id},
         #{universityId},
         #{universityName},
         #{majorName},
-        #{universityName},
         #{planEnrolling},
         #{createTime}
         )
