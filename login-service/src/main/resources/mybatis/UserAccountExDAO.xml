@@ -165,5 +165,12 @@
         WHERE areaCode = #{areaCode}
         limit 0,1
     </select>
+
+    <select id="getOrderList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        select od.id,od.orderNo,od.amount,od.createDate,od.detail,od.payStatus
+        from zgk_orders od
+        where od.userId=#{userId} and od.`status`!=-1
+        order by od.createDate
+    </select>
 </mapper>
 

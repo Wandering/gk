@@ -30,7 +30,6 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.pingplusplus.Pingpp;
 import com.pingplusplus.model.Charge;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +65,9 @@ public class OrdersController extends ZGKBaseController {
 
     @Autowired
     private IProductService productService;
+
+    //订单过期时间间隔2小时
+    private final long expireDuration = 2 * 60 * 60 * 1000;
     /**
      * 下订单
      *
@@ -208,6 +210,7 @@ public class OrdersController extends ZGKBaseController {
     private Charge getCharge(Map<String,String> paramMap) throws Exception {
         Pingpp.apiKey = DynConfigClientFactory.getClient().getConfig("common", "apiKey");
         String appid = DynConfigClientFactory.getClient().getConfig("common", "appId");
+        String aliReturnUrl = DynConfigClientFactory.getClient().getConfig("common", "aliReturnUrl");
         Map<String, Object> chargeParams = new HashMap<>();
         String channel = paramMap.get("channel");
         Map<String, String> app = new HashMap<>();
@@ -263,62 +266,6 @@ public class OrdersController extends ZGKBaseController {
             MatrixToImageWriter.writeToStream(bitMatrix, MatrixToImageWriter.FORMAT, response.getOutputStream());
         } catch (IOException e) {
             throw new BizException(ERRORCODE.FAIL.getCode(), "传输二维码错误!");
-        }
-    }
-
-    /**
-     * 订单详情查询
-     *
-     * @return
-     */
-    @RequestMapping(value = "getOrderDetail", method = RequestMethod.GET)
-    public String getOrderDetail(HttpServletResponse response,
-                                 @RequestParam(value = "pageNo", required = false) Integer pageNo,
-                                 @RequestParam(value = "pageSize", required = false) Integer pageSize,
-                                 @RequestParam(value = "userAccount", required = false) String userAccount,
-                                 @RequestParam(value = "orderNo", required = false) String orderNo) {
-        Map<String, Object> paramMap = new HashMap<>();
-        if (null != pageNo && null != pageSize) {
-            paramMap.put("offset", pageNo * pageSize);
-        }
-        paramMap.put("rows", 10);
-        paramMap.put("userAccount", userAccount);
-        paramMap.put("orderNo", orderNo);
-        List<Map<String, String>> resultList = ordersService.queryOrderDetail(paramMap);
-        sendMessage(response, JSON.toJSONString(resultList), "Invoke method getOrderDetail failed!");
-        return null;
-    }
-
-    /**
-     * 各省订单销售总记录
-     *
-     * @param response
-     * @param paramMap
-     * @return
-     */
-    @RequestMapping(value = "getOrderStatisticsData", method = RequestMethod.GET)
-    public String getOrderStatisticsData(HttpServletResponse response, HashMap<String, Object> paramMap) {
-        List<Map<String, String>> resultList = ordersService.queryOrderStatisticsData(paramMap);
-        sendMessage(response, JSON.toJSONString(resultList), "Invoke method getOrderStatisticsData failed!");
-        return null;
-    }
-
-    private void sendMessage(HttpServletResponse response, String msg, String errorMsg) {
-        response.setContentType("text/plain");
-        response.setCharacterEncoding("UTF-8");
-        PrintWriter pw = null;
-        try {
-            pw = response.getWriter();
-            pw.write(msg);
-        } catch (Exception e) {
-            if (null != pw) {
-                pw.write("Error!");
-            }
-            LOGGER.error(errorMsg);
-        } finally {
-            if (null != pw) {
-                pw.close();
-            }
         }
     }
 
@@ -422,7 +369,7 @@ public class OrdersController extends ZGKBaseController {
     }
 
     /**
-     * 下订单时获取离用户最近的取货代理商信息
+     * 获取订单详情
      * @param token
      * @return
      */
@@ -436,6 +383,7 @@ public class OrdersController extends ZGKBaseController {
             throw new BizException("0000010", "订单号无效!");
         }
 
+        checkExpire(order);
         Map<String, String> resultMap = new HashMap<>();
         resultMap.put("orderNo", orderNo);
         BigDecimal amount = order.getAmount();
@@ -469,6 +417,54 @@ public class OrdersController extends ZGKBaseController {
             }
         }
         return resultMap;
+    }
+
+    /**
+     * 获取订单列表
+     * @param token
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="getOrderList")
+    public List<Map<String, Object>> getOrderList(@RequestParam(value = "token", required = true)String token)
+    {
+        long userId = getUserAccountPojo().getId();
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("userId", userId+"");
+        List<Map<String, Object>> orderList = userAccountExService.getOrderList(paramMap);
+        if(null != orderList && orderList.size()>0)
+        {
+            for (Map<String, Object> order: orderList) {
+                String detail = order.get("detail") + "";
+                JSONArray obj = JSON.parseArray(detail);
+                Object object = obj.get(0);
+                if(null != object)
+                {
+                    JSONObject jsonObject = JSON.parseObject(object.toString());
+                    order.put("unitPrice", jsonObject.getString("unitPrice"));
+                    order.put("productNum", jsonObject.getString("productNum"));
+                    order.remove("detail");
+                }
+                if("0".equals(order.get("payStatus")+""))
+                {
+                    String orderId = order.get("id") + "";
+                    Orders ord = (Orders) ordersService.findOne("id", orderId);
+                    checkExpire(ord);
+                    order.put("payStatus", ord.getPayStatus());
+                }
+            }
+        }
+        return orderList;
+    }
+
+    private void checkExpire(Orders order) {
+        long createDate = order.getCreateDate();
+        if("0".equals(order.getPayStatus()+"") && System.currentTimeMillis() -  createDate > expireDuration)
+        {
+            //订单过期
+            order.setPayStatus(2);
+            ordersService.update(order);
+        }
     }
 
 }

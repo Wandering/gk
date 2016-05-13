@@ -11,6 +11,7 @@ import cn.thinkjoy.gk.domain.Department;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.pojo.UserInfoPojo;
 
+import java.util.List;
 import java.util.Map;
 
 public interface IUserAccountExDAO {
@@ -26,4 +27,6 @@ public interface IUserAccountExDAO {
     Map<String,Object> findUserInfo(Map<String, String> paramMap);
 
     Department findDepartMent(Map<String, String> paramMap);
+
+    List<Map<String,Object>> getOrderList(Map<String, String> paramMap);
 }

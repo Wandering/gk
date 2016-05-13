@@ -30,6 +30,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -213,6 +214,11 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
     @Override
     public Department findDepartMent(Map<String, String> paramMap) {
         return userAccountExDAO.findDepartMent(paramMap);
+    }
+
+    @Override
+    public List<Map<String, Object>> getOrderList(Map<String, String> paramMap) {
+        return userAccountExDAO.getOrderList(paramMap);
     }
 
 }

@@ -15,6 +15,7 @@ import cn.thinkjoy.gk.pojo.UserInfoPojo;
 import com.google.zxing.WriterException;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 
@@ -45,4 +46,6 @@ public interface IUserAccountExService {
     Map<String,Object> findUserInfo(Map<String, String> paramMap);
 
     Department findDepartMent(Map<String, String> paramMap);
+
+    List<Map<String,Object>> getOrderList(Map<String, String> paramMap);
 }
