@@ -8,7 +8,6 @@ public class RedisConst {
 	 */
 	public static final String CAPTCHA_AUTH_TIME_KEY = "gk_captcha_auth_time_";
 
-
 	/**
 	 * 验证码
 	 */
