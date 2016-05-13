@@ -1045,12 +1045,12 @@ public class RedisUtil {
 		return s;
 	}
 
-	public long zadd(String key, Map<Double, String> scoreMembers) {
-		Jedis jedis = JedisCommonPool.getInstance().getJedis();
-		long s = jedis.zadd(key, scoreMembers);
-		JedisCommonPool.getInstance().returnJedis(jedis);
-		return s;
-	}
+//	public long zadd(String key, Map<Double, String> scoreMembers) {
+//		Jedis jedis = JedisCommonPool.getInstance().getJedis();
+//		long s = jedis.zadd(key, scoreMembers);
+//		JedisCommonPool.getInstance().returnJedis(jedis);
+//		return s;
+//	}
 
 	/**
 	 * 获取集合中元素的数量

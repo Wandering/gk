@@ -147,6 +147,18 @@ subprojects{
     dependencies{
         //都会依赖bizcommon
         compile group: "cn.thinkjoy.common", name: "thinkjoy-domain-common", version: "$thinkjoyCommonVersion", changing: true
+
+        compile group: "cn.thinkjoy.common", name: "thinkjoy-biz-common", version: "$thinkjoyCommonVersion", changing: true
+
+        // 智高考专有短信服务
+        compile ("cn.thinkjoy.sms:sms-api:$zgkSmsVersion"){
+            exclude group: 'cn.thinkjoy.common', module: 'thinkjoy-mu-common'
+            exclude group: 'org.springframework'
+        }
+        compile ("cn.thinkjoy.sms:sms-domain:$zgkSmsVersion"){
+            exclude group: 'cn.thinkjoy.common', module: 'thinkjoy-mu-common'
+            exclude group: 'org.springframework'
+        }
     }
 }
 
