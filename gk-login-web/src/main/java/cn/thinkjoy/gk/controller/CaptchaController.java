@@ -78,20 +78,22 @@ public class CaptchaController extends ZGKBaseController {
 
         String randomString = CaptchaUtil.getRandomNumString(6);
 
-        cn.thinkjoy.push.domain.sms.SMSCheckCode smsCheckCode = new cn.thinkjoy.push.domain.sms.SMSCheckCode();
-        smsCheckCode.setPhone(account);
-        smsCheckCode.setBizTarget(CaptchaConst.CAPTCHA_TARGET);
-        smsCheckCode.setCheckCode(randomString);
+        // 先用zgk短信渠道发送
+        SMSCheckCode zgkSmsCheckCode = new SMSCheckCode();
+        zgkSmsCheckCode.setPhone(account);
+        zgkSmsCheckCode.setCheckCode(randomString);
+        zgkSmsCheckCode.setBizTarget(CaptchaConst.CAPTCHA_TARGET);
 
-        boolean smsResult = smsService.sendSMS(smsCheckCode,false);
+        boolean smsResult = zgkSmsService.sendSMS(zgkSmsCheckCode,false);
 
         if(!smsResult) {
-            // 发送失败切换至zgk短信渠道
-            SMSCheckCode zgkSmsCheckCode = new SMSCheckCode();
-            zgkSmsCheckCode.setPhone(account);
-            zgkSmsCheckCode.setBizTarget(CaptchaConst.CAPTCHA_TARGET);
-            zgkSmsCheckCode.setCheckCode(randomString);
-            smsResult = zgkSmsService.sendSMS(zgkSmsCheckCode,false);
+            // 发送失败切换至原有短信渠道
+            cn.thinkjoy.push.domain.sms.SMSCheckCode smsCheckCode = new cn.thinkjoy.push.domain.sms.SMSCheckCode(
+                    account,
+                    randomString,
+                    CaptchaConst.CAPTCHA_TARGET);
+
+            smsResult = smsService.sendSMS(smsCheckCode,false);
         }
 
         if(smsResult){
