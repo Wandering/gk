@@ -39,7 +39,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -225,7 +224,7 @@ public class OrdersController extends ZGKBaseController {
         chargeParams.put("currency", "cny");
         if ("alipay_pc_direct".equals(channel)) {
             Map<String, Object> extraMap = new HashMap<>();
-            extraMap.put("success_url", "http://dev.service.zhigaokao.cn/aLiPayCallback.do?token="+paramMap.get("token"));
+            extraMap.put("success_url", aliReturnUrl+"?token="+paramMap.get("token"));
             chargeParams.put("extra", extraMap);
         } else if ("wx_pub_qr".equals(channel)) {
             Map<String, Object> extraMap = new HashMap<>();
@@ -443,14 +442,27 @@ public class OrdersController extends ZGKBaseController {
                     JSONObject jsonObject = JSON.parseObject(object.toString());
                     order.put("unitPrice", jsonObject.getString("unitPrice"));
                     order.put("productNum", jsonObject.getString("productNum"));
+                    String code = jsonObject.getString("productCode");
+                    if(null != code)
+                    {
+                        Product product = (Product)productService.findOne("code", code);
+                        if(null != product)
+                        {
+                            order.put("productName", product.getName());
+                        }
+                    }
                     order.remove("detail");
                 }
                 if("0".equals(order.get("payStatus")+""))
                 {
-                    String orderId = order.get("id") + "";
-                    Orders ord = (Orders) ordersService.findOne("id", orderId);
-                    checkExpire(ord);
-                    order.put("payStatus", ord.getPayStatus());
+                    String orderId = order.get("orderNo") + "";
+                    Orders ord = (Orders) ordersService.findOne("orderNo", orderId);
+                    if(null != ord)
+                    {
+                        checkExpire(ord);
+                        order.put("payStatus", ord.getPayStatus());
+                    }
+
                 }
             }
         }
@@ -465,6 +477,34 @@ public class OrdersController extends ZGKBaseController {
             order.setPayStatus(2);
             ordersService.update(order);
         }
+    }
+
+    /**
+     * 获取订单列表
+     * @param token
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="removeOrder")
+    public boolean removeOrder(@RequestParam(value = "token", required = true)String token,
+                                                 @RequestParam(value = "orderNo", required = true)String orderNo)
+    {
+        boolean result;
+        Orders order = (Orders) ordersService.findOne("orderNo", orderNo);
+        if (null == order) {
+            throw new BizException("0000010", "订单号无效!");
+        }
+        long userId = getUserAccountPojo().getId();
+        if(userId == order.getUserId())
+        {
+            //逻辑删除订单
+            order.setStatus(-1);
+            ordersService.update(order);
+            result = true;
+        }else {
+            throw new BizException("0000010", "token无效");
+        }
+        return result;
     }
 
 }
