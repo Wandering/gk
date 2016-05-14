@@ -139,7 +139,7 @@ public class PayCallbackController extends ZGKBaseController {
                     order.setLastModDate(System.currentTimeMillis());
                     ordersService.update(order);
                 }
-                long userId = getUserAccountPojo().getId();
+                long userId = order.getUserId();
                 String urlKey = "pay_return_url_"+userId;
                 //获取回调url
                 if(RedisUtil.getInstance().exists(urlKey))
