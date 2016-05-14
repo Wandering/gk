@@ -170,7 +170,7 @@
         select od.orderNo,od.amount,od.createDate,od.detail,od.payStatus
         from zgk_orders od
         where od.userId=#{userId} and od.`status`!=-1
-        order by od.createDate
+        order by od.createDate desc
     </select>
 </mapper>
 
