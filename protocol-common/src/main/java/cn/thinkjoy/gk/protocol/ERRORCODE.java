@@ -63,6 +63,17 @@ public enum ERRORCODE {
 	VERIFY_CODE_ERROR("0100005", "验证码错误!"),
 	NOT_IS_VIP_ERROR("0100006", "升级成VIP用户才可使用该功能，快点升级VIP用户去吧！"),
 
+	PARAM_NOTEXIST("0600001", "查询参数不存在"),
+	IDISNOTNULL("0600002", "id不能为空"),
+	RESOURCEOCCUPY("0600003", "资源被占用"),
+	RESOURCEISNULL("0600005", "资源不存在"),
+	DELETEEXCEPTION("0600006", "删除异常"),
+	ADDEXCEPTION("0600004", "添加异常"),
+	HASPREDICT("0600007", "您今天已经预测过了，请明天再来！"),
+	ISLOGIN("0600008", "当前用户未登录！"),
+	SCORE_ERROR("0600009", "请输入正确的分数!"),
+	SCHOOL_NAME_ERROR("0600010", "请输入院校名称!"),
+
 
 	UPLOAD_ERROR_0("1100001", "非法上传!"),
 

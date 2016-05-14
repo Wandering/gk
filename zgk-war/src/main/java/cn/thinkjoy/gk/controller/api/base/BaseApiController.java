@@ -3,16 +3,12 @@ package cn.thinkjoy.gk.controller.api.base;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.common.service.IBaseService;
 import cn.thinkjoy.common.utils.SqlOrderEnum;
-import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.zgk.domain.BizData4Page;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;

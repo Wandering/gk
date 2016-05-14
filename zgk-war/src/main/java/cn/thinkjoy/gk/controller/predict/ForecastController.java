@@ -11,7 +11,6 @@ import cn.thinkjoy.common.domain.BizStatusEnum;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
 import cn.thinkjoy.common.utils.SqlOrderEnum;
-import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
 import cn.thinkjoy.gk.service.IForecastService;
 import cn.thinkjoy.gk.annotation.VipMethonTag;
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import sun.text.resources.FormatData;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

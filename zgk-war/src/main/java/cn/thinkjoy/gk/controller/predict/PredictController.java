@@ -4,19 +4,16 @@ import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.domain.BizStatusEnum;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.common.utils.SqlOrderEnum;
-import cn.thinkjoy.gk.common.BaseCommonController;
-import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.annotation.VipMethonTag;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
-import cn.thinkjoy.gk.domain.*;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.protocol.ModeUtil;
 import cn.thinkjoy.gk.service.IForecastService;
 import cn.thinkjoy.gk.service.IUserInfoExService;
 import cn.thinkjoy.gk.util.RedisUtil;
-import cn.thinkjoy.gk.util.UserContext;
 import cn.thinkjoy.zgk.remote.IUniversityService;
 import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -137,21 +134,21 @@ public class PredictController extends BaseApiController {
         //判断是否今天定位过
         boolean flag = userInfoExService.isPredictByUid(Long.parseLong(this.getAccoutId()));
         if(!flag){
-            throw new BizException(ERRORCODE.HASPREDICT.getCode(),ERRORCODE.HASPREDICT.getMessage());
+            ModeUtil.throwException(ERRORCODE.HASPREDICT);
         }
         //end
-        if(score<=0 || score > 999)
+        if(score <= 0 || score > 999)
         {
-            throw new BizException("error", "请输入正确的分数!");
+            ModeUtil.throwException(ERRORCODE.SCORE_ERROR);
         }
-        if(null==name || "".equals(name))
+        if(null == name || "".equals(name))
         {
-            throw new BizException("error", "请输入院校名称!");
+            ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
         }
         List<Map<String, String>> universityList = universityService.getUniversityByName(name);
-        if(universityList.size()==0)
+        if(universityList.size() == 0)
         {
-            throw new BizException("error", "请输入正确的院校名称!");
+            ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
         }
         String uName = "";
         String uId = "";
