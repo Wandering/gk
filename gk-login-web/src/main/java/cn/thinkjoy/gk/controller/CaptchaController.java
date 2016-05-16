@@ -52,7 +52,7 @@ public class CaptchaController extends ZGKBaseController {
 
         int count = userAccountExService.findUserAccountCountByPhone(
                 account,
-                getAreaId());
+                null);
 
         // type=0为注册，type=1找回密码
         if(type == 0 && count > 0) {
