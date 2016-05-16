@@ -3,11 +3,13 @@ package cn.thinkjoy.gk.controller.predict;
 import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.domain.BizStatusEnum;
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.common.utils.SqlOrderEnum;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.annotation.VipMethonTag;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
-import cn.thinkjoy.gk.domain.University;
+import cn.thinkjoy.gk.domain.*;
+import cn.thinkjoy.gk.domain.Forecast;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.protocol.ModeUtil;
 import cn.thinkjoy.gk.service.IForecastService;
@@ -15,6 +17,8 @@ import cn.thinkjoy.gk.service.IUniversityService;
 import cn.thinkjoy.gk.service.IUserInfoExService;
 import cn.thinkjoy.gk.util.RedisUtil;
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -37,7 +41,9 @@ public class PredictController extends BaseApiController {
     public int TOKEN_EXPIRE_TIME = 60 * 60;
     @Autowired
     private IForecastService forecastService;
-    // gaokao360-admin提供的 universityService 后续优化:全部用本工程内的 universityService 和 universityExService
+
+    // TODO gaokao360-admin提供的 universityService
+    // TODO 后续优化:全部用本工程内的 universityService 和 universityExService
     @Autowired
     private cn.thinkjoy.zgk.remote.IUniversityService gk360UniversityService;
 
@@ -468,7 +474,7 @@ public class PredictController extends BaseApiController {
     public Map<String, Object> predictResults(){
         Map<String,Object> map = new HashMap<>();
         map.put("userId",this.getAccoutId());
-        cn.thinkjoy.gk.domain.Forecast forecast=(cn.thinkjoy.gk.domain.Forecast)forecastService.queryOne(map, "lastModDate", SqlOrderEnum.DESC);
+        cn.thinkjoy.gk.domain.Forecast forecast = (cn.thinkjoy.gk.domain.Forecast) forecastService.queryOne(map, "lastModDate", SqlOrderEnum.DESC);
         if(forecast==null){
             throw new BizException(ERRORCODE.RESOURCEISNULL.getCode(),ERRORCODE.RESOURCEISNULL.getMessage());
         }
@@ -536,5 +542,36 @@ public class PredictController extends BaseApiController {
             redisRepository.set(key, JSON.toJSON(propertysMap), TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
         }
         return propertysMap;
+    }
+
+
+    @ApiDesc(value = "查询用户历史目标定位详情", owner = "杨国荣")
+    @RequestMapping(value = "/queryPredictHistory",method = RequestMethod.GET)
+    @ResponseBody
+    public List<Map<String,Object>> queryPredictHistory(){
+
+        List<Forecast> forecasts = forecastService.findList(
+                "userId",
+                getAccoutId(),
+                "createDate",
+                SqlOrderEnum.DESC);
+
+        List<Map<String,Object>> maps = Lists.newArrayList();
+
+        if(forecasts.size() == 0){
+            return maps;
+        }
+
+        Forecast forecastTemp = forecasts.get(0);
+
+        for(Forecast forecast : forecasts){
+            Map<String,Object> map = Maps.newHashMap();
+            map.put("requestTime",forecast.getCreateDate());
+            map.put("lowestScore",forecastTemp.getLowestScore());
+            map.put("userScore",forecast.getAchievement());
+            maps.add(map);
+        }
+
+        return maps;
     }
 }

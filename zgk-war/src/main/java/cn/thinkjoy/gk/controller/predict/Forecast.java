@@ -3,6 +3,7 @@ package cn.thinkjoy.gk.controller.predict;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.common.utils.SqlOrderEnum;
 import cn.thinkjoy.gk.common.IForecase;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IForecastService;
 import cn.thinkjoy.gk.service.IUserInfoExService;
 import cn.thinkjoy.gk.util.UserContext;
