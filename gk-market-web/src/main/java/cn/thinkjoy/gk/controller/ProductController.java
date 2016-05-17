@@ -8,11 +8,14 @@ package cn.thinkjoy.gk.controller;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.query.ProductQuery;
 import cn.thinkjoy.gk.domain.Product;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IProductExService;
 import cn.thinkjoy.gk.service.IProductService;
+import cn.thinkjoy.gk.service.IUserAccountExService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,20 +47,17 @@ public class ProductController extends ZGKBaseController {
     @Autowired
     private IProductService productService;
 
+    @Autowired
+    private IUserAccountExService userAccountExService;
+
     /**
      * 获取商品
      * @return
      */
     @RequestMapping(value = "findProductPage", method = RequestMethod.GET)
     @ResponseBody
+    @Deprecated
     public List<Product> findProductPage(ProductQuery productQuery) {
-
-//        response.setHeader("Access-Control-Allow-Origin","http://test.zhiless.com:8088");
-//        response.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
-//        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
-//        response.setHeader("Access-Control-Max-Age", "1800");
-//        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-//        response.addHeader("Access-Control-Allow-Credentials", "true");
 
         if(productQuery==null) {
             LOGGER.info("====product /findProductPage PARAM_ERROR ");
@@ -75,6 +75,7 @@ public class ProductController extends ZGKBaseController {
      */
     @RequestMapping(value = "findProduct", method = RequestMethod.GET)
     @ResponseBody
+    @Deprecated
     public Product findProduct(@RequestParam(value="code",required=false) Integer code) {
 
         if(code==null) {
@@ -93,26 +94,32 @@ public class ProductController extends ZGKBaseController {
      */
     @RequestMapping(value = "findAllProduct", method = RequestMethod.GET)
     @ResponseBody
-    public List<Product> findAllProduct(@RequestParam(value="userKey",required=true) String userKey) {
+    public List<Product> findAllProduct(@RequestParam(value="userId") String userId) {
+
         List<Product> productList = productService.findAll();
-        if(null != productList && productList.size() > 0)
-        {
-            long areaId = getAreaId();
-            for (Product product: productList) {
-                product.setPrice(null);
-                if("330000".equals(areaId+""))
+
+        long areaId = getAreaId();
+
+        if(StringUtils.isNotEmpty(userId)){
+            UserAccount account = userAccountExService.findUserAccountById(Long.valueOf(userId));
+            areaId = account.getAreaId();
+        }
+
+        for (Product product: productList) {
+            product.setPrice(null);
+            if("330000".equals(areaId+""))
+            {
+                if("10000001".equals(product.getCode()+""))
                 {
-                    if("10000001".equals(product.getCode()+""))
-                    {
-                        product.setMarketPrice("680.00");
-                    }
-                    if("10000002".equals(product.getCode()+""))
-                    {
-                        product.setMarketPrice("750.00");
-                    }
+                    product.setMarketPrice("680.00");
+                }
+                if("10000002".equals(product.getCode()+""))
+                {
+                    product.setMarketPrice("750.00");
                 }
             }
         }
+
         return productList;
     }
 }
