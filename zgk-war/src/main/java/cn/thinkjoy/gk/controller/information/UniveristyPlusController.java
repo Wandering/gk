@@ -6,6 +6,7 @@ import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.service.IUniversityInfoService;
 import cn.thinkjoy.gk.util.RedisUtil;
+import org.apache.xmlbeans.impl.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.misc.BASE64Decoder;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -29,6 +32,7 @@ public class UniveristyPlusController extends ZGKBaseController{
     private String universityEnrollingConditionsKey = "zgk_uec_key_%s_%s";
     private String majorEnrollingConditionsKey = "zgk_mec_key_%s_%s";
     private String majorPlanConditionsKey = "zgk_mpc_key_%s_%s";
+    private String universityEnrollingInfoKey = "zgk_uei_key_%s_%s_%s";
 
     /**
      * 院校录取信息条件查询
@@ -151,5 +155,35 @@ public class UniveristyPlusController extends ZGKBaseController{
         }
         repository.set(key, resultMap);
         return  resultMap;
+    }
+
+
+    /**
+     * 院校历年录取数,map中key为年份,value为"文科录取数:理科录取数:录取总数"拼成的字符串
+     * @param universityId
+     * @param userKey
+     * @param batch
+     * @return
+     */
+    @RequestMapping(value = "/getUniversityEnrollingInfo", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Map<String, Object>> getUniversityEnrollingInfo(
+            @RequestParam(value = "universityId",required = true) Long universityId,
+            @RequestParam(value = "userKey",required = true) String userKey,
+            @RequestParam(value = "batch",required = true) String batch) throws IOException {
+        RedisRepository repository = RedisUtil.getInstance();
+        String areaId = getAreaId().toString();
+        String key = String.format(universityEnrollingInfoKey, universityId, areaId, batch);
+        if(repository.exists(key))
+        {
+            return (List<Map<String, Object>>) repository.get(key);
+        }
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("universityId", String.valueOf(universityId));
+        paramMap.put("areaId", areaId);
+        paramMap.put("batch", batch);
+        List<Map<String,Object>> resultList = universityInfoService.getUniversityEnrollingInfo(paramMap);
+        repository.set(key, resultList);
+        return  resultList;
     }
 }
