@@ -75,9 +75,11 @@ public class MajoredController extends ZGKBaseController {
     @RequestMapping(value = "/getMajorOpenUniversityList",method = RequestMethod.GET)
     @ResponseBody
     public Object getMajorOpenUniversityList(@RequestParam(value = "majoredId",required = true)int majoredId,
+                                             @RequestParam(value = "majorType",required = true,defaultValue = "1")Integer majorType,
                                              @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
                                              @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
-        List<Map<String,Object>> getUniversityList=iremoteMajoredService.getMajorOpenUniversityList(majoredId,offset,rows,null,null);
+        List<Map<String,Object>> getUniversityList=iMajoredService.getMajorOpenUniversityList(majoredId,majorType,offset,rows);
+        int count=iMajoredService.getMajorOpenUniversityCount(majoredId,majorType);
 //        int count=iremoteUniversityService.getUniversityCount(condition);
         //如果用户已登录
         UserAccountPojo userAccountPojo=getUserAccountPojo();
@@ -100,7 +102,7 @@ public class MajoredController extends ZGKBaseController {
         }
         Map<String,Object> returnMap=Maps.newHashMap();
         returnMap.put("universityList", getUniversityList);
-//        returnMap.put("count", count);
+        returnMap.put("count", count);
         return returnMap;
     }
 
