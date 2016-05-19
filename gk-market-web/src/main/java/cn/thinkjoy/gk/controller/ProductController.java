@@ -15,6 +15,8 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IProductExService;
 import cn.thinkjoy.gk.service.IProductService;
 import cn.thinkjoy.gk.service.IUserAccountExService;
+import cn.thinkjoy.zgk.zgksystem.DeparmentApiService;
+import cn.thinkjoy.zgk.zgksystem.domain.DepartmentProductRelation;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +51,9 @@ public class ProductController extends ZGKBaseController {
 
     @Autowired
     private IUserAccountExService userAccountExService;
+
+    @Autowired
+    private DeparmentApiService deparmentApiService;
 
     /**
      * 获取商品
@@ -94,32 +99,10 @@ public class ProductController extends ZGKBaseController {
      */
     @RequestMapping(value = "findAllProduct", method = RequestMethod.GET)
     @ResponseBody
-    public List<Product> findAllProduct(@RequestParam(value="userId") String userId) {
+    public List<DepartmentProductRelation> findAllProduct() {
 
-        List<Product> productList = productService.findAll();
+        List<DepartmentProductRelation> relations = deparmentApiService.queryProductPriceByAreaId(getAreaId().toString());
 
-        long areaId = getAreaId();
-
-        if(StringUtils.isNotEmpty(userId)){
-            UserAccount account = userAccountExService.findUserAccountById(Long.valueOf(userId));
-            areaId = account.getAreaId();
-        }
-
-        for (Product product: productList) {
-            product.setPrice(null);
-            if("330000".equals(areaId+""))
-            {
-                if("10000001".equals(product.getCode()+""))
-                {
-                    product.setMarketPrice("680.00");
-                }
-                if("10000002".equals(product.getCode()+""))
-                {
-                    product.setMarketPrice("750.00");
-                }
-            }
-        }
-
-        return productList;
+        return relations;
     }
 }
