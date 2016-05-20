@@ -71,6 +71,10 @@ public class UniversityInfoView extends CreateBaseDomain<Long> implements Compar
      * 院校隶属
      */
     private String subjection;
+    /**
+     * 所在地
+     */
+    private String areaName;
     private Integer type;
     private String typeName;
     /**
@@ -219,6 +223,14 @@ public class UniversityInfoView extends CreateBaseDomain<Long> implements Compar
 
     public void setSubjection(String subjection) {
         this.subjection = subjection;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
     }
 
     public Integer getType() {

@@ -8,16 +8,21 @@
         university_name,
         major_name,
         plan_enrolling,
+        report_id,
         create_time
         ) VALUES (
         #{universityId},
         #{universityName},
         #{majorName},
         #{planEnrolling},
+        #{reportId},
         #{createTime}
         )
         <selectKey resultType="java.lang.Long" keyProperty="id">
             SELECT LAST_INSERT_ID() AS ID
         </selectKey>
     </insert>
+    <select id="selectRiskRankByUniversityId" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(1)+1 as rank from zgk_risk_forecast where score &gt;=#{score,jdbcType=INTEGER} and university_id=#{universityId,jdbcType=INTEGER}
+    </select>
 </mapper>

@@ -46,6 +46,10 @@ public class ReportResult extends CreateBaseDomain<Long> {
      */
     private String batch;
     /**
+     * 扩展属性
+     */
+    private String extendProper;
+    /**
      * 评测日期
      */
     private Long createTime;
@@ -130,6 +134,14 @@ public class ReportResult extends CreateBaseDomain<Long> {
 
     public void setBatch(String batch) {
         this.batch = batch;
+    }
+
+    public String getExtendProper() {
+        return extendProper;
+    }
+
+    public void setExtendProper(String extendProper) {
+        this.extendProper = extendProper;
     }
 
     public Long getCreateTime() {

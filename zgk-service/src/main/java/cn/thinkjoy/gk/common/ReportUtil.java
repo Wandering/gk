@@ -72,6 +72,41 @@ public class ReportUtil {
     public static final String CLASSIFY_TAG_KEY="CLASSIFY_TAG";
 
     /**
+     * 算法逻辑
+     */
+    public static final String LOGIC_TREND="LOGIC_TREND";
+
+    /**
+     * 线差---批次线差值
+     */
+    public static final String LINE_DIFF_CON_LINE_PLUS_VALUE="LINE_DIFF_CON_LINE_PLUS_VALUE";
+
+    /**
+     * 线差批次选择  跳转策略  需验证
+     */
+    public static final String LINE_DIFF_CHK_BATCH_VALID="LINE_DIFF_CHK_BATCH_VALID";
+    /**
+     * 线差批次选择  跳转策略  直接跳转策略
+     */
+    public static final String LINE_DIFF_CHK_BATCH_HREF="LINE_DIFF_CHK_BATCH_HREF";
+
+    /**
+     * 线差值范围
+     */
+    public static final String  LINE_DIFF_RANGE_KEY="LINE_DIFF";
+
+    /**
+     * 是否存在优先选项 --线差
+     */
+    public static final String SP_FIRST_OR_UN_FIRST_KEY="SP_FIRST_OR_UN_FIRST";
+
+    /**
+     *  是否存在优先选项 --位次
+     */
+    public static final String PRECEDENCE_SP_FIRST_OR_UN_FIRST_KEY="PRECEDENCE_SP_FIRST_OR_UN_FIRST";
+
+
+    /**
      * 规则值拆分符
      */
     public static final String ROLE_VALUE_SPLIT_SYMBOL="\\-";
@@ -91,6 +126,12 @@ public class ReportUtil {
      */
     public static final String PRECEDENCE_KEY_SYMBOL="w";
 
+    /**
+     * 一分一段表后缀
+     */
+    public static final String ONESCORE_KEY_SYMBOL="y";
+
+
 
 
     /**
@@ -108,6 +149,23 @@ public class ReportUtil {
             return provinceCode + ROLE_KEY_SPLIT_SYMBOL + categorie + ROLE_KEY_SPLIT_SYMBOL + batchArr[0];
     }
 
+    /**
+     * 获取一分一段表
+     * @param provinceCode
+     * @param categorie
+     * @return
+     */
+    public static String getOneScoreTableName(String provinceCode,Integer categorie) {
+        return provinceCode + ROLE_KEY_SPLIT_SYMBOL + categorie + ROLE_KEY_SPLIT_SYMBOL + ONESCORE_KEY_SYMBOL;
+    }
+
+    /**
+     * 线差值范围Key组装
+     * @return
+     */
+    public static String getLineDiffRangeKey(String procode,String batch) {
+        return procode.toUpperCase() + ReportUtil.ROLE_KEY_SPLIT_SYMBOL + ReportUtil.LINE_DIFF_RANGE_KEY + ReportUtil.ROLE_KEY_SPLIT_SYMBOL + batch;
+    }
     /**
      * 批次规则拆分
      * @param batchStr
@@ -175,8 +233,8 @@ public class ReportUtil {
      * 获取当前位次符合的排名规则区间下标
      * @return
      */
-    public static Integer getRankingRuleIndex(String rankingRuleStr,Integer precedence) {
-        if (precedence <= 0)
+    public static Integer getRankingRuleIndex(String rankingRuleStr,Integer value) {
+        if (value <= 0)
             return -1;
         String[] rankingRuleArr = rankingRuleStr.split(VOLUNTEER_KEY_SPLIT_SYMBOL);
         for (int i = 0; i < rankingRuleArr.length; i++) {
@@ -184,7 +242,7 @@ public class ReportUtil {
             String[] rankRangeArr = rankStr.split(ROLE_VALUE_SPLIT_SYMBOL);
             Integer rankStar = Integer.valueOf(rankRangeArr[0]);
             Integer rankEnd = Integer.valueOf(rankRangeArr[1]);
-            if (precedence >= rankStar && precedence <= rankEnd)
+            if (value >= rankStar && value <= rankEnd)
                 return i;
         }
         return -1;
@@ -263,6 +321,25 @@ public class ReportUtil {
         }
         return result;
     }
+
+    /**
+     * 根据逻辑标识 获取压线生 追加值
+     * @param logic
+     * @param provinceCode
+     * @return
+     */
+    public static String getLinePlusByLogic(Integer logic,String provinceCode) {
+        //默认位次及分数转位次
+        String key = provinceCode + ROLE_KEY_SPLIT_SYMBOL + CON_LINE_PLUS_VALUE_KEY;
+
+        ReportEnum.LogicTrend logicTrend = ReportEnum.LogicTrend.getLogic(logic);
+        //线差
+        if (logicTrend.equals(ReportEnum.LogicTrend.LINEDIFF)) {
+            key = provinceCode + ROLE_KEY_SPLIT_SYMBOL + LINE_DIFF_CON_LINE_PLUS_VALUE;
+        }
+        return key;
+    }
+
 
     public static void main(String[] arg) throws IOException {
         String s="[{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"268\",\"averageScore\":\"0\",\"enrollRate\":\"100%\",\"name\":\"上海金融学院\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"上海市\",\"type\":\"8\",\"typeName\":\"财经\"},\"sequence\":1},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"1415\",\"averageScore\":\"530\",\"enrollRate\":\"100%\",\"name\":\"西北政法大学\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"陕西省\",\"type\":\"9\",\"typeName\":\"政法\"},\"sequence\":2},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"837\",\"averageScore\":\"554\",\"enrollRate\":\"100%\",\"name\":\"湖南财政经济学院\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"湖南省\",\"type\":\"8\",\"typeName\":\"财经\"},\"sequence\":3},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"465\",\"averageScore\":\"0\",\"enrollRate\":\"100%\",\"name\":\"上海工程技术大学\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"上海市\",\"type\":\"2\",\"typeName\":\"工科\"},\"sequence\":4},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"555\",\"averageScore\":\"0\",\"enrollRate\":\"100%\",\"name\":\"三峡大学\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"湖北省\",\"type\":\"1\",\"typeName\":\"综合\"},\"sequence\":5},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"1633\",\"averageScore\":\"0\",\"enrollRate\":\"100%\",\"name\":\"河北经贸大学\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"河北省\",\"type\":\"8\",\"typeName\":\"财经\"},\"sequence\":6}]";

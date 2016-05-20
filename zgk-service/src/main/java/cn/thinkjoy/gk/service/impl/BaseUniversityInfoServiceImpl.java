@@ -63,6 +63,32 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
     }
 
     /**
+     * 院校清单List【线差法】---   规则见DB zgk_system_parmas
+     * @param map
+     * @return
+     */
+    @Override
+    public List<UniversityInfoView> selectUniversityInfoByLineDiff(Map map) {
+        LOGGER.info("=====院校清单--线差法 Start=====");
+        List<RankingRoleParmas> rankingRoleParmases= getRankingParmasByLineDiff(map);
+        LOGGER.info("动态参数集Size:"+rankingRoleParmases.size());//筛选参数集
+        List<Map> parmasMapList= getLineDiffParmasMapByRoleParmas(map, rankingRoleParmases);
+        LOGGER.info("db参数集:"+ parmasMapList.size());
+        //清单组合
+        List<UniversityInfoView> universityInfoViewsResult =getUniversityByRoleMap(parmasMapList);
+
+        Integer cate=Integer.valueOf(map.get("majorType").toString());
+        //set部分额外属性
+        List<UniversityInfoView> universityInfoViewList= setUniversityProper(map.get("province").toString(),cate,universityInfoViewsResult);
+
+        //按冲稳保垫排序
+        Collections.sort(universityInfoViewList);
+
+        LOGGER.info("=====院校清单--排名法 Start=====");
+
+        return universityInfoViewList;
+    }
+    /**
      * 院校清单List【排名法】---用户位次<8k走此规则|  按院校排名   规则见DB zgk_system_parmas
      * @param map
      * @return
@@ -146,6 +172,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         searchMap.put("whoFirst", firstValue);
         searchMap.put("majorType", cate);
         searchMap.put("isScore", 1);//标示为分数补充法
+        searchMap.put("chkBatch", batchStr);
         List<RankingRoleParmas> rankingRoleParmas = iRankingRoleParmasService.selectRankingRuleParmasList(searchMap);
 
         LOGGER.info("参数集总数:" + rankingRoleParmas.size());
@@ -154,53 +181,23 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
     }
 
     /**
-     * 是否与分数补充法规则匹配
+     *      是否与分数补充法规则匹配     线差
      * @param parmasView
      * @return
      */
     @Override
+    public boolean isScoreSupplementaryLindDiff(UniversityInfoParmasView parmasView) {
+       return iSystemParmasService.isScoreSupplementaryLindDiff(parmasView);
+    }
+
+        /**
+         * 是否与分数补充法规则匹配     位次
+         * @param parmasView
+         * @return
+         */
+    @Override
     public boolean isScoreSupplementary(UniversityInfoParmasView parmasView) {
-        boolean result = false;
-        //获取对应配置信息
-        SystemParmas systemParmas = iSystemParmasService.getThresoldModel(parmasView.getProvince(), ReportUtil.SCORE_ROLE_KEY, parmasView.getCategorie());
-        if (systemParmas == null)
-            return false;
-        Integer isScore = Integer.valueOf(systemParmas.getConfigValue());
-        //1:为开启分数补充法
-        if (isScore == 1) {
-
-            String conLineScore = iSystemParmasService.getControleLine(parmasView.getBatch(), parmasView.getCategorie(), parmasView.getProvince());
-
-            String[] conLineArr=conLineScore.split(ReportUtil.VOLUNTEER_KEY_SPLIT_SYMBOL);
-            String[] batArr = ReportUtil.getBatchArr(parmasView.getBatch());
-            if(conLineArr.length>1) {
-                Integer line = Integer.valueOf(conLineArr[Integer.valueOf(batArr[1]) - 1]);
-                if (parmasView.getScore() >= line) {
-                    SystemParmas conLinePlusScoreParmas = iSystemParmasService.getThresoldModel(parmasView.getProvince(), ReportUtil.CON_LINE_PLUS_VALUE_KEY, parmasView.getCategorie());
-                    if (conLinePlusScoreParmas == null)
-                        return false;
-                    //批次线追加分
-                    Integer plusScore = Integer.valueOf(conLinePlusScoreParmas.getConfigValue());
-                    //用户分数小于(批次线+批次线追加分)
-                    if (parmasView.getScore() <= Integer.valueOf(line) + plusScore) {
-                        result = true;
-                    }
-                }
-            }else {
-                //用户分数大于 批次线
-                if (parmasView.getScore() >= Integer.valueOf(conLineScore)) {
-                    SystemParmas conLinePlusScoreParmas = iSystemParmasService.getThresoldModel(parmasView.getProvince(), ReportUtil.CON_LINE_PLUS_VALUE_KEY, parmasView.getCategorie());
-                    if (conLinePlusScoreParmas == null)
-                        return false;
-                    //批次线追加分
-                    Integer plusScore = Integer.valueOf(conLinePlusScoreParmas.getConfigValue());
-                    //用户分数小于(批次线+批次线追加分)
-                    if (parmasView.getScore() <= Integer.valueOf(conLineScore) + plusScore)
-                        result = true;
-                }
-            }
-        }
-        return result;
+        return  iSystemParmasService.isScoreSupplementary(parmasView);
     }
     /**
      * 根据分数及控制线 计算线差
@@ -209,17 +206,133 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
      */
     @Override
     public Integer getLineDiff(String batch, Integer score, Integer cate, String provinceCode) {
-        String[] bch = batch.split(ReportUtil.VOLUNTEER_KEY_SPLIT_SYMBOL);
-        String controleLine = iSystemParmasService.getControleLine(bch[0], cate, provinceCode);
-        String[] conLineArr = controleLine.split(ReportUtil.VOLUNTEER_KEY_SPLIT_SYMBOL);
-        Integer line = 0;
-        if (conLineArr.length > 1) {
-            line = (score - Integer.valueOf(conLineArr[Integer.valueOf(bch[1])]));
-        } else
-            line = (score - Integer.valueOf(conLineArr[0]));
-
-        return line;
+        return  iSystemParmasService.getLineDiff(batch,score,cate,provinceCode);
     }
+    /*************************************************线差法*************************************************/
+    /**
+     * 根据线差信息获取线差法动态参数
+     * @param map
+     * @return
+     */
+    private List<RankingRoleParmas> getRankingParmasByLineDiff(Map map) {
+        LOGGER.info("=====根据线差信息获取线差法动态参数 Start=====");
+        String proCode = map.get("province").toString(), scoreDiff = map.get("scoreDiff").toString(), first = map.get("first").toString(), cate = map.get("majorType").toString(), score = map.get("score").toString(), chkBatch = map.get("batch").toString();
+
+        LOGGER.info("province:" + proCode);
+        LOGGER.info("scoreDiff:" + scoreDiff);
+        LOGGER.info("first:" + first);
+        LOGGER.info("cate:" + cate);
+
+        if (StringUtils.isBlank(proCode) && StringUtils.isBlank(scoreDiff)
+                && StringUtils.isBlank(first))
+            return null;
+
+
+        String batch = iSystemParmasService.getBatchByScore(Integer.valueOf(score), proCode, Integer.valueOf(cate));
+        if (batch == null)
+            return null;
+
+        Integer firstValue = Integer.valueOf(first);
+
+        Integer scoreBatch = Integer.valueOf(ReportUtil.getBatchArr(batch)[0]);
+
+        Integer rangeIndex = iSystemParmasService.getLineDiffRangeIndex(Integer.valueOf(scoreDiff), proCode, Integer.valueOf(cate), batch);
+
+        if (rangeIndex < 0)
+            return null;
+
+        Map searchMap = new HashMap();
+        searchMap.put("precedenceIndex", rangeIndex);
+        searchMap.put("provinceCode", proCode);
+        searchMap.put("whoFirst", firstValue);
+        searchMap.put("majorType", cate);
+        searchMap.put("isScore", 0);
+        searchMap.put("chkBatch", chkBatch);
+        searchMap.put("batch", batch);
+        List<RankingRoleParmas> rankingRoleParmas = iRankingRoleParmasService.selectLineDiffRuleParmasList(searchMap);
+
+        LOGGER.info("参数集总数:" + rankingRoleParmas.size());
+
+        LOGGER.info("=====根据线差信息获取线差法动态参数 End=====");
+        return rankingRoleParmas;
+    }
+
+    /**
+     * 根据动态参数生成DB Parmas集  --  线差
+     * @param rankingRoleParmases
+     * @return
+     */
+    private List<Map> getLineDiffParmasMapByRoleParmas(Map initMap,List<RankingRoleParmas> rankingRoleParmases) {
+        LOGGER.info("=====生成DB Parmas集 Start=====");
+        if (rankingRoleParmases == null)
+            return null;
+        LOGGER.info("RankingRoleParmas Size:" + rankingRoleParmases.size());
+        List<Map> parmasMaps = new ArrayList<>();
+
+        LOGGER.info("tableName:" + initMap.get("tableName"));
+        LOGGER.info("province:" + initMap.get("province"));
+        LOGGER.info("majorType:" + initMap.get("majorType"));
+        LOGGER.info("scoreDiff:" + initMap.get("scoreDiff"));
+
+        for (RankingRoleParmas rankingRoleParmas : rankingRoleParmases) {
+            Map map = new HashMap();
+            map.put("tableName", initMap.get("tableName"));
+            map.put("province", initMap.get("province"));//key
+            map.put("majorType", initMap.get("majorType"));
+            map.put("scoreDiff", initMap.get("scoreDiff"));
+            //院校排名规则
+            if (rankingRoleParmas.getWhoDim() == ReportEnum.RankDim.RANK.getValue()) {
+                LOGGER.info("-------走排名规则 start-------");
+                ArrayList<Integer> roleArr = ReportUtil.strSplit(rankingRoleParmas.getRankRuleParmas(), ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
+                map.put("rankStart", roleArr.get(0));
+                map.put("rankEnd", roleArr.get(1));
+                map.put("isRank", true);
+                LOGGER.info("rankStart:"+roleArr.get(0));
+                LOGGER.info("rankEnd:"+ roleArr.get(1));
+                LOGGER.info("-------走排名规则 end-------");
+            }
+            //院校录取率规则
+            if (rankingRoleParmas.getWhoDim() == ReportEnum.RankDim.ENROLLING.getValue()) {
+                LOGGER.info("-------走录取率规则 start-------");
+                ArrayList<Integer> roleArr = ReportUtil.strSplit(rankingRoleParmas.getEnrollingRuleParmas(), ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
+                map.put("enrollStart", roleArr.get(0));
+                map.put("enrollEnd", roleArr.get(1));
+
+                LOGGER.info("enrollStart:"+roleArr.get(0));
+                LOGGER.info("enrollEnd:"+roleArr.get(1));
+
+                if (rankingRoleParmas.getOrderParmas() == 0) {
+                    map.put("enrollOrder", "asc");     //录取率从小到大
+                    map.put("scoreDiffOrder", "desc"); //线差从大到小
+                } else {
+                    map.put("enrollOrder", "desc");  //录取率从大到小
+                    map.put("scoreDiffOrder", "asc");//线差从小到大
+                }
+
+                LOGGER.info("-------排序规则 start-------");
+                LOGGER.info("enrollOrder:"+map.get("enrollOrder"));
+                LOGGER.info("scoreDiffOrder:"+map.get("scoreDiffOrder"));
+                LOGGER.info("-------排序规则 end--------");
+
+                ArrayList<Integer> limitArr = ReportUtil.strSplit(rankingRoleParmas.getLimitParmas(), ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
+                map.put("begin", limitArr.get(0));
+                map.put("end", limitArr.get(1));
+                map.put("isEnrolling", true);
+
+                LOGGER.info("-------走录取率规则 end-------");
+            }
+            map.put("whoDim", rankingRoleParmas.getWhoDim());
+            map.put("isScore",initMap.get("isScore"));
+            parmasMaps.add(map);
+        }
+        LOGGER.info("共生成" + parmasMaps.size() + "组参数集");
+
+        LOGGER.info("=====生成DB Parmas集 Start=====");
+        return parmasMaps;
+    }
+
+    /*************************************************线差法*************************************************/
+
 
     /*************************************************排位法*************************************************/
 
@@ -231,13 +344,15 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
     private List<RankingRoleParmas> getRankingParmasByPrecedence(Map map) {
         LOGGER.info("=====根据位次信息获取排位法动态参数 Start=====");
         //省份 , 位次 , 专业or院校 ?
-        String proCode = map.get("province").toString(), precedence = map.get("precedence").toString(), first = map.get("first").toString();
+        String proCode = map.get("province").toString(), precedence = map.get("precedence").toString(), first = map.get("first").toString(), chkBatch = map.get("batch").toString();
         String cate = map.get("majorType").toString();
 
         LOGGER.info("province:" + proCode);
         LOGGER.info("precedence:" + precedence);
         LOGGER.info("first:" + first);
         LOGGER.info("cate:" + cate);
+        LOGGER.info("chkBatch:" + chkBatch);
+
 
 
         if (StringUtils.isBlank(proCode) && StringUtils.isBlank(precedence)
@@ -267,6 +382,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         searchMap.put("provinceCode", proCode);
         searchMap.put("whoFirst", firstValue);
         searchMap.put("majorType", cate);
+        searchMap.put("chkBatch", chkBatch);
         searchMap.put("isScore", 0);
         List<RankingRoleParmas> rankingRoleParmas = iRankingRoleParmasService.selectRankingRuleParmasList(searchMap);
 
@@ -277,7 +393,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
     }
 
     /**
-     * 根据动态参数生成DB Parmas集  --
+     * 根据动态参数生成DB Parmas集  --  位次
      * @param rankingRoleParmases
      * @return
      */
@@ -359,7 +475,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         List<UniversityInfoView> universityInfoViews = new ArrayList<>();
 
         for (Map map : maps) {
-            List<UniversityInfoView> universityInfoViewRankList = iUniversityInfoDao.selectUniversityInfoByRanking(map);
+            List<UniversityInfoView> universityInfoViewRankList = iUniversityInfoDao.selectUniversityInfoByLineDiff(map);
             universityInfoViews.addAll(universityInfoViewRankList);
         }
 

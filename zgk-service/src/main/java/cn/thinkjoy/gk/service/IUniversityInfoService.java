@@ -19,7 +19,19 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
      */
     public Integer selectPlanEnrolling(Map map);
 
+    /**
+     * 获取院校清单  根据接口版本号
+     * @param universityInfoParmasView
+     * @return
+     */
     public List<UniversityInfoView> selectUniversityInfoViewByVersion(UniversityInfoParmasView universityInfoParmasView);
+
+    /**
+     *  获取院校清单  根据逻辑走向
+     * @param universityInfoParmasView
+     * @return
+     */
+    public List<UniversityInfoView> selectUniversityInfoViewByLogic(UniversityInfoParmasView universityInfoParmasView);
 
     /**
      * 院校录取信息查询条件

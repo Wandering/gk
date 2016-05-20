@@ -27,6 +27,11 @@ public class RiskForecast implements Serializable {
     private Integer planEnrolling;
 
     /**
+     * 填报结果ID
+     */
+    private Long reportId;
+
+    /**
      * 创建时间
      */
     private Long createTime;
@@ -69,6 +74,14 @@ public class RiskForecast implements Serializable {
 
     public void setPlanEnrolling(Integer planEnrolling) {
         this.planEnrolling = planEnrolling;
+    }
+
+    public Long getReportId() {
+        return reportId;
+    }
+
+    public void setReportId(Long reportId) {
+        this.reportId = reportId;
     }
 
     public Long getCreateTime() {

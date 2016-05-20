@@ -49,6 +49,13 @@ public interface IBaseUniversityInfoService {
     public List<UniversityInfoView> selectUniversityInfoByRanking(Map map);
 
     /**
+     * 线差法
+     * @param map
+     * @return
+     */
+    public List<UniversityInfoView> selectUniversityInfoByLineDiff(Map map);
+
+    /**
      * 分数补充法
      * 1.判断用户输入分数
      * 2.如果在批次限制范围 则走此分数法
@@ -60,13 +67,27 @@ public interface IBaseUniversityInfoService {
     public List<UniversityInfoView> selectUniversityInfoByScore(Map map);
 
     /**
-     * 是否匹配分数补充法   --由此来判定算法的最终走向.
+     * 是否匹配分数补充法   --由此来判定算法的最终走向.   --位次
      * 1.判断用户输入分数
      * 2.是否匹配分数补充法  匹配 return true; 否则 result false
+     *
      * @param universityInfoParmasView
      * @return
      */
     public boolean isScoreSupplementary(UniversityInfoParmasView universityInfoParmasView);
+
+
+    /**
+     * 是否匹配分数补充法   --由此来判定算法的最终走向.   --线差
+     * 1.判断用户输入分数
+     * 2.是否匹配分数补充法  匹配 return true; 否则 result false
+     *
+     * @param universityInfoParmasView
+     * @return
+     */
+    public boolean isScoreSupplementaryLindDiff(UniversityInfoParmasView universityInfoParmasView);
+
+
 
 
 }

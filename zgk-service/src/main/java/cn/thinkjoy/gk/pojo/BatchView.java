@@ -28,6 +28,25 @@ public class BatchView implements Serializable,Comparable<BatchView> {
      */
     private Integer liPlus;
 
+    /**
+     * 是否推荐
+     */
+    private boolean isRecommend;
+    /**
+     * 是否符合
+     */
+    private boolean isConform;
+
+    /**
+     * 是否为压线生
+     */
+    private boolean isLine;
+
+    /**
+     * 是否存在优先筛选
+     */
+    private boolean isFirst;
+
     public String getBatch() {
         return batch;
     }
@@ -66,6 +85,38 @@ public class BatchView implements Serializable,Comparable<BatchView> {
 
     public void setLiPlus(Integer liPlus) {
         this.liPlus = liPlus;
+    }
+
+    public boolean isRecommend() {
+        return isRecommend;
+    }
+
+    public void setRecommend(boolean isRecommend) {
+        this.isRecommend = isRecommend;
+    }
+
+    public boolean isConform() {
+        return isConform;
+    }
+
+    public void setConform(boolean isConform) {
+        this.isConform = isConform;
+    }
+
+    public boolean isLine() {
+        return isLine;
+    }
+
+    public void setIsLine(boolean isLine) {
+        this.isLine = isLine;
+    }
+
+    public boolean isFirst() {
+        return isFirst;
+    }
+
+    public void setFirst(boolean isFirst) {
+        this.isFirst = isFirst;
     }
 
     @Override

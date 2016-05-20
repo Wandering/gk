@@ -52,6 +52,17 @@ public class RankingRoleParmas extends CreateBaseDomain<Long> implements Seriali
      */
     private byte isScore;
 
+    /**
+     * 策略批次
+     */
+    private String batch;
+
+    /**
+     * 选择批次
+     */
+    private String chkBatch;
+
+
     @Override
     public Long getId() {
         return id;
@@ -140,5 +151,21 @@ public class RankingRoleParmas extends CreateBaseDomain<Long> implements Seriali
 
     public void setIsScore(byte isScore) {
         this.isScore = isScore;
+    }
+
+    public String getBatch() {
+        return batch;
+    }
+
+    public void setBatch(String batch) {
+        this.batch = batch;
+    }
+
+    public String getChkBatch() {
+        return chkBatch;
+    }
+
+    public void setChkBatch(String chkBatch) {
+        this.chkBatch = chkBatch;
     }
 }

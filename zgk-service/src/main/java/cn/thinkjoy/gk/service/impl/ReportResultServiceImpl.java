@@ -218,6 +218,7 @@ public class ReportResultServiceImpl implements IReportResultService {
                     riskForecast.setMajorName(selfReportMajorView.getName());
                     riskForecast.setPlanEnrolling(selfReportMajorView.getPlanEnrolling());
                     riskForecast.setCreateTime(System.currentTimeMillis());
+                    riskForecast.setReportId(reportResult.getId());
                     result = iRiskForecastDAO.insert(riskForecast);
                 }
             }

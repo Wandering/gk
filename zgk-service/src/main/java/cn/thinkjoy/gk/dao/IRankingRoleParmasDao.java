@@ -23,4 +23,12 @@ public interface IRankingRoleParmasDao extends IBaseDAO<RankingRoleParmas> {
      * @return
      */
     public List<RankingRoleParmas> selectRankingRuleParmasList(Map map);
+
+
+    /**
+     * 获取线差法系统参数
+     * @param map
+     * @return
+     */
+    public List<RankingRoleParmas> selectLineDiffRuleParmasList(Map map);
 }

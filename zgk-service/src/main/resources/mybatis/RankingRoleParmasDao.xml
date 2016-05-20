@@ -14,11 +14,15 @@
         <result column="limit_parmas" property="limitParmas" jdbcType="VARCHAR" />
         <result column="order_parmas" property="orderParmas" jdbcType="TINYINT" />
         <result column="is_score" property="isScore" jdbcType="TINYINT" />
+        <result column="batch" property="batch" jdbcType="VARCHAR"/>
+        <result column="chk_batch" property="chkBatch" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
         id,precedence_index,who_first,who_dim,province_code,major_type,rank_rule_parmas,enrolling_rule_parmas,limit_parmas,order_parmas,is_score
     </sql>
-
+    <sql id="LineDiff_Column_List">
+        id,precedence_index,who_first,who_dim,province_code,major_type,rank_rule_parmas,enrolling_rule_parmas,limit_parmas,order_parmas,is_score,batch,chk_batch
+    </sql>
     <select id="selectModel" resultMap="BaseResultMap" parameterType="java.util.Map">
         SELECT <include refid="Base_Column_List" />  from zgk_ranking_role_parmas
         <where>
@@ -93,6 +97,60 @@
             <if test="isScore!=null">
                 and is_score=#{isScore,jdbcType=TINYINT}
             </if>
+            <if test="chkBatch!=null">
+                and chk_batch=#{chkBatch,jdbcType=VARCHAR}
+            </if>
         </where>
     </select>
+
+
+
+    <!--**************************************************线差**************************************************!-->
+
+    <select id="selectLineDiffRuleParmasList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT <include refid="LineDiff_Column_List" />  from zgk_ranking_role_parmas_line_diff
+        <where>
+            <if test="id!=null">
+                and id=#{id,jdbcType=BIGINT}
+            </if>
+            <if test="precedenceIndex!=null and precedence_index>=0">
+                and precedence_index=#{precedenceIndex,jdbcType=INTEGER}
+            </if>
+            <if test="whoFirst!=null">
+                and who_first=#{whoFirst,jdbcType=TINYINT}
+            </if>
+            <if test="whoDim!=null">
+                and  who_dim=#{whoDim,jdbcType=TINYINT}
+            </if>
+            <if test="provinceCode!=null">
+                and   province_code=#{provinceCode,jdbcType=VARCHAR}
+            </if>
+            <if test="rankRuleParmas!=null">
+                and  rank_rule_parmas=#{rankRuleParmas,jdbcType=VARCHAR}
+            </if>
+            <if test="enrollingRuleParmas!=null">
+                and   enrolling_rule_parmas=#{enrollingRuleParmas,jdbcType=VARCHAR}
+            </if>
+            <if test="limitParmas!=null">
+                and   limit_parmas=#{limitParmas,jdbcType=VARCHAR}
+            </if>
+            <if test="orderParmas!=null">
+                and   order_parmas=#{orderParmas,jdbcType=TINYINT}
+            </if>
+            <if test="majorType!=null">
+                and major_type=#{majorType,jdbcType=TINYINT}
+            </if>
+            <if test="isScore!=null">
+                and is_score=#{isScore,jdbcType=TINYINT}
+            </if>
+            <if test="batch!=null">
+                and batch=#{batch,jdbcType=VARCHAR}
+            </if>
+            <if test="chkBatch!=null">
+                and chk_batch=#{chkBatch,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <!--**************************************************线差**************************************************!-->
 </mapper>
