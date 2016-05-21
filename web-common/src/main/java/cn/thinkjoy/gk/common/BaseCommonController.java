@@ -2,7 +2,10 @@ package cn.thinkjoy.gk.common;
 
 import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.domain.Province;
+import cn.thinkjoy.gk.domain.UserInfo;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.protocol.ModeUtil;
 import cn.thinkjoy.gk.service.IProvinceService;
 import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.gk.util.UserContext;
@@ -60,9 +63,11 @@ public class BaseCommonController {
 	 * @return
      */
 	public String getAccoutId(){
-		Long uid=UserContext.getCurrentUser().getId();
-//		Long uid=17L;
-		return uid.toString();
+		UserAccountPojo pojo = UserContext.getCurrentUser();
+		if(pojo == null){
+			ModeUtil.throwException(ERRORCODE.USER_EXPIRED);
+		}
+		return pojo.toString();
 	}
 
 	/**

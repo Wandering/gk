@@ -10,5 +10,6 @@
 		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <description>zgk dubbo 服务消费配置 </description>
-       <dubbo:reference id="goodsCheck" interface="cn.thinkjoy.agents.IGoodsCheck" check="false" retries="0" timeout="600000" />
+    <dubbo:reference id="goodsCheck" interface="cn.thinkjoy.agents.IGoodsCheck" check="false" retries="0" timeout="600000" />
+    <dubbo:reference id="deparmentApiService" interface="cn.thinkjoy.zgk.zgksystem.DeparmentApiService" check="false"/>
 </beans>
