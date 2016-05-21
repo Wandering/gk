@@ -8,6 +8,8 @@
         university_name,
         major_name,
         plan_enrolling,
+        score,
+        user_id,
         report_id,
         create_time
         ) VALUES (
@@ -15,6 +17,8 @@
         #{universityName},
         #{majorName},
         #{planEnrolling},
+        #{score},
+        #{userId},
         #{reportId},
         #{createTime}
         )

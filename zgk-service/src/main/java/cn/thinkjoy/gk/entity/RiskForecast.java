@@ -27,6 +27,15 @@ public class RiskForecast implements Serializable {
     private Integer planEnrolling;
 
     /**
+     * 分数
+     */
+    private Integer score;
+
+    /**
+     * 用户ID
+     */
+    private Integer userId;
+    /**
      * 填报结果ID
      */
     private Long reportId;
@@ -74,6 +83,22 @@ public class RiskForecast implements Serializable {
 
     public void setPlanEnrolling(Integer planEnrolling) {
         this.planEnrolling = planEnrolling;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Long getReportId() {
