@@ -121,7 +121,7 @@
                 department_name = #{departmentName},
             </if>
             <if test="departmentPhone!=null">
-                departmentPhone = #{departmentPhone},
+                department_phone = #{departmentPhone},
             </if>
             <if test="goodsCount!=null">
                 goods_count = #{goodsCount},
