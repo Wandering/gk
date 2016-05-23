@@ -167,9 +167,17 @@
     </select>
 
     <select id="getOrderList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        select od.order_no as orderNo,od.product_price as amount,
-        od.create_date as createDate,od.status as status,od.product_type as productType
+        select
+        od.order_no as orderNo,
+        od.product_price as amount,
+        od.create_date as createDate,
+        od.status as payStatus,
+		od.goods_count as productNum,
+		od.product_type as productType,
+		pro.price as unitPrice,
+		pro.`name` as productName
         from zgk_order od
+        LEFT JOIN zgk_product pro on od.product_type=pro.type
         where od.user_id=#{userId} and od.state!='Y'
         order by od.create_date desc
     </select>

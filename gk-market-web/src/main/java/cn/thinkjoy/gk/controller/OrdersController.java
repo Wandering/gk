@@ -470,33 +470,14 @@ public class OrdersController extends ZGKBaseController {
         if(null != orderList && orderList.size()>0)
         {
             for (Map<String, Object> order: orderList) {
-                String detail = order.get("detail") + "";
-                JSONArray obj = JSON.parseArray(detail);
-                Object object = obj.get(0);
-                if(null != object)
-                {
-                    JSONObject jsonObject = JSON.parseObject(object.toString());
-                    order.put("unitPrice", jsonObject.getString("unitPrice"));
-                    order.put("productNum", jsonObject.getString("productNum"));
-                    String code = jsonObject.getString("productCode");
-                    if(null != code)
-                    {
-                        Product product = (Product)productService.findOne("code", code);
-                        if(null != product)
-                        {
-                            order.put("productName", product.getName());
-                        }
-                    }
-                    order.remove("detail");
-                }
-                if("0".equals(order.get("status")+""))
+                if("0".equals(order.get("payStatus")+""))
                 {
                     String orderNo = order.get("orderNo") + "";
                     Order ord = (Order) orderService.findOne("order_no", orderNo);
                     if(null != ord)
                     {
                         checkExpire(ord);
-                        order.put("status", ord.getStatus());
+                        order.put("payStatus", ord.getStatus());
                     }
                 }
             }
