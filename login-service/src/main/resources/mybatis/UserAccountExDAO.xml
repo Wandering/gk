@@ -167,10 +167,11 @@
     </select>
 
     <select id="getOrderList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        select od.orderNo,od.amount,od.createDate,od.detail,od.payStatus
-        from zgk_orders od
-        where od.userId=#{userId} and od.`status`!=-1
-        order by od.createDate desc
+        select od.order_no as orderNo,od.product_price as amount,
+        od.create_date as createDate,od.status as status,od.product_type as productType
+        from zgk_order od
+        where od.user_id=#{userId} and od.state!='Y'
+        order by od.create_date desc
     </select>
 </mapper>
 
