@@ -105,6 +105,9 @@
             <if test="updateDate!=null">
                 update_date = #{updateDate},
             </if>
+            <if test="state!=null">
+                state = #{state},
+            </if>
             <if test="goodsAddress!=null">
                 goods_address = #{goodsAddress},
             </if>

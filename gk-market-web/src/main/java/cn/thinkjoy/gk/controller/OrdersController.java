@@ -514,7 +514,7 @@ public class OrdersController extends ZGKBaseController {
         if(userId == order.getUserId())
         {
             //逻辑删除订单
-            order.setStatus(-1);
+            order.setState("Y");
             orderService.update(order);
             result = true;
         }else {
