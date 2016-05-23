@@ -12,7 +12,6 @@ import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.protocol.ModeUtil;
 import cn.thinkjoy.gk.service.ICardExService;
-import cn.thinkjoy.gk.service.ICardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
