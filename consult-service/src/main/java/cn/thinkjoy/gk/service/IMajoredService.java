@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.service;
 
+import cn.thinkjoy.gk.domain.University;
 import cn.thinkjoy.gk.pojo.MajorDetailPojo;
 import cn.thinkjoy.gk.pojo.MajoredDto;
 import cn.thinkjoy.gk.pojo.SubjectDto;
@@ -33,5 +34,9 @@ public interface IMajoredService {
      * @return
      */
     Map<String,String> getMajoredInfoByKeywords(String keywords);
+
+    List<Map<String,Object>> getMajorOpenUniversityList(int majorId,int majorType,int offset,int rows);
+
+    int getMajorOpenUniversityCount(int majorId,int majorType);
 
 }

@@ -33,4 +33,8 @@ public interface IMajoredDAO {
      * @return
      */
     List<MajorDetailPojo> getMajoredInfoByKeywords(@Param("keywords") String keywords);
+
+    List<Map<String,Object>> getMajorOpenUniversityList(@Param("condition")Map<String,Object> params);
+
+    int getMajorOpenUniversityCount(@Param("condition")Map<String,Object> params);
 }

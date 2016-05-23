@@ -27,7 +27,7 @@ public interface IUserAccountExService {
 
     UserAccountPojo findUserAccountPojoByPhone(String phone);
 
-    int findUserAccountCountByPhone(String phone, long areaId);
+    int findUserAccountCountByPhone(String phone, Long areaId);
 
     boolean insertUserAccount(UserAccount userAccount, Long sharerId, Integer sharerType) throws WriterException, IOException;
 

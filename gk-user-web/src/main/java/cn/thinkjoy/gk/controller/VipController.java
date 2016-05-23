@@ -10,6 +10,7 @@ import cn.thinkjoy.gk.domain.Card;
 import cn.thinkjoy.gk.pojo.CardPojo;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.protocol.ModeUtil;
 import cn.thinkjoy.gk.service.ICardExService;
 import cn.thinkjoy.gk.service.ICardService;
 import org.slf4j.Logger;
@@ -53,17 +54,15 @@ public class VipController extends ZGKBaseController implements Watched {
 
         Card card=cardExService.getVipCardInfo(map);
 
-        if(null==card ){
-            throw new BizException(ERRORCODE.VIP_CARD_NOT_INVALID.getCode(), ERRORCODE.VIP_CARD_NOT_INVALID.getMessage());
+        if(null == card){
+            ModeUtil.throwException(ERRORCODE.VIP_CARD_NOT_INVALID);
         }
-
-        if("1".equals(card.getStatus()+""))
-        {
-            throw new BizException(ERRORCODE.VIP_CARD_USED.getCode(), ERRORCODE.VIP_CARD_USED.getMessage());
+        if(card.getStatus() == 1){
+            ModeUtil.throwException(ERRORCODE.VIP_CARD_USED);
         }
 
         if(!card.getPassword().equals(cardPojo.getPassword())){
-            throw new BizException(ERRORCODE.VIP_CARD_NOT_INVALID.getCode(), ERRORCODE.VIP_CARD_NOT_INVALID.getMessage());
+            ModeUtil.throwException(ERRORCODE.VIP_CARD_NOT_INVALID);
         }
 
         try {
@@ -77,7 +76,7 @@ public class VipController extends ZGKBaseController implements Watched {
             String token = DESUtil.getEightByteMultypleStr(String.valueOf(userAccountPojo.getId()), userAccountPojo.getAccount());
             setUserAccountPojo(userAccountPojo, DESUtil.encrypt(token, DESUtil.key));
         } catch(Exception e) {
-            throw new BizException(ERRORCODE.VIP_UPGRADE_FAIL.getCode(), ERRORCODE.VIP_UPGRADE_FAIL.getMessage());
+            ModeUtil.throwException(ERRORCODE.VIP_UPGRADE_FAIL);
         }
         /**
          * 当所有操作执行完成之后通知该更新代理商后台了
@@ -88,7 +87,7 @@ public class VipController extends ZGKBaseController implements Watched {
         try {
             notifyWatchers(notify);
         }catch (Exception e){
-            logger.info("卡号异常防窜货代理商系统调用失败！");
+            logger.info("卡号异常防窜货代理商系统调用失败！",e);
         }
         return userAccountPojo;
     }
