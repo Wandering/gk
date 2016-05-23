@@ -75,7 +75,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         List<Map> parmasMapList= getLineDiffParmasMapByRoleParmas(map, rankingRoleParmases);
         LOGGER.info("db参数集:"+ parmasMapList.size());
         //清单组合
-        List<UniversityInfoView> universityInfoViewsResult =getUniversityByRoleMap(parmasMapList);
+        List<UniversityInfoView> universityInfoViewsResult =getUniversityByRoleMap(parmasMapList,ReportEnum.LogicTrend.LINEDIFF);
 
         Integer cate=Integer.valueOf(map.get("majorType").toString());
         //set部分额外属性
@@ -103,7 +103,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         List<Map> parmasMapList=getParmasMapByRoleParmas(map, rankingRoleParmases);
         LOGGER.info("db参数集:"+ parmasMapList.size());
         //清单组合
-        List<UniversityInfoView> universityInfoViewsResult =getUniversityByRoleMap(parmasMapList);
+        List<UniversityInfoView> universityInfoViewsResult =getUniversityByRoleMap(parmasMapList,ReportEnum.LogicTrend.PRECEDENCE);
 
         Integer cate=Integer.valueOf(map.get("majorType").toString());
 
@@ -130,8 +130,9 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         //筛选参数集
         List<Map> parmasMapList=getParmasMapByRoleParmas(map, rankingRoleParmases);
         LOGGER.info("db参数集:"+ parmasMapList.size());
+
         //清单组合
-        List<UniversityInfoView> universityInfoViewsResult =getUniversityByRoleMap(parmasMapList);
+        List<UniversityInfoView> universityInfoViewsResult =getUniversityByRoleMap(parmasMapList,ReportEnum.LogicTrend.PRECEDENCE);
         Integer cate=Integer.valueOf(map.get("majorType").toString());
 
         //set部分额外属性
@@ -471,11 +472,19 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
      * @param maps
      * @return
      */
-    private List<UniversityInfoView>   getUniversityByRoleMap(List<Map> maps) {
+    private List<UniversityInfoView>   getUniversityByRoleMap(List<Map> maps,ReportEnum.LogicTrend logicTrend) {
         List<UniversityInfoView> universityInfoViews = new ArrayList<>();
 
+
         for (Map map : maps) {
-            List<UniversityInfoView> universityInfoViewRankList = iUniversityInfoDao.selectUniversityInfoByLineDiff(map);
+
+            List<UniversityInfoView> universityInfoViewRankList = new ArrayList<>();
+            if (logicTrend.equals(ReportEnum.LogicTrend.PRECEDENCE)) {
+                universityInfoViewRankList = iUniversityInfoDao.selectUniversityInfoByRanking(map);
+            } else
+                universityInfoViewRankList = iUniversityInfoDao.selectUniversityInfoByLineDiff(map);
+
+
             universityInfoViews.addAll(universityInfoViewRankList);
         }
 

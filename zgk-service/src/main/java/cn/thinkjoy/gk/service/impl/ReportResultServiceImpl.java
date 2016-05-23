@@ -191,6 +191,7 @@ public class ReportResultServiceImpl implements IReportResultService {
             userReportResultView.setProvinceCode(reportResult.getProvinceCode());
             userReportResultView.setScore(reportResult.getScore());
             userReportResultView.setUserId(reportResult.getUserId());
+            userReportResultView.setExtendProper(reportResult.getExtendProper());
         }
         return userReportResultView;
     }
@@ -261,6 +262,7 @@ public class ReportResultServiceImpl implements IReportResultService {
         reportResultView.setReasonable(reportResult.isReasonable());
         reportResultView.setScore(reportResult.getScore());
         reportResultView.setReportResultJson(reportResult.getReportResultJson());
+        reportResultView.setExtendProper(reportResult.getExtendProper());
         return reportResultView;
     }
 

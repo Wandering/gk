@@ -38,6 +38,11 @@ public class UserReportResultView  implements Serializable {
      */
     private Integer score;
 
+    /**
+     * 扩展字段
+     */
+    private String extendProper;
+
 
     public Integer getUserId() {
         return userId;
@@ -93,5 +98,13 @@ public class UserReportResultView  implements Serializable {
 
     public void setScore(Integer score) {
         this.score = score;
+    }
+
+    public String getExtendProper() {
+        return extendProper;
+    }
+
+    public void setExtendProper(String extendProper) {
+        this.extendProper = extendProper;
     }
 }
