@@ -5,7 +5,6 @@ import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Order;
 import cn.thinkjoy.gk.domain.OrderStatements;
-import cn.thinkjoy.gk.domain.Orders;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IOrderService;
 import cn.thinkjoy.gk.service.IOrderStatementsService;
@@ -80,28 +79,27 @@ public class PayCallbackController extends ZGKBaseController {
                 {
                     status=1;
                     LOGGER.debug("流水号:"+statementNo+"支付成功!支付金额为"+price.toString());
+                    OrderStatements orderStatement =(OrderStatements) orderStatementService.findOne("statement_no", statementNo);
+                    if(!"1".equals(orderStatement.getStatus() + ""))
+                    {
+                        orderStatement.setStatus(1);
+                        orderStatement.setCallBackJson(requestJson);
+                        orderStatementService.update(orderStatement);
+                        LOGGER.debug("流水号:"+statementNo+"状态跟新成功!");
+                    }
+                    String orderNo = orderStatement.getOrderNo();
+                    Order order = (Order) orderService.findOne("order_no", orderNo);
+                    if(order !=null&&order.getStatus()==0){
+                        order.setStatus(status);
+                        order.setChannel(channel);
+                        orderService.update(order);
+                        LOGGER.debug("订单号:"+orderNo+"状态跟新成功!");
+                    }
                     response.setStatus(200);
                 }else if ("refund.succeeded".equals(result)) {
                     response.setStatus(200);
                 } else {
                     response.setStatus(500);
-                }
-
-                OrderStatements orderStatement =(OrderStatements) orderStatementService.findOne("statement_no", statementNo);
-                if(!"1".equals(orderStatement.getStatus() + ""))
-                {
-                    orderStatement.setStatus(1);
-                    orderStatement.setCallBackJson(object.toJSONString());
-                    orderStatementService.update(orderStatement);
-                    LOGGER.debug("流水号:"+statementNo+"状态跟新成功!");
-                }
-                String orderNo = orderStatement.getOrderNo();
-                Order order = (Order) orderService.findOne("order_no", orderNo);
-                if(order !=null&&order.getStatus()==0){
-                    order.setStatus(status);
-                    order.setChannel(channel);
-                    orderService.update(order);
-                    LOGGER.debug("订单号:"+orderNo+"状态跟新成功!");
                 }
 //                String account = getUserAccountPojo().getAccount();
 //                gkxtActiveUrl = String.format(gkxtActiveUrl, account);
