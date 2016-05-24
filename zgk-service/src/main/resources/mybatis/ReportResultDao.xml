@@ -118,6 +118,29 @@
             limit #{size,jdbcType=INTEGER}
         </if>
     </select>
+    <select id="selectHistoryList"  resultMap="BaseResultMap" parameterType="java.util.Map">
+        select<include refid="Base_Column_List" /> from zgk_report_result
+        <where>
+            <if test="userId!=null">
+                and user_id=#{userId}
+            </if>
+            <if test="provinceCode!=null">
+                and province_code=#{provinceCode,jdbcType=VARCHAR}
+            </if>
+            <if test="batch!=null">
+                and batch=#{batch,jdbcType=VARCHAR}
+            </if>
+            <if test="majorType!=null">
+                and major_type=#{majorType,jdbcType=INTEGER}
+            </if>
+        </where>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="size!=null">
+            limit #{size,jdbcType=INTEGER}
+        </if>
+    </select>
     <select id="selectRanking" resultType="java.lang.Integer" parameterType="java.util.Map">
          select (select count(Distinct(score)) from zgk_report_result where score>#{score,jdbcType=INTEGER})+1 as ranking
     </select>

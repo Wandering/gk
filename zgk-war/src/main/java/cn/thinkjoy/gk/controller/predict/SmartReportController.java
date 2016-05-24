@@ -54,7 +54,7 @@ public class SmartReportController extends ZGKBaseController {
      */
     @RequestMapping(value = "/exist",method = RequestMethod.GET)
     @ResponseBody
-    public Map<String,Object> getReportByUser() {
+    public Map<String,Object> getReportByUser(@RequestParam(value = "province") String province) {
         UserAccountPojo userAccountPojo = getUserAccountPojo();
         if (userAccountPojo == null) {
             throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
@@ -64,9 +64,15 @@ public class SmartReportController extends ZGKBaseController {
         if (vipStatus == null || vipStatus == 0) {
             throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(), ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
         }
-        UserReportResultView userReportResultView = iReportResultService.getUserReportResultView( Long.valueOf(userAccountPojo.getId()));
         Map resultMap = new HashMap();
-        resultMap.put("report", userReportResultView);
+
+//        if (province.equals("zj") || province.equals("sh")) {
+            List<UserReportResultView> userReportResultViews = iReportResultService.getUserReportResultList(Long.valueOf(userAccountPojo.getId()));
+            resultMap.put("reports", userReportResultViews);
+//        } else {
+//            UserReportResultView userReportResultView = iReportResultService.getUserReportResultView(Long.valueOf(userAccountPojo.getId()));
+//            resultMap.put("report", userReportResultView);
+//        }
         return resultMap;
     }
     /**
@@ -441,7 +447,7 @@ public class SmartReportController extends ZGKBaseController {
 
     /**
      * 智能报告保存
-     * @param reportResult
+     * @param
      * @return
      */
     @RequestMapping(value = "/test",method=RequestMethod.GET)

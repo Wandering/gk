@@ -52,6 +52,10 @@ public class ReportResultServiceImpl implements IReportResultService {
         return iReportResultDao.selectModelOne(map);
     }
 
+    @Override
+    public List<ReportResult> selectHistoryList(Map map) {
+        return iReportResultDao.selectHistoryList(map);
+    }
 
     /**
      * 评估结果输出
@@ -194,6 +198,32 @@ public class ReportResultServiceImpl implements IReportResultService {
             userReportResultView.setExtendProper(reportResult.getExtendProper());
         }
         return userReportResultView;
+    }
+
+    @Override
+    public List<UserReportResultView>  getUserReportResultList(Long userId) {
+        Map map = new HashMap();
+        map.put("userId", userId);
+        map.put("orderBy", "id");
+        map.put("sortBy", "desc");
+        List<ReportResult> reportResults = selectHistoryList(map);
+
+        List<UserReportResultView> userReportResultViews = new ArrayList<>();
+        for (ReportResult reportResult : reportResults) {
+            UserReportResultView userReportResultView = new UserReportResultView();
+            userReportResultView.setExistReport((reportResult == null ? false : true));
+            if (userReportResultView.isExistReport()) {
+                userReportResultView.setBatch(reportResult.getBatch());
+                userReportResultView.setMajorType(reportResult.getMajorType());
+                userReportResultView.setPrecedence(reportResult.getPrecedence());
+                userReportResultView.setProvinceCode(reportResult.getProvinceCode());
+                userReportResultView.setScore(reportResult.getScore());
+                userReportResultView.setUserId(reportResult.getUserId());
+                userReportResultView.setExtendProper(reportResult.getExtendProper());
+            }
+            userReportResultViews.add(userReportResultView);
+        }
+        return userReportResultViews;
     }
 
     /**
