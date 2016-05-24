@@ -54,7 +54,7 @@ public class SmartReportController extends ZGKBaseController {
      */
     @RequestMapping(value = "/exist",method = RequestMethod.GET)
     @ResponseBody
-    public Map<String,Object> getReportByUser(@RequestParam(value = "province") String province) {
+    public Map<String,Object> getReportByUser() {
         UserAccountPojo userAccountPojo = getUserAccountPojo();
         if (userAccountPojo == null) {
             throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
