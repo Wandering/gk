@@ -103,4 +103,15 @@ public class MajoredServiceImpl implements IMajoredService {
         params.put("educationLevel",majorType);
         return majoredDAO.getMajorOpenUniversityCount(params);
     }
+
+    @Override
+    public Map<String, Object> getJobOrientation(int majorId) {
+        Map<String,Object> params = new HashMap<>();
+        params.put("majorId",majorId);
+        String introduce=majoredDAO.getMajorIntroduce(params);
+        String employmentRate=majoredDAO.getMajorEmploymentRate(params);
+        params.put("introduce",introduce);
+        params.put("employmentRate",employmentRate);
+        return params;
+    }
 }

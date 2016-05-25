@@ -107,15 +107,15 @@ public class LoginController extends ZGKBaseController {
 				/**
 				 * 注册高考学堂
 				 */
-				String registResult = HttpClientUtil.getContents(gkxtRegistUrl);
-
-				if(!registResult.contains("\"ret\":\"200\""))
-				{
-					LOGGER.error("帐号"+account+", 注册高考学堂失败!");
-				}else
-				{
-					LOGGER.debug("帐号"+account+", 注册高考学堂成功!");
-				}
+//				String registResult = HttpClientUtil.getContents(gkxtRegistUrl);
+//
+//				if(!registResult.contains("\"ret\":\"200\""))
+//				{
+//					LOGGER.error("帐号"+account+", 注册高考学堂失败!");
+//				}else
+//				{
+//					LOGGER.debug("帐号"+account+", 注册高考学堂成功!");
+//				}
 			}
 		}catch(Exception e){
 			throw e;
