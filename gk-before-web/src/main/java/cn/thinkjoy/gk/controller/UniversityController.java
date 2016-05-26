@@ -377,7 +377,15 @@ public class UniversityController extends ZGKBaseController {
     @RequestMapping(value = "getRemoteProvinceList", method = RequestMethod.GET)
     @ResponseBody
     public List getProvinceList() {
-        return iremoteUniversityService.getProvinceName();
+        String userKey = request.getParameter("userKey");
+        String key = "zgk_university:" + userKey + ":getRemoteProvinceList";
+        Object object = RedisIsSaveUtil.existsKey(key);
+        if (object == null) {
+            List list=iremoteUniversityService.getProvinceName();
+            RedisUtil.getInstance().set(key, JSONArray.toJSON(list));
+            return list;
+        }
+        return JSONArray.parseArray(object.toString());
     }
 
     /**
@@ -389,7 +397,15 @@ public class UniversityController extends ZGKBaseController {
     @RequestMapping(value = "getRemoteDataDictList", method = RequestMethod.GET)
     @ResponseBody
     public List getDataDictList(@RequestParam(value = "type", required = true) String type) {
-        return iremoteUniversityService.getDataDictListByType(type);
+        String userKey = request.getParameter("userKey");
+        String key = "zgk_university:" + userKey + "_type:" + type + ":getRemoteDataDictList";
+        Object object = RedisIsSaveUtil.existsKey(key);
+        if (object == null) {
+            List list=iremoteUniversityService.getDataDictListByType(type);
+            RedisUtil.getInstance().set(key, JSONArray.toJSON(list));
+            return list;
+        }
+        return JSONArray.parseArray(object.toString());
     }
 
     /**
