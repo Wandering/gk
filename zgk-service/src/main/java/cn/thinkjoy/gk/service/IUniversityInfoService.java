@@ -47,7 +47,7 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
      * @param map
      * @return
      */
-    List<String> getUniversityMajors(Map<String, String> map);
+    List<Map<String, Object>> getUniversityMajors(Map<String, String> map);
 
     /**
      * 专业招生信息查询条件

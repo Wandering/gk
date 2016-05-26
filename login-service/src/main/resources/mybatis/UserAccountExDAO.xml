@@ -27,13 +27,15 @@
         market.qrCodeUrl,
         market.sharerId,
         market.sharerType,
-        market.agentLevel
+        market.agentLevel,
+        card.productType as vipType
         FROM zgk_user_account acc
         left join zgk_user_vip vip on acc.id = vip.id
         left join zgk_user_info info on acc.id = info.id
         left join zgk_user_exam exam on acc.id = exam.id
         left join zgk_province pro on pro.id = info.provinceId
         left join zgk_user_market market on acc.id=market.accountId
+        LEFT JOIN zgk_card card on card.userId=acc.id
         <where>
             acc.userType = 0
             <if test="token!=null">
@@ -167,10 +169,19 @@
     </select>
 
     <select id="getOrderList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        select od.orderNo,od.amount,od.createDate,od.detail,od.payStatus
-        from zgk_orders od
-        where od.userId=#{userId} and od.`status`!=-1
-        order by od.createDate desc
+        select
+        od.order_no as orderNo,
+        od.product_price as amount,
+        od.create_date as createDate,
+        od.status as payStatus,
+		od.goods_count as productNum,
+		od.product_type as productType,
+		pro.price as unitPrice,
+		pro.`name` as productName
+        from zgk_order od
+        LEFT JOIN zgk_product pro on od.product_type=pro.type
+        where od.user_id=#{userId} and od.state!='Y'
+        order by od.create_date desc
     </select>
 </mapper>
 

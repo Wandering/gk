@@ -33,9 +33,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -69,6 +66,8 @@ public class UniversityController extends ZGKBaseController {
 
     @Autowired
     private IUniversityInfoService universityInfoService;
+
+    private static final String[] zhongDianFeatures = {"国家品牌", "国家重点", "省部重点"};
     /**
      * 智高考院校信息列表
      *
@@ -189,52 +188,95 @@ public class UniversityController extends ZGKBaseController {
      * 获取开设专业列表
      *
      * @param universityId
-     * @param offset
-     * @param rows
      * @return
      */
     @RequestMapping(value = "getRemoteUniversityMajorListByUniversityId", method = RequestMethod.GET)
     @ResponseBody
-    public Map getUniversityMajorListByUniversityId(@RequestParam(value = "universityId", required = true) long universityId,
-                                                    @RequestParam(value = "majorFeature", required = true) String majorFeature,
-                                                    @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-                                                    @RequestParam(value = "rows", required = false, defaultValue = "10") Integer rows) throws UnsupportedEncodingException {
-        Map<String, Object> condition = Maps.newHashMap();
-        condition.put("groupOp", "and");
-        ConditionsUtil.setCondition(condition, "universityId", "=", String.valueOf(universityId));
-        Map<String, Object> selectorpage = Maps.newHashMap();
-        selectorpage.put("majorId", 1);
-        selectorpage.put("majorName", 1);
-        selectorpage.put("educationLevel", 1);
-        selectorpage.put("gainDegree", 1);
-//        selectorpage.put("majorRank",1);
-        selectorpage.put("salaryRank", 1);
-        selectorpage.put("jobRank", 1);
-
-        //此接口读取静态数据，不做缓存处理
-        List ll = iremoteUniversityService.queryPage("universityMajorExService", condition, offset, rows, "majorRank", "asc", selectorpage);
+    public Map<String, Object> getUniversityMajorListByUniversityId(@RequestParam(value = "universityId", required = true) long universityId)  {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("universityId", String.valueOf(universityId));
-        paramMap.put("majorFeature", majorFeature);
-        Map<String, Object> condition2 = Maps.newHashMap();
-        condition2.put("groupOp", "and");
-        ConditionsUtil.setCondition(condition2, "id", "=", String.valueOf(universityId));
-        Map<String, Object> selectorpage2 = Maps.newHashMap();
-        selectorpage2.put("featureMajor", 1);
-        List featureMajorList;
+        List<Map<String, Object>> featureMajorList;
         RedisRepository resUtil = RedisUtil.getInstance();
-        String resKey = "zgk_uy:" + universityId + "_ot:" + offset + "_rs:" + rows +"_mf"+majorFeature+ ":major";
+        String resKey = "zgk_uy:" + universityId + "_mf";
+        Map<String, Object> featureMajorMap = new LinkedHashMap<>();
         if (resUtil.exists(resKey)) {
-            featureMajorList = (List) JSONUtils.parse(resUtil.get(resKey).toString());
+            featureMajorMap = (Map<String, Object>) JSONUtils.parse(resUtil.get(resKey).toString());
         } else {
             featureMajorList = universityInfoService.getUniversityMajors(paramMap);
-            resUtil.set(resKey, JSONUtils.toJSONString(featureMajorList));
+            if(null != featureMajorList && featureMajorList.size() > 0)
+            {
+                setFeatureMap(featureMajorList, featureMajorMap);
+            }
+            resUtil.set(resKey, JSONUtils.toJSONString(featureMajorMap));
+            featureMajorMap = (Map<String, Object>) JSONUtils.parse(resUtil.get(resKey).toString());
         }
-        Map<String, List> returnMap = Maps.newHashMap();
-        returnMap.put("majorList", ll);
-        returnMap.put("featureMajorList", featureMajorList);
+        return featureMajorMap;
+    }
 
-        return returnMap;
+    private void setFeatureMap(List<Map<String, Object>> featureMajorList, Map<String, Object> featureMajorMap) {
+        for (Map<String, Object> map :featureMajorList) {
+            String feature = map.get("majorFeature") + "";
+            String educationLevel = map.get("educationLevel") + "";
+            map.remove("majorFeature");
+            map.remove("educationLevel");
+            if("1".equals(educationLevel))
+            {
+                List<Map<String, Object>> benKeList = (List<Map<String, Object>>) featureMajorMap.get("本科专业");
+                if(null == benKeList)
+                {
+                    benKeList = new ArrayList<>();
+                    featureMajorMap.put("本科专业" , benKeList);
+                }
+                benKeList.add(map);
+            }
+            if("2".equals(educationLevel))
+            {
+                List<Map<String, Object>> zhuanKeList = (List<Map<String, Object>>) featureMajorMap.get("高职(专科)专业");
+                if(null == zhuanKeList)
+                {
+                    zhuanKeList = new ArrayList<>();
+                    featureMajorMap.put("高职(专科)专业" , zhuanKeList);
+                }
+                zhuanKeList.add(map);
+            }
+            if(StringUtils.isNotEmpty(feature) && StringUtils.isNotBlank(feature))
+            {
+                if("特色专业".equals(feature))
+                {
+                    List<Map<String, Object>> teSheList = (List<Map<String, Object>>) featureMajorMap.get(feature);
+                    if(null == teSheList)
+                    {
+                        teSheList = new ArrayList<>();
+                        featureMajorMap.put(feature , teSheList);
+                    }
+                    teSheList.add(map);
+                }else
+                {
+                    setZhongDianMajor(featureMajorMap, map, feature);
+                }
+            }
+        }
+    }
+
+    private void setZhongDianMajor(Map<String, Object> featureMajorMap, Map<String, Object> map, String feature) {
+        Map<String, List<Map<String, Object>>> zhongDianMap = (Map<String, List<Map<String, Object>>>) featureMajorMap.get("重点专业");
+        if(null == zhongDianMap)
+        {
+            zhongDianMap = new HashMap<>();
+            featureMajorMap.put("重点专业", zhongDianMap);
+        }
+        for (String zhongDianFeatrue: zhongDianFeatures) {
+            if(feature.contains(zhongDianFeatrue))
+            {
+                List<Map<String, Object>> zhongDianList = zhongDianMap.get(zhongDianFeatrue);
+                if(null == zhongDianList)
+                {
+                    zhongDianList = new ArrayList<>();
+                    zhongDianMap.put(zhongDianFeatrue, zhongDianList);
+                }
+                zhongDianMap.get(zhongDianFeatrue).add(map);
+            }
+        }
     }
 
     /**

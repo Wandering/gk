@@ -180,8 +180,9 @@
         order by year desc, cast(majorType AS UNSIGNED) asc
     </select>
 
-    <select id="getUniversityMajors" parameterType="java.util.Map" resultType="java.lang.String">
-        select t.majorName
+    <select id="getUniversityMajors" parameterType="java.util.Map" resultType="java.util.Map">
+        select
+        t.majorId,t.majorName,t.majorFeature,t.educationLevel
         from zgk_university_major t
         <where>
             <if test="universityId!=null">
