@@ -97,6 +97,9 @@
             <if test="isScore!=null">
                 and is_score=#{isScore,jdbcType=TINYINT}
             </if>
+            <if test="batch!=null">
+                and batch=#{batch,jdbcType=VARCHAR}
+            </if>
             <if test="chkBatch!=null">
                 and chk_batch=#{chkBatch,jdbcType=VARCHAR}
             </if>

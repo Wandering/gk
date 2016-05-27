@@ -66,7 +66,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
         if (systemParmas == null)
             return false;
 
-        rangeIndex = getRankingRangeIndex(provinceCode, exValue, cate);
+        rangeIndex = getRankingRangeIndex(provinceCode, exValue, cate,batch);
 
         String[] firstArr = systemParmas.getConfigValue().split(ReportUtil.VOLUNTEER_KEY_SPLIT_SYMBOL);
 
@@ -101,6 +101,37 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
             if (batchLineArr.length > 1) {  // >1 A B类 <=1 正常
                 for (int x = 0; x < batchLineArr.length; x++) {
                     /***************************AB类后续处理**************************/
+                    Integer line = Integer.valueOf(batchLineArr[x]);
+
+                    String btc = (i + 1) + "-" + String.valueOf(x + 1);
+                    BatchView batchView = batchConfig(cate, btc, x, provinceCode, batchLine);
+
+                    boolean isFirst = !first ? getFirst(sap, provinceCode, btc, cate,logicTrend) : first;
+
+                    batchView.setFirst(first ? false : isFirst);
+
+                    first = isFirst;
+
+                    if (score >= line && line > 0) {
+                        batchView.setConform(true);
+                        if (i == flag) {
+                            batchView.setRecommend(true);
+                            isRecom = false;
+                        }
+                        //是否是压线生
+                        if (isLine(logicTrend, btc, cate, provinceCode, score)) {
+                            flag = (i + 1) == 2 ? 3 : (i + 1);  //三批特殊处理  0：一批 1：二批 3：高职高专 4：三批
+                            batchView.setIsLine(true);
+                            isRecom = false;
+                        } else if (isRecom) {
+                            batchView.setIsLine(false);
+                            batchView.setRecommend(true);
+                            isRecom = false;
+                        }
+                    }else
+                        batchView.setConform(false);
+
+                    batchViews.add(batchView);
                 }
             } else {
                 Integer btLine = Integer.valueOf(batchLine);
@@ -188,10 +219,13 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
 
             String[] conLineArr=conLineScore.split(ReportUtil.VOLUNTEER_KEY_SPLIT_SYMBOL);
             String[] batArr = ReportUtil.getBatchArr(parmasView.getBatch());
+
+             String conlineKey=ReportUtil.getExecKey(parmasView.getProvince(),ReportUtil.CON_LINE_PLUS_VALUE_KEY,parmasView.getBatch());
+
             if(conLineArr.length>1) {
                 Integer line = Integer.valueOf(conLineArr[Integer.valueOf(batArr[1]) - 1]);
                 if (parmasView.getScore() >= line) {
-                    SystemParmas conLinePlusScoreParmas = getThresoldModel(parmasView.getProvince(), ReportUtil.CON_LINE_PLUS_VALUE_KEY, parmasView.getCategorie());
+                    SystemParmas conLinePlusScoreParmas = getThresoldModel(parmasView.getProvince(), conlineKey, parmasView.getCategorie());
                     if (conLinePlusScoreParmas == null)
                         return false;
                     //批次线追加分
@@ -204,7 +238,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
             }else {
                 //用户分数大于 批次线
                 if (parmasView.getScore() >= Integer.valueOf(conLineScore)) {
-                    SystemParmas conLinePlusScoreParmas = getThresoldModel(parmasView.getProvince(), ReportUtil.CON_LINE_PLUS_VALUE_KEY, parmasView.getCategorie());
+                    SystemParmas conLinePlusScoreParmas = getThresoldModel(parmasView.getProvince(), conlineKey, parmasView.getCategorie());
                     if (conLinePlusScoreParmas == null)
                         return false;
                     //批次线追加分
@@ -427,10 +461,11 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
      * @return
      */
     @Override
-    public Integer getRankingRangeIndex(String proCode,Integer precedence,Integer majorType) {
+    public Integer getRankingRangeIndex(String proCode,Integer precedence,Integer majorType,String batch) {
         LOGGER.info("========获取排名规则区间下标 start=======");
         LOGGER.info("输入位次:" + precedence);
-        SystemParmas systemParmas = getThresoldModel(proCode, ReportUtil.VOLUNTEER_BATCH_PRECEDENCE_KEY,majorType);
+        String conlineKey=ReportUtil.getExecKey(proCode,ReportUtil.VOLUNTEER_BATCH_PRECEDENCE_KEY,batch);
+        SystemParmas systemParmas = getThresoldModel(proCode,conlineKey ,majorType);
         if (systemParmas == null)
             return -1;
         LOGGER.info("组装排名VALUE:" + systemParmas.getConfigValue());

@@ -155,8 +155,13 @@ public class ReportUtil {
      * @param categorie
      * @return
      */
-    public static String getOneScoreTableName(String provinceCode,Integer categorie) {
-        return provinceCode + ROLE_KEY_SPLIT_SYMBOL + categorie + ROLE_KEY_SPLIT_SYMBOL + ONESCORE_KEY_SYMBOL;
+    public static String getOneScoreTableName(String provinceCode,Integer categorie,String batch) {
+        if (IsDifference(provinceCode))
+            return provinceCode + ROLE_KEY_SPLIT_SYMBOL + categorie + ROLE_KEY_SPLIT_SYMBOL + batch + ROLE_KEY_SPLIT_SYMBOL + ONESCORE_KEY_SYMBOL;
+        else
+            return provinceCode + ROLE_KEY_SPLIT_SYMBOL + categorie + ROLE_KEY_SPLIT_SYMBOL + ONESCORE_KEY_SYMBOL;
+
+//        return ;
     }
 
     /**
@@ -340,6 +345,31 @@ public class ReportUtil {
         return key;
     }
 
+    /**
+     * 获取key 信息   用于处理省份差异化
+     * @param procode
+     * @param key
+     * @return
+     */
+    public static String getExecKey(String procode,String key,String batch) {
+        String resuKey = key;
+        if (IsDifference(procode)) {
+            resuKey = key + ROLE_KEY_SPLIT_SYMBOL + batch;
+        }
+        return resuKey;
+    }
+
+    /**
+     * 差异化城市
+     * @param procode
+     * @return
+     */
+    public static boolean IsDifference(String procode) {
+        if (procode.equals("zj") || procode.equals("sh"))
+            return true;
+
+        return false;
+    }
 
     public static void main(String[] arg) throws IOException {
         String s="[{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"268\",\"averageScore\":\"0\",\"enrollRate\":\"100%\",\"name\":\"上海金融学院\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"上海市\",\"type\":\"8\",\"typeName\":\"财经\"},\"sequence\":1},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"1415\",\"averageScore\":\"530\",\"enrollRate\":\"100%\",\"name\":\"西北政法大学\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"陕西省\",\"type\":\"9\",\"typeName\":\"政法\"},\"sequence\":2},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"837\",\"averageScore\":\"554\",\"enrollRate\":\"100%\",\"name\":\"湖南财政经济学院\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"湖南省\",\"type\":\"8\",\"typeName\":\"财经\"},\"sequence\":3},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"465\",\"averageScore\":\"0\",\"enrollRate\":\"100%\",\"name\":\"上海工程技术大学\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"上海市\",\"type\":\"2\",\"typeName\":\"工科\"},\"sequence\":4},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"555\",\"averageScore\":\"0\",\"enrollRate\":\"100%\",\"name\":\"三峡大学\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"湖北省\",\"type\":\"1\",\"typeName\":\"综合\"},\"sequence\":5},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"1633\",\"averageScore\":\"0\",\"enrollRate\":\"100%\",\"name\":\"河北经贸大学\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"河北省\",\"type\":\"8\",\"typeName\":\"财经\"},\"sequence\":6}]";

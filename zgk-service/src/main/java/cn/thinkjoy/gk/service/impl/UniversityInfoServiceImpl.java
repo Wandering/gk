@@ -120,7 +120,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         Integer score = parmasView.getScore();
 
         Map scoreMap = new HashMap();
-        scoreMap.put("tableName", ReportUtil.getOneScoreTableName(parmasView.getProvince(), parmasView.getCategorie()));
+        scoreMap.put("tableName", ReportUtil.getOneScoreTableName(parmasView.getProvince(), parmasView.getCategorie(),parmasView.getBatch()));
         ScoreMaxMin scoreMaxMin = iScoreConverPrecedenceService.selectMaxScore(scoreMap);
 
         //超过最大及最小分数   按最大、最小分数走

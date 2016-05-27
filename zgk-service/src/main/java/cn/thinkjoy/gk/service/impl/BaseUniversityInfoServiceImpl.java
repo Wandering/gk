@@ -371,7 +371,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
 
         LOGGER.info("阀值:" + preNum);
 
-        Integer rangeIndex = iSystemParmasService.getRankingRangeIndex(proCode, preNum, Integer.valueOf(cate));
+        Integer rangeIndex = iSystemParmasService.getRankingRangeIndex(proCode, preNum, Integer.valueOf(cate),chkBatch);
 
         LOGGER.info("rangeIndex:" + rangeIndex);
 
@@ -383,6 +383,9 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         searchMap.put("provinceCode", proCode);
         searchMap.put("whoFirst", firstValue);
         searchMap.put("majorType", cate);
+        if( ReportUtil.IsDifference(proCode)) {
+            searchMap.put("batch", chkBatch);
+        }
         searchMap.put("chkBatch", chkBatch);
         searchMap.put("isScore", 0);
         List<RankingRoleParmas> rankingRoleParmas = iRankingRoleParmasService.selectRankingRuleParmasList(searchMap);

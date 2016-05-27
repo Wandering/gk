@@ -106,7 +106,7 @@ public interface ISystemParmasService {
      * @param precedence  输入位次
      * @return
      */
-    Integer getRankingRangeIndex(String proCode,Integer precedence,Integer majorType);
+    Integer getRankingRangeIndex(String proCode,Integer precedence,Integer majorType,String batch);
 
     /**
      * 获取当前位次符合的规则区间下标  By 批次
