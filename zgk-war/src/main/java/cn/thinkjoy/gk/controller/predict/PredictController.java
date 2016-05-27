@@ -8,7 +8,6 @@ import cn.thinkjoy.common.utils.SqlOrderEnum;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.annotation.VipMethonTag;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
-import cn.thinkjoy.gk.domain.*;
 import cn.thinkjoy.gk.domain.Forecast;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.protocol.ModeUtil;
@@ -88,34 +87,34 @@ public class PredictController extends BaseApiController {
             ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
         }
 
-//        List<Map<String, String>> universityList = gk360UniversityService.getUniversityByName(name);
-//        if(universityList.size()==0)
-//        {
-//            throw new BizException("error", "请输入正确的院校名称!");
-//        }
-//        String uName = "";
-//        if(universityList.size()==1)
-//        {
-//            uName = universityList.get(0).get("label");
-//        }
-//        if(universityList.size()>1)
-//        {
-//            for (Map<String, String> map : universityList) {
-//                if(name.equals(map.get("label")))
-//                {
-//                    uName = map.get("label");
-//                }
-//            }
-//        }
-//        if("".equals(uName))
-//        {
-//            throw new BizException("error", "请输入正确的院校名称!");
-//        }
-
-        University university = (University) universityService.findOne("name",name);
-        if(university == null){
-            ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
+        List<Map<String, String>> universityList = gk360UniversityService.getUniversityByName(name);
+        if(universityList.size()==0)
+        {
+            throw new BizException("error", "请输入正确的院校名称!");
         }
+        String uName = "";
+        if(universityList.size()==1)
+        {
+            uName = universityList.get(0).get("label");
+        }
+        if(universityList.size()>1)
+        {
+            for (Map<String, String> map : universityList) {
+                if(name.equals(map.get("label")))
+                {
+                    uName = map.get("label");
+                }
+            }
+        }
+        if("".equals(uName))
+        {
+            throw new BizException("error", "请输入正确的院校名称!");
+        }
+
+//        University university = (University) gk360UniversityService.findOne("name",name);
+//        if(university == null){
+//            ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
+//        }
 
         Map<String, Object> params = new HashMap<>();
         params.put("universityName", name);
@@ -164,41 +163,41 @@ public class PredictController extends BaseApiController {
             ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
         }
 
-//        List<Map<String, String>> universityList = gk360UniversityService.getUniversityByName(name);
-//        if(universityList.size() == 0)
-//        {
-//            ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
-//        }
-//        String uName = "";
-//        String uId = "";
-//        if(universityList.size()==1)
-//        {
-//            uName = universityList.get(0).get("label");
-//            uId = String.valueOf(universityList.get(0).get("id"));
-//        }
-//        if(universityList.size()>1)
-//        {
-//            for (Map<String, String> map : universityList) {
-//                if(name.equals(map.get("label")))
-//                {
-//                    uName = map.get("label");
-//                    uId = String.valueOf(universityList.get(0).get("id"));
-//                }
-//            }
-//        }
-//        if("".equals(uName))
-//        {
-//            throw new BizException("error", "请输入正确的院校名称!");
-//        }
-
-        University university = (University) universityService.findOne("name",name);
-        if(university == null){
+        List<Map<String, String>> universityList = gk360UniversityService.getUniversityByName(name);
+        if(universityList.size() == 0)
+        {
             ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
         }
+        String uName = "";
+        String uId = "";
+        if(universityList.size()==1)
+        {
+            uName = universityList.get(0).get("label");
+            uId = String.valueOf(universityList.get(0).get("id"));
+        }
+        if(universityList.size()>1)
+        {
+            for (Map<String, String> map : universityList) {
+                if(name.equals(map.get("label")))
+                {
+                    uName = map.get("label");
+                    uId = String.valueOf(universityList.get(0).get("id"));
+                }
+            }
+        }
+        if("".equals(uName))
+        {
+            throw new BizException("error", "请输入正确的院校名称!");
+        }
+
+//        University university = (University) universityService.findOne("name",name);
+//        if(university == null){
+//            ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
+//        }
         Map<String,Object> resultMap=getUniversityPredict(name,score,type);
 
         //保存预测结果
-        addFrecast(resultMap,university.getId().toString(),name,score,type);
+        addFrecast(resultMap,uId,name,score,type);
 
 
         //由于压测需要，特别添加用户Id=363，账号18291920831用户为无限目标定位用户
