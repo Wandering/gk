@@ -35,6 +35,14 @@ public class UserGoodsAdress extends BaseDomain<Long>{
 
     private String status;
 
+    private Long provinceId;
+
+    private Long cityId;
+
+    private Long countyId;
+
+    private String postCode;
+
 	public UserGoodsAdress(){
 	}
     public void setUserId(Long value) {
@@ -88,6 +96,38 @@ public class UserGoodsAdress extends BaseDomain<Long>{
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Long getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(Long provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    public Long getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
+    }
+
+    public Long getCountyId() {
+        return countyId;
+    }
+
+    public void setCountyId(Long countyId) {
+        this.countyId = countyId;
+    }
+
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
     }
 
     public String toString() {

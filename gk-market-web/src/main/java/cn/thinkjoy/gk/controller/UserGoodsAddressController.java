@@ -7,7 +7,6 @@
 
 package cn.thinkjoy.gk.controller;
 
-import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.domain.UserGoodsAdress;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
@@ -51,72 +50,50 @@ public class UserGoodsAddressController extends ZGKBaseController {
     }
 
     /**
-     * 添加收货地址
+     * 添加或更新收货地址
      * @return
      */
-    @RequestMapping(value = "addUserGoodsAddress", method = RequestMethod.POST)
+    @RequestMapping(value = "saveOrUpdateUserGoodsAddress", method = RequestMethod.POST)
     @ResponseBody
-    public boolean addUserGoodsAddress(
-            @RequestParam(value = "address", required = true) String address,
-            @RequestParam(value = "contactPhone", required = true) String contactPhone,
-            @RequestParam(value = "token", required = true) String token,
-            @RequestParam(value = "contactName", required = true) String contactName)
+    public boolean saveOrupdateUserGoodsAddress(UserGoodsAdress userGoodsAddress,
+            @RequestParam(value = "token", required = true) String token)
     {
         boolean result = false;
-        UserGoodsAdress userGoodsAdress = setDomain(address, contactPhone, contactName, "add", null);
-        if(1 == userGoodsAdressService.insert(userGoodsAdress))
-        {
-            result = true;
-            LOGGER.debug("添加收货地址成功!");
-        }
-        return result;
-    }
-
-    /**
-     * 更新收货地址
-     * @return
-     */
-    @RequestMapping(value = "updateUserGoodsAddress", method = RequestMethod.POST)
-    @ResponseBody
-    public boolean updateUserGoodsAddress(
-            @RequestParam(value = "address", required = true) String address,
-            @RequestParam(value = "contactPhone", required = true) String contactPhone,
-            @RequestParam(value = "token", required = true) String token,
-            @RequestParam(value = "contactName", required = true) String contactName)
-    {
-        boolean result = false;
-        Object obj = userGoodsAdressService.findOne("userId",getUserAccountPojo().getId());
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+        userGoodsAddress.setUserId(userAccountPojo.getId());
+        Object obj = userGoodsAdressService.findOne("userId",userAccountPojo.getId());
         if(null == obj)
         {
-            throw new BizException("0000017", "未找到用户收货信息");
+            UserGoodsAdress address = setDomain(userGoodsAddress, "add",null);
+            if(1 == userGoodsAdressService.add(address))
+            {
+                result = true;
+                LOGGER.debug("添加收货地址成功!");
+            }
         }
-        UserGoodsAdress userGoodsAdress = setDomain(address, contactPhone, contactName, "update",obj);
-        if(1 == userGoodsAdressService.update(userGoodsAdress))
-        {
-            result = true;
-            LOGGER.debug("更新收货地址成功!");
+        else{
+            UserGoodsAdress address = setDomain(userGoodsAddress, "update",obj);
+            if(1 == userGoodsAdressService.update(address))
+            {
+                result = true;
+                LOGGER.debug("更新收货地址成功!");
+            }
         }
         return result;
     }
 
-    private UserGoodsAdress setDomain(String address,  String contactPhone, String contactName,String type, Object obj) {
-        UserGoodsAdress userGoodsAdress = new UserGoodsAdress();
-        UserAccountPojo userAccountPojo = getUserAccountPojo();
-        userGoodsAdress.setUserId(userAccountPojo.getId());
-        userGoodsAdress.setReceivingAddress(address);
-        userGoodsAdress.setContactPhone(contactPhone);
-        userGoodsAdress.setContactName(contactName);
+    private UserGoodsAdress setDomain(UserGoodsAdress userGoodsAddress,String type, Object obj) {
         if ("add".equals(type))
         {
-            userGoodsAdress.setCreateDate(System.currentTimeMillis());
+            userGoodsAddress.setCreateDate(System.currentTimeMillis());
         }else
         {
             UserGoodsAdress addObj = (UserGoodsAdress) obj;
-            userGoodsAdress.setCreateDate(addObj.getCreateDate());
-            userGoodsAdress.setId(addObj.getId());
+            userGoodsAddress.setCreateDate(addObj.getCreateDate());
+            userGoodsAddress.setId(addObj.getId());
         }
-        userGoodsAdress.setUpdateDate(System.currentTimeMillis());
-        userGoodsAdress.setStatus("1");
-        return userGoodsAdress;
+        userGoodsAddress.setUpdateDate(System.currentTimeMillis());
+        userGoodsAddress.setStatus("1");
+        return userGoodsAddress;
     }
 }
