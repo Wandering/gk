@@ -7,6 +7,7 @@
 
 package cn.thinkjoy.gk.controller;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.domain.UserGoodsAdress;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
@@ -41,12 +42,22 @@ public class UserGoodsAddressController extends ZGKBaseController {
     public Object getUserGoodsAddress(
             @RequestParam(value = "token", required = true) String token)
     {
-        List addressList =userGoodsAdressService.findList("userId", getAccoutId());
+        UserAccountPojo userAccountPojo = getUserAccount();
+        List addressList =userGoodsAdressService.findList("userId", userAccountPojo.getId());
         if(null != addressList && addressList.size() > 0)
         {
             return addressList.get(0);
         }
         return new HashMap<>();
+    }
+
+    private UserAccountPojo getUserAccount() {
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+        if(null == userAccountPojo)
+        {
+            throw new BizException("100001","token无效或者已过期!");
+        }
+        return userAccountPojo;
     }
 
     /**
@@ -59,7 +70,7 @@ public class UserGoodsAddressController extends ZGKBaseController {
             @RequestParam(value = "token", required = true) String token)
     {
         boolean result = false;
-        UserAccountPojo userAccountPojo = getUserAccountPojo();
+        UserAccountPojo userAccountPojo = getUserAccount();
         userGoodsAddress.setUserId(userAccountPojo.getId());
         Object obj = userGoodsAdressService.findOne("userId",userAccountPojo.getId());
         if(null == obj)
