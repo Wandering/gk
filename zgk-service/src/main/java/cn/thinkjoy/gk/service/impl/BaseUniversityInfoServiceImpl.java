@@ -71,11 +71,17 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
     public List<UniversityInfoView> selectUniversityInfoByLineDiff(Map map) {
         LOGGER.info("=====院校清单--线差法 Start=====");
         List<RankingRoleParmas> rankingRoleParmases= getRankingParmasByLineDiff(map);
+        if(rankingRoleParmases==null)
+            return null;
         LOGGER.info("动态参数集Size:"+rankingRoleParmases.size());//筛选参数集
         List<Map> parmasMapList= getLineDiffParmasMapByRoleParmas(map, rankingRoleParmases);
+        if(parmasMapList==null)
+            return null;
         LOGGER.info("db参数集:"+ parmasMapList.size());
         //清单组合
         List<UniversityInfoView> universityInfoViewsResult =getUniversityByRoleMap(parmasMapList,ReportEnum.LogicTrend.LINEDIFF);
+        if(universityInfoViewsResult==null)
+            return null;
 
         Integer cate=Integer.valueOf(map.get("majorType").toString());
         //set部分额外属性

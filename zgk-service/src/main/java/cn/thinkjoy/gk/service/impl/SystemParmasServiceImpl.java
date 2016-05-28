@@ -169,12 +169,12 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
     }
     @Override
     public Integer getLineDiff(String batch, Integer score, Integer cate, String provinceCode) {
-        String[] bch = batch.split(ReportUtil.VOLUNTEER_KEY_SPLIT_SYMBOL);
+        String[] bch = batch.split(ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
         String controleLine = getControleLine(bch[0], cate, provinceCode);
         String[] conLineArr = controleLine.split(ReportUtil.VOLUNTEER_KEY_SPLIT_SYMBOL);
         Integer line = 0;
         if (conLineArr.length > 1) {
-            line = (score - Integer.valueOf(conLineArr[Integer.valueOf(bch[1])]));
+            line = (score - Integer.valueOf(conLineArr[Integer.valueOf(bch[1])-1]));
         } else
             line = (score - Integer.valueOf(conLineArr[0]));
 

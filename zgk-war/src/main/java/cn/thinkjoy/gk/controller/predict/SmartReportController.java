@@ -335,7 +335,7 @@ public class SmartReportController extends ZGKBaseController {
      */
     @RequestMapping(value = "/main",method=RequestMethod.GET)
     @ResponseBody
-    public List reportMain(
+    public Map<String,Object> reportMain(
                              @RequestParam(value = "batch") String batch,
                              @RequestParam(value = "score") Integer score,
                              @RequestParam(value = "province") String province,
@@ -399,9 +399,11 @@ public class SmartReportController extends ZGKBaseController {
 
 //        List<UniversityInfoView> universityInfoViewList = iUniversityInfoService.selectUniversityInfo(map);
 
-        LOGGER.info("最终输出:" + universityInfoViewList.size() + "个院校清单");
         LOGGER.info("=======智能填报主入口 End=======");
-        return universityInfoViewList;
+
+        Map map=new HashMap();
+        map.put("universityInfoViewList",universityInfoViewList);
+        return map;
     }
 
     /**
