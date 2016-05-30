@@ -252,4 +252,275 @@
     <select id="getUniversityInfoByKeywords" parameterType="java.util.Map" resultType="University">
         select id,name from zgk_university where name like CONCAT('%',#{keywords},'%') LIMIT 5
     </select>
+
+    <select id="queryPage" resultType="cn.thinkjoy.gk.dto.UniversityDTO">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , university.id as id
+                </if>
+                <if test="selector.name!=null">
+                    , university.name as name
+                </if>
+                <if test="selector.code!=null">
+                    , university.code as code
+                </if>
+                <if test="selector.provinceCode!=null">
+                    , university.provinceCode as provinceCode
+                </if>
+                <if test="selector.subjection!=null">
+                    , university.subjection as subjection
+                </if>
+                <if test="selector.areaid!=null">
+                    , university.areaid as areaid
+                </if>
+                <if test="selector.type!=null">
+                    , university.type as type
+                </if>
+                <if test="selector.url!=null">
+                    , university.url as url
+                </if>
+                <if test="selector.photoUrl!=null">
+                    , university.photo_url as photoUrl
+                </if>
+                <if test="selector.property!=null">
+                    , university.property as property
+                </if>
+                <if test="selector.rank!=null">
+                    , university.rank as rank
+                </if>
+                <if test="selector.xcRank!=null">
+                    , university.xc_rank as xcRank
+                </if>
+                <if test="selector.educationLevel!=null">
+                    , university.educationLevel as educationLevel
+                </if>
+                <if test="selector.isDelete!=null">
+                    , university.is_delete as isDelete
+                </if>
+                <if test="selector.address!=null">
+                    ,detail.address as address
+                </if>
+                <if test="selector.contactPhone!=null">
+                    ,detail.contactPhone as contactPhone
+                </if>
+                <if test="selector.universityIntro!=null">
+                    ,detail.universityIntro as universityIntro
+                </if>
+                <if test="selector.entranceIntro!=null">
+                    ,detail.entranceIntro as entranceIntro
+                </if>
+                <if test="selector.featureMajor!=null">
+                    ,detail.featureMajor as featureMajor
+                </if>
+                <if test="selector.typeName!=null">
+                    ,typedict.name as typeName
+                </if>
+                <if test="selector.levelName!=null">
+                    ,leveldict.name as levelName
+                </if>
+                <if test="selector.province!=null">
+                    ,province.name as province
+                </if>
+            </trim>
+        </if>
+        <if test="selector==null">
+            university.id as id ,
+            university.name as name ,
+            university.code as code ,
+            university.subjection as subjection ,
+            university.areaid as areaid ,
+            university.type as type ,
+            university.url as url ,
+            university.photo_url as photoUrl ,
+            university.property as property ,
+            university.rank as rank ,
+            university.xc_rank as xcRank ,
+            university.educationLevel as educationLevel,
+            detail.address as address ,
+            detail.contactPhone as contactPhone ,
+            detail.universityIntro as universityIntro ,
+            detail.entranceIntro as entranceIntro ,
+            detail.featureMajor as featureMajor ,
+            typedict.name as typeName,
+            leveldict.name as levelName,
+            province.name as province,
+            university.lastModifier as lastModifier
+        </if>
+        FROM
+        zgk_university university
+        LEFT OUTER JOIN zgk_university_detail detail ON detail.id=university.id
+        LEFT JOIN zgk_province province ON province.id = university.areaid
+        LEFT JOIN zgk_data_dict typedict ON typedict.dictId=university.type AND typedict.type='UNIVERSITY_TYPE'
+        LEFT JOIN zgk_data_dict leveldict ON leveldict.dictId = university.educationLevel AND leveldict.type='EDULEVEL'
+        <where>
+            1=1
+            <if test="condition.name!=null">
+                and university.name  ${condition.name.op} #{condition.name.data}
+            </if>
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+            <if test="condition.universityeducationLevel!=null">
+                ${condition.groupOp}   ${condition.universityeducationLevel.field}  ${condition.universityeducationLevel.op}  #{condition.universityeducationLevel.data}
+            </if>
+            <if test="condition.universityprovinceName!=null">
+                ${condition.groupOp}   university.areaid  ${condition.universityprovinceName.op}  #{condition.universityprovinceName.data}
+            </if>
+            <if test="condition.id!=null">
+                ${condition.groupOp}   university.${condition.id.field}  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <!--<if test="condition.ssss!=null">-->
+            <!--${condition.groupOp}   university.name  like  '%吉林%'-->
+            <!--</if>-->
+            <if test="condition.code!=null">
+                ${condition.groupOp}   university.${condition.code.field}  ${condition.code.op}  #{condition.code.data}
+            </if>
+            <if test="condition.provinceCode!=null">
+                ${condition.groupOp}   university.${condition.provinceCode.field}  ${condition.provinceCode.op}  #{condition.provinceCode.data}
+            </if>
+            <if test="condition.subjection!=null">
+                ${condition.groupOp}   university.${condition.subjection.field}  ${condition.subjection.op}  #{condition.subjection.data}
+            </if>
+            <if test="condition.areaid!=null">
+                ${condition.groupOp}   university.${condition.areaid.field}  ${condition.areaid.op}  #{condition.areaid.data}
+            </if>
+            <if test="condition.type!=null">
+                ${condition.groupOp}   university.${condition.type.field}  ${condition.type.op}  #{condition.type.data}
+            </if>
+            <if test="condition.url!=null">
+                ${condition.groupOp}   university.${condition.url.field}  ${condition.url.op}  #{condition.url.data}
+            </if>
+            <if test="condition.photoUrl!=null">
+                ${condition.groupOp}   university.${condition.photoUrl.field}  ${condition.photoUrl.op}  #{condition.photoUrl.data}
+            </if>
+            <if test="condition.property!=null">
+                ${condition.groupOp}   university.${condition.property.field}  ${condition.property.op}  #{condition.property.data}
+            </if>
+            <if test="condition.rank!=null">
+                ${condition.groupOp}   university.${condition.rank.field}  ${condition.rank.op}  #{condition.rank.data}
+            </if>
+            <if test="condition.educationLevel!=null">
+                ${condition.groupOp}   university.${condition.educationLevel.field}  ${condition.educationLevel.op}  #{condition.educationLevel.data}
+            </if>
+            <if test="condition.createDate!=null">
+                ${condition.groupOp}   university.${condition.createDate.field}  ${condition.createDate.op}  #{condition.createDate.data}
+            </if>
+            <if test="condition.creator!=null">
+                ${condition.groupOp}   university.${condition.creator.field}  ${condition.creator.op}  #{condition.creator.data}
+            </if>
+            <if test="condition.lastModDate!=null">
+                ${condition.groupOp}   university.${condition.lastModDate.field}  ${condition.lastModDate.op}  #{condition.lastModDate.data}
+            </if>
+            <if test="condition.lastModifier!=null">
+                ${condition.groupOp}   university.${condition.lastModifier.field}  ${condition.lastModifier.op}  #{condition.lastModifier.data}
+            </if>
+            <if test="condition.isDelete!=null">
+                ${condition.groupOp}   university.${condition.isDelete.field}  ${condition.isDelete.op}  #{condition.isDelete.data}
+            </if>
+            <!--<if test="condition.universityprovinceId!=null">-->
+            <!--${condition.groupOp}   ${condition.universityprovinceId.field}  ${condition.universityprovinceId.op}  #{condition.universityprovinceId.data}-->
+            <!--</if>-->
+            <if test="condition.queryparam!=null">
+                ${condition.groupOp}   (
+                university.code like #{condition.queryparam.data}
+                OR university.name like #{condition.queryparam.data}
+                OR university.subjection like #{condition.queryparam.data}
+                OR province.name like #{condition.queryparam.data}
+                OR typedict.name like #{condition.queryparam.data}
+                OR leveldict.name like #{condition.queryparam.data}
+                )
+            </if>
+
+        </where>
+        ORDER BY educationLevel,IF (ISNULL(rank),10000,rank) ${sortBy}
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(university.id)
+        FROM
+        zgk_university university
+        LEFT OUTER JOIN zgk_university_detail detail ON detail.id=university.id
+        LEFT JOIN zgk_province province ON province.id = university.areaid
+        LEFT JOIN zgk_data_dict typedict ON typedict.dictId=university.type AND typedict.type='UNIVERSITY_TYPE'
+        LEFT JOIN zgk_data_dict leveldict ON leveldict.dictId = university.educationLevel AND leveldict.type='EDUCATION_LEVEL'
+        <where>
+            1=1
+            <if test="universityeducationLevel!=null">
+                ${groupOp}   ${universityeducationLevel.field}  ${universityeducationLevel.op}  #{universityeducationLevel.data}
+            </if>
+            <if test="universityprovinceName!=null">
+                ${groupOp}  university.areaid  ${universityprovinceName.op}  #{universityprovinceName.data}
+            </if>
+            <if test="id!=null">
+                ${groupOp}   university.${id.field}  ${id.op}  #{id.data}
+            </if>
+            <if test="name!=null">
+                ${groupOp}   university.${name.field}  ${name.op}  #{name.data}
+            </if>
+            <if test="code!=null">
+                ${groupOp}   university.${code.field}  ${code.op}  #{code.data}
+            </if>
+            <if test="provinceCode!=null">
+                ${groupOp}   university.${provinceCode.field}  ${provinceCode.op}  #{provinceCode.data}
+            </if>
+            <if test="subjection!=null">
+                ${groupOp}   university.${subjection.field}  ${subjection.op}  #{subjection.data}
+            </if>
+            <if test="areaid!=null">
+                ${groupOp}   university.${areaid.field}  ${areaid.op}  #{areaid.data}
+            </if>
+            <if test="type!=null">
+                ${groupOp}   university.${type.field}  ${type.op}  #{type.data}
+            </if>
+            <if test="url!=null">
+                ${groupOp}   university.${url.field}  ${url.op}  #{url.data}
+            </if>
+            <if test="photoUrl!=null">
+                ${groupOp}   university.${photoUrl.field}  ${photoUrl.op}  #{photoUrl.data}
+            </if>
+            <if test="property!=null">
+                ${groupOp}   university.${property.field}  ${property.op}  #{property.data}
+            </if>
+            <if test="rank!=null">
+                ${groupOp}   university.${rank.field}  ${rank.op}  #{rank.data}
+            </if>
+            <if test="educationLevel!=null">
+                ${groupOp}   university.${educationLevel.field}  ${educationLevel.op}  #{educationLevel.data}
+            </if>
+            <if test="createDate!=null">
+                ${groupOp}   university.${createDate.field}  ${createDate.op}  #{createDate.data}
+            </if>
+            <if test="creator!=null">
+                ${groupOp}   university.${creator.field}  ${creator.op}  #{creator.data}
+            </if>
+            <if test="lastModDate!=null">
+                ${groupOp}   university.${lastModDate.field}  ${lastModDate.op}  #{lastModDate.data}
+            </if>
+            <if test="lastModifier!=null">
+                ${groupOp}   university.${lastModifier.field}  ${lastModifier.op}  #{lastModifier.data}
+            </if>
+            <if test="isDelete!=null">
+                ${groupOp}   university.${isDelete.field}  ${isDelete.op}  #{isDelete.data}
+            </if>
+            <!--<if test="universityprovinceId!=null">-->
+            <!--${groupOp}   ${universityprovinceId.field}  ${universityprovinceId.op}  #{universityprovinceId.data}-->
+            <!--</if>-->
+            <if test="queryparam!=null">
+                ${groupOp}   (
+                university.code like #{queryparam.data}
+                OR university.name like #{queryparam.data}
+                OR university.subjection like #{queryparam.data}
+                OR province.name like #{queryparam.data}
+                OR typedict.name like #{queryparam.data}
+                OR leveldict.name like #{queryparam.data}
+                )
+            </if>
+
+        </where>
+    </select>
 </mapper>

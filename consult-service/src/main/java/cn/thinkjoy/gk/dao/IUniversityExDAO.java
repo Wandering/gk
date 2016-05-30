@@ -46,4 +46,9 @@ public interface IUniversityExDAO{
      */
     List<University> getUniversityInfoByKeywords(@Param("keywords") String keywords);
 
+    List<Map<String,Object>> queryPage(@Param("condition") Map<String, Object> condition, @Param("offset") int offset, @Param("rows") int rows,
+                                       @Param("orderBy") String orderBy, @Param("sortBy") String sortBy, @Param("selector")Map<String, Object> selector);
+
+    int count(Map<String, Object> condition);
+
 }

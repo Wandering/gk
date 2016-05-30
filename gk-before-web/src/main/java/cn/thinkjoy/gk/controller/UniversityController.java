@@ -11,6 +11,7 @@ import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.domain.UniversityDict;
+import cn.thinkjoy.gk.dto.UniversityDTO;
 import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.UniversityQuery;
@@ -20,12 +21,12 @@ import cn.thinkjoy.gk.util.RedisIsSaveUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.zgk.dto.UniversityPlanChartDTO;
 import com.alibaba.druid.support.json.JSONUtils;
-import com.alibaba.dubbo.common.logger.Logger;
-import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -34,8 +35,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -49,7 +48,8 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/university")
 public class UniversityController extends ZGKBaseController {
     public int TOKEN_EXPIRE_TIME = 60 * 60;
-    public static final Logger LOGGER = LoggerFactory.getLogger(UniversityController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger("SPECLOGGER");
+//    public static final Logger LOGGER = LoggerFactory.getLogger(UniversityController.class);
 
     @Autowired
     private IUserCollectExService userCollectExService;
@@ -107,19 +107,24 @@ public class UniversityController extends ZGKBaseController {
         selectorpage.put("subjection", 1);
         selectorpage.put("typeName", 1);
         selectorpage.put("url", 1);
-        List<Map<String, Object>> getUniversityList = iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
-        int count = iremoteUniversityService.getUniversityCount(condition);
+        long start=System.currentTimeMillis();
+//        List<Map<String, Object>> getUniversityList = iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
+//        int count = iremoteUniversityService.getUniversityCount(condition);
+        List<UniversityDTO> getUniversityList =  universityExService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
+        int count = universityExService.getUniversityCount(condition);
+        long end=System.currentTimeMillis();
+        long dubbo=end-start;
+        LOGGER.info("dubbo time:"+dubbo);
         //如果用户已登录
         UserAccountPojo userAccountPojo = getUserAccountPojo();
-        for (Map<String, Object> university : getUniversityList) {
+        for (UniversityDTO university : getUniversityList) {
             String[] propertys = new String[1];
-            if (university.containsKey("property") && university.get("property") != null) {
-                propertys[0] = university.get("property").toString();
-                university.put("property", propertys);
+            if (university.getProperty() != null) {
+                propertys[0] = university.getProperty().toString();
             }
             String[] propertys2 = null;
             Map<String, Object> propertyMap = new HashMap();
-            if (StringUtils.isNotEmpty(university.get("property").toString())) {
+            if (StringUtils.isNotEmpty(university.getProperty().toString())) {
                 propertys2 = propertys[0].toString().split(",");
                 Map<String, Object> propertysMap = getPropertys();
 
@@ -135,17 +140,17 @@ public class UniversityController extends ZGKBaseController {
                 }
             }
 
-            university.put("propertys", propertyMap);
-            university.put("isCollect", 0);
+            university.setProperty(propertyMap);
+            university.setIsCollect(0);
             if (null != userAccountPojo) {
                 long userId = userAccountPojo.getId();
                 //需要在收藏表中拼接收藏状态字段
                 Map<String, Object> param = Maps.newHashMap();
 //                param.put("userId",54);
                 param.put("userId", userId);
-                param.put("projectId", university.get("id"));
+                param.put("projectId", university.getId());
                 param.put("type", 1);
-                university.put("isCollect", userCollectExService.isCollect(param));
+                university.setIsCollect(userCollectExService.isCollect(param));
             }
         }
         Map<String, Object> returnMap = Maps.newHashMap();

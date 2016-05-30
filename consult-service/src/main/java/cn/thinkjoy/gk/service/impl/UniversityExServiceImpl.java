@@ -115,4 +115,17 @@ public class UniversityExServiceImpl implements IUniversityExService{
         }
         return map;
     }
+
+    @Override
+    public List getUniversityList(Map<String, Object> condition, int offset, int rows, String orederBy, String sqlOrderEnumStr, Map<String, Object> selectorpage) {
+//        SqlOrderEnum sqlOrderEnum=SqlOrderEnum.ASC;
+//        if(sqlOrderEnumStr.equalsIgnoreCase("DESC"))
+//            sqlOrderEnum=SqlOrderEnum.DESC;
+        return universityExDAO.queryPage(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
+    }
+
+    @Override
+    public int getUniversityCount(Map<String, Object> condition) {
+        return universityExDAO.count(condition);
+    }
 }
