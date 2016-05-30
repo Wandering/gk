@@ -140,7 +140,7 @@ public class UniversityController extends ZGKBaseController {
                 }
             }
 
-            university.setProperty(propertyMap);
+            university.setPropertys(propertyMap);
             university.setIsCollect(0);
             if (null != userAccountPojo) {
                 long userId = userAccountPojo.getId();

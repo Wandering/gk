@@ -22,6 +22,16 @@ public class UniversityDTO extends University {
     /** 层次名称 */
     private String levelName;
 
+    private Object propertys;
+
+    public Object getPropertys() {
+        return propertys;
+    }
+
+    public void setPropertys(Object propertys) {
+        this.propertys = propertys;
+    }
+
     /** 层次名称 */
     private String province;
     public String getAddress() {

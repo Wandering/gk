@@ -22,7 +22,7 @@ public class University extends CreateBaseDomain{
     private String name;
     private String subjection;
     private String educationLevel;
-    private Object property;
+    private String property;
     private String type;
     private String url;
     private String address;
@@ -127,11 +127,11 @@ public class University extends CreateBaseDomain{
     public String getEducationLevel() {
         return this.educationLevel;
     }
-    public void setProperty(Object value) {
+    public void setProperty(String value) {
         this.property = value;
     }
 
-    public Object getProperty() {
+    public String getProperty() {
         return this.property;
     }
     public void setType(String value) {
