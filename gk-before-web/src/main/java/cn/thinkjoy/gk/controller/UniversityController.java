@@ -103,6 +103,7 @@ public class UniversityController extends ZGKBaseController {
         selectorpage.put("property", 1);
         selectorpage.put("province", 1);
         selectorpage.put("rank", 1);
+        selectorpage.put("xcRank", 1);
         selectorpage.put("subjection", 1);
         selectorpage.put("typeName", 1);
         selectorpage.put("url", 1);

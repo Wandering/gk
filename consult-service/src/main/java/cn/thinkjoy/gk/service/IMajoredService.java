@@ -39,4 +39,6 @@ public interface IMajoredService {
 
     int getMajorOpenUniversityCount(int majorId,int majorType);
 
+    Map<String,Object> getJobOrientation(int majorId);
+
 }

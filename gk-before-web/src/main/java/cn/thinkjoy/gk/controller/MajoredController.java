@@ -134,6 +134,12 @@ public class MajoredController extends ZGKBaseController {
         return returnMap;
     }
 
+    @RequestMapping(value = "/getJobOrientation",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> getJobOrientation(@RequestParam(value = "majoredId",required = true)int majoredId){
+        return iMajoredService.getJobOrientation(majoredId);
+    }
+
     /**
      * 获取初始化信息
      * @return
