@@ -55,4 +55,6 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
      * @return
      */
     List<Map<String, Object>> getUniversityEnrollingInfo(Map<String, String> map);
+
+    List getUniversityMajorListByUniversityId(Map<String, Object> condition,int offset,int rows,String orderBy,String sortBy,Map<String, Object> selectorpage);
 }

@@ -114,4 +114,10 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         return iUniversityInfoDao.getUniversityEnrollingInfo(map);
     }
 
+    @Override
+    public List getUniversityMajorListByUniversityId(Map<String, Object> condition,int offset,int rows,String orderBy,String sortBy,Map<String, Object> selectorpage) {
+        return iUniversityInfoDao.getUniversityMajorListByUniversityId(condition,offset,rows,orderBy,sortBy,selectorpage);
+    }
+
+
 }

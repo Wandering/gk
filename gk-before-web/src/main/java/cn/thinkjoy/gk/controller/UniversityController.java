@@ -217,7 +217,8 @@ public class UniversityController extends ZGKBaseController {
         selectorpage.put("jobRank", 1);
 
         //此接口读取静态数据，不做缓存处理
-        List ll = iremoteUniversityService.queryPage("universityMajorExService", condition, offset, rows, "majorRank", "asc", selectorpage);
+//        List ll = iremoteUniversityService.queryPage("universityMajorExService", condition, offset, rows, "majorRank", "asc", selectorpage);
+        List ll = universityInfoService.getUniversityMajorListByUniversityId(condition, offset, rows, "majorRank", "asc", selectorpage);
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("universityId", String.valueOf(universityId));
         paramMap.put("majorFeature", majorFeature);
