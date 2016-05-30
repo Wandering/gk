@@ -276,7 +276,8 @@ public class UniversityController extends ZGKBaseController {
         condition.put("areaId",getAreaId().toString());
         condition.put("offset", offset);
         condition.put("rows", rows);
-        List ll = iremoteUniversityService.getUniversityMajorEnrollingPlanList(condition);
+//        List ll = iremoteUniversityService.getUniversityMajorEnrollingPlanList(condition);
+        List ll = universityExService.getUniversityMajorEnrollingPlanList(condition);
         return ll;
     }
 

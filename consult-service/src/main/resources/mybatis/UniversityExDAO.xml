@@ -523,4 +523,36 @@
 
         </where>
     </select>
+
+    <select id="getUniversityMajorEnrollingPlanList" resultType="cn.thinkjoy.gk.dto.UniversityMajorEnrollingPlanDTO" parameterType="java.util.Map">
+        SELECT
+        majorId as majoredId,
+        majorName as majoredName,
+        enrollType as enrollType,
+        year,
+        '' as batchName,
+        (SELECT NAME FROM zgk_data_dict dd
+        WHERE dd.type = 'UNIVERSITY_MAJOR_TYPE'
+        AND dd.dictId = pp.majorType)
+        as majorType,
+        planEnrolling,
+        lengthOfSchooling,
+        schoolFee
+        FROM
+        zgk_university_major_enrolling_plan pp
+        WHERE
+        universityId = #{universityId}
+        <if test="year!=null">
+            and year = #{year}
+        </if>
+        <if test="majorType!=null">
+            and majorType = #{majorType}
+        </if>
+        <if test="areaId!=null">
+            and areaId = #{areaId}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
 </mapper>

@@ -128,4 +128,9 @@ public class UniversityExServiceImpl implements IUniversityExService{
     public int getUniversityCount(Map<String, Object> condition) {
         return universityExDAO.count(condition);
     }
+
+    @Override
+    public List getUniversityMajorEnrollingPlanList(Map<String, Object> condition) {
+        return universityExDAO.getUniversityMajorEnrollingPlanList(condition);
+    }
 }
