@@ -490,11 +490,10 @@ public class OrdersController extends ZGKBaseController {
                     }
                 }
                 //标示已发货状态
-                if("1".equals("payStatus") && "1".equals("handleState"))
+                if("1".equals(order.get("payStatus") + "") && "1".equals(order.get("handleState") + ""))
                 {
                     order.put("payStatus", "3");
                 }
-
             }
         }
         return orderList;
