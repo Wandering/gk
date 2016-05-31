@@ -430,37 +430,19 @@ public class OrdersController extends ZGKBaseController {
      */
     @ResponseBody
     @RequestMapping(value="getOrderInfo")
-    public Map<String, String> getOrderDetail(@RequestParam(value = "orderNo", required = true)String orderNo,
+    public Map<String, Object> getOrderDetail(@RequestParam(value = "orderNo", required = true)String orderNo,
                                               @RequestParam(value = "token", required = true)String token)
     {
-        Order order = (Order) orderService.findOne("order_no", orderNo);
-        if (null == order) {
-            throw new BizException("0000010", "订单号无效!");
+        long userId = getUserAccountPojo().getId();
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("userId", userId+"");
+        paramMap.put("orderNo", orderNo+"");
+        List<Map<String, Object>> orderList = userAccountExService.getOrderList(paramMap);
+        if (null == orderList || orderList.size()==0) {
+            throw new BizException("0000010", "订单号或token无效!");
         }
-        checkExpire(order);
-        Map<String, String> resultMap = new HashMap<>();
-        resultMap.put("orderNo", orderNo);
-        String amount = order.getProductPrice();
-        if(null != amount)
-        {
-            resultMap.put("amount", amount);
-        }else
-        {
-            resultMap.put("amount", "未知");
-        }
-        resultMap.put("createTime", order.getCreateDate().toString());
-        resultMap.put("payStatus",order.getStatus().toString());
-        resultMap.put("productNum", order.getGoodsCount().toString());
-        String productType = order.getProductType();
-        if(null != productType)
-        {
-            Product product = (Product)productService.findOne("type", productType);
-            if(null != product)
-            {
-                resultMap.put("productName", product.getName());
-            }
-        }
-        return resultMap;
+        fixOrderList(orderList);
+        return orderList.get(0);
     }
 
     /**
@@ -476,6 +458,11 @@ public class OrdersController extends ZGKBaseController {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("userId", userId+"");
         List<Map<String, Object>> orderList = userAccountExService.getOrderList(paramMap);
+        fixOrderList(orderList);
+        return orderList;
+    }
+
+    private void fixOrderList(List<Map<String, Object>> orderList) {
         if(null != orderList && orderList.size()>0)
         {
             for (Map<String, Object> order: orderList) {
@@ -496,7 +483,6 @@ public class OrdersController extends ZGKBaseController {
                 }
             }
         }
-        return orderList;
     }
 
     private void checkExpire(Order order) {

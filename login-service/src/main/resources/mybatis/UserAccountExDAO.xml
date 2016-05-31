@@ -186,6 +186,9 @@
         LEFT JOIN zgk_system.zgk_sale_product pro on od.product_type=pro.type
         LEFT JOIN zgk_user_goodsadress address on od.user_id=address.userId
         where od.user_id=#{userId} and od.state!='Y'
+        <if test="orderNo!=null">
+            and od.order_no = #{orderNo}
+        </if>
         order by od.create_date desc
     </select>
 </mapper>
