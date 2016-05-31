@@ -27,8 +27,6 @@ import java.util.List;
 @Controller
 @RequestMapping(value="/userGoodsAddress")
 public class UserGoodsAddressController extends ZGKBaseController {
-
-
     @Autowired
     private IUserGoodsAdressService userGoodsAdressService;
     private static final Logger LOGGER= LoggerFactory.getLogger(UserGoodsAddressController.class);

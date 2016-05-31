@@ -178,9 +178,13 @@
 		od.product_type as productType,
 		od.unit_price as unitPrice,
 		pro.productName as productName,
-		od.handle_state as handleState
+		od.handle_state as handleState,
+		address.receivingAddress as receivingAddress,
+		address.contactName as contactName,
+		address.contactPhone as contactPhone
         from zgk_order od
         LEFT JOIN zgk_system.zgk_sale_product pro on od.product_type=pro.type
+        LEFT JOIN zgk_user_goodsadress address on od.user_id=address.userId
         where od.user_id=#{userId} and od.state!='Y'
         order by od.create_date desc
     </select>
