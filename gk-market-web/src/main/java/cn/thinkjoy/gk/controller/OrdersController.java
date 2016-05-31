@@ -17,6 +17,8 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.*;
 import cn.thinkjoy.gk.util.IPUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
+import cn.thinkjoy.zgk.zgksystem.DeparmentApiService;
+import cn.thinkjoy.zgk.zgksystem.domain.DepartmentProductRelation;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -64,6 +66,12 @@ public class OrdersController extends ZGKBaseController {
     @Autowired
     private IProductService productService;
 
+    @Autowired
+    private DeparmentApiService deparmentApiService;
+
+    @Autowired
+    private IUserGoodsAdressService userGoodsAdressService;
+
     //订单过期时间间隔2小时
     private final long expireDuration = 2 * 60 * 60 * 1000;
     /**
@@ -88,9 +96,7 @@ public class OrdersController extends ZGKBaseController {
         RedisUtil.getInstance().set("pay_return_url_" + userId, returnUrl, 24l, TimeUnit.HOURS);
         String orderNo = String.valueOf(System.currentTimeMillis()) + userId;
         String products = ordersQuery.getProducts();
-        BigDecimal amount = BigDecimal.ZERO;
-        amount = getAmount(products, amount);
-        Order order = getOrder(userId, products, amount);
+        Order order = getOrder(userId, products);
         Map<String, String> resultMap = new HashMap<>();
         try {
             resultMap.put("orderNo", order.getOrderNo());
@@ -170,51 +176,58 @@ public class OrdersController extends ZGKBaseController {
         }
     }
 
-    private BigDecimal getAmount(String products, BigDecimal amount) {
-        JSONArray jsonArray = JSON.parseArray(products);
-        for (int i = 0; i < jsonArray.size(); i++) {
-            JSONObject obj = jsonArray.getJSONObject(i);
-            BigDecimal count = new BigDecimal(obj.getIntValue("productNum"))
-                    .setScale(0, BigDecimal.ROUND_DOWN);
-            BigDecimal unitPrice = new BigDecimal(obj.getString("unitPrice"))
-                    .setScale(2, BigDecimal.ROUND_HALF_UP);
-            amount = amount.add(unitPrice.multiply(count));
-        }
-        return amount;
-    }
-
-    private Order getOrder(Long userId, String products, BigDecimal amount) {
+    private Order getOrder(Long userId, String products) {
         String orderNo= NumberGenUtil.genOrderNo();
         Order order=new Order();
-        Department  department= getDepartment();
+        //来源:0微信,1web
+        order.setChannle(1);
         order.setCreateDate(System.currentTimeMillis());
         order.setOrderNo(orderNo);
-        if(null != department)
+        UserGoodsAdress userGoodsAdress = (UserGoodsAdress) userGoodsAdressService.findOne("userId",userId);
+        if(null != userGoodsAdress)
         {
-            order.setDepartmentName(department.getDepartmentName());
-            order.setDepartmentCode(department.getDepartmentCode());
-            order.setDepartmentPhone(department.getDepartmentPhone());
-            order.setGoodsAddress(department.getGoodsAddress());
-            //来源:0微信,1web
-            order.setChannle(1);
+            order.setGoodsAddress(userGoodsAdress.getReceivingAddress());
+            order.setDepartmentName(userGoodsAdress.getContactName());
+            order.setDepartmentPhone(userGoodsAdress.getContactPhone());
         }
-        order.setProductPrice(amount.toString());
         order.setUserId(userId);
         order.setStatus(0);
         JSONArray jsonArray = JSON.parseArray(products);
         if(jsonArray.size() >= 1)
         {
             JSONObject obj = jsonArray.getJSONObject(0);
-            String productCode = obj.getString("productCode");
-            Product product = (Product) productService.findOne("code", productCode);
+            String productType = obj.getString("productType");
+            Product product = (Product) productService.findOne("type", productType);
             if(null == product)
             {
                 throw new BizException("0000007", "无效的产品code!");
             }
-            order.setProductType(product.getType() + "");
-            order.setGoodsCount(obj.getIntValue("productNum"));
+            order.setProductType(productType);
+            BigDecimal count = new BigDecimal(obj.getIntValue("productNum")).setScale(0, BigDecimal.ROUND_DOWN);
+            BigDecimal salePrice = getSalePrice(productType);
+            if(salePrice.toString().equals(BigDecimal.ZERO.toString()))
+            {
+               throw new BizException("1000111", "未找到匹配的产品类型!");
+            }
+            order.setUnitPrice(salePrice.toString());
+            order.setGoodsCount(count.intValue());
+            order.setProductPrice(salePrice.multiply(count).toString());
+        }else {
+            throw new BizException("1000112", "输入信息有误!");
         }
         return order;
+    }
+
+    private BigDecimal getSalePrice(String productType) {
+        BigDecimal salePrice = BigDecimal.ZERO;
+        List<DepartmentProductRelation > relations = deparmentApiService.queryProductPriceByAreaId(getAreaId().toString());
+        for (DepartmentProductRelation relation: relations) {
+            if(productType.equals(relation.getProductType().toString()))
+            {
+                salePrice = new BigDecimal(relation.getSalePrice()).setScale(2, BigDecimal.ROUND_HALF_UP);
+            }
+        }
+        return salePrice;
     }
 
     private Charge getCharge(Map<String,String> paramMap) throws Exception {
@@ -446,7 +459,7 @@ public class OrdersController extends ZGKBaseController {
             if(null != product)
             {
                 resultMap.put("productName", product.getName());
-                resultMap.put("unitPrice",  product.getMarketPrice());
+                resultMap.put("unitPrice",  getSalePrice(productType).toString());
             }
         }
 //        resultMap.put("goodsAddress", jsonObject.getString("goodsAddress"));
@@ -480,6 +493,12 @@ public class OrdersController extends ZGKBaseController {
                         order.put("payStatus", ord.getStatus());
                     }
                 }
+                //标示已发货状态
+                if("1".equals("payStatus") && "1".equals("handleState"))
+                {
+                    order.put("payStatus", "3");
+                }
+
             }
         }
         return orderList;

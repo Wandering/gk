@@ -40,7 +40,8 @@
         department_phone as departmentPhone,
         goods_count as goodsCount,
         handle_state as handleState,
-        channel as channel
+        channel as channel,
+        unit_price as unitPrice
     </sql>
     <insert id="insert" parameterType="Order">
         INSERT INTO zgk_order (
@@ -59,7 +60,8 @@
         department_phone,
         goods_count,
         handle_state,
-        channel
+        channel,
+        unit_price
         ) VALUES (
         #{userId},
         #{status},
@@ -76,7 +78,8 @@
         #{departmentPhone},
         #{goodsCount},
         #{handleState},
-        #{channel}
+        #{channel},
+        #{unitPrice}
         )
         <selectKey resultType="java.lang.Long" keyProperty="id">
             SELECT LAST_INSERT_ID() AS ID

@@ -176,10 +176,11 @@
         od.status as payStatus,
 		od.goods_count as productNum,
 		od.product_type as productType,
-		pro.price as unitPrice,
-		pro.`name` as productName
+		od.unit_price as unitPrice,
+		pro.productName as productName,
+		od.handle_state as handleState
         from zgk_order od
-        LEFT JOIN zgk_product pro on od.product_type=pro.type
+        LEFT JOIN zgk_system.zgk_sale_product pro on od.product_type=pro.type
         where od.user_id=#{userId} and od.state!='Y'
         order by od.create_date desc
     </select>

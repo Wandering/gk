@@ -13,7 +13,6 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.ProductQuery;
 import cn.thinkjoy.gk.service.IProductExService;
 import cn.thinkjoy.gk.service.IProductService;
-import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.zgk.zgksystem.DeparmentApiService;
 import cn.thinkjoy.zgk.zgksystem.domain.DepartmentProductRelation;
 import org.slf4j.Logger;
@@ -43,9 +42,6 @@ public class ProductController extends ZGKBaseController {
 
     @Autowired
     private IProductService productService;
-
-    @Autowired
-    private IUserAccountExService userAccountExService;
 
     @Autowired
     private DeparmentApiService deparmentApiService;
@@ -95,9 +91,7 @@ public class ProductController extends ZGKBaseController {
     @RequestMapping(value = "findAllProduct", method = RequestMethod.GET)
     @ResponseBody
     public List<DepartmentProductRelation> findAllProduct() {
-
         List<DepartmentProductRelation> relations = deparmentApiService.queryProductPriceByAreaId(getAreaId().toString());
-
         return relations;
     }
 }
