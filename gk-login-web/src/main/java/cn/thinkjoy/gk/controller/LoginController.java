@@ -103,20 +103,28 @@ public class LoginController extends ZGKBaseController {
 				userInfoPojo.setId(null);
 				userInfoPojo.setStatus(null);
 				resultMap.put("userInfo", userInfoPojo);
-				gkxtRegistUrl = String.format(gkxtRegistUrl, account, basePassword);
-				/**
-				 * 注册高考学堂
-				 */
-				String registResult = HttpClientUtil.getContents(gkxtRegistUrl);
+				if (userInfoPojo.getIsRegisterXueTang()!=1) {
+					gkxtRegistUrl = String.format(gkxtRegistUrl, account, basePassword);
+					/**
+					 * 注册高考学堂
+					 */
+					String registResult = HttpClientUtil.getContents(gkxtRegistUrl);
 
-				if(registResult.contains("\"ret\":\"200\""))
-				{
-					LOGGER.error("帐号"+account+", 注册高考学堂成功!");
-				}else if(registResult.contains("\"ret\":\"403\"") && registResult.contains("\"msg\":\"该手机已被注册\""))
-				{
-					LOGGER.debug("帐号"+account+", 高考学堂已经注册!");
-				}else {
-					LOGGER.error("帐号"+account+", 注册高考学堂失败!");
+					if (registResult.contains("\"ret\":\"200\"")) {
+						LOGGER.error("帐号" + account + ", 注册高考学堂成功!");
+						Map<String,Object> map=new HashMap<String,Object>();
+						map.put("id",id);
+						map.put("isRegisterXueTang",1);
+						userAccountExService.updateUserAccountRegistXueTang(map);
+					} else if (registResult.contains("\"ret\":\"403\"") && registResult.contains("\"msg\":\"该手机已被注册\"")) {
+						LOGGER.debug("帐号" + account + ", 高考学堂已经注册!");
+						Map<String,Object> map=new HashMap<String,Object>();
+						map.put("id",id);
+						map.put("isRegisterXueTang",1);
+						userAccountExService.updateUserAccountRegistXueTang(map);
+					} else {
+						LOGGER.error("帐号" + account + ", 注册高考学堂失败!");
+					}
 				}
 			}
 		}catch(Exception e){

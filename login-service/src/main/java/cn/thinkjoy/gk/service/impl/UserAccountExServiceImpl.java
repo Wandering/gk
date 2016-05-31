@@ -221,4 +221,9 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         return userAccountExDAO.getOrderList(paramMap);
     }
 
+    @Override
+    public int updateUserAccountRegistXueTang(Map<String, Object> paramMap) {
+        return userAccountExDAO.updateUserAccountRegistXueTang(paramMap);
+    }
+
 }
