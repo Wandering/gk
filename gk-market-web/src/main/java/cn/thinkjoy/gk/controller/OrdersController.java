@@ -196,15 +196,15 @@ public class OrdersController extends ZGKBaseController {
         if(jsonArray.size() >= 1)
         {
             JSONObject obj = jsonArray.getJSONObject(0);
-            String productType = obj.getString("productType");
-            Product product = (Product) productService.findOne("type", productType);
+            String productId = obj.getString("productId");
+            Product product = (Product) productService.findOne("id", productId);
             if(null == product)
             {
                 throw new BizException("0000007", "无效的产品code!");
             }
-            order.setProductType(productType);
+            order.setProductType(productId);
             BigDecimal count = new BigDecimal(obj.getIntValue("productNum")).setScale(0, BigDecimal.ROUND_DOWN);
-            BigDecimal salePrice = getSalePrice(productType);
+            BigDecimal salePrice = getSalePrice(productId);
             if(salePrice.toString().equals(BigDecimal.ZERO.toString()))
             {
                throw new BizException("1000111", "未找到匹配的产品类型!");
@@ -218,11 +218,11 @@ public class OrdersController extends ZGKBaseController {
         return order;
     }
 
-    private BigDecimal getSalePrice(String productType) {
+    private BigDecimal getSalePrice(String productId) {
         BigDecimal salePrice = BigDecimal.ZERO;
         List<DepartmentProductRelation > relations = deparmentApiService.queryProductPriceByAreaId(getAreaId().toString());
         for (DepartmentProductRelation relation: relations) {
-            if(productType.equals(relation.getProductType().toString()))
+            if(productId.equals(relation.getProductId().toString()))
             {
                 salePrice = new BigDecimal(relation.getSalePrice()).setScale(2, BigDecimal.ROUND_HALF_UP);
             }
@@ -437,7 +437,6 @@ public class OrdersController extends ZGKBaseController {
         if (null == order) {
             throw new BizException("0000010", "订单号无效!");
         }
-
         checkExpire(order);
         Map<String, String> resultMap = new HashMap<>();
         resultMap.put("orderNo", orderNo);
@@ -459,11 +458,8 @@ public class OrdersController extends ZGKBaseController {
             if(null != product)
             {
                 resultMap.put("productName", product.getName());
-                resultMap.put("unitPrice",  getSalePrice(productType).toString());
             }
         }
-//        resultMap.put("goodsAddress", jsonObject.getString("goodsAddress"));
-//        resultMap.put("contactPhoneNumber", jsonObject.getString("contactPhoneNumber"));
         return resultMap;
     }
 
