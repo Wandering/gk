@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.controller;
 
+import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.HttpClientUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
@@ -149,6 +150,15 @@ public class RegisterController extends ZGKBaseController {
             userAccountBean.setPassword(null);
             userAccountBean.setId(null);
             resultMap.put("userInfo", userAccountBean);
+            String key = "zgk_user_count";
+            RedisRepository redisRepository = RedisUtil.getInstance();
+            if(redisRepository.exists(key))
+            {
+                Map<String,Integer> userCountMap =  (Map<String,Integer>) redisRepository.get(key);
+                Integer count = userCountMap.get("registeUserCount");
+                userCountMap.put("registeUserCount", ++count);
+                redisRepository.set(key, userCountMap);
+            }
         }catch (Exception e){
             throw e;
         }finally {

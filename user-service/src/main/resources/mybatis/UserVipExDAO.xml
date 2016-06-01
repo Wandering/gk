@@ -25,7 +25,7 @@
 
     <!-- 获取用户注册总数 -->
     <select id="getRegisteUserCount" resultType="Integer">
-        select count(*) from zgk_user_info
+        select count(1) from zgk_user_info
     </select>
 </mapper>
 

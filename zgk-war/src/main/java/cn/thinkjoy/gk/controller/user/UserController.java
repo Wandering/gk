@@ -1,11 +1,15 @@
 package cn.thinkjoy.gk.controller.user;
 
+import cn.thinkjoy.cloudstack.cache.RedisRepository;
+import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IUserVipExService;
+import cn.thinkjoy.gk.util.RedisUtil;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
@@ -140,10 +144,26 @@ public class UserController extends ZGKBaseController{
     }
 
     @ResponseBody
-    @ApiDesc(value = "获取首页各种用户数（注册基数为36627）",owner = "杨国荣")
+    @ApiDesc(value = "获取首页各种用户数（注册基数为156069）",owner = "杨国荣")
     @RequestMapping(value = "/getIndexUserCount", method = RequestMethod.GET)
     public Map<String,Integer> getIndexUserCount() {
-        return userVipExService.getIndexUserCount();
+        String key = "zgk_user_count";
+        RedisRepository redisRepository = RedisUtil.getInstance();
+        if(redisRepository.exists(key))
+        {
+            return (Map<String,Integer>) redisRepository.get(key);
+        }
+        String baseCount;
+        try {
+             baseCount = DynConfigClientFactory.getClient().getConfig("common", "baseUserCount");
+        } catch (Exception e) {
+            baseCount = "156069";
+        }
+        Map<String, Integer> map = Maps.newHashMap();
+        int registCount = userVipExService.getIndexUserCount();
+        map.put("registeUserCount", registCount + Integer.parseInt(baseCount));
+        redisRepository.set(key, map);
+        return map;
     }
 
 }
