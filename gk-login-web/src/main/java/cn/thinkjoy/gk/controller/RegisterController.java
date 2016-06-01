@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.controller;
 
+import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.HttpClientUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
@@ -47,10 +48,7 @@ public class RegisterController extends ZGKBaseController {
 
     //高考学堂注册接口
     private String gkxtRegistUrl = "http://xuetang.zhigaokao.cn/userapi/reg?mobile=%s&password=%s";
-//    @Autowired
-//    private ICityService cityService;
-//    @Autowired
-//    private ICountyService countyService;
+
 
     /**
      * 注册账号
@@ -83,38 +81,21 @@ public class RegisterController extends ZGKBaseController {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择省份!");
             }
             List<Province> provinceList =provinceService.findList("id", provinceId);
-            if(provinceList.size()==0)
-            {
+            if(provinceList.size()==0){
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择正确省份!");
             }
-//            if (StringUtils.isEmpty(cityId)||"00".equals(cityId)) {
-//                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择城市!");
-//            }
-//            List<Province> cityIdList =cityService.findList("id", cityId);
-//            if(cityIdList.size()==0)
-//            {
-//                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择正确城市!");
-//            }
-//            if (StringUtils.isEmpty(countyId)||"00".equals(countyId)) {
-//                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择区域!");
-//            }
-//            List<Province> countyList =countyService.findList("id", countyId);
-//            if(countyList.size()==0)
-//            {
-//                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请选择正确区域!");
-//            }
             if (StringUtils.isEmpty(captcha)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入验证码!");
             }
             if (StringUtils.isEmpty(password)) {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入密码!");
             }
+            if (!checkCaptcha(account,captcha)){
+                ModeUtil.throwException(ERRORCODE.CHECK_SMSCODE_ERROR);
+            }
             UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
             if (userAccountBean!=null){
-                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "该账号已被注册!");
-            }
-            if (!checkCaptcha(account,captcha)){
-                throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "验证码有误!");
+                ModeUtil.throwException(ERRORCODE.PHONENUM_HAS_EXIST);
             }
 
             //保存用户
@@ -125,7 +106,7 @@ public class RegisterController extends ZGKBaseController {
             userAccount.setLastModDate(System.currentTimeMillis());
             userAccount.setUserType(0);
             userAccount.setStatus(0);
-            userAccount.setAreaId(areaId);
+            userAccount.setAreaId(Long.valueOf(provinceId));
             userAccount.setCanTargetSchool(true);
             userAccount.setProvinceId(provinceId);
             userAccount.setCityId(cityId);
@@ -169,6 +150,15 @@ public class RegisterController extends ZGKBaseController {
             userAccountBean.setPassword(null);
             userAccountBean.setId(null);
             resultMap.put("userInfo", userAccountBean);
+            String key = "zgk_user_count";
+            RedisRepository redisRepository = RedisUtil.getInstance();
+            if(redisRepository.exists(key))
+            {
+                Map<String,Integer> userCountMap =  (Map<String,Integer>) redisRepository.get(key);
+                Integer count = userCountMap.get("registeUserCount");
+                userCountMap.put("registeUserCount", ++count);
+                redisRepository.set(key, userCountMap);
+            }
         }catch (Exception e){
             throw e;
         }finally {

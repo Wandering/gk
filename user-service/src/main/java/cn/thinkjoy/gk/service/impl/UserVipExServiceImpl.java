@@ -23,11 +23,7 @@ public class UserVipExServiceImpl implements IUserVipExService {
     }
 
     @Override
-    public Map<String, Integer> getIndexUserCount() {
-        Map<String, Integer> map = Maps.newHashMap();
-        // 注册用户数(基数为36627)
-        Integer registCount = userVipExDAO.getRegisteUserCount();
-        map.put("registeUserCount",registCount==null?0:registCount + 36627);
-        return map;
+    public int getIndexUserCount() {
+        return userVipExDAO.getRegisteUserCount();
     }
 }

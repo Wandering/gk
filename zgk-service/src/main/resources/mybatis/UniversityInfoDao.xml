@@ -180,8 +180,9 @@
         order by year desc, cast(majorType AS UNSIGNED) asc
     </select>
 
-    <select id="getUniversityMajors" parameterType="java.util.Map" resultType="java.lang.String">
-        select t.majorName
+    <select id="getUniversityMajors" parameterType="java.util.Map" resultType="java.util.Map">
+        select
+        t.majorId,t.majorName,t.majorFeature,t.educationLevel
         from zgk_university_major t
         <where>
             <if test="universityId!=null">
@@ -191,5 +192,29 @@
                 and t.majorFeature like CONCAT('%', #{majorFeature} , '%')
             </if>
         </where>
+    </select>
+
+    <select id="getUniversityEnrollingInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        select en.year,
+        CAST(concat(sum(case when en.majorType=1 then en.realEnrollingNumber else 0 end),
+        ':',
+        sum(case when en.majorType=2 then en.realEnrollingNumber else 0 end),
+        ':',
+        sum(en.realEnrollingNumber)) AS CHAR) as enrollingNumbers
+        from zgk_university_enrolling en
+        <where>
+            en.realEnrollingNumber!=''
+            <if test="universityId!=null">
+                and en.universityId=#{universityId}
+            </if>
+            <if test="areaId!=null">
+                and en.areaId=#{areaId}
+            </if>
+            <if test="batch!=null">
+                and en.batch=#{batch}
+            </if>
+        </where>
+        group by en.year
+        order by en.year
     </select>
 </mapper>

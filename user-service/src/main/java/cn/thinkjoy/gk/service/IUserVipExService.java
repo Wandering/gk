@@ -12,5 +12,5 @@ public interface IUserVipExService {
     /**
      * 获取首页各种用户数
      */
-    Map<String,Integer> getIndexUserCount();
+    int getIndexUserCount();
 }

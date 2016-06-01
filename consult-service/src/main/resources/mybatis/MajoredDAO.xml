@@ -87,5 +87,36 @@
         select id,major_name as name from zgk_major where major_name like CONCAT('%',#{keywords},'%') LIMIT 5
     </select>
 
+    <select id="getMajorOpenUniversityList" parameterType="java.util.Map" resultType="java.util.Map">
+        select uu.id,uu.photo_url,uu.name,uu.property,uu.provinceCode,pp.name as province,uu.rank,uu.subjection,dd.name as typeName,uu.url,mm.majorRank
+        from zgk_university uu
+        left join zgk_university_major mm on uu.id=mm.universityId
+        left join zgk_province pp on pp.id=uu.provinceCode
+        left join zgk_data_dict dd on dd.type='PROPERTY' and dd.dictId=uu.type
+        where mm.majorId=#{condition.majorId}
+          and mm.educationLevel=#{condition.educationLevel}
+        ORDER BY if(isnull(mm.majorRank),10000,mm.majorRank) asc
+        limit #{condition.offset},#{condition.rows}
+    </select>
+
+    <select id="getMajorOpenUniversityCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(*)
+        from zgk_university uu
+        left join zgk_university_major mm on uu.id=mm.universityId
+        left join zgk_province pp on pp.id=uu.provinceCode
+        left join zgk_data_dict dd on dd.type='PROPERTY' and dd.dictId=uu.type
+        where mm.majorId=#{condition.majorId}
+          and mm.educationLevel=#{condition.educationLevel}
+
+    </select>
+
+    <select id="getMajorEmploymentRate" parameterType="java.util.Map" resultType="java.lang.String">
+        select employmentRate from zgk_major mm where mm.id=#{condition.majorId}
+    </select>
+
+    <select id="getMajorIntroduce" parameterType="java.util.Map" resultType="java.lang.String">
+        select major_introduce from zgk_major_detail mm where mm.id=#{condition.majorId}
+    </select>
+
 </mapper>
 

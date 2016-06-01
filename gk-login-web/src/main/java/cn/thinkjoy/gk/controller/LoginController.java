@@ -109,12 +109,14 @@ public class LoginController extends ZGKBaseController {
 				 */
 				String registResult = HttpClientUtil.getContents(gkxtRegistUrl);
 
-				if(!registResult.contains("\"ret\":\"200\""))
+				if(registResult.contains("\"ret\":\"200\""))
 				{
+					LOGGER.error("帐号"+account+", 注册高考学堂成功!");
+				}else if(registResult.contains("\"ret\":\"403\"") && registResult.contains("\"msg\":\"该手机已被注册\""))
+				{
+					LOGGER.debug("帐号"+account+", 高考学堂已经注册!");
+				}else {
 					LOGGER.error("帐号"+account+", 注册高考学堂失败!");
-				}else
-				{
-					LOGGER.debug("帐号"+account+", 注册高考学堂成功!");
 				}
 			}
 		}catch(Exception e){

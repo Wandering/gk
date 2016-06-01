@@ -81,7 +81,7 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
     }
 
     @Override
-    public int findUserAccountCountByPhone(String account,long areaId) {
+    public int findUserAccountCountByPhone(String account,Long areaId) {
         Map<String,Object> params = new HashMap<String,Object>();
         params.put("account",account);
         params.put("areaId",areaId);

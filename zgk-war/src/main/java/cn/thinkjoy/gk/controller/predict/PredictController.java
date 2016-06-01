@@ -3,19 +3,20 @@ package cn.thinkjoy.gk.controller.predict;
 import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.domain.BizStatusEnum;
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.common.utils.SqlOrderEnum;
-import cn.thinkjoy.gk.common.BaseCommonController;
-import cn.thinkjoy.gk.common.ERRORCODE;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.annotation.VipMethonTag;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
-import cn.thinkjoy.gk.domain.*;
+import cn.thinkjoy.gk.domain.Forecast;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.protocol.ModeUtil;
 import cn.thinkjoy.gk.service.IForecastService;
+import cn.thinkjoy.gk.service.IUniversityService;
 import cn.thinkjoy.gk.service.IUserInfoExService;
 import cn.thinkjoy.gk.util.RedisUtil;
-import cn.thinkjoy.gk.util.UserContext;
-import cn.thinkjoy.zgk.remote.IUniversityService;
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,12 @@ public class PredictController extends BaseApiController {
     public int TOKEN_EXPIRE_TIME = 60 * 60;
     @Autowired
     private IForecastService forecastService;
+
+    // TODO gaokao360-admin提供的 universityService
+    // TODO 后续优化:全部用本工程内的 universityService 和 universityExService
+    @Autowired
+    private cn.thinkjoy.zgk.remote.IUniversityService gk360UniversityService;
+
     @Autowired
     private IUniversityService universityService;
     @Autowired
@@ -54,7 +61,7 @@ public class PredictController extends BaseApiController {
     @ResponseBody
     public List getUniversityByName(@RequestParam(value = "universityName", defaultValue = "") String name)
     {
-        return universityService.getUniversityByName(name);
+        return gk360UniversityService.getUniversityByName(name);
     }
 
     /**
@@ -71,15 +78,16 @@ public class PredictController extends BaseApiController {
                                                   @RequestParam(value = "score") int score,
                                                   @RequestParam(value = "type") String type)
     {
-        if(score<=0 || score > 999)
+        if(score <= 0 || score > 999)
         {
-            throw new BizException("error", "请输入正确的分数!");
+            ModeUtil.throwException(ERRORCODE.SCORE_ERROR);
         }
-        if(null==name || "".equals(name))
+        if(null == name || "".equals(name))
         {
-            throw new BizException("error", "请输入院校名称!");
+            ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
         }
-        List<Map<String, String>> universityList = universityService.getUniversityByName(name);
+
+        List<Map<String, String>> universityList = gk360UniversityService.getUniversityByName(name);
         if(universityList.size()==0)
         {
             throw new BizException("error", "请输入正确的院校名称!");
@@ -102,20 +110,26 @@ public class PredictController extends BaseApiController {
         {
             throw new BizException("error", "请输入正确的院校名称!");
         }
+
+//        University university = (University) gk360UniversityService.findOne("name",name);
+//        if(university == null){
+//            ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
+//        }
+
         Map<String, Object> params = new HashMap<>();
-        params.put("universityName", uName);
+        params.put("universityName", name);
         params.put("score", score);
         params.put("type", type);
         params.put("areaId", getAreaId());
         Map<String, Object> resultMap = new HashMap<>();
         try {
-            resultMap = universityService.getPredictProbability(params);
+            resultMap = gk360UniversityService.getPredictProbability(params);
         } catch (Exception e) {
             setBatch(score, type, resultMap);
             resultMap.put("probability", 0);
             resultMap.put("type", type);
         }
-        resultMap.put("universityName", uName);
+        resultMap.put("universityName", name);
         resultMap.put("score", score);
         return resultMap;
     }
@@ -137,21 +151,22 @@ public class PredictController extends BaseApiController {
         //判断是否今天定位过
         boolean flag = userInfoExService.isPredictByUid(Long.parseLong(this.getAccoutId()));
         if(!flag){
-            throw new BizException(ERRORCODE.HASPREDICT.getCode(),ERRORCODE.HASPREDICT.getMessage());
+            ModeUtil.throwException(ERRORCODE.HASPREDICT);
         }
         //end
-        if(score<=0 || score > 999)
+        if(score <= 0 || score > 999)
         {
-            throw new BizException("error", "请输入正确的分数!");
+            ModeUtil.throwException(ERRORCODE.SCORE_ERROR);
         }
-        if(null==name || "".equals(name))
+        if(null == name || "".equals(name))
         {
-            throw new BizException("error", "请输入院校名称!");
+            ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
         }
-        List<Map<String, String>> universityList = universityService.getUniversityByName(name);
-        if(universityList.size()==0)
+
+        List<Map<String, String>> universityList = gk360UniversityService.getUniversityByName(name);
+        if(universityList.size() == 0)
         {
-            throw new BizException("error", "请输入正确的院校名称!");
+            ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
         }
         String uName = "";
         String uId = "";
@@ -174,10 +189,15 @@ public class PredictController extends BaseApiController {
         {
             throw new BizException("error", "请输入正确的院校名称!");
         }
-        Map<String,Object> resultMap=getUniversityPredict(uName,score,type);
+
+//        University university = (University) universityService.findOne("name",name);
+//        if(university == null){
+//            ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
+//        }
+        Map<String,Object> resultMap=getUniversityPredict(name,score,type);
 
         //保存预测结果
-        addFrecast(resultMap,uId,uName,score,type);
+        addFrecast(resultMap,uId,name,score,type);
 
 
         //由于压测需要，特别添加用户Id=363，账号18291920831用户为无限目标定位用户
@@ -275,7 +295,7 @@ public class PredictController extends BaseApiController {
         params.put("areaId", getAreaId());
         Map<String, Object> resultMap = new LinkedHashMap<>();
         try {
-            resultMap = universityService.getPredictUniversityInfo(params);
+            resultMap = gk360UniversityService.getPredictUniversityInfo(params);
 
             for(Integer i=4;i>0;i--) {
                 if(resultMap.get(i.toString())==null)continue;
@@ -431,7 +451,7 @@ public class PredictController extends BaseApiController {
         params.put("areaId", getAreaId());
         Map<String, Object> resultMap = new HashMap<>();
         try {
-            resultMap = universityService.getPredictProbability(params);
+            resultMap = gk360UniversityService.getPredictProbability(params);
         } catch (Exception e) {
             setBatch(score, type, resultMap);
             resultMap.put("probability", 0);
@@ -453,7 +473,7 @@ public class PredictController extends BaseApiController {
     public Map<String, Object> predictResults(){
         Map<String,Object> map = new HashMap<>();
         map.put("userId",this.getAccoutId());
-        cn.thinkjoy.gk.domain.Forecast forecast=(cn.thinkjoy.gk.domain.Forecast)forecastService.queryOne(map, "lastModDate", SqlOrderEnum.DESC);
+        cn.thinkjoy.gk.domain.Forecast forecast = (cn.thinkjoy.gk.domain.Forecast) forecastService.queryOne(map, "lastModDate", SqlOrderEnum.DESC);
         if(forecast==null){
             throw new BizException(ERRORCODE.RESOURCEISNULL.getCode(),ERRORCODE.RESOURCEISNULL.getMessage());
         }
@@ -514,12 +534,43 @@ public class PredictController extends BaseApiController {
         if (flag) {
             propertysMap = JSON.parseObject(redisRepository.get(key).toString(), Map.class);
         } else {
-            list = universityService.getDataDictListByType("FEATURE");
+            list = gk360UniversityService.getDataDictListByType("FEATURE");
             for (Map<String, Object> map : list) {
                 propertysMap.put(map.get("dictId").toString(), map.get("name").toString());
             }
             redisRepository.set(key, JSON.toJSON(propertysMap), TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
         }
         return propertysMap;
+    }
+
+
+    @ApiDesc(value = "查询用户历史目标定位详情", owner = "杨国荣")
+    @RequestMapping(value = "/queryPredictHistory",method = RequestMethod.GET)
+    @ResponseBody
+    public List<Map<String,Object>> queryPredictHistory(){
+
+        List<Forecast> forecasts = forecastService.findList(
+                "userId",
+                getAccoutId(),
+                "createDate",
+                SqlOrderEnum.DESC);
+
+        List<Map<String,Object>> maps = Lists.newArrayList();
+
+        if(forecasts.size() == 0){
+            return maps;
+        }
+
+        Forecast forecastTemp = forecasts.get(0);
+
+        for(Forecast forecast : forecasts){
+            Map<String,Object> map = Maps.newHashMap();
+            map.put("requestTime",forecast.getCreateDate());
+            map.put("lowestScore",forecastTemp.getLowestScore());
+            map.put("userScore",forecast.getAchievement());
+            maps.add(map);
+        }
+
+        return maps;
     }
 }

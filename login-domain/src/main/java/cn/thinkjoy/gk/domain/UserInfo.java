@@ -65,6 +65,7 @@ public class UserInfo extends BaseDomain<Long>{
     private Long sharerId;
     private String sharerType;
     private String agentLevel;
+    private String vipType;
 
     public UserInfo(){
     }
@@ -243,6 +244,14 @@ public class UserInfo extends BaseDomain<Long>{
 
     public void setAgentLevel(String agentLevel) {
         this.agentLevel = agentLevel;
+    }
+
+    public String getVipType() {
+        return vipType;
+    }
+
+    public void setVipType(String vipType) {
+        this.vipType = vipType;
     }
 
     public String toString() {
