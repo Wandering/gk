@@ -2,8 +2,6 @@ package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.gk.common.ReportEnum;
 import cn.thinkjoy.gk.common.ReportUtil;
-import cn.thinkjoy.gk.entity.ScoreConverPrecedence;
-import cn.thinkjoy.gk.entity.ScoreMaxMin;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
 import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 import cn.thinkjoy.gk.service.IReportResultService;
@@ -101,6 +99,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         //判定算法走向
         boolean isScore = super.isScoreSupplementary(universityInfoParmasView);
 
+
         if (isScore) // true 走分数补充发    false 走位次法
             universityInfoViews = super.selectUniversityInfoByScore(map);
         else
@@ -118,22 +117,22 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     private  List<UniversityInfoView> getUniversityByScoreConver(Map map,String tbName,UniversityInfoParmasView parmasView) {
         LOGGER.info("======================分数转化  Start====================");
         Integer score = parmasView.getScore();
+        Integer avgPre=iScoreConverPrecedenceService.converPrecedenceByScore(score, parmasView.getProvince(), parmasView.getCategorie(),parmasView.getBatch());
+//        Map scoreMap = new HashMap();
+//        scoreMap.put("tableName", ReportUtil.getOneScoreTableName(parmasView.getProvince(), parmasView.getCategorie(),parmasView.getBatch()));
+//        ScoreMaxMin scoreMaxMin = iScoreConverPrecedenceService.selectMaxScore(scoreMap);
+//
+//        //超过最大及最小分数   按最大、最小分数走
+//        if (score >= scoreMaxMin.getMaxScore())
+//            score = scoreMaxMin.getMaxScore();
+//        if (score <= scoreMaxMin.getMinScore())
+//            score = scoreMaxMin.getMinScore();
+//
+//        scoreMap.put("score", score);
+//        //根据分数 查找对应位次
+//        ScoreConverPrecedence converPrecedence = iScoreConverPrecedenceService.selectPrecedenceByScore(scoreMap);
 
-        Map scoreMap = new HashMap();
-        scoreMap.put("tableName", ReportUtil.getOneScoreTableName(parmasView.getProvince(), parmasView.getCategorie(),parmasView.getBatch()));
-        ScoreMaxMin scoreMaxMin = iScoreConverPrecedenceService.selectMaxScore(scoreMap);
-
-        //超过最大及最小分数   按最大、最小分数走
-        if (score >= scoreMaxMin.getMaxScore())
-            score = scoreMaxMin.getMaxScore();
-        if (score <= scoreMaxMin.getMinScore())
-            score = scoreMaxMin.getMinScore();
-
-        scoreMap.put("score", score);
-        //根据分数 查找对应位次
-        ScoreConverPrecedence converPrecedence = iScoreConverPrecedenceService.selectPrecedenceByScore(scoreMap);
-
-        parmasView.setPrecedence(converPrecedence.getAvgPre());
+        parmasView.setPrecedence(avgPre);
 
         LOGGER.info("======================分数转化  End====================");
         return this.getUniversityByPrecedence(map, tbName, parmasView);

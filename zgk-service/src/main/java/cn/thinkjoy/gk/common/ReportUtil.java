@@ -98,7 +98,7 @@ public class ReportUtil {
     /**
      * 是否存在优先选项 --线差
      */
-    public static final String SP_FIRST_OR_UN_FIRST_KEY="SP_FIRST_OR_UN_FIRST";
+    public static final String LINEDIFF_SP_FIRST_OR_UN_FIRST_KEY="LINEDIFF_SP_FIRST_OR_UN_FIRST";
 
     /**
      *  是否存在优先选项 --位次

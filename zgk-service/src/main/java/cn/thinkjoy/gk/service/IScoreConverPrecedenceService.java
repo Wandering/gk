@@ -22,5 +22,15 @@ public interface IScoreConverPrecedenceService {
      * @return
      */
     ScoreMaxMin selectMaxScore(Map map);
+
+    /**
+     * 分数转换位次
+     * @param score 分数
+     * @param proCode 省份
+     * @param cate    科类
+     * @param batch   批次
+     * @return
+     */
+    public Integer converPrecedenceByScore(Integer score,String proCode,Integer cate,String batch);
 }
 

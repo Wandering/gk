@@ -60,4 +60,5 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
      * @return
      */
     List<String> getUniversityMajors(Map<String, String> map);
+
 }

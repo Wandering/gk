@@ -7,6 +7,7 @@ import cn.thinkjoy.gk.entity.CheckBatchMsg;
 import cn.thinkjoy.gk.entity.SystemParmas;
 import cn.thinkjoy.gk.pojo.BatchView;
 import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
+import cn.thinkjoy.gk.service.IScoreConverPrecedenceService;
 import cn.thinkjoy.gk.service.ISystemParmasService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,8 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
 
     @Resource
     ISystemParmasDao iSystemParmasDao;
+    @Resource
+    IScoreConverPrecedenceService iScoreConverPrecedenceService;
 
 
 
@@ -56,17 +59,23 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
         String firstKey = ReportUtil.PRECEDENCE_SP_FIRST_OR_UN_FIRST_KEY;
         Integer exValue = num;
         Integer rangeIndex = -1;
+
+        rangeIndex = getRankingRangeIndex(provinceCode, exValue, cate,batch);
+        //线差
         if (logicTrend.equals(ReportEnum.LogicTrend.LINEDIFF)) {
-            firstKey = ReportUtil.SP_FIRST_OR_UN_FIRST_KEY + ReportUtil.ROLE_KEY_SPLIT_SYMBOL + batch;
+            firstKey = ReportUtil.LINEDIFF_SP_FIRST_OR_UN_FIRST_KEY + ReportUtil.ROLE_KEY_SPLIT_SYMBOL + batch;
             exValue = getLineDiff(batch, num, cate, provinceCode);
             rangeIndex = getLineDiffRangeIndex(exValue, provinceCode, cate, batch);
+        }//分数转换
+       else if(logicTrend.equals(ReportEnum.LogicTrend.SCORECONVER)) {
+            exValue = iScoreConverPrecedenceService.converPrecedenceByScore(num, provinceCode, cate, batch);
         }
 
         SystemParmas systemParmas = getThresoldModel(provinceCode, firstKey, cate);
         if (systemParmas == null)
             return false;
-
-        rangeIndex = getRankingRangeIndex(provinceCode, exValue, cate,batch);
+        if(rangeIndex<=-1)
+            return false;
 
         String[] firstArr = systemParmas.getConfigValue().split(ReportUtil.VOLUNTEER_KEY_SPLIT_SYMBOL);
 
@@ -122,6 +131,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
                         if (isLine(logicTrend, btc, cate, provinceCode, score)) {
                             flag = (i + 1) == 2 ? 3 : (i + 1);  //三批特殊处理  0：一批 1：二批 3：高职高专 4：三批
                             batchView.setIsLine(true);
+                            batchView.setFirst(false);
                             isRecom = false;
                         } else if (isRecom) {
                             batchView.setIsLine(false);
@@ -152,6 +162,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
                     if (isLine(logicTrend, batch, cate, provinceCode, score)) {
                         flag = (i + 1) == 2 ? 3 : (i + 1);  //三批特殊处理  0：一批 1：二批 3：高职高专 4：三批
                         batchView.setIsLine(true);
+                        batchView.setFirst(false);
                         isRecom = false;
                     } else if (isRecom) {
                         batchView.setIsLine(false);
@@ -183,6 +194,11 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
     @Override
     public boolean isScoreSupplementaryLindDiff(UniversityInfoParmasView parmasView) {
         boolean result = false;
+
+        String[] equesBatch = ReportUtil.getBatchArr(parmasView.getBatch());
+        if(equesBatch[0].equals("3"))//高职高专不判断压线
+            return false;
+
         if (isOpenScore(parmasView)) {
             //获取线差值
             Integer line = getLineDiff(parmasView.getBatch(), parmasView.getScore(), parmasView.getScore(), parmasView.getProvince());
@@ -212,6 +228,12 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
     @Override
     public boolean isScoreSupplementary(UniversityInfoParmasView parmasView) {
         boolean result = false;
+
+        String[] equesBatch = ReportUtil.getBatchArr(parmasView.getBatch());
+        if(equesBatch[0].equals("3"))//高职高专不判断压线
+            return false;
+
+
         //是否开启
         if (isOpenScore(parmasView)) {
 
