@@ -29,13 +29,14 @@ public class CardExServiceImpl implements ICardExService {
     private ICardDAO cardDAO;
 
     @Override
-    public boolean updateUserVip(Long cardId, Long userId,Long endDate) {
+    public boolean updateUserVip(Long cardId, Long userId,Long endDate, boolean gkxtActiveStatus) {
         boolean flag;
         UserVip userVip = new UserVip();
         userVip.setId(userId);
         userVip.setStatus(1);
         userVip.setEndDate(endDate);
         userVip.setActiveDate(System.currentTimeMillis());
+        userVip.setActiveGkxt(gkxtActiveStatus);
         userVipDAO.update(userVip);
         Card card = new Card();
         card.setId(cardId);

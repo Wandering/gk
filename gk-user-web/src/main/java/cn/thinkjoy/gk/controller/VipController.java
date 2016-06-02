@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.DESUtil;
+import cn.thinkjoy.gk.common.HttpClientUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.common.observer.Watched;
 import cn.thinkjoy.gk.common.observer.Watcher;
@@ -37,9 +38,12 @@ public class VipController extends ZGKBaseController implements Watched {
     @Autowired
     private ICardExService cardExService;
 
+    //高考学堂注册接口
+    private String gkxtActiveUrl = "http://xuetang.zhigaokao.cn/userapi/tovip?mobile=%s&duration=12&unit=month&levelId=1";
+
     @RequestMapping(value = "/upgradeVipByCard")
     @ResponseBody
-    public UserAccountPojo upgradeVipByCard(CardPojo cardPojo) throws Exception{
+    public UserAccountPojo upgradeVipByCard(CardPojo cardPojo){
         UserAccountPojo userAccountPojo=super.getUserAccountPojo();
         if(null==userAccountPojo){
             throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
@@ -63,11 +67,26 @@ public class VipController extends ZGKBaseController implements Watched {
         if(!card.getPassword().equals(cardPojo.getPassword())){
             ModeUtil.throwException(ERRORCODE.VIP_CARD_NOT_INVALID);
         }
-
+        //状元及第会员卡激活高考学堂
+        boolean gkxtActiveStatus = false;
+        if(card.getProductType().equals("2"))
+        {
+            String account = getUserAccountPojo().getAccount();
+            gkxtActiveUrl = String.format(gkxtActiveUrl, account);
+            String result = HttpClientUtil.getContents(gkxtActiveUrl);
+            if(result.contains("\"ret\":\"200\""))
+            {
+                logger.debug("帐号"+account+"激活高考学堂会员成功!");
+                gkxtActiveStatus =true;
+            }else
+            {
+                logger.debug("帐号"+account+"激活高考学堂会员失败!");
+            }
+        }
         try {
             Calendar c = getVipEndDate(card.getCardType());
             card.setEndDate(c.getTimeInMillis());
-            cardExService.updateUserVip(card.getId(),userAccountPojo.getId(),card.getEndDate());
+            cardExService.updateUserVip(card.getId(),userAccountPojo.getId(),card.getEndDate(), gkxtActiveStatus);
             userAccountPojo.setVipStatus(1);
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             userAccountPojo.setVipActiveDate(format.format(new Date(System.currentTimeMillis())));
@@ -77,6 +96,7 @@ public class VipController extends ZGKBaseController implements Watched {
         } catch(Exception e) {
             ModeUtil.throwException(ERRORCODE.VIP_UPGRADE_FAIL);
         }
+
         /**
          * 当所有操作执行完成之后通知该更新代理商后台了
          */

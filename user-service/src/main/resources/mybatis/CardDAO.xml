@@ -758,7 +758,8 @@ selectList
         password as password ,
         userId as userId ,
         areaId as areaId,
-        cardType as cardType
+        cardType as cardType,
+        productType as productType
         FROM zgk_card
         <where>
             1=1

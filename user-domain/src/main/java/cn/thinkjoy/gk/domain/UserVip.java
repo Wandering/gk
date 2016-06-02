@@ -20,6 +20,15 @@ import java.util.*;
 public class UserVip extends CreateBaseDomain<Long>{
     private Long endDate;
 	private Long activeDate;
+	private boolean isActiveGkxt;
+
+	public boolean isActiveGkxt() {
+		return isActiveGkxt;
+	}
+
+	public void setActiveGkxt(boolean activeGkxt) {
+		isActiveGkxt = activeGkxt;
+	}
 
 	public UserVip(){
 	}
