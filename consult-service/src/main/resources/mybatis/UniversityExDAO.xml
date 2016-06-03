@@ -447,7 +447,7 @@
         LEFT OUTER JOIN zgk_university_detail detail ON detail.id=university.id
         LEFT JOIN zgk_province province ON province.id = university.areaid
         LEFT JOIN zgk_data_dict typedict ON typedict.type='UNIVERSITY_TYPE' AND typedict.dictId=university.type
-        LEFT JOIN zgk_data_dict leveldict ON leveldict.type='EDUCATION_LEVEL' AND leveldict.dictId = university.educationLevel
+        LEFT JOIN zgk_data_dict leveldict ON leveldict.type='EDULEVEL' AND leveldict.dictId = university.educationLevel
         <where>
             1=1
             <if test="universityeducationLevel!=null">
