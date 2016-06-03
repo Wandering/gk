@@ -264,7 +264,7 @@ public class UniversityController extends ZGKBaseController {
         if(null == zhongDianMap)
         {
             zhongDianMap = new HashMap<>();
-            featureMajorMap.put("重点专业", zhongDianMap);
+            featureMajorMap.put("重点学科", zhongDianMap);
         }
         for (String zhongDianFeatrue: zhongDianFeatures) {
             if(feature.contains(zhongDianFeatrue))
