@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.common;
 
+import cn.thinkjoy.gk.pojo.BatchView;
 import cn.thinkjoy.gk.pojo.SelfReportResultView;
 import com.alibaba.dubbo.common.utils.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -72,6 +73,41 @@ public class ReportUtil {
     public static final String CLASSIFY_TAG_KEY="CLASSIFY_TAG";
 
     /**
+     * 算法逻辑
+     */
+    public static final String LOGIC_TREND="LOGIC_TREND";
+
+    /**
+     * 线差---批次线差值
+     */
+    public static final String LINE_DIFF_CON_LINE_PLUS_VALUE="LINE_DIFF_CON_LINE_PLUS_VALUE";
+
+    /**
+     * 线差批次选择  跳转策略  需验证
+     */
+    public static final String LINE_DIFF_CHK_BATCH_VALID="LINE_DIFF_CHK_BATCH_VALID";
+    /**
+     * 线差批次选择  跳转策略  直接跳转策略
+     */
+    public static final String LINE_DIFF_CHK_BATCH_HREF="LINE_DIFF_CHK_BATCH_HREF";
+
+    /**
+     * 线差值范围
+     */
+    public static final String  LINE_DIFF_RANGE_KEY="LINE_DIFF";
+
+    /**
+     * 是否存在优先选项 --线差
+     */
+    public static final String LINEDIFF_SP_FIRST_OR_UN_FIRST_KEY="LINEDIFF_SP_FIRST_OR_UN_FIRST";
+
+    /**
+     *  是否存在优先选项 --位次
+     */
+    public static final String PRECEDENCE_SP_FIRST_OR_UN_FIRST_KEY="PRECEDENCE_SP_FIRST_OR_UN_FIRST";
+
+
+    /**
      * 规则值拆分符
      */
     public static final String ROLE_VALUE_SPLIT_SYMBOL="\\-";
@@ -91,6 +127,12 @@ public class ReportUtil {
      */
     public static final String PRECEDENCE_KEY_SYMBOL="w";
 
+    /**
+     * 一分一段表后缀
+     */
+    public static final String ONESCORE_KEY_SYMBOL="y";
+
+
 
 
     /**
@@ -109,12 +151,44 @@ public class ReportUtil {
     }
 
     /**
+     * 获取一分一段表
+     * @param provinceCode
+     * @param categorie
+     * @return
+     */
+    public static String getOneScoreTableName(String provinceCode,Integer categorie,String batch) {
+        if (IsDifference(provinceCode))
+            return provinceCode + ROLE_KEY_SPLIT_SYMBOL + categorie + ROLE_KEY_SPLIT_SYMBOL + batch + ROLE_KEY_SPLIT_SYMBOL + ONESCORE_KEY_SYMBOL;
+        else
+            return provinceCode + ROLE_KEY_SPLIT_SYMBOL + categorie + ROLE_KEY_SPLIT_SYMBOL + ONESCORE_KEY_SYMBOL;
+
+//        return ;
+    }
+
+    /**
+     * 线差值范围Key组装
+     * @return
+     */
+    public static String getLineDiffRangeKey(String procode,String batch) {
+        return procode.toUpperCase() + ReportUtil.ROLE_KEY_SPLIT_SYMBOL + ReportUtil.LINE_DIFF_RANGE_KEY + ReportUtil.ROLE_KEY_SPLIT_SYMBOL + batch;
+    }
+    /**
      * 批次规则拆分
      * @param batchStr
      * @return
      */
     public static String[] getBatchArr(String batchStr) {
         return batchStr.split(ROLE_VALUE_SPLIT_SYMBOL);
+    }
+
+    /**
+     * 是否是高职高专
+     * @return
+     */
+    public static boolean isBatch4(String batch) {
+        String[] equesBatch = ReportUtil.getBatchArr(batch);
+
+        return equesBatch[0].equals("4");
     }
 
     /**
@@ -175,8 +249,8 @@ public class ReportUtil {
      * 获取当前位次符合的排名规则区间下标
      * @return
      */
-    public static Integer getRankingRuleIndex(String rankingRuleStr,Integer precedence) {
-        if (precedence <= 0)
+    public static Integer getRankingRuleIndex(String rankingRuleStr,Integer value) {
+        if (value <= 0)
             return -1;
         String[] rankingRuleArr = rankingRuleStr.split(VOLUNTEER_KEY_SPLIT_SYMBOL);
         for (int i = 0; i < rankingRuleArr.length; i++) {
@@ -184,11 +258,72 @@ public class ReportUtil {
             String[] rankRangeArr = rankStr.split(ROLE_VALUE_SPLIT_SYMBOL);
             Integer rankStar = Integer.valueOf(rankRangeArr[0]);
             Integer rankEnd = Integer.valueOf(rankRangeArr[1]);
-            if (precedence >= rankStar && precedence <= rankEnd)
+            if (value >= rankStar && value <= rankEnd)
                 return i;
         }
         return -1;
     }
+
+    /**
+     * 批次排序
+     * @return
+     */
+    public static String[] sortBatchArr(String spStr) {
+
+        String[] batchArr = spStr.split(ROLE_VALUE_SPLIT_SYMBOL);
+//
+//        String[] batchResultArr = new String[batchArr.length];
+//
+//        if (batchArr.length >= 1)
+//            batchResultArr[0] = batchArr[0];
+//        if (batchArr.length >= 2)
+//            batchResultArr[1] = batchArr[1];
+//        if (batchArr.length >= 4)
+//            batchResultArr[2] = batchArr[3];
+//        if (batchArr.length >= 3)
+//            batchResultArr[3] = batchArr[2];
+
+//        return batchResultArr;
+
+        return batchArr;
+    }
+
+    /**
+     * 批次结果排序
+     * @param batchViews
+     * @return
+     */
+    public static List<BatchView> sortBatchResultArr(List<BatchView> batchViews) {
+//        List<BatchView> resultBatchViews = new ArrayList<>();
+//
+//
+//        if (batchViews.size() >= 1)
+//            resultBatchViews.add(batchViews.get(0));
+//        if (batchViews.size() >= 2)
+//            resultBatchViews.add(batchViews.get(1));
+//        if (batchViews.size() >= 4) {
+//            BatchView batchView= batchViews.get(3);
+//            BatchView batchView1= batchViews.get(2);
+//            String batchOld=batchView.getBatch(),batchOld1=batchView1.getBatch();
+//            batchView.setBatch(batchOld1);
+//            batchView1.setBatch(batchOld);
+//            resultBatchViews.add(batchView);
+//        }
+//        if (batchViews.size() >= 3) {
+//            BatchView batchView= batchViews.get(2);
+////            if (batchViews.size() >= 4) {
+////                BatchView batchView1= batchViews.get(3);
+////                batchView.setBatch(batchView1.getBatch());
+////            }
+//            resultBatchViews.add(batchView);
+//        }
+//
+//
+//        return resultBatchViews;
+
+        return batchViews;
+    }
+
 
     /**
      * 根据批次获取  批次配置下标
@@ -262,6 +397,50 @@ public class ReportUtil {
             break;
         }
         return result;
+    }
+
+    /**
+     * 根据逻辑标识 获取压线生 追加值
+     * @param logic
+     * @param provinceCode
+     * @return
+     */
+    public static String getLinePlusByLogic(Integer logic,String provinceCode) {
+        //默认位次及分数转位次
+        String key = provinceCode + ROLE_KEY_SPLIT_SYMBOL + CON_LINE_PLUS_VALUE_KEY;
+
+        ReportEnum.LogicTrend logicTrend = ReportEnum.LogicTrend.getLogic(logic);
+        //线差
+        if (logicTrend.equals(ReportEnum.LogicTrend.LINEDIFF)) {
+            key = provinceCode + ROLE_KEY_SPLIT_SYMBOL + LINE_DIFF_CON_LINE_PLUS_VALUE;
+        }
+        return key;
+    }
+
+    /**
+     * 获取key 信息   用于处理省份差异化
+     * @param procode
+     * @param key
+     * @return
+     */
+    public static String getExecKey(String procode,String key,String batch) {
+        String resuKey = key;
+        if (IsDifference(procode)) {
+            resuKey = key + ROLE_KEY_SPLIT_SYMBOL + batch;
+        }
+        return resuKey;
+    }
+
+    /**
+     * 差异化城市
+     * @param procode
+     * @return
+     */
+    public static boolean IsDifference(String procode) {
+        if (procode.equals("zj") || procode.equals("sh"))
+            return true;
+
+        return false;
     }
 
     public static void main(String[] arg) throws IOException {

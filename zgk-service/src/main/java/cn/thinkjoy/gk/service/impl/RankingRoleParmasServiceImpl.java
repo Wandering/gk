@@ -28,4 +28,12 @@ public class RankingRoleParmasServiceImpl implements IRankingRoleParmasService {
     public List<RankingRoleParmas> selectRankingRuleParmasList(Map map) {
         return iRankingRoleParmasDao.selectRankingRuleParmasList(map);
     }
+
+
+    @Override
+    public List<RankingRoleParmas> selectLineDiffRuleParmasList(Map map) {
+        return iRankingRoleParmasDao.selectLineDiffRuleParmasList(map);
+    }
+
+
 }
