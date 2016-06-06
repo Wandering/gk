@@ -169,6 +169,8 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
                         batchView.setRecommend(true);
                         isRecom = false;
                     }
+                }else if(ReportUtil.isBatch4(batch)&&score <= btLine){
+                    batchView.setConform(true);
                 } else
                     batchView.setConform(false);
 

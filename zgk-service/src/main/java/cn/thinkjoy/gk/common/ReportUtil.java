@@ -188,7 +188,7 @@ public class ReportUtil {
     public static boolean isBatch4(String batch) {
         String[] equesBatch = ReportUtil.getBatchArr(batch);
 
-        return equesBatch[0].equals("4");
+        return equesBatch[0].equals("3");
     }
 
     /**
