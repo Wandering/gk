@@ -21,6 +21,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.concurrent.TimeUnit;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
@@ -29,7 +31,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	public LoginInterceptor() { }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws UnsupportedEncodingException {
 		UserAreaContext.setCurrentUserArea(request.getParameter("userKey") == null ? "zj" : request.getParameter("userKey"));
 		String url = request.getServletPath();
 		//兼容jsonp-start
@@ -41,6 +43,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		LOGGER.info("url:" + url);
 
 		String value = request.getParameter("token");
+		if(null != value)
+		{
+			value = URLDecoder.decode(value,"UTF-8").toString();
+		}
 		String reqType = request.getParameter("req");
 
 		LOGGER.info("cookie:" + value);

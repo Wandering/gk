@@ -37,4 +37,8 @@ public interface IMajoredDAO {
     List<Map<String,Object>> getMajorOpenUniversityList(@Param("condition")Map<String,Object> params);
 
     int getMajorOpenUniversityCount(@Param("condition")Map<String,Object> params);
+
+    String getMajorEmploymentRate(@Param("condition")Map<String,Object> params);
+
+    String getMajorIntroduce(@Param("condition")Map<String,Object> params);
 }

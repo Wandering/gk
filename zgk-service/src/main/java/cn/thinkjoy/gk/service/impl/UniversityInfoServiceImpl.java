@@ -105,7 +105,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     }
 
     @Override
-    public List<String> getUniversityMajors(Map<String, String> map) {
+    public List<Map<String, Object>> getUniversityMajors(Map<String, String> map) {
         return iUniversityInfoDao.getUniversityMajors(map);
     }
 

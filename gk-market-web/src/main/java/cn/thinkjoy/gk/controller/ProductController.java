@@ -8,16 +8,13 @@ package cn.thinkjoy.gk.controller;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
-import cn.thinkjoy.gk.domain.UserAccount;
-import cn.thinkjoy.gk.query.ProductQuery;
 import cn.thinkjoy.gk.domain.Product;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.query.ProductQuery;
 import cn.thinkjoy.gk.service.IProductExService;
 import cn.thinkjoy.gk.service.IProductService;
-import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.zgk.zgksystem.DeparmentApiService;
 import cn.thinkjoy.zgk.zgksystem.domain.DepartmentProductRelation;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +25,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.NumberFormat;
 import java.util.List;
 
 /**
@@ -48,9 +42,6 @@ public class ProductController extends ZGKBaseController {
 
     @Autowired
     private IProductService productService;
-
-    @Autowired
-    private IUserAccountExService userAccountExService;
 
     @Autowired
     private DeparmentApiService deparmentApiService;
@@ -100,9 +91,7 @@ public class ProductController extends ZGKBaseController {
     @RequestMapping(value = "findAllProduct", method = RequestMethod.GET)
     @ResponseBody
     public List<DepartmentProductRelation> findAllProduct() {
-
         List<DepartmentProductRelation> relations = deparmentApiService.queryProductPriceByAreaId(getAreaId().toString());
-
         return relations;
     }
 }

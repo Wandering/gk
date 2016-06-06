@@ -110,5 +110,13 @@
 
     </select>
 
+    <select id="getMajorEmploymentRate" parameterType="java.util.Map" resultType="java.lang.String">
+        select employmentRate from zgk_major mm where mm.id=#{condition.majorId}
+    </select>
+
+    <select id="getMajorIntroduce" parameterType="java.util.Map" resultType="java.lang.String">
+        select major_introduce from zgk_major_detail mm where mm.id=#{condition.majorId}
+    </select>
+
 </mapper>
 

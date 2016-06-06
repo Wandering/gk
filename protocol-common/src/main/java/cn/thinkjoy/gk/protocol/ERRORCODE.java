@@ -93,13 +93,6 @@ public enum ERRORCODE {
 
 
 
-
-
-
-
-
-
-
 	/** The code. */
 	private final String code;
 

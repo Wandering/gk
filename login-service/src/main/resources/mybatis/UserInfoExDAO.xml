@@ -90,9 +90,11 @@
         market.qrCodeUrl,
         market.sharerId,
         market.sharerType,
-        market.agentLevel
+        market.agentLevel,
+        card.productType as vipType
         from zgk_user_info info
         left join zgk_user_market market on info.id=market.accountId
+        LEFT JOIN zgk_card card on card.userId=info.id
         WHERE info.id=#{id}
     </select>
     <!--end-->

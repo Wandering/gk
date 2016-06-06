@@ -1,9 +1,11 @@
 package cn.thinkjoy.gk.controller;
 
 
+import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.pojo.ProvincePojo;
 import cn.thinkjoy.gk.service.IRegionService;
+import cn.thinkjoy.gk.util.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +34,16 @@ public class RegionController {
 	@RequestMapping(value = "/getAllRegion" , method = RequestMethod.GET)
 	@ResponseBody
 	public List<ProvincePojo> getAllRegion() {
-		return regionService.getAllRegion();
+		String key = "zgk_regionList";
+		RedisRepository rep = RedisUtil.getInstance();
+		List<ProvincePojo> regionList = null;
+		if(rep.exists(key))
+		{
+			return (List<ProvincePojo>) rep.get(key);
+		}
+		regionList = regionService.getAllRegion();
+		rep.set("zgk_regionList", regionList);
+		return regionList;
 	}
-
-
 
 }

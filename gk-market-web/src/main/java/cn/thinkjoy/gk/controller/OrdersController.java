@@ -7,22 +7,22 @@ package cn.thinkjoy.gk.controller;
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.MatrixToImageWriter;
+import cn.thinkjoy.gk.common.NumberGenUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
-import cn.thinkjoy.gk.domain.Department;
-import cn.thinkjoy.gk.domain.Product;
+import cn.thinkjoy.gk.domain.*;
 import cn.thinkjoy.gk.query.OrdersQuery;
-import cn.thinkjoy.gk.domain.Orders;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.service.IOrdersService;
-import cn.thinkjoy.gk.service.IProductService;
-import cn.thinkjoy.gk.service.IUserAccountExService;
+import cn.thinkjoy.gk.service.*;
 import cn.thinkjoy.gk.util.IPUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
+import cn.thinkjoy.zgk.zgksystem.DeparmentApiService;
+import cn.thinkjoy.zgk.zgksystem.domain.DepartmentProductRelation;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.DoubleArraySerializer;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -57,13 +57,20 @@ public class OrdersController extends ZGKBaseController {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrdersController.class);
 
     @Autowired
-    private IOrdersService ordersService;
-
+    private IOrderService orderService;
+    @Autowired
+    private IOrderStatementsService orderStatementService;
     @Autowired
     private IUserAccountExService userAccountExService;
 
     @Autowired
     private IProductService productService;
+
+    @Autowired
+    private DeparmentApiService deparmentApiService;
+
+    @Autowired
+    private IUserGoodsAdressService userGoodsAdressService;
 
     //订单过期时间间隔2小时
     private final long expireDuration = 2 * 60 * 60 * 1000;
@@ -89,13 +96,11 @@ public class OrdersController extends ZGKBaseController {
         RedisUtil.getInstance().set("pay_return_url_" + userId, returnUrl, 24l, TimeUnit.HOURS);
         String orderNo = String.valueOf(System.currentTimeMillis()) + userId;
         String products = ordersQuery.getProducts();
-        BigDecimal amount = BigDecimal.ZERO;
-        amount = getAmount(products, amount);
-        Orders order = getOrders(ordersQuery, userId, orderNo, products, amount);
+        Order order = getOrder(userId, products);
         Map<String, String> resultMap = new HashMap<>();
         try {
             resultMap.put("orderNo", order.getOrderNo());
-            ordersService.insert(order);
+            orderService.insert(order);
             LOGGER.info("create orders :" + orderNo);
             return resultMap;
         } catch (Exception e) {
@@ -117,12 +122,15 @@ public class OrdersController extends ZGKBaseController {
         if (userAccountPojo == null) {
             throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
         }
-        String price = getPrice(orderNo);
+        Order order = getOrder(orderNo);
+        String price = new BigDecimal(order.getProductPrice()).
+                multiply(new BigDecimal(100)).setScale(0 , BigDecimal.ROUND_HALF_EVEN).toString();
         Map<String,String> paramMap = new HashMap<>();
         paramMap.put("channel", "alipay_pc_direct");
         paramMap.put("orderNo", orderNo);
         paramMap.put("token", token);
         paramMap.put("amount", price);
+        paramMap.put("productType", order.getProductType());
         Charge charge;
         try {
             charge = getCharge(paramMap);
@@ -132,12 +140,12 @@ public class OrdersController extends ZGKBaseController {
         return charge;
     }
 
-    private String getPrice(String orderNo) {
-        Orders order = (Orders) ordersService.findOne("orderNo", orderNo);
+    private Order getOrder(String orderNo) {
+        Order order = (Order) orderService.findOne("order_no", orderNo);
         if (null == order) {
             throw new BizException("0000010", "订单号无效!");
         }
-        return order.getAmount().multiply(new BigDecimal(100)).setScale(0 , BigDecimal.ROUND_HALF_EVEN).toString();
+        return order;
     }
 
     /**
@@ -168,34 +176,58 @@ public class OrdersController extends ZGKBaseController {
         }
     }
 
-    private BigDecimal getAmount(String products, BigDecimal amount) {
-        JSONArray jsonArray = JSON.parseArray(products);
-        for (int i = 0; i < jsonArray.size(); i++) {
-            JSONObject obj = jsonArray.getJSONObject(i);
-            BigDecimal count = new BigDecimal(obj.getIntValue("productNum"))
-                    .setScale(0, BigDecimal.ROUND_DOWN);
-            BigDecimal unitPrice = new BigDecimal(obj.getString("unitPrice"))
-                    .setScale(2, BigDecimal.ROUND_HALF_UP);
-            amount = amount.add(unitPrice.multiply(count));
+    private Order getOrder(Long userId, String products) {
+        String orderNo= NumberGenUtil.genOrderNo();
+        Order order=new Order();
+        //来源:0微信,1web
+        order.setChannle(1);
+        order.setCreateDate(System.currentTimeMillis());
+        order.setOrderNo(orderNo);
+        UserGoodsAdress userGoodsAdress = (UserGoodsAdress) userGoodsAdressService.findOne("userId",userId);
+        if(null != userGoodsAdress)
+        {
+            order.setGoodsAddress(userGoodsAdress.getReceivingAddress());
+            order.setDepartmentName(userGoodsAdress.getContactName());
+            order.setDepartmentPhone(userGoodsAdress.getContactPhone());
         }
-        return amount;
+        order.setUserId(userId);
+        order.setStatus(0);
+        JSONArray jsonArray = JSON.parseArray(products);
+        if(jsonArray.size() >= 1)
+        {
+            JSONObject obj = jsonArray.getJSONObject(0);
+            String productId = obj.getString("productId");
+            Product product = (Product) productService.findOne("id", productId);
+            if(null == product)
+            {
+                throw new BizException("0000007", "无效的产品code!");
+            }
+            order.setProductType(productId);
+            BigDecimal count = new BigDecimal(obj.getIntValue("productNum")).setScale(0, BigDecimal.ROUND_DOWN);
+            BigDecimal salePrice = getSalePrice(productId);
+            if(salePrice.toString().equals(BigDecimal.ZERO.toString()))
+            {
+               throw new BizException("1000111", "未找到匹配的产品类型!");
+            }
+            order.setUnitPrice(salePrice.toString());
+            order.setGoodsCount(count.intValue());
+            order.setProductPrice(salePrice.multiply(count).toString());
+        }else {
+            throw new BizException("1000112", "输入信息有误!");
+        }
+        return order;
     }
 
-    private Orders getOrders(OrdersQuery ordersQuery, Long userId, String orderNo, String products, BigDecimal amount) {
-        Orders order = new Orders();
-        order.setUserId(userId);
-        order.setOrderNo(orderNo);
-        order.setDetail(products);
-        order.setAmount(amount);
-        long now = System.currentTimeMillis();
-        order.setCreateDate(now);
-        order.setLastModDate(now);
-        order.setInvalidDate(0l);
-        order.setStatus(0);
-        order.setPayStatus(0);
-        order.setDescription(ordersQuery.getExtra());
-        order.setChannel("");
-        return order;
+    private BigDecimal getSalePrice(String productId) {
+        BigDecimal salePrice = BigDecimal.ZERO;
+        List<DepartmentProductRelation > relations = deparmentApiService.queryProductPriceByAreaId(getAreaId().toString());
+        for (DepartmentProductRelation relation: relations) {
+            if(productId.equals(relation.getProductId().toString()))
+            {
+                salePrice = new BigDecimal(relation.getSalePrice()).setScale(2, BigDecimal.ROUND_HALF_UP);
+            }
+        }
+        return salePrice;
     }
 
     private Charge getCharge(Map<String,String> paramMap) throws Exception {
@@ -204,15 +236,22 @@ public class OrdersController extends ZGKBaseController {
         String aliReturnUrl = DynConfigClientFactory.getClient().getConfig("common", "aliReturnUrl");
         Map<String, Object> chargeParams = new HashMap<>();
         String channel = paramMap.get("channel");
+        String productType = paramMap.get("productType");
+        Product product = (Product)productService.findOne("type", productType);
+        if(null == product)
+        {
+            throw new BizException("0000007", "无效的产品类型!");
+        }
         Map<String, String> app = new HashMap<>();
         app.put("id", appid);
-        chargeParams.put("order_no", paramMap.get("orderNo"));
+        String statemenstNo = NumberGenUtil.genOrderNo();
+        chargeParams.put("order_no", statemenstNo);
         chargeParams.put("amount", paramMap.get("amount"));
         chargeParams.put("app", app);
         chargeParams.put("channel", channel);
         chargeParams.put("client_ip", IPUtil.getRemortIP(request));
-        chargeParams.put("subject", "智高考");
-        chargeParams.put("body", "智高考VIP会员");
+        chargeParams.put("subject", product.getName());
+        chargeParams.put("body", product.getIntro());
         chargeParams.put("currency", "cny");
         if ("alipay_pc_direct".equals(channel)) {
             Map<String, Object> extraMap = new HashMap<>();
@@ -220,22 +259,44 @@ public class OrdersController extends ZGKBaseController {
             chargeParams.put("extra", extraMap);
         } else if ("wx_pub_qr".equals(channel)) {
             Map<String, Object> extraMap = new HashMap<>();
-            extraMap.put("product_id", "1");
+            extraMap.put("product_id", productType);
             chargeParams.put("extra", extraMap);
         }
+        createOrderStatement(paramMap, chargeParams, statemenstNo);
         return Charge.create(chargeParams);
+    }
+
+    /**
+     * 创建交易流水
+     * @param paramMap
+     * @param chargeParams
+     */
+    private void createOrderStatement(Map<String, String> paramMap, Map<String, Object> chargeParams, String statemenstNo ) {
+        OrderStatements orderstatement=new OrderStatements();
+        orderstatement.setAmount(Double.parseDouble(paramMap.get("amount")));
+        orderstatement.setCreateDate(System.currentTimeMillis());
+        orderstatement.setOrderNo(paramMap.get("orderNo"));
+        //0:交易进行中  1：交易成功  2：交易失败
+        orderstatement.setStatus(0);
+        orderstatement.setStatementNo(statemenstNo);
+        orderstatement.setState("N");
+        orderstatement.setPayJson(JSONObject.toJSONString(chargeParams));
+        orderStatementService.insert(orderstatement);
     }
 
     private void getQrCode(String orderNo, String token, HttpServletResponse response, int width, int height) {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         Map params = new HashMap();
         params.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-        String price = getPrice(orderNo);
+        Order order = getOrder(orderNo);
+        String price = new BigDecimal(order.getProductPrice()).
+                multiply(new BigDecimal(100)).setScale(0 , BigDecimal.ROUND_HALF_EVEN).toString();
         Map<String,String> paramMap = new HashMap<>();
         paramMap.put("channel", "wx_pub_qr");
         paramMap.put("orderNo", orderNo);
         paramMap.put("token", token);
         paramMap.put("amount", price);
+        paramMap.put("productType", order.getProductType());
         Charge charge;
         try {
             charge = getCharge(paramMap);
@@ -269,6 +330,10 @@ public class OrdersController extends ZGKBaseController {
     @RequestMapping(value="getAgentInfo")
     public Department getAgentInfo(@RequestParam(value = "token", required = true)String token)
     {
+        return getDepartment();
+    }
+
+    private Department getDepartment() {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("accountId", getUserAccountPojo().getId()+"");
         Map<String, Object> userAccountMap =  userAccountExService.findUserInfo(paramMap);
@@ -337,7 +402,6 @@ public class OrdersController extends ZGKBaseController {
 
     private Department fixReturnValue(Department countyDepartment) {
         countyDepartment.setCompanyCode(null);
-        countyDepartment.setDepartmentCode(null);
         countyDepartment.setDepartmentPrincipal(null);
         countyDepartment.setDescription(null);
         countyDepartment.setParentCode(null);
@@ -366,48 +430,19 @@ public class OrdersController extends ZGKBaseController {
      */
     @ResponseBody
     @RequestMapping(value="getOrderInfo")
-    public Map<String, String> getOrderDetail(@RequestParam(value = "orderNo", required = true)String orderNo,
+    public Map<String, Object> getOrderDetail(@RequestParam(value = "orderNo", required = true)String orderNo,
                                               @RequestParam(value = "token", required = true)String token)
     {
-        Orders order = (Orders) ordersService.findOne("orderNo", orderNo);
-        if (null == order) {
-            throw new BizException("0000010", "订单号无效!");
+        long userId = getUserAccountPojo().getId();
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("userId", userId+"");
+        paramMap.put("orderNo", orderNo+"");
+        List<Map<String, Object>> orderList = userAccountExService.getOrderList(paramMap);
+        if (null == orderList || orderList.size()==0) {
+            throw new BizException("0000010", "订单号或token无效!");
         }
-
-        checkExpire(order);
-        Map<String, String> resultMap = new HashMap<>();
-        resultMap.put("orderNo", orderNo);
-        BigDecimal amount = order.getAmount();
-        if(null != amount)
-        {
-            resultMap.put("amount", amount.toString());
-        }else
-        {
-            resultMap.put("amount", "未知");
-        }
-        resultMap.put("createTime", order.getCreateDate().toString());
-        resultMap.put("payStatus",order.getPayStatus().toString());
-        String detail = order.getDetail();
-        JSONArray obj = JSON.parseArray(detail);
-        Object object = obj.get(0);
-        if(null != object)
-        {
-            JSONObject jsonObject = JSON.parseObject(object.toString());
-            resultMap.put("unitPrice", jsonObject.getString("unitPrice"));
-            resultMap.put("productNum", jsonObject.getString("productNum"));
-            resultMap.put("goodsAddress", jsonObject.getString("goodsAddress"));
-            resultMap.put("contactPhoneNumber", jsonObject.getString("contactPhoneNumber"));
-            String code = jsonObject.getString("productCode");
-            if(null != code)
-            {
-                Product product = (Product)productService.findOne("code", code);
-                if(null != product)
-                {
-                    resultMap.put("productName", product.getName());
-                }
-            }
-        }
-        return resultMap;
+        fixOrderList(orderList);
+        return orderList.get(0);
     }
 
     /**
@@ -423,50 +458,40 @@ public class OrdersController extends ZGKBaseController {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("userId", userId+"");
         List<Map<String, Object>> orderList = userAccountExService.getOrderList(paramMap);
-        if(null != orderList && orderList.size()>0)
-        {
-            for (Map<String, Object> order: orderList) {
-                String detail = order.get("detail") + "";
-                JSONArray obj = JSON.parseArray(detail);
-                Object object = obj.get(0);
-                if(null != object)
-                {
-                    JSONObject jsonObject = JSON.parseObject(object.toString());
-                    order.put("unitPrice", jsonObject.getString("unitPrice"));
-                    order.put("productNum", jsonObject.getString("productNum"));
-                    String code = jsonObject.getString("productCode");
-                    if(null != code)
-                    {
-                        Product product = (Product)productService.findOne("code", code);
-                        if(null != product)
-                        {
-                            order.put("productName", product.getName());
-                        }
-                    }
-                    order.remove("detail");
-                }
-                if("0".equals(order.get("payStatus")+""))
-                {
-                    String orderId = order.get("orderNo") + "";
-                    Orders ord = (Orders) ordersService.findOne("orderNo", orderId);
-                    if(null != ord)
-                    {
-                        checkExpire(ord);
-                        order.put("payStatus", ord.getPayStatus());
-                    }
-                }
-            }
-        }
+        fixOrderList(orderList);
         return orderList;
     }
 
-    private void checkExpire(Orders order) {
+    private void fixOrderList(List<Map<String, Object>> orderList) {
+        if(null != orderList && orderList.size()>0)
+        {
+            for (Map<String, Object> order: orderList) {
+                if("0".equals(order.get("payStatus")+""))
+                {
+                    String orderNo = order.get("orderNo") + "";
+                    Order ord = (Order) orderService.findOne("order_no", orderNo);
+                    if(null != ord)
+                    {
+                        checkExpire(ord);
+                        order.put("payStatus", ord.getStatus());
+                    }
+                }
+                //标示已发货状态
+                if("1".equals(order.get("payStatus") + "") && "1".equals(order.get("handleState") + ""))
+                {
+                    order.put("payStatus", "3");
+                }
+            }
+        }
+    }
+
+    private void checkExpire(Order order) {
         long createDate = order.getCreateDate();
-        if("0".equals(order.getPayStatus()+"") && System.currentTimeMillis() -  createDate > expireDuration)
+        if("0".equals(order.getStatus()+"") && System.currentTimeMillis() -  createDate > expireDuration)
         {
             //订单过期
-            order.setPayStatus(2);
-            ordersService.update(order);
+            order.setStatus(2);
+            orderService.update(order);
         }
     }
 
@@ -481,7 +506,7 @@ public class OrdersController extends ZGKBaseController {
                                                  @RequestParam(value = "orderNo", required = true)String orderNo)
     {
         boolean result;
-        Orders order = (Orders) ordersService.findOne("orderNo", orderNo);
+        Order order = (Order) orderService.findOne("order_no", orderNo);
         if (null == order) {
             throw new BizException("0000010", "订单号无效!");
         }
@@ -489,8 +514,8 @@ public class OrdersController extends ZGKBaseController {
         if(userId == order.getUserId())
         {
             //逻辑删除订单
-            order.setStatus(-1);
-            ordersService.update(order);
+            order.setState("Y");
+            orderService.update(order);
             result = true;
         }else {
             throw new BizException("0000010", "token无效");
