@@ -69,6 +69,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
         }//分数转换
        else if(logicTrend.equals(ReportEnum.LogicTrend.SCORECONVER)) {
             exValue = iScoreConverPrecedenceService.converPrecedenceByScore(num, provinceCode, cate, batch);
+            rangeIndex = getRankingRangeIndex(provinceCode, exValue, cate,batch);
         }
 
         SystemParmas systemParmas = getThresoldModel(provinceCode, firstKey, cate);
@@ -203,7 +204,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
 
         if (isOpenScore(parmasView)) {
             //获取线差值
-            Integer line = getLineDiff(parmasView.getBatch(), parmasView.getScore(), parmasView.getScore(), parmasView.getProvince());
+            Integer line = getLineDiff(parmasView.getBatch(), parmasView.getScore(), parmasView.getCategorie(), parmasView.getProvince());
             SystemParmas systemParmas = getThresoldModel(parmasView.getProvince(), ReportUtil.LINE_DIFF_CON_LINE_PLUS_VALUE, parmasView.getCategorie());
             if (systemParmas == null)
                 return false;
