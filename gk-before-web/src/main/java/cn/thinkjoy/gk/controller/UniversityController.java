@@ -76,87 +76,93 @@ public class UniversityController extends ZGKBaseController {
      */
     @RequestMapping(value = "/getRemoteUniversityList", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getUniversityList(@RequestParam(value = "universityName", required = false) String universityName,
+    public Object getUniversityList(@RequestParam(value = "universityName", required = false) String universityName,
                                                  @RequestParam(value = "areaid", required = false) String areaid,//省份
                                                  @RequestParam(value = "type", required = false) Integer type,//院校分类
                                                  @RequestParam(value = "educationLevel", required = false) Integer educationLevel,//学历层次
                                                  @RequestParam(value = "property", required = false) String property,//院校特征
                                                  @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
                                                  @RequestParam(value = "rows", required = false, defaultValue = "10") Integer rows) {
-        Map<String, Object> condition = Maps.newHashMap();
-        condition.put("groupOp", "and");
-        if (StringUtils.isNotBlank(universityName))
-            ConditionsUtil.setCondition(condition, "name", "like", "%" + universityName + "%");
-        if (StringUtils.isNotBlank(areaid))
-            ConditionsUtil.setCondition(condition, "areaid", "=", areaid);
-        if (type != null)
-            ConditionsUtil.setCondition(condition, "type", "=", type.toString());
-        if (educationLevel != null)
-            ConditionsUtil.setCondition(condition, "educationLevel", "=", educationLevel.toString());
-        if (StringUtils.isNotBlank(property))
-            ConditionsUtil.setCondition(condition, "property", "like", "%" + property + "%");
-        String orederBy = "rank";
-        String sqlOrderEnumStr = "asc";
-        Map<String, Object> selectorpage = Maps.newHashMap();
-        selectorpage.put("photoUrl", 1);
-        selectorpage.put("id", 1);
-        selectorpage.put("name", 1);
-        selectorpage.put("property", 1);
-        selectorpage.put("province", 1);
-        selectorpage.put("rank", 1);
-        selectorpage.put("subjection", 1);
-        selectorpage.put("typeName", 1);
-        selectorpage.put("url", 1);
-        long start=System.currentTimeMillis();
+        String redisKey = "zgk_pe:"+"universityName:" + universityName + "_areaid:" + areaid + "_type:" + type + "_educationLevel:" + educationLevel + "_property:" + property + "_offset:" + offset + "_rows"+rows+":getUniversityList";
+        Object object = RedisIsSaveUtil.existsKey(redisKey);
+        if (object==null) {
+            Map<String, Object> condition = Maps.newHashMap();
+            condition.put("groupOp", "and");
+            if (StringUtils.isNotBlank(universityName))
+                ConditionsUtil.setCondition(condition, "name", "like", "%" + universityName + "%");
+            if (StringUtils.isNotBlank(areaid))
+                ConditionsUtil.setCondition(condition, "areaid", "=", areaid);
+            if (type != null)
+                ConditionsUtil.setCondition(condition, "type", "=", type.toString());
+            if (educationLevel != null)
+                ConditionsUtil.setCondition(condition, "educationLevel", "=", educationLevel.toString());
+            if (StringUtils.isNotBlank(property))
+                ConditionsUtil.setCondition(condition, "property", "like", "%" + property + "%");
+            String orederBy = "rank";
+            String sqlOrderEnumStr = "asc";
+            Map<String, Object> selectorpage = Maps.newHashMap();
+            selectorpage.put("photoUrl", 1);
+            selectorpage.put("id", 1);
+            selectorpage.put("name", 1);
+            selectorpage.put("property", 1);
+            selectorpage.put("province", 1);
+            selectorpage.put("rank", 1);
+            selectorpage.put("subjection", 1);
+            selectorpage.put("typeName", 1);
+            selectorpage.put("url", 1);
+            long start = System.currentTimeMillis();
 //        List<Map<String, Object>> getUniversityList = iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
 //        int count = iremoteUniversityService.getUniversityCount(condition);
-        List<UniversityDTO> getUniversityList =  universityExService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
-        int count = universityExService.getUniversityCount(condition);
-        long end=System.currentTimeMillis();
-        long dubbo=end-start;
-        LOGGER.info("dubbo time:"+dubbo);
-        //如果用户已登录
-        UserAccountPojo userAccountPojo = getUserAccountPojo();
-        for (UniversityDTO university : getUniversityList) {
-            String[] propertys = new String[1];
-            if (university.getProperty() != null) {
-                propertys[0] = university.getProperty().toString();
-            }
-            String[] propertys2 = null;
-            Map<String, Object> propertyMap = new HashMap();
-            if (StringUtils.isNotEmpty(university.getProperty().toString())) {
-                propertys2 = propertys[0].toString().split(",");
-                Map<String, Object> propertysMap = getPropertys();
+            List<UniversityDTO> getUniversityList = universityExService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
+            int count = universityExService.getUniversityCount(condition);
+            long end = System.currentTimeMillis();
+            long dubbo = end - start;
+            LOGGER.info("dubbo time:" + dubbo);
+            //如果用户已登录
+            UserAccountPojo userAccountPojo = getUserAccountPojo();
+            for (UniversityDTO university : getUniversityList) {
+                String[] propertys = new String[1];
+                if (university.getProperty() != null) {
+                    propertys[0] = university.getProperty().toString();
+                }
+                String[] propertys2 = null;
+                Map<String, Object> propertyMap = new HashMap();
+                if (StringUtils.isNotEmpty(university.getProperty().toString())) {
+                    propertys2 = propertys[0].toString().split(",");
+                    Map<String, Object> propertysMap = getPropertys();
 
-                for (String str : propertys2) {
-                    Iterator<String> propertysIterator = propertysMap.keySet().iterator();
-                    while (propertysIterator.hasNext()) {
-                        String key = propertysIterator.next();
-                        String value = propertysMap.get(key).toString();
-                        if (str.indexOf(value) > -1) {
-                            propertyMap.put(key, value);
+                    for (String str : propertys2) {
+                        Iterator<String> propertysIterator = propertysMap.keySet().iterator();
+                        while (propertysIterator.hasNext()) {
+                            String key = propertysIterator.next();
+                            String value = propertysMap.get(key).toString();
+                            if (str.indexOf(value) > -1) {
+                                propertyMap.put(key, value);
+                            }
                         }
                     }
                 }
-            }
 
-            university.setPropertys(propertyMap);
-            university.setIsCollect(0);
-            if (null != userAccountPojo) {
-                long userId = userAccountPojo.getId();
-                //需要在收藏表中拼接收藏状态字段
-                Map<String, Object> param = Maps.newHashMap();
+                university.setPropertys(propertyMap);
+                university.setIsCollect(0);
+                if (null != userAccountPojo) {
+                    long userId = userAccountPojo.getId();
+                    //需要在收藏表中拼接收藏状态字段
+                    Map<String, Object> param = Maps.newHashMap();
 //                param.put("userId",54);
-                param.put("userId", userId);
-                param.put("projectId", university.getId());
-                param.put("type", 1);
-                university.setIsCollect(userCollectExService.isCollect(param));
+                    param.put("userId", userId);
+                    param.put("projectId", university.getId());
+                    param.put("type", 1);
+                    university.setIsCollect(userCollectExService.isCollect(param));
+                }
             }
+            Map<String, Object> returnMap = Maps.newHashMap();
+            returnMap.put("universityList", getUniversityList);
+            returnMap.put("count", count);
+            RedisUtil.getInstance().set(redisKey, JSON.toJSONString(returnMap));
+            return returnMap;
         }
-        Map<String, Object> returnMap = Maps.newHashMap();
-        returnMap.put("universityList", getUniversityList);
-        returnMap.put("count", count);
-        return returnMap;
+        return JSON.parseObject(object.toString(), Object.class);
     }
 
     @RequestMapping(value = "getRemoteUniversityById", method = RequestMethod.GET)
