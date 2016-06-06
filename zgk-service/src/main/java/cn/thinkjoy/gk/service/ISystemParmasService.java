@@ -140,14 +140,14 @@ public interface ISystemParmasService {
      * @param parmasView
      * @return
      */
-    public boolean isScoreSupplementary(UniversityInfoParmasView parmasView);
+    public boolean isScoreSupplementary(UniversityInfoParmasView parmasView,String flag);
 
     /**
      * 是否为压线生 --线差法
      * @param parmasView
      * @return
      */
-    public boolean isScoreSupplementaryLindDiff(UniversityInfoParmasView parmasView);
+    public boolean isScoreSupplementaryLindDiff(UniversityInfoParmasView parmasView,String flag);
 
     /**
      * 批次选择提示

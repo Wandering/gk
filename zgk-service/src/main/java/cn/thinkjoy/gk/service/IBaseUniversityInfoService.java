@@ -74,7 +74,7 @@ public interface IBaseUniversityInfoService {
      * @param universityInfoParmasView
      * @return
      */
-    public boolean isScoreSupplementary(UniversityInfoParmasView universityInfoParmasView);
+    public boolean isScoreSupplementary(UniversityInfoParmasView universityInfoParmasView,String flag);
 
 
     /**
@@ -85,7 +85,7 @@ public interface IBaseUniversityInfoService {
      * @param universityInfoParmasView
      * @return
      */
-    public boolean isScoreSupplementaryLindDiff(UniversityInfoParmasView universityInfoParmasView);
+    public boolean isScoreSupplementaryLindDiff(UniversityInfoParmasView universityInfoParmasView,String flag);
 
 
 

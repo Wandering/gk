@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.common;
 
+import cn.thinkjoy.gk.pojo.BatchView;
 import cn.thinkjoy.gk.pojo.SelfReportResultView;
 import com.alibaba.dubbo.common.utils.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -181,6 +182,16 @@ public class ReportUtil {
     }
 
     /**
+     * 是否是高职高专
+     * @return
+     */
+    public static boolean isBatch4(String batch) {
+        String[] equesBatch = ReportUtil.getBatchArr(batch);
+
+        return equesBatch[0].equals("4");
+    }
+
+    /**
      * 批次标记拆分
      * @param batchTag
      * @return
@@ -252,6 +263,67 @@ public class ReportUtil {
         }
         return -1;
     }
+
+    /**
+     * 批次排序
+     * @return
+     */
+    public static String[] sortBatchArr(String spStr) {
+
+        String[] batchArr = spStr.split(ROLE_VALUE_SPLIT_SYMBOL);
+//
+//        String[] batchResultArr = new String[batchArr.length];
+//
+//        if (batchArr.length >= 1)
+//            batchResultArr[0] = batchArr[0];
+//        if (batchArr.length >= 2)
+//            batchResultArr[1] = batchArr[1];
+//        if (batchArr.length >= 4)
+//            batchResultArr[2] = batchArr[3];
+//        if (batchArr.length >= 3)
+//            batchResultArr[3] = batchArr[2];
+
+//        return batchResultArr;
+
+        return batchArr;
+    }
+
+    /**
+     * 批次结果排序
+     * @param batchViews
+     * @return
+     */
+    public static List<BatchView> sortBatchResultArr(List<BatchView> batchViews) {
+//        List<BatchView> resultBatchViews = new ArrayList<>();
+//
+//
+//        if (batchViews.size() >= 1)
+//            resultBatchViews.add(batchViews.get(0));
+//        if (batchViews.size() >= 2)
+//            resultBatchViews.add(batchViews.get(1));
+//        if (batchViews.size() >= 4) {
+//            BatchView batchView= batchViews.get(3);
+//            BatchView batchView1= batchViews.get(2);
+//            String batchOld=batchView.getBatch(),batchOld1=batchView1.getBatch();
+//            batchView.setBatch(batchOld1);
+//            batchView1.setBatch(batchOld);
+//            resultBatchViews.add(batchView);
+//        }
+//        if (batchViews.size() >= 3) {
+//            BatchView batchView= batchViews.get(2);
+////            if (batchViews.size() >= 4) {
+////                BatchView batchView1= batchViews.get(3);
+////                batchView.setBatch(batchView1.getBatch());
+////            }
+//            resultBatchViews.add(batchView);
+//        }
+//
+//
+//        return resultBatchViews;
+
+        return batchViews;
+    }
+
 
     /**
      * 根据批次获取  批次配置下标

@@ -193,8 +193,8 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
      * @return
      */
     @Override
-    public boolean isScoreSupplementaryLindDiff(UniversityInfoParmasView parmasView) {
-       return iSystemParmasService.isScoreSupplementaryLindDiff(parmasView);
+    public boolean isScoreSupplementaryLindDiff(UniversityInfoParmasView parmasView,String flag) {
+       return iSystemParmasService.isScoreSupplementaryLindDiff(parmasView,flag);
     }
 
         /**
@@ -203,8 +203,8 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
          * @return
          */
     @Override
-    public boolean isScoreSupplementary(UniversityInfoParmasView parmasView) {
-        return  iSystemParmasService.isScoreSupplementary(parmasView);
+    public boolean isScoreSupplementary(UniversityInfoParmasView parmasView,String flag) {
+        return  iSystemParmasService.isScoreSupplementary(parmasView,flag);
     }
     /**
      * 根据分数及控制线 计算线差

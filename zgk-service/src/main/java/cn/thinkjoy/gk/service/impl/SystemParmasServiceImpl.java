@@ -97,12 +97,11 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
         SystemParmas systemParmas = selectSystemParmas(cate, provinceCode);
         List<BatchView> batchViews = new ArrayList<>();
         //拆分批次
-        String[] batchArr = systemParmas.getConfigValue().split(ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
+        String[] batchArr = ReportUtil.sortBatchArr(systemParmas.getConfigValue());//.split(ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
 
-        Integer flag=-1;
+        Integer flag = -1;
 
-        boolean isRecom=true
-                ,first=false;
+        boolean isRecom = true, first = false;
         for (int i = 0; i < batchArr.length; i++) {
             String batchLine = batchArr[i];
             //拆分 A类 B类 批次
@@ -115,7 +114,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
                     String btc = (i + 1) + "-" + String.valueOf(x + 1);
                     BatchView batchView = batchConfig(cate, btc, x, provinceCode, batchLine);
 
-                    boolean isFirst = !first ? getFirst(sap, provinceCode, btc, cate,logicTrend) : first;
+                    boolean isFirst = !first ? getFirst(sap, provinceCode, btc, cate, logicTrend) : first;
 
                     batchView.setFirst(first ? false : isFirst);
 
@@ -127,9 +126,10 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
                             batchView.setRecommend(true);
                             isRecom = false;
                         }
+
                         //是否是压线生
-                        if (isLine(logicTrend, btc, cate, provinceCode, score)) {
-                            flag = (i + 1) == 2 ? 3 : (i + 1);  //三批特殊处理  0：一批 1：二批 3：高职高专 4：三批
+                        if (isLine(logicTrend, btc, cate, provinceCode, score,"3")) {
+                            flag = (i + 1) == 2 ? 3 : (i + 1);  //三批特殊处理  0：一批 1：二批 3：三批 4：高职高专
                             batchView.setIsLine(true);
                             batchView.setFirst(false);
                             isRecom = false;
@@ -138,7 +138,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
                             batchView.setRecommend(true);
                             isRecom = false;
                         }
-                    }else
+                    } else
                         batchView.setConform(false);
 
                     batchViews.add(batchView);
@@ -148,7 +148,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
                 String batch = String.valueOf((i + 1));
                 BatchView batchView = batchConfig(cate, batch, 0, provinceCode, batchLine);
 
-                boolean isFirst = !first ? getFirst(sap, provinceCode, batch, cate,logicTrend) : first;
+                boolean isFirst = !first ? getFirst(sap, provinceCode, batch, cate, logicTrend) : first;
                 batchView.setFirst(first ? false : isFirst);
                 first = isFirst;
                 //批次线大于0 且分数大于等于批次线 表示用户分数已达标
@@ -159,8 +159,8 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
                         isRecom = false;
                     }
                     //是否是压线生
-                    if (isLine(logicTrend, batch, cate, provinceCode, score)) {
-                        flag = (i + 1) == 2 ? 3 : (i + 1);  //三批特殊处理  0：一批 1：二批 3：高职高专 4：三批
+                    if (isLine(logicTrend, batch, cate, provinceCode, score,"3")) {
+                        flag = (i + 1) == 2 ? 3 : (i + 1);  //三批特殊处理  0：一批 1：二批 3：三批 4：高职高专
                         batchView.setIsLine(true);
                         batchView.setFirst(false);
                         isRecom = false;
@@ -176,7 +176,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
             }
         }
 
-        return batchViews;
+        return ReportUtil.sortBatchResultArr(batchViews);
     }
     @Override
     public Integer getLineDiff(String batch, Integer score, Integer cate, String provinceCode) {
@@ -192,11 +192,11 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
         return line;
     }
     @Override
-    public boolean isScoreSupplementaryLindDiff(UniversityInfoParmasView parmasView) {
+    public boolean isScoreSupplementaryLindDiff(UniversityInfoParmasView parmasView,String flag) {
         boolean result = false;
 
         String[] equesBatch = ReportUtil.getBatchArr(parmasView.getBatch());
-        if(equesBatch[0].equals("3"))//高职高专不判断压线
+        if(equesBatch[0].equals(flag))//高职高专不判断压线
             return false;
 
         if (isOpenScore(parmasView)) {
@@ -226,11 +226,11 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
         return isScore == 1;
     }
     @Override
-    public boolean isScoreSupplementary(UniversityInfoParmasView parmasView) {
+    public boolean isScoreSupplementary(UniversityInfoParmasView parmasView,String flag) {
         boolean result = false;
 
         String[] equesBatch = ReportUtil.getBatchArr(parmasView.getBatch());
-        if(equesBatch[0].equals("3"))//高职高专不判断压线
+        if(equesBatch[0].equals(flag))//高职高专不判断压线
             return false;
 
 
@@ -288,7 +288,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
             return false;
 
         //是否为压线生
-        result=isLine(logicTrend,batch,cate,provinceCode,score);
+        result=isLine(logicTrend,batch,cate,provinceCode,score,"3"); //3:高职高专
         Integer plusValue= Integer.valueOf(systemParmas.getConfigValue());
 
 
@@ -300,7 +300,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
      * 是否为压线生
      * @return
      */
-    private boolean isLine(Integer logic,String batch,Integer cate,String procode,Integer score) {
+    private boolean isLine(Integer logic,String batch,Integer cate,String procode,Integer score,String flag) {
         boolean result = false;
         UniversityInfoParmasView universityInfoParmasView = new UniversityInfoParmasView();
         universityInfoParmasView.setBatch(batch);
@@ -310,9 +310,9 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
         ReportEnum.LogicTrend logicTrend = ReportEnum.LogicTrend.getLogic(logic);
         //线差
         if(logicTrend.equals(ReportEnum.LogicTrend.LINEDIFF)){
-            result = isScoreSupplementaryLindDiff(universityInfoParmasView);
+            result = isScoreSupplementaryLindDiff(universityInfoParmasView,flag);
         } else { //位次
-            result = isScoreSupplementary(universityInfoParmasView);
+            result = isScoreSupplementary(universityInfoParmasView,flag);
         }
 
         return result;
@@ -400,7 +400,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
         SystemParmas systemParmasL = selectSystemParmas(ct, provinceCode);//理
 
         String batch1 = batchLine;
-        String batch2 = getBatchNumberLine(viewBatch, systemParmasL.getConfigValue());
+        String batch2 = getBatchNumberLineSort(viewBatch, systemParmasL.getConfigValue());
         String[] bthArr1= ReportUtil.getBatchTagArr(batch1);
         String[] bthArr2= ReportUtil.getBatchTagArr(batch2);
 
@@ -434,6 +434,13 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
      */
     private String getBatchNumberLine(String batch,String configValue) {
         String[] lines = configValue.split(ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
+        String[] arr = ReportUtil.getBatchArr(batch);
+        return lines[(Integer.valueOf(arr[0]) - 1)];
+    }
+
+    private String getBatchNumberLineSort(String batch,String configValue)
+    {
+        String[] lines = ReportUtil.sortBatchArr(configValue);//.split(ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
         String[] arr = ReportUtil.getBatchArr(batch);
         return lines[(Integer.valueOf(arr[0]) - 1)];
     }
