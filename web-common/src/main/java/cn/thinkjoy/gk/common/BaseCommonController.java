@@ -67,7 +67,7 @@ public class BaseCommonController {
 		if(pojo == null){
 			ModeUtil.throwException(ERRORCODE.USER_EXPIRED);
 		}
-		return pojo.toString();
+		return pojo.getId().toString();
 	}
 
 	/**
