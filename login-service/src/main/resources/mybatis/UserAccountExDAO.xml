@@ -52,6 +52,7 @@
                 and acc.areaId = #{areaId}
             </if>
         </where>
+        limit 1
     </select>
 
     <select id="findUserAccountPojo" resultType="UserAccountPojo">

@@ -1,7 +1,9 @@
 package cn.thinkjoy.gk.service;
 
+import cn.thinkjoy.gk.entity.CheckBatchMsg;
 import cn.thinkjoy.gk.entity.SystemParmas;
 import cn.thinkjoy.gk.pojo.BatchView;
+import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,24 @@ public interface ISystemParmasService {
      * @return
      */
     List<BatchView> selectSystemParmas( Integer cate ,Integer score,String provinceCode);
+
+    /**
+     * 获取系统参数 --根据逻辑参数
+     * @param cate 科类
+     * @param score 分数
+     * @param provinceCode 省份
+     * @return
+     */
+    List<BatchView> selectSystemParmas( Integer cate ,Integer score,Integer sap,String provinceCode,Integer logicTrend);
+
+    /**
+     * 根据分数获取对应批次
+     * @param score
+     * @param provinceCode
+     * @param cate
+     * @return
+     */
+    String getBatchByScore(Integer score,String provinceCode,Integer cate);
 
     /**
      * 获取控制线
@@ -86,7 +106,7 @@ public interface ISystemParmasService {
      * @param precedence  输入位次
      * @return
      */
-    Integer getRankingRangeIndex(String proCode,Integer precedence,Integer majorType);
+    Integer getRankingRangeIndex(String proCode,Integer precedence,Integer majorType,String batch);
 
     /**
      * 获取当前位次符合的规则区间下标  By 批次
@@ -96,4 +116,53 @@ public interface ISystemParmasService {
      * @return
      */
     Integer getRankingRangeIndex(String batch,String proCode,Integer majorType);
+
+    /**
+     * 算法逻辑走向
+     * @param province
+     * @param cate
+     * @return
+     */
+    Integer getLogicTrend(String province,Integer cate);
+
+    /**
+     * 计算线差
+     * @param batch
+     * @param score
+     * @param cate
+     * @param provinceCode
+     * @return
+     */
+    public Integer getLineDiff(String batch, Integer score, Integer cate, String provinceCode);
+
+    /**
+     * 是否为压线生 --位次法
+     * @param parmasView
+     * @return
+     */
+    public boolean isScoreSupplementary(UniversityInfoParmasView parmasView,String flag);
+
+    /**
+     * 是否为压线生 --线差法
+     * @param parmasView
+     * @return
+     */
+    public boolean isScoreSupplementaryLindDiff(UniversityInfoParmasView parmasView,String flag);
+
+    /**
+     * 批次选择提示
+     * @param paramView
+     * @return
+     */
+    public CheckBatchMsg checkBatchAlert(UniversityInfoParmasView paramView);
+
+    /**
+     * 获取线差规则 下标
+     * @param lineDiff
+     * @param proCode
+     * @param majorType
+     * @param batch
+     * @return
+     */
+    public Integer getLineDiffRangeIndex(Integer lineDiff,String proCode,Integer majorType,String batch);
 }

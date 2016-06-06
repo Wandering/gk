@@ -43,6 +43,10 @@ public class ReportResultView implements Serializable {
      * 报告结果
      */
     private String reportResultJson;
+    /**
+     *扩展字段
+     */
+    private String extendProper;
 
     /**
      * 评测日期
@@ -119,6 +123,14 @@ public class ReportResultView implements Serializable {
 
     public void setReportResultJson(String reportResultJson) {
         this.reportResultJson = reportResultJson;
+    }
+
+    public String getExtendProper() {
+        return extendProper;
+    }
+
+    public void setExtendProper(String extendProper) {
+        this.extendProper = extendProper;
     }
 
     public Long getCreateTime() {

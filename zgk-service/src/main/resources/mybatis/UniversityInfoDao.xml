@@ -9,6 +9,7 @@
         <result column="isRange" property="isRange" jdbcType="BIT" />
         <result column="rankTrend" property="rankTrend" jdbcType="VARCHAR" />
         <result column="subjection" property="subjection" jdbcType="VARCHAR" />
+        <result column="areaName" property="areaName" jdbcType="VARCHAR" />
         <result column="type" property="type" jdbcType="INTEGER" />
         <result column="property" property="property" jdbcType="VARCHAR" />
         <result column="code" property="code" jdbcType="VARCHAR" />
@@ -30,12 +31,12 @@
     </sql>
     <sql id="Search_Column_List">
          bData.*,zgk_university.isProportion,zgk_university.isRange,zgk_university.rankTrend,zgk_university.subjection,zgk_university.type,zgk_university.property,province.id as areaId,
-        zgk_university_enroll.averageScore ,province.code as code,dict.name as typeName
+        province.name as areaName,zgk_university_enroll.averageScore ,province.code as code,dict.name as typeName
 --         sum(enrollingPlan.planEnrolling) as planEnrolling,
     </sql>
     <sql id="Search_Column_List_Ranking">
          bData.*,zgk_university.isProportion,zgk_university.isRange,zgk_university.rankTrend,zgk_university.subjection,zgk_university.type,zgk_university.property,province.id as areaId,
-         province.code as code,dict.name as typeName
+         province.name as areaName,province.code as code,dict.name as typeName
     </sql>
     <sql id="Base_Join_Search_Column">
         left join zgk_university as zgk_university on bData.universityId=zgk_university.id
@@ -80,6 +81,44 @@
 
             order by bData.enrollRate desc,bData.preScoreDiff desc   limit 60
         </where>
+    </select>
+    <!--按线差-->
+    <select id="selectUniversityInfoByLineDiff" resultMap="BaseResultMap" parameterType="java.util.Map" >
+        select <include refid="Search_Column_List_Ranking" /> from ${tableName} as bData
+        <include refid="Base_Join_Search_Column"/>
+        <where>
+            <if test="rankStart!=null and rankEnd!=null">
+                and  zgk_university.rank &gt;=#{rankStart,jdbcType=INTEGER}   and zgk_university.rank &lt;=#{rankEnd,jdbcType=INTEGER}
+            </if>
+            <if test="enrollStart!=null and enrollEnd!=null">
+                <choose>
+                    <when test="enrollStart==100 and enrollEnd==100">
+                        and  left(bData.enrollRate*100,7)=#{enrollEnd,jdbcType=INTEGER}
+                    </when>
+                    <otherwise>
+                        and  left(bData.enrollRate*100,7)&gt;=#{enrollStart,jdbcType=INTEGER} and  left(bData.enrollRate*100,7)&lt;#{enrollEnd,jdbcType=INTEGER}
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="scoreDiff!=null">
+                and bData.scoreDiff=#{scoreDiff,jdbcType=INTEGER}
+            </if>
+            <if test="isRank==true">
+                and zgk_university.rank is not null
+            </if>
+            and zgk_university.id is not null
+            and dict.type='UNIVERSITY_TYPE'
+            group by bData.universityId
+            <if test="isRank==true">
+                order by zgk_university.rank asc
+            </if>
+            <if test="isEnrolling==true and enrollOrder!=null and scoreDiffOrder!=null">
+                order by bData.enrollRate ${enrollOrder},preScoreDiff ${scoreDiffOrder}
+            </if>
+        </where>
+        <if test="isEnrolling==true and begin!=null and end!=null">
+            limit #{begin,jdbcType=INTEGER},#{end,jdbcType=INTEGER}
+        </if>
     </select>
     <!--按排名-->
     <select id="selectUniversityInfoByRanking" resultMap="BaseResultMap" parameterType="java.util.Map" >

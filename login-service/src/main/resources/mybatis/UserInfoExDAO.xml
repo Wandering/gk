@@ -96,6 +96,7 @@
         left join zgk_user_market market on info.id=market.accountId
         LEFT JOIN zgk_card card on card.userId=info.id
         WHERE info.id=#{id}
+        limit 1
     </select>
     <!--end-->
 </mapper>

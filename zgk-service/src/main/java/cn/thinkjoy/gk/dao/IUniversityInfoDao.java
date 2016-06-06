@@ -23,6 +23,15 @@ public interface IUniversityInfoDao extends IBaseDAO<UniversityInfoView> {
      * @return
      */
     public List<UniversityInfoView> selectUniversityInfoByRanking(Map map);
+
+    /**
+     * 院校清单List    --- 按线差   规则见DB zgk_system_parmas
+     * @param map
+     * @return
+     */
+    public List<UniversityInfoView> selectUniversityInfoByLineDiff(Map map);
+
+
     /**
      * 获取计划招生数
      * @param map

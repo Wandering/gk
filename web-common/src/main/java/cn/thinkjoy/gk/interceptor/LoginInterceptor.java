@@ -43,12 +43,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		LOGGER.info("url:" + url);
 
 		String value = request.getParameter("token");
-		if(null != value)
-		{
-			value = URLDecoder.decode(value,"UTF-8").toString();
-		}
 		String reqType = request.getParameter("req");
-
 		LOGGER.info("cookie:" + value);
 		String key = UserRedisConst.USER_KEY + value;
 

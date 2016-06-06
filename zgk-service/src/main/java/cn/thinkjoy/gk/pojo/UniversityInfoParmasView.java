@@ -26,9 +26,10 @@ public class UniversityInfoParmasView implements Serializable {
      */
     private String province;
     /**
-     * 批次  1 :一批 2: 二批 2-0:二批A类 2-1:二批B类.... 3: 高职 4:三批
+     * 策略批次  1 :一批 2: 二批 2-0:二批A类 2-1:二批B类.... 3: 高职 4:三批
      */
     private String batch;
+
     /**
      * 用户输入位次
      */
@@ -37,6 +38,11 @@ public class UniversityInfoParmasView implements Serializable {
      * 专业优先or院校优先    0:专业 1:院校
      */
     private Integer first;
+
+    /**
+     * 逻辑走向
+     */
+    private Integer logic;
 
 
     public Integer getVersion() {
@@ -93,5 +99,13 @@ public class UniversityInfoParmasView implements Serializable {
 
     public void setFirst(Integer first) {
         this.first = first;
+    }
+
+    public Integer getLogic() {
+        return logic;
+    }
+
+    public void setLogic(Integer logic) {
+        this.logic = logic;
     }
 }

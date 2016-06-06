@@ -68,4 +68,34 @@ public class ReportEnum {
 
         public abstract byte getValue();
     }
+    /**
+     * 算法走向  - 1:位次法 2:分数转换位次  3：线差
+     */
+    public enum LogicTrend {
+
+        PRECEDENCE(1),
+        SCORECONVER(2),
+        LINEDIFF(3);
+
+        private final Integer logic;
+
+        private LogicTrend(Integer logic) {
+            this.logic = logic;
+        }
+
+        public static LogicTrend getLogic(Integer num) {
+            switch (num) {
+                case 1:
+                    return LogicTrend.PRECEDENCE;
+                case 2:
+                    return LogicTrend.SCORECONVER;
+                case 3:
+                    return LogicTrend.LINEDIFF;
+                default:
+                    return LogicTrend.PRECEDENCE;
+            }
+        }
+    }
+
+
 }

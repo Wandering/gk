@@ -58,6 +58,9 @@
             <if test="activeDate!=null">
                 activeDate = #{activeDate},
             </if>
+            <if test="isActiveGkxt!=null">
+                isActiveGkxt = #{isActiveGkxt},
+            </if>
         </trim>
         WHERE
         id = #{id}

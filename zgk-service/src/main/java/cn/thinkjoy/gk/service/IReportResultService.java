@@ -34,6 +34,13 @@ public interface IReportResultService {
     ReportResult  selectModelOne(Map map);
 
     /**
+     * 多次批次筛选记录
+     * @param map
+     * @return
+     */
+    public List<ReportResult> selectHistoryList(Map map);
+
+    /**
      * 获取位次列表
      * @param map
      * @return
@@ -68,6 +75,16 @@ public interface IReportResultService {
      * @return
      */
     UserReportResultView getUserReportResultView(Long userId);
+
+    /**
+     * 多次填报 结果
+     * @param userId
+     * @param cate
+     * @param batch
+     * @param provinceCode
+     * @return
+     */
+    public List<UserReportResultView>  getUserReportResultList(Long userId);
 
 
     /**

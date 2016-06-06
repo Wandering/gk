@@ -21,4 +21,13 @@ public interface IRankingRoleParmasService {
      * @return
      */
     public List<RankingRoleParmas> selectRankingRuleParmasList(Map map);
+
+
+    /**
+     * 获取线差法动态参数 对象
+     * @param map
+     * @return
+     */
+    public List<RankingRoleParmas> selectLineDiffRuleParmasList(Map map);
+
 }
