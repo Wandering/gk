@@ -2,14 +2,15 @@ package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.gk.common.ReportUtil;
 import cn.thinkjoy.gk.dao.IReportResultDao;
+import cn.thinkjoy.gk.dao.IRiskForecastDAO;
 import cn.thinkjoy.gk.entity.ReportResult;
+import cn.thinkjoy.gk.entity.RiskForecast;
 import cn.thinkjoy.gk.entity.SystemParmas;
-import cn.thinkjoy.gk.entity.ReportUserInfo;
 import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.service.IReportResultService;
+import cn.thinkjoy.gk.service.IReportUserInfoService;
 import cn.thinkjoy.gk.service.ISystemParmasService;
 import cn.thinkjoy.gk.service.IUniversityMajorEnrollingService;
-import cn.thinkjoy.gk.service.IReportUserInfoService;
 import com.alibaba.dubbo.common.utils.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
@@ -17,10 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by douzy on 16/3/16.
@@ -36,6 +34,8 @@ public class ReportResultServiceImpl implements IReportResultService {
     IUniversityMajorEnrollingService iUniversityMajorEnrollingService;
     @Resource
     IReportUserInfoService iReportUserInfoService;
+    @Resource
+    IRiskForecastDAO iRiskForecastDAO;
 
     /**
      * 保存志愿报告
@@ -193,6 +193,38 @@ public class ReportResultServiceImpl implements IReportResultService {
             userReportResultView.setUserId(reportResult.getUserId());
         }
         return userReportResultView;
+    }
+
+    /**
+     * 同步院校及专业信息至动态风险表
+     * @param reportResult
+     * @return
+     */
+    @Override
+    public boolean InsertRiskForecast(ReportResult reportResult) {
+        Integer result = 0;
+        List<SelfReportResultView> selfReportResultViews = getUnSerializableReports(reportResult.getReportResultJson());
+
+        for (SelfReportResultView selfReportResultView : selfReportResultViews) {
+            RiskForecast riskForecast = new RiskForecast();
+            //院校
+            SelfReportUniversityView selfReportUniversityView = selfReportResultView.getSelfReportUniversityViewList();
+            riskForecast.setUniversityId(Long.valueOf(selfReportUniversityView.getId()));
+            riskForecast.setUniversityName(selfReportUniversityView.getName());
+            //专业
+            List<SelfReportMajorView> selfReportMajorViews = selfReportResultView.getSelfReportUniversityViewList().getSelfReportMajorViewList();
+            for (SelfReportMajorView selfReportMajorView : selfReportMajorViews) {
+                if (!StringUtils.isBlank(selfReportMajorView.getName())) {
+                    riskForecast.setMajorName(selfReportMajorView.getName());
+                    riskForecast.setPlanEnrolling(selfReportMajorView.getPlanEnrolling());
+                    riskForecast.setCreateTime(System.currentTimeMillis());
+                    result = iRiskForecastDAO.insert(riskForecast);
+                }
+            }
+
+        }
+
+        return result > 0;
     }
     /**
      * 评估结果输出----获取报告展示 -- 用户信息部分

@@ -5,7 +5,16 @@ package cn.thinkjoy.gk.protocol;
  */
 public enum ERRORCODE {
 
-	PARAM_ERROR("0100001", "参数错误"), FAIL("0100002", "失败"), PHONE_FORMAT_ERROR("0100003", "电话号码格式错误"), ACCOUNT_NO_EXIST("0100004", "账户不存在"), TEACHER_NO_EXIST("0100005", "教师不存在"), PARENT_NO_EXIST("0100006", "家长不存在"), CHILD_NO_EXIST("0100007", "孩子不存在"), STUDENT_NO_EXIST("0100008", "学生不存在"), CLASS_NO_EXIST("0100009", "班级不存在"), GROUP_NO_EXIST("0100010", "群组不存在"),
+	PARAM_ERROR("0100001", "参数错误"),
+	FAIL("0100002", "失败"),
+	PHONE_FORMAT_ERROR("0100003", "电话号码格式错误"),
+	ACCOUNT_NO_EXIST("0100004", "账户不存在"),
+	TEACHER_NO_EXIST("0100005", "教师不存在"),
+	PARENT_NO_EXIST("0100006", "家长不存在"),
+	CHILD_NO_EXIST("0100007", "孩子不存在"),
+	STUDENT_NO_EXIST("0100008", "学生不存在"),
+	CLASS_NO_EXIST("0100009", "班级不存在"),
+	GROUP_NO_EXIST("0100010", "群组不存在"),
 	SCHOOL_NO_EXIST("0100011", "学校不存在"),
 	USER_NO_EXIST("0100012", "用户不存在"),
 
@@ -15,7 +24,12 @@ public enum ERRORCODE {
 	 * 登录
 	 */
 
-	LOGIN_PHONE_FORMAT_ERROR("0200001", "电话号码格式错误"), LOGIN_ACCOUNT_NO_EXIST("0200002", "账户不存在"), LOGIN_PASSWORD_ERROR("0200003", "密码错误"), LOGIN_ERROR("0200004", "登录失败"),
+	LOGIN_PHONE_FORMAT_ERROR("0200001", "电话号码格式错误"),
+	LOGIN_ACCOUNT_NO_EXIST("0200002", "账户不存在"),
+	LOGIN_PASSWORD_ERROR("0200003", "密码错误"),
+	LOGIN_ERROR("0200004", "登录失败"),
+	PHONENUM_HAS_EXIST("0200005", "手机号码已存在"),
+	PHONENUM_NOT_EXIST("0200006", "手机号不存在"),
 
 	/**
 	 * 验证码输入错误
@@ -27,12 +41,16 @@ public enum ERRORCODE {
 	 * 验证码
 	 */
 
-	CHECK_SMSCODE_ERROR("0400001", "验证码输入错误"), CHECK_SMSCODE_EXPIRE("0400002", "验证码失效"),
+	CHECK_SMSCODE_ERROR("0400001", "验证码输入错误"),
+	CHECK_SMSCODE_EXPIRE("0400002", "验证码失效"),
+	CHECK_SMSCODE_NOT_EXIST("0400003", "验证码过期或不存在，请重新获取!"),
+
 	/**
 	 * 发送验证码失败
 	 */
 
-	SEND_SMSCODE_ERROR("0500001", "发送验证码失败"), SEND_SMSCODE_MORE("0500002", "获取验证码太频烦,请稍后再试"),
+	SEND_SMSCODE_ERROR("0500001", "发送验证码失败"),
+	SEND_SMSCODE_MORE("0500002", "获取验证码太频烦,请稍后再试"),
 	ORDER_VIP_REPEAT("0600001", "重复订购"),
 	PARAM_ISNULL("0700001","参数不能为空"),
 	NO_RECORD("0800001","无记录"),
@@ -44,6 +62,7 @@ public enum ERRORCODE {
 	NO_LOGIN("1000004","请先登录后再进行操作"),
 	VERIFY_CODE_ERROR("0100005", "验证码错误!"),
 	NOT_IS_VIP_ERROR("0100006", "升级成VIP用户才可使用该功能，快点升级VIP用户去吧！"),
+	CARD_HAS_ACTIVATE("0100007", "该卡已被激活!"),
 
 
 	UPLOAD_ERROR_0("1100001", "非法上传!"),

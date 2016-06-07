@@ -16,6 +16,11 @@ public class SelfReportMajorView implements Serializable {
      */
     private String name;
 
+    /**
+     * 专业招生计划
+     */
+    private Integer planEnrolling;
+
     public Integer getId() {
         return id;
     }
@@ -30,5 +35,13 @@ public class SelfReportMajorView implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getPlanEnrolling() {
+        return planEnrolling;
+    }
+
+    public void setPlanEnrolling(Integer planEnrolling) {
+        this.planEnrolling = planEnrolling;
     }
 }

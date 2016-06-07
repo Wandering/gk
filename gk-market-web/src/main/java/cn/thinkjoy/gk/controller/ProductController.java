@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.util.List;
 
 /**
@@ -84,4 +87,32 @@ public class ProductController extends ZGKBaseController {
         return product;
     }
 
+    /**
+     * 获取商品详情
+     * @return
+     */
+    @RequestMapping(value = "findAllProduct", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Product> findAllProduct(@RequestParam(value="userKey",required=true) String userKey) {
+        List<Product> productList = productService.findAll();
+        if(null != productList && productList.size() > 0)
+        {
+            long areaId = getAreaId();
+            for (Product product: productList) {
+                product.setPrice(null);
+                if("330000".equals(areaId+""))
+                {
+                    if("10000001".equals(product.getCode()+""))
+                    {
+                        product.setMarketPrice("680.00");
+                    }
+                    if("10000002".equals(product.getCode()+""))
+                    {
+                        product.setMarketPrice("750.00");
+                    }
+                }
+            }
+        }
+        return productList;
+    }
 }

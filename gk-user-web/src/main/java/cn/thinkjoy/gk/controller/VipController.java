@@ -10,6 +10,7 @@ import cn.thinkjoy.gk.domain.Card;
 import cn.thinkjoy.gk.pojo.CardPojo;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.protocol.ModeUtil;
 import cn.thinkjoy.gk.service.ICardExService;
 import cn.thinkjoy.gk.service.ICardService;
 import org.slf4j.Logger;
@@ -50,11 +51,12 @@ public class VipController extends ZGKBaseController implements Watched {
         }
         Map<String,String> map=new HashMap<>();
         map.put("cardNumber",cardPojo.getCardNumber());
-
-        map.put("status", "0");
         Card card=cardExService.getVipCardInfo(map);
-        if(null==card ){
-            throw new BizException(ERRORCODE.VIP_CARD_NOT_INVALID.getCode(), ERRORCODE.VIP_CARD_NOT_INVALID.getMessage());
+        if(null==card){
+            ModeUtil.throwException(ERRORCODE.VIP_CARD_NOT_INVALID);
+        }
+        if(card.getStatus() == 1){
+            ModeUtil.throwException(ERRORCODE.CARD_HAS_ACTIVATE);
         }
         if(!card.getPassword().equals(cardPojo.getPassword())){
             throw new BizException("error","卡密码错误！");

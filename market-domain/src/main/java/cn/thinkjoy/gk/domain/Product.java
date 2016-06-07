@@ -23,8 +23,8 @@ public class Product extends BaseDomain{
     private String name;
     private Integer type;
     private String unit;
-    private Double marketPrice;
-    private Double price;
+    private String marketPrice;
+    private String price;
     private String icon;
     private String action;
     private String intro;
@@ -60,20 +60,23 @@ public class Product extends BaseDomain{
     public String getUnit() {
         return this.unit;
     }
-    public void setMarketPrice(Double value) {
-        this.marketPrice = value;
+
+    public String getMarketPrice() {
+        return marketPrice;
     }
 
-    public Double getMarketPrice() {
-        return this.marketPrice;
-    }
-    public void setPrice(Double value) {
-        this.price = value;
+    public void setMarketPrice(String marketPrice) {
+        this.marketPrice = marketPrice;
     }
 
-    public Double getPrice() {
-        return this.price;
+    public String getPrice() {
+        return price;
     }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
     public void setIcon(String value) {
         this.icon = value;
     }

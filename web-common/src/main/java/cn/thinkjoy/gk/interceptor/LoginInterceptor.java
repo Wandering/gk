@@ -17,9 +17,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
@@ -32,47 +33,49 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        UserAreaContext.setCurrentUserArea(request.getParameter("userKey")==null?"zj":request.getParameter("userKey"));
-        String url = request.getServletPath();
-        //兼容jsonp-start
-        synchronized (this) {
-            String callback = request.getParameter("callback");
-            this.setCallback(callback);
-        }
-        //兼容jsonp-end
-        LOGGER.info("url:" + url);
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+		UserAreaContext.setCurrentUserArea(request.getParameter("userKey") == null ? "zj" : request.getParameter("userKey"));
+		String url = request.getServletPath();
+		//兼容jsonp-start
+		synchronized (this) {
+			String callback = request.getParameter("callback");
+			this.setCallback(callback);
+		}
+		//兼容jsonp-end
+		LOGGER.info("url:" + url);
 
 		String value = request.getParameter("token");
 		String reqType = request.getParameter("req");
 
-		LOGGER.info("cookie:"+value);
-		String key = UserRedisConst.USER_KEY+value;
+		LOGGER.info("cookie:" + value);
+		String key = UserRedisConst.USER_KEY + value;
 
 		boolean redisFlag = RedisUtil.getInstance().exists(key);
-		LOGGER.info("redis is exists:"+ redisFlag);
-		if(redisFlag)
-		{
+		LOGGER.info("redis is exists:" + redisFlag);
+		if (redisFlag) {
 			callWhenAuthenticationSuccess(key);
 		}
-		if(!ServletPathConst.MAPPING_URLS.contains(url)){
+		if (!ServletPathConst.MAPPING_URLS.contains(url)) {
 			return true;
 		}
 
-		if (StringUtils.isEmpty(value)||!redisFlag) {
+		if (StringUtils.isEmpty(value) || !redisFlag) {
 			if (reqType != null && reqType.equals("ajax")) {
 
 				/**************后期优化**************/
+				response.setCharacterEncoding("UTF-8");
 				try {
-					PrintWriter out = response.getWriter();
+					ServletOutputStream out = response.getOutputStream();
 					out.print("{\"rtnCode\":\"1000004\",\"msg\":\"请先登录后再进行操作\"}");
-				} catch (Exception e) {
+					out.flush();
+					out.close();
+				} catch (IOException ex) {
 					throw new BizException("1000004", "请先登录后再进行操作");
 				}
 				/**************后期优化**************/
 
 			} else
-				throw new BizException("1000004","请先登录后再进行操作");
+				throw new BizException("1000004", "请先登录后再进行操作");
 
 		}
 		return true;

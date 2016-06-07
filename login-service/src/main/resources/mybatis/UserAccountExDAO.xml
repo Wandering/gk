@@ -131,5 +131,55 @@
             </if>
         </where>
     </select>
+
+    <select id="findUserInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        select acc.account,info.provinceId,info.cityId,info.countyId
+        from zgk_user_account acc
+        left join zgk_user_info info on acc.id=info.id
+        where acc.id=#{accountId}
+        limit 0, 1
+    </select>
+
+    <select id="findDepartMent" parameterType="java.util.HashMap" resultType="Department">
+        select
+        id,
+        departmentCode,
+        companyCode,
+        parentCode,
+        departmentPhone,
+        departmentFax,
+        departmentPrincipal,
+        departmentName,
+        status,
+        seqSort,
+        description,
+        creator,
+        createDate,
+        lastModDate,
+        lastModifier,
+        roleType,
+        areaCode,
+        salePrice,
+        goodsAddress
+        FROM zgk_system.k12system_department
+        WHERE areaCode = #{areaCode}
+        limit 0,1
+    </select>
+
+    <select id="getOrderList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        select
+        od.order_no as orderNo,
+        od.product_price as amount,
+        od.create_date as createDate,
+        od.status as payStatus,
+		od.goods_count as productNum,
+		od.product_type as productType,
+		pro.price as unitPrice,
+		pro.`name` as productName
+        from zgk_order od
+        LEFT JOIN zgk_product pro on od.product_type=pro.type
+        where od.user_id=#{userId} and od.state!='Y'
+        order by od.create_date desc
+    </select>
 </mapper>
 

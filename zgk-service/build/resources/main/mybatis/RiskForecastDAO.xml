@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IRiskForecastDAO">
+    <insert id="insert" parameterType="cn.thinkjoy.gk.entity.RiskForecast">
+        INSERT INTO zgk_risk_forecast (
+        university_id,
+        university_name,
+        major_name,
+        plan_enrolling,
+        create_time
+        ) VALUES (
+        #{universityId},
+        #{universityName},
+        #{majorName},
+        #{planEnrolling},
+        #{createTime}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+</mapper>
