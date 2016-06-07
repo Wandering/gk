@@ -1,0 +1,890 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.information.IPolicyInterpretationDAO">
+<!--
+insert
+update
+updateNull
+deleteById
+deleteByCondition
+deleteByProperty
+fetch
+findOne
+findList
+findAll
+queryPage
+like
+queryList
+queryOne
+count
+selectMaxId
+updateOrSave
+selectOne
+selectList
+-->
+
+    <sql id="Base_Column_List">
+        id as id ,
+        title as title ,
+        provinceId as provinceId ,
+        admissionBatchId as admissionBatchId ,
+        categoryName as categoryName ,
+        content as content ,
+        status as status ,
+        creator as creator ,
+        createDate as createDate ,
+        lastModifier as lastModifier ,
+        lastModDate as lastModDate ,
+        areaId as areaId ,
+        htmlId as htmlId ,
+        subContent as subContent 
+    </sql>
+    <insert id="insert" parameterType="PolicyInterpretation">
+        INSERT INTO zgk_policy_interpretation (
+        title,
+        provinceId,
+        admissionBatchId,
+        categoryName,
+        content,
+        status,
+        creator,
+        createDate,
+        lastModifier,
+        lastModDate,
+        areaId,
+        htmlId,
+        subContent
+        ) VALUES (
+        #{title},
+        #{provinceId},
+        #{admissionBatchId},
+        #{categoryName},
+        #{content},
+        #{status},
+        #{creator},
+        #{createDate},
+        #{lastModifier},
+        #{lastModDate},
+        #{areaId},
+        #{htmlId},
+        #{subContent}
+        )
+            <selectKey resultType="java.lang.Long" keyProperty="id">
+                SELECT LAST_INSERT_ID() AS ID
+            </selectKey>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="PolicyInterpretation">
+        UPDATE zgk_policy_interpretation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title!=null">
+                title = #{title},
+            </if>
+            <if test="provinceId!=null">
+                provinceId = #{provinceId},
+            </if>
+            <if test="admissionBatchId!=null">
+                admissionBatchId = #{admissionBatchId},
+            </if>
+            <if test="categoryName!=null">
+                categoryName = #{categoryName},
+            </if>
+            <if test="content!=null">
+                content = #{content},
+            </if>
+            <if test="status!=null">
+                status = #{status},
+            </if>
+            <if test="creator!=null">
+                creator = #{creator},
+            </if>
+            <if test="createDate!=null">
+                createDate = #{createDate},
+            </if>
+            <if test="lastModifier!=null">
+                lastModifier = #{lastModifier},
+            </if>
+            <if test="lastModDate!=null">
+                lastModDate = #{lastModDate},
+            </if>
+            <if test="areaId!=null">
+                areaId = #{areaId},
+            </if>
+            <if test="htmlId!=null">
+                htmlId = #{htmlId},
+            </if>
+            <if test="subContent!=null">
+                subContent = #{subContent},
+            </if>
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateMap">
+        UPDATE zgk_policy_interpretation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.title!=null">
+                title = #{map.title},
+            </if>
+            <if test="map.provinceId!=null">
+                provinceId = #{map.provinceId},
+            </if>
+            <if test="map.admissionBatchId!=null">
+                admissionBatchId = #{map.admissionBatchId},
+            </if>
+            <if test="map.categoryName!=null">
+                categoryName = #{map.categoryName},
+            </if>
+            <if test="map.content!=null">
+                content = #{map.content},
+            </if>
+            <if test="map.status!=null">
+                status = #{map.status},
+            </if>
+            <if test="map.creator!=null">
+                creator = #{map.creator},
+            </if>
+            <if test="map.createDate!=null">
+                createDate = #{map.createDate},
+            </if>
+            <if test="map.lastModifier!=null">
+                lastModifier = #{map.lastModifier},
+            </if>
+            <if test="map.lastModDate!=null">
+                lastModDate = #{map.lastModDate},
+            </if>
+            <if test="map.areaId!=null">
+                areaId = #{map.areaId},
+            </if>
+            <if test="map.htmlId!=null">
+                htmlId = #{map.htmlId},
+            </if>
+            <if test="map.subContent!=null">
+                subContent = #{map.subContent},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE zgk_policy_interpretation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.title!=null">
+                title = #{update.title},
+            </if>
+            <if test="update.provinceId!=null">
+                provinceId = #{update.provinceId},
+            </if>
+            <if test="update.admissionBatchId!=null">
+                admissionBatchId = #{update.admissionBatchId},
+            </if>
+            <if test="update.categoryName!=null">
+                categoryName = #{update.categoryName},
+            </if>
+            <if test="update.content!=null">
+                content = #{update.content},
+            </if>
+            <if test="update.status!=null">
+                status = #{update.status},
+            </if>
+            <if test="update.creator!=null">
+                creator = #{update.creator},
+            </if>
+            <if test="update.createDate!=null">
+                createDate = #{update.createDate},
+            </if>
+            <if test="update.lastModifier!=null">
+                lastModifier = #{update.lastModifier},
+            </if>
+            <if test="update.lastModDate!=null">
+                lastModDate = #{update.lastModDate},
+            </if>
+            <if test="update.areaId!=null">
+                areaId = #{update.areaId},
+            </if>
+            <if test="update.htmlId!=null">
+                htmlId = #{update.htmlId},
+            </if>
+            <if test="update.subContent!=null">
+                subContent = #{update.subContent},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.title!=null">
+                AND title = #{condition.title}
+            </if>
+            <if test="condition.provinceId!=null">
+                AND provinceId = #{condition.provinceId}
+            </if>
+            <if test="condition.admissionBatchId!=null">
+                AND admissionBatchId = #{condition.admissionBatchId}
+            </if>
+            <if test="condition.categoryName!=null">
+                AND categoryName = #{condition.categoryName}
+            </if>
+            <if test="condition.content!=null">
+                AND content = #{condition.content}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
+            <if test="condition.htmlId!=null">
+                AND htmlId = #{condition.htmlId}
+            </if>
+            <if test="condition.subContent!=null">
+                AND subContent = #{condition.subContent}
+            </if>
+        </trim>
+    </update>
+
+    <insert id="insertMap" >
+        INSERT INTO zgk_policy_interpretation (
+                title,
+                provinceId,
+                admissionBatchId,
+                categoryName,
+                content,
+                status,
+                creator,
+                createDate,
+                lastModifier,
+                lastModDate,
+                areaId,
+                htmlId,
+                subContent
+        ) VALUES (
+                    #{map.title},
+                    #{map.provinceId},
+                    #{map.admissionBatchId},
+                    #{map.categoryName},
+                    #{map.content},
+                    #{map.status},
+                    #{map.creator},
+                    #{map.createDate},
+                    #{map.lastModifier},
+                    #{map.lastModDate},
+                    #{map.areaId},
+                    #{map.htmlId},
+                    #{map.subContent}
+        )
+    </insert>
+
+
+    <update id="updateNull" parameterType="PolicyInterpretation">
+        UPDATE zgk_policy_interpretation
+        <trim prefix="SET" suffixOverrides=",">
+            title = #{title},
+            provinceId = #{provinceId},
+            admissionBatchId = #{admissionBatchId},
+            categoryName = #{categoryName},
+            content = #{content},
+            status = #{status},
+            creator = #{creator},
+            createDate = #{createDate},
+            lastModifier = #{lastModifier},
+            lastModDate = #{lastModDate},
+            areaId = #{areaId},
+            htmlId = #{htmlId},
+            subContent = #{subContent},
+        </trim>
+        WHERE
+        id = #{id} 
+    </update>
+
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM zgk_policy_interpretation
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </delete>
+
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM zgk_policy_interpretation
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="title!=null">
+                AND title = #{title}
+            </if>
+            <if test="provinceId!=null">
+                AND provinceId = #{provinceId}
+            </if>
+            <if test="admissionBatchId!=null">
+                AND admissionBatchId = #{admissionBatchId}
+            </if>
+            <if test="categoryName!=null">
+                AND categoryName = #{categoryName}
+            </if>
+            <if test="content!=null">
+                AND content = #{content}
+            </if>
+            <if test="status!=null">
+                AND status = #{status}
+            </if>
+            <if test="creator!=null">
+                AND creator = #{creator}
+            </if>
+            <if test="createDate!=null">
+                AND createDate = #{createDate}
+            </if>
+            <if test="lastModifier!=null">
+                AND lastModifier = #{lastModifier}
+            </if>
+            <if test="lastModDate!=null">
+                AND lastModDate = #{lastModDate}
+            </if>
+            <if test="areaId!=null">
+                AND areaId = #{areaId}
+            </if>
+            <if test="htmlId!=null">
+                AND htmlId = #{htmlId}
+            </if>
+            <if test="subContent!=null">
+                AND subContent = #{subContent}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM zgk_policy_interpretation WHERE
+        ${property} = #{value}
+    </delete>
+
+    <select id="fetch" parameterType="java.lang.Long" resultType="PolicyInterpretation">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_policy_interpretation
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="PolicyInterpretation">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_policy_interpretation WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="PolicyInterpretation">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_policy_interpretation WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="PolicyInterpretation">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_policy_interpretation
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="PolicyInterpretation">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                        <if test="selector.id!=null">
+                            , id
+                        </if>
+                        <if test="selector.title!=null">
+                            , title
+                        </if>
+                        <if test="selector.provinceId!=null">
+                            , provinceId
+                        </if>
+                        <if test="selector.admissionBatchId!=null">
+                            , admissionBatchId
+                        </if>
+                        <if test="selector.categoryName!=null">
+                            , categoryName
+                        </if>
+                        <if test="selector.content!=null">
+                            , content
+                        </if>
+                        <if test="selector.status!=null">
+                            , status
+                        </if>
+                        <if test="selector.creator!=null">
+                            , creator
+                        </if>
+                        <if test="selector.createDate!=null">
+                            , createDate
+                        </if>
+                        <if test="selector.lastModifier!=null">
+                            , lastModifier
+                        </if>
+                        <if test="selector.lastModDate!=null">
+                            , lastModDate
+                        </if>
+                        <if test="selector.areaId!=null">
+                            , areaId
+                        </if>
+                        <if test="selector.htmlId!=null">
+                            , htmlId
+                        </if>
+                        <if test="selector.subContent!=null">
+                            , subContent
+                        </if>
+            </trim>
+        </if>
+        <if test="selector==null">
+        <include refid="Base_Column_List" />
+        </if>
+        FROM zgk_policy_interpretation
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.id!=null">
+                ${condition.groupOp}   ${condition.id.field}  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.title!=null">
+                ${condition.groupOp}   ${condition.title.field}  ${condition.title.op}  #{condition.title.data}
+            </if>
+            <if test="condition.provinceId!=null">
+                ${condition.groupOp}   ${condition.provinceId.field}  ${condition.provinceId.op}  #{condition.provinceId.data}
+            </if>
+            <if test="condition.admissionBatchId!=null">
+                ${condition.groupOp}   ${condition.admissionBatchId.field}  ${condition.admissionBatchId.op}  #{condition.admissionBatchId.data}
+            </if>
+            <if test="condition.categoryName!=null">
+                ${condition.groupOp}   ${condition.categoryName.field}  ${condition.categoryName.op}  #{condition.categoryName.data}
+            </if>
+            <if test="condition.content!=null">
+                ${condition.groupOp}   ${condition.content.field}  ${condition.content.op}  #{condition.content.data}
+            </if>
+            <if test="condition.status!=null">
+                ${condition.groupOp}   ${condition.status.field}  ${condition.status.op}  #{condition.status.data}
+            </if>
+            <if test="condition.creator!=null">
+                ${condition.groupOp}   ${condition.creator.field}  ${condition.creator.op}  #{condition.creator.data}
+            </if>
+            <if test="condition.createDate!=null">
+                ${condition.groupOp}   ${condition.createDate.field}  ${condition.createDate.op}  #{condition.createDate.data}
+            </if>
+            <if test="condition.lastModifier!=null">
+                ${condition.groupOp}   ${condition.lastModifier.field}  ${condition.lastModifier.op}  #{condition.lastModifier.data}
+            </if>
+            <if test="condition.lastModDate!=null">
+                ${condition.groupOp}   ${condition.lastModDate.field}  ${condition.lastModDate.op}  #{condition.lastModDate.data}
+            </if>
+            <if test="condition.areaId!=null">
+                ${condition.groupOp}   ${condition.areaId.field}  ${condition.areaId.op}  #{condition.areaId.data}
+            </if>
+            <if test="condition.htmlId!=null">
+                ${condition.groupOp}   ${condition.htmlId.field}  ${condition.htmlId.op}  #{condition.htmlId.data}
+            </if>
+            <if test="condition.subContent!=null">
+                ${condition.groupOp}   ${condition.subContent.field}  ${condition.subContent.op}  #{condition.subContent.data}
+            </if>
+
+
+    </where>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="PolicyInterpretation">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                    <if test="selector.id!=null">
+                        , id
+                    </if>
+                    <if test="selector.title!=null">
+                        , title
+                    </if>
+                    <if test="selector.provinceId!=null">
+                        , provinceId
+                    </if>
+                    <if test="selector.admissionBatchId!=null">
+                        , admissionBatchId
+                    </if>
+                    <if test="selector.categoryName!=null">
+                        , categoryName
+                    </if>
+                    <if test="selector.content!=null">
+                        , content
+                    </if>
+                    <if test="selector.status!=null">
+                        , status
+                    </if>
+                    <if test="selector.creator!=null">
+                        , creator
+                    </if>
+                    <if test="selector.createDate!=null">
+                        , createDate
+                    </if>
+                    <if test="selector.lastModifier!=null">
+                        , lastModifier
+                    </if>
+                    <if test="selector.lastModDate!=null">
+                        , lastModDate
+                    </if>
+                    <if test="selector.areaId!=null">
+                        , areaId
+                    </if>
+                    <if test="selector.htmlId!=null">
+                        , htmlId
+                    </if>
+                    <if test="selector.subContent!=null">
+                        , subContent
+                    </if>
+            </trim>
+        </if>
+        <if test="selector==null">
+            <include refid="Base_Column_List" />
+        </if>
+        FROM zgk_policy_interpretation
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id like CONCAT('%', #{condition.id} , '%')
+            </if>
+            <if test="condition.title!=null">
+                AND title like CONCAT('%', #{condition.title} , '%')
+            </if>
+            <if test="condition.provinceId!=null">
+                AND provinceId like CONCAT('%', #{condition.provinceId} , '%')
+            </if>
+            <if test="condition.admissionBatchId!=null">
+                AND admissionBatchId like CONCAT('%', #{condition.admissionBatchId} , '%')
+            </if>
+            <if test="condition.categoryName!=null">
+                AND categoryName like CONCAT('%', #{condition.categoryName} , '%')
+            </if>
+            <if test="condition.content!=null">
+                AND content like CONCAT('%', #{condition.content} , '%')
+            </if>
+            <if test="condition.status!=null">
+                AND status like CONCAT('%', #{condition.status} , '%')
+            </if>
+            <if test="condition.creator!=null">
+                AND creator like CONCAT('%', #{condition.creator} , '%')
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate like CONCAT('%', #{condition.createDate} , '%')
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier like CONCAT('%', #{condition.lastModifier} , '%')
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate like CONCAT('%', #{condition.lastModDate} , '%')
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId like CONCAT('%', #{condition.areaId} , '%')
+            </if>
+            <if test="condition.htmlId!=null">
+                AND htmlId like CONCAT('%', #{condition.htmlId} , '%')
+            </if>
+            <if test="condition.subContent!=null">
+                AND subContent like CONCAT('%', #{condition.subContent} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="PolicyInterpretation">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.title!=null">
+                    , title
+                </if>
+                <if test="selector.provinceId!=null">
+                    , provinceId
+                </if>
+                <if test="selector.admissionBatchId!=null">
+                    , admissionBatchId
+                </if>
+                <if test="selector.categoryName!=null">
+                    , categoryName
+                </if>
+                <if test="selector.content!=null">
+                    , content
+                </if>
+                <if test="selector.status!=null">
+                    , status
+                </if>
+                <if test="selector.creator!=null">
+                    , creator
+                </if>
+                <if test="selector.createDate!=null">
+                    , createDate
+                </if>
+                <if test="selector.lastModifier!=null">
+                    , lastModifier
+                </if>
+                <if test="selector.lastModDate!=null">
+                    , lastModDate
+                </if>
+                <if test="selector.areaId!=null">
+                    , areaId
+                </if>
+                <if test="selector.htmlId!=null">
+                    , htmlId
+                </if>
+                <if test="selector.subContent!=null">
+                    , subContent
+                </if>
+        </trim>
+    </if>
+<if test="selector==null">
+<include refid="Base_Column_List" />
+</if>
+        FROM zgk_policy_interpretation
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.title!=null">
+                AND title = #{condition.title}
+            </if>
+            <if test="condition.provinceId!=null">
+                AND provinceId = #{condition.provinceId}
+            </if>
+            <if test="condition.admissionBatchId!=null">
+                AND admissionBatchId = #{condition.admissionBatchId}
+            </if>
+            <if test="condition.categoryName!=null">
+                AND categoryName = #{condition.categoryName}
+            </if>
+            <if test="condition.content!=null">
+                AND content = #{condition.content}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
+            <if test="condition.htmlId!=null">
+                AND htmlId = #{condition.htmlId}
+            </if>
+            <if test="condition.subContent!=null">
+                AND subContent = #{condition.subContent}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="PolicyInterpretation">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                    <if test="selector.id!=null">
+                        , id
+                    </if>
+                    <if test="selector.title!=null">
+                        , title
+                    </if>
+                    <if test="selector.provinceId!=null">
+                        , provinceId
+                    </if>
+                    <if test="selector.admissionBatchId!=null">
+                        , admissionBatchId
+                    </if>
+                    <if test="selector.categoryName!=null">
+                        , categoryName
+                    </if>
+                    <if test="selector.content!=null">
+                        , content
+                    </if>
+                    <if test="selector.status!=null">
+                        , status
+                    </if>
+                    <if test="selector.creator!=null">
+                        , creator
+                    </if>
+                    <if test="selector.createDate!=null">
+                        , createDate
+                    </if>
+                    <if test="selector.lastModifier!=null">
+                        , lastModifier
+                    </if>
+                    <if test="selector.lastModDate!=null">
+                        , lastModDate
+                    </if>
+                    <if test="selector.areaId!=null">
+                        , areaId
+                    </if>
+                    <if test="selector.htmlId!=null">
+                        , htmlId
+                    </if>
+                    <if test="selector.subContent!=null">
+                        , subContent
+                    </if>
+            </trim>
+        </if>
+        <if test="selector==null">
+            <include refid="Base_Column_List" />
+        </if>
+        FROM zgk_policy_interpretation
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.title!=null">
+                AND title = #{condition.title}
+            </if>
+            <if test="condition.provinceId!=null">
+                AND provinceId = #{condition.provinceId}
+            </if>
+            <if test="condition.admissionBatchId!=null">
+                AND admissionBatchId = #{condition.admissionBatchId}
+            </if>
+            <if test="condition.categoryName!=null">
+                AND categoryName = #{condition.categoryName}
+            </if>
+            <if test="condition.content!=null">
+                AND content = #{condition.content}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
+            <if test="condition.htmlId!=null">
+                AND htmlId = #{condition.htmlId}
+            </if>
+            <if test="condition.subContent!=null">
+                AND subContent = #{condition.subContent}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(id) FROM zgk_policy_interpretation
+       <where>
+           <if test="id!=null">
+               ${groupOp} ${id.field} ${id.op}  #{id.data}
+           </if>
+           <if test="title!=null">
+               ${groupOp} ${title.field} ${title.op}  #{title.data}
+           </if>
+           <if test="provinceId!=null">
+               ${groupOp} ${provinceId.field} ${provinceId.op}  #{provinceId.data}
+           </if>
+           <if test="admissionBatchId!=null">
+               ${groupOp} ${admissionBatchId.field} ${admissionBatchId.op}  #{admissionBatchId.data}
+           </if>
+           <if test="categoryName!=null">
+               ${groupOp} ${categoryName.field} ${categoryName.op}  #{categoryName.data}
+           </if>
+           <if test="content!=null">
+               ${groupOp} ${content.field} ${content.op}  #{content.data}
+           </if>
+           <if test="status!=null">
+               ${groupOp} ${status.field} ${status.op}  #{status.data}
+           </if>
+           <if test="creator!=null">
+               ${groupOp} ${creator.field} ${creator.op}  #{creator.data}
+           </if>
+           <if test="createDate!=null">
+               ${groupOp} ${createDate.field} ${createDate.op}  #{createDate.data}
+           </if>
+           <if test="lastModifier!=null">
+               ${groupOp} ${lastModifier.field} ${lastModifier.op}  #{lastModifier.data}
+           </if>
+           <if test="lastModDate!=null">
+               ${groupOp} ${lastModDate.field} ${lastModDate.op}  #{lastModDate.data}
+           </if>
+           <if test="areaId!=null">
+               ${groupOp} ${areaId.field} ${areaId.op}  #{areaId.data}
+           </if>
+           <if test="htmlId!=null">
+               ${groupOp} ${htmlId.field} ${htmlId.op}  #{htmlId.data}
+           </if>
+           <if test="subContent!=null">
+               ${groupOp} ${subContent.field} ${subContent.op}  #{subContent.data}
+           </if>
+
+       </where>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Long">
+        SELECT
+        MAX(id)
+        FROM zgk_policy_interpretation
+    </select>
+
+</mapper>
+

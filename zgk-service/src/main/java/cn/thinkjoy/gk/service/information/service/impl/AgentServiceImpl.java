@@ -1,38 +1,30 @@
 ///*
 // * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
 // *
-// * Project Name: jx-market
-// * $Id:  PolicyInterpretationServiceImpl.java 2015-09-22 19:03:03 $
+// * Project Name: gaokao360
+// * $Id:  AgentServiceImpl.java 2015-12-15 17:52:12 $
 // */
-//package cn.thinkjoy.gk.service.impl;
+//package cn.thinkjoy.gk.service.information.service.impl;
 //
 //import cn.thinkjoy.common.dao.IBaseDAO;
 //import cn.thinkjoy.common.service.impl.AbstractPageService;
-//import cn.thinkjoy.gk.dao.IPolicyInterpretationDAO;
-//import cn.thinkjoy.gk.dao.IPolicyInterpretationExDAO;
-//import cn.thinkjoy.gk.domain.PolicyInterpretation;
-//import cn.thinkjoy.gk.service.IPolicyInterpretationService;
+//import cn.thinkjoy.gk.dao.information.IAgentDAO;
+//import cn.thinkjoy.gk.entity.information.domain.Agent;
+//import cn.thinkjoy.gk.service.information.service.IAgentService;
 //import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.context.annotation.Scope;
 //import org.springframework.stereotype.Service;
 //
-//import java.util.List;
 //
-//
-//@Service("PolicyInterpretationServiceImpl")
-//public class PolicyInterpretationServiceImpl extends AbstractPageService<IBaseDAO<PolicyInterpretation>, PolicyInterpretation> implements IPolicyInterpretationService<IBaseDAO<PolicyInterpretation>,PolicyInterpretation> {
+//@Service("AgentServiceImpl")
+//@Scope("prototype")
+//public class AgentServiceImpl extends AbstractPageService<IBaseDAO<Agent>, Agent> implements IAgentService<IBaseDAO<Agent>,Agent> {
 //    @Autowired
-//    private IPolicyInterpretationDAO policyInterpretationDAO;
-//    @Autowired
-//    private IPolicyInterpretationExDAO policyInterpretationExDAO;
+//    private IAgentDAO agentDAO;
 //
 //    @Override
-//    public IBaseDAO<PolicyInterpretation> getDao() {
-//        return policyInterpretationDAO;
-//    }
-//
-//    @Override
-//    public List<PolicyInterpretation> findPolicyInterpretationCategoryByBatchIdAndProvinceId(long batchId, long provinceId) {
-//        return policyInterpretationExDAO.findPolicyInterpretationCategorysByBatchIdAndProvinceId(batchId, provinceId);
+//    public IBaseDAO<Agent> getDao() {
+//        return agentDAO;
 //    }
 //
 ////    @Override
@@ -86,8 +78,8 @@
 ////    }
 ////
 ////    @Override
-////    public List<PolicyInterpretation> findAll() {
-////        return policyInterpretationDAO.findAll();
+////    public List<Agent> findAll() {
+////        return agentDAO.findAll();
 ////    }
 ////
 ////    @Override
@@ -141,8 +133,8 @@
 ////    }
 ////
 ////    @Override
-////    protected PolicyInterpretationDAO getDao() {
-////        return policyInterpretationDAO;
+////    protected AgentDAO getDao() {
+////        return agentDAO;
 ////    }
 ////
 ////    @Override
