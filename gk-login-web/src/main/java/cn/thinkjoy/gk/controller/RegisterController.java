@@ -128,6 +128,11 @@ public class RegisterController extends ZGKBaseController {
             }catch(Exception e){
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"账户注册失败");
             }
+
+            userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
+
+            long id = userAccountBean.getId();
+
             gkxtRegistUrl = String.format(gkxtRegistUrl, account, basePassword);
             //注册高考学堂
             String registResult = HttpClientUtil.getContents(gkxtRegistUrl);
@@ -138,11 +143,11 @@ public class RegisterController extends ZGKBaseController {
             }else
             {
                 LOGGER.debug("帐号"+account+"注册高考学堂成功!");
+                Map<String,Object> map=new HashMap<String,Object>();
+                map.put("id",id);
+                map.put("isRegisterXueTang",1);
+                userAccountExService.updateUserAccountRegistXueTang(map);
             }
-
-            userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
-
-            long id = userAccountBean.getId();
 
             String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), account);
             setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));

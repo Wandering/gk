@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.dao;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -62,4 +63,7 @@ public interface IUniversityInfoDao extends IBaseDAO<UniversityInfoView> {
     List<Map<String, Object>> getUniversityMajors(Map<String, String> map);
 
     List<Map<String, Object>> getUniversityEnrollingInfo(Map<String, String> map);
+
+    List getUniversityMajorListByUniversityId(@Param("condition") Map<String, Object> condition, @Param("offset") int offset, @Param("rows") int rows,
+                             @Param("orderBy") String orderBy, @Param("sortBy") String sortBy,@Param("selector")Map<String, Object> selectorpage);
 }

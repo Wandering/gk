@@ -11,6 +11,7 @@ import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.domain.UniversityDict;
+import cn.thinkjoy.gk.dto.UniversityDTO;
 import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.UniversityQuery;
@@ -20,12 +21,12 @@ import cn.thinkjoy.gk.util.RedisIsSaveUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.zgk.dto.UniversityPlanChartDTO;
 import com.alibaba.druid.support.json.JSONUtils;
-import com.alibaba.dubbo.common.logger.Logger;
-import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -46,7 +48,8 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/university")
 public class UniversityController extends ZGKBaseController {
     public int TOKEN_EXPIRE_TIME = 60 * 60;
-    public static final Logger LOGGER = LoggerFactory.getLogger(UniversityController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger("SPECLOGGER");
+//    public static final Logger LOGGER = LoggerFactory.getLogger(UniversityController.class);
 
     @Autowired
     private IUserCollectExService userCollectExService;
@@ -67,6 +70,7 @@ public class UniversityController extends ZGKBaseController {
     @Autowired
     private IUniversityInfoService universityInfoService;
 
+
     private static final String[] zhongDianFeatures = {"国家品牌", "国家重点", "省部重点"};
     /**
      * 智高考院校信息列表
@@ -75,83 +79,94 @@ public class UniversityController extends ZGKBaseController {
      */
     @RequestMapping(value = "/getRemoteUniversityList", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getUniversityList(@RequestParam(value = "universityName", required = false) String universityName,
+    public Object getUniversityList(@RequestParam(value = "universityName", required = false) String universityName,
                                                  @RequestParam(value = "areaid", required = false) String areaid,//省份
                                                  @RequestParam(value = "type", required = false) Integer type,//院校分类
                                                  @RequestParam(value = "educationLevel", required = false) Integer educationLevel,//学历层次
                                                  @RequestParam(value = "property", required = false) String property,//院校特征
                                                  @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
                                                  @RequestParam(value = "rows", required = false, defaultValue = "10") Integer rows) {
-        Map<String, Object> condition = Maps.newHashMap();
-        condition.put("groupOp", "and");
-        if (StringUtils.isNotBlank(universityName))
-            ConditionsUtil.setCondition(condition, "name", "like", "%" + universityName + "%");
-        if (StringUtils.isNotBlank(areaid))
-            ConditionsUtil.setCondition(condition, "areaid", "=", areaid);
-        if (type != null)
-            ConditionsUtil.setCondition(condition, "type", "=", type.toString());
-        if (educationLevel != null)
-            ConditionsUtil.setCondition(condition, "educationLevel", "=", educationLevel.toString());
-        if (StringUtils.isNotBlank(property))
-            ConditionsUtil.setCondition(condition, "property", "like", "%" + property + "%");
-        String orederBy = "rank";
-        String sqlOrderEnumStr = "asc";
-        Map<String, Object> selectorpage = Maps.newHashMap();
-        selectorpage.put("photoUrl", 1);
-        selectorpage.put("id", 1);
-        selectorpage.put("name", 1);
-        selectorpage.put("property", 1);
-        selectorpage.put("province", 1);
-        selectorpage.put("rank", 1);
+        String redisKey = "zgk_pe:"+"universityName:" + universityName + "_areaid:" + areaid + "_type:" + type + "_educationLevel:" + educationLevel + "_property:" + property + "_offset:" + offset + "_rows"+rows+":getUniversityList";
+        Object object = RedisIsSaveUtil.existsKey(redisKey);
+        if (object==null) {
+            Map<String, Object> condition = Maps.newHashMap();
+            condition.put("groupOp", "and");
+            if (StringUtils.isNotBlank(universityName))
+                ConditionsUtil.setCondition(condition, "name", "like", "%" + universityName + "%");
+            if (StringUtils.isNotBlank(areaid))
+                ConditionsUtil.setCondition(condition, "areaid", "=", areaid);
+            if (type != null)
+                ConditionsUtil.setCondition(condition, "type", "=", type.toString());
+            if (educationLevel != null)
+                ConditionsUtil.setCondition(condition, "educationLevel", "=", educationLevel.toString());
+            if (StringUtils.isNotBlank(property))
+                ConditionsUtil.setCondition(condition, "property", "like", "%" + property + "%");
+            String orederBy = "rank";
+            String sqlOrderEnumStr = "asc";
+            Map<String, Object> selectorpage = Maps.newHashMap();
+            selectorpage.put("photoUrl", 1);
+            selectorpage.put("id", 1);
+            selectorpage.put("name", 1);
+            selectorpage.put("property", 1);
+            selectorpage.put("province", 1);
+            selectorpage.put("rank", 1);
         selectorpage.put("xcRank", 1);
-        selectorpage.put("subjection", 1);
-        selectorpage.put("typeName", 1);
-        selectorpage.put("url", 1);
-        List<Map<String, Object>> getUniversityList = iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
-        int count = iremoteUniversityService.getUniversityCount(condition);
-        //如果用户已登录
-        UserAccountPojo userAccountPojo = getUserAccountPojo();
-        for (Map<String, Object> university : getUniversityList) {
-            String[] propertys = new String[1];
-            if (university.containsKey("property") && university.get("property") != null) {
-                propertys[0] = university.get("property").toString();
-                university.put("property", propertys);
-            }
-            String[] propertys2 = null;
-            Map<String, Object> propertyMap = new HashMap();
-            if (StringUtils.isNotEmpty(university.get("property").toString())) {
-                propertys2 = propertys[0].toString().split(",");
-                Map<String, Object> propertysMap = getPropertys();
+            selectorpage.put("subjection", 1);
+            selectorpage.put("typeName", 1);
+            selectorpage.put("url", 1);
+            long start = System.currentTimeMillis();
+//        List<Map<String, Object>> getUniversityList = iremoteUniversityService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
+//        int count = iremoteUniversityService.getUniversityCount(condition);
+            List<UniversityDTO> getUniversityList = universityExService.getUniversityList(condition, offset, rows, orederBy, sqlOrderEnumStr, selectorpage);
+            int count = universityExService.getUniversityCount(condition);
+            long end = System.currentTimeMillis();
+            long dubbo = end - start;
+            LOGGER.info("dubbo time:" + dubbo);
+            //如果用户已登录
+            UserAccountPojo userAccountPojo = getUserAccountPojo();
+            for (UniversityDTO university : getUniversityList) {
+                String[] propertys = new String[1];
+                if (university.getProperty() != null) {
+                    propertys[0] = university.getProperty().toString();
+                }
+                String[] propertys2 = null;
+                Map<String, Object> propertyMap = new HashMap();
+                if (StringUtils.isNotEmpty(university.getProperty().toString())) {
+                    propertys2 = propertys[0].toString().split(",");
+                    Map<String, Object> propertysMap = getPropertys();
 
-                for (String str : propertys2) {
-                    Iterator<String> propertysIterator = propertysMap.keySet().iterator();
-                    while (propertysIterator.hasNext()) {
-                        String key = propertysIterator.next();
-                        String value = propertysMap.get(key).toString();
-                        if (str.indexOf(value) > -1) {
-                            propertyMap.put(key, value);
+                    for (String str : propertys2) {
+                        Iterator<String> propertysIterator = propertysMap.keySet().iterator();
+                        while (propertysIterator.hasNext()) {
+                            String key = propertysIterator.next();
+                            String value = propertysMap.get(key).toString();
+                            if (str.indexOf(value) > -1) {
+                                propertyMap.put(key, value);
+                            }
                         }
                     }
                 }
-            }
 
-            university.put("propertys", propertyMap);
-            university.put("isCollect", 0);
-            if (null != userAccountPojo) {
-                long userId = userAccountPojo.getId();
-                //需要在收藏表中拼接收藏状态字段
-                Map<String, Object> param = Maps.newHashMap();
+                university.setPropertys(propertyMap);
+                university.setIsCollect(0);
+                if (null != userAccountPojo) {
+                    long userId = userAccountPojo.getId();
+                    //需要在收藏表中拼接收藏状态字段
+                    Map<String, Object> param = Maps.newHashMap();
 //                param.put("userId",54);
-                param.put("userId", userId);
-                param.put("projectId", university.get("id"));
-                param.put("type", 1);
-                university.put("isCollect", userCollectExService.isCollect(param));
+                    param.put("userId", userId);
+                    param.put("projectId", university.getId());
+                    param.put("type", 1);
+                    university.setIsCollect(userCollectExService.isCollect(param));
+                }
             }
+            Map<String, Object> returnMap = Maps.newHashMap();
+            returnMap.put("universityList", getUniversityList);
+            returnMap.put("count", count);
+            RedisUtil.getInstance().set(redisKey, JSON.toJSONString(returnMap));
+            return returnMap;
         }
-        Map<String, Object> returnMap = Maps.newHashMap();
-        returnMap.put("universityList", getUniversityList);
-        returnMap.put("count", count);
-        return returnMap;
+        return JSON.parseObject(object.toString(), Object.class);
     }
 
     @RequestMapping(value = "getRemoteUniversityById", method = RequestMethod.GET)
@@ -313,7 +328,8 @@ public class UniversityController extends ZGKBaseController {
         condition.put("areaId",getAreaId().toString());
         condition.put("offset", offset);
         condition.put("rows", rows);
-        List ll = iremoteUniversityService.getUniversityMajorEnrollingPlanList(condition);
+//        List ll = iremoteUniversityService.getUniversityMajorEnrollingPlanList(condition);
+        List ll = universityExService.getUniversityMajorEnrollingPlanList(condition);
         return ll;
     }
 
@@ -420,7 +436,15 @@ public class UniversityController extends ZGKBaseController {
     @RequestMapping(value = "getRemoteProvinceList", method = RequestMethod.GET)
     @ResponseBody
     public List getProvinceList() {
-        return iremoteUniversityService.getProvinceName();
+        String userKey = request.getParameter("userKey");
+        String key = "zgk_university:" + userKey + ":getRemoteProvinceList";
+        Object object = RedisIsSaveUtil.existsKey(key);
+        if (object == null) {
+            List list=iremoteUniversityService.getProvinceName();
+            RedisUtil.getInstance().set(key, JSONArray.toJSON(list));
+            return list;
+        }
+        return JSONArray.parseArray(object.toString());
     }
 
     /**
@@ -432,7 +456,15 @@ public class UniversityController extends ZGKBaseController {
     @RequestMapping(value = "getRemoteDataDictList", method = RequestMethod.GET)
     @ResponseBody
     public List getDataDictList(@RequestParam(value = "type", required = true) String type) {
-        return iremoteUniversityService.getDataDictListByType(type);
+        String userKey = request.getParameter("userKey");
+        String key = "zgk_university:" + userKey + "_type:" + type + ":getRemoteDataDictList";
+        Object object = RedisIsSaveUtil.existsKey(key);
+        if (object == null) {
+            List list=iremoteUniversityService.getDataDictListByType(type);
+            RedisUtil.getInstance().set(key, JSONArray.toJSON(list));
+            return list;
+        }
+        return JSONArray.parseArray(object.toString());
     }
 
     /**

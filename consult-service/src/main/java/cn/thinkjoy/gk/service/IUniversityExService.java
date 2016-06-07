@@ -31,4 +31,10 @@ public interface IUniversityExService{
      * @return
      */
     Map<String,String> getUniversityInfoByKeywords(String keywords);
+
+    List getUniversityList(Map<String, Object> condition, int offset, int rows, String orderBy, String sqlOrderEnum, Map<String, Object> selectorpage);
+
+    int getUniversityCount(Map<String, Object> condition);
+
+    List getUniversityMajorEnrollingPlanList(Map<String, Object> condition);
 }

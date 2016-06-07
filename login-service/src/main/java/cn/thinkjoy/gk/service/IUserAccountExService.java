@@ -48,4 +48,6 @@ public interface IUserAccountExService {
     Department findDepartMent(Map<String, String> paramMap);
 
     List<Map<String,Object>> getOrderList(Map<String, String> paramMap);
+
+    int updateUserAccountRegistXueTang(Map<String, Object> paramMap);
 }
