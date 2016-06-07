@@ -165,8 +165,13 @@ public class ApeskController extends BaseCommonController {
 					//testEmail 由批次+_+用户名+_+用户id
 					String testName= userAccountPojo.getAccount();
 					String testEmail=apeskCourse.getBatch()+"_"+testName+"_"+ userAccountPojo.getId();
-					List<ZgkApesk> apList= zgkApeskService.query(userAccountPojo.getId() ,acId, liangbiao,testEmail);
-					LOGGER.info("apList.size:"+apList.size());
+//					List<ZgkApesk> apList= zgkApeskService.query(userAccountPojo.getId() ,acId, liangbiao,testEmail);
+					Map map=new HashMap();
+					map.put("userId",userAccountPojo.getId());
+					map.put("acId",acId);
+					map.put("liangBiao",liangbiao);
+					map.put("testEmail",testEmail);
+					List<ZgkApesk> apList= zgkApeskService.selectApeskLimit(map);
 					if(apList==null||apList.size()<2) {//小于2条记录，开始做题
 						ZgkApesk apesk = new ZgkApesk();
 						apesk.setUserId(userAccountPojo.getId());
