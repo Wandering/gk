@@ -13,6 +13,8 @@ import cn.thinkjoy.zgk.domain.ZgkApeskCourse;
 import cn.thinkjoy.zgk.dto.ZgkApeskDTO;
 import cn.thinkjoy.zgk.remote.IZgkApeskCourseService;
 import cn.thinkjoy.zgk.remote.IZgkApeskService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -41,7 +43,7 @@ import java.util.Map;
 @RequestMapping(value = "/apesk")
 public class ApeskController extends BaseCommonController {
     private String apeskUrl="http://www.apesk.com/h/go_zy_dingzhi.asp?checkcode=%s&hruserid=%s&l=%s&test_name=%s&test_email=%s";
-
+	private static final Logger LOGGER= LoggerFactory.getLogger(ApeskController.class);
     @Autowired
     private IZgkApeskService zgkApeskService;
     @Autowired
@@ -164,6 +166,7 @@ public class ApeskController extends BaseCommonController {
 					String testName= userAccountPojo.getAccount();
 					String testEmail=apeskCourse.getBatch()+"_"+testName+"_"+ userAccountPojo.getId();
 					List<ZgkApesk> apList= zgkApeskService.query(userAccountPojo.getId() ,acId, liangbiao,testEmail);
+					LOGGER.info("apList.size:"+apList.size());
 					if(apList==null||apList.size()<2) {//小于2条记录，开始做题
 						ZgkApesk apesk = new ZgkApesk();
 						apesk.setUserId(userAccountPojo.getId());
