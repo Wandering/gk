@@ -96,17 +96,22 @@ public class ApeskController extends BaseCommonController {
 		map.put("test_email", test_email);
 		if(!StringUtil.isNulOrBlank(test_email)&&!StringUtil.isNulOrBlank(liangbiao)&&test_email.contains("_")){
 			int userId=Integer.parseInt(test_email.split("_")[2]);
-			List<ZgkApesk> apList=zgkApeskService.query(Long.parseLong(userId+""),-1, liangbiao,test_email);
-			if(apList.size()>0){
+//			List<ZgkApesk> apList=zgkApeskService.query(Long.parseLong(userId+""),-1, liangbiao,test_email);
+			Map callMap=new HashMap();
+			callMap.put("liangBiao",liangbiao);
+			callMap.put("userId",userId);
+			callMap.put("testEmail",test_email);
+			List<ZgkApesk> apList=zgkApeskService.selectApeskCallBack(callMap);
+			if(apList!=null&&apList.size()>0){
 				ZgkApesk apesk=apList.get(0);
-				if(apList.size()>1){
-					for(ZgkApesk ap:apList){
-						if(ap.getLiangBiao().equals(liangbiao)&&ap.getTestEmail().equals(test_email)&&userId==ap.getUserId()){
-							apesk=ap;
-							break;
-						}
-					}
-				}
+//				if(apList.size()>1){
+//					for(ZgkApesk ap:apList){
+//						if(ap.getLiangBiao().equals(liangbiao)&&ap.getTestEmail().equals(test_email)&&userId==ap.getUserId()){
+//							apesk=ap;
+//							break;
+//						}
+//					}
+//				}
 				apesk.setReportDate(new Date());
 				apesk.setReportId(Integer.parseInt(report_id));
 				zgkApeskService.updateByPrimaryKeySelective(apesk);
