@@ -1,16 +1,16 @@
 package cn.thinkjoy.gk.controller.predict;
 
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.common.ReportUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.entity.CheckBatchMsg;
 import cn.thinkjoy.gk.entity.ReportResult;
+import cn.thinkjoy.gk.entity.SystemParmas;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
 import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.service.IReportResultService;
-import cn.thinkjoy.gk.service.ISystemParmasService;
-import cn.thinkjoy.gk.service.IUniversityInfoService;
-import cn.thinkjoy.gk.service.IUniversityMajorEnrollingService;
+import cn.thinkjoy.gk.service.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +45,8 @@ public class SmartReportController extends ZGKBaseController {
     IUniversityMajorEnrollingService iUniversityMajorEnrollingService;
     @Resource
     IReportResultService iReportResultService;
+    @Resource
+    IRiskForecastService iRiskForecastService;
 
     /**
      * 查询用户是否已经填报
@@ -62,9 +64,15 @@ public class SmartReportController extends ZGKBaseController {
         if (vipStatus == null || vipStatus == 0) {
             throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(), ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
         }
-        UserReportResultView userReportResultView = iReportResultService.getUserReportResultView( Long.valueOf(userAccountPojo.getId()));
         Map resultMap = new HashMap();
-        resultMap.put("report", userReportResultView);
+
+//        if (province.equals("zj") || province.equals("sh")) {
+            List<UserReportResultView> userReportResultViews = iReportResultService.getUserReportResultList(Long.valueOf(userAccountPojo.getId()));
+            resultMap.put("reports", userReportResultViews);
+//        } else {
+//            UserReportResultView userReportResultView = iReportResultService.getUserReportResultView(Long.valueOf(userAccountPojo.getId()));
+//            resultMap.put("report", userReportResultView);
+//        }
         return resultMap;
     }
     /**
@@ -112,10 +120,12 @@ public class SmartReportController extends ZGKBaseController {
      */
     @RequestMapping(value ="/get/batch",method=RequestMethod.GET)
     @ResponseBody
-    public Map<String,Object> report(@RequestParam(value = "score",required = false) Integer score,
+    public Map<String,Object> report(@RequestParam(value = "sap",required = false) Integer sap,
+                                     @RequestParam(value = "score",required = false) Integer score,
                                      @RequestParam(value = "cate",required = false) Integer cate,
                                          @RequestParam(value = "province",required = false) String province,
                                          ModelMap modelMap) {
+//        sap=201;
         UserAccountPojo userAccountPojo = getUserAccountPojo();
 
 
@@ -128,11 +138,19 @@ public class SmartReportController extends ZGKBaseController {
             throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
         }
 
+
+
         LOGGER.info("=======批次及批次控制线信息 Start=======");
-        LOGGER.info("分数:" + score);
+        LOGGER.info("分数||位次:" + sap);
         LOGGER.info("科类:" + cate);
         LOGGER.info("省份:" + province);
-        List<BatchView> batchViews = iSystemParmasService.selectSystemParmas(cate, score, province);
+
+        /**
+         * 逻辑走向
+         */
+        Integer loginTrend=getLogic(province, cate);
+        LOGGER.info("逻辑:" + loginTrend);
+        List<BatchView> batchViews = iSystemParmasService.selectSystemParmas(cate, score,sap, province,loginTrend);
 
         Collections.sort(batchViews);
         LOGGER.info("该学生达标:" + batchViews.size() + "个批次");
@@ -206,6 +224,110 @@ public class SmartReportController extends ZGKBaseController {
         resultMap.put("reportInfoView", reportInfoView);
         return resultMap;
     }
+
+    /**
+     * 输出算法逻辑走向
+     * @param province
+     * @param cate
+     * @return
+     */
+    @RequestMapping(value = "/get/logic",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> getLogic(@RequestParam(value = "province") String province,
+                                       @RequestParam(value = "cate",required = false) String cate) {
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if(vipStatus==null||vipStatus==0){
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
+        SystemParmas systemParmas = iSystemParmasService.getThresoldModel(province, ReportUtil.LOGIC_TREND, 1);
+        Map resultMap = new HashMap();
+        resultMap.put("logic", systemParmas.getConfigValue());
+        return resultMap;
+    }
+    /**
+     * 获取智高考排名
+     * @return
+     */
+    @RequestMapping(value = "/get/rank",method=RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> getZGKRank(@RequestParam(value = "score") Integer score,
+                                         @RequestParam(value = "uid") Integer uid) {
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+
+        if (userAccountPojo == null) {
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
+        }
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if (vipStatus == null || vipStatus == 0) {
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(), ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
+
+        Map map=new HashMap();
+        map.put("score",score);
+        map.put("universityId",uid);
+
+        Integer rank=iRiskForecastService.selectRiskRankByUniversityId(map);
+
+        Map resultMap = new HashMap();
+        resultMap.put("rank", rank);
+
+        return resultMap;
+    }
+    /**
+     * 批次选择 提示
+     * @param province 用户省份
+     * @param cate 用户科类
+     * @param score 用户分数
+     * @param chkBatch 用户选择的位次
+     * @return
+     */
+    @RequestMapping(value = "/check/batch",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> checkBatch(@RequestParam(value = "province") String province,
+                                         @RequestParam(value = "cate") Integer cate,
+                                         @RequestParam(value = "score") Integer score,
+                                         @RequestParam(value = "chkBatch") String chkBatch) {
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+
+
+        if(userAccountPojo==null){
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        }
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if(vipStatus==null||vipStatus==0){
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
+        /**
+         * 逻辑走向
+         */
+        Integer loginTrend = getLogic(province, cate);
+        LOGGER.info("逻辑:" + loginTrend);
+
+
+        UniversityInfoParmasView universityInfoParmasView = new UniversityInfoParmasView();
+        universityInfoParmasView.setBatch(chkBatch);
+        universityInfoParmasView.setCategorie(cate);
+        universityInfoParmasView.setProvince(province);
+        universityInfoParmasView.setScore(score);
+
+        CheckBatchMsg checkBatchMsg = iSystemParmasService.checkBatchAlert(universityInfoParmasView);
+
+        Map resultMap = new HashMap();
+        resultMap.put("batchAlert", checkBatchMsg);
+        return resultMap;
+    }
+
+
     /**
      * 智能填报主入口
      * 获取用户  输入分数、位次、文理 过滤院校清单
@@ -213,12 +335,12 @@ public class SmartReportController extends ZGKBaseController {
      */
     @RequestMapping(value = "/main",method=RequestMethod.GET)
     @ResponseBody
-    public List reportMain(
+    public Map<String,Object> reportMain(
                              @RequestParam(value = "batch") String batch,
                              @RequestParam(value = "score") Integer score,
                              @RequestParam(value = "province") String province,
                              @RequestParam(value = "categorie") Integer categorie,
-                             @RequestParam(value="precedence") Integer precedence,
+                             @RequestParam(value="precedence",required = false) Integer precedence,
                              @RequestParam(value="first") Integer first,
                              @RequestParam(value = "version") Integer version) {
 
@@ -254,9 +376,13 @@ public class SmartReportController extends ZGKBaseController {
 ////        map.put("code", "'" + province + "'");  //db
 //        map.put("province", province);//key
 //        map.put("majorType", categorie);
+        /**
+         * 逻辑走向
+         */
+        Integer logic= getLogic(province,categorie);
+        universityInfoParmasView.setLogic(logic);
 
-
-        List<UniversityInfoView> universityInfoViewList=iUniversityInfoService.selectUniversityInfoViewByVersion(universityInfoParmasView);
+        List<UniversityInfoView> universityInfoViewList=iUniversityInfoService.selectUniversityInfoViewByLogic(universityInfoParmasView);
 
 //        if (precedence > 0) {
 //            Integer result=iReportResultService.getPrecedence(tbName, precedence);
@@ -273,9 +399,11 @@ public class SmartReportController extends ZGKBaseController {
 
 //        List<UniversityInfoView> universityInfoViewList = iUniversityInfoService.selectUniversityInfo(map);
 
-        LOGGER.info("最终输出:" + universityInfoViewList.size() + "个院校清单");
         LOGGER.info("=======智能填报主入口 End=======");
-        return universityInfoViewList;
+
+        Map map=new HashMap();
+        map.put("universityInfoViewList",universityInfoViewList);
+        return map;
     }
 
     /**
@@ -309,16 +437,19 @@ public class SmartReportController extends ZGKBaseController {
         reportResult.setReasonable((isReasonable ? (byte) 1 : (byte) 0));
         reportResult.setComplete((isCompl ? (byte) 1 : (byte) 0));
         Integer result = iReportResultService.insertSelective(reportResult);
-        if (result > 0)
+        if (result>0) {
+            reportResult.setId(Long.valueOf(reportResult.getId()));
             iReportResultService.InsertRiskForecast(reportResult);         //同步信息至动态风险表
+        }
         Map map = new HashMap();
         map.put("result", result);
         return map;
     }
 
+
     /**
      * 智能报告保存
-     * @param reportResult
+     * @param
      * @return
      */
     @RequestMapping(value = "/test",method=RequestMethod.GET)
@@ -401,5 +532,13 @@ public class SmartReportController extends ZGKBaseController {
         return map;
     }
 
-
+    /**
+     * 逻辑走向
+     * @param proCode
+     * @param cate
+     * @return
+     */
+    private Integer getLogic(String proCode,Integer cate) {
+        return iSystemParmasService.getLogicTrend(proCode, cate);
+    }
 }

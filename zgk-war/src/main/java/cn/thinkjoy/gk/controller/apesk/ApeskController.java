@@ -13,6 +13,8 @@ import cn.thinkjoy.zgk.domain.ZgkApeskCourse;
 import cn.thinkjoy.zgk.dto.ZgkApeskDTO;
 import cn.thinkjoy.zgk.remote.IZgkApeskCourseService;
 import cn.thinkjoy.zgk.remote.IZgkApeskService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -41,7 +43,7 @@ import java.util.Map;
 @RequestMapping(value = "/apesk")
 public class ApeskController extends BaseCommonController {
     private String apeskUrl="http://www.apesk.com/h/go_zy_dingzhi.asp?checkcode=%s&hruserid=%s&l=%s&test_name=%s&test_email=%s";
-
+	private static final Logger LOGGER= LoggerFactory.getLogger(ApeskController.class);
     @Autowired
     private IZgkApeskService zgkApeskService;
     @Autowired
@@ -94,17 +96,22 @@ public class ApeskController extends BaseCommonController {
 		map.put("test_email", test_email);
 		if(!StringUtil.isNulOrBlank(test_email)&&!StringUtil.isNulOrBlank(liangbiao)&&test_email.contains("_")){
 			int userId=Integer.parseInt(test_email.split("_")[2]);
-			List<ZgkApesk> apList=zgkApeskService.query(Long.parseLong(userId+""),-1, liangbiao,test_email);
-			if(apList.size()>0){
+//			List<ZgkApesk> apList=zgkApeskService.query(Long.parseLong(userId+""),-1, liangbiao,test_email);
+			Map callMap=new HashMap();
+			callMap.put("liangBiao",liangbiao);
+			callMap.put("userId",userId);
+			callMap.put("testEmail",test_email);
+			List<ZgkApesk> apList=zgkApeskService.selectApeskCallBack(callMap);
+			if(apList!=null&&apList.size()>0){
 				ZgkApesk apesk=apList.get(0);
-				if(apList.size()>1){
-					for(ZgkApesk ap:apList){
-						if(ap.getLiangBiao().equals(liangbiao)&&ap.getTestEmail().equals(test_email)&&userId==ap.getUserId()){
-							apesk=ap;
-							break;
-						}
-					}
-				}
+//				if(apList.size()>1){
+//					for(ZgkApesk ap:apList){
+//						if(ap.getLiangBiao().equals(liangbiao)&&ap.getTestEmail().equals(test_email)&&userId==ap.getUserId()){
+//							apesk=ap;
+//							break;
+//						}
+//					}
+//				}
 				apesk.setReportDate(new Date());
 				apesk.setReportId(Integer.parseInt(report_id));
 				zgkApeskService.updateByPrimaryKeySelective(apesk);
@@ -163,7 +170,13 @@ public class ApeskController extends BaseCommonController {
 					//testEmail 由批次+_+用户名+_+用户id
 					String testName= userAccountPojo.getAccount();
 					String testEmail=apeskCourse.getBatch()+"_"+testName+"_"+ userAccountPojo.getId();
-					List<ZgkApesk> apList= zgkApeskService.query(userAccountPojo.getId() ,acId, liangbiao,testEmail);
+//					List<ZgkApesk> apList= zgkApeskService.query(userAccountPojo.getId() ,acId, liangbiao,testEmail);
+					Map map=new HashMap();
+					map.put("userId",userAccountPojo.getId());
+					map.put("acId",acId);
+					map.put("liangBiao",liangbiao);
+					map.put("testEmail",testEmail);
+					List<ZgkApesk> apList= zgkApeskService.selectApeskLimit(map);
 					if(apList==null||apList.size()<2) {//小于2条记录，开始做题
 						ZgkApesk apesk = new ZgkApesk();
 						apesk.setUserId(userAccountPojo.getId());

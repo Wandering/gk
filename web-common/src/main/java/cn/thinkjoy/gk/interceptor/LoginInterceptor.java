@@ -21,19 +21,17 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.concurrent.TimeUnit;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
-	public int TOKEN_EXPIRE_TIME = 60*60;
+	public int TOKEN_EXPIRE_TIME = 4* 60*60;
 	private static final Logger LOGGER= LoggerFactory.getLogger(LoginInterceptor.class);
-	@Autowired
-	private IUserAccountExService userAccountExService;
-
 	public LoginInterceptor() { }
 
-
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws UnsupportedEncodingException {
 		UserAreaContext.setCurrentUserArea(request.getParameter("userKey") == null ? "zj" : request.getParameter("userKey"));
 		String url = request.getServletPath();
 		//兼容jsonp-start
@@ -46,7 +44,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 		String value = request.getParameter("token");
 		String reqType = request.getParameter("req");
-
 		LOGGER.info("cookie:" + value);
 		String key = UserRedisConst.USER_KEY + value;
 
@@ -83,7 +80,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public void postHandle(HttpServletRequest request,HttpServletResponse response, Object handler,ModelAndView modelAndView) throws Exception {
-//		System.out.println("===========HandlerInterceptor1 postHandle");
+		UserContext.removeCurrentUser();
+		CallbackContext.removeCallback();
+		UserAreaContext.removeCurrentUseraArea();
 	}
 
 	@Override
@@ -96,17 +95,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 		UserContext.setCurrentUser(getUserAccountPojo(key));
 	}
-
-//	/**
-//	 * 获取用户信息
-//	 * @return
-//	 */
-//	protected UserAccountPojo getUserAccountPojo(HttpServletRequest request) {
-//		UserAccountPojo userAccountBean  = null;
-//		String uid="17";
-//		userAccountBean = userAccountExService.findUserAccountPojoById(Long.parseLong(uid));
-//		return userAccountBean;
-//	}
 
 	/**
 	 * 获取用户信息
@@ -129,6 +117,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	{
 		RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
 	}
+
 	private void setCallback(String callback) {
 		CallbackContext.setCallback(callback);
 	}

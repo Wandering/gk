@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.controller;
 
+import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.gk.common.ZGKBaseController;
@@ -8,9 +9,11 @@ import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.MajoredQuery;
 import cn.thinkjoy.gk.service.*;
+import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.zgk.dto.MajoredCategoryRemoteDTO;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by wpliu on 15/9/25.
@@ -33,7 +37,7 @@ import java.util.*;
 public class MajoredController extends ZGKBaseController {
 
     public static  final Logger log= LoggerFactory.getLogger(MajoredController.class);
-
+    public int TOKEN_EXPIRE_TIME = 60 * 60;
     @Autowired
     private IMajoredRankExService majoredRankExService;
     @Autowired
@@ -43,6 +47,11 @@ public class MajoredController extends ZGKBaseController {
 
     @Autowired
     private IUserCollectExService userCollectExService;
+
+
+    @Autowired
+    private cn.thinkjoy.zgk.remote.IUniversityService iremoteUniversityService;
+
 
     @Autowired
     private cn.thinkjoy.zgk.remote.IMajoredService iremoteMajoredService;
@@ -75,9 +84,11 @@ public class MajoredController extends ZGKBaseController {
     @RequestMapping(value = "/getMajorOpenUniversityList",method = RequestMethod.GET)
     @ResponseBody
     public Object getMajorOpenUniversityList(@RequestParam(value = "majoredId",required = true)int majoredId,
+                                             @RequestParam(value = "majorType",required = true,defaultValue = "1")Integer majorType,
                                              @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
                                              @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
-        List<Map<String,Object>> getUniversityList=iremoteMajoredService.getMajorOpenUniversityList(majoredId,offset,rows,null,null);
+        List<Map<String,Object>> getUniversityList=iMajoredService.getMajorOpenUniversityList(majoredId,majorType,offset,rows);
+        int count=iMajoredService.getMajorOpenUniversityCount(majoredId, majorType);
 //        int count=iremoteUniversityService.getUniversityCount(condition);
         //如果用户已登录
         UserAccountPojo userAccountPojo=getUserAccountPojo();
@@ -97,11 +108,36 @@ public class MajoredController extends ZGKBaseController {
                 param.put("type",1);
                 university.put("isCollect",userCollectExService.isCollect(param));
             }
+            String[] propertys2 = null;
+            Map<String, Object> propertyMap = new HashMap();
+            if (StringUtils.isNotEmpty(university.get("property").toString())) {
+                propertys2 = propertys[0].toString().split(",");
+                Map<String, Object> propertysMap = getPropertys();
+
+                for (String str : propertys2) {
+                    Iterator<String> propertysIterator = propertysMap.keySet().iterator();
+                    while (propertysIterator.hasNext()) {
+                        String key = propertysIterator.next();
+                        String value = propertysMap.get(key).toString();
+                        if (str.indexOf(value) > -1) {
+                            propertyMap.put(key, value);
+                        }
+                    }
+                }
+            }
+
+            university.put("propertys", propertyMap);
         }
         Map<String,Object> returnMap=Maps.newHashMap();
         returnMap.put("universityList", getUniversityList);
-//        returnMap.put("count", count);
+        returnMap.put("count", count);
         return returnMap;
+    }
+
+    @RequestMapping(value = "/getJobOrientation",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> getJobOrientation(@RequestParam(value = "majoredId",required = true)int majoredId){
+        return iMajoredService.getJobOrientation(majoredId);
     }
 
     /**
@@ -300,6 +336,25 @@ public class MajoredController extends ZGKBaseController {
             throw new BizException(ERRORCODE.FAIL.getCode(),ERRORCODE.FAIL.getMessage());
         }
         return lists;
+    }
+
+    private Map<String, Object> getPropertys() {
+        List<Map<String, Object>> list = null;
+        Map<String, Object> propertysMap = new HashMap<>();
+
+        String key = "universityPropertys";
+        RedisRepository redisRepository = RedisUtil.getInstance();
+        boolean flag = redisRepository.exists(key);
+        if (flag) {
+            propertysMap = JSON.parseObject(redisRepository.get(key).toString(), Map.class);
+        } else {
+            list = iremoteUniversityService.getDataDictListByType("FEATURE");
+            for (Map<String, Object> map : list) {
+                propertysMap.put(map.get("dictId").toString(), map.get("name").toString());
+            }
+            redisRepository.set(key, JSON.toJSON(propertysMap), TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
+        }
+        return propertysMap;
     }
 
 

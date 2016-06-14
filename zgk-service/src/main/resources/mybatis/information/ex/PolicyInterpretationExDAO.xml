@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace=" cn.thinkjoy.gk.dao.information.ex.IPolicyInterpretationExDAO">
+<!--
+insert
+update
+updateNull
+deleteById
+deleteByCondition
+deleteByProperty
+fetch
+findOne
+findList
+findAll
+queryPage
+like
+queryList
+queryOne
+count
+selectMaxId
+updateOrSave
+selectOne
+selectList
+-->
+
+    <sql id="Base_Column_List">
+        interpretation.id as id ,
+        interpretation.provinceId as provinceId ,
+        interpretation.admissionBatchId as admissionBatchId ,
+        interpretation.categoryName as categoryName ,
+        interpretation.content as content ,
+        interpretation.status as status ,
+        interpretation.creator as creator ,
+        interpretation.createDate as createDate ,
+        interpretation.lastModifier as lastModifier ,
+        interpretation.lastModDate as lastModDate ,
+        interpretation.areaId as areaId,
+		province.name as province,
+		batch.name as admissionBatch
+
+    </sql>
+
+    <select id="queryPage" resultType="cn.thinkjoy.gk.entity.information.dto.PolicyInterpretationDTO">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_policy_interpretation interpretation
+        LEFT JOIN zgk_province province ON province.id=interpretation.provinceId
+        LEFT OUTER JOIN zgk_admission_batch batch ON batch.id=interpretation.admissionBatchId
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.interpretationprovinceId!=null">
+                ${condition.groupOp}   ${condition.interpretationprovinceId.field}  ${condition.interpretationprovinceId.op}  #{condition.interpretationprovinceId.data}
+            </if>
+            <if test="condition.interpretationadmissionBatchId!=null">
+                ${condition.groupOp}   ${condition.interpretationadmissionBatchId.field}  ${condition.interpretationadmissionBatchId.op}  #{condition.interpretationadmissionBatchId.data}
+            </if>
+            <if test="condition.queryparam!=null">
+                  ${condition.groupOp}
+                (interpretation.categoryName LIKE #{condition.queryparam.data}
+                OR province.name LIKE #{condition.queryparam.data}
+                OR batch.name LIKE #{condition.queryparam.data}
+                OR interpretation.content LIKE  #{condition.queryparam.data})
+            </if>
+
+
+    </where>
+        ORDER BY id DESC
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(interpretation.id)
+        FROM zgk_policy_interpretation interpretation
+        LEFT JOIN zgk_province province ON province.id=interpretation.provinceId
+        LEFT OUTER JOIN zgk_admission_batch batch ON batch.id=interpretation.admissionBatchId
+       <where>
+           <if test="interpretationprovinceId!=null">
+               ${groupOp} ${interpretationprovinceId.field} ${interpretationprovinceId.op}  #{interpretationprovinceId.data}
+           </if>
+           <if test="interpretationadmissionBatchId!=null">
+               ${groupOp} ${interpretationadmissionBatchId.field} ${interpretationadmissionBatchId.op}  #{interpretationadmissionBatchId.data}
+           </if>
+           <if test="queryparam!=null">
+               ${groupOp} ( interpretation.categoryName LIKE  #{queryparam.data} OR interpretation.content LIKE  #{queryparam.data}  )
+           </if>
+       </where>
+    </select>
+    <select id="fetch" parameterType="java.lang.Long" resultType="cn.thinkjoy.gk.entity.information.dto.PolicyInterpretationDTO">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_policy_interpretation interpretation
+        LEFT JOIN zgk_province province ON province.id=interpretation.provinceId
+        LEFT OUTER JOIN zgk_admission_batch batch ON batch.id=interpretation.admissionBatchId
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND interpretation.id = #{id}
+        </trim>
+    </select>
+</mapper>
+

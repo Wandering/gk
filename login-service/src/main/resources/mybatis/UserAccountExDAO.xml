@@ -27,13 +27,16 @@
         market.qrCodeUrl,
         market.sharerId,
         market.sharerType,
-        market.agentLevel
+        market.agentLevel,
+        card.productType as vipType,
+        acc.isRegisterXueTang as isRegisterXueTang
         FROM zgk_user_account acc
         left join zgk_user_vip vip on acc.id = vip.id
         left join zgk_user_info info on acc.id = info.id
         left join zgk_user_exam exam on acc.id = exam.id
         left join zgk_province pro on pro.id = info.provinceId
         left join zgk_user_market market on acc.id=market.accountId
+        LEFT JOIN zgk_card card on card.userId=acc.id
         <where>
             acc.userType = 0
             <if test="token!=null">
@@ -49,6 +52,7 @@
                 and acc.areaId = #{areaId}
             </if>
         </where>
+        limit 1
     </select>
 
     <select id="findUserAccountPojo" resultType="UserAccountPojo">
@@ -174,12 +178,24 @@
         od.status as payStatus,
 		od.goods_count as productNum,
 		od.product_type as productType,
-		pro.price as unitPrice,
-		pro.`name` as productName
+		od.unit_price as unitPrice,
+		pro.productName as productName,
+		od.handle_state as handleState,
+		address.receivingAddress as receivingAddress,
+		address.contactName as contactName,
+		address.contactPhone as contactPhone
         from zgk_order od
-        LEFT JOIN zgk_product pro on od.product_type=pro.type
+        LEFT JOIN zgk_system.zgk_sale_product pro on od.product_type=pro.type
+        LEFT JOIN zgk_user_goodsadress address on od.user_id=address.userId
         where od.user_id=#{userId} and od.state!='Y'
+        <if test="orderNo!=null">
+            and od.order_no = #{orderNo}
+        </if>
         order by od.create_date desc
     </select>
+
+    <update id="updateUserAccountRegistXueTang" parameterType="java.util.HashMap">
+        UPDATE zgk_user_account SET isRegisterXueTang=#{isRegisterXueTang} WHERE id=#{id}
+    </update>
 </mapper>
 

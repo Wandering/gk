@@ -8,11 +8,13 @@ package cn.thinkjoy.gk.controller;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
-import cn.thinkjoy.gk.query.ProductQuery;
 import cn.thinkjoy.gk.domain.Product;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.query.ProductQuery;
 import cn.thinkjoy.gk.service.IProductExService;
 import cn.thinkjoy.gk.service.IProductService;
+import cn.thinkjoy.zgk.zgksystem.DeparmentApiService;
+import cn.thinkjoy.zgk.zgksystem.domain.DepartmentProductRelation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +25,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.NumberFormat;
 import java.util.List;
 
 /**
@@ -44,20 +43,17 @@ public class ProductController extends ZGKBaseController {
     @Autowired
     private IProductService productService;
 
+    @Autowired
+    private DeparmentApiService deparmentApiService;
+
     /**
      * 获取商品
      * @return
      */
     @RequestMapping(value = "findProductPage", method = RequestMethod.GET)
     @ResponseBody
+    @Deprecated
     public List<Product> findProductPage(ProductQuery productQuery) {
-
-//        response.setHeader("Access-Control-Allow-Origin","http://test.zhiless.com:8088");
-//        response.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
-//        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
-//        response.setHeader("Access-Control-Max-Age", "1800");
-//        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-//        response.addHeader("Access-Control-Allow-Credentials", "true");
 
         if(productQuery==null) {
             LOGGER.info("====product /findProductPage PARAM_ERROR ");
@@ -75,6 +71,7 @@ public class ProductController extends ZGKBaseController {
      */
     @RequestMapping(value = "findProduct", method = RequestMethod.GET)
     @ResponseBody
+    @Deprecated
     public Product findProduct(@RequestParam(value="code",required=false) Integer code) {
 
         if(code==null) {
@@ -93,26 +90,8 @@ public class ProductController extends ZGKBaseController {
      */
     @RequestMapping(value = "findAllProduct", method = RequestMethod.GET)
     @ResponseBody
-    public List<Product> findAllProduct(@RequestParam(value="userKey",required=true) String userKey) {
-        List<Product> productList = productService.findAll();
-        if(null != productList && productList.size() > 0)
-        {
-            long areaId = getAreaId();
-            for (Product product: productList) {
-                product.setPrice(null);
-                if("330000".equals(areaId+""))
-                {
-                    if("10000001".equals(product.getCode()+""))
-                    {
-                        product.setMarketPrice("680.00");
-                    }
-                    if("10000002".equals(product.getCode()+""))
-                    {
-                        product.setMarketPrice("750.00");
-                    }
-                }
-            }
-        }
-        return productList;
+    public List<DepartmentProductRelation> findAllProduct() {
+        List<DepartmentProductRelation> relations = deparmentApiService.queryProductPriceByAreaId(getAreaId().toString());
+        return relations;
     }
 }

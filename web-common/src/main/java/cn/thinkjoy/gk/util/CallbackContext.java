@@ -21,4 +21,8 @@ public class CallbackContext {
     public static void setCallback(String call){
         callback.set(call);
     }
+
+    public static void removeCallback(){
+        callback.remove();
+    }
 }

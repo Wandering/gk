@@ -9,6 +9,7 @@
         <result column="isRange" property="isRange" jdbcType="BIT" />
         <result column="rankTrend" property="rankTrend" jdbcType="VARCHAR" />
         <result column="subjection" property="subjection" jdbcType="VARCHAR" />
+        <result column="areaName" property="areaName" jdbcType="VARCHAR" />
         <result column="type" property="type" jdbcType="INTEGER" />
         <result column="property" property="property" jdbcType="VARCHAR" />
         <result column="code" property="code" jdbcType="VARCHAR" />
@@ -30,12 +31,12 @@
     </sql>
     <sql id="Search_Column_List">
          bData.*,zgk_university.isProportion,zgk_university.isRange,zgk_university.rankTrend,zgk_university.subjection,zgk_university.type,zgk_university.property,province.id as areaId,
-        zgk_university_enroll.averageScore ,province.code as code,dict.name as typeName
+        province.name as areaName,zgk_university_enroll.averageScore ,province.code as code,dict.name as typeName
 --         sum(enrollingPlan.planEnrolling) as planEnrolling,
     </sql>
     <sql id="Search_Column_List_Ranking">
          bData.*,zgk_university.isProportion,zgk_university.isRange,zgk_university.rankTrend,zgk_university.subjection,zgk_university.type,zgk_university.property,province.id as areaId,
-         province.code as code,dict.name as typeName
+         province.name as areaName,province.code as code,dict.name as typeName
     </sql>
     <sql id="Base_Join_Search_Column">
         left join zgk_university as zgk_university on bData.universityId=zgk_university.id
@@ -80,6 +81,44 @@
 
             order by bData.enrollRate desc,bData.preScoreDiff desc   limit 60
         </where>
+    </select>
+    <!--按线差-->
+    <select id="selectUniversityInfoByLineDiff" resultMap="BaseResultMap" parameterType="java.util.Map" >
+        select <include refid="Search_Column_List_Ranking" /> from ${tableName} as bData
+        <include refid="Base_Join_Search_Column"/>
+        <where>
+            <if test="rankStart!=null and rankEnd!=null">
+                and  zgk_university.rank &gt;=#{rankStart,jdbcType=INTEGER}   and zgk_university.rank &lt;=#{rankEnd,jdbcType=INTEGER}
+            </if>
+            <if test="enrollStart!=null and enrollEnd!=null">
+                <choose>
+                    <when test="enrollStart==100 and enrollEnd==100">
+                        and  left(bData.enrollRate*100,7)=#{enrollEnd,jdbcType=INTEGER}
+                    </when>
+                    <otherwise>
+                        and  left(bData.enrollRate*100,7)&gt;=#{enrollStart,jdbcType=INTEGER} and  left(bData.enrollRate*100,7)&lt;#{enrollEnd,jdbcType=INTEGER}
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="scoreDiff!=null">
+                and bData.scoreDiff=#{scoreDiff,jdbcType=INTEGER}
+            </if>
+            <if test="isRank==true">
+                and zgk_university.rank is not null
+            </if>
+            and zgk_university.id is not null
+            and dict.type='UNIVERSITY_TYPE'
+            group by bData.universityId
+            <if test="isRank==true">
+                order by zgk_university.rank asc
+            </if>
+            <if test="isEnrolling==true and enrollOrder!=null and scoreDiffOrder!=null">
+                order by bData.enrollRate ${enrollOrder},preScoreDiff ${scoreDiffOrder}
+            </if>
+        </where>
+        <if test="isEnrolling==true and begin!=null and end!=null">
+            limit #{begin,jdbcType=INTEGER},#{end,jdbcType=INTEGER}
+        </if>
     </select>
     <!--按排名-->
     <select id="selectUniversityInfoByRanking" resultMap="BaseResultMap" parameterType="java.util.Map" >
@@ -180,8 +219,9 @@
         order by year desc, cast(majorType AS UNSIGNED) asc
     </select>
 
-    <select id="getUniversityMajors" parameterType="java.util.Map" resultType="java.lang.String">
-        select t.majorName
+    <select id="getUniversityMajors" parameterType="java.util.Map" resultType="java.util.Map">
+        select
+        t.majorId,t.majorName,t.majorFeature,t.educationLevel
         from zgk_university_major t
         <where>
             <if test="universityId!=null">
@@ -192,4 +232,175 @@
             </if>
         </where>
     </select>
+
+    <select id="getUniversityEnrollingInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        select en.year,
+        CAST(concat(sum(case when en.majorType=1 then en.realEnrollingNumber else 0 end),
+        ':',
+        sum(case when en.majorType=2 then en.realEnrollingNumber else 0 end),
+        ':',
+        sum(en.realEnrollingNumber)) AS CHAR) as enrollingNumbers
+        from zgk_university_enrolling en
+        <where>
+            en.realEnrollingNumber!=''
+            <if test="universityId!=null">
+                and en.universityId=#{universityId}
+            </if>
+            <if test="areaId!=null">
+                and en.areaId=#{areaId}
+            </if>
+            <if test="batch!=null">
+                and en.batch=#{batch}
+            </if>
+        </where>
+        group by en.year
+        order by en.year
+    </select>
+
+    <select id="getUniversityMajorListByUniversityId" resultType="cn.thinkjoy.gk.dto.UniversityMajorDTO">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.universityId!=null">
+                    , universityId
+                </if>
+                <if test="selector.universityName!=null">
+                    , universityName
+                </if>
+                <if test="selector.majorId!=null">
+                    , majorId
+                </if>
+                <if test="selector.majorName!=null">
+                    , majorName
+                </if>
+                <if test="selector.majorType!=null">
+                    , (SELECT name FROM zgk_data_dict dd WHERE dd.type = 'MAJOR_TYPE' AND dd.dictId = majorType) as majorTypeName
+                </if>
+                <if test="selector.majorSubject!=null">
+                    ,
+                    (SELECT name FROM zgk_data_dict dd WHERE dd.type = 'UNIVERSITY_MAJOR_TYPE' AND dd.dictId = majorSubject) as majorSubjectName
+                </if>
+                <if test="selector.educationLevel!=null">
+                    ,
+                    (SELECT name FROM zgk_data_dict dd WHERE dd.type = 'EDULEVEL' AND dd.dictId = educationLevel) as educationLevelName
+                </if>
+                <if test="selector.gainDegree!=null">
+                    ,
+                    (SELECT name FROM zgk_data_dict dd WHERE dd.type = 'GAIN_DEGREE' AND dd.dictId = gainDegree) as gainDegreeName
+                </if>
+                <if test="selector.salaryRank!=null">
+                    , salaryRank
+                </if>
+                <if test="selector.majorRank!=null">
+                    , majorRank
+                </if>
+                <if test="selector.jobRank!=null">
+                    , jobRank
+                </if>
+                <if test="selector.createDate!=null">
+                    , createDate
+                </if>
+                <if test="selector.creator!=null">
+                    , creator
+                </if>
+                <if test="selector.lastModDate!=null">
+                    , lastModDate
+                </if>
+                <if test="selector.lastModifier!=null">
+                    , lastModifier
+                </if>
+                <if test="selector.isDelete!=null">
+                    , isDelete
+                </if>
+            </trim>
+        </if>
+        <if test="selector==null">
+            id as id ,
+            universityId as universityId ,
+            universityName as universityName ,
+            majorId as majorId ,
+            majorName as majorName ,
+            (SELECT name FROM zgk_data_dict dd WHERE dd.type = 'MAJOR_TYPE' AND dd.dictId = majorType limit 1) as majorTypeName,
+            (SELECT name FROM zgk_data_dict dd WHERE dd.type = 'UNIVERSITY_MAJOR_TYPE' AND dd.dictId = majorSubject limit 1) as majorSubjectName,
+            (SELECT name FROM zgk_data_dict dd WHERE dd.type = 'EDULEVEL' AND dd.dictId = educationLevel limit 1) as educationLevelName,
+            (SELECT name FROM zgk_data_dict dd WHERE dd.type = 'GAIN_DEGREE' AND dd.dictId = gainDegree limit 1) as gainDegreeName ,
+            salaryRank,
+            jobRank,
+            majorRank as majorRank ,
+            createDate as createDate ,
+            creator as creator ,
+            lastModDate as lastModDate ,
+            lastModifier as lastModifier ,
+            isDelete as isDelete
+        </if>
+        FROM zgk_university_major
+        <where>
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.id!=null">
+                ${condition.groupOp}   ${condition.id.field}  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.universityId!=null">
+                ${condition.groupOp}   ${condition.universityId.field}  ${condition.universityId.op}  #{condition.universityId.data}
+            </if>
+            <if test="condition.keywordSearch!=null">
+                AND ( universityName ${condition.keywordSearch.op} #{condition.keywordSearch.data}
+                OR majorName ${condition.keywordSearch.op} #{condition.keywordSearch.data}
+                )
+            </if>
+            <if test="condition.universityName!=null">
+                ${condition.groupOp}   ${condition.universityName.field}  ${condition.universityName.op}  #{condition.universityName.data}
+            </if>
+            <if test="condition.majorId!=null">
+                ${condition.groupOp}   ${condition.majorId.field}  ${condition.majorId.op}  #{condition.majorId.data}
+            </if>
+            <if test="condition.majorName!=null">
+                ${condition.groupOp}   ${condition.majorName.field}  ${condition.majorName.op}  #{condition.majorName.data}
+            </if>
+            <if test="condition.majorType!=null">
+                ${condition.groupOp}   ${condition.majorType.field}  ${condition.majorType.op}  #{condition.majorType.data}
+            </if>
+            <if test="condition.majorSubject!=null">
+                ${condition.groupOp}   ${condition.majorSubject.field}  ${condition.majorSubject.op}  #{condition.majorSubject.data}
+            </if>
+            <if test="condition.educationLevel!=null">
+                ${condition.groupOp}   ${condition.educationLevel.field}  ${condition.educationLevel.op}  #{condition.educationLevel.data}
+            </if>
+            <if test="condition.gainDegree!=null">
+                ${condition.groupOp}   ${condition.gainDegree.field}  ${condition.gainDegree.op}  #{condition.gainDegree.data}
+            </if>
+            <if test="condition.majorRank!=null">
+                ${condition.groupOp}   ${condition.majorRank.field}  ${condition.majorRank.op}  #{condition.majorRank.data}
+            </if>
+            <if test="condition.createDate!=null">
+                ${condition.groupOp}   ${condition.createDate.field}  ${condition.createDate.op}  #{condition.createDate.data}
+            </if>
+            <if test="condition.creator!=null">
+                ${condition.groupOp}   ${condition.creator.field}  ${condition.creator.op}  #{condition.creator.data}
+            </if>
+            <if test="condition.lastModDate!=null">
+                ${condition.groupOp}   ${condition.lastModDate.field}  ${condition.lastModDate.op}  #{condition.lastModDate.data}
+            </if>
+            <if test="condition.lastModifier!=null">
+                ${condition.groupOp}   ${condition.lastModifier.field}  ${condition.lastModifier.op}  #{condition.lastModifier.data}
+            </if>
+            <if test="condition.isDelete!=null">
+                ${condition.groupOp}   ${condition.isDelete.field}  ${condition.isDelete.op}  #{condition.isDelete.data}
+            </if>
+
+
+        </where>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
 </mapper>

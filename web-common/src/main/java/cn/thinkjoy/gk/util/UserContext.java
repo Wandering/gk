@@ -22,4 +22,9 @@ public class UserContext {
     public static void setCurrentUser(UserAccountPojo user){
         context.set(user);
     }
+
+    public static void removeCurrentUser()
+    {
+        context.remove();
+    }
 }

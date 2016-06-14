@@ -10,6 +10,7 @@ import cn.thinkjoy.gk.domain.University;
 import cn.thinkjoy.gk.pojo.MajoredScoreLinePojo;
 import cn.thinkjoy.gk.pojo.OpenMajoredPojo;
 import cn.thinkjoy.gk.pojo.UniversityDetailDto;
+import cn.thinkjoy.zgk.dto.UniversityMajorEnrollingPlanDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -46,4 +47,10 @@ public interface IUniversityExDAO{
      */
     List<University> getUniversityInfoByKeywords(@Param("keywords") String keywords);
 
+    List<Map<String,Object>> queryPage(@Param("condition") Map<String, Object> condition, @Param("offset") int offset, @Param("rows") int rows,
+                                       @Param("orderBy") String orderBy, @Param("sortBy") String sortBy, @Param("selector")Map<String, Object> selector);
+
+    int count(Map<String, Object> condition);
+
+    List<UniversityMajorEnrollingPlanDTO> getUniversityMajorEnrollingPlanList(Map<String,Object> params);
 }

@@ -36,8 +36,68 @@ public class University extends CreateBaseDomain{
     private Long countyId;
     private String countyName;
     private String batchType;
+    /** 院校省码 */
+    private String provinceCode;
+    /** 位置 */
+    private String areaid;
+    /** 院校logo链接 */
+    private String photoUrl;
+    /** 学校排名 */
+    private Integer rank;
+    /** 选测等级 */
+    private String xcRank;
 
-	public University(){
+    private int isCollect;
+
+    public int getIsCollect() {
+        return isCollect;
+    }
+
+    public void setIsCollect(int isCollect) {
+        this.isCollect = isCollect;
+    }
+
+    public String getProvinceCode() {
+        return provinceCode;
+    }
+
+    public void setProvinceCode(String provinceCode) {
+        this.provinceCode = provinceCode;
+    }
+
+    public String getAreaid() {
+        return areaid;
+    }
+
+    public void setAreaid(String areaid) {
+        this.areaid = areaid;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public Integer getRank() {
+        return rank;
+    }
+
+    public void setRank(Integer rank) {
+        this.rank = rank;
+    }
+
+    public String getXcRank() {
+        return xcRank;
+    }
+
+    public void setXcRank(String xcRank) {
+        this.xcRank = xcRank;
+    }
+
+    public University(){
 	}
     public void setCode(String value) {
         this.code = value;

@@ -81,7 +81,7 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
     }
 
     @Override
-    public int findUserAccountCountByPhone(String account,long areaId) {
+    public int findUserAccountCountByPhone(String account,Long areaId) {
         Map<String,Object> params = new HashMap<String,Object>();
         params.put("account",account);
         params.put("areaId",areaId);
@@ -219,6 +219,11 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
     @Override
     public List<Map<String, Object>> getOrderList(Map<String, String> paramMap) {
         return userAccountExDAO.getOrderList(paramMap);
+    }
+
+    @Override
+    public int updateUserAccountRegistXueTang(Map<String, Object> paramMap) {
+        return userAccountExDAO.updateUserAccountRegistXueTang(paramMap);
     }
 
 }

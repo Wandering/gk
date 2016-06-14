@@ -14,6 +14,7 @@ public class Order extends BaseDomain {
     private String state="N";
     private String  goodsAddress;
     private String  productPrice;
+    private String unitPrice;
     private String  productType;
     private Long departmentCode;
     private String  departmentName;
@@ -21,6 +22,15 @@ public class Order extends BaseDomain {
     private Integer goodsCount;
     private String handleState = "0";
     private String channel;
+
+    public String getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(String unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
     public Integer getGoodsCount() {
         return goodsCount;
     }

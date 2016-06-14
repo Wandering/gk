@@ -37,6 +37,16 @@ public class Card extends CreateBaseDomain<Long>{
 	/** 激活日期 */
 	private Long activeDate;
 
+	private String productType;
+
+	public String getProductType() {
+		return productType;
+	}
+
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+
 	public Long getActiveDate() {
 		return activeDate;
 	}

@@ -19,7 +19,19 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
      */
     public Integer selectPlanEnrolling(Map map);
 
+    /**
+     * 获取院校清单  根据接口版本号
+     * @param universityInfoParmasView
+     * @return
+     */
     public List<UniversityInfoView> selectUniversityInfoViewByVersion(UniversityInfoParmasView universityInfoParmasView);
+
+    /**
+     *  获取院校清单  根据逻辑走向
+     * @param universityInfoParmasView
+     * @return
+     */
+    public List<UniversityInfoView> selectUniversityInfoViewByLogic(UniversityInfoParmasView universityInfoParmasView);
 
     /**
      * 院校录取信息查询条件
@@ -47,5 +59,14 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
      * @param map
      * @return
      */
-    List<String> getUniversityMajors(Map<String, String> map);
+    List<Map<String, Object>> getUniversityMajors(Map<String, String> map);
+
+    /**
+     * 专业招生信息查询条件
+     * @param map
+     * @return
+     */
+    List<Map<String, Object>> getUniversityEnrollingInfo(Map<String, String> map);
+
+    List getUniversityMajorListByUniversityId(Map<String, Object> condition,int offset,int rows,String orderBy,String sortBy,Map<String, Object> selectorpage);
 }

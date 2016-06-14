@@ -31,6 +31,24 @@ public class UserInfoPojo extends BaseDomain<Long> {
     private Long sharerId;
     private String sharerType;
     private String agentLevel;
+    private String vipType;
+    private int isRegisterXueTang;
+
+    public int getIsRegisterXueTang() {
+        return isRegisterXueTang;
+    }
+
+    public void setIsRegisterXueTang(int isRegisterXueTang) {
+        this.isRegisterXueTang = isRegisterXueTang;
+    }
+
+    public String getVipType() {
+        return vipType;
+    }
+
+    public void setVipType(String vipType) {
+        this.vipType = vipType;
+    }
 
     public String getEndDate() {
         return endDate;

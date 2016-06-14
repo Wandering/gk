@@ -16,4 +16,6 @@ public interface IReportResultDao extends IBaseDAO<ReportResult> {
 
     Integer selectRanking(Map map);
     List<Integer> selectPrecedence(Map map);
+
+    List<ReportResult> selectHistoryList(Map map);
 }
