@@ -44,6 +44,8 @@ public class UniversityInfoParmasView implements Serializable {
      */
     private Integer logic;
 
+    private Long areaId;
+
 
     public Integer getVersion() {
         return version;
@@ -107,5 +109,13 @@ public class UniversityInfoParmasView implements Serializable {
 
     public void setLogic(Integer logic) {
         this.logic = logic;
+    }
+
+    public Long getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(Long areaId) {
+        this.areaId = areaId;
     }
 }

@@ -129,8 +129,8 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
                         }
 
                         //是否是压线生
-                        if (isLine(logicTrend, btc, cate, provinceCode, score,"3")) {
-                            flag = (i + 1) == 2 ? 3 : (i + 1);  //三批特殊处理  0：一批 1：二批 3：三批 4：高职高专
+                        if (isLine(logicTrend, btc, cate, provinceCode, score,"4")) {
+                            flag = (i + 1) == 3 ? 4 : (i + 1);  //三批特殊处理  0：一批 1：二批 3：三批 4：高职高专
                             batchView.setIsLine(true);
                             batchView.setFirst(false);
                             isRecom = false;
@@ -160,8 +160,8 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
                         isRecom = false;
                     }
                     //是否是压线生
-                    if (isLine(logicTrend, batch, cate, provinceCode, score,"3")) {
-                        flag = (i + 1) == 2 ? 3 : (i + 1);  //三批特殊处理  0：一批 1：二批 3：三批 4：高职高专
+                    if (isLine(logicTrend, batch, cate, provinceCode, score,"4")) {
+                        flag = (i + 1) == 3 ? 4 : (i + 1);  //三批特殊处理  0：一批 1：二批 3：三批 4：高职高专
                         batchView.setIsLine(true);
                         batchView.setFirst(false);
                         isRecom = false;
@@ -179,7 +179,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
             }
         }
 
-        return ReportUtil.sortBatchResultArr(batchViews);
+        return batchViews;
     }
     @Override
     public Integer getLineDiff(String batch, Integer score, Integer cate, String provinceCode) {

@@ -32,5 +32,16 @@ public interface IScoreConverPrecedenceService {
      * @return
      */
     public Integer converPrecedenceByScore(Integer score,String proCode,Integer cate,String batch);
+
+    /**
+     * 校验用户位次准确性
+     * @param score
+     * @param proCode
+     * @param cate
+     * @param batch
+     * @param precedence
+     * @return
+     */
+    public boolean validPrecedenceScoreMapper(Integer score,String proCode,Integer cate,String batch,Integer precedence);
 }
 

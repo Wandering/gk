@@ -24,6 +24,7 @@
         <result column="scoreUseRate" property="scoreUseRate" jdbcType="NUMERIC" />
         <result column="areaId" property="areaId" jdbcType="INTEGER" />
         <result column="typeName" property="typeName" jdbcType="VARCHAR" />
+        <result column="batch" property="batch" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -42,6 +43,7 @@
         left join zgk_university as zgk_university on bData.universityId=zgk_university.id
         left join zgk_province as province on zgk_university.provinceCode=province.id
         left join zgk_data_dict as dict on zgk_university.type=dict.dictId
+        left join zgk_university_enrolling_plan as enrollPingPlan on bData.universityId=enrollPingPlan.universityId
     </sql>
     <!--按位次-->
     <select id="selectUniversityInfo" resultMap="BaseResultMap" parameterType="java.util.Map" >
@@ -108,6 +110,7 @@
             </if>
             and zgk_university.id is not null
             and dict.type='UNIVERSITY_TYPE'
+            and enrollPingPlan.areaId=#{areaId}
             group by bData.universityId
             <if test="isRank==true">
                 order by zgk_university.rank asc
@@ -146,6 +149,7 @@
             </if>
             and zgk_university.id is not null
             and dict.type='UNIVERSITY_TYPE'
+            and enrollPingPlan.areaId=#{areaId}
             group by bData.universityId
             <if test="isRank==true">
               order by zgk_university.rank asc
