@@ -111,25 +111,58 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
                 for (int x = 0; x < batchLineArr.length; x++) {
                     /***************************AB类后续处理**************************/
                     Integer line = Integer.valueOf(batchLineArr[x]);
+                    if (line > 0) {
+                        String btc = (i + 1) + "-" + String.valueOf(x + 1);
+                        BatchView batchView = batchConfig(cate, btc, x, provinceCode, batchLine);
 
-                    String btc = (i + 1) + "-" + String.valueOf(x + 1);
-                    BatchView batchView = batchConfig(cate, btc, x, provinceCode, batchLine);
+                        boolean isFirst = !first ? getFirst(sap, provinceCode, btc, cate, logicTrend) : first;
 
-                    boolean isFirst = !first ? getFirst(sap, provinceCode, btc, cate, logicTrend) : first;
+                        batchView.setFirst(first ? false : isFirst);
 
+                        first = isFirst;
+
+                        if (score >= line && line > 0) {
+                            batchView.setConform(true);
+                            if (i == flag) {
+                                batchView.setRecommend(true);
+                                isRecom = false;
+                            }
+
+                            //是否是压线生
+                            if (isLine(logicTrend, btc, cate, provinceCode, score, "4")) {
+                                flag = (i + 1) == 3 ? 4 : (i + 1);  //三批特殊处理  0：一批 1：二批 3：三批 4：高职高专
+                                batchView.setIsLine(true);
+                                batchView.setFirst(false);
+                                isRecom = false;
+                            } else if (isRecom) {
+                                batchView.setIsLine(false);
+                                batchView.setRecommend(true);
+                                isRecom = false;
+                            }
+                        } else
+                            batchView.setConform(false);
+
+                        batchViews.add(batchView);
+                    }
+                }
+            } else {
+                Integer btLine = Integer.valueOf(batchLine);
+                if (btLine > 0) {
+                    String batch = String.valueOf((i + 1));
+                    BatchView batchView = batchConfig(cate, batch, 0, provinceCode, batchLine);
+
+                    boolean isFirst = !first ? getFirst(sap, provinceCode, batch, cate, logicTrend) : first;
                     batchView.setFirst(first ? false : isFirst);
-
                     first = isFirst;
-
-                    if (score >= line && line > 0) {
+                    //批次线大于0 且分数大于等于批次线 表示用户分数已达标
+                    if (btLine > 0 && score >= btLine) {
                         batchView.setConform(true);
                         if (i == flag) {
                             batchView.setRecommend(true);
                             isRecom = false;
                         }
-
                         //是否是压线生
-                        if (isLine(logicTrend, btc, cate, provinceCode, score,"4")) {
+                        if (isLine(logicTrend, batch, cate, provinceCode, score, "4")) {
                             flag = (i + 1) == 3 ? 4 : (i + 1);  //三批特殊处理  0：一批 1：二批 3：三批 4：高职高专
                             batchView.setIsLine(true);
                             batchView.setFirst(false);
@@ -139,43 +172,13 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
                             batchView.setRecommend(true);
                             isRecom = false;
                         }
+                    } else if (ReportUtil.isBatch4(batch) && score <= btLine) {
+                        batchView.setConform(true);
                     } else
                         batchView.setConform(false);
 
                     batchViews.add(batchView);
                 }
-            } else {
-                Integer btLine = Integer.valueOf(batchLine);
-                String batch = String.valueOf((i + 1));
-                BatchView batchView = batchConfig(cate, batch, 0, provinceCode, batchLine);
-
-                boolean isFirst = !first ? getFirst(sap, provinceCode, batch, cate, logicTrend) : first;
-                batchView.setFirst(first ? false : isFirst);
-                first = isFirst;
-                //批次线大于0 且分数大于等于批次线 表示用户分数已达标
-                if (btLine > 0 && score >= btLine) {
-                    batchView.setConform(true);
-                    if (i == flag) {
-                        batchView.setRecommend(true);
-                        isRecom = false;
-                    }
-                    //是否是压线生
-                    if (isLine(logicTrend, batch, cate, provinceCode, score,"4")) {
-                        flag = (i + 1) == 3 ? 4 : (i + 1);  //三批特殊处理  0：一批 1：二批 3：三批 4：高职高专
-                        batchView.setIsLine(true);
-                        batchView.setFirst(false);
-                        isRecom = false;
-                    } else if (isRecom) {
-                        batchView.setIsLine(false);
-                        batchView.setRecommend(true);
-                        isRecom = false;
-                    }
-                }else if(ReportUtil.isBatch4(batch)&&score <= btLine){
-                    batchView.setConform(true);
-                } else
-                    batchView.setConform(false);
-
-                batchViews.add(batchView);
             }
         }
 
