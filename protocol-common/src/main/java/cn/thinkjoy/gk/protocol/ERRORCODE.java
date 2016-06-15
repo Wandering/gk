@@ -78,6 +78,7 @@ public enum ERRORCODE {
 	SCORE_ERROR("0600009", "请输入正确的分数!"),
 	SCHOOL_NAME_ERROR("0600010", "请输入院校名称!"),
 
+	ROWS_TOO_LONG("1200001","查询条数过多"),
 
 	UPLOAD_ERROR_0("1100001", "非法上传!"),
 

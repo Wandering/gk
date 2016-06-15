@@ -86,6 +86,9 @@ public class UniversityController extends ZGKBaseController {
                                                  @RequestParam(value = "property", required = false) String property,//院校特征
                                                  @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
                                                  @RequestParam(value = "rows", required = false, defaultValue = "10") Integer rows) {
+        if (rows>50){
+            throw new BizException(ERRORCODE.ROWS_TOO_LONG.getCode(), ERRORCODE.ROWS_TOO_LONG.getMessage());
+        }
         String redisKey = "zgk_pe:"+"universityName:" + universityName + "_areaid:" + areaid + "_type:" + type + "_educationLevel:" + educationLevel + "_property:" + property + "_offset:" + offset + "_rows"+rows+":getUniversityList";
         Object object = RedisIsSaveUtil.existsKey(redisKey);
         if (object==null) {
@@ -314,6 +317,9 @@ public class UniversityController extends ZGKBaseController {
                                                     @RequestParam(value = "universityMajorType", required = false) String universityMajorType,//科类
                                                     @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
                                                     @RequestParam(value = "rows", required = false, defaultValue = "10") Integer rows) {
+        if (rows>50){
+            throw new BizException(ERRORCODE.ROWS_TOO_LONG.getCode(), ERRORCODE.ROWS_TOO_LONG.getMessage());
+        }
         Map<String, Object> condition = Maps.newHashMap();
         condition.put("universityId", String.valueOf(universityId));
         if (StringUtils.isNotBlank(year)) {
@@ -352,7 +358,9 @@ public class UniversityController extends ZGKBaseController {
                                                          @RequestParam(value = "universityMajorType", required = true) String universityMajorType,//科类
                                                          @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
                                                          @RequestParam(value = "rows", required = false, defaultValue = "10") Integer rows) {
-
+        if (rows>50){
+            throw new BizException(ERRORCODE.ROWS_TOO_LONG.getCode(), ERRORCODE.ROWS_TOO_LONG.getMessage());
+        }
         String userKey = request.getParameter("userKey");
         String key = "zgk_pe:" + userKey + "_uy:" + universityId + "_yr:" + year + "_me:" + universityMajorType + "_bh:" + batch + "_ot:" + offset + "_rs:" + rows + ":enrollingSituationDetailsList";
         Object object = RedisIsSaveUtil.existsKey(key);
