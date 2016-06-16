@@ -237,6 +237,11 @@
         </where>
     </select>
 
+    <select id="getUniversityspecialMajors" resultType="java.util.Map">
+        select t.majorId,t.majorName from zgk_university_major_special t WHERE
+                t.universityId=#{universityId}
+    </select>
+
     <select id="getUniversityEnrollingInfo" parameterType="java.util.Map" resultType="java.util.Map">
         select en.year,
         CAST(concat(sum(case when en.majorType=1 then en.realEnrollingNumber else 0 end),
