@@ -4,13 +4,11 @@ import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ReportUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
-import cn.thinkjoy.gk.entity.CheckBatchMsg;
-import cn.thinkjoy.gk.entity.ReportResult;
-import cn.thinkjoy.gk.entity.SystemParmas;
-import cn.thinkjoy.gk.entity.UniversityInfoView;
+import cn.thinkjoy.gk.entity.*;
 import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.*;
+import com.alibaba.dubbo.common.utils.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,8 +43,13 @@ public class SmartReportController extends ZGKBaseController {
     IUniversityMajorEnrollingService iUniversityMajorEnrollingService;
     @Resource
     IReportResultService iReportResultService;
+
+    @Resource
+    IReportLockService iReportLockService;
     @Resource
     IRiskForecastService iRiskForecastService;
+    @Resource
+    IScoreConverPrecedenceService iScoreConverPrecedenceService;
 
     /**
      * 查询用户是否已经填报
@@ -66,15 +69,98 @@ public class SmartReportController extends ZGKBaseController {
         }
         Map resultMap = new HashMap();
 
+//        parmasMap.put("proCode",);
+//         List<ReportLock> reportLocks=iReportLockService.selectReportLock(parmasMap);
 //        if (province.equals("zj") || province.equals("sh")) {
-            List<UserReportResultView> userReportResultViews = iReportResultService.getUserReportResultList(Long.valueOf(userAccountPojo.getId()));
-            resultMap.put("reports", userReportResultViews);
+            List<ReportLockView> reportLockViews = iReportResultService.getUserReportLockResultList(Long.valueOf(userAccountPojo.getId()));
+            resultMap.put("reports", reportLockViews);
 //        } else {
 //            UserReportResultView userReportResultView = iReportResultService.getUserReportResultView(Long.valueOf(userAccountPojo.getId()));
 //            resultMap.put("report", userReportResultView);
 //        }
         return resultMap;
     }
+    /**
+     * 校验用户位次准确性
+     * @param score 分数
+     * @param province 省份
+     * @param categorie    科类
+     * @param batch   批次
+     * @param precedence 位次
+     * @return
+     */
+    @RequestMapping(value = "/validPrecedenceScoreMapp",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> validPrecedenceScoreMapper(@RequestParam(value = "batch",required = true) String batch,
+                                                         @RequestParam(value = "score",required = true) Integer score,
+                                                         @RequestParam(value = "province",required = true) String province,
+                                                         @RequestParam(value = "categorie",required = true) Integer categorie,
+                                                         @RequestParam(value="precedence",required = true) Integer precedence) {
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+        if (userAccountPojo == null) {
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
+        }
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if (vipStatus == null || vipStatus == 0) {
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(), ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
+
+        Map resultMap = new HashMap();
+        boolean result = iScoreConverPrecedenceService.validPrecedenceScoreMapper(score, province, categorie, batch, precedence);
+        resultMap.put("result", result);
+        return resultMap;
+    }
+    /**
+     * 锁定分数及位次
+     * @return
+     */
+    @RequestMapping(value = "/reportLockSet",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> InsertReportLock(  @RequestParam(value = "batch",required = true) String batch,
+                                                 @RequestParam(value = "score",required = true) Integer score,
+                                                 @RequestParam(value = "province",required = true) String province,
+                                                 @RequestParam(value = "categorie",required = true) Integer categorie,
+                                                 @RequestParam(value="precedence",required = true) Integer precedence,
+                                                 @RequestParam(value="extendProper",required = false) String  extendProper) {
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+        if (userAccountPojo == null) {
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
+        }
+        Integer vipStatus = userAccountPojo.getVipStatus();
+
+        if (vipStatus == null || vipStatus == 0) {
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(), ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        }
+        Map map = new HashMap();
+        map.put("userId", userAccountPojo.getId().intValue());
+        map.put("orderBy", "id");
+        map.put("sortBy", "desc");
+        List<ReportLock> reportLocks=iReportLockService.selectReportLock(map);
+
+        if(reportLocks!=null&&reportLocks.size()>0) {
+            Map resultMap = new HashMap();
+            resultMap.put("result", true);
+            return resultMap;
+        }
+        ReportLock reportLock = new ReportLock();
+        reportLock.setUserId(userAccountPojo.getId().intValue());
+        reportLock.setScore(score);
+        reportLock.setBatch(batch);
+        reportLock.setCreateTime(System.currentTimeMillis());
+        reportLock.setMajorType(categorie);
+        reportLock.setPrecedence(precedence);
+        reportLock.setProvinceCode(province);
+        if (!StringUtils.isBlank(extendProper))
+            reportLock.setExtendProper(extendProper);
+
+
+        Integer result = iReportLockService.insertSelective(reportLock);
+        Map resultMap = new HashMap();
+        resultMap.put("result", result > 0);
+        return resultMap;
+    }
+
     /**
      * 获取用户最后一次填报结果
      * @return
@@ -381,6 +467,10 @@ public class SmartReportController extends ZGKBaseController {
          */
         Integer logic= getLogic(province,categorie);
         universityInfoParmasView.setLogic(logic);
+
+        universityInfoParmasView.setAreaId(getAreaId());
+
+
 
         List<UniversityInfoView> universityInfoViewList=iUniversityInfoService.selectUniversityInfoViewByLogic(universityInfoParmasView);
 

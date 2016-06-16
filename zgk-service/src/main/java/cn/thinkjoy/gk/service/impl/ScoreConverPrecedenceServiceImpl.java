@@ -49,4 +49,34 @@ public class ScoreConverPrecedenceServiceImpl implements IScoreConverPrecedenceS
         ScoreConverPrecedence converPrecedence = selectPrecedenceByScore(scoreMap);
         return converPrecedence == null ? 0 : converPrecedence.getAvgPre();
     }
+
+    /**
+     * 校验用户位次准确性
+     * @param score
+     * @param proCode
+     * @param cate
+     * @param batch
+     * @param precedence
+     * @return
+     */
+    @Override
+    public boolean validPrecedenceScoreMapper(Integer score,String proCode,Integer cate,String batch,Integer precedence) {
+        Map scoreMap = new HashMap();
+        scoreMap.put("tableName", ReportUtil.getOneScoreTableName(proCode, cate, batch));
+        scoreMap.put("score", score);
+
+        ScoreConverPrecedence scoreConverPrecedence = iScoreConverPrecedenceDao.selectPrecedenceByScore(scoreMap);
+
+        if (scoreConverPrecedence == null)//一分一段找不到该分数对应的位次时,不予提示.
+            return true;
+
+        Integer heightPre = scoreConverPrecedence.getHeighPre(),
+                lowPre = scoreConverPrecedence.getLowPre();
+
+        //输入位次在最高为此与最低位次之间.
+        if (precedence <= heightPre && precedence >= lowPre)
+            return true;
+
+        return false;
+    }
 }

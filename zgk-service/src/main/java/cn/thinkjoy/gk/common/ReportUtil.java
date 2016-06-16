@@ -143,11 +143,11 @@ public class ReportUtil {
      * @return
      */
     public static String getTableName(String provinceCode,Integer categorie,String batch,boolean isPrecedence) {
-        String[] batchArr = getBatchArr(batch);
+//        String[] batchArr = getBatchArr(batch);
         if (isPrecedence)
-            return provinceCode + ROLE_KEY_SPLIT_SYMBOL + categorie + ROLE_KEY_SPLIT_SYMBOL + batchArr[0] + ROLE_KEY_SPLIT_SYMBOL + PRECEDENCE_KEY_SYMBOL;
+            return provinceCode + ROLE_KEY_SPLIT_SYMBOL + categorie + ROLE_KEY_SPLIT_SYMBOL +batch+ ROLE_KEY_SPLIT_SYMBOL + PRECEDENCE_KEY_SYMBOL;
         else
-            return provinceCode + ROLE_KEY_SPLIT_SYMBOL + categorie + ROLE_KEY_SPLIT_SYMBOL + batchArr[0];
+            return provinceCode + ROLE_KEY_SPLIT_SYMBOL + categorie + ROLE_KEY_SPLIT_SYMBOL + batch;
     }
 
     /**
@@ -188,7 +188,7 @@ public class ReportUtil {
     public static boolean isBatch4(String batch) {
         String[] equesBatch = ReportUtil.getBatchArr(batch);
 
-        return equesBatch[0].equals("3");
+        return equesBatch[0].equals("4");
     }
 
     /**

@@ -287,6 +287,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
             map.put("province", initMap.get("province"));//key
             map.put("majorType", initMap.get("majorType"));
             map.put("scoreDiff", initMap.get("scoreDiff"));
+            map.put("areaId",initMap.get("areaId"));
             //院校排名规则
             if (rankingRoleParmas.getWhoDim() == ReportEnum.RankDim.RANK.getValue()) {
                 LOGGER.info("-------走排名规则 start-------");
@@ -321,9 +322,9 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
                 LOGGER.info("scoreDiffOrder:"+map.get("scoreDiffOrder"));
                 LOGGER.info("-------排序规则 end--------");
 
-                ArrayList<Integer> limitArr = ReportUtil.strSplit(rankingRoleParmas.getLimitParmas(), ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
-                map.put("begin", limitArr.get(0));
-                map.put("end", limitArr.get(1));
+//                ArrayList<Integer> limitArr = ReportUtil.strSplit(rankingRoleParmas.getLimitParmas(), ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
+//                map.put("begin", limitArr.get(0));
+//                map.put("end", limitArr.get(1));
                 map.put("isEnrolling", true);
 
                 LOGGER.info("-------走录取率规则 end-------");
@@ -425,6 +426,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
             map.put("province", initMap.get("province"));//key
             map.put("majorType", initMap.get("majorType"));
             map.put("precedenceParmas", initMap.get("precedenceParmas"));
+            map.put("areaId",initMap.get("areaId"));
             //院校排名规则
             if (rankingRoleParmas.getWhoDim() == ReportEnum.RankDim.RANK.getValue()) {
                 LOGGER.info("-------走排名规则 start-------");
@@ -459,9 +461,9 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
                 LOGGER.info("scoreDiffOrder:"+map.get("scoreDiffOrder"));
                 LOGGER.info("-------排序规则 end--------");
 
-                ArrayList<Integer> limitArr = ReportUtil.strSplit(rankingRoleParmas.getLimitParmas(), ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
-                map.put("begin", limitArr.get(0));
-                map.put("end", limitArr.get(1));
+//                ArrayList<Integer> limitArr = ReportUtil.strSplit(rankingRoleParmas.getLimitParmas(), ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
+//                map.put("begin", limitArr.get(0));
+//                map.put("end", limitArr.get(1));
                 map.put("isEnrolling", true);
 
                 LOGGER.info("-------走录取率规则 end-------");

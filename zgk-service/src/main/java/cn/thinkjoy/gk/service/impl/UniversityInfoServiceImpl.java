@@ -188,7 +188,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         LOGGER.info("tableName:" + tbName);
         map.put("province", universityInfoParmasView.getProvince());//key
         map.put("majorType", universityInfoParmasView.getCategorie());
-
+        map.put("areaId",universityInfoParmasView.getAreaId());
         LOGGER.info("省份:" + universityInfoParmasView.getProvince());
         LOGGER.info("科类:" + universityInfoParmasView.getCategorie());
 
