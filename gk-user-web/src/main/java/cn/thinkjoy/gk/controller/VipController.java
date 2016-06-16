@@ -11,7 +11,7 @@ import cn.thinkjoy.gk.domain.Card;
 import cn.thinkjoy.gk.pojo.CardPojo;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.protocol.ModeUtil;
+import cn.thinkjoy.gk.protocol.ModelUtil;
 import cn.thinkjoy.gk.service.ICardExService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,14 +58,14 @@ public class VipController extends ZGKBaseController implements Watched {
         Card card=cardExService.getVipCardInfo(map);
 
         if(null == card){
-            ModeUtil.throwException(ERRORCODE.VIP_CARD_NOT_INVALID);
+            ModelUtil.throwException(ERRORCODE.VIP_CARD_NOT_INVALID);
         }
         if(card.getStatus() == 1){
-            ModeUtil.throwException(ERRORCODE.VIP_CARD_USED);
+            ModelUtil.throwException(ERRORCODE.VIP_CARD_USED);
         }
 
         if(!card.getPassword().equals(cardPojo.getPassword())){
-            ModeUtil.throwException(ERRORCODE.VIP_CARD_NOT_INVALID);
+            ModelUtil.throwException(ERRORCODE.VIP_CARD_NOT_INVALID);
         }
         //状元及第会员卡激活高考学堂
         boolean gkxtActiveStatus = false;
@@ -94,7 +94,7 @@ public class VipController extends ZGKBaseController implements Watched {
             String token = DESUtil.getEightByteMultypleStr(String.valueOf(userAccountPojo.getId()), userAccountPojo.getAccount());
             setUserAccountPojo(userAccountPojo, DESUtil.encrypt(token, DESUtil.key));
         } catch(Exception e) {
-            ModeUtil.throwException(ERRORCODE.VIP_UPGRADE_FAIL);
+            ModelUtil.throwException(ERRORCODE.VIP_UPGRADE_FAIL);
         }
 
         /**
