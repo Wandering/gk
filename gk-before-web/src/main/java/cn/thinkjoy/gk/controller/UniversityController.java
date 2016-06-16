@@ -212,6 +212,7 @@ public class UniversityController extends ZGKBaseController {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("universityId", String.valueOf(universityId));
         List<Map<String, Object>> featureMajorList;
+        List<Map<String, Object>> teseList;
         RedisRepository resUtil = RedisUtil.getInstance();
         String resKey = "zgk_uy:" + universityId + "_mf";
         Map<String, Object> featureMajorMap = new LinkedHashMap<>();
@@ -219,10 +220,12 @@ public class UniversityController extends ZGKBaseController {
             featureMajorMap = (Map<String, Object>) JSONUtils.parse(resUtil.get(resKey).toString());
         } else {
             featureMajorList = universityInfoService.getUniversityMajors(paramMap);
+            teseList = universityInfoService.getUniversityspecialMajors(universityId);
             if(null != featureMajorList && featureMajorList.size() > 0)
             {
                 setFeatureMap(featureMajorList, featureMajorMap);
             }
+            featureMajorMap.put("特色专业",teseList);
             resUtil.set(resKey, JSONUtils.toJSONString(featureMajorMap));
             featureMajorMap = (Map<String, Object>) JSONUtils.parse(resUtil.get(resKey).toString());
         }
@@ -255,22 +258,24 @@ public class UniversityController extends ZGKBaseController {
                 }
                 zhuanKeList.add(map);
             }
-            if(StringUtils.isNotEmpty(feature) && StringUtils.isNotBlank(feature))
-            {
-                if("特色专业".equals(feature))
-                {
-                    List<Map<String, Object>> teSheList = (List<Map<String, Object>>) featureMajorMap.get(feature);
-                    if(null == teSheList)
-                    {
-                        teSheList = new ArrayList<>();
-                        featureMajorMap.put(feature , teSheList);
-                    }
-                    teSheList.add(map);
-                }else
-                {
-                    setZhongDianMajor(featureMajorMap, map, feature);
-                }
-            }
+//            if(StringUtils.isNotEmpty(feature) && StringUtils.isNotBlank(feature))
+//            {
+//                if("特色专业".equals(feature))
+//                {
+//                    List<Map<String, Object>> teSheList = universityInfoService.getUniversityspecialMajors(universityDetailId)
+//                    if(null == teSheList)
+//                    {
+//                        teSheList = new ArrayList<>();
+//                        featureMajorMap.put(feature , teSheList);
+//                    }
+//                    teSheList.add(map);
+//                }
+//                else
+//                {
+//                    setZhongDianMajor(featureMajorMap, map, feature);
+//
+//                }
+//            }
         }
     }
 

@@ -10,7 +10,7 @@ import cn.thinkjoy.gk.annotation.VipMethonTag;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
 import cn.thinkjoy.gk.domain.Forecast;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.protocol.ModeUtil;
+import cn.thinkjoy.gk.protocol.ModelUtil;
 import cn.thinkjoy.gk.service.IForecastService;
 import cn.thinkjoy.gk.service.IUniversityService;
 import cn.thinkjoy.gk.service.IUserInfoExService;
@@ -80,11 +80,11 @@ public class PredictController extends BaseApiController {
     {
         if(score <= 0 || score > 999)
         {
-            ModeUtil.throwException(ERRORCODE.SCORE_ERROR);
+            ModelUtil.throwException(ERRORCODE.SCORE_ERROR);
         }
         if(null == name || "".equals(name))
         {
-            ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
+            ModelUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
         }
 
         List<Map<String, String>> universityList = gk360UniversityService.getUniversityByName(name);
@@ -113,7 +113,7 @@ public class PredictController extends BaseApiController {
 
 //        University university = (University) gk360UniversityService.findOne("name",name);
 //        if(university == null){
-//            ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
+//            ModelUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
 //        }
 
         Map<String, Object> params = new HashMap<>();
@@ -151,22 +151,22 @@ public class PredictController extends BaseApiController {
         //判断是否今天定位过
         boolean flag = userInfoExService.isPredictByUid(Long.parseLong(this.getAccoutId()));
         if(!flag){
-            ModeUtil.throwException(ERRORCODE.HASPREDICT);
+            ModelUtil.throwException(ERRORCODE.HASPREDICT);
         }
         //end
         if(score <= 0 || score > 999)
         {
-            ModeUtil.throwException(ERRORCODE.SCORE_ERROR);
+            ModelUtil.throwException(ERRORCODE.SCORE_ERROR);
         }
         if(null == name || "".equals(name))
         {
-            ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
+            ModelUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
         }
 
         List<Map<String, String>> universityList = gk360UniversityService.getUniversityByName(name);
         if(universityList.size() == 0)
         {
-            ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
+            ModelUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
         }
         String uName = "";
         String uId = "";
@@ -192,7 +192,7 @@ public class PredictController extends BaseApiController {
 
 //        University university = (University) universityService.findOne("name",name);
 //        if(university == null){
-//            ModeUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
+//            ModelUtil.throwException(ERRORCODE.SCHOOL_NAME_ERROR);
 //        }
         Map<String,Object> resultMap=getUniversityPredict(name,score,type);
 

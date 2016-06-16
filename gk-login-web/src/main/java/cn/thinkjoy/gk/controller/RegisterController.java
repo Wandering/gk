@@ -10,7 +10,7 @@ import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
-import cn.thinkjoy.gk.protocol.ModeUtil;
+import cn.thinkjoy.gk.protocol.ModelUtil;
 import cn.thinkjoy.gk.service.IProvinceService;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
@@ -91,11 +91,11 @@ public class RegisterController extends ZGKBaseController {
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入密码!");
             }
             if (!checkCaptcha(account,captcha)){
-                ModeUtil.throwException(ERRORCODE.CHECK_SMSCODE_ERROR);
+                ModelUtil.throwException(ERRORCODE.CHECK_SMSCODE_ERROR);
             }
             UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
             if (userAccountBean!=null){
-                ModeUtil.throwException(ERRORCODE.PHONENUM_HAS_EXIST);
+                ModelUtil.throwException(ERRORCODE.PHONENUM_HAS_EXIST);
             }
 
             //保存用户
@@ -277,7 +277,7 @@ public class RegisterController extends ZGKBaseController {
         boolean equals=false;
         String key = RedisConst.USER_CAPTCHA_KEY+account;
         if (RedisUtil.getInstance().get(key)==null){
-            ModeUtil.throwException(ERRORCODE.CHECK_SMSCODE_NOT_EXIST);
+            ModelUtil.throwException(ERRORCODE.CHECK_SMSCODE_NOT_EXIST);
         }
         String cap=RedisUtil.getInstance().get(key).toString();
         if (captcha.equals(cap)){
@@ -299,7 +299,7 @@ public class RegisterController extends ZGKBaseController {
         String key = RedisConst.USER_CAPTCHA_KEY + account;
         Object value = RedisUtil.getInstance().get(key);
         if (value == null){
-            ModeUtil.throwException(ERRORCODE.CHECK_SMSCODE_NOT_EXIST);
+            ModelUtil.throwException(ERRORCODE.CHECK_SMSCODE_NOT_EXIST);
         }
         return value.toString();
     }

@@ -6,7 +6,7 @@ import cn.thinkjoy.common.exception.BizException;
 /**
  * Created by yangguorong on 16/5/12.
  */
-public class ModeUtil {
+public class ModelUtil {
 
     /**
      * 初始化对象
