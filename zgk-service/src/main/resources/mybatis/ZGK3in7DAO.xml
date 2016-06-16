@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IZGK3in7DAO">
+<!--
+getFavoritesByMajor
+getFavoritesBySubjectKey
+getFavoritesBySubject
+insertFavorites
+deleteById
+deleteBySubjects
+-->
+
+    <sql id="Base_Column_List">
+        3in7.id as  id,
+        3in7.eduLevel as  eduLevel,
+        3in7.major as  major,
+        3in7.selectCount as  selectCount,
+        3in7.selectSubject as selectSubject,
+        3in7.unversityName as  unversityName,
+    </sql>
+
+    <!--根据省份查学校-->
+    <select id="getUnversityByArea" resultType="java.util.Map">
+        SELECT 3in7.universityCode as id,3in7.unversityName,university.areaid as areaId FROM
+        (SELECT universityCode,unversityName FROM zgk_zj_3in7 GROUP BY universityCode) 3in7
+        LEFT JOIN zgk_university university ON 3in7.universityCode=university.code
+        <where>
+            <if test="whereSql != null">
+                and id in (#{whereSql})
+            </if>
+            <if test="areaId!=null">
+               AND  university.areaid =  #{areaId}
+            </if>
+            <if test="unversityName!= null">
+                and unversityName LIKE CONCAT('%', #{unversityName} , '%')
+            </if>
+    </where>
+        ORDER BY convert( 3in7.unversityName
+        USING gbk )
+    </select>
+
+    <!--根据学校查专业-->
+    <select id="getMajorByUnversityId" resultType="java.util.Map">
+        SELECT
+        id,major
+        FROM zgk_zj_3in7 3in7
+        <where>
+            <if test="whereSql != null">
+                and id in (#{whereSql})
+            </if>
+              AND   universityCode =  #{universityId}
+            <if test="majorName!= null">
+                and major LIKE CONCAT('%', #{majorName} , '%')
+            </if>
+        </where>
+    </select>
+
+    <!--根据专业查政策-->
+    <select id="getSubjectByMajor" resultType="java.util.Map">
+        SELECT
+        3in7.selectCount,
+        3in7.selectSubject,
+        if(isnull(favorites.id),0,1) as isFavorites
+        FROM zgk_zj_3in7 3in7
+        LEFT JOIN  zgk_user_favorites_3in7 favorites ON
+        <if test="userId!= null">
+            favorites.userId=#{userId} and
+        </if>
+        favorites.majorId=3in7.id
+        WHERE
+        3in7.id =  #{majorId}
+    </select>
+
+    <!--按分页获取含有该课程组合的专业-->
+    <select id="queryPage" resultType="java.util.Map">
+       SELECT
+        3in7.id,
+        3in7.unversityName,
+        3in7.major,
+        if(isnull(favorites.id),0,1) as isFavorites
+        FROM zgk_zj_3in7 3in7
+        LEFT JOIN  zgk_user_favorites_3in7 favorites
+				ON
+				3in7.userId=#{userId}
+				and favorites.majorId=3in7.id
+        <if test="areaId!= null">
+          INNER JOIN zgk_university university ON 3in7.universityCode=university.code AND university.code in (#{areaId})
+        </if>
+        <where>
+            <foreach item="list" collection="subjectItem" separator="and" index="">
+                3in7.selectSubject LIKE CONCAT('%', #{list.selectSubject} , '%')
+            </foreach>
+            <if test="unversityName!= null">
+                and major LIKE CONCAT('%', #{unversityName} , '%')
+            </if>
+        </where>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+    <!-- 统计按分页获取含有该课程组合的专业 -->
+    <select id="count" resultType="java.util.Map">
+        SELECT
+        count(3in7.id)
+        FROM zgk_zj_3in7 3in7
+        <if test="areaId!= null">
+            INNER JOIN zgk_university university ON 3in7.universityCode=university.code AND university.code in (#{areaId})
+        </if>
+        <where>
+            <foreach item="list" collection="subjectItem" separator="and" index="">
+                3in7.selectSubject LIKE CONCAT('%', #{list.selectSubject} , '%')
+            </foreach>
+            <if test="unversityName!= null">
+                and major LIKE CONCAT('%', #{unversityName} , '%')
+            </if>
+        </where>
+    </select>
+</mapper>
+

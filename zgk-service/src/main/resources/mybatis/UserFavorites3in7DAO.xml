@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IUserFavorites3in7DAO">
+<!--
+getFavoritesByMajor
+getFavoritesBySubjectKey
+getFavoritesBySubject
+insertFavorites
+deleteById
+deleteBySubjects
+-->
+
+    <sql id="Base_Column_List">
+       favorites.id as id,
+       favorites.userId as userId,
+       favorites.majorId as majorId,
+       favorites.createDate as createDate,
+       favorites.subjects as subjects,
+       favorites.type as type,
+       	3in7.major AS major,
+       3in7.unversityName as unversityName
+    </sql>
+
+    <!--获取以专业为主键的收藏key-->
+    <select id="getFavoritesByMajor" resultType="java.util.Map">
+        SELECT
+        favorites.id as id,
+        3in7.major AS major,
+        3in7.unversityName as unversityName
+        FROM zgk_user_favorites_3in7 favorites
+        INNER JOIN zgk_zj_3in7 3in7 ON favorites.majorId=3in7.id
+        <where>
+            AND favorites.type=1
+            <if test="whereSql != null">
+                and id in (#{whereSql})
+            </if>
+            <if test="userId!=null">
+                and   favorites.userId =  #{userId}
+            </if>
+    </where>
+        ORDER BY id DESC
+    </select>
+
+    <!--获取以课程组合为主键的收藏key-->
+    <select id="getFavoritesBySubjectKey" resultType="java.util.Map">
+        SELECT
+        favorites.majorId as id,
+        favorites.subjects as subjects,
+        FROM zgk_user_favorites_3in7 favorites
+        <where>
+            AND favorites.type=2
+            <if test="whereSql != null">
+                and id in (#{whereSql})
+            </if>
+            <if test="userId!=null">
+                and   favorites.userId =  #{userId}
+            </if>
+        </where>
+        GROUP BY subjects
+    </select>
+
+    <!--获取以课程组合为主键的收藏内容-->
+    <select id="getFavoritesBySubject" resultType="java.util.Map">
+        SELECT
+        favorites.id as id,
+        3in7.major AS major,
+        3in7.unversityName as unversityName
+        FROM zgk_user_favorites_3in7 favorites
+        INNER JOIN zgk_zj_3in7 3in7 ON favorites.majorId=3in7.id
+        <where>
+            AND favorites.type=2
+            <if test="whereSql != null">
+                and id in (#{whereSql})
+            </if>
+            <if test="userId!=null">
+                and  favorites.userId =  #{userId}
+            </if>
+            <if test="subjects!=null">
+                and   favorites.subjects =  #{subjects}
+            </if>
+        </where>
+    </select>
+
+    <!--添加收藏-->
+    <insert id="insertFavorites" parameterType="java.util.Map">
+        INSERT INTO zgk_user_favorites_3in7 (
+         userId,
+         majorId,
+         createDate,
+        <if test="subjects!=null">
+            subjects,
+        </if>
+         type
+        ) VALUES (
+         #{userId},
+         #{majorId},
+         #{createDate},
+        <if test="subjects!=null">
+            #{subjects},
+        </if>
+         #{type}
+        )
+    </insert>
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM zgk_user_favorites_3in7
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id} and userId={userId}
+        </trim>
+    </delete>
+
+
+    <!--按课程组合删除-->
+    <delete id="deleteBySubjects" parameterType="java.lang.Long">
+        DELETE FROM zgk_user_favorites_3in7
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND subjects = #{subjects} and userId={userId}
+        </trim>
+    </delete>
+</mapper>
+
