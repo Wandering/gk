@@ -47,7 +47,7 @@ public class ScoreConverPrecedenceServiceImpl implements IScoreConverPrecedenceS
         scoreMap.put("score", score);
         //根据分数 查找对应位次
         ScoreConverPrecedence converPrecedence = selectPrecedenceByScore(scoreMap);
-        return converPrecedence == null ? 0 : converPrecedence.getAvgPre();
+        return converPrecedence == null ? 0 : converPrecedence.getLowPre();
     }
 
     /**
