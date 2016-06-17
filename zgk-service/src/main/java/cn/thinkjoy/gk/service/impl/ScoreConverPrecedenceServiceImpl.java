@@ -74,7 +74,7 @@ public class ScoreConverPrecedenceServiceImpl implements IScoreConverPrecedenceS
                 lowPre = scoreConverPrecedence.getLowPre();
 
         //输入位次在最高为此与最低位次之间.
-        if (precedence <= heightPre && precedence >= lowPre)
+        if (precedence >= heightPre && precedence <= lowPre)
             return true;
 
         return false;
