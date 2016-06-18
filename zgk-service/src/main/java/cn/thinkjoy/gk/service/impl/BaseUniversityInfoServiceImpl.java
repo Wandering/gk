@@ -449,11 +449,11 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
                 LOGGER.info("enrollEnd:"+roleArr.get(1));
 
                 if (rankingRoleParmas.getOrderParmas() == 0) {
-                    map.put("enrollOrder", "asc");     //录取率从小到大
-                    map.put("scoreDiffOrder", "desc"); //线差从大到小
+                    map.put("enrollOrder", "desc");     //录取率从小到大
+                    map.put("scoreDiffOrder", "asc"); //线差从大到小
                 } else {
-                    map.put("enrollOrder", "desc");  //录取率从大到小
-                    map.put("scoreDiffOrder", "asc");//线差从小到大
+                    map.put("enrollOrder", "asc");  //录取率从大到小
+                    map.put("scoreDiffOrder", "desc");//线差从小到大
                 }
 
                 LOGGER.info("-------排序规则 start-------");
