@@ -243,7 +243,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
 
         Integer scoreBatch = Integer.valueOf(ReportUtil.getBatchArr(batch)[0]);
 
-        Integer rangeIndex = iSystemParmasService.getLineDiffRangeIndex(Integer.valueOf(scoreDiff), proCode, Integer.valueOf(cate), batch);
+        Integer rangeIndex = iSystemParmasService.getLineDiffRangeIndex(Integer.valueOf(scoreDiff), proCode, Integer.valueOf(cate), scoreBatch+"");
 
         if (rangeIndex < 0)
             return null;

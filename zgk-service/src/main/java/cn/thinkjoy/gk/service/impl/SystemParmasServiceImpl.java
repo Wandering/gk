@@ -107,10 +107,14 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
             String batchLine = batchArr[i];
             //拆分 A类 B类 批次
             String[] batchLineArr = batchLine.split("\\|");
+
             if (batchLineArr.length > 1) {  // >1 A B类 <=1 正常
+
+//                Integer oldLine=0;
                 for (int x = 0; x < batchLineArr.length; x++) {
                     /***************************AB类后续处理**************************/
                     Integer line = Integer.valueOf(batchLineArr[x]);
+//                    Integer newLine=line;
                     if (line > 0) {
                         String btc = (i + 1) + "-" + String.valueOf(x + 1);
                         BatchView batchView = batchConfig(cate, btc, x, provinceCode, batchLine);
@@ -120,7 +124,6 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
                         batchView.setFirst(first ? false : isFirst);
 
                         first = isFirst;
-
                         if (score >= line && line > 0) {
                             batchView.setConform(true);
                             if (i == flag) {
@@ -143,6 +146,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
                             batchView.setConform(false);
 
                         batchViews.add(batchView);
+//                        oldLine=newLine;
                     }
                 }
             } else {
@@ -750,21 +754,33 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
         String[] batchArr = systemParmas.getConfigValue().split(ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
 
 //        String matchBatch=chkBatch;
+        boolean isMatch=false;
         for (int i = 0; i < batchArr.length; i++) {
-            String batchLine = batchArr[i];
-            //拆分 A类 B类 批次
-            String[] batchLineArr = batchLine.split("\\|");
-            if (batchLineArr.length > 1) {  // >1 A B类 <=1 正常
-                for (int x = 0; x < batchLineArr.length; x++) {
-                    /***************************AB类后续处理**************************/
-                }
-            } else {
-                Integer btLine = Integer.valueOf(batchLine);
-                String batch = String.valueOf((i + 1));
-                //批次线大于0 且分数大于等于批次线 表示用户分数已达标
-                if (btLine > 0 && score >= btLine) {
-                    b = batch;
-                    break;
+            if(!isMatch) {
+                String batchLine = batchArr[i];
+                //拆分 A类 B类 批次
+                String[] batchLineArr = batchLine.split("\\|");
+                if (batchLineArr.length > 1) {  // >1 A B类 <=1 正常
+                    for (int x = 0; x < batchLineArr.length; x++) {
+                        Integer line = Integer.valueOf(batchLineArr[x]);
+                        String batch = (i + 1) + "-" + String.valueOf(x + 1);
+                        if (line > 0 && score >= line) {
+                            b = batch;
+                            isMatch=true;
+                            break;
+                        }
+                        /***************************AB类后续处理**************************/
+                    }
+                } else {
+                    Integer btLine = Integer.valueOf(batchLine);
+
+                    String batch = String.valueOf((i + 1));
+                    //批次线大于0 且分数大于等于批次线 表示用户分数已达标
+                    if (btLine > 0 && score >= btLine) {
+                        b = batch;
+                        isMatch=true;
+                        break;
+                    }
                 }
             }
         }
