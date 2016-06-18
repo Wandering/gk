@@ -33,11 +33,11 @@
     <sql id="Search_Column_List">
          bData.*,zgk_university.isProportion,zgk_university.isRange,zgk_university.rankTrend,zgk_university.subjection,zgk_university.type,zgk_university.property,province.id as areaId,
         province.name as areaName,zgk_university_enroll.averageScore ,province.code as code,dict.name as typeName,
-        enrollPingPlan.planEnrolling as planEnrolling
+        enrollPingPlan.planEnrollingNumber as planEnrolling
     </sql>
     <sql id="Search_Column_List_Ranking">
          bData.*,zgk_university.isProportion,zgk_university.isRange,zgk_university.rankTrend,zgk_university.subjection,zgk_university.type,zgk_university.property,province.id as areaId,
-         province.name as areaName,province.code as code,dict.name as typeName
+         province.name as areaName,province.code as code,dict.name as typeName,enrollPingPlan.planEnrollingNumber as planEnrolling
     </sql>
     <sql id="Base_Join_Search_Column">
         left join zgk_university as zgk_university on bData.universityId=zgk_university.id
