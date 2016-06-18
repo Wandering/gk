@@ -80,7 +80,33 @@ deleteBySubjects
                 and   favorites.subjects =  #{subjects}
             </if>
         </where>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
     </select>
+
+    <select id="count" resultType="java.util.Map">
+        SELECT
+        count(favorites.id)
+        FROM zgk_user_favorites_3in7 favorites
+        INNER JOIN zgk_zj_3in7 3in7 ON favorites.majorId=3in7.id
+        <where>
+            AND favorites.type=2
+            <if test="whereSql != null">
+                and id in (#{whereSql})
+            </if>
+            <if test="userId!=null">
+                and  favorites.userId =  #{userId}
+            </if>
+            <if test="subjects!=null">
+                and favorites.subjects =  #{subjects}
+            </if>
+        </where>
+    </select>
+
 
     <!--添加收藏-->
     <insert id="insertFavorites" parameterType="java.util.Map">

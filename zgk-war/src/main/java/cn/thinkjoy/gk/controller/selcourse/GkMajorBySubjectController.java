@@ -1,0 +1,60 @@
+package cn.thinkjoy.gk.controller.selcourse;
+
+import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.service.IZGK3in7Service;
+import cn.thinkjoy.zgk.domain.BizData4Page;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 高考热点/头条controller
+ * Created by admin on 2016/1/4.
+ */
+@Controller
+@Scope(SpringMVCConst.SCOPE)
+@RequestMapping(value = "/majorBySubject")
+public class GkMajorBySubjectController {
+
+    @Autowired
+    private IZGK3in7Service zgk3in7Service;
+
+
+
+    @RequestMapping(value = "/getUnversityByArea",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getUnversityByArea(String areaId,String unversityName){
+        Map<String,Object> map=new HashMap<>();
+        map.put("unversityName",unversityName);
+        map.put("areaId",areaId);
+        return zgk3in7Service.getUnversityByArea(map);
+    }
+
+
+    @RequestMapping(value = "/getMajorByUnversityId",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getMajorByUnversityId(@RequestParam String universityId,String majorName){
+        Map<String,Object> map = new HashMap<>();
+        map.put("universityId",universityId);
+        map.put("majorName",majorName);
+        return zgk3in7Service.getMajorByUnversityId(map);
+    }
+
+    @RequestMapping(value = "/getSubjectByMajor",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getSubjectByMajor(String majorId){
+        Map<String,Object> map = new HashMap<>();
+        map.put("majorId",majorId);
+        return zgk3in7Service.getSubjectByMajor(map);
+    }
+
+}
