@@ -225,7 +225,9 @@ public class UniversityController extends ZGKBaseController {
             {
                 setFeatureMap(featureMajorList, featureMajorMap);
             }
-            featureMajorMap.put("特色专业",teseList);
+            if(teseList.size()>0) {
+                featureMajorMap.put("特色专业", teseList);
+            }
             resUtil.set(resKey, JSONUtils.toJSONString(featureMajorMap));
             featureMajorMap = (Map<String, Object>) JSONUtils.parse(resUtil.get(resKey).toString());
         }
