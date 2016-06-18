@@ -369,12 +369,12 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         SystemParmas systemParmas = iSystemParmasService.getThresoldModel(proCode, ReportUtil.VOLUNTEER_RANKING_VALUE_KEY, Integer.valueOf(cate));
         if (systemParmas == null)
             return null;
-        //1:一批 2：二批 3：高职高专 4:三批
+        //1:一批 2：二批 3：三批 4:高职高专
         Integer batch = Integer.valueOf(ReportUtil.getBatchArr(map.get("batch").toString())[0]);
 
         LOGGER.info("batch:" + batch);
 
-        Integer preNum = (batch == 3 ? Integer.valueOf(systemParmas.getConfigValue()) : Integer.valueOf(precedence)), firstValue = Integer.valueOf(first);
+        Integer preNum = (batch == 4 ? Integer.valueOf(systemParmas.getConfigValue()) : Integer.valueOf(precedence)), firstValue = Integer.valueOf(first);
 
         LOGGER.info("阀值:" + preNum);
 
@@ -653,10 +653,9 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
             planMap.put("universityId", universityInfoView.getUniversityId());
             planMap.put("majorType", converMajorType(universityInfoView.getMajorType()));
             planMap.put("areaId", universityInfoView.getAreaId());
-            Integer PlanEnrolling = iUniversityMajorEnrollingService.selectUniversityPlanEnrollingNumber(planMap);
-//            Integer PlanEnrolling = selectPlanEnrolling(planMap);
-            LOGGER.info("计划招生人数:" + PlanEnrolling);
-            universityInfoView.setPlanEnrolling(PlanEnrolling);
+//            Integer PlanEnrolling = iUniversityMajorEnrollingService.selectUniversityPlanEnrollingNumber(planMap);
+//            LOGGER.info("计划招生人数:" + PlanEnrolling);
+//            universityInfoView.setPlanEnrolling(PlanEnrolling);
             Map averageMap = new HashMap();
             averageMap.put("universityId", universityInfoView.getUniversityId());
             averageMap.put("areaId", universityInfoView.getAreaId());
