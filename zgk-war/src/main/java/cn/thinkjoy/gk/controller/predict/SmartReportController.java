@@ -138,7 +138,7 @@ public class SmartReportController extends ZGKBaseController {
         map.put("sortBy", "desc");
         List<ReportLock> reportLocks=iReportLockService.selectReportLock(map);
 
-        if(reportLocks!=null&&reportLocks.size()>0) {
+        if(reportLocks!=null&&reportLocks.size()>0&&!ReportUtil.IsDifference(province)) {
             Map resultMap = new HashMap();
             resultMap.put("result", true);
             return resultMap;

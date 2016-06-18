@@ -116,7 +116,7 @@
                 order by zgk_university.rank asc
             </if>
             <if test="isEnrolling==true and enrollOrder!=null and scoreDiffOrder!=null">
-                order by bData.enrollRate ${enrollOrder},prePrecedence ${scoreDiffOrder}
+                order by bData.enrollRate ${enrollOrder},bData.prePrecedence ${scoreDiffOrder}
             </if>
         </where>
         <if test="isEnrolling==true and begin!=null and end!=null">
@@ -155,7 +155,7 @@
               order by zgk_university.rank asc
             </if>
             <if test="isEnrolling==true and enrollOrder!=null and scoreDiffOrder!=null">
-                order by bData.enrollRate ${enrollOrder},prePrecedence ${scoreDiffOrder}
+                order by bData.enrollRate ${enrollOrder},bData.prePrecedence ${scoreDiffOrder}
             </if>
         </where>
         <if test="isEnrolling==true and begin!=null and end!=null">
