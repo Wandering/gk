@@ -81,7 +81,7 @@
 --             and enrollingPlan.planEnrolling is not null
             group by bData.universityId
 
-            order by bData.enrollRate desc,bData.preScoreDiff desc   limit 60
+            order by bData.enrollRate desc,bData.prePrecedence desc   limit 60
         </where>
     </select>
     <!--按线差-->
@@ -116,7 +116,7 @@
                 order by zgk_university.rank asc
             </if>
             <if test="isEnrolling==true and enrollOrder!=null and scoreDiffOrder!=null">
-                order by bData.enrollRate ${enrollOrder},preScoreDiff ${scoreDiffOrder}
+                order by bData.enrollRate ${enrollOrder},prePrecedence ${scoreDiffOrder}
             </if>
         </where>
         <if test="isEnrolling==true and begin!=null and end!=null">
@@ -155,7 +155,7 @@
               order by zgk_university.rank asc
             </if>
             <if test="isEnrolling==true and enrollOrder!=null and scoreDiffOrder!=null">
-                order by bData.enrollRate ${enrollOrder},preScoreDiff ${scoreDiffOrder}
+                order by bData.enrollRate ${enrollOrder},prePrecedence ${scoreDiffOrder}
             </if>
         </where>
         <if test="isEnrolling==true and begin!=null and end!=null">
