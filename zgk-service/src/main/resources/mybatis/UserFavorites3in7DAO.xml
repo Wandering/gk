@@ -19,7 +19,7 @@ deleteBySubjects
        favorites.subjects as subjects,
        favorites.type as type,
        	3in7.major AS major,
-       3in7.unversityName as unversityName
+       3in7.universityName as universityName
     </sql>
 
     <!--获取以专业为主键的收藏key-->
@@ -27,7 +27,7 @@ deleteBySubjects
         SELECT
         favorites.id as id,
         3in7.major AS major,
-        3in7.unversityName as unversityName
+        3in7.universityName as universityName
         FROM zgk_user_favorites_3in7 favorites
         INNER JOIN zgk_zj_3in7 3in7 ON favorites.majorId=3in7.id
         <where>
@@ -65,7 +65,7 @@ deleteBySubjects
         SELECT
         favorites.id as id,
         3in7.major AS major,
-        3in7.unversityName as unversityName
+        3in7.universityName as universityName
         FROM zgk_user_favorites_3in7 favorites
         INNER JOIN zgk_zj_3in7 3in7 ON favorites.majorId=3in7.id
         <where>

@@ -30,23 +30,23 @@ public class GkMajorBySubjectController {
 
 
 
-    @RequestMapping(value = "/getUnversityByArea",method = RequestMethod.GET)
+    @RequestMapping(value = "/getUniversityByArea",method = RequestMethod.GET)
     @ResponseBody
-    public Object getUnversityByArea(String areaId,String unversityName){
+    public Object getUniversityByArea(String areaId,String universityName){
         Map<String,Object> map=new HashMap<>();
-        map.put("unversityName",unversityName);
+        map.put("universityName",universityName);
         map.put("areaId",areaId);
-        return zgk3in7Service.getUnversityByArea(map);
+        return zgk3in7Service.getUniversityByArea(map);
     }
 
 
-    @RequestMapping(value = "/getMajorByUnversityId",method = RequestMethod.GET)
+    @RequestMapping(value = "/getMajorByUniversityId",method = RequestMethod.GET)
     @ResponseBody
-    public Object getMajorByUnversityId(@RequestParam String universityId,String majorName){
+    public Object getMajorByUniversityId(@RequestParam String universityId,String majorName){
         Map<String,Object> map = new HashMap<>();
         map.put("universityId",universityId);
         map.put("majorName",majorName);
-        return zgk3in7Service.getMajorByUnversityId(map);
+        return zgk3in7Service.getMajorByUniversityId(map);
     }
 
     @RequestMapping(value = "/getSubjectByMajor",method = RequestMethod.GET)

@@ -9,22 +9,22 @@ import junit.framework.TestCase;
 public class Http7in3Test extends TestCase {
     //        String host="http://10.254.130.33:9080";
 //        String host="http://zjtest.zhigaokao.cn";
-//        String host="http://localhost:8080";
+//        String host="http://10.136.13.245:8086";
     String host = "http://localhost:8080";
 
     /**
      * 通过专业查政策
      */
-    String getUnversityByArea = "/subjectByMajor/getUnversityByArea.do";
-    String getMajorByUnversityId = "/subjectByMajor/getMajorByUnversityId.do";
+    String getUniversityByArea = "/subjectByMajor/getUniversityByArea.do";
+    String getMajorByUniversityId = "/subjectByMajor/getMajorByUniversityId.do";
     String getSubjectByMajor = "/subjectByMajor/getSubjectByMajor.do";
-    public void testGetUnversityByArea() {
-        String url = host + getUnversityByArea + RequestUtils.genParam("areaId=110000","unversityName=北京");
+    public void testGetUniversityByArea() {
+        String url = host + getUniversityByArea + RequestUtils.genParam("areaId=110000","universityName=北京");
         String result = RequestUtils.requestGet(url);
     }
 
-    public void testGetMajorByUnversityId() {
-        String url = host + getMajorByUnversityId + RequestUtils.genParam("universityId=11418","majorName=金融学");
+    public void testGetMajorByUniversityId() {
+        String url = host + getMajorByUniversityId + RequestUtils.genParam("universityId=11418","majorName=金融学");
         String result = RequestUtils.requestGet(url);
     }
 
@@ -37,7 +37,7 @@ public class Http7in3Test extends TestCase {
      */
     String querySubjectByMajor = "/majorBySubject/queryMajorBySubject.do";
     public void testQuerySubjectByMajor() {
-        String url = host + querySubjectByMajor + RequestUtils.genParam("subjectItem=物理","subjectItem=化学","areaId=110000,330000","unversityName=北京");
+        String url = host + querySubjectByMajor + RequestUtils.genParam("subjects=物理","subjects=化学","areaId=110000,330000","universityName=北京");
         String result = RequestUtils.requestGet(url);
     }
 

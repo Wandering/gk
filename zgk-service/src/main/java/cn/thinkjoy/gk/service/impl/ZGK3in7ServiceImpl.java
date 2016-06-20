@@ -22,15 +22,15 @@ public class ZGK3in7ServiceImpl implements IZGK3in7Service{
     @Autowired
     IZGK3in7DAO zgk3in7DAO;
     @Override
-    public List<Map<String, Object>> getUnversityByArea(Map<String, Object> map) {
+    public List<Map<String, Object>> getUniversityByArea(Map<String, Object> map) {
         setUserId(map);
-        return zgk3in7DAO.getUnversityByArea(map);
+        return zgk3in7DAO.getUniversityByArea(map);
     }
 
     @Override
-    public List<Map<String, Object>> getMajorByUnversityId(Map<String, Object> map) {
+    public List<Map<String, Object>> getMajorByUniversityId(Map<String, Object> map) {
         setUserId(map);
-        return zgk3in7DAO.getMajorByUnversityId(map);
+        return zgk3in7DAO.getMajorByUniversityId(map);
     }
 
     @Override

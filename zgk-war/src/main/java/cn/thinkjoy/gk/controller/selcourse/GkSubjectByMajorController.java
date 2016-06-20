@@ -40,7 +40,7 @@ public class GkSubjectByMajorController {
     @ResponseBody
     public Object queryMajorBySubject( @RequestParam(defaultValue = "1",required = false) Integer page,
                                     @RequestParam(defaultValue = "10",required = false) Integer rows,
-                                 String[] subjects,String areaId,String unversityName){
+                                 String[] subjects,String areaId,String universityName){
         Map<String,Object> map = new HashMap<>();
         if(subjects!=null) {
             map.put("subjectItemList", combineAlgorithm(subjects));
@@ -48,8 +48,8 @@ public class GkSubjectByMajorController {
         if(areaId!=null){
             map.put("areaId", areaId);
         }
-        if(unversityName!=null){
-            map.put("unversityName", unversityName);
+        if(universityName!=null){
+            map.put("universityName", universityName);
         }
         return doPage(map,page,rows);
     }
@@ -83,24 +83,29 @@ public class GkSubjectByMajorController {
         return createBizData4Page(conditions,page,rows);
     }
 
-    private List<List<String>> combineAlgorithm(String[] str){
+    private List<Map<String,Object>> combineAlgorithm(String[] str){
 
         int nCnt = str.length;
 
         int nBit = (0xFFFFFFFF >>> (32 - nCnt));
 
 
-        List<String> mapList=null;
-
-        List<List<String>> lists=new ArrayList<>();
+        List<Map<String,Object>> mapList=null;
+        Map<String,Object> map=null;
+        Map<String,Object> subjectItemMap=null;
+        List<Map<String,Object>> lists=new ArrayList<>();
         for (int i = 1; i <= nBit; i++) {
             mapList=new ArrayList<>();
             for (int j = 0; j < nCnt; j++) {
                 if ((i << (31 - j)) >> 31 == -1) {
-                    mapList.add(str[j]);
+                    map=new HashMap<>();
+                    map.put("selectSubject",str[j]);
+                    mapList.add(map);
                 }
             }
-            lists.add(mapList);
+            subjectItemMap=new HashMap<>();
+            subjectItemMap.put("subjectItem",mapList);
+            lists.add(subjectItemMap);
         }
         return lists;
     }
