@@ -47,7 +47,7 @@ public class ScoreConverPrecedenceServiceImpl implements IScoreConverPrecedenceS
         scoreMap.put("score", score);
         //根据分数 查找对应位次
         ScoreConverPrecedence converPrecedence = selectPrecedenceByScore(scoreMap);
-        return converPrecedence == null ? 0 : converPrecedence.getAvgPre();
+        return converPrecedence == null ? 0 : converPrecedence.getLowPre();
     }
 
     /**
@@ -74,7 +74,7 @@ public class ScoreConverPrecedenceServiceImpl implements IScoreConverPrecedenceS
                 lowPre = scoreConverPrecedence.getLowPre();
 
         //输入位次在最高为此与最低位次之间.
-        if (precedence <= heightPre && precedence >= lowPre)
+        if (precedence >= heightPre && precedence <= lowPre)
             return true;
 
         return false;
