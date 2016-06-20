@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.controller.selcourse;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.SubjectsUtil;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.service.IUserFavorites3in7Service;
@@ -35,9 +36,19 @@ public class GkFavoritesController {
         Map<String,Object> map = new HashMap<>();
         map.put("majorId",majorId);
         map.put("createDate",System.currentTimeMillis());
+        if(type.equals(2)&&subjects==null){
+            throw new BizException("error","课程组合不能为空！");
+        }
         if(subjects!=null){
             Arrays.sort(subjects);
-            map.put("subjects",subjects);
+            StringBuffer buffer=new StringBuffer();
+            for(String string:subjects){
+                buffer.append(string).append(" - ");
+            }
+            if(buffer.length()>0) {
+                buffer.delete(buffer.length()-3, buffer.length());
+            }
+            map.put("subjects",buffer.toString());
         }
         map.put("type",type);
         return userFavorites3in7Service.insertFavorites(map);
@@ -55,7 +66,7 @@ public class GkFavoritesController {
     @ResponseBody
     public Object getFavoritesBySubjectKey(){
         Map<String,Object> map = new HashMap<>();
-        return userFavorites3in7Service.getFavoritesByMajor(map);
+        return userFavorites3in7Service.getFavoritesBySubjectKey(map);
     }
 
     @RequestMapping(value = "/getFavoritesBySubject",method = RequestMethod.GET)
@@ -64,7 +75,7 @@ public class GkFavoritesController {
                                          @RequestParam(defaultValue = "10",required = false) Integer rows,
                                          @RequestParam String subjects){
         Map<String,Object> map = new HashMap<>();
-        map.put("subjects",SubjectsUtil.genSubjects(subjects));
+        map.put("subjects",subjects);
         return doPage(map,page,rows);
     }
 
@@ -79,7 +90,7 @@ public class GkFavoritesController {
     @ResponseBody
     public Object removeBySubjects(@RequestParam String subjects){
         Map<String,Object> map = new HashMap<>();
-        map.put("subjects",SubjectsUtil.genSubjects(subjects));
+        map.put("subjects",subjects);
         return userFavorites3in7Service.deleteBySubjects(map);
     }
 

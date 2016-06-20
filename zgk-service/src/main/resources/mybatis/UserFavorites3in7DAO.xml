@@ -46,7 +46,7 @@ deleteBySubjects
     <select id="getFavoritesBySubjectKey" resultType="java.util.Map">
         SELECT
         favorites.majorId as id,
-        favorites.subjects as subjects,
+        favorites.subjects as subjects
         FROM zgk_user_favorites_3in7 favorites
         <where>
             AND favorites.type=2
@@ -88,7 +88,7 @@ deleteBySubjects
         </if>
     </select>
 
-    <select id="count" resultType="java.util.Map">
+    <select id="count" resultType="java.lang.Integer">
         SELECT
         count(favorites.id)
         FROM zgk_user_favorites_3in7 favorites
@@ -132,7 +132,7 @@ deleteBySubjects
     <delete id="deleteById" parameterType="java.lang.Long">
         DELETE FROM zgk_user_favorites_3in7
         <trim prefix="WHERE" prefixOverrides="AND | OR">
-            AND id = #{id} and userId={userId}
+            AND id = #{id} and userId=#{userId}
         </trim>
     </delete>
 
@@ -141,7 +141,7 @@ deleteBySubjects
     <delete id="deleteBySubjects" parameterType="java.lang.Long">
         DELETE FROM zgk_user_favorites_3in7
         <trim prefix="WHERE" prefixOverrides="AND | OR">
-            AND subjects = #{subjects} and userId={userId}
+            AND subjects = #{subjects} and userId=#{userId}
         </trim>
     </delete>
 </mapper>

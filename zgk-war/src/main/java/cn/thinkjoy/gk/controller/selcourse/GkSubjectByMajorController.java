@@ -28,7 +28,7 @@ import java.util.Map;
  */
 @Controller
 @Scope(SpringMVCConst.SCOPE)
-@RequestMapping(value = "/subjectByMajor")
+@RequestMapping(value = "/majorBySubject")
 public class GkSubjectByMajorController {
 
     @Autowired
@@ -36,14 +36,14 @@ public class GkSubjectByMajorController {
 
 
 
-    @RequestMapping(value = "/querySubjectByMajor",method = RequestMethod.GET)
+    @RequestMapping(value = "/queryMajorBySubject",method = RequestMethod.GET)
     @ResponseBody
-    public Object querySubjectByMajor( @RequestParam(defaultValue = "1",required = false) Integer page,
+    public Object queryMajorBySubject( @RequestParam(defaultValue = "1",required = false) Integer page,
                                     @RequestParam(defaultValue = "10",required = false) Integer rows,
-                                 String[] subjectItem,String areaId,String unversityName){
+                                 String[] subjects,String areaId,String unversityName){
         Map<String,Object> map = new HashMap<>();
-        if(subjectItem!=null) {
-            map.put("subjectItemList", combineAlgorithm(subjectItem));
+        if(subjects!=null) {
+            map.put("subjectItemList", combineAlgorithm(subjects));
         }
         if(areaId!=null){
             map.put("areaId", areaId);

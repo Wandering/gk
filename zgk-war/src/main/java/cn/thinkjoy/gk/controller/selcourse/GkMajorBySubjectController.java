@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Controller
 @Scope(SpringMVCConst.SCOPE)
-@RequestMapping(value = "/majorBySubject")
+@RequestMapping(value = "/subjectByMajor")
 public class GkMajorBySubjectController {
 
     @Autowired
@@ -51,7 +51,7 @@ public class GkMajorBySubjectController {
 
     @RequestMapping(value = "/getSubjectByMajor",method = RequestMethod.GET)
     @ResponseBody
-    public Object getSubjectByMajor(String majorId){
+    public Object getSubjectByMajor(@RequestParam String majorId){
         Map<String,Object> map = new HashMap<>();
         map.put("majorId",majorId);
         return zgk3in7Service.getSubjectByMajor(map);

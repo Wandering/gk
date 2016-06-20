@@ -19,25 +19,25 @@ public class UserFavorites3in7ServiceImpl implements IUserFavorites3in7Service {
     IUserFavorites3in7DAO userFavorites3in7DAO;
     @Override
     public List<Map<String, Object>> getFavoritesByMajor(Map<String, Object> map) {
-        setUserId(map);
+        setUserIdAndErr(map);
         return userFavorites3in7DAO.getFavoritesByMajor(map);
     }
 
     @Override
     public List<Map<String, Object>> getFavoritesBySubjectKey(Map<String, Object> map) {
-        setUserId(map);
+        setUserIdAndErr(map);
         return userFavorites3in7DAO.getFavoritesBySubjectKey(map);
     }
 
     @Override
     public List<Map<String, Object>> getFavoritesBySubject(Map<String, Object> map) {
-        setUserId(map);
+        setUserIdAndErr(map);
         return userFavorites3in7DAO.getFavoritesBySubject(map);
     }
 
     @Override
     public int count(Map<String, Object> map) {
-        setUserId(map);
+        setUserIdAndErr(map);
         return userFavorites3in7DAO.count(map);
     }
 
