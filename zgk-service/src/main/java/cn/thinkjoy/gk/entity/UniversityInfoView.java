@@ -189,6 +189,10 @@ public class UniversityInfoView extends CreateBaseDomain<Long> implements Compar
         this.sequence = sequence;
     }
 
+    public String getBatch() {
+        return batch;
+    }
+
     public void setBatch(String batch) {
         this.batch = batch;
     }

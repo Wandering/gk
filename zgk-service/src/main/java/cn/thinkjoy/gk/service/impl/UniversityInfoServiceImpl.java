@@ -97,7 +97,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         map.put("batch", universityInfoParmasView.getBatch());
 
         //判定算法走向
-        boolean isScore = super.isScoreSupplementary(universityInfoParmasView,"3");
+        boolean isScore = super.isScoreSupplementary(universityInfoParmasView,"4");
 
 
         if (isScore) // true 走分数补充发    false 走位次法
@@ -188,7 +188,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         LOGGER.info("tableName:" + tbName);
         map.put("province", universityInfoParmasView.getProvince());//key
         map.put("majorType", universityInfoParmasView.getCategorie());
-
+        map.put("areaId",universityInfoParmasView.getAreaId());
         LOGGER.info("省份:" + universityInfoParmasView.getProvince());
         LOGGER.info("科类:" + universityInfoParmasView.getCategorie());
 
@@ -231,6 +231,11 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     @Override
     public List<Map<String, Object>> getUniversityMajors(Map<String, String> map) {
         return iUniversityInfoDao.getUniversityMajors(map);
+    }
+
+    @Override
+    public List<Map<String, Object>> getUniversityspecialMajors(Object universityId) {
+        return iUniversityInfoDao.getUniversityspecialMajors(universityId);
     }
 
     @Override

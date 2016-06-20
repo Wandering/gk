@@ -6,7 +6,7 @@ import cn.thinkjoy.gk.constant.CaptchaConst;
 import cn.thinkjoy.gk.constant.RedisConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.protocol.ModeUtil;
+import cn.thinkjoy.gk.protocol.ModelUtil;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.CaptchaUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
@@ -47,7 +47,7 @@ public class CaptchaController extends ZGKBaseController {
                           @RequestParam(value="type",required=false) Integer type) {
 
         if(StringUtils.isEmpty(account) || type == null){
-            ModeUtil.throwException(ERRORCODE.PARAM_ERROR);
+            ModelUtil.throwException(ERRORCODE.PARAM_ERROR);
         }
 
         int count = userAccountExService.findUserAccountCountByPhone(
@@ -57,10 +57,10 @@ public class CaptchaController extends ZGKBaseController {
         // type=0为注册，type=1找回密码
         if(type == 0 && count > 0) {
             // 注册账号已存在
-            ModeUtil.throwException(ERRORCODE.PHONENUM_HAS_EXIST);
+            ModelUtil.throwException(ERRORCODE.PHONENUM_HAS_EXIST);
         }else if(type == 1 && count == 0){
             // 找回密码账号不存在
-            ModeUtil.throwException(ERRORCODE.PHONENUM_NOT_EXIST);
+            ModelUtil.throwException(ERRORCODE.PHONENUM_NOT_EXIST);
         }
 
         long time = CaptchaConst.CAPTCHA_TIME;
@@ -104,7 +104,7 @@ public class CaptchaController extends ZGKBaseController {
             redis.expire(timeKey, 60, TimeUnit.SECONDS);
         }else {
             // 再次发送失败,抛出异常
-            ModeUtil.throwException(ERRORCODE.SEND_SMSCODE_ERROR);
+            ModelUtil.throwException(ERRORCODE.SEND_SMSCODE_ERROR);
         }
 
         result.put("time", time);

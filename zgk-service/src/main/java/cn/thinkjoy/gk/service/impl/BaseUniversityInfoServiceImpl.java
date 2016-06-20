@@ -243,7 +243,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
 
         Integer scoreBatch = Integer.valueOf(ReportUtil.getBatchArr(batch)[0]);
 
-        Integer rangeIndex = iSystemParmasService.getLineDiffRangeIndex(Integer.valueOf(scoreDiff), proCode, Integer.valueOf(cate), batch);
+        Integer rangeIndex = iSystemParmasService.getLineDiffRangeIndex(Integer.valueOf(scoreDiff), proCode, Integer.valueOf(cate), scoreBatch+"");
 
         if (rangeIndex < 0)
             return null;
@@ -287,6 +287,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
             map.put("province", initMap.get("province"));//key
             map.put("majorType", initMap.get("majorType"));
             map.put("scoreDiff", initMap.get("scoreDiff"));
+            map.put("areaId",initMap.get("areaId"));
             //院校排名规则
             if (rankingRoleParmas.getWhoDim() == ReportEnum.RankDim.RANK.getValue()) {
                 LOGGER.info("-------走排名规则 start-------");
@@ -321,9 +322,9 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
                 LOGGER.info("scoreDiffOrder:"+map.get("scoreDiffOrder"));
                 LOGGER.info("-------排序规则 end--------");
 
-                ArrayList<Integer> limitArr = ReportUtil.strSplit(rankingRoleParmas.getLimitParmas(), ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
-                map.put("begin", limitArr.get(0));
-                map.put("end", limitArr.get(1));
+//                ArrayList<Integer> limitArr = ReportUtil.strSplit(rankingRoleParmas.getLimitParmas(), ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
+//                map.put("begin", limitArr.get(0));
+//                map.put("end", limitArr.get(1));
                 map.put("isEnrolling", true);
 
                 LOGGER.info("-------走录取率规则 end-------");
@@ -368,12 +369,12 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
         SystemParmas systemParmas = iSystemParmasService.getThresoldModel(proCode, ReportUtil.VOLUNTEER_RANKING_VALUE_KEY, Integer.valueOf(cate));
         if (systemParmas == null)
             return null;
-        //1:一批 2：二批 3：高职高专 4:三批
+        //1:一批 2：二批 3：三批 4:高职高专
         Integer batch = Integer.valueOf(ReportUtil.getBatchArr(map.get("batch").toString())[0]);
 
         LOGGER.info("batch:" + batch);
 
-        Integer preNum = (batch == 3 ? Integer.valueOf(systemParmas.getConfigValue()) : Integer.valueOf(precedence)), firstValue = Integer.valueOf(first);
+        Integer preNum = (batch == 4 ? Integer.valueOf(systemParmas.getConfigValue()) : Integer.valueOf(precedence)), firstValue = Integer.valueOf(first);
 
         LOGGER.info("阀值:" + preNum);
 
@@ -425,6 +426,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
             map.put("province", initMap.get("province"));//key
             map.put("majorType", initMap.get("majorType"));
             map.put("precedenceParmas", initMap.get("precedenceParmas"));
+            map.put("areaId",initMap.get("areaId"));
             //院校排名规则
             if (rankingRoleParmas.getWhoDim() == ReportEnum.RankDim.RANK.getValue()) {
                 LOGGER.info("-------走排名规则 start-------");
@@ -459,9 +461,9 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
                 LOGGER.info("scoreDiffOrder:"+map.get("scoreDiffOrder"));
                 LOGGER.info("-------排序规则 end--------");
 
-                ArrayList<Integer> limitArr = ReportUtil.strSplit(rankingRoleParmas.getLimitParmas(), ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
-                map.put("begin", limitArr.get(0));
-                map.put("end", limitArr.get(1));
+//                ArrayList<Integer> limitArr = ReportUtil.strSplit(rankingRoleParmas.getLimitParmas(), ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
+//                map.put("begin", limitArr.get(0));
+//                map.put("end", limitArr.get(1));
                 map.put("isEnrolling", true);
 
                 LOGGER.info("-------走录取率规则 end-------");
@@ -651,10 +653,9 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
             planMap.put("universityId", universityInfoView.getUniversityId());
             planMap.put("majorType", converMajorType(universityInfoView.getMajorType()));
             planMap.put("areaId", universityInfoView.getAreaId());
-            Integer PlanEnrolling = iUniversityMajorEnrollingService.selectUniversityPlanEnrollingNumber(planMap);
-//            Integer PlanEnrolling = selectPlanEnrolling(planMap);
-            LOGGER.info("计划招生人数:" + PlanEnrolling);
-            universityInfoView.setPlanEnrolling(PlanEnrolling);
+//            Integer PlanEnrolling = iUniversityMajorEnrollingService.selectUniversityPlanEnrollingNumber(planMap);
+//            LOGGER.info("计划招生人数:" + PlanEnrolling);
+//            universityInfoView.setPlanEnrolling(PlanEnrolling);
             Map averageMap = new HashMap();
             averageMap.put("universityId", universityInfoView.getUniversityId());
             averageMap.put("areaId", universityInfoView.getAreaId());

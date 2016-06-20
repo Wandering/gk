@@ -24,6 +24,7 @@
         <result column="scoreUseRate" property="scoreUseRate" jdbcType="NUMERIC" />
         <result column="areaId" property="areaId" jdbcType="INTEGER" />
         <result column="typeName" property="typeName" jdbcType="VARCHAR" />
+        <result column="batch" property="batch" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -31,21 +32,22 @@
     </sql>
     <sql id="Search_Column_List">
          bData.*,zgk_university.isProportion,zgk_university.isRange,zgk_university.rankTrend,zgk_university.subjection,zgk_university.type,zgk_university.property,province.id as areaId,
-        province.name as areaName,zgk_university_enroll.averageScore ,province.code as code,dict.name as typeName
---         sum(enrollingPlan.planEnrolling) as planEnrolling,
+        province.name as areaName,zgk_university_enroll.averageScore ,province.code as code,dict.name as typeName,
+        enrollPingPlan.planEnrollingNumber as planEnrolling
     </sql>
     <sql id="Search_Column_List_Ranking">
          bData.*,zgk_university.isProportion,zgk_university.isRange,zgk_university.rankTrend,zgk_university.subjection,zgk_university.type,zgk_university.property,province.id as areaId,
-         province.name as areaName,province.code as code,dict.name as typeName
+         province.name as areaName,province.code as code,dict.name as typeName,enrollPingPlan.planEnrollingNumber as planEnrolling
     </sql>
     <sql id="Base_Join_Search_Column">
         left join zgk_university as zgk_university on bData.universityId=zgk_university.id
         left join zgk_province as province on zgk_university.provinceCode=province.id
         left join zgk_data_dict as dict on zgk_university.type=dict.dictId
+        left join zgk_university_enrolling_plan as enrollPingPlan on bData.universityId=enrollPingPlan.universityId
     </sql>
     <!--按位次-->
     <select id="selectUniversityInfo" resultMap="BaseResultMap" parameterType="java.util.Map" >
-        select <include refid="Search_Column_List" /> from ${tableName} as bData
+        select <include refid="Search_Column_List" /> from `${tableName}` as bData
         left join zgk_university as zgk_university on bData.universityId=zgk_university.id
         left join zgk_university_enrolling as zgk_university_enroll on bData.universityId=zgk_university_enroll.universityId
         left join zgk_province as province on zgk_university.provinceCode=province.id
@@ -79,12 +81,12 @@
 --             and enrollingPlan.planEnrolling is not null
             group by bData.universityId
 
-            order by bData.enrollRate desc,bData.preScoreDiff desc   limit 60
+            order by bData.enrollRate desc,bData.prePrecedence desc   limit 60
         </where>
     </select>
     <!--按线差-->
     <select id="selectUniversityInfoByLineDiff" resultMap="BaseResultMap" parameterType="java.util.Map" >
-        select <include refid="Search_Column_List_Ranking" /> from ${tableName} as bData
+        select <include refid="Search_Column_List_Ranking" /> from `${tableName}` as bData
         <include refid="Base_Join_Search_Column"/>
         <where>
             <if test="rankStart!=null and rankEnd!=null">
@@ -108,12 +110,13 @@
             </if>
             and zgk_university.id is not null
             and dict.type='UNIVERSITY_TYPE'
+            and enrollPingPlan.areaId=#{areaId}
             group by bData.universityId
             <if test="isRank==true">
                 order by zgk_university.rank asc
             </if>
             <if test="isEnrolling==true and enrollOrder!=null and scoreDiffOrder!=null">
-                order by bData.enrollRate ${enrollOrder},preScoreDiff ${scoreDiffOrder}
+                order by bData.enrollRate ${enrollOrder},bData.preScoreDiff ${scoreDiffOrder}
             </if>
         </where>
         <if test="isEnrolling==true and begin!=null and end!=null">
@@ -122,7 +125,7 @@
     </select>
     <!--按排名-->
     <select id="selectUniversityInfoByRanking" resultMap="BaseResultMap" parameterType="java.util.Map" >
-        select <include refid="Search_Column_List_Ranking" /> from ${tableName} as bData
+        select <include refid="Search_Column_List_Ranking" /> from `${tableName}` as bData
         <include refid="Base_Join_Search_Column"/>
         <where>
             <if test="rankStart!=null and rankEnd!=null">
@@ -146,12 +149,13 @@
             </if>
             and zgk_university.id is not null
             and dict.type='UNIVERSITY_TYPE'
+            and enrollPingPlan.areaId=#{areaId}
             group by bData.universityId
             <if test="isRank==true">
               order by zgk_university.rank asc
             </if>
             <if test="isEnrolling==true and enrollOrder!=null and scoreDiffOrder!=null">
-                order by bData.enrollRate ${enrollOrder},preScoreDiff ${scoreDiffOrder}
+                order by bData.enrollRate ${enrollOrder},bData.prePrecedence ${scoreDiffOrder}
             </if>
         </where>
         <if test="isEnrolling==true and begin!=null and end!=null">
@@ -231,6 +235,11 @@
                 and t.majorFeature like CONCAT('%', #{majorFeature} , '%')
             </if>
         </where>
+    </select>
+
+    <select id="getUniversityspecialMajors" resultType="java.util.Map">
+        select t.majorId,t.majorName from zgk_university_major_special t WHERE
+                t.universityId=#{universityId}
     </select>
 
     <select id="getUniversityEnrollingInfo" parameterType="java.util.Map" resultType="java.util.Map">

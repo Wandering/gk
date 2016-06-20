@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.service;
 
 import cn.thinkjoy.gk.entity.ReportResult;
 import cn.thinkjoy.gk.pojo.ReportInfoView;
+import cn.thinkjoy.gk.pojo.ReportLockView;
 import cn.thinkjoy.gk.pojo.UserReportResultView;
 
 import java.io.IOException;
@@ -86,6 +87,7 @@ public interface IReportResultService {
      */
     public List<UserReportResultView>  getUserReportResultList(Long userId);
 
+    public List<ReportLockView>  getUserReportLockResultList(Long userId);
 
     /**
      * 同步院校跟专业信息至  动态风险表

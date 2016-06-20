@@ -3,14 +3,12 @@ package cn.thinkjoy.gk.service.impl;
 import cn.thinkjoy.gk.common.ReportUtil;
 import cn.thinkjoy.gk.dao.IReportResultDao;
 import cn.thinkjoy.gk.dao.IRiskForecastDAO;
+import cn.thinkjoy.gk.entity.ReportLock;
 import cn.thinkjoy.gk.entity.ReportResult;
 import cn.thinkjoy.gk.entity.RiskForecast;
 import cn.thinkjoy.gk.entity.SystemParmas;
 import cn.thinkjoy.gk.pojo.*;
-import cn.thinkjoy.gk.service.IReportResultService;
-import cn.thinkjoy.gk.service.IReportUserInfoService;
-import cn.thinkjoy.gk.service.ISystemParmasService;
-import cn.thinkjoy.gk.service.IUniversityMajorEnrollingService;
+import cn.thinkjoy.gk.service.*;
 import com.alibaba.dubbo.common.utils.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
@@ -36,6 +34,8 @@ public class ReportResultServiceImpl implements IReportResultService {
     IReportUserInfoService iReportUserInfoService;
     @Resource
     IRiskForecastDAO iRiskForecastDAO;
+    @Resource
+    IReportLockService iReportLockService;
 
     /**
      * 保存志愿报告
@@ -224,6 +224,31 @@ public class ReportResultServiceImpl implements IReportResultService {
             userReportResultViews.add(userReportResultView);
         }
         return userReportResultViews;
+    }
+    @Override
+    public List<ReportLockView>  getUserReportLockResultList(Long userId) {
+        Map map = new HashMap();
+        map.put("userId", userId);
+        map.put("orderBy", "id");
+        map.put("sortBy", "desc");
+        List<ReportLock> reportLocks=iReportLockService.selectReportLock(map);
+
+        List<ReportLockView> reportLockViews = new ArrayList<>();
+        for (ReportLock reportLock : reportLocks) {
+            ReportLockView reportLockView = new ReportLockView();
+            reportLockView.setExistReport((reportLock == null ? false : true));
+            if (reportLockView.isExistReport()) {
+                reportLockView.setBatch(reportLock.getBatch());
+                reportLockView.setMajorType(reportLock.getMajorType());
+                reportLockView.setPrecedence(reportLock.getPrecedence());
+                reportLockView.setProvinceCode(reportLock.getProvinceCode());
+                reportLockView.setScore(reportLock.getScore());
+                reportLockView.setUserId(reportLock.getUserId());
+                reportLockView.setExtendProper(reportLock.getExtendProper());
+            }
+            reportLockViews.add(reportLockView);
+        }
+        return reportLockViews;
     }
 
     /**
