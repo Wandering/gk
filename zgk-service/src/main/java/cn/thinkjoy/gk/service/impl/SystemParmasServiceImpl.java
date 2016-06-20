@@ -527,7 +527,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
         if(systemParmas==null)
             return -1;
         LOGGER.info("组装线差VALUE:" + systemParmas.getConfigValue());
-        Integer index = ReportUtil.getRankingRuleIndex(systemParmas.getConfigValue(), lineDiff);
+        Integer index = ReportUtil.getRankingRuleIndexLineDiff(systemParmas.getConfigValue(), lineDiff);
         LOGGER.info("========获取线差规则区间下标 start=======");
         return index;
     }

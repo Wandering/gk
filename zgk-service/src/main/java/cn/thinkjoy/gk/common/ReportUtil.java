@@ -263,7 +263,22 @@ public class ReportUtil {
         }
         return -1;
     }
-
+    /**
+     * 获取当前位次符合的排名规则区间下标
+     * @return
+     */
+    public static Integer getRankingRuleIndexLineDiff(String rankingRuleStr,Integer value) {
+        String[] rankingRuleArr = rankingRuleStr.split(VOLUNTEER_KEY_SPLIT_SYMBOL);
+        for (int i = 0; i < rankingRuleArr.length; i++) {
+            String rankStr = rankingRuleArr[i];
+            String[] rankRangeArr = rankStr.split(ROLE_VALUE_SPLIT_SYMBOL);
+            Integer rankStar = Integer.valueOf(rankRangeArr[0]);
+            Integer rankEnd = Integer.valueOf(rankRangeArr[1]);
+            if (value >= rankStar && value <= rankEnd)
+                return i;
+        }
+        return -1;
+    }
     /**
      * 批次排序
      * @return
