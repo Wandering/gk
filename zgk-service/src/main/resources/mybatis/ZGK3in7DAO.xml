@@ -24,13 +24,14 @@ deleteBySubjects
     <select id="getUniversityByArea" resultType="java.util.Map">
         SELECT 3in7.universityCode as id,3in7.universityName FROM
         (SELECT universityCode,universityName FROM zgk_zj_3in7 GROUP BY universityCode) 3in7
-        LEFT JOIN zgk_university university ON 3in7.universityCode=university.code
+        LEFT JOIN (SELECT code FROM zgk_university
+        <if test="areaId!=null">
+            WHERE university.areaid =  #{areaId}
+        </if>
+        ) university ON 3in7.universityCode=university.code
         <where>
             <if test="whereSql != null">
                 and id in (#{whereSql})
-            </if>
-            <if test="areaId!=null">
-               AND  university.areaid =  #{areaId}
             </if>
             <if test="universityName!= null">
                 and universityName LIKE CONCAT('%', #{universityName} , '%')
@@ -46,13 +47,14 @@ deleteBySubjects
     <select id="countUniversity" resultType="java.lang.Integer">
         SELECT count(3in7.universityCode) FROM
         (SELECT universityCode,universityName FROM zgk_zj_3in7 GROUP BY universityCode) 3in7
-        LEFT JOIN zgk_university university ON 3in7.universityCode=university.code
+        LEFT JOIN (SELECT code FROM zgk_university
+        <if test="areaId!=null">
+            WHERE university.areaid =  #{areaId}
+        </if>
+        ) university ON 3in7.universityCode=university.code
         <where>
             <if test="whereSql != null">
                 and id in (#{whereSql})
-            </if>
-            <if test="areaId!=null">
-                AND  university.areaid =  #{areaId}
             </if>
             <if test="universityName!= null">
                 and universityName LIKE CONCAT('%', #{universityName} , '%')
