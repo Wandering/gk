@@ -37,7 +37,7 @@ public class Http7in3Test extends TestCase {
      */
     String querySubjectByMajor = "/majorBySubject/queryMajorBySubject.do";
     public void testQuerySubjectByMajor() {
-        String url = host + querySubjectByMajor + RequestUtils.genParam("subjects=物理","subjects=化学","areaId=110000,330000","universityName=北京");
+        String url = host + querySubjectByMajor + RequestUtils.genParam("subjects=物理","subjects=化学","subjects=生物","areaId=110000,330000","universityName=北京");
         String result = RequestUtils.requestGet(url);
     }
 

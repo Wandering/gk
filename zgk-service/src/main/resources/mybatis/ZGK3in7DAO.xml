@@ -101,18 +101,18 @@ deleteBySubjects
             INNER JOIN zgk_university university ON 3in7.universityCode=university.code AND university.areaid in (${areaId})
         </if>
         <where>
+            <if test="subjectItemList!=null">
             <foreach item="subjectItems" collection="subjectItemList"  separator=" or " index="">
                 <foreach item="mapList" collection="subjectItems.subjectItem" open="(" close=")" separator="and" index="">
-                    3in7.selectSubject LIKE CONCAT('%',#{mapList.selectSubject},'%')
+                    3in7.selectSubject LIKE CONCAT('%','${mapList.selectSubject}','%')
                 </foreach>
             </foreach>
             OR  3in7.selectSubject = ''
+            </if>
             <if test="universityName!= null">
                 and 3in7.universityName LIKE CONCAT('%', #{universityName} , '%')
             </if>
         </where>
-
-        <!--) t-->
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
         </if>
