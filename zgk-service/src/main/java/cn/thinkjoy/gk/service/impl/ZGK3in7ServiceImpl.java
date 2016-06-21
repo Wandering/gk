@@ -28,6 +28,11 @@ public class ZGK3in7ServiceImpl implements IZGK3in7Service{
     }
 
     @Override
+    public int countUniversity(Map<String, Object> map) {
+        return zgk3in7DAO.countUniversity(map);
+    }
+
+    @Override
     public List<Map<String, Object>> getMajorByUniversityId(Map<String, Object> map) {
         setUserId(map);
         return zgk3in7DAO.getMajorByUniversityId(map);

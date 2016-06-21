@@ -38,8 +38,27 @@ deleteBySubjects
     </where>
         ORDER BY convert( 3in7.universityName
         USING gbk )
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
     </select>
-
+    <!--根据省份查学校-->
+    <select id="countUniversity" resultType="java.lang.Integer">
+        SELECT count(3in7.universityCode) FROM
+        (SELECT universityCode,universityName FROM zgk_zj_3in7 GROUP BY universityCode) 3in7
+        LEFT JOIN zgk_university university ON 3in7.universityCode=university.code
+        <where>
+            <if test="whereSql != null">
+                and id in (#{whereSql})
+            </if>
+            <if test="areaId!=null">
+                AND  university.areaid =  #{areaId}
+            </if>
+            <if test="universityName!= null">
+                and universityName LIKE CONCAT('%', #{universityName} , '%')
+            </if>
+        </where>
+    </select>
     <!--根据学校查专业-->
     <select id="getMajorByUniversityId" resultType="java.util.Map">
         SELECT
@@ -125,14 +144,23 @@ deleteBySubjects
         SELECT
         count(3in7.id)
         FROM zgk_zj_3in7 3in7
+        <if test="userId!= null">
+            LEFT JOIN  zgk_user_favorites_3in7 favorites
+            ON
+            favorites.userId=#{userId}
+            and favorites.majorId=3in7.id
+        </if>
         <if test="areaId!= null">
             INNER JOIN zgk_university university ON 3in7.universityCode=university.code AND university.areaid in (${areaId})
         </if>
         <where>
-            <if test="subjectItem!= null">
-                <foreach item="list" collection="subjectItem" open="and" separator="and" index="">
-                    3in7.selectSubject LIKE CONCAT('%', #{list.selectSubject} , '%')
+            <if test="subjectItemList!=null">
+                <foreach item="subjectItems" collection="subjectItemList"  separator=" or " index="">
+                    <foreach item="mapList" collection="subjectItems.subjectItem" open="(" close=")" separator="and" index="">
+                        3in7.selectSubject LIKE CONCAT('%','${mapList.selectSubject}','%')
+                    </foreach>
                 </foreach>
+                OR  3in7.selectSubject = ''
             </if>
             <if test="universityName!= null">
                 and 3in7.universityName LIKE CONCAT('%', #{universityName} , '%')

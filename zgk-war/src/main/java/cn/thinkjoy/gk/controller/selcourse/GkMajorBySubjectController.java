@@ -32,11 +32,42 @@ public class GkMajorBySubjectController {
 
     @RequestMapping(value = "/getUniversityByArea",method = RequestMethod.GET)
     @ResponseBody
-    public Object getUniversityByArea(String areaId,String universityName){
+    public Object getUniversityByArea(@RequestParam(defaultValue = "1",required = false) Integer page,
+                                      @RequestParam(defaultValue = "10",required = false) Integer rows,
+                                      String areaId,String universityName){
         Map<String,Object> map=new HashMap<>();
         map.put("universityName",universityName);
         map.put("areaId",areaId);
-        return zgk3in7Service.getUniversityByArea(map);
+        return createBizData4Page(map,page,rows);
+    }
+
+    public BizData4Page createBizData4Page(Map<String, Object> conditions,Integer curPage,Integer rows){
+        List mainData = zgk3in7Service.getUniversityByArea(conditions);
+        int records = zgk3in7Service.countUniversity(conditions);
+        BizData4Page bizData4Page = new BizData4Page();
+        bizData4Page.setRows(mainData);
+        bizData4Page.setPage(curPage);
+        bizData4Page.setRecords(records);
+        int total = records / rows;
+        int mod = records % rows;
+        int pagesize=0;
+        if(mainData!=null) {
+            pagesize = mainData.size();
+        }
+        if(mod > 0){
+            total = total + 1;
+        }
+        bizData4Page.setPagesize(pagesize);
+        bizData4Page.setTotal(total);
+        return bizData4Page;
+    }
+
+    protected BizData4Page doPage(Map<String, Object> conditions,Integer page,Integer rows){
+        conditions.put("offset",(page - 1) * rows);
+        conditions.put("rows",rows);
+        conditions.put("sortBy","asc");
+        conditions.put("orderBy", "id");
+        return createBizData4Page(conditions,page,rows);
     }
 
 

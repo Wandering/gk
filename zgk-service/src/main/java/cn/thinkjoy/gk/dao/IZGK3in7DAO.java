@@ -14,6 +14,7 @@ import java.util.Map;
 
 public interface IZGK3in7DAO{
     List<Map<String,Object>> getUniversityByArea(Map<String, Object> map);
+    int countUniversity(Map<String, Object> map);
     List<Map<String,Object>> getMajorByUniversityId(Map<String, Object> map);
     Map<String,Object> getSubjectByMajor(Map<String, Object> map);
     List<Map<String,Object>> queryPage(Map<String, Object> map);
