@@ -24,11 +24,11 @@ deleteBySubjects
     <select id="getUniversityByArea" resultType="java.util.Map">
         SELECT 3in7.universityCode as id,3in7.universityName FROM
         (SELECT universityCode,universityName FROM zgk_zj_3in7 GROUP BY universityCode) 3in7
-        LEFT JOIN (SELECT code FROM zgk_university
         <if test="areaId!=null">
+        INNER JOIN (SELECT code FROM zgk_university
             WHERE university.areaid =  #{areaId}
-        </if>
         ) university ON 3in7.universityCode=university.code
+        </if>
         <where>
             <if test="whereSql != null">
                 and id in (#{whereSql})
@@ -47,11 +47,11 @@ deleteBySubjects
     <select id="countUniversity" resultType="java.lang.Integer">
         SELECT count(*) FROM
         (SELECT universityCode,universityName FROM zgk_zj_3in7 GROUP BY universityCode) 3in7
-        LEFT JOIN (SELECT code FROM zgk_university
         <if test="areaId!=null">
+        INNER JOIN (SELECT code FROM zgk_university
             WHERE university.areaid =  #{areaId}
-        </if>
         ) university ON 3in7.universityCode=university.code
+        </if>
         <where>
             <if test="whereSql != null">
                 and id in (#{whereSql})
