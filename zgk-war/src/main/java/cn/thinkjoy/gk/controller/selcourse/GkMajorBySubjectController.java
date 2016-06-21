@@ -38,7 +38,7 @@ public class GkMajorBySubjectController {
         Map<String,Object> map=new HashMap<>();
         map.put("universityName",universityName);
         map.put("areaId",areaId);
-        return createBizData4Page(map,page,rows);
+        return doPage(map,page,rows);
     }
 
     public BizData4Page createBizData4Page(Map<String, Object> conditions,Integer curPage,Integer rows){

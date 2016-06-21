@@ -19,7 +19,7 @@ public class Http7in3Test extends TestCase {
     String getMajorByUniversityId = "/subjectByMajor/getMajorByUniversityId.do";
     String getSubjectByMajor = "/subjectByMajor/getSubjectByMajor.do";
     public void testGetUniversityByArea() {
-        String url = host + getUniversityByArea + RequestUtils.genParam("page=1","rows=10","areaId=110000","universityName=北京");
+        String url = host + getUniversityByArea + RequestUtils.genParam("page=2","rows=10","areaId=110000","universityName=北京");
         String result = RequestUtils.requestGet(url);
     }
 
@@ -37,7 +37,7 @@ public class Http7in3Test extends TestCase {
      */
     String querySubjectByMajor = "/majorBySubject/queryMajorBySubject.do";
     public void testQuerySubjectByMajor() {
-        String url = host + querySubjectByMajor + RequestUtils.genParam("subjects=物理","subjects=化学","subjects=生物","areaId=110000,330000","universityName=北京");
+        String url = host + querySubjectByMajor + RequestUtils.genParam("page=3","rows=10","subjects=物理","subjects=化学","subjects=生物","areaId=110000,330000","universityName=北京");
         String result = RequestUtils.requestGet(url);
     }
 
