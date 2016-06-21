@@ -45,7 +45,7 @@ deleteBySubjects
     </select>
     <!--根据省份查学校-->
     <select id="countUniversity" resultType="java.lang.Integer">
-        SELECT count(3in7.universityCode) FROM
+        SELECT count(*) FROM
         (SELECT universityCode,universityName FROM zgk_zj_3in7 GROUP BY universityCode) 3in7
         LEFT JOIN (SELECT code FROM zgk_university
         <if test="areaId!=null">
