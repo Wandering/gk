@@ -64,6 +64,7 @@ public class UniversityController extends ZGKBaseController {
     @Autowired
     private IDataDictService dataDictService;
 
+
     @Autowired
     private cn.thinkjoy.zgk.remote.IUniversityService iremoteUniversityService;
 
@@ -473,6 +474,22 @@ public class UniversityController extends ZGKBaseController {
         }
         return JSONArray.parseArray(object.toString());
     }
+
+    /**
+     * 根据年份和区域获取批次
+     * @param year
+     * @param areaId
+     * @return
+     */
+    @RequestMapping(value = "getBatchByYearAndArea", method = RequestMethod.GET)
+    @ResponseBody
+    public List getBatchByYearAndArea(@RequestParam String year,@RequestParam String areaId) {
+        Map<String,String> map = new HashMap<>();
+        map.put("year",year);
+        map.put("areaId",areaId);
+        return universityInfoService.getBatchByYearAndArea(map) ;
+    }
+
 
     /**
      * 获取初始化信息

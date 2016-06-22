@@ -414,4 +414,9 @@
         </if>
     </select>
 
+    <select id="getBatchByYearAndArea" resultType="java.util.Map">
+          select b.* from zgk_university_enrolling a,
+            (select name,dictid from zgk_data_dict where type='BATCHTYPE2') b
+            where year=#{year} and areaid=#{areaId} and a.batch=b.dictid group by batch
+    </select>
 </mapper>
