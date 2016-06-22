@@ -484,9 +484,11 @@ public class UniversityController extends ZGKBaseController {
     @RequestMapping(value = "getBatchByYearAndArea", method = RequestMethod.GET)
     @ResponseBody
     public List getBatchByYearAndArea(@RequestParam String year,@RequestParam String areaId) {
-        Map<String,String> map = new HashMap<>();
+            Map<String,Object> map = new HashMap<>();
         map.put("year",year);
         map.put("areaId",areaId);
+        map.put("currAreaId",getAreaId());
+
         return universityInfoService.getBatchByYearAndArea(map) ;
     }
 

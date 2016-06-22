@@ -82,5 +82,5 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
      * @param map
      * @return
      */
-    List<Map<String, Object>> getBatchByYearAndArea(Map<String, String> map);
+    List<Map<String, Object>> getBatchByYearAndArea(Map<String, Object> map);
 }

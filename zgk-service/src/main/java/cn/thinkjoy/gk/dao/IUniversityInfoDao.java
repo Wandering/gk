@@ -71,7 +71,7 @@ public interface IUniversityInfoDao extends IBaseDAO<UniversityInfoView> {
      * @param map
      * @return
      */
-    List<Map<String, Object>> getBatchByYearAndArea(Map<String, String> map);
+    List<Map<String, Object>> getBatchByYearAndArea(Map<String, Object> map);
 
     List getUniversityMajorListByUniversityId(@Param("condition") Map<String, Object> condition, @Param("offset") int offset, @Param("rows") int rows,
                              @Param("orderBy") String orderBy, @Param("sortBy") String sortBy,@Param("selector")Map<String, Object> selectorpage);
