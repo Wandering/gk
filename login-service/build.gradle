@@ -13,6 +13,4 @@ dependencies {
 
     compile "cn.thinkjoy:microschool-core:1.4.7"
 
-    compile "cn.thinkjoy.notify:notify-service:jx0.0.1-SNAPSHOT"
-
 }
