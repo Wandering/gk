@@ -39,6 +39,11 @@ public class SpecialtyView implements Serializable {
      */
     private String majorType;
 
+    /**
+     * 科类
+     */
+    private Integer year;
+
     public Long getUniversityId() {
         return universityId;
     }
@@ -93,5 +98,13 @@ public class SpecialtyView implements Serializable {
 
     public void setMajorType(String majorType) {
         this.majorType = majorType;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 }
