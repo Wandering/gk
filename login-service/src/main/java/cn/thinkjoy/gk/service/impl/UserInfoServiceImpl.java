@@ -144,5 +144,8 @@ public class UserInfoServiceImpl extends AbstractPageService<IBaseDAO<UserInfo>,
 //        return super.doQueryPageByDataPerm(resUri, conditions, curPage, offset, rows);
 //    }
 
-
+    public void addTelSchoolInfo(Map<String, String> paramMap)
+    {
+        userInfoDAO.insertTelSchoolInfo(paramMap);
+    }
 }

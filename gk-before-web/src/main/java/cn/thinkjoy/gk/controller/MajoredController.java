@@ -87,6 +87,9 @@ public class MajoredController extends ZGKBaseController {
                                              @RequestParam(value = "majorType",required = true,defaultValue = "1")Integer majorType,
                                              @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
                                              @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
+        if (rows>50){
+            throw new BizException(ERRORCODE.ROWS_TOO_LONG.getCode(), ERRORCODE.ROWS_TOO_LONG.getMessage());
+        }
         List<Map<String,Object>> getUniversityList=iMajoredService.getMajorOpenUniversityList(majoredId,majorType,offset,rows);
         int count=iMajoredService.getMajorOpenUniversityCount(majoredId, majorType);
 //        int count=iremoteUniversityService.getUniversityCount(condition);
