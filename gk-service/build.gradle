@@ -42,6 +42,7 @@ dependencies {
         exclude group: 'org.springframework'
         exclude group: 'org.codehaus.jackson'
         exclude group: 'net.sf.json-lib'
+        exclude group: 'org.apache.httpcomponents'
     }
 
     compile "cn.thinkjoy.ss:ss-api:$thinkjoySSVersion"

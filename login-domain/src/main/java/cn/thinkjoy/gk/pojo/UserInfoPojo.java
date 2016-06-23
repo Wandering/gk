@@ -32,6 +32,15 @@ public class UserInfoPojo extends BaseDomain<Long> {
     private String sharerType;
     private String agentLevel;
     private String vipType;
+    private String gkxtToken;
+
+    public String getGkxtToken() {
+        return gkxtToken;
+    }
+
+    public void setGkxtToken(String gkxtToken) {
+        this.gkxtToken = gkxtToken;
+    }
     private int isRegisterXueTang;
 
     public int getIsRegisterXueTang() {

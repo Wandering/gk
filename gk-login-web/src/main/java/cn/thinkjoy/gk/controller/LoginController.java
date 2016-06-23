@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.common.GkxtUtil;
 import cn.thinkjoy.gk.common.HttpClientUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.common.DESUtil;
@@ -29,10 +30,8 @@ import java.util.Map;
 public class LoginController extends ZGKBaseController {
 
 	private static final Logger LOGGER= LoggerFactory.getLogger(LoginController.class);
-
 	@Autowired
 	private IUserAccountExService userAccountExService;
-
 	//高考学堂注册接口
 	private String gkxtRegistUrl = "http://xuetang.zhigaokao.cn/userapi/reg?mobile=%s&password=%s";
 
@@ -97,12 +96,21 @@ public class LoginController extends ZGKBaseController {
 					}
 				}
 				String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), userInfoPojo.getAccount());
-				setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));
-				resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
+				String encryptToken = DESUtil.encrypt(token, DESUtil.key);
+				setUserAccountPojo(userAccountBean, encryptToken);
+				resultMap.put("token", encryptToken);
+				String gkxtToken = GkxtUtil.getLoginToken(userInfoPojo.getId(), userInfoPojo.getName());
+				userInfoPojo.setGkxtToken(gkxtToken);
 				userInfoPojo.setPassword(null);
 				userInfoPojo.setId(null);
 				userInfoPojo.setStatus(null);
 				resultMap.put("userInfo", userInfoPojo);
+				resultMap.put("gkxtToken", gkxtToken);
+				gkxtRegistUrl = String.format(gkxtRegistUrl, account, basePassword);
+				/**
+				 * 注册高考学堂
+				 */
+				String registResult = HttpClientUtil.getContents(gkxtRegistUrl);
 				if (userInfoPojo.getIsRegisterXueTang()!=1) {
 					gkxtRegistUrl = String.format(gkxtRegistUrl, account, basePassword);
 					/**
@@ -141,15 +149,6 @@ public class LoginController extends ZGKBaseController {
 	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout() throws Exception {
-//		boolean status = true;
-//		try {
-//			RedisUtil.getInstance().del(UserRedisConst.USER_KEY + getCookieValue());
-//			String domain = DynConfigClientFactory.getClient().getConfig("login", "domain");
-//			response.addCookie(CookieUtil.addCookie(domain,getCookieName(), "", CookieTimeConst.CLEAN_COOKIE));
-//		}catch(Exception e){
-//			status = false;
-//			throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
-//		}
 		return "index";
 	}
 
