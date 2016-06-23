@@ -47,6 +47,11 @@ public class BatchView implements Serializable,Comparable<BatchView> {
      */
     private boolean isFirst;
 
+    /**
+     * 是否存在优先筛选
+     */
+    private Integer year;
+
     public String getBatch() {
         return batch;
     }
@@ -122,5 +127,13 @@ public class BatchView implements Serializable,Comparable<BatchView> {
     @Override
     public int compareTo(BatchView batchView) {
         return batchView.getWenLine().compareTo(this.wenLine);
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 }
