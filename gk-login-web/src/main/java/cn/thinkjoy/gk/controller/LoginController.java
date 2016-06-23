@@ -110,7 +110,6 @@ public class LoginController extends ZGKBaseController {
 				/**
 				 * 注册高考学堂
 				 */
-				String registResult = HttpClientUtil.getContents(gkxtRegistUrl);
 				if (userInfoPojo.getIsRegisterXueTang()!=1) {
 					gkxtRegistUrl = String.format(gkxtRegistUrl, account, basePassword);
 					/**
