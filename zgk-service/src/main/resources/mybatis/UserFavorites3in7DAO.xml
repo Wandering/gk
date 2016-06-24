@@ -63,7 +63,8 @@ deleteBySubjects
     <!--获取以课程组合为主键的收藏内容-->
     <select id="getFavoritesBySubject" resultType="java.util.Map">
         SELECT
-        favorites.id as id,
+        3in7.id as id,
+        favorites.id as favoritesId,
         3in7.major AS major,
         3in7.universityName as universityName
         FROM zgk_user_favorites_3in7 favorites

@@ -106,6 +106,7 @@ deleteBySubjects
         3in7.universityName,
         3in7.major
         <if test="userId!= null">,
+            favorites.id as favoritesId,
             if(isnull(favorites.id),0,1) as isFavorites
         </if>
         <if test="userId==null">,
