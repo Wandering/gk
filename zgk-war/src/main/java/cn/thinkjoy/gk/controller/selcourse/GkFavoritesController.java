@@ -81,9 +81,10 @@ public class GkFavoritesController {
 
     @RequestMapping(value = "/removeFavorites",method = RequestMethod.POST)
     @ResponseBody
-    public Object removeFavorites(@RequestParam String id){
+    public Object removeFavorites(@RequestParam String id,@RequestParam String type){
         Map<String,Object> map = new HashMap<>();
         map.put("id",id);
+        map.put("type",type);
         return userFavorites3in7Service.deleteById(map);
     }
     @RequestMapping(value = "/removeBySubjects",method = RequestMethod.POST)

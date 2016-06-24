@@ -133,7 +133,7 @@ deleteBySubjects
     <delete id="deleteById" parameterType="java.lang.Long">
         DELETE FROM zgk_user_favorites_3in7
         <trim prefix="WHERE" prefixOverrides="AND | OR">
-            AND id = #{id} and userId=#{userId}
+            AND  majorId= #{id} and userId=#{userId} AND type=#{type}
         </trim>
     </delete>
 
