@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 高考热点/头条controller
@@ -44,6 +41,17 @@ public class GkSubjectByMajorController {
         Map<String,Object> map = new HashMap<>();
         if(subjects!=null) {
             map.put("subjectItemList", combineAlgorithm(subjects));
+        }
+        if(subjects!=null){
+            Arrays.sort(subjects);
+            StringBuffer buffer=new StringBuffer();
+            for(String string:subjects){
+                buffer.append(string).append(" - ");
+            }
+            if(buffer.length()>0) {
+                buffer.delete(buffer.length()-3, buffer.length());
+            }
+            map.put("subjects",buffer.toString());
         }
         if(areaId!=null){
             map.put("areaId", areaId);

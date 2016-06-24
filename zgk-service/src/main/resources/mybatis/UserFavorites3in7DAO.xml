@@ -81,9 +81,8 @@ deleteBySubjects
                 and   favorites.subjects =  #{subjects}
             </if>
         </where>
-        <if test="orderBy!=null">
-            ORDER BY ${orderBy} ${sortBy}
-        </if>
+        ORDER BY convert( 3in7.universityName
+        USING gbk )
         <if test="offset != null">
             limit ${offset}, ${rows}
         </if>
@@ -134,6 +133,9 @@ deleteBySubjects
         DELETE FROM zgk_user_favorites_3in7
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND  majorId= #{id} and userId=#{userId} AND type=#{type}
+            <if test="subjects!=null">
+                and subjects=#{subjects}
+            </if>
         </trim>
     </delete>
 

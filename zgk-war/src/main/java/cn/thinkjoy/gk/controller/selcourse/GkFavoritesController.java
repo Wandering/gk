@@ -81,10 +81,21 @@ public class GkFavoritesController {
 
     @RequestMapping(value = "/removeFavorites",method = RequestMethod.POST)
     @ResponseBody
-    public Object removeFavorites(@RequestParam String id,@RequestParam String type){
+    public Object removeFavorites(@RequestParam String id,@RequestParam String type,String[] subjects){
         Map<String,Object> map = new HashMap<>();
         map.put("id",id);
         map.put("type",type);
+        if(subjects!=null){
+            Arrays.sort(subjects);
+            StringBuffer buffer=new StringBuffer();
+            for(String string:subjects){
+                buffer.append(string).append(" - ");
+            }
+            if(buffer.length()>0) {
+                buffer.delete(buffer.length()-3, buffer.length());
+            }
+            map.put("subjects",buffer.toString());
+        }
         return userFavorites3in7Service.deleteById(map);
     }
     @RequestMapping(value = "/removeBySubjects",method = RequestMethod.POST)

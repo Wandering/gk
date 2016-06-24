@@ -116,7 +116,8 @@ deleteBySubjects
             LEFT JOIN  zgk_user_favorites_3in7 favorites
             ON
             favorites.userId=#{userId}
-            and favorites.majorId=3in7.id
+            and favorites.majorId=3in7.id AND
+            favorites.subjects=#{subjects}
         </if>
         <if test="areaId!= null">
             INNER JOIN (SELECT code FROM  zgk_university WHERE areaid in (${areaId})) university ON 3in7.universityCode=university.code
@@ -134,9 +135,8 @@ deleteBySubjects
                 and 3in7.universityName LIKE CONCAT('%', #{universityName} , '%')
             </if>
         </where>
-        <if test="orderBy!=null">
-            ORDER BY ${orderBy} ${sortBy}
-        </if>
+        ORDER BY convert( 3in7.universityName
+        USING gbk )
         <if test="offset != null">
             limit ${offset}, ${rows}
         </if>
