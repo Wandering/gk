@@ -41,15 +41,16 @@ public class Http7in3Test extends TestCase {
         String result = RequestUtils.requestGet(url);
     }
 
-    /**
-     * 添加收藏
-     */
+
     String insertFavorites = "/favorites/insertFavorites.do";
     String getFavoritesByMajor = "/favorites/getFavoritesByMajor.do";
     String getFavoritesBySubjectKey = "/favorites/getFavoritesBySubjectKey.do";
     String getFavoritesBySubject = "/favorites/getFavoritesBySubject.do";
     String removeFavorites = "/favorites/removeFavorites.do";
     String removeBySubjects = "/favorites/removeBySubjects.do";
+    /**
+     * 添加收藏
+     */
     public void testInsertFavorites() {
         String url = host + insertFavorites + RequestUtils.genParam("majorId=784","type=1","&token=GM%2BX0KMwbKG9fj19q5XN8Q%3D%3D&userKey=tj");
         String result = RequestUtils.requestPost(url);
@@ -58,26 +59,41 @@ public class Http7in3Test extends TestCase {
         result = RequestUtils.requestPost(url);
     }
 
+    /**
+     * 收藏  -   通过专业获取收藏
+     */
     public void testGetFavoritesByMajor() {
         String url = host + getFavoritesByMajor + RequestUtils.genParam("token=GM%2BX0KMwbKG9fj19q5XN8Q%3D%3D&userKey=tj");
         String result = RequestUtils.requestGet(url);
     }
 
+    /**
+     * 获取专业组合key
+     */
     public void testGetFavoritesBySubjectKey() {
         String url = host + getFavoritesBySubjectKey + RequestUtils.genParam("token=GM%2BX0KMwbKG9fj19q5XN8Q%3D%3D&userKey=tj");
         String result = RequestUtils.requestGet(url);
     }
 
+    /**
+     * 通过专业获取收藏
+     */
     public void testGetFavoritesBySubject() {
         String url = host + getFavoritesBySubject + RequestUtils.genParam("page=1","rows=10","subjects=%e5%8e%86%e5%8f%b2+-+%e7%89%a9%e7%90%86","token=GM%2BX0KMwbKG9fj19q5XN8Q%3D%3D&userKey=tj");
         String result = RequestUtils.requestGet(url);
     }
 
+    /**
+     * 删除收藏
+     */
     public void testRemoveFavorites() {
         String url = host + removeFavorites + RequestUtils.genParam("id=16","token=GM%2BX0KMwbKG9fj19q5XN8Q%3D%3D&userKey=tj");
         String result = RequestUtils.requestPost(url);
     }
 
+    /**
+     * 删除通过专业组合
+     */
     public void testRemoveBySubjects() {
             String url = host + removeBySubjects + RequestUtils.genParam("subjects=%e5%8e%86%e5%8f%b2+-+%e7%89%a9%e7%90%86","&token=GM%2BX0KMwbKG9fj19q5XN8Q%3D%3D&userKey=tj");
         String result = RequestUtils.requestPost(url);
