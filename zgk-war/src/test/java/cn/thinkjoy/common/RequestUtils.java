@@ -122,4 +122,15 @@ public class RequestUtils {
         return result;
     }
 
+
+    public static String genParam(String ...args){
+        StringBuffer buffer= new StringBuffer();
+        buffer.append("?");
+        for(String str:args){
+            buffer.append(str).append("&");
+        }
+        buffer.delete(buffer.length()-1,buffer.length());
+        return buffer.toString();
+    }
+
 }
