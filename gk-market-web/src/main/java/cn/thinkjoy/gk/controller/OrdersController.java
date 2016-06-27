@@ -1,9 +1,5 @@
 package cn.thinkjoy.gk.controller;
 
-/**
- * Created by clei on 15/5/4.
- */
-
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.MatrixToImageWriter;
@@ -84,7 +80,7 @@ public class OrdersController extends ZGKBaseController {
     public Map<String, String> createOrder(OrdersQuery ordersQuery) throws Exception {
 
         if (ordersQuery == null) {
-            LOGGER.info("====pay /orders/createOrders PARAM_ERROR ");
+            LOGGER.error("====pay /orders/createOrders PARAM_ERROR ");
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
         }
         UserAccountPojo userAccountPojo = getUserAccountPojo();
@@ -104,7 +100,7 @@ public class OrdersController extends ZGKBaseController {
             LOGGER.info("create orders :" + orderNo);
             return resultMap;
         } catch (Exception e) {
-            LOGGER.info("====pay /orders/createOrder catch: " + e.getMessage());
+            LOGGER.error("====pay /orders/createOrder catch: " + e.getMessage());
             throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
         }
     }
