@@ -66,6 +66,13 @@ public interface IUniversityInfoDao extends IBaseDAO<UniversityInfoView> {
 
     List<Map<String, Object>> getUniversityEnrollingInfo(Map<String, String> map);
 
+    /**
+     * 通过年份和地区获取批次
+     * @param map
+     * @return
+     */
+    List<Map<String, Object>> getBatchByYearAndArea(Map<String, Object> map);
+
     List getUniversityMajorListByUniversityId(@Param("condition") Map<String, Object> condition, @Param("offset") int offset, @Param("rows") int rows,
                              @Param("orderBy") String orderBy, @Param("sortBy") String sortBy,@Param("selector")Map<String, Object> selectorpage);
 }

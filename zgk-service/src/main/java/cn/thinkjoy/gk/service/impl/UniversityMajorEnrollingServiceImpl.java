@@ -43,6 +43,7 @@ public class UniversityMajorEnrollingServiceImpl implements IUniversityMajorEnro
             specialtyView.setMajorType(universityMajorEnrollingPlan.getMajorType());
             specialtyView.setPlanEnrolling(universityMajorEnrollingPlan.getPlanEnrolling());
             specialtyView.setEnrollType(universityMajorEnrollingPlan.getEnrollType());
+            specialtyView.setYear(universityMajorEnrollingPlan.getYear());
             specialtyViews.add(specialtyView);
         }
         return specialtyViews;

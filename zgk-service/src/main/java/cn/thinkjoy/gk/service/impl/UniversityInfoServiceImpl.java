@@ -248,5 +248,8 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         return iUniversityInfoDao.getUniversityMajorListByUniversityId(condition,offset,rows,orderBy,sortBy,selectorpage);
     }
 
-
+    @Override
+    public List<Map<String, Object>> getBatchByYearAndArea(Map<String, Object> map) {
+        return iUniversityInfoDao.getBatchByYearAndArea(map);
+    }
 }

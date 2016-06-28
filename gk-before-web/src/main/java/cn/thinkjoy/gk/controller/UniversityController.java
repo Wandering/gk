@@ -64,6 +64,7 @@ public class UniversityController extends ZGKBaseController {
     @Autowired
     private IDataDictService dataDictService;
 
+
     @Autowired
     private cn.thinkjoy.zgk.remote.IUniversityService iremoteUniversityService;
 
@@ -86,6 +87,9 @@ public class UniversityController extends ZGKBaseController {
                                                  @RequestParam(value = "property", required = false) String property,//院校特征
                                                  @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
                                                  @RequestParam(value = "rows", required = false, defaultValue = "10") Integer rows) {
+        if (rows>50){
+            throw new BizException(ERRORCODE.ROWS_TOO_LONG.getCode(), ERRORCODE.ROWS_TOO_LONG.getMessage());
+        }
         String redisKey = "zgk_pe:"+"universityName:" + universityName + "_areaid:" + areaid + "_type:" + type + "_educationLevel:" + educationLevel + "_property:" + property + "_offset:" + offset + "_rows"+rows+":getUniversityList";
         Object object = RedisIsSaveUtil.existsKey(redisKey);
         if (object==null) {
@@ -321,6 +325,9 @@ public class UniversityController extends ZGKBaseController {
                                                     @RequestParam(value = "universityMajorType", required = false) String universityMajorType,//科类
                                                     @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
                                                     @RequestParam(value = "rows", required = false, defaultValue = "10") Integer rows) {
+        if (rows>50){
+            throw new BizException(ERRORCODE.ROWS_TOO_LONG.getCode(), ERRORCODE.ROWS_TOO_LONG.getMessage());
+        }
         Map<String, Object> condition = Maps.newHashMap();
         condition.put("universityId", String.valueOf(universityId));
         if (StringUtils.isNotBlank(year)) {
@@ -359,7 +366,9 @@ public class UniversityController extends ZGKBaseController {
                                                          @RequestParam(value = "universityMajorType", required = true) String universityMajorType,//科类
                                                          @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
                                                          @RequestParam(value = "rows", required = false, defaultValue = "10") Integer rows) {
-
+        if (rows>50){
+            throw new BizException(ERRORCODE.ROWS_TOO_LONG.getCode(), ERRORCODE.ROWS_TOO_LONG.getMessage());
+        }
         String userKey = request.getParameter("userKey");
         String key = "zgk_pe:" + userKey + "_uy:" + universityId + "_yr:" + year + "_me:" + universityMajorType + "_bh:" + batch + "_ot:" + offset + "_rs:" + rows + ":enrollingSituationDetailsList";
         Object object = RedisIsSaveUtil.existsKey(key);
@@ -473,6 +482,24 @@ public class UniversityController extends ZGKBaseController {
         }
         return JSONArray.parseArray(object.toString());
     }
+
+    /**
+     * 根据年份和区域获取批次
+     * @param year
+     * @param areaId
+     * @return
+     */
+    @RequestMapping(value = "getBatchByYearAndArea", method = RequestMethod.GET)
+    @ResponseBody
+    public List getBatchByYearAndArea(@RequestParam String year,@RequestParam String areaId) {
+            Map<String,Object> map = new HashMap<>();
+        map.put("year",year);
+        map.put("areaId",areaId);
+        map.put("currAreaId",getAreaId());
+
+        return universityInfoService.getBatchByYearAndArea(map) ;
+    }
+
 
     /**
      * 获取初始化信息

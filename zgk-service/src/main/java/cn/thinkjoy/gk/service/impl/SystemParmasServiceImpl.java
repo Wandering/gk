@@ -118,7 +118,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
                     if (line > 0) {
                         String btc = (i + 1) + "-" + String.valueOf(x + 1);
                         BatchView batchView = batchConfig(cate, btc, x, provinceCode, batchLine);
-
+                        batchView.setYear(systemParmas.getYear());
                         boolean isFirst = !first ? getFirst(sap, provinceCode, btc, cate, logicTrend) : first;
 
                         batchView.setFirst(first ? false : isFirst);
@@ -144,7 +144,6 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
                             }
                         } else
                             batchView.setConform(false);
-
                         batchViews.add(batchView);
 //                        oldLine=newLine;
                     }
@@ -154,6 +153,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
                 if (btLine > 0) {
                     String batch = String.valueOf((i + 1));
                     BatchView batchView = batchConfig(cate, batch, 0, provinceCode, batchLine);
+                    batchView.setYear(systemParmas.getYear());
 
                     boolean isFirst = !first ? getFirst(sap, provinceCode, batch, cate, logicTrend) : first;
                     batchView.setFirst(first ? false : isFirst);

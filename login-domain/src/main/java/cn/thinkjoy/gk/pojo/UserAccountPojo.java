@@ -24,6 +24,15 @@ public class UserAccountPojo extends BaseDomain<Long> {
     private Long sharerId;
     private String sharerType;
     private String agentLevel;
+    private String gkxtToken;
+
+    public String getGkxtToken() {
+        return gkxtToken;
+    }
+
+    public void setGkxtToken(String gkxtToken) {
+        this.gkxtToken = gkxtToken;
+    }
 
     public UserAccountPojo(){
     }

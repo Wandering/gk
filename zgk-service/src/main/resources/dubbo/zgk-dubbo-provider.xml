@@ -20,6 +20,4 @@
 
     <dubbo:reference id="userInfoService" interface="cn.thinkjoy.ss.api.IUserInfoService" check="false" retries="0" timeout="600000"/>
 
-    <dubbo:reference id="smsService" interface="cn.thinkjoy.push.service.sms.SMSService" check="false" retries="0" timeout="600000" />
-
 </beans>

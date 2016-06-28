@@ -43,7 +43,7 @@
         left join zgk_university as zgk_university on bData.universityId=zgk_university.id
         left join zgk_province as province on zgk_university.provinceCode=province.id
         left join zgk_data_dict as dict on zgk_university.type=dict.dictId
-        left join zgk_university_enrolling_plan as enrollPingPlan on bData.universityId=enrollPingPlan.universityId
+        inner join zgk_university_enrolling_plan as enrollPingPlan on bData.universityId=enrollPingPlan.universityId
     </sql>
     <!--按位次-->
     <select id="selectUniversityInfo" resultMap="BaseResultMap" parameterType="java.util.Map" >
@@ -111,6 +111,7 @@
             and zgk_university.id is not null
             and dict.type='UNIVERSITY_TYPE'
             and enrollPingPlan.areaId=#{areaId}
+            and enrollPingPlan.year=(select max(year) from  zgk_university_enrolling_plan where areaId=#{areaId})
             group by bData.universityId
             <if test="isRank==true">
                 order by zgk_university.rank asc
@@ -150,6 +151,7 @@
             and zgk_university.id is not null
             and dict.type='UNIVERSITY_TYPE'
             and enrollPingPlan.areaId=#{areaId}
+            and enrollPingPlan.year=(select max(year) from  zgk_university_enrolling_plan where areaId=#{areaId})
             group by bData.universityId
             <if test="isRank==true">
               order by zgk_university.rank asc
@@ -412,4 +414,31 @@
         </if>
     </select>
 
+    <select id="getBatchByYearAndArea" resultType="java.util.Map">
+            SELECT
+	b.*
+FROM
+	(
+		SELECT
+			universityId,batch
+		FROM
+			zgk_university_enrolling enrolling WHERE year = #{year}
+		AND areaid = #{currAreaId}
+	) a
+INNER JOIN (SELECT id FROM zgk_university WHERE areaid=#{areaId}) university ON a.universityId=university.id
+		,
+	(
+		SELECT
+			name,
+			dictid
+		FROM
+			zgk_data_dict
+		WHERE
+			type = 'BATCHTYPE2'
+	) b
+WHERE
+a.batch = b.dictid
+GROUP BY
+	batch
+    </select>
 </mapper>

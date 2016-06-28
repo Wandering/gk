@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.common.GkxtUtil;
 import cn.thinkjoy.gk.common.HttpClientUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.common.DESUtil;
@@ -71,7 +72,6 @@ public class RegisterController extends ZGKBaseController {
                                   @RequestParam(value = "sharerId",required = false) Long sharerId,
                                   @RequestParam(value = "sharerType",required = false) Integer sharerType)
             throws Exception{
-        long areaId= getAreaId();
         Map<String, Object> resultMap = new HashMap<>();
         try{
             if (StringUtils.isEmpty(account)) {
@@ -128,33 +128,33 @@ public class RegisterController extends ZGKBaseController {
             }catch(Exception e){
                 throw new BizException(ERRORCODE.PARAM_ERROR.getCode(),"账户注册失败");
             }
-
-            userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
-
-            long id = userAccountBean.getId();
-
             gkxtRegistUrl = String.format(gkxtRegistUrl, account, basePassword);
             //注册高考学堂
             String registResult = HttpClientUtil.getContents(gkxtRegistUrl);
 
+            userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
+            long id = userAccountBean.getId();
             if(registResult.indexOf("\"ret\":\"200\"")==-1)
             {
                 LOGGER.error("帐号"+account+", 注册高考学堂失败.....");
             }else
             {
                 LOGGER.debug("帐号"+account+"注册高考学堂成功!");
-                Map<String,Object> map=new HashMap<String,Object>();
-                map.put("id",id);
-                map.put("isRegisterXueTang",1);
+                Map<String,Object> map=new HashMap<>();
+                map.put("id", id);
+                map.put("isRegisterXueTang", 1);
                 userAccountExService.updateUserAccountRegistXueTang(map);
             }
 
+            String gkxtToken = GkxtUtil.getLoginToken(userAccountBean.getId(), userAccountBean.getName());
+            userAccountBean.setGkxtToken(gkxtToken);
             String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), account);
             setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));
             resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
             userAccountBean.setPassword(null);
             userAccountBean.setId(null);
             resultMap.put("userInfo", userAccountBean);
+            resultMap.put("gkxtToken", gkxtToken);
             String key = "zgk_user_count";
             RedisRepository redisRepository = RedisUtil.getInstance();
             if(redisRepository.exists(key))

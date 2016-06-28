@@ -11,6 +11,7 @@ public class SystemParmas extends CreateBaseDomain<Long> {
     private String configKey;
     private String configValue;
     private byte majorType;
+    private Integer year;
 
     @Override
     public Long getId() {
@@ -52,5 +53,13 @@ public class SystemParmas extends CreateBaseDomain<Long> {
 
     public void setMajorType(byte majorType) {
         this.majorType = majorType;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 }
