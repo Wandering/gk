@@ -271,7 +271,7 @@ public class SmartReportController extends ZGKBaseController {
         parmasMap.put("universityId", uId);
         parmasMap.put("majorType", cate);
         parmasMap.put("province", code);
-        parmasMap.put("batch", code == "gd" ? null : batch);
+        parmasMap.put("batch", batch);
         List<SpecialtyView> universityMajoyEnrollingPlans = iUniversityMajorEnrollingService.selectList(parmasMap);
         Map resultMap = new HashMap();
         resultMap.put("specialtys", universityMajoyEnrollingPlans);
