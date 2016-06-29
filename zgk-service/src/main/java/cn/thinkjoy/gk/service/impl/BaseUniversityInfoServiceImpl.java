@@ -288,7 +288,8 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
             map.put("majorType", initMap.get("majorType"));
             map.put("scoreDiff", initMap.get("scoreDiff"));
             map.put("areaId",initMap.get("areaId"));
-            //院校排名规则
+
+                    //院校排名规则
             if (rankingRoleParmas.getWhoDim() == ReportEnum.RankDim.RANK.getValue()) {
                 LOGGER.info("-------走排名规则 start-------");
                 ArrayList<Integer> roleArr = ReportUtil.strSplit(rankingRoleParmas.getRankRuleParmas(), ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
