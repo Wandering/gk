@@ -80,7 +80,6 @@
         <appender-ref ref="WARN-FILE-APPENDER" />
     </logger>
 
-
     <root level="ERROR">
         <appender-ref ref="STDOUT-APPENDER" />
     </root>

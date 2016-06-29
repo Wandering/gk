@@ -39,7 +39,7 @@ deleteBySubjects
                 and   favorites.userId =  #{userId}
             </if>
     </where>
-        ORDER BY id DESC
+        ORDER BY favorites.createDate DESC
     </select>
 
     <!--获取以课程组合为主键的收藏key-->
@@ -58,6 +58,7 @@ deleteBySubjects
             </if>
         </where>
         GROUP BY subjects
+        ORDER BY favorites.createDate desc
     </select>
 
     <!--获取以课程组合为主键的收藏内容-->
