@@ -254,22 +254,24 @@ public class SmartReportController extends ZGKBaseController {
     @ResponseBody
     public Map<String,Object> getSpecialty(@RequestParam(value = "uId") Integer uId
                                            ,@RequestParam(value = "cate") Integer cate
-                                            ,@RequestParam(value = "code") String code) {
+                                            ,@RequestParam(value = "code") String code
+                                            ,@RequestParam(value = "batch") String batch) {
         UserAccountPojo userAccountPojo = getUserAccountPojo();
 
 
-        if(userAccountPojo==null){
-            throw new BizException(ERRORCODE.NO_LOGIN.getCode(),ERRORCODE.NO_LOGIN.getMessage());
+        if (userAccountPojo == null) {
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
         }
         Integer vipStatus = userAccountPojo.getVipStatus();
 
-        if(vipStatus==null||vipStatus==0){
-            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(),ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
+        if (vipStatus == null || vipStatus == 0) {
+            throw new BizException(ERRORCODE.NOT_IS_VIP_ERROR.getCode(), ERRORCODE.NOT_IS_VIP_ERROR.getMessage());
         }
         Map parmasMap = new HashMap();
         parmasMap.put("universityId", uId);
         parmasMap.put("majorType", cate);
         parmasMap.put("province", code);
+        parmasMap.put("batch", code == "gd" ? null : batch);
         List<SpecialtyView> universityMajoyEnrollingPlans = iUniversityMajorEnrollingService.selectList(parmasMap);
         Map resultMap = new HashMap();
         resultMap.put("specialtys", universityMajoyEnrollingPlans);
