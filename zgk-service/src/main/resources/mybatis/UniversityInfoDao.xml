@@ -115,6 +115,7 @@
             and dict.type='UNIVERSITY_TYPE'
             and enrollPingPlan.areaId=#{areaId}
             and enrollPingPlan.year=(select max(year) from  zgk_university_enrolling_plan where areaId=#{areaId})
+            and enrollPingPlan.batch=#{batch,jdbcType=VARCHAR}
             group by bData.universityId
             <if test="isRank==true">
                 order by zgk_university.rank asc
@@ -158,6 +159,7 @@
             and dict.type='UNIVERSITY_TYPE'
             and enrollPingPlan.areaId=#{areaId}
             and enrollPingPlan.year=(select max(year) from  zgk_university_enrolling_plan where areaId=#{areaId})
+            and enrollPingPlan.batch=#{batch,jdbcType=VARCHAR}
             group by bData.universityId
             <if test="isRank==true">
               order by zgk_university.rank asc
