@@ -99,7 +99,7 @@ public class LoginController extends ZGKBaseController {
 				String encryptToken = DESUtil.encrypt(token, DESUtil.key);
 				setUserAccountPojo(userAccountBean, encryptToken);
 				resultMap.put("token", encryptToken);
-				String gkxtToken = GkxtUtil.getLoginToken(userInfoPojo.getId(), userInfoPojo.getName());
+				String gkxtToken = GkxtUtil.getLoginToken(userInfoPojo.getAccount(), userInfoPojo.getName());
 				userInfoPojo.setGkxtToken(gkxtToken);
 				userInfoPojo.setPassword(null);
 				userInfoPojo.setId(null);

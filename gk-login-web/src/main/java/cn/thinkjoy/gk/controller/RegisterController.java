@@ -146,7 +146,7 @@ public class RegisterController extends ZGKBaseController {
                 userAccountExService.updateUserAccountRegistXueTang(map);
             }
 
-            String gkxtToken = GkxtUtil.getLoginToken(userAccountBean.getId(), userAccountBean.getName());
+            String gkxtToken = GkxtUtil.getLoginToken(userAccountBean.getAccount(), userAccountBean.getName());
             userAccountBean.setGkxtToken(gkxtToken);
             String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), account);
             setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));

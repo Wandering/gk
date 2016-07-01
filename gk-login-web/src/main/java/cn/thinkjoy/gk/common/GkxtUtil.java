@@ -19,12 +19,12 @@ public class GkxtUtil {
 
     /**
      * 单点登录高考学堂
-     * @param userId
+     * @param account
      * @param name
      * @return
      * @throws Exception
      */
-    public static String getLoginToken(long userId,String name) throws Exception {
+    public static String getLoginToken(String account,String name) throws Exception {
         String url = DynConfigClientFactory.getClient().getConfig("common", "gkxtTokenUrl");
         String token = "";
         String clientId = GkxtConstants.CLIENTID;
@@ -36,7 +36,7 @@ public class GkxtUtil {
         paramMap.put("clientId", clientId);
         paramMap.put("secret", secret);
         paramMap.put("nickname", name);
-        paramMap.put("userId", userId);
+        paramMap.put("userId", account);
         paramMap.put("sign", sign);
         String content = HttpClientUtil.postContents(url, paramMap);
         String result = StringEscapeUtils.unescapeJava(content);
@@ -55,7 +55,7 @@ public class GkxtUtil {
     }
 
     private static String getSign(String clientId, String secret, String code, String salt) {
-        String format = "yyyy-M-d";
+        String format = "yyyy-M-dd";
         SimpleDateFormat formater = new SimpleDateFormat(format);
         String currentDay = formater.format(new Date()).toString();
         StringBuffer text = new StringBuffer();
@@ -67,7 +67,7 @@ public class GkxtUtil {
         return MD5(text.toString());
     }
 
-    public static  String MD5(String s) {
+    public static String MD5(String s) {
         char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                 'a', 'b', 'c', 'd', 'e', 'f'};
         try {
