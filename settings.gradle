@@ -22,10 +22,6 @@ include 'market-domain'
 
 include 'market-service'
 
-include 'question-domain'
-
-include 'question-service'
-
 include 'user-domain'
 
 include 'user-service'
@@ -38,17 +34,11 @@ include 'protocol-common'
 
 include 'gk-user-web'
 
-include 'gk-question-web'
-
 include 'gk-login-web'
 
 include 'gk-before-web'
 
-include 'gk-guide-web'
-
 include 'gk-market-web'
-
-include 'gk-orders-war'
 
 include 'zgk-war'
 
