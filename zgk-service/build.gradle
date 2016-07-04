@@ -55,8 +55,6 @@ dependencies {
 
     compile project(':consult-service')
 
-    compile project(':guide-service')
-
     compile project(':login-service')
 
     compile project(':market-service')

@@ -4,6 +4,4 @@ dependencies {
 //    compile group: "cn.thinkjoy.common", name: "thinkjoy-biz-common", version: "$thinkjoyCommonVersion", changing: true
 
     compile project(':user-domain')
-
-    compile project(':before-domain')
 }
