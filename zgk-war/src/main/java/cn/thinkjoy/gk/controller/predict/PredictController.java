@@ -10,7 +10,7 @@ import cn.thinkjoy.gk.annotation.VipMethonTag;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
 import cn.thinkjoy.gk.domain.Forecast;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.util.ModelUtil;
+import cn.thinkjoy.gk.protocol.ModelUtil;
 import cn.thinkjoy.gk.service.IForecastService;
 import cn.thinkjoy.gk.service.IUniversityService;
 import cn.thinkjoy.gk.service.IUserInfoExService;

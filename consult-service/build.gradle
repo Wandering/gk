@@ -5,4 +5,6 @@ dependencies {
 
     compile project(':protocol-common')
 
+    compile project(':web-common')
+
 }
