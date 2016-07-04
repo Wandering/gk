@@ -10,6 +10,8 @@ include 'consult-service'
 
 include 'guide-domain'
 
+include ':before-domain'
+
 include 'guide-service'
 
 include 'login-domain'

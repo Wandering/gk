@@ -53,10 +53,6 @@ dependencies {
 
     compile project(':gk-domain')
 
-    compile project(':after-service')
-
-    compile project(':before-service')
-
     compile project(':consult-service')
 
     compile project(':guide-service')
