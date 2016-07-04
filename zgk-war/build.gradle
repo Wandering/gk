@@ -9,20 +9,18 @@ dependencies {
 
     compile "org.apache.poi:poi:3.9"
 
-    compile project(':protocol-common')
-
     compile project(':web-common')
 
     compile project(':gk-service')
 
     compile project(':zgk-service')
 
-    compile project(':gk-before-web')
+    compile project(':consult-web')
 
-    compile project(':gk-login-web')
+    compile project(':login-web')
 
-    compile project(':gk-user-web')
+    compile project(':user-web')
 
-    compile project(':gk-market-web')
+    compile project(':market-web')
 
 }

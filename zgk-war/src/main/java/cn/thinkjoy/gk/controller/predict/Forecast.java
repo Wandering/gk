@@ -3,7 +3,7 @@ package cn.thinkjoy.gk.controller.predict;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.common.utils.SqlOrderEnum;
 import cn.thinkjoy.gk.common.IForecase;
-import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.enumerate.ERRORCODE;
 import cn.thinkjoy.gk.service.IForecastService;
 import cn.thinkjoy.gk.service.IUserInfoExService;
 import cn.thinkjoy.gk.util.UserContext;
@@ -17,7 +17,7 @@ import java.util.Map;
  * Created by admin on 2016/3/1.
  */
 @Component("forecast")
-public class Forecast implements IForecase{
+public class Forecast implements IForecase {
     @Autowired
     IForecastService forecastService;
     @Autowired

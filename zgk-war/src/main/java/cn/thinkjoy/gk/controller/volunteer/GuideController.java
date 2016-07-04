@@ -5,7 +5,7 @@ import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.VerificationKeyConst;
 import cn.thinkjoy.gk.pojo.UniversityDetailDto;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
-import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.enumerate.ERRORCODE;
 import cn.thinkjoy.gk.service.IUniversityExService;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
 import com.alibaba.fastjson.JSON;

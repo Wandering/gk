@@ -1,7 +1,7 @@
 package cn.thinkjoy.gk.util;
 
-import cn.thinkjoy.gk.protocol.DateStyle;
-import cn.thinkjoy.gk.protocol.Week;
+import cn.thinkjoy.gk.enumerate.DateStyle;
+import cn.thinkjoy.gk.enumerate.Week;
 
 import java.sql.Timestamp;
 import java.text.ParsePosition;

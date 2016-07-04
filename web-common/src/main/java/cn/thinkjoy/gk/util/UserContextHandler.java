@@ -1,8 +1,7 @@
 package cn.thinkjoy.gk.util;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.protocol.ERRORCODE;
-import org.aspectj.lang.annotation.After;
+import cn.thinkjoy.gk.enumerate.ERRORCODE;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;

@@ -5,7 +5,7 @@ import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.constant.VerificationKeyConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
-import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.enumerate.ERRORCODE;
 import cn.thinkjoy.gk.util.HttpRequestUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;

@@ -2,7 +2,6 @@ package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.domain.Count;
-import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.ICountExService;
 import cn.thinkjoy.gk.service.ICountService;
 import com.google.common.collect.Maps;

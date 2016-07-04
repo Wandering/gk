@@ -8,31 +8,29 @@ include 'consult-domain'
 
 include 'consult-service'
 
+include 'consult-web'
+
 include 'login-domain'
 
 include 'login-service'
+
+include 'login-web'
 
 include 'market-domain'
 
 include 'market-service'
 
+include 'market-web'
+
 include 'user-domain'
 
 include 'user-service'
 
+include 'user-web'
+
 include 'gk-service'
 
 include 'gk-domain'
-
-include 'protocol-common'
-
-include 'gk-user-web'
-
-include 'gk-login-web'
-
-include 'gk-before-web'
-
-include 'gk-market-web'
 
 include 'zgk-war'
 

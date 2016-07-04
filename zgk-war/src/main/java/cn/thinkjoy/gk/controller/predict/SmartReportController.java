@@ -6,7 +6,7 @@ import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.entity.*;
 import cn.thinkjoy.gk.pojo.*;
-import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.enumerate.ERRORCODE;
 import cn.thinkjoy.gk.service.*;
 import com.alibaba.dubbo.common.utils.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;

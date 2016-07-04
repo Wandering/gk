@@ -6,7 +6,7 @@ import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
-import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.enumerate.ERRORCODE;
 import cn.thinkjoy.gk.service.IUserVipExService;
 import cn.thinkjoy.gk.util.RedisUtil;
 import com.google.common.collect.Maps;
@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

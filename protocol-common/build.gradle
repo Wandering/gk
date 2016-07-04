@@ -1,7 +1,0 @@
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-    compile "com.alibaba:fastjson:$fastjsonVersion"
-    compile "com.squareup.retrofit:retrofit:$retrofitVersion"
-    compile "com.squareup.okhttp:okhttp:$okhttpVersion"
-    compile "com.squareup.okhttp:okhttp-urlconnection:$okhttpVersion"
-}
