@@ -50,9 +50,6 @@ public class InfoController extends ZGKBaseController {
     @Autowired
     private IUserAccountService userAccountService;
 
-    @Autowired
-    private cn.thinkjoy.ss.api.IUserInfoService userInfoApiService;
-
     /**
      * 查询显示个人信息
      * @return
@@ -105,8 +102,6 @@ public class InfoController extends ZGKBaseController {
 
 
             boolean flag = false;
-
-//            cn.thinkjoy.ss.domain.UserInfo ssUserInfo = new cn.thinkjoy.ss.domain.UserInfo();
 
             String icon = userInfo.getIcon();
 

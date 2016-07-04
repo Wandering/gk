@@ -34,10 +34,6 @@ dependencies {
         exclude group: 'org.apache.httpcomponents'
     }
 
-    compile "cn.thinkjoy.ss:ss-api:$thinkjoySSVersion"
-
-    compile "cn.thinkjoy.ss:ss-domain:$thinkjoySSVersion"
-
     compile project(':gk-domain')
 
     compile project(':login-service')
