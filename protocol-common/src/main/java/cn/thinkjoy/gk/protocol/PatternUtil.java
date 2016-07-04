@@ -1,7 +1,7 @@
-package cn.thinkjoy.gk.util;
+package cn.thinkjoy.gk.protocol;
 
 
-import cn.thinkjoy.gk.enumerate.PatternEnum;
+import cn.thinkjoy.gk.protocol.PatternEnum;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

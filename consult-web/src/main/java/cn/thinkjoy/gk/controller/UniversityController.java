@@ -13,7 +13,7 @@ import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.domain.UniversityDict;
 import cn.thinkjoy.gk.dto.UniversityDTO;
 import cn.thinkjoy.gk.pojo.*;
-import cn.thinkjoy.gk.enumerate.ERRORCODE;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.UniversityQuery;
 import cn.thinkjoy.gk.service.*;
 import cn.thinkjoy.gk.util.ConditionsUtil;

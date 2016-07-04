@@ -5,7 +5,7 @@ import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.UserExam;
-import cn.thinkjoy.gk.enumerate.ERRORCODE;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

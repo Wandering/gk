@@ -4,6 +4,8 @@ include 'redis'
 
 include 'web-common'
 
+include 'protocol-common'
+
 include 'consult-domain'
 
 include 'consult-service'

@@ -6,7 +6,7 @@ import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Appointment;
 import cn.thinkjoy.gk.pojo.AppointmentPojo;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
-import cn.thinkjoy.gk.enumerate.ERRORCODE;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IAppointmentExService;
 import cn.thinkjoy.gk.service.IAppointmentService;
 import org.slf4j.Logger;

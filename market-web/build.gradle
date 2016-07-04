@@ -5,6 +5,8 @@ dependencies {
 
     compile project(':gk-service')
 
+    compile project(':web-common')
+
     compile 'Pingplusplus:pingpp-java:2.0.7'
 
     compile "cn.thinkjoy:pingpp-java:2.0.1"

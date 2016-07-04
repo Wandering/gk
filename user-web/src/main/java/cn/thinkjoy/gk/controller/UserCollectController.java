@@ -8,7 +8,7 @@ import cn.thinkjoy.gk.domain.UserCollect;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.pojo.UserCollectPojo;
 import cn.thinkjoy.gk.pojo.VideoCoursePojo;
-import cn.thinkjoy.gk.enumerate.ERRORCODE;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.ICountExService;
 import cn.thinkjoy.gk.service.IUserCollectExService;
 import cn.thinkjoy.gk.service.IUserCollectService;

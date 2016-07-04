@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.enumerate;
+package cn.thinkjoy.gk.protocol;
 
 /**
  * Created by xgfan on 14-12-4.

@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.common;
+package cn.thinkjoy.gk.protocol;
 
 import java.security.MessageDigest;
 

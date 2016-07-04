@@ -5,4 +5,6 @@ dependencies {
 
     compile project(':gk-service')
 
+    compile project(':web-common')
+
 }

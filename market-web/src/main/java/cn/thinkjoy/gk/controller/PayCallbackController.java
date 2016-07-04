@@ -5,7 +5,7 @@ import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Order;
 import cn.thinkjoy.gk.domain.OrderStatements;
-import cn.thinkjoy.gk.enumerate.ERRORCODE;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IOrderService;
 import cn.thinkjoy.gk.service.IOrderStatementsService;
 import cn.thinkjoy.gk.util.RedisUtil;

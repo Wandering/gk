@@ -10,7 +10,7 @@ import cn.thinkjoy.gk.common.*;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Orders;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
-import cn.thinkjoy.gk.enumerate.ERRORCODE;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.OrdersQuery;
 import cn.thinkjoy.gk.service.IOrdersService;
 import cn.thinkjoy.gk.util.HttpRequestUtil;

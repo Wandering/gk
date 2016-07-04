@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.util;
+package cn.thinkjoy.gk.protocol;
 
 /**
  * Created by clei on 15/9/23.

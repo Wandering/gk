@@ -1,8 +1,7 @@
-package cn.thinkjoy.gk.util;
+package cn.thinkjoy.gk.protocol;
 
 import cn.thinkjoy.common.domain.CreateBaseDomain;
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.enumerate.ERRORCODE;
 
 /**
  * Created by yangguorong on 16/5/12.

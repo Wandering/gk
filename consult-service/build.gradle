@@ -3,4 +3,6 @@ dependencies {
 
     compile project(':consult-domain')
 
+    compile project(':protocol-common')
+
 }

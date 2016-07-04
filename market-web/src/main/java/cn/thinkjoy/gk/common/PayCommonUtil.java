@@ -1,5 +1,7 @@
 package cn.thinkjoy.gk.common;
 
+import cn.thinkjoy.gk.protocol.MD5Util;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 

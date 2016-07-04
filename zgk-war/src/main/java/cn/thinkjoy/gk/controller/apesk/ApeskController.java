@@ -6,7 +6,7 @@ import cn.thinkjoy.gk.annotation.VipMethonTag;
 import cn.thinkjoy.gk.common.BaseCommonController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
-import cn.thinkjoy.gk.enumerate.ERRORCODE;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.zgk.common.StringUtil;
 import cn.thinkjoy.zgk.domain.ZgkApesk;
 import cn.thinkjoy.zgk.domain.ZgkApeskCourse;

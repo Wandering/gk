@@ -1,7 +1,8 @@
 package cn.thinkjoy.gk.query;
 
 
-import cn.thinkjoy.gk.util.PageQuery;
+
+import cn.thinkjoy.gk.protocol.PageQuery;
 
 import java.io.Serializable;
 

@@ -7,8 +7,6 @@ import cn.thinkjoy.gk.pojo.MajoredDto;
 import cn.thinkjoy.gk.pojo.SubjectDto;
 import cn.thinkjoy.gk.query.MajoredQuery;
 import cn.thinkjoy.gk.service.IMajoredService;
-import cn.thinkjoy.gk.util.RedisUtil;
-import cn.thinkjoy.zgk.common.MD5Util;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
