@@ -4,14 +4,6 @@ include 'redis'
 
 include 'web-common'
 
-include 'after-domain'
-
-include 'after-service'
-
-include 'before-domain'
-
-include 'before-service'
-
 include 'consult-domain'
 
 include 'consult-service'
@@ -31,10 +23,6 @@ include 'market-service'
 include 'question-domain'
 
 include 'question-service'
-
-include 'timer-domain'
-
-include 'timer-service'
 
 include 'user-domain'
 
