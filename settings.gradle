@@ -44,8 +44,6 @@ include 'gk-login-web'
 
 include 'gk-before-web'
 
-include 'gk-consult-web'
-
 include 'gk-guide-web'
 
 include 'gk-market-web'
@@ -55,8 +53,4 @@ include 'gk-orders-war'
 include 'zgk-war'
 
 include 'zgk-service'
-
-include 'data-domain'
-
-include 'data-service'
 

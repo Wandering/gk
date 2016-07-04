@@ -21,8 +21,6 @@ dependencies {
 
     compile project(':gk-before-web')
 
-    compile project(':gk-consult-web')
-
     compile project(':gk-guide-web')
 
     compile project(':gk-login-web')
