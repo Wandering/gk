@@ -4,13 +4,6 @@ dependencies {
     testCompile "org.springframework:spring-test:$springVersion"
 
     compile group: "cn.thinkjoy.common", name: "thinkjoy-mus-common", version: "$thinkjoyCommonVersion", changing: true
-//    自动注册自己到cmc
-//    compile group: "cn.thinkjoy.cloudstack", name: "cs-clustermanager-client", version: "$thinkjoyCloudstackVersion", changing: true
-
-    //compile "mysql:mysql-connector-java:$mysqlConnectorVersion"
-
-    //compile "com.alibaba:dubbo:$dubboVersion"
-    //compile "com.101tec:zkclient:$dubboZKClientVersion"
 
     compile "net.esoar:esoar-core:1.1.0"
 
@@ -20,10 +13,6 @@ dependencies {
 
     compile "org.mortbay.jetty:jetty-util:$jettyVersion"
     compile "org.mortbay.jetty:jetty:$jettyVersion"
-
-//    compile "cn.thinkjoy.im:im-api:$thinkjoyIMVersion"
-
-//    compile "cn.thinkjoy.jx:jx-auth-common:$jxCommonVersion"
 
     compile "org.unidal.framework:foundation-service:2.1.0"
 
@@ -45,17 +34,7 @@ dependencies {
         exclude group: 'org.apache.httpcomponents'
     }
 
-    compile "cn.thinkjoy.ss:ss-api:$thinkjoySSVersion"
-
-    compile "cn.thinkjoy.ss:ss-domain:$thinkjoySSVersion"
-
     compile project(':gk-domain')
-
-    compile project(':after-service')
-
-    compile project(':before-service')
-
-    compile project(':guide-service')
 
     compile project(':login-service')
 
@@ -63,7 +42,6 @@ dependencies {
 
     compile project(':user-service')
 
-//    compile project(':qky-api')
     compile "cn.thinkjoy.gaokao360:gaokao360-api:$gaokao360Version"
 
     compile "cn.thinkjoy.zgk.statistics:agents-api:0.0.1-SNAPSHOT"

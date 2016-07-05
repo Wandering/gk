@@ -1,6 +1,5 @@
 package cn.thinkjoy.gk.service;
 
-import cn.thinkjoy.gk.domain.VideoCourse;
 import cn.thinkjoy.gk.pojo.UserCollectPojo;
 import cn.thinkjoy.gk.pojo.VideoCoursePojo;
 
