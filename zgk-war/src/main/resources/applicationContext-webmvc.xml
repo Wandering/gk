@@ -27,7 +27,6 @@
 
     <mvc:interceptors >
         <bean class="cn.thinkjoy.gk.interceptor.LoginInterceptor"></bean>
-        <bean class="cn.thinkjoy.gk.interceptor.QuestionInterceptor"></bean>
         <bean class="cn.thinkjoy.gk.interceptor.CrossInterceptor" ></bean>
         <!--<mvc:interceptor>-->
             <!--<mvc:mapping path="/index.do"/>-->

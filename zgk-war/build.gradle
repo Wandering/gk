@@ -9,28 +9,16 @@ dependencies {
 
     compile "org.apache.poi:poi:3.9"
 
-//    compile group: "redis.clients", name: "jedis", version: "2.3.0"
-
-    compile project(':protocol-common')
-
-    compile project(':web-common')
-
     compile project(':gk-service')
 
     compile project(':zgk-service')
 
-    compile project(':gk-before-web')
+    compile project(':consult-web')
 
-    compile project(':gk-consult-web')
+    compile project(':login-web')
 
-    compile project(':gk-guide-web')
+    compile project(':user-web')
 
-    compile project(':gk-login-web')
-
-    compile project(':gk-user-web')
-
-    compile project(':gk-market-web')
-
-    compile project(':gk-question-web')
+    compile project(':market-web')
 
 }

@@ -17,7 +17,7 @@ import java.util.Map;
  * Created by admin on 2016/3/1.
  */
 @Component("forecast")
-public class Forecast implements IForecase{
+public class Forecast implements IForecase {
     @Autowired
     IForecastService forecastService;
     @Autowired
