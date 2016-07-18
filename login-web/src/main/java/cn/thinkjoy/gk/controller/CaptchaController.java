@@ -35,6 +35,9 @@ public class CaptchaController extends ZGKBaseController {
     @Autowired
     private SMSService zgkSmsService;
 
+//    @Autowired
+//    private cn.thinkjoy.push.service.sms.SMSService smsService;
+
     @Autowired
     private IUserAccountExService userAccountExService;
 
@@ -75,6 +78,13 @@ public class CaptchaController extends ZGKBaseController {
 
         String randomString = CaptchaUtil.getRandomNumString(6);
 
+//        cn.thinkjoy.push.domain.sms.SMSCheckCode smsCheckCode = new cn.thinkjoy.push.domain.sms.SMSCheckCode();
+//        smsCheckCode.setPhone(account);
+//        smsCheckCode.setBizTarget(CaptchaConst.CAPTCHA_TARGET);
+//        smsCheckCode.setCheckCode(randomString);
+
+//        boolean smsResult = smsService.sendSMS(smsCheckCode,false);
+
         SMSCheckCode zgkSmsCheckCode = new SMSCheckCode();
         zgkSmsCheckCode.setPhone(account);
         zgkSmsCheckCode.setCheckCode(randomString);
@@ -84,7 +94,7 @@ public class CaptchaController extends ZGKBaseController {
 
         if(!smsResult) {
             // 发送失败切换短信通道
-            zgkSmsService.sendSMS(zgkSmsCheckCode,true);
+            smsResult = zgkSmsService.sendSMS(zgkSmsCheckCode,true);
         }
 
         if(smsResult){
