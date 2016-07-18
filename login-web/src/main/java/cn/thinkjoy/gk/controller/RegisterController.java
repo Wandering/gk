@@ -305,7 +305,7 @@ public class RegisterController extends ZGKBaseController {
     }
 
     /**
-     * 短信收不到验证码的时候,查询手机验证码接口
+     * 图形验证码太模糊的时候,查询图形验证码接口
      * @param account
      * @return
      */
