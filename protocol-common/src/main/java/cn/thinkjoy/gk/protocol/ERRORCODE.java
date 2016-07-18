@@ -92,9 +92,9 @@ public enum ERRORCODE {
 
 	UPLOAD_ERROR_500("1100006", "服务端发生错误!"),
 
-	IMAGE_CAPTCHA_NOT_EXIST_ERROR("0600011", "验证码不存在!"),
+	IMAGE_CAPTCHA_NOT_EXIST_ERROR("0600011", "图形验证码不存在!"),
 
-	IMAGE_CAPTCHA_INVALID_ERROR("0600012", "验证码错误!");
+	IMAGE_CAPTCHA_INVALID_ERROR("0600012", "图形验证码错误!");
 
 	/** The code. */
 	private final String code;

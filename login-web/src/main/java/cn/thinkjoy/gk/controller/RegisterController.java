@@ -304,4 +304,20 @@ public class RegisterController extends ZGKBaseController {
         return value.toString();
     }
 
+    /**
+     * 短信收不到验证码的时候,查询手机验证码接口
+     * @param account
+     * @return
+     */
+    @RequestMapping(value = "/getRegisterImageCaptcha")
+    @ResponseBody
+    public String getRegisterImageCaptcha(String account)
+    {
+        String key = RedisConst.USER_IMAGE_CAPTCHA_KEY + account;
+        Object value = RedisUtil.getInstance().get(key);
+        if (value == null){
+            ModelUtil.throwException(ERRORCODE.CHECK_SMSCODE_NOT_EXIST);
+        }
+        return value.toString();
+    }
 }
