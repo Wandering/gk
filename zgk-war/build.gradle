@@ -9,6 +9,8 @@ dependencies {
 
     compile "org.apache.poi:poi:3.9"
 
+    compile group: 'com.github.penggle', name: 'kaptcha', version: '2.3.2'
+
     compile project(':gk-service')
 
     compile project(':zgk-service')

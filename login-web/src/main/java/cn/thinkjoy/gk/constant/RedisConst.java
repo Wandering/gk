@@ -12,5 +12,7 @@ public class RedisConst {
 	 * 验证码
 	 */
 	public static final String USER_CAPTCHA_KEY = "gk_user_captcha_";
-	
+
+	public static final String USER_IMAGE_CAPTCHA_KEY = "gk_user_image_captcha_";
+
 }

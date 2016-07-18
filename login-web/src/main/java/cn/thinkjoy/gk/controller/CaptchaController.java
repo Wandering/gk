@@ -13,6 +13,7 @@ import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.sms.api.SMSService;
 import cn.thinkjoy.sms.domain.SMSCheckCode;
 import com.alibaba.fastjson.JSONObject;
+import com.google.code.kaptcha.Producer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 @Controller
@@ -32,6 +37,8 @@ public class CaptchaController extends ZGKBaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(CaptchaController.class);
 
+    @Autowired
+    private Producer captchaProducer = null;
     @Autowired
     private SMSService zgkSmsService;
 
@@ -44,6 +51,7 @@ public class CaptchaController extends ZGKBaseController {
     @RequestMapping(value = "/captcha")
     @ResponseBody
     public String captcha(@RequestParam(value="account",required=false) String account,
+                          @RequestParam(value="capText",required=false) String capText,
                           @RequestParam(value="type",required=false) Integer type) {
 
         if(StringUtils.isEmpty(account) || type == null){
@@ -63,9 +71,24 @@ public class CaptchaController extends ZGKBaseController {
             ModelUtil.throwException(ERRORCODE.PHONENUM_NOT_EXIST);
         }
 
+        RedisRepository redis = RedisUtil.getInstance();
+        String userImageCaptchaKey = RedisConst.USER_IMAGE_CAPTCHA_KEY + account;
+        if(redis.exists(userImageCaptchaKey))
+        {
+            String captext = (String)redis.get(userImageCaptchaKey);
+            if(!captext.equals(capText))
+            {
+                ModelUtil.throwException(ERRORCODE.IMAGE_CAPTCHA_INVALID_ERROR);
+            }
+            redis.del(userImageCaptchaKey);
+        }
+        else
+        {
+            ModelUtil.throwException(ERRORCODE.IMAGE_CAPTCHA_NOT_EXIST_ERROR);
+        }
+
         long time = CaptchaConst.CAPTCHA_TIME;
         String timeKey = RedisConst.CAPTCHA_AUTH_TIME_KEY + account;
-        RedisRepository redis = RedisUtil.getInstance();
         JSONObject result = new JSONObject();
         // 验证码存在缓存中
         if(redis.exists(timeKey)){
@@ -112,4 +135,28 @@ public class CaptchaController extends ZGKBaseController {
         return result.toJSONString();
     }
 
+    @RequestMapping(value = "/imageCaptcha")
+    public String captcha(@RequestParam(value="account",required=false) String account)
+        throws IOException
+    {
+        response.setDateHeader("Expires", 0);
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+        response.addHeader("Cache-Control", "post-check=0, pre-check=0");
+        response.setHeader("Pragma", "no-cache");
+        response.setContentType("image/jpeg");
+        String capText = captchaProducer.createText();
+        LOGGER.error("******************\"用户\" +account + 验证码是: " + capText + "******************");
+        RedisRepository redis = RedisUtil.getInstance();
+        String userImageCaptchaKey = RedisConst.USER_IMAGE_CAPTCHA_KEY + account;
+        redis.set(userImageCaptchaKey, capText, 120, TimeUnit.SECONDS);
+        BufferedImage bi = captchaProducer.createImage(capText);
+        ServletOutputStream out = response.getOutputStream();
+        ImageIO.write(bi, "jpg", out);
+        try {
+            out.flush();
+        } finally {
+            out.close();
+        }
+        return null;
+    }
 }

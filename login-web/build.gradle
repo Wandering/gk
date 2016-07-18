@@ -3,6 +3,8 @@ dependencies {
 
     compile "org.jsoup:jsoup:1.8.1"
 
+    compile group: 'com.github.penggle', name: 'kaptcha', version: '2.3.2'
+
     compile project(':gk-service')
 
     compile project(':web-common')
