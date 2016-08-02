@@ -42,8 +42,9 @@ public class ScoreController {
     @ResponseBody
     public Object queryScoreRecordByUserId(@RequestParam long userId){
         Map<String,Object> map = scoreAnalysisDAO.queryScoreRecordByUserId(userId);
-
-
+        if(map==null){
+            return new HashedMap();
+        }
         Map<String,Object> resultMap = new HashedMap();
         resultMap.put("areaName",map.get("areaName"));
         Integer majorType=(Integer) map.get("majorType");
@@ -160,10 +161,9 @@ public class ScoreController {
     public Object queryInfoByRecordId(@RequestParam long recordId){
 
         Map<String,Object> map = scoreAnalysisDAO.queryInfoByRecordId(recordId);
-
-
-
-
+        if(map==null){
+            return new HashedMap();
+        }
         Map<String,Object> resultMap = new HashedMap();
         Float totalScore = (Float) map.get("totalScore");
         Long areaId = Long.valueOf(map.get("areaId").toString()) ;
@@ -229,8 +229,6 @@ public class ScoreController {
                 int proviceRank = scoreAnalysisDAO.queryProviceRank(totalScore,areaTableName);
                 resultMap.put("stuNum", stuNum);
                 resultMap.put("proviceRank", proviceRank);
-
-
                 resultMap.put("scores", scoreUtil.getScores(map,majorType));
 
                 list.add(resultMap);
