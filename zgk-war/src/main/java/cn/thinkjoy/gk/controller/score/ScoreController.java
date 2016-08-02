@@ -36,12 +36,13 @@ public class ScoreController {
     public Object queryScoreRecordByUserId(@RequestParam long userId){
         Map<String,Object> map = scoreAnalysisDAO.queryScoreRecordByUserId(userId);
 
+
         Map<String,Object> resultMap = new HashedMap();
         resultMap.put("areaName",map.get("areaName"));
         Integer majorType=(Integer) map.get("majorType");
         resultMap.put("majorType",majorType);
+        resultMap.put("schoolName",map.get("schoolName"));
         Map<String,Object> scores = getScores(map,majorType);
-
         resultMap.put("scores",scores);
         return resultMap;
     }

@@ -15,7 +15,8 @@ public class HttpScoreTest extends TestCase{
 //        String host="http://zjtest.zhigaokao.cn";
 //        String host="http://localhost:8082";
 //        String host="http://localhost:8080";
-        String host="http://zgkser.zhigaokao.cn/";
+//        String host="http://zgkser.zhigaokao.cn/";
+        String host="http://zj.dev.zhigaokao.cn";
         String base="/score/";
 
 
@@ -49,6 +50,7 @@ public class HttpScoreTest extends TestCase{
     }
     public void testQueryUserInfo(){
         String url=host + queryUserInfo_url + "?userId=1\n";
+        System.out.println();
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
 
@@ -72,6 +74,7 @@ public class HttpScoreTest extends TestCase{
      */
      public void testQueryScoreRecordByUserId(){
          String url=host + queryScoreRecordByUserId_url + "?userId=1\n";
+         System.out.println(url);
          String result = RequestUtils.requestGet(url);
          System.out.println("result = " + result);
 
