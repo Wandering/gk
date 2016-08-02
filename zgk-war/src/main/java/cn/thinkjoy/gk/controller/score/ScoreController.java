@@ -607,7 +607,7 @@ public class ScoreController {
         return score;
     }
     String floatToStr(Float f){
-        if(f!=null){
+        if(f==null){
             return null;
         }
         String[] strs= f.toString().split("\\.");

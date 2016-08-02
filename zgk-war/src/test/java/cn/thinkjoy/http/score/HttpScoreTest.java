@@ -14,9 +14,9 @@ public class HttpScoreTest extends TestCase{
 //        String host="http://10.136.56.195:8080";
 //        String host="http://zjtest.zhigaokao.cn";
 //        String host="http://localhost:8082";
-//        String host="http://localhost:8080";
+        String host="http://localhost:8080";
 //        String host="http://zgkser.zhigaokao.cn/";
-        String host="http://zj.dev.zhigaokao.cn";
+//        String host="http://zj.dev.zhigaokao.cn";
         String base="/score/";
 
 
