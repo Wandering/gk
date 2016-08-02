@@ -23,7 +23,7 @@ public interface IScoreAnalysisDAO {
      * @param map
      * @return
      */
-    Map<String, Object> insertScoreRecord(Map<String, Object> map);
+    int insertScoreRecord(Map<String, Object> map);
 
     /**
      * 根据ID查询定位分数

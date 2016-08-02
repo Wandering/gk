@@ -3,6 +3,9 @@ package cn.thinkjoy.gk.controller.score;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.dao.IScoreAnalysisDAO;
+import cn.thinkjoy.gk.util.ScoreUtil;
+import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.NumberFormat;
 import java.util.*;
 
@@ -26,6 +30,9 @@ public class ScoreController {
 
     @Autowired
     private IScoreAnalysisDAO scoreAnalysisDAO;
+    @Autowired
+    private ScoreUtil scoreUtil;
+
 
     /**
      * 根据用户Id和用户来源查询用户最新的提交记录
@@ -42,7 +49,7 @@ public class ScoreController {
         Integer majorType=(Integer) map.get("majorType");
         resultMap.put("majorType",majorType);
         resultMap.put("schoolName",map.get("schoolName"));
-        Map<String,Object> scores = getScores(map,majorType);
+        Map<String,Object> scores = scoreUtil.getScores(map,majorType);
         resultMap.put("scores",scores);
         return resultMap;
     }
@@ -112,7 +119,10 @@ public class ScoreController {
     public Object insertScoreRecord(@RequestParam long userId,
                                     @RequestParam long areaId,
                                     @RequestParam Integer majorType,
-                                    @RequestParam Map<String,Object> scores){
+                                    HttpServletRequest request){
+        //获取成绩
+        Map<String, Object> scores = scoreUtil.getScores(request);
+
 
         Map<String,Object> insertMap = new HashedMap();
         insertMap.put("userId",userId);
@@ -121,7 +131,7 @@ public class ScoreController {
         insertMap.put("cdate",System.currentTimeMillis());
         Map<String,Object> insertScores = new HashedMap();
 
-        Iterator iterator=scores.entrySet().iterator();
+        Iterator iterator=scores.keySet().iterator();
         Float totalScore=0f;
         while (iterator.hasNext()){
             String key = (String) iterator.next();
@@ -134,7 +144,7 @@ public class ScoreController {
 
         insertMap.put("scores",insertScores);
         insertMap.put("totalScore",totalScore);
-        insertMap=scoreAnalysisDAO.insertScoreRecord(insertMap);
+        scoreAnalysisDAO.insertScoreRecord(insertMap);
         Map<String,Object> resultMap=new HashedMap();
         resultMap.put("recordId",insertMap.get("recordId"));
         return resultMap;
@@ -162,7 +172,7 @@ public class ScoreController {
         Integer majorType=(Integer) map.get("majorType");
         resultMap.put("majorType",majorType);
         //需要超过多少人
-        String areaTableName = getAreaTableName(areaId,majorType);
+        String areaTableName = scoreUtil.getAreaTableName(areaId,majorType);
         int stuNum = scoreAnalysisDAO.queryStuNum(totalScore,areaTableName);
         int allStuNum = scoreAnalysisDAO.queryAllAreaStuNum(areaTableName);
         int proviceRank = scoreAnalysisDAO.queryProviceRank(totalScore,areaTableName);
@@ -171,7 +181,7 @@ public class ScoreController {
         String proviceRankPro=nums[0]+"."+nums[1].substring(0,2)+"%";
         resultMap.put("proviceRankPro",proviceRankPro);
         resultMap.put("proviceRank",proviceRank);
-        resultMap.put("scores",getScores(map,majorType));
+        resultMap.put("scores",scoreUtil.getScores(map,majorType));
 
 //        Map<String,Object> resultMap=new HashedMap();
 //        resultMap.put("totalScore",600);
@@ -214,14 +224,14 @@ public class ScoreController {
                 resultMap.put("majorType", majorType);
                 resultMap.put("cdate", map.get("cdate"));
                 //需要超过多少人
-                String areaTableName = getAreaTableName(areaId,majorType);
+                String areaTableName = scoreUtil.getAreaTableName(areaId,majorType);
                 int stuNum = scoreAnalysisDAO.queryStuNum(totalScore, areaTableName);
                 int proviceRank = scoreAnalysisDAO.queryProviceRank(totalScore,areaTableName);
                 resultMap.put("stuNum", stuNum);
                 resultMap.put("proviceRank", proviceRank);
 
 
-                resultMap.put("scores", getScores(map,majorType));
+                resultMap.put("scores", scoreUtil.getScores(map,majorType));
 
                 list.add(resultMap);
             }
@@ -260,7 +270,7 @@ public class ScoreController {
                                          @RequestParam long areaId,
                                          @RequestParam int majorType){
 
-        String scoreLine = scoreAnalysisDAO.queryScoreLine(areaId,majorType,getYear());
+        String scoreLine = scoreAnalysisDAO.queryScoreLine(areaId,majorType,scoreUtil.getYear());
 
         String [] scoreStrs = scoreLine.split("-");
         Float topScore = null;
@@ -336,14 +346,14 @@ public class ScoreController {
 
         //确定当前分数对应当年批次分数
 //        long areaId,int majorType,Float totalScore,String year
-        Object[] line1s = getBatchAndScore(areaId,majorType,totalScore,getYear());
+        Object[] line1s = scoreUtil.getBatchAndScore(areaId,majorType,totalScore,scoreUtil.getYear());
         int batch= (int)line1s[2];
         //获得分差1  考生分-16年分数线
         float difference = totalScore-(Float) line1s[0];
         //确定点钱分数对应次年批次分数
 
-        Integer lastYear = Integer.valueOf(getYear())-1;
-        Float line2 = getLastBatchAndScore(areaId,majorType,batch,lastYear.toString());
+        Integer lastYear = Integer.valueOf(scoreUtil.getYear())-1;
+        Float line2 = scoreUtil.getLastBatchAndScore(areaId,majorType,batch,lastYear.toString());
 
         //获得分差2  院校15年分-15年分数线 (15年分数线)
 
@@ -385,7 +395,7 @@ public class ScoreController {
 
 
         List<Map<String,Object>> list = null;
-        list=scoreAnalysisDAO.queryUnivsersityBatch(areaId,schoolId,getYear());
+        list=scoreAnalysisDAO.queryUnivsersityBatch(areaId,schoolId,scoreUtil.getYear());
 //        List<Map<String,Object>> list = new ArrayList<>();
 //        Map<String,Object> resultMap1=new HashedMap();
 //        resultMap1.put("batchId",1);
@@ -418,8 +428,8 @@ public class ScoreController {
                                              Integer batch,
                                              @RequestParam long userId){
 
-        Map<String,Object> targetMap = null;
         Map<String,Object> map = scoreAnalysisDAO.queryInfoByRecordId(recordId);
+        //假如院校没有传入 默认为使用上次院校
         if(schoolId!=null && batch!=null){
             Map<String,Object> insertMap = new HashedMap();
             insertMap.put("userId",userId);
@@ -428,192 +438,26 @@ public class ScoreController {
             insertMap.put("batch",batch);
             insertMap.put("cdate",System.currentTimeMillis());
             scoreAnalysisDAO.insertTarget(insertMap);
-            targetMap=insertMap;
         }else {
-
-            targetMap = scoreAnalysisDAO.queryLastTarget(userId);
-
+            //获取上次测评院校和批次
+            Map<String,Object> targetMap = scoreAnalysisDAO.queryLastTarget(userId);
+            schoolId=Long.valueOf(targetMap.get("universityId").toString());
+            batch=Integer.valueOf(targetMap.get("batch").toString());
         }
 
         long areaId = Long.valueOf(map.get("areaId").toString());
         int majorType = (int)map.get("majorType");
         Float totalScore=(Float) map.get("totalScore");
-        String areaTableName = getAreaTableName(areaId,majorType);
-        float schoolLine = scoreAnalysisDAO.queryUnivsersityLowestScore(schoolId,areaId,batch,majorType,getYear());
+        String areaTableName = scoreUtil.getAreaTableName(areaId,majorType);
+        float schoolLine = scoreAnalysisDAO.queryUnivsersityLowestScore(schoolId,areaId,batch,majorType,scoreUtil.getYear());
         int stuNum = scoreAnalysisDAO.queryStuNumToLine(totalScore,schoolLine,areaTableName);
 
         Map<String,Object> resultMap=new HashedMap();
         resultMap.put("stuNum",stuNum);
         resultMap.put("addScore",totalScore-schoolLine);
-        resultMap.put("batchLine",getBatchScore(batch,areaId,majorType));
+        resultMap.put("batchLine",scoreUtil.getBatchScore(batch,areaId,majorType));
         resultMap.put("schoolLine",schoolLine);
         return resultMap;
     }
 
-    private String getYear(){
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH)+1;
-        if(month>=7){
-            return year+"";
-        }else {
-            return year-1+"";
-        }
-    }
-
-    /**
-     * 生成一分一段表表名
-     * @param areaId
-     * @param majorType
-     * @return
-     */
-    private String getAreaTableName(long areaId,int majorType){
-        String areaKey = scoreAnalysisDAO.queryAreaKey(areaId);
-        return "zgk_data." + areaKey + "_" + majorType + "_y";
-    }
-
-
-    /**
-     * 生成分数明细
-     * @param map
-     * @param majorType
-     * @return
-     */
-    private Map<String,Object> getScores(Map<String,Object> map,int majorType){
-        Map<String, Object> scores = new HashedMap();
-        scores.put("语文", floatToStr((float) map.get("ywScore")) + "-" + floatToStr((float) map.get("ywScoreTotal")));
-        scores.put("数学", floatToStr((float) map.get("sxScore")) + "-" + floatToStr((float) map.get("sxScoreTotal")));
-        scores.put("外语", floatToStr((float) map.get("wyScore")) + "-" + floatToStr((float) map.get("wyScoreTotal")));
-        if (majorType == 2) {
-            scores.put("物理", floatToStr((float) map.get("wlScore")) + "-" + floatToStr((float) map.get("wlScoreTotal")));
-            scores.put("化学", floatToStr((float) map.get("hxScore")) + "-" + floatToStr((float) map.get("hxScoreTotal")));
-            scores.put("生物", floatToStr((float) map.get("swScore")) + "-" + floatToStr((float) map.get("swScoreTotal")));
-        } else if ((majorType == 1)) {
-            scores.put("历史", floatToStr((float) map.get("lsScore")) + "-" + floatToStr((float) map.get("lsScoreTotal")));
-            scores.put("政治", floatToStr((float) map.get("zzScore")) + "-" + floatToStr((float) map.get("zzScoreTotal")));
-            scores.put("地理", floatToStr((float) map.get("dlScore")) + "-" + floatToStr((float) map.get("dlScoreTotal")));
-        } else {
-
-            scores.put("物理", floatToStr((float) map.get("wlScore")) + "-" + floatToStr((float) map.get("wlScoreTotal")));
-            scores.put("化学", floatToStr((float) map.get("hxScore")) + "-" + floatToStr((float) map.get("hxScoreTotal")));
-            scores.put("生物", floatToStr((float) map.get("swScore")) + "-" + floatToStr((float) map.get("swScoreTotal")));
-            scores.put("历史", floatToStr((float) map.get("lsScore")) + "-" + floatToStr((float) map.get("lsScoreTotal")));
-            scores.put("思想政治", floatToStr((float) map.get("zzScore")) + "-" + floatToStr((float) map.get("zzScoreTotal")));
-            scores.put("地理", floatToStr((float) map.get("dlScore")) + "-" + floatToStr((float) map.get("dlScoreTotal")));
-            scores.put("通用技术", floatToStr((float) map.get("tyScore")) + "-" + floatToStr((float) map.get("tyScoreTotal")));
-        }
-        return scores;
-    }
-
-    /**
-     * 获取批次线
-     * @param batch
-     * @param areaId
-     * @param majorType
-     * @return
-     */
-    private String getBatchScore(Integer batch,long areaId,int majorType){
-
-        String scoreLine = scoreAnalysisDAO.queryScoreLine(areaId,majorType,getYear());
-
-
-        String [] scoreStrs = scoreLine.split("-");
-
-        String batchStr = batch.toString().substring(0,1);
-
-        switch (Integer.parseInt(batchStr)){
-            case 1:
-                return scoreStrs[0].split("\\|")[0];
-            case 2:
-                return scoreStrs[1].split("\\|")[0];
-            case 4:
-                return scoreStrs[3].split("\\|")[0];
-            case 8:
-                return scoreStrs[4].split("\\|")[0];
-
-        }
-
-       return null;
-    }
-
-    private Object[] getBatchAndScore(long areaId,int majorType,Float totalScore,String year){
-
-        String scoreLine = scoreAnalysisDAO.queryScoreLine(areaId,majorType,year);
-
-        String [] scoreStrs = scoreLine.split("-");
-        Float bottomScore = null;
-        int i=1;
-        for(String scoreStr:scoreStrs){
-            float score=Float.parseFloat(scoreStr.split("\\|")[0]);
-            if(totalScore-score>0){
-                bottomScore=score;
-                break;
-            }
-            i++;
-        }
-        String batch2=null;
-        switch (i){
-            case 1:
-                batch2="一批本科";
-                break;
-            case 2:
-                batch2="二批本科";
-                break;
-            case 3:
-                batch2="三批本科";
-                break;
-            case 4:
-                batch2="高职高专";
-                break;
-            case 5:
-                batch2="不足高职高专";
-                break;
-        }
-
-        Object[] objects = new Object[3];
-        objects[0]=bottomScore;
-        objects[1]=batch2;
-        objects[2]=i;
-        return objects;
-    }
-
-    private Float getLastBatchAndScore(long areaId,int majorType,int batch,String year){
-
-        String scoreLine = scoreAnalysisDAO.queryScoreLine(areaId,majorType,year);
-
-        String [] scoreStrs = scoreLine.split("-");
-        Float bottomScore = null;
-        String batch2=null;
-        Float score=null;
-        switch (batch){
-            case 1:
-                score=Float.parseFloat(scoreStrs[batch-1].split("\\|")[0]);
-                break;
-            case 2:
-                score=Float.parseFloat(scoreStrs[batch-1].split("\\|")[0]);
-                break;
-            case 3:
-                score=Float.parseFloat(scoreStrs[batch-1].split("\\|")[0]);
-
-                break;
-            case 4:
-                score=Float.parseFloat(scoreStrs[batch-1].split("\\|")[0]);
-
-                break;
-            case 5:
-                break;
-        }
-
-        return score;
-    }
-    String floatToStr(Float f){
-        if(f==null){
-            return null;
-        }
-        String[] strs= f.toString().split("\\.");
-        if("0".equals(strs[1])){
-            return strs[0];
-        }
-        return f.toString();
-    }
 }

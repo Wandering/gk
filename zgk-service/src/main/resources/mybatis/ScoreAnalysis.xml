@@ -234,8 +234,8 @@ deleteBySubjects
     <select id="countUniversity" resultType="java.lang.Integer">
         SELECT count(*) from zgk_university_enrolling
         WHERE areaId = #{areaId} and majorType=#{majorType} and year = #{year}
-        and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
-        and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
+        and (averageScore - #{line}) -  #{difference} &lt;= #{bc}
+        and #{difference} -(averageScore - #{line})  &lt;= #{bc}
     </select>
 
     <!--推荐院校-->
@@ -244,12 +244,14 @@ deleteBySubjects
         (SELECT name from zgk_university WHERE id = universityId LIMIT 1) as schoolName,
         (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batch,
         realEnrollingNumber as stuNum,
-        lowestScore as averageScore,
-        (#{totalScore}-lowestScore) as gapSchool
+        averageScore as averageScore,
+    	highestScore as highestScore,
+	    lowestScore as lowestScore,
+        (#{totalScore}-averageScore) as gapSchool
         from zgk_university_enrolling
         WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
-        and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
-        and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
+        and (averageScore - #{line}) -  #{difference} &lt;= #{bc}
+        and #{difference} -(averageScore - #{line})  &lt;= #{bc}
         ORDER BY ABS(gapSchool) ASC
         limit 20;
     </select>
