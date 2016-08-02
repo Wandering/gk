@@ -481,26 +481,26 @@ public class ScoreController {
      */
     private Map<String,Object> getScores(Map<String,Object> map,int majorType){
         Map<String, Object> scores = new HashedMap();
-        scores.put("语文", (float) map.get("ywScore") + "-" + (float) map.get("ywScoreTotal"));
-        scores.put("数学", (float) map.get("sxScore") + "-" + (float) map.get("sxScoreTotal"));
-        scores.put("外语", (float) map.get("wyScore") + "-" + (float) map.get("wyScoreTotal"));
+        scores.put("语文", floatToStr((float) map.get("ywScore")) + "-" + floatToStr((float) map.get("ywScoreTotal")));
+        scores.put("数学", floatToStr((float) map.get("sxScore")) + "-" + floatToStr((float) map.get("sxScoreTotal")));
+        scores.put("外语", floatToStr((float) map.get("wyScore")) + "-" + floatToStr((float) map.get("wyScoreTotal")));
         if (majorType == 2) {
-            scores.put("物理", (float) map.get("wlScore") + "-" + (float) map.get("wlScoreTotal"));
-            scores.put("化学", (float) map.get("hxScore") + "-" + (float) map.get("hxScoreTotal"));
-            scores.put("生物", (float) map.get("swScore") + "-" + (float) map.get("swScoreTotal"));
+            scores.put("物理", floatToStr((float) map.get("wlScore")) + "-" + floatToStr((float) map.get("wlScoreTotal")));
+            scores.put("化学", floatToStr((float) map.get("hxScore")) + "-" + floatToStr((float) map.get("hxScoreTotal")));
+            scores.put("生物", floatToStr((float) map.get("swScore")) + "-" + floatToStr((float) map.get("swScoreTotal")));
         } else if ((majorType == 1)) {
-            scores.put("历史", (float) map.get("lsScore") + "-" + (float) map.get("lsScoreTotal"));
-            scores.put("政治", (float) map.get("zzScore") + "-" + (float) map.get("zzScoreTotal"));
-            scores.put("地理", (float) map.get("dlScore") + "-" + (float) map.get("dlScoreTotal"));
+            scores.put("历史", floatToStr((float) map.get("lsScore")) + "-" + floatToStr((float) map.get("lsScoreTotal")));
+            scores.put("政治", floatToStr((float) map.get("zzScore")) + "-" + floatToStr((float) map.get("zzScoreTotal")));
+            scores.put("地理", floatToStr((float) map.get("dlScore")) + "-" + floatToStr((float) map.get("dlScoreTotal")));
         } else {
 
-            scores.put("物理", (float) map.get("wlScore") + "-" + (float) map.get("wlScoreTotal"));
-            scores.put("化学", (float) map.get("hxScore") + "-" + (float) map.get("hxScoreTotal"));
-            scores.put("生物", (float) map.get("swScore") + "-" + (float) map.get("swScoreTotal"));
-            scores.put("历史", (float) map.get("lsScore") + "-" + (float) map.get("lsScoreTotal"));
-            scores.put("思想政治", (float) map.get("zzScore") + "-" + (float) map.get("zzScoreTotal"));
-            scores.put("地理", (float) map.get("dlScore") + "-" + (float) map.get("dlScoreTotal"));
-            scores.put("通用技术", (float) map.get("tyScore") + "-" + (float) map.get("tyScoreTotal"));
+            scores.put("物理", floatToStr((float) map.get("wlScore")) + "-" + floatToStr((float) map.get("wlScoreTotal")));
+            scores.put("化学", floatToStr((float) map.get("hxScore")) + "-" + floatToStr((float) map.get("hxScoreTotal")));
+            scores.put("生物", floatToStr((float) map.get("swScore")) + "-" + floatToStr((float) map.get("swScoreTotal")));
+            scores.put("历史", floatToStr((float) map.get("lsScore")) + "-" + floatToStr((float) map.get("lsScoreTotal")));
+            scores.put("思想政治", floatToStr((float) map.get("zzScore")) + "-" + floatToStr((float) map.get("zzScoreTotal")));
+            scores.put("地理", floatToStr((float) map.get("dlScore")) + "-" + floatToStr((float) map.get("dlScoreTotal")));
+            scores.put("通用技术", floatToStr((float) map.get("tyScore")) + "-" + floatToStr((float) map.get("tyScoreTotal")));
         }
         return scores;
     }
@@ -605,5 +605,15 @@ public class ScoreController {
         }
 
         return score;
+    }
+    String floatToStr(Float f){
+        if(f!=null){
+            return null;
+        }
+        String[] strs= f.toString().split("\\.");
+        if("0".equals(strs[1])){
+            return strs[0];
+        }
+        return f.toString();
     }
 }
