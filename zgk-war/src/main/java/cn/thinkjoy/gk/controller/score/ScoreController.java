@@ -165,12 +165,16 @@ public class ScoreController {
             return new HashedMap();
         }
         Map<String,Object> resultMap = new HashedMap();
+
         Float totalScore = (Float) map.get("totalScore");
         Long areaId = Long.valueOf(map.get("areaId").toString()) ;
+
         resultMap.put("totalScore",totalScore);
         resultMap.put("areaName",map.get("areaName"));
         Integer majorType=(Integer) map.get("majorType");
         resultMap.put("majorType",majorType);
+
+
         //需要超过多少人
         String areaTableName = scoreUtil.getAreaTableName(areaId,majorType);
         int stuNum = scoreAnalysisDAO.queryStuNum(totalScore,areaTableName);
@@ -182,6 +186,7 @@ public class ScoreController {
         resultMap.put("proviceRankPro",proviceRankPro);
         resultMap.put("proviceRank",proviceRank);
         resultMap.put("scores",scoreUtil.getScores(map,majorType));
+        resultMap.put("scoreRank",scoreUtil.getScoreRank(areaId,majorType,totalScore));
 
 //        Map<String,Object> resultMap=new HashedMap();
 //        resultMap.put("totalScore",600);

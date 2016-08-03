@@ -107,6 +107,25 @@ public class ScoreUtil {
         return null;
     }
 
+    /**
+     * 获取批次线
+     * @param areaId
+     * @param majorType
+     * @return
+     */
+    public Integer[] getBatchLine(long areaId,int majorType){
+
+        String scoreLine = scoreAnalysisDAO.queryScoreLine(areaId,majorType,getYear());
+
+
+        String [] scoreStrs = scoreLine.split("-");
+        Integer [] scoreLines = new Integer[4];
+        for(int i=0;i<4;i++){
+            scoreLines[i]=Integer.valueOf(scoreStrs[i].split("\\|")[0]);
+        }
+        return scoreLines;
+    }
+
     public Object[] getBatchAndScore(long areaId,int majorType,Float totalScore,String year){
 
         String scoreLine = scoreAnalysisDAO.queryScoreLine(areaId,majorType,year);
@@ -201,5 +220,32 @@ public class ScoreUtil {
         }
 
         return scores;
+    }
+
+    /**
+     * 查询当前分数的分数等级
+     * @return
+     */
+    public Integer getScoreRank(long areaId,int majorType,Float score){
+
+        Integer[] scoreLines = getBatchLine(areaId,majorType);
+
+            if(score - scoreLines[0]>50){
+                //一本+50
+                return ScoreRankEnum.名垂校史.getSub();
+            }else if(score-scoreLines[0]>0){
+                //一本+0-49
+                return ScoreRankEnum.校刊红人.getSub();
+            }else if(scoreLines[0]-score>0 && score - scoreLines[1]>0){
+                //二本以上 一本以下
+                return ScoreRankEnum.三好学生.getSub();
+            }else if(scoreLines[1]-score>0 && score - scoreLines[2]>0){
+                //三本以上 二本以下
+                return ScoreRankEnum.教师常客.getSub();
+            }else{
+                //三本以下
+                return ScoreRankEnum.逃课大军.getSub();
+            }
+
     }
 }
