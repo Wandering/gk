@@ -184,7 +184,23 @@ public interface IScoreAnalysisDAO {
     int  setUserInfo(Map<String,Object> map);
 
 
+    /**
+     *
+     * 查询用户信息
+     * @param userId
+     * @return
+     */
     Map<String,Object>  queryUserInfo(long userId);
+
+    /**
+     * 查询院校近三年的成绩
+     * @param universityId
+     * @param year
+     * @param areaId
+     * @param majorType
+     * @return
+     */
+    List<Map<String,Object>>  queryUniversityScore(@Param("universityId")long universityId,@Param("year")String year,@Param("areaId")long areaId,@Param("majorType")Integer majorType);
 
 
 }

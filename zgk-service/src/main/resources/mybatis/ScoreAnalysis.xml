@@ -175,7 +175,7 @@ deleteBySubjects
         SELECT sum(num) from ${areaTableName} WHERE score > #{totalScore}
     </select>
     <select id="queryUnivsersityLowestScore" resultType="java.lang.Float">
-        select lowestScore from zgk_university_enrolling
+        select averageScore from zgk_university_enrolling
         WHERE universityId = #{schoolId}
         and areaId=#{areaId}
         and batch = #{batch}
@@ -296,6 +296,16 @@ deleteBySubjects
         FROM zgk_user_info
         WHERE
         id = #{userId}
+    </select>
+
+    <select id="queryUniversityScore" resultType="java.util.Map">
+        SELECT
+        lowestScore,highestScore,averageScore,year
+        FROM zgk_university_enrolling
+        WHERE universityId = #{universityId}
+        and year in (#{year},#{year}-1,#{year}-2)
+        and areaId=#{areaId}
+        and majorType=#{majorType} limit 3
     </select>
 </mapper>
 

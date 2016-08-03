@@ -31,6 +31,7 @@ public class HttpScoreTest extends TestCase{
         String insertUserInfo_url=base+"insertUserInfo.do";
         String queryHighSchoolByCountyId_url=base+"queryHighSchoolByCountyId.do";
         String queryUserInfo_url=base+"queryUserInfo.do";
+        String queryUniversityScore_url=base+"queryUniversityScore.do";
 
 
 
@@ -136,4 +137,12 @@ public class HttpScoreTest extends TestCase{
     }
 
 
+    /**
+     * ok
+     */
+    public void testQueryUniversityScore(){
+        String url=host +queryUniversityScore_url + "?universityId=1&areaId=610000&majorType=1";
+        String result = RequestUtils.requestGet(url);
+        System.out.println("result = " + result);
+    }
 }

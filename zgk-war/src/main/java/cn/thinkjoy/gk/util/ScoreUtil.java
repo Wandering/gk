@@ -195,7 +195,8 @@ public class ScoreUtil {
         while (names.hasMoreElements()) {
             prop = names.nextElement();
             if(prop.startsWith("scores")){
-                scores.put(prop.substring(prop.lastIndexOf("scores[")+"scores[".length(),prop.lastIndexOf("]")), request.getParameter(prop));
+                String key = prop.substring(prop.lastIndexOf("scores[")+"scores[".length(),prop.lastIndexOf("]"));
+                scores.put(SubjectEnum.valueOf(key).getSub(), request.getParameter(prop));
             }
         }
 

@@ -447,7 +447,8 @@ public class ScoreController {
         int majorType = (int)map.get("majorType");
         Float totalScore=(Float) map.get("totalScore");
         String areaTableName = scoreUtil.getAreaTableName(areaId,majorType);
-        float schoolLine = scoreAnalysisDAO.queryUnivsersityLowestScore(schoolId,areaId,batch,majorType,scoreUtil.getYear());
+        String year=(Integer.valueOf(scoreUtil.getYear())-1)+"";
+        float schoolLine = scoreAnalysisDAO.queryUnivsersityLowestScore(schoolId,areaId,batch,majorType,year);
         int stuNum = scoreAnalysisDAO.queryStuNumToLine(totalScore,schoolLine,areaTableName);
 
         Map<String,Object> resultMap=new HashedMap();
@@ -456,6 +457,17 @@ public class ScoreController {
         resultMap.put("batchLine",scoreUtil.getBatchScore(batch,areaId,majorType));
         resultMap.put("schoolLine",schoolLine);
         return resultMap;
+    }
+
+
+    @RequestMapping(value = "/queryUniversityScore",method = RequestMethod.GET)
+    @ResponseBody
+    public Object queryUniversityScore(@RequestParam long universityId,
+                                             @RequestParam long areaId,
+                                             @RequestParam Integer majorType){
+        String year = (Integer.valueOf(scoreUtil.getYear())-1)+"";
+        List<Map<String,Object>> resultMaps = scoreAnalysisDAO.queryUniversityScore(universityId,year,areaId,majorType);
+        return resultMaps;
     }
 
 }
