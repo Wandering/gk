@@ -9,6 +9,7 @@ import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.pojo.UserInfoPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
+import cn.thinkjoy.gk.protocol.ModelUtil;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +47,6 @@ public class LoginController extends ZGKBaseController {
 					  @RequestParam(value="basePassword",required = false) String basePassword) throws Exception {
 		long id = 0L;
 		UserInfoPojo userInfoPojo=null;
-		UserInfoPojo old=null;
 		Map<String, Object> resultMap = new HashMap<>();
 		try {
 			if (StringUtils.isEmpty(account)) {
@@ -58,7 +58,7 @@ public class LoginController extends ZGKBaseController {
 
 			UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
 			if(userAccountBean==null){
-				old=oldUserLogin(account,password);
+				ModelUtil.throwException(ERRORCODE.LOGIN_ACCOUNT_NO_EXIST);
 			}else {
 				if (!password.equals(userAccountBean.getPassword())) {
 					throw new BizException(ERRORCODE.LOGIN_PASSWORD_ERROR.getCode(), ERRORCODE.LOGIN_PASSWORD_ERROR.getMessage());
@@ -69,12 +69,7 @@ public class LoginController extends ZGKBaseController {
 				id = userAccountBean.getId();
 				userInfoPojo=userAccountExService.getUserInfoPojoById(id);
 			}
-			if (userAccountBean == null && old==null) {
-				throw new BizException(ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getCode(), ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getMessage());
-			}
-			if(userInfoPojo==null){
-				userInfoPojo=old;
-			}
+
 			if(null != userInfoPojo)
 			{
 				/**
@@ -151,14 +146,4 @@ public class LoginController extends ZGKBaseController {
 		return "index";
 	}
 
-	private UserInfoPojo oldUserLogin(String account,String password){
-		UserInfoPojo userAccountBean = userAccountExService.findOldUserAccountPojoByPhone(account);
-		if (userAccountBean == null) {
-			throw new BizException(ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getCode(),ERRORCODE.LOGIN_ACCOUNT_NO_EXIST.getMessage());
-		}
-		if (!password.equals(userAccountBean.getPassword())) {
-			throw new BizException(ERRORCODE.LOGIN_PASSWORD_ERROR.getCode(),ERRORCODE.LOGIN_PASSWORD_ERROR.getMessage());
-		}
-		return userAccountBean;
-	}
 }
