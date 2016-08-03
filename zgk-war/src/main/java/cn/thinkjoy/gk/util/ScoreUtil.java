@@ -114,8 +114,13 @@ public class ScoreUtil {
      * @return
      */
     public Integer[] getBatchLine(long areaId,int majorType){
+        Integer year = Integer.valueOf(getYear());
 
-        String scoreLine = scoreAnalysisDAO.queryScoreLine(areaId,majorType,getYear());
+        String scoreLine =null;
+        do{
+            scoreLine = scoreAnalysisDAO.queryScoreLine(areaId,majorType,year.toString());
+            year--;
+        }while (scoreLine==null);
 
 
         String [] scoreStrs = scoreLine.split("-");
