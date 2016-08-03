@@ -102,7 +102,7 @@ deleteBySubjects
     <select id="queryInfoByRecordId" resultType="java.util.Map">
         SELECT
         major_type as majorType,
-        (SELECT provinceId FROM  zgk_user_info WHERE id=#{userId}) as areaId,
+        (SELECT provinceId FROM  zgk_user_info WHERE id=user_id) as areaId,
         yw_score as ywScore,
         sx_score as sxScore,
         wy_score as wyScore,
@@ -132,7 +132,7 @@ deleteBySubjects
         SELECT
         id as recordId,
         major_type as majorType,
-        (SELECT provinceId FROM  zgk_user_info WHERE id=#{userId}) as areaId,
+        (SELECT provinceId FROM  zgk_user_info WHERE id=user_id) as areaId,
         cdate,
         yw_score as ywScore,
         sx_score as sxScore,
@@ -156,7 +156,7 @@ deleteBySubjects
         ty_score_total as tyScoreTotal,
         total_score as totalScore
         from zgk_score_base
-        WHERE id = #{userId};
+        WHERE user_id = #{userId};
     </select>
 
 
