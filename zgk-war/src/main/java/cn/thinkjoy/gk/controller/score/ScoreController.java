@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.security.auth.Subject;
 import javax.servlet.http.HttpServletRequest;
 import java.text.NumberFormat;
 import java.util.*;
@@ -197,6 +198,7 @@ public class ScoreController {
             //TODO           分数不在一分一段中的情况
             //文或者理科总人数
             resultMap.put("proviceRank", -allStuNum);
+            resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
         }
 //        Map<String,Object> resultMap=new HashedMap();
 //        resultMap.put("totalScore",600);
@@ -496,6 +498,13 @@ public class ScoreController {
     }
 
 
+    /**
+     * 查询院校近三年成绩
+     * @param universityId
+     * @param areaId
+     * @param majorType
+     * @return
+     */
     @RequestMapping(value = "/queryUniversityScore",method = RequestMethod.GET)
     @ResponseBody
     public Object queryUniversityScore(@RequestParam long universityId,
@@ -504,6 +513,50 @@ public class ScoreController {
         String year = (Integer.valueOf(scoreUtil.getYear())-1)+"";
         List<Map<String,Object>> resultMaps = scoreAnalysisDAO.queryUniversityScore(universityId,year,areaId,majorType);
         return resultMaps;
+    }
+
+
+    /**
+     * 根据薄弱科目给当前用户推荐智学堂学习
+     * @return
+     */
+    @RequestMapping(value = "/querySubjectByGrade",method = RequestMethod.GET)
+    @ResponseBody
+    public Object querySubjectByGrade(@RequestParam long userId,@RequestParam String subject){
+        //高一课程地址
+        Map<String,Object> subjectMap1 = new HashedMap();
+        subjectMap1.put("语文","http://xuetang.zhigaokao.cn/course/explore/gyyuwen?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap1.put("数学","http://xuetang.zhigaokao.cn/course/explore/gyshuxue?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap1.put("外语","http://xuetang.zhigaokao.cn/course/explore/gyyingyu?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap1.put("物理","http://xuetang.zhigaokao.cn/course/explore/gywuli?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap1.put("化学","http://xuetang.zhigaokao.cn/course/explore/gyhuaxue?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap1.put("生物","http://xuetang.zhigaokao.cn/course/explore/gyshengwu?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap1.put("政治","http://xuetang.zhigaokao.cn/course/explore/gyzhengzhi?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap1.put("历史","http://xuetang.zhigaokao.cn/course/explore/gylishi?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap1.put("地理","http://xuetang.zhigaokao.cn/course/explore/gydili?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+
+        //高二课程地址
+        Map<String,Object> subjectMap2 = new HashedMap();
+        subjectMap1.put("语文","http://xuetang.zhigaokao.cn/course/explore/geyuwen?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap1.put("数学","http://xuetang.zhigaokao.cn/course/explore/geshuxue?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap1.put("外语","http://xuetang.zhigaokao.cn/course/explore/geyingyu?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap1.put("物理","http://xuetang.zhigaokao.cn/course/explore/gewuli?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap1.put("化学","http://xuetang.zhigaokao.cn/course/explore/gehuaxue?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap1.put("生物","http://xuetang.zhigaokao.cn/course/explore/geshengwu?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap1.put("政治","http://xuetang.zhigaokao.cn/course/explore/gezhengzhi?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap1.put("历史","http://xuetang.zhigaokao.cn/course/explore/gelishi?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap1.put("地理","http://xuetang.zhigaokao.cn/course/explore/gedili?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+
+        Integer grade = scoreAnalysisDAO.queryUserGrade(userId);
+        if(grade==null || grade==2 || grade == 3){
+            //推荐高二课程
+            return subjectMap2.get(subject);
+
+        }else {
+            //推荐高一课程
+            return subjectMap1.get(subject);
+        }
+
     }
 
 }

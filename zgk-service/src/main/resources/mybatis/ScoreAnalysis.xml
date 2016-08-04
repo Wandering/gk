@@ -254,6 +254,7 @@ deleteBySubjects
         averageScore as averageScore,
     	highestScore as highestScore,
 	    lowestScore as lowestScore,
+	    universityId,
         (#{totalScore}-averageScore) as gapSchool
         from zgk_university_enrolling
         WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
@@ -272,11 +273,19 @@ deleteBySubjects
         averageScore as averageScore,
         highestScore as highestScore,
         lowestScore as lowestScore,
+        universityId,
         (#{totalScore}-averageScore) as gapSchool
-        from zgk_university_enrolling
-        WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
-        and batch like '8%'
-        ORDER BY averageScore desc,universityId
+        from zgk_university_enrolling,(SELECT
+		universityId as uid
+	    FROM
+	    	zgk_university_enrolling_plan
+	    WHERE
+	    	majorType = #{majorType}
+	    AND YEAR = #{year}+1
+	    GROUP BY universityId) plan
+            WHERE plan.uid = universityId and  areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
+            and batch like '8%'
+            ORDER BY averageScore desc
         limit  10;
 
     </select>
@@ -331,6 +340,11 @@ deleteBySubjects
         and year in (#{year},#{year}-1,#{year}-2)
         and areaId=#{areaId}
         and majorType=#{majorType} limit 3
+    </select>
+
+    <!--判断用户年级-->
+    <select id="queryUserGrade" resultType="java.lang.Integer">
+        SELECT grade from zgk_user_info where id=#{userId}
     </select>
 </mapper>
 

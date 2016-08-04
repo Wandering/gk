@@ -223,4 +223,11 @@ public interface IScoreAnalysisDAO {
                                  @Param("majorType")int majorType,
                                  @Param("totalScore")Float totalScore,
                                  @Param("year")String year);
+
+    /**
+     * 获取用户年级
+     * @param userId
+     * @return
+     */
+    Integer queryUserGrade(@Param("userId")long userId);
 }

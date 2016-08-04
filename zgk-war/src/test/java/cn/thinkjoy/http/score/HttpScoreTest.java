@@ -32,6 +32,7 @@ public class HttpScoreTest extends TestCase{
         String queryHighSchoolByCountyId_url=base+"queryHighSchoolByCountyId.do";
         String queryUserInfo_url=base+"queryUserInfo.do";
         String queryUniversityScore_url=base+"queryUniversityScore.do";
+        String querySubjectByGrade_url=base+"querySubjectByGrade.do";
 
 
 
@@ -104,7 +105,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryBatchLineByAreaId(){
-        String url=host +queryBatchLineByAreaId_url + "?totalScore=460&areaId=610000&majorType=2";
+        String url=host +queryBatchLineByAreaId_url + "?totalScore=60&areaId=610000&majorType=2";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
@@ -142,6 +143,15 @@ public class HttpScoreTest extends TestCase{
      */
     public void testQueryUniversityScore(){
         String url=host +queryUniversityScore_url + "?universityId=1&areaId=610000&majorType=1";
+        String result = RequestUtils.requestGet(url);
+        System.out.println("result = " + result);
+    }
+
+    /**
+     * ok
+     */
+    public void testQuerySubjectByGrade(){
+        String url=host +querySubjectByGrade_url + "?userId=13582&subject=";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
