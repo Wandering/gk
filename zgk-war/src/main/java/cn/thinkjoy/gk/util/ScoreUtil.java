@@ -3,12 +3,14 @@ package cn.thinkjoy.gk.util;
 import cn.thinkjoy.gk.dao.IScoreAnalysisDAO;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.collections.map.LinkedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
 import java.util.Enumeration;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -50,7 +52,7 @@ public class ScoreUtil {
      * @return
      */
     public Map<String,Object> getScores(Map<String,Object> map, int majorType){
-        Map<String, Object> scores = new HashedMap();
+        Map<String, Object> scores =  new LinkedHashMap();
         scores.put("语文", floatToStr((float) map.get("ywScore")) + "-" + floatToStr((float) map.get("ywScoreTotal")));
         scores.put("数学", floatToStr((float) map.get("sxScore")) + "-" + floatToStr((float) map.get("sxScoreTotal")));
         scores.put("外语", floatToStr((float) map.get("wyScore")) + "-" + floatToStr((float) map.get("wyScoreTotal")));
@@ -61,15 +63,15 @@ public class ScoreUtil {
             scores.put("生物", floatToStr((float) map.get("swScore")) + "-" + floatToStr((float) map.get("swScoreTotal")));
 
         } else if ((majorType == 1)) {
-            scores.put("历史", floatToStr((float) map.get("lsScore")) + "-" + floatToStr((float) map.get("lsScoreTotal")));
             scores.put("政治", floatToStr((float) map.get("zzScore")) + "-" + floatToStr((float) map.get("zzScoreTotal")));
+            scores.put("历史", floatToStr((float) map.get("lsScore")) + "-" + floatToStr((float) map.get("lsScoreTotal")));
             scores.put("地理", floatToStr((float) map.get("dlScore")) + "-" + floatToStr((float) map.get("dlScoreTotal")));
         } else {
             scores.put("物理", floatToStr((float) map.get("wlScore")) + "-" + floatToStr((float) map.get("wlScoreTotal")));
             scores.put("化学", floatToStr((float) map.get("hxScore")) + "-" + floatToStr((float) map.get("hxScoreTotal")));
             scores.put("生物", floatToStr((float) map.get("swScore")) + "-" + floatToStr((float) map.get("swScoreTotal")));
-            scores.put("历史", floatToStr((float) map.get("lsScore")) + "-" + floatToStr((float) map.get("lsScoreTotal")));
             scores.put("思想政治", floatToStr((float) map.get("zzScore")) + "-" + floatToStr((float) map.get("zzScoreTotal")));
+            scores.put("历史", floatToStr((float) map.get("lsScore")) + "-" + floatToStr((float) map.get("lsScoreTotal")));
             scores.put("地理", floatToStr((float) map.get("dlScore")) + "-" + floatToStr((float) map.get("dlScoreTotal")));
             scores.put("通用技术", floatToStr((float) map.get("tyScore")) + "-" + floatToStr((float) map.get("tyScoreTotal")));
         }

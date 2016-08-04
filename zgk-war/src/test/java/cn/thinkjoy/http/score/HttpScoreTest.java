@@ -86,7 +86,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryInfoByRecordId(){
-        String url=host +queryInfoByRecordId_url + "?recordId=1";
+        String url=host +queryInfoByRecordId_url + "?recordId=59";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
@@ -113,7 +113,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryGapBySchoolIdAndBatch(){
-        String url=host +queryGapBySchoolIdAndBatch_url + "?recordId=1&schoolId=1&batch=1&userId=1&source=1";
+        String url=host +queryGapBySchoolIdAndBatch_url + "?recordId=59&schoolId=&batch=&userId=1";
         String result = RequestUtils.requestPost(url);
         System.out.println("result = " + result);
     }
