@@ -537,15 +537,15 @@ public class ScoreController {
 
         //高二课程地址
         Map<String,Object> subjectMap2 = new HashedMap();
-        subjectMap1.put("语文","http://xuetang.zhigaokao.cn/course/explore/geyuwen?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
-        subjectMap1.put("数学","http://xuetang.zhigaokao.cn/course/explore/geshuxue?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
-        subjectMap1.put("外语","http://xuetang.zhigaokao.cn/course/explore/geyingyu?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
-        subjectMap1.put("物理","http://xuetang.zhigaokao.cn/course/explore/gewuli?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
-        subjectMap1.put("化学","http://xuetang.zhigaokao.cn/course/explore/gehuaxue?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
-        subjectMap1.put("生物","http://xuetang.zhigaokao.cn/course/explore/geshengwu?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
-        subjectMap1.put("政治","http://xuetang.zhigaokao.cn/course/explore/gezhengzhi?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
-        subjectMap1.put("历史","http://xuetang.zhigaokao.cn/course/explore/gelishi?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
-        subjectMap1.put("地理","http://xuetang.zhigaokao.cn/course/explore/gedili?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap2.put("语文","http://xuetang.zhigaokao.cn/course/explore/geyuwen?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap2.put("数学","http://xuetang.zhigaokao.cn/course/explore/geshuxue?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap2.put("外语","http://xuetang.zhigaokao.cn/course/explore/geyingyu?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap2.put("物理","http://xuetang.zhigaokao.cn/course/explore/gewuli?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap2.put("化学","http://xuetang.zhigaokao.cn/course/explore/gehuaxue?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap2.put("生物","http://xuetang.zhigaokao.cn/course/explore/geshengwu?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap2.put("政治","http://xuetang.zhigaokao.cn/course/explore/gezhengzhi?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap2.put("历史","http://xuetang.zhigaokao.cn/course/explore/gelishi?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
+        subjectMap2.put("地理","http://xuetang.zhigaokao.cn/course/explore/gedili?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
 
         Integer grade = scoreAnalysisDAO.queryUserGrade(userId);
         if(grade==null || grade==2 || grade == 3){

@@ -151,7 +151,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQuerySubjectByGrade(){
-        String url=host +querySubjectByGrade_url + "?userId=13582&subject=";
+        String url=host +querySubjectByGrade_url + "?userId=13582&subject=语文";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
