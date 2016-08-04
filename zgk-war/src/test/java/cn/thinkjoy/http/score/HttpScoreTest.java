@@ -95,7 +95,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryAllRecordByUserId(){
-        String url=host +queryAllRecordByUserId_url + "?userId=1&source=1";
+        String url=host +queryAllRecordByUserId_url + "?userId=3";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
@@ -131,7 +131,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testRecommendSchool(){
-        String url=host +recommendSchool_url + "?totalScore=500&areaId=610000&majorType=1";
+        String url=host +recommendSchool_url + "?totalScore=100&areaId=610000&majorType=1";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }

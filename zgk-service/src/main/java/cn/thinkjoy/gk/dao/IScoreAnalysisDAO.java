@@ -202,5 +202,25 @@ public interface IScoreAnalysisDAO {
      */
     List<Map<String,Object>>  queryUniversityScore(@Param("universityId")long universityId,@Param("year")String year,@Param("areaId")long areaId,@Param("majorType")Integer majorType);
 
+    /**
+     * 判断分数是否在一分一段表中存在
+     * @param totalScore
+     * @param areaTableName
+     * @return
+     */
+    boolean isExistScore(@Param("totalScore")Object totalScore,
+                         @Param("areaTableName")String areaTableName);
 
+    /**
+     * 取得前十个高职院校
+     * @param areaId
+     * @param totalScore
+     * @param majorType
+     * @param year
+     * @return
+     */
+    List<Map<String,Object>> queryLowstUniversity(@Param("areaId")long areaId,
+                                 @Param("majorType")int majorType,
+                                 @Param("totalScore")Float totalScore,
+                                 @Param("year")String year);
 }

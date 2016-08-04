@@ -171,9 +171,16 @@ deleteBySubjects
         SELECT sum(num) from ${areaTableName}
     </select>
 
+    <!--全省排名-->
     <select id="queryProviceRank" resultType="java.lang.Integer">
-        SELECT sum(num) from ${areaTableName} WHERE score > #{totalScore}
+        SELECT avg_pre from ${areaTableName} WHERE score = #{totalScore}
     </select>
+
+    <!--分数极端情况判定(不存在于一分一段表中)-->
+    <select id="isExistScore" resultType="java.lang.Boolean">
+        SELECT count(*) from ${areaTableName} WHERE score = #{totalScore}
+    </select>
+
     <select id="queryUnivsersityLowestScore" resultType="java.lang.Float">
         select averageScore from zgk_university_enrolling
         WHERE universityId = #{schoolId}
@@ -254,6 +261,24 @@ deleteBySubjects
         and #{difference} -(averageScore - #{line})  &lt;= #{bc}
         ORDER BY ABS(gapSchool) ASC
         limit 20;
+    </select>
+
+    <!--推荐高职前10院校-->
+    <select id="queryLowstUniversity" resultType="java.util.Map">
+        SELECT
+        (SELECT name from zgk_university WHERE id = universityId LIMIT 1) as schoolName,
+        (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batch,
+        realEnrollingNumber as stuNum,
+        averageScore as averageScore,
+        highestScore as highestScore,
+        lowestScore as lowestScore,
+        (#{totalScore}-averageScore) as gapSchool
+        from zgk_university_enrolling
+        WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
+        and batch like '8%'
+        ORDER BY averageScore desc,universityId
+        limit  10;
+
     </select>
 
     <!--查询高中-->

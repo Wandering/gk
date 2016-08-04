@@ -173,21 +173,31 @@ public class ScoreController {
         resultMap.put("areaName",map.get("areaName"));
         Integer majorType=(Integer) map.get("majorType");
         resultMap.put("majorType",majorType);
-
-
-        //需要超过多少人
-        String areaTableName = scoreUtil.getAreaTableName(areaId,majorType);
-        int stuNum = scoreAnalysisDAO.queryStuNum(totalScore,areaTableName);
-        int allStuNum = scoreAnalysisDAO.queryAllAreaStuNum(areaTableName);
-        int proviceRank = scoreAnalysisDAO.queryProviceRank(totalScore,areaTableName);
-        resultMap.put("stuNum",stuNum);
-        String[] nums=String.valueOf(100-((Float.valueOf(proviceRank)/Float.valueOf(allStuNum))*100)).split("\\.");
-        String proviceRankPro=nums[0]+"."+nums[1].substring(0,2)+"%";
-        resultMap.put("proviceRankPro",proviceRankPro);
-        resultMap.put("proviceRank",proviceRank);
         resultMap.put("scores",scoreUtil.getScores(map,majorType));
-        resultMap.put("scoreRank",scoreUtil.getScoreRank(areaId,majorType,totalScore));
+        String areaTableName = scoreUtil.getAreaTableName(areaId, majorType);
+        //文或者理科总人数
+        int allStuNum = scoreAnalysisDAO.queryAllAreaStuNum(areaTableName);
 
+        //极端情况
+        if(scoreAnalysisDAO.isExistScore(totalScore,areaTableName)) {
+            //TODO            正常情况
+            //需要超过多少人
+            //一分超过多少人
+            int stuNum = scoreAnalysisDAO.queryStuNum(totalScore, areaTableName);
+            //全省排名
+            int proviceRank = scoreAnalysisDAO.queryProviceRank(totalScore, areaTableName);
+            resultMap.put("stuNum", stuNum);
+            String[] nums = String.valueOf(100 - ((Float.valueOf(proviceRank) / Float.valueOf(allStuNum)) * 100)).split("\\.");
+            String proviceRankPro = nums[0] + "." + nums[1].substring(0, 2) + "%";
+            resultMap.put("proviceRankPro", proviceRankPro);
+            resultMap.put("proviceRank", proviceRank);
+
+            resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
+        }else {
+            //TODO           分数不在一分一段中的情况
+            //文或者理科总人数
+            resultMap.put("proviceRank", -allStuNum);
+        }
 //        Map<String,Object> resultMap=new HashedMap();
 //        resultMap.put("totalScore",600);
 //        resultMap.put("majorType",1);
@@ -228,13 +238,24 @@ public class ScoreController {
                 Integer majorType = (Integer) map.get("majorType");
                 resultMap.put("majorType", majorType);
                 resultMap.put("cdate", map.get("cdate"));
-                //需要超过多少人
-                String areaTableName = scoreUtil.getAreaTableName(areaId,majorType);
-                int stuNum = scoreAnalysisDAO.queryStuNum(totalScore, areaTableName);
-                int proviceRank = scoreAnalysisDAO.queryProviceRank(totalScore,areaTableName);
-                resultMap.put("stuNum", stuNum);
-                resultMap.put("proviceRank", proviceRank);
                 resultMap.put("scores", scoreUtil.getScores(map,majorType));
+                String areaTableName = scoreUtil.getAreaTableName(areaId,majorType);
+
+
+
+                //极端情况
+                if(scoreAnalysisDAO.isExistScore(totalScore,areaTableName)) {
+                    //需要超过多少人
+                    int stuNum = scoreAnalysisDAO.queryStuNum(totalScore, areaTableName);
+                    int proviceRank = scoreAnalysisDAO.queryProviceRank(totalScore, areaTableName);
+                    resultMap.put("stuNum", stuNum);
+                    resultMap.put("proviceRank", proviceRank);
+                }else {
+                    //TODO           分数不在一分一段中的情况
+                    //文或者理科总人数
+                    int allStuNum = scoreAnalysisDAO.queryAllAreaStuNum(areaTableName);
+                    resultMap.put("proviceRank", -allStuNum);
+                }
 
                 list.add(resultMap);
             }
@@ -347,15 +368,25 @@ public class ScoreController {
     @ResponseBody
     public Object recommendSchool(float totalScore,long areaId,int majorType){
 
+        Integer lastYear = Integer.valueOf(scoreUtil.getYear())-1;
+
         //确定当前分数对应当年批次分数
 //        long areaId,int majorType,Float totalScore,String year
         Object[] line1s = scoreUtil.getBatchAndScore(areaId,majorType,totalScore,scoreUtil.getYear());
+        if(line1s[2]==5){
+            //todo 假如不足高职专科批次(分数超低)
+
+            //推荐10所高职院校
+            return scoreAnalysisDAO.queryLowstUniversity(areaId,majorType,totalScore,lastYear.toString());
+
+        }
+
         int batch= (int)line1s[2];
         //获得分差1  考生分-16年分数线
         float difference = totalScore-(Float) line1s[0];
         //确定点钱分数对应次年批次分数
 
-        Integer lastYear = Integer.valueOf(scoreUtil.getYear())-1;
+
         Float line2 = scoreUtil.getLastBatchAndScore(areaId,majorType,batch,lastYear.toString());
 
         //获得分差2  院校15年分-15年分数线 (15年分数线)
@@ -370,7 +401,7 @@ public class ScoreController {
             count = scoreAnalysisDAO.countUniversity(areaId,(Integer)line1s[2],majorType,lastYear.toString(),difference,line2,bc);
             //增加步长
             bc+=5;
-        }while (count<20);
+        }while (count<20&&bc<750);
 
         bc-=5;
         //返回前20个院校

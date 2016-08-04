@@ -139,6 +139,7 @@ public class ScoreUtil {
 
         String [] scoreStrs = scoreLine.split("-");
         Float bottomScore = null;
+        Float lastScore=Float.parseFloat(scoreStrs[3].split("\\|")[0]);
         int i=1;
         for(String scoreStr:scoreStrs){
             float score=Float.parseFloat(scoreStr.split("\\|")[0]);
@@ -164,6 +165,7 @@ public class ScoreUtil {
                 break;
             case 5:
                 batch2="不足高职高专";
+                bottomScore=lastScore;
                 break;
         }
 
