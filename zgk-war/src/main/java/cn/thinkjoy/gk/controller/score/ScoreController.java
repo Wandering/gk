@@ -143,6 +143,9 @@ public class ScoreController {
             insertScores.put(key+"Score",values[0]);
             insertScores.put(key+"ScoreTotal",values[1]);
         }
+        if(insertScores.size()!=12&&insertScores.size()!=14){
+            throw new BizException("error","提交科目不完整!");
+        }
 
         insertMap.put("scores",insertScores);
         insertMap.put("totalScore",totalScore);

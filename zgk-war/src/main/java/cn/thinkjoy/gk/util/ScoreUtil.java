@@ -53,27 +53,27 @@ public class ScoreUtil {
      */
     public Map<String,Object> getScores(Map<String,Object> map, int majorType){
         Map<String, Object> scores =  new LinkedHashMap();
-        scores.put("语文", floatToStr((float) map.get("ywScore")) + "-" + floatToStr((float) map.get("ywScoreTotal")));
-        scores.put("数学", floatToStr((float) map.get("sxScore")) + "-" + floatToStr((float) map.get("sxScoreTotal")));
-        scores.put("外语", floatToStr((float) map.get("wyScore")) + "-" + floatToStr((float) map.get("wyScoreTotal")));
+        scores.put("语文", floatToStr(map.get("ywScore")) + "-" + floatToStr(map.get("ywScoreTotal")));
+        scores.put("数学", floatToStr(map.get("sxScore")) + "-" + floatToStr(map.get("sxScoreTotal")));
+        scores.put("外语", floatToStr(map.get("wyScore")) + "-" + floatToStr(map.get("wyScoreTotal")));
 
         if (majorType == 2) {
-            scores.put("物理", floatToStr((float) map.get("wlScore")) + "-" + floatToStr((float) map.get("wlScoreTotal")));
-            scores.put("化学", floatToStr((float) map.get("hxScore")) + "-" + floatToStr((float) map.get("hxScoreTotal")));
-            scores.put("生物", floatToStr((float) map.get("swScore")) + "-" + floatToStr((float) map.get("swScoreTotal")));
+            scores.put("物理", floatToStr(map.get("wlScore")) + "-" + floatToStr(map.get("wlScoreTotal")));
+            scores.put("化学", floatToStr(map.get("hxScore")) + "-" + floatToStr(map.get("hxScoreTotal")));
+            scores.put("生物", floatToStr(map.get("swScore")) + "-" + floatToStr(map.get("swScoreTotal")));
 
         } else if ((majorType == 1)) {
-            scores.put("政治", floatToStr((float) map.get("zzScore")) + "-" + floatToStr((float) map.get("zzScoreTotal")));
-            scores.put("历史", floatToStr((float) map.get("lsScore")) + "-" + floatToStr((float) map.get("lsScoreTotal")));
-            scores.put("地理", floatToStr((float) map.get("dlScore")) + "-" + floatToStr((float) map.get("dlScoreTotal")));
+            scores.put("政治", floatToStr(map.get("zzScore")) + "-" + floatToStr(map.get("zzScoreTotal")));
+            scores.put("历史", floatToStr(map.get("lsScore")) + "-" + floatToStr(map.get("lsScoreTotal")));
+            scores.put("地理", floatToStr(map.get("dlScore")) + "-" + floatToStr(map.get("dlScoreTotal")));
         } else {
-            scores.put("物理", floatToStr((float) map.get("wlScore")) + "-" + floatToStr((float) map.get("wlScoreTotal")));
-            scores.put("化学", floatToStr((float) map.get("hxScore")) + "-" + floatToStr((float) map.get("hxScoreTotal")));
-            scores.put("生物", floatToStr((float) map.get("swScore")) + "-" + floatToStr((float) map.get("swScoreTotal")));
-            scores.put("思想政治", floatToStr((float) map.get("zzScore")) + "-" + floatToStr((float) map.get("zzScoreTotal")));
-            scores.put("历史", floatToStr((float) map.get("lsScore")) + "-" + floatToStr((float) map.get("lsScoreTotal")));
-            scores.put("地理", floatToStr((float) map.get("dlScore")) + "-" + floatToStr((float) map.get("dlScoreTotal")));
-            scores.put("通用技术", floatToStr((float) map.get("tyScore")) + "-" + floatToStr((float) map.get("tyScoreTotal")));
+            scores.put("物理", floatToStr(map.get("wlScore")) + "-" + floatToStr(map.get("wlScoreTotal")));
+            scores.put("化学", floatToStr(map.get("hxScore")) + "-" + floatToStr(map.get("hxScoreTotal")));
+            scores.put("生物", floatToStr(map.get("swScore")) + "-" + floatToStr(map.get("swScoreTotal")));
+            scores.put("思想政治", floatToStr(map.get("zzScore")) + "-" + floatToStr(map.get("zzScoreTotal")));
+            scores.put("历史", floatToStr(map.get("lsScore")) + "-" + floatToStr(map.get("lsScoreTotal")));
+            scores.put("地理", floatToStr(map.get("dlScore")) + "-" + floatToStr(map.get("dlScoreTotal")));
+            scores.put("通用技术", floatToStr(map.get("tyScore")) + "-" + floatToStr(map.get("tyScoreTotal")));
         }
         return scores;
     }
@@ -205,9 +205,9 @@ public class ScoreUtil {
 
         return score;
     }
-    public String floatToStr(Float f){
+    public String floatToStr(Object f){
         if(f==null){
-            return null;
+            return "";
         }
         String[] strs= f.toString().split("\\.");
         if("0".equals(strs[1])){
