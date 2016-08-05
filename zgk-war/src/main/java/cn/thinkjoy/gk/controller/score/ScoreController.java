@@ -495,10 +495,13 @@ public class ScoreController {
         Float totalScore=(Float) map.get("totalScore");
         String areaTableName = scoreUtil.getAreaTableName(areaId,majorType);
         String year=(Integer.valueOf(scoreUtil.getYear())-1)+"";
+        String name = scoreAnalysisDAO.querySchoolNameById(schoolId);
         float schoolLine = scoreAnalysisDAO.queryUnivsersityLowestScore(schoolId,areaId,batch,majorType,year);
         if (totalScore>schoolLine){
             Integer stuNum = scoreAnalysisDAO.queryStuNumToLine(schoolLine,totalScore,areaTableName);
             Map<String,Object> resultMap=new HashedMap();
+            resultMap.put("schoolId",schoolId);
+            resultMap.put("schoolName",name);
             resultMap.put("totalScore",totalScore);
             resultMap.put("stuNum",-stuNum);
             resultMap.put("batchLine",scoreUtil.getBatchScore(batch,areaId,majorType));
@@ -508,6 +511,9 @@ public class ScoreController {
         Integer stuNum = scoreAnalysisDAO.queryStuNumToLine(totalScore,schoolLine,areaTableName);
 
         Map<String,Object> resultMap=new HashedMap();
+
+        resultMap.put("schoolId",schoolId);
+        resultMap.put("schoolName",name);
         resultMap.put("totalScore",totalScore);
         resultMap.put("stuNum",stuNum);
         resultMap.put("addScore",totalScore-schoolLine);

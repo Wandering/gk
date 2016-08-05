@@ -67,6 +67,13 @@ public interface IScoreAnalysisDAO {
                           @Param("areaTableName")String areaTableName);
 
     /**
+     * 获取院校name
+     * @param id
+     * @return
+     */
+    String querySchoolNameById(Object id);
+
+    /**
      * 查询分数排名
      * @param totalScore
      * @param areaTableName

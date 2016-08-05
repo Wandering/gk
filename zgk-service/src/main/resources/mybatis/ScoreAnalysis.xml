@@ -346,5 +346,10 @@ deleteBySubjects
     <select id="queryUserGrade" resultType="java.lang.Integer">
         SELECT grade from zgk_user_info where id=#{userId}
     </select>
+
+    <!--判断用户年级-->
+    <select id="querySchoolNameById" resultType="java.lang.String">
+        SELECT name from zgk_university where id=#{id}
+    </select>
 </mapper>
 
