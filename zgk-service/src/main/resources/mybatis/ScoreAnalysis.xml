@@ -176,9 +176,14 @@ deleteBySubjects
         SELECT avg_pre from ${areaTableName} WHERE score = #{totalScore}
     </select>
 
-    <!--分数极端情况判定(不存在于一分一段表中)-->
+    <!--分数极端情况判定(最小值判定)(不存在于一分一段表中)-->
     <select id="isExistScore" resultType="java.lang.Boolean">
         SELECT MIN(score)&lt;#{totalScore} from ${areaTableName} where score!=0
+    </select>
+
+    <!--分数极端情况判定(最大值判定)(不存在于一分一段表中)-->
+    <select id="isExistMaxScore" resultType="java.lang.Boolean">
+        SELECT max(score)&lt;#{totalScore} from ${areaTableName} where score!=0
     </select>
 
     <select id="queryUnivsersityLowestScore" resultType="java.lang.Float">
@@ -357,5 +362,6 @@ deleteBySubjects
     <select id="queryBatchNameById" resultType="java.lang.String">
         SELECT name from zgk_data_dict where type = 'BATCHTYPE2' and dictId =#{id}
     </select>
+
 </mapper>
 

@@ -224,6 +224,14 @@ public interface IScoreAnalysisDAO {
      */
     boolean isExistScore(@Param("totalScore")Object totalScore,
                          @Param("areaTableName")String areaTableName);
+    /**
+     * 判断分数是否在一分一段表中存在(最大值)
+     * @param totalScore
+     * @param areaTableName
+     * @return
+     */
+    boolean isExistMaxScore(@Param("totalScore")Object totalScore,
+                         @Param("areaTableName")String areaTableName);
 
     /**
      * 取得前十个高职院校

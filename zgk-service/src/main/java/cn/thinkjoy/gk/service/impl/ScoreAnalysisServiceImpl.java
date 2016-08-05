@@ -134,6 +134,11 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     }
 
     @Override
+    public boolean isExistMaxScore(Object totalScore, String areaTableName) {
+        return scoreAnalysisDAO.isExistMaxScore(totalScore,areaTableName);
+    }
+
+    @Override
     public List<Map<String, Object>> queryLowstUniversity(long areaId,int majorType,Float totalScore,String year) {
         return scoreAnalysisDAO.queryLowstUniversity(areaId,majorType,totalScore,year);
     }

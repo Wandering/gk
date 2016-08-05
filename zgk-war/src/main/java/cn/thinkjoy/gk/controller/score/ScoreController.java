@@ -180,11 +180,15 @@ public class ScoreController {
         resultMap.put("scores",scoreUtil.getScores(map,majorType));
         String areaTableName = scoreUtil.getAreaTableName(areaId, majorType);
         //文或者理科总人数
-        int allStuNum = scoreAnalysisService.queryAllAreaStuNum(areaTableName);
+        Integer allStuNum = scoreAnalysisService.queryAllAreaStuNum(areaTableName);
 
         //极端情况
-        if(scoreAnalysisService.isExistScore(totalScore,areaTableName)) {
-            //TODO            正常情况
+        if(scoreAnalysisService.isExistMaxScore(totalScore,areaTableName)){
+            //当前分数超过了一分一段表的最大值 或者  达到很高的值
+            resultMap.put("proviceRank", -1);
+
+        }else if(scoreAnalysisService.isExistScore(totalScore,areaTableName)) {
+            //            正常情况
             //需要超过多少人
             //一分超过多少人
             Integer stuNum = scoreAnalysisService.queryStuNum(totalScore, areaTableName);
@@ -198,7 +202,7 @@ public class ScoreController {
 
             resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
         }else {
-            //TODO           分数不在一分一段中的情况
+            //           分数不在一分一段中的情况
             //文或者理科总人数
             resultMap.put("proviceRank", -allStuNum);
             resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));

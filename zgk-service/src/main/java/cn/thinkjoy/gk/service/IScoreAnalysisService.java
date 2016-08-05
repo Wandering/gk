@@ -227,6 +227,15 @@ public interface IScoreAnalysisService {
                          String areaTableName);
 
     /**
+     * 判断分数是否在一分一段表中存在(最大值)
+     * @param totalScore
+     * @param areaTableName
+     * @return
+     */
+    boolean isExistMaxScore(Object totalScore,
+                            String areaTableName);
+
+    /**
      * 取得前十个高职院校
      * @param areaId
      * @param totalScore
