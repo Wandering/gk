@@ -186,6 +186,7 @@ public class ScoreController {
         if(scoreAnalysisService.isExistMaxScore(totalScore,areaTableName)){
             //当前分数超过了一分一段表的最大值 或者  达到很高的值
             resultMap.put("proviceRank", -1);
+            resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
 
         }else if(scoreAnalysisService.isExistScore(totalScore,areaTableName)) {
             //            正常情况
