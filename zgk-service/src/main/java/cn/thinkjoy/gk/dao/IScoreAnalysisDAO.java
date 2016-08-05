@@ -45,7 +45,7 @@ public interface IScoreAnalysisDAO {
      * @param areaTableName
      * @return
      */
-    int queryStuNum(@Param("totalScore")Object totalScore,
+    Integer queryStuNum(@Param("totalScore")Object totalScore,
                     @Param("areaTableName")String areaTableName);
 
     /**
@@ -53,7 +53,7 @@ public interface IScoreAnalysisDAO {
      * @param areaTableName
      * @return
      */
-    int queryAllAreaStuNum(@Param("areaTableName")String areaTableName);
+    Integer queryAllAreaStuNum(@Param("areaTableName")String areaTableName);
 
     /**
      * 查询分数到分数线之间有多少人

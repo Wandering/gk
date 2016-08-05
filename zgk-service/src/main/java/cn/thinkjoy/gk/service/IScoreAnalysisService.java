@@ -43,7 +43,7 @@ public interface IScoreAnalysisService {
      * @param areaTableName
      * @return
      */
-    int queryStuNum(Object totalScore,
+    Integer queryStuNum(Object totalScore,
                     String areaTableName);
 
     /**
@@ -51,7 +51,7 @@ public interface IScoreAnalysisService {
      * @param areaTableName
      * @return
      */
-    int queryAllAreaStuNum(String areaTableName);
+    Integer queryAllAreaStuNum(String areaTableName);
 
     /**
      * 查询分数到分数线之间有多少人

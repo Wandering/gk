@@ -256,8 +256,8 @@ public class ScoreController {
                 //极端情况
                 if(scoreAnalysisService.isExistScore(totalScore,areaTableName)) {
                     //需要超过多少人
-                    int stuNum = scoreAnalysisService.queryStuNum(totalScore, areaTableName);
-                    int proviceRank = scoreAnalysisService.queryProviceRank(totalScore, areaTableName);
+                    Integer stuNum = scoreAnalysisService.queryStuNum(totalScore, areaTableName);
+                    Integer proviceRank = scoreAnalysisService.queryProviceRank(totalScore, areaTableName);
                     resultMap.put("stuNum", stuNum);
                     resultMap.put("proviceRank", proviceRank);
                 }else {
