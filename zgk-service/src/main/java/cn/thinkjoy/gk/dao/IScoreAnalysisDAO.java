@@ -86,9 +86,17 @@ public interface IScoreAnalysisDAO {
      * @param areaTableName
      * @return
      */
-    int queryProviceRank(@Param("totalScore")Object totalScore,
+    Integer queryProviceRank(@Param("totalScore")Object totalScore,
                          @Param("areaTableName")String areaTableName);
 
+    /**
+     * 查询分数排名
+     * @param totalScore
+     * @param areaTableName
+     * @return
+     */
+    Integer queryProviceRank2(@Param("totalScore")Object totalScore,
+                             @Param("areaTableName")String areaTableName);
     /**
      * 查询分数线串
      * @param areaId

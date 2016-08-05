@@ -176,6 +176,11 @@ deleteBySubjects
         SELECT avg_pre from ${areaTableName} WHERE score = #{totalScore}
     </select>
 
+    <!--全省排名2-->
+    <select id="queryProviceRank2" resultType="java.lang.Integer">
+        SELECT (heigh_pre+low_pre)/2 from zgk_data.ln_2_y from ${areaTableName} WHERE score = #{totalScore}
+    </select>
+
     <!--分数极端情况判定(最小值判定)(不存在于一分一段表中)-->
     <select id="isExistScore" resultType="java.lang.Boolean">
         SELECT MIN(score)&lt;#{totalScore} from ${areaTableName} where score!=0
@@ -185,6 +190,8 @@ deleteBySubjects
     <select id="isExistMaxScore" resultType="java.lang.Boolean">
         SELECT max(score)&lt;#{totalScore} from ${areaTableName} where score!=0
     </select>
+
+
 
     <select id="queryUnivsersityLowestScore" resultType="java.lang.Float">
         select lowestScore from zgk_university_enrolling

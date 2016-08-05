@@ -88,6 +88,16 @@ public interface IScoreAnalysisService {
                          String areaTableName);
 
     /**
+     * 查询分数排名
+     * @param totalScore
+     * @param areaTableName
+     * @return
+     */
+    Integer queryProviceRank2(Object totalScore,
+                             String areaTableName);
+
+
+    /**
      * 查询分数线串
      * @param areaId
      * @param majorType

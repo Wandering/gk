@@ -195,6 +195,9 @@ public class ScoreController {
             Integer stuNum = scoreAnalysisService.queryStuNum(totalScore, areaTableName);
             //全省排名
             Integer proviceRank = scoreAnalysisService.queryProviceRank(totalScore, areaTableName);
+            if(proviceRank==null) {
+                proviceRank = scoreAnalysisService.queryProviceRank2(totalScore, areaTableName);
+            }
             resultMap.put("stuNum", stuNum);
             String[] nums = String.valueOf(100 - ((Float.valueOf(proviceRank) / Float.valueOf(allStuNum)) * 100)).split("\\.");
             String proviceRankPro = nums[0] + "." + nums[1].substring(0, 2) + "%";
@@ -259,7 +262,12 @@ public class ScoreController {
 
 
                 //极端情况
-                if(scoreAnalysisService.isExistScore(totalScore,areaTableName)) {
+                if(scoreAnalysisService.isExistMaxScore(totalScore,areaTableName)){
+                    //当前分数超过了一分一段表的最大值 或者  达到很高的值
+                    resultMap.put("proviceRank", -1);
+                    resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
+
+                }if(scoreAnalysisService.isExistScore(totalScore,areaTableName)) {
                     //需要超过多少人
                     Integer stuNum = scoreAnalysisService.queryStuNum(totalScore, areaTableName);
                     Float totalScore1=totalScore;
