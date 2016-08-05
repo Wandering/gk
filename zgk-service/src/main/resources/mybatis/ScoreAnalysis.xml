@@ -102,7 +102,7 @@ deleteBySubjects
     <select id="queryInfoByRecordId" resultType="java.util.Map">
         SELECT
         major_type as majorType,
-        (SELECT provinceId FROM  zgk_user_info WHERE id=#{userId}) as areaId,
+        (SELECT provinceId FROM  zgk_user_info WHERE id=user_id) as areaId,
         yw_score as ywScore,
         sx_score as sxScore,
         wy_score as wyScore,
@@ -132,7 +132,7 @@ deleteBySubjects
         SELECT
         id as recordId,
         major_type as majorType,
-        (SELECT provinceId FROM  zgk_user_info WHERE id=#{userId}) as areaId,
+        (SELECT provinceId FROM  zgk_user_info WHERE id=user_id) as areaId,
         cdate,
         yw_score as ywScore,
         sx_score as sxScore,
@@ -156,7 +156,7 @@ deleteBySubjects
         ty_score_total as tyScoreTotal,
         total_score as totalScore
         from zgk_score_base
-        WHERE id = #{userId};
+        WHERE user_id = #{userId} ORDER BY cdate;
     </select>
 
 
@@ -171,11 +171,18 @@ deleteBySubjects
         SELECT sum(num) from ${areaTableName}
     </select>
 
+    <!--全省排名-->
     <select id="queryProviceRank" resultType="java.lang.Integer">
-        SELECT sum(num) from ${areaTableName} WHERE score > #{totalScore}
+        SELECT avg_pre from ${areaTableName} WHERE score = #{totalScore}
     </select>
+
+    <!--分数极端情况判定(不存在于一分一段表中)-->
+    <select id="isExistScore" resultType="java.lang.Boolean">
+        SELECT MIN(score)&lt;#{totalScore} from ${areaTableName} where score!=0
+    </select>
+
     <select id="queryUnivsersityLowestScore" resultType="java.lang.Float">
-        select lowestScore from zgk_university_enrolling
+        select averageScore from zgk_university_enrolling
         WHERE universityId = #{schoolId}
         and areaId=#{areaId}
         and batch = #{batch}
@@ -203,7 +210,7 @@ deleteBySubjects
     </select>
 
     <select id="queryLastTarget" resultType="java.util.Map">
-         SELECT * from zgk_favorite_university
+         SELECT university_id as universityId,batch from zgk_favorite_university
          WHERE user_id = #{userId} ORDER BY id DESC limit 1
     </select>
 
@@ -234,8 +241,8 @@ deleteBySubjects
     <select id="countUniversity" resultType="java.lang.Integer">
         SELECT count(*) from zgk_university_enrolling
         WHERE areaId = #{areaId} and majorType=#{majorType} and year = #{year}
-        and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
-        and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
+        and (averageScore - #{line}) -  #{difference} &lt;= #{bc}
+        and #{difference} -(averageScore - #{line})  &lt;= #{bc}
     </select>
 
     <!--推荐院校-->
@@ -244,14 +251,43 @@ deleteBySubjects
         (SELECT name from zgk_university WHERE id = universityId LIMIT 1) as schoolName,
         (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batch,
         realEnrollingNumber as stuNum,
-        lowestScore as averageScore,
-        (#{totalScore}-lowestScore) as gapSchool
+        averageScore as averageScore,
+    	highestScore as highestScore,
+	    lowestScore as lowestScore,
+	    universityId,
+        (#{totalScore}-averageScore) as gapSchool
         from zgk_university_enrolling
         WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
-        and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
-        and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
+        and (averageScore - #{line}) -  #{difference} &lt;= #{bc}
+        and #{difference} -(averageScore - #{line})  &lt;= #{bc}
         ORDER BY ABS(gapSchool) ASC
         limit 20;
+    </select>
+
+    <!--推荐高职前10院校-->
+    <select id="queryLowstUniversity" resultType="java.util.Map">
+        SELECT
+        (SELECT name from zgk_university WHERE id = universityId LIMIT 1) as schoolName,
+        (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batch,
+        realEnrollingNumber as stuNum,
+        averageScore as averageScore,
+        highestScore as highestScore,
+        lowestScore as lowestScore,
+        universityId,
+        (#{totalScore}-averageScore) as gapSchool
+        from zgk_university_enrolling,(SELECT
+		universityId as uid
+	    FROM
+	    	zgk_university_enrolling_plan
+	    WHERE
+	    	majorType = #{majorType}
+	    AND YEAR = #{year}+1
+	    GROUP BY universityId) plan
+            WHERE plan.uid = universityId and  areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
+            and batch like '8%'
+            ORDER BY averageScore desc
+        limit  10;
+
     </select>
 
     <!--查询高中-->
@@ -294,6 +330,31 @@ deleteBySubjects
         FROM zgk_user_info
         WHERE
         id = #{userId}
+    </select>
+
+    <select id="queryUniversityScore" resultType="java.util.Map">
+        SELECT
+        lowestScore,realEnrollingNumber,averageScore,year
+        FROM zgk_university_enrolling
+        WHERE universityId = #{universityId}
+        and year in (#{year},#{year}-1,#{year}-2)
+        and areaId=#{areaId}
+        and majorType=#{majorType} ORDER BY YEAR DESC limit 3
+    </select>
+
+    <!--判断用户年级-->
+    <select id="queryUserGrade" resultType="java.lang.Integer">
+        SELECT grade from zgk_user_info where id=#{userId}
+    </select>
+
+    <!--根据id获取学校名称-->
+    <select id="querySchoolNameById" resultType="java.lang.String">
+        SELECT name from zgk_university where id=#{id}
+    </select>
+
+    <!--根据id获取彼此名称-->
+    <select id="queryBatchNameById" resultType="java.lang.String">
+        SELECT name from zgk_data_dict where type = 'BATCHTYPE2' and dictId =#{id}
     </select>
 </mapper>
 

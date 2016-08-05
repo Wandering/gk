@@ -23,7 +23,7 @@ public interface IScoreAnalysisDAO {
      * @param map
      * @return
      */
-    Map<String, Object> insertScoreRecord(Map<String, Object> map);
+    int insertScoreRecord(Map<String, Object> map);
 
     /**
      * 根据ID查询定位分数
@@ -45,7 +45,7 @@ public interface IScoreAnalysisDAO {
      * @param areaTableName
      * @return
      */
-    int queryStuNum(@Param("totalScore")Object totalScore,
+    Integer queryStuNum(@Param("totalScore")Object totalScore,
                     @Param("areaTableName")String areaTableName);
 
     /**
@@ -53,7 +53,7 @@ public interface IScoreAnalysisDAO {
      * @param areaTableName
      * @return
      */
-    int queryAllAreaStuNum(@Param("areaTableName")String areaTableName);
+    Integer queryAllAreaStuNum(@Param("areaTableName")String areaTableName);
 
     /**
      * 查询分数到分数线之间有多少人
@@ -62,9 +62,23 @@ public interface IScoreAnalysisDAO {
      * @param areaTableName
      * @return
      */
-    int queryStuNumToLine(@Param("totalScore")Object totalScore,
+    Integer queryStuNumToLine(@Param("totalScore")Object totalScore,
                           @Param("scoreLine")Object scoreLine,
                           @Param("areaTableName")String areaTableName);
+
+    /**
+     * 获取院校name
+     * @param id
+     * @return
+     */
+    String querySchoolNameById(Object id);
+
+    /**
+     * 获取批次名称
+     * @param id
+     * @return
+     */
+    String queryBatchNameById(Object id);
 
     /**
      * 查询分数排名
@@ -184,7 +198,50 @@ public interface IScoreAnalysisDAO {
     int  setUserInfo(Map<String,Object> map);
 
 
+    /**
+     *
+     * 查询用户信息
+     * @param userId
+     * @return
+     */
     Map<String,Object>  queryUserInfo(long userId);
 
+    /**
+     * 查询院校近三年的成绩
+     * @param universityId
+     * @param year
+     * @param areaId
+     * @param majorType
+     * @return
+     */
+    List<Map<String,Object>>  queryUniversityScore(@Param("universityId")long universityId,@Param("year")String year,@Param("areaId")long areaId,@Param("majorType")Integer majorType);
 
+    /**
+     * 判断分数是否在一分一段表中存在
+     * @param totalScore
+     * @param areaTableName
+     * @return
+     */
+    boolean isExistScore(@Param("totalScore")Object totalScore,
+                         @Param("areaTableName")String areaTableName);
+
+    /**
+     * 取得前十个高职院校
+     * @param areaId
+     * @param totalScore
+     * @param majorType
+     * @param year
+     * @return
+     */
+    List<Map<String,Object>> queryLowstUniversity(@Param("areaId")long areaId,
+                                 @Param("majorType")int majorType,
+                                 @Param("totalScore")Float totalScore,
+                                 @Param("year")String year);
+
+    /**
+     * 获取用户年级
+     * @param userId
+     * @return
+     */
+    Integer queryUserGrade(@Param("userId")long userId);
 }
