@@ -74,6 +74,13 @@ public interface IScoreAnalysisDAO {
     String querySchoolNameById(Object id);
 
     /**
+     * 获取批次名称
+     * @param id
+     * @return
+     */
+    String queryBatchNameById(Object id);
+
+    /**
      * 查询分数排名
      * @param totalScore
      * @param areaTableName

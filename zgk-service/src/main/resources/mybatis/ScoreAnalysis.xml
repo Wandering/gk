@@ -351,5 +351,10 @@ deleteBySubjects
     <select id="querySchoolNameById" resultType="java.lang.String">
         SELECT name from zgk_university where id=#{id}
     </select>
+
+    <!--判断用户年级-->
+    <select id="queryBatchNameById" resultType="java.lang.String">
+        SELECT name from zgk_data_dict where type = 'BATCHTYPE2' and dictId =#{id}
+    </select>
 </mapper>
 
