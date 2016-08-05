@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Calendar;
-import java.util.Enumeration;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by yangyongping on 16/8/2.
@@ -255,6 +252,48 @@ public class ScoreUtil {
                 //三本以下
                 return ScoreRankEnum.逃课大军.getSub();
             }
+
+    }
+
+    /**
+     * 查询当前分数的分数等级
+     * @return
+     */
+    public String[] getScoreWeak(Map<String,Object> scores){
+        String strongSubject=null;
+        String weakSubject=null;
+        Float initFloat1 = 1F;
+        Float initFloat2 = 0F;
+        Iterator<String> iterator =  scores.keySet().iterator();
+        while (iterator.hasNext()){
+            String key = iterator.next();
+            String value = (String) scores.get(key);
+            Float scoreProportion = getProportion(value);
+            if(scoreProportion<initFloat1){
+                initFloat1=scoreProportion;
+                weakSubject = key;
+            };
+            if(scoreProportion>initFloat2 && scoreProportion<=1F){
+                initFloat2=scoreProportion;
+                strongSubject = key;
+            };
+
+        }
+        return new String[]{strongSubject,weakSubject};
+
+    }
+
+    public Float getProportion(String value){
+        String[] scores = value.split("-");
+        Float v1 = 2f;
+        Float v2 = 0f;
+        if(!"".equals(scores[0])){
+            v1 =Float.valueOf(scores[0]);
+        }
+        if(!"".equals(scores[1])){
+            v2 =Float.valueOf(scores[1]);
+        }
+        return v1/v2;
 
     }
 }

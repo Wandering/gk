@@ -243,9 +243,14 @@ public class ScoreController {
                 Integer majorType = (Integer) map.get("majorType");
                 resultMap.put("majorType", majorType);
                 resultMap.put("cdate", map.get("cdate"));
-                resultMap.put("scores", scoreUtil.getScores(map,majorType));
-                String areaTableName = scoreUtil.getAreaTableName(areaId,majorType);
+                Map<String,Object> scores =  scoreUtil.getScores(map,majorType);
 
+                resultMap.put("scores",scores);
+                String areaTableName = scoreUtil.getAreaTableName(areaId,majorType);
+                //分析科目强弱
+                String [] subjects = scoreUtil.getScoreWeak(scores);
+                resultMap.put("strong", subjects[0]);
+                resultMap.put("weak", subjects[1]);
 
 
                 //极端情况
@@ -261,6 +266,7 @@ public class ScoreController {
                     int allStuNum = scoreAnalysisDAO.queryAllAreaStuNum(areaTableName);
                     resultMap.put("proviceRank", -allStuNum);
                 }
+
 
                 list.add(resultMap);
             }

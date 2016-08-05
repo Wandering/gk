@@ -156,7 +156,7 @@ deleteBySubjects
         ty_score_total as tyScoreTotal,
         total_score as totalScore
         from zgk_score_base
-        WHERE user_id = #{userId};
+        WHERE user_id = #{userId} ORDER BY cdate;
     </select>
 
 
