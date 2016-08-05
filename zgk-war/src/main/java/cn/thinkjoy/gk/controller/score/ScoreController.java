@@ -351,14 +351,16 @@ public class ScoreController {
         Map<String, Object> resultMap = new HashedMap();
         Map<String, Object> topLine = new HashedMap();
         Map<String, Object> bottomLine = new HashedMap();
-
-        topLine.put("batch",batch1);
-        topLine.put("score",topScore);
-        bottomLine.put("batch",batch2);
-        bottomLine.put("score",bottomScore);
+        topLine.put("batch", batch1);
+        topLine.put("score", topScore);
+        bottomLine.put("batch", batch2);
+        bottomLine.put("score", bottomScore);
+        if(bottomScore!=null&&bottomScore==0) {
+            bottomLine.put("batch", null);
+            bottomLine.put("score", null);
+        }
         resultMap.put("topLine", topLine);
         resultMap.put("bottomLine", bottomLine);
-
 
 
 
