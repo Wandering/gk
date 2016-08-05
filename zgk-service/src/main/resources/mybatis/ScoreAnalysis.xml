@@ -334,12 +334,12 @@ deleteBySubjects
 
     <select id="queryUniversityScore" resultType="java.util.Map">
         SELECT
-        lowestScore,highestScore,averageScore,year
+        lowestScore,realEnrollingNumber,averageScore,year
         FROM zgk_university_enrolling
         WHERE universityId = #{universityId}
         and year in (#{year},#{year}-1,#{year}-2)
         and areaId=#{areaId}
-        and majorType=#{majorType} limit 3
+        and majorType=#{majorType} ORDER BY YEAR DESC limit 3
     </select>
 
     <!--判断用户年级-->
@@ -347,12 +347,12 @@ deleteBySubjects
         SELECT grade from zgk_user_info where id=#{userId}
     </select>
 
-    <!--判断用户年级-->
+    <!--根据id获取学校名称-->
     <select id="querySchoolNameById" resultType="java.lang.String">
         SELECT name from zgk_university where id=#{id}
     </select>
 
-    <!--判断用户年级-->
+    <!--根据id获取彼此名称-->
     <select id="queryBatchNameById" resultType="java.lang.String">
         SELECT name from zgk_data_dict where type = 'BATCHTYPE2' and dictId =#{id}
     </select>

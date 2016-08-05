@@ -2,7 +2,7 @@ package cn.thinkjoy.gk.controller.score;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
-import cn.thinkjoy.gk.dao.IScoreAnalysisDAO;
+import cn.thinkjoy.gk.service.IScoreAnalysisService;
 import cn.thinkjoy.gk.util.ScoreUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
@@ -30,7 +30,7 @@ public class ScoreController {
 
 
     @Autowired
-    private IScoreAnalysisDAO scoreAnalysisDAO;
+    private IScoreAnalysisService scoreAnalysisService;
     @Autowired
     private ScoreUtil scoreUtil;
 
@@ -42,7 +42,7 @@ public class ScoreController {
     @RequestMapping(value = "/queryScoreRecordByUserId",method = RequestMethod.GET)
     @ResponseBody
     public Object queryScoreRecordByUserId(@RequestParam long userId){
-        Map<String,Object> map = scoreAnalysisDAO.queryScoreRecordByUserId(userId);
+        Map<String,Object> map = scoreAnalysisService.queryScoreRecordByUserId(userId);
         if(map==null){
             return new HashedMap();
         }
@@ -82,7 +82,7 @@ public class ScoreController {
         insertMap.put("gradeInfo",gradeInfo);
         insertMap.put("classInfo",classInfo);
         try {
-            scoreAnalysisDAO.setUserInfo(insertMap);
+            scoreAnalysisService.setUserInfo(insertMap);
         }catch (Exception e){
             throw new BizException("error","添加失败,用户异常!");
         }
@@ -99,7 +99,7 @@ public class ScoreController {
         if("".equals(schoolName)){
             schoolName=null;
         }
-        return scoreAnalysisDAO.queryHighSchoolByCountyId(countyId,schoolName);
+        return scoreAnalysisService.queryHighSchoolByCountyId(countyId,schoolName);
     }
 
     /**
@@ -109,7 +109,7 @@ public class ScoreController {
     @RequestMapping(value = "/queryUserInfo",method = RequestMethod.GET)
     @ResponseBody
     public Object queryUserInfo(@RequestParam long userId){
-        return scoreAnalysisDAO.queryUserInfo(userId);
+        return scoreAnalysisService.queryUserInfo(userId);
     }
 
     /**
@@ -149,7 +149,7 @@ public class ScoreController {
 
         insertMap.put("scores",insertScores);
         insertMap.put("totalScore",totalScore);
-        scoreAnalysisDAO.insertScoreRecord(insertMap);
+        scoreAnalysisService.insertScoreRecord(insertMap);
         Map<String,Object> resultMap=new HashedMap();
         resultMap.put("recordId",insertMap.get("recordId"));
         return resultMap;
@@ -164,7 +164,7 @@ public class ScoreController {
     @ResponseBody
     public Object queryInfoByRecordId(@RequestParam long recordId){
 
-        Map<String,Object> map = scoreAnalysisDAO.queryInfoByRecordId(recordId);
+        Map<String,Object> map = scoreAnalysisService.queryInfoByRecordId(recordId);
         if(map==null){
             return new HashedMap();
         }
@@ -180,16 +180,16 @@ public class ScoreController {
         resultMap.put("scores",scoreUtil.getScores(map,majorType));
         String areaTableName = scoreUtil.getAreaTableName(areaId, majorType);
         //文或者理科总人数
-        int allStuNum = scoreAnalysisDAO.queryAllAreaStuNum(areaTableName);
+        int allStuNum = scoreAnalysisService.queryAllAreaStuNum(areaTableName);
 
         //极端情况
-        if(scoreAnalysisDAO.isExistScore(totalScore,areaTableName)) {
+        if(scoreAnalysisService.isExistScore(totalScore,areaTableName)) {
             //TODO            正常情况
             //需要超过多少人
             //一分超过多少人
-            int stuNum = scoreAnalysisDAO.queryStuNum(totalScore, areaTableName);
+            int stuNum = scoreAnalysisService.queryStuNum(totalScore, areaTableName);
             //全省排名
-            int proviceRank = scoreAnalysisDAO.queryProviceRank(totalScore, areaTableName);
+            int proviceRank = scoreAnalysisService.queryProviceRank(totalScore, areaTableName);
             resultMap.put("stuNum", stuNum);
             String[] nums = String.valueOf(100 - ((Float.valueOf(proviceRank) / Float.valueOf(allStuNum)) * 100)).split("\\.");
             String proviceRankPro = nums[0] + "." + nums[1].substring(0, 2) + "%";
@@ -231,7 +231,7 @@ public class ScoreController {
 
         List<Map<String,Object>> list = new ArrayList<>();
 
-        List<Map<String,Object>> queryList = scoreAnalysisDAO.queryAllRecordByUserId(userId);
+        List<Map<String,Object>> queryList = scoreAnalysisService.queryAllRecordByUserId(userId);
         if(queryList!=null && (!queryList.isEmpty())) {
             for (Map<String, Object> map : queryList) {
                 Map<String, Object> resultMap = new HashedMap();
@@ -254,16 +254,16 @@ public class ScoreController {
 
 
                 //极端情况
-                if(scoreAnalysisDAO.isExistScore(totalScore,areaTableName)) {
+                if(scoreAnalysisService.isExistScore(totalScore,areaTableName)) {
                     //需要超过多少人
-                    int stuNum = scoreAnalysisDAO.queryStuNum(totalScore, areaTableName);
-                    int proviceRank = scoreAnalysisDAO.queryProviceRank(totalScore, areaTableName);
+                    int stuNum = scoreAnalysisService.queryStuNum(totalScore, areaTableName);
+                    int proviceRank = scoreAnalysisService.queryProviceRank(totalScore, areaTableName);
                     resultMap.put("stuNum", stuNum);
                     resultMap.put("proviceRank", proviceRank);
                 }else {
                     //TODO           分数不在一分一段中的情况
                     //文或者理科总人数
-                    int allStuNum = scoreAnalysisDAO.queryAllAreaStuNum(areaTableName);
+                    int allStuNum = scoreAnalysisService.queryAllAreaStuNum(areaTableName);
                     resultMap.put("proviceRank", -allStuNum);
                 }
 
@@ -305,7 +305,7 @@ public class ScoreController {
                                          @RequestParam long areaId,
                                          @RequestParam int majorType){
 
-        String scoreLine = scoreAnalysisDAO.queryScoreLine(areaId,majorType,scoreUtil.getYear());
+        String scoreLine = scoreAnalysisService.queryScoreLine(areaId,majorType,scoreUtil.getYear());
 
         String [] scoreStrs = scoreLine.split("-");
         Float topScore = null;
@@ -388,7 +388,7 @@ public class ScoreController {
             //todo 假如不足高职专科批次(分数超低)
 
             //推荐10所高职院校
-            return scoreAnalysisDAO.queryLowstUniversity(areaId,majorType,totalScore,lastYear.toString());
+            return scoreAnalysisService.queryLowstUniversity(areaId,majorType,totalScore,lastYear.toString());
 
         }
 
@@ -409,14 +409,14 @@ public class ScoreController {
         int count =0;
         int bc = 0;
         do {
-            count = scoreAnalysisDAO.countUniversity(areaId,(Integer)line1s[2],majorType,lastYear.toString(),difference,line2,bc);
+            count = scoreAnalysisService.countUniversity(areaId,(Integer)line1s[2],majorType,lastYear.toString(),difference,line2,bc);
             //增加步长
             bc+=5;
         }while (count<20&&bc<750);
 
         bc-=5;
         //返回前20个院校
-        List<Map<String,Object>> resultList = scoreAnalysisDAO.queryUniversityByScore(areaId,(Integer)line1s[2],majorType,lastYear.toString(),difference,line2,totalScore,bc);
+        List<Map<String,Object>> resultList = scoreAnalysisService.queryUniversityByScore(areaId,(Integer)line1s[2],majorType,lastYear.toString(),difference,line2,totalScore,bc);
 
 //        List<Map<String,Object>> list = new ArrayList<>();
 //        Map<String,Object> resultMap=new HashedMap();
@@ -440,7 +440,7 @@ public class ScoreController {
 
 
         List<Map<String,Object>> list = null;
-        list=scoreAnalysisDAO.queryUnivsersityBatch(areaId,schoolId,scoreUtil.getYear());
+        list=scoreAnalysisService.queryUnivsersityBatch(areaId,schoolId,scoreUtil.getYear());
 //        List<Map<String,Object>> list = new ArrayList<>();
 //        Map<String,Object> resultMap1=new HashedMap();
 //        resultMap1.put("batchId",1);
@@ -473,7 +473,7 @@ public class ScoreController {
                                              Integer batch,
                                              @RequestParam long userId){
 
-        Map<String,Object> map = scoreAnalysisDAO.queryInfoByRecordId(recordId);
+        Map<String,Object> map = scoreAnalysisService.queryInfoByRecordId(recordId);
         //假如院校没有传入 默认为使用上次院校
         if(schoolId!=null && batch!=null){
             Map<String,Object> insertMap = new HashedMap();
@@ -482,10 +482,10 @@ public class ScoreController {
             insertMap.put("universityId",schoolId);
             insertMap.put("batch",batch);
             insertMap.put("cdate",System.currentTimeMillis());
-            scoreAnalysisDAO.insertTarget(insertMap);
+            scoreAnalysisService.insertTarget(insertMap);
         }else {
             //获取上次测评院校和批次
-            Map<String,Object> targetMap = scoreAnalysisDAO.queryLastTarget(userId);
+            Map<String,Object> targetMap = scoreAnalysisService.queryLastTarget(userId);
             schoolId=Long.valueOf(targetMap.get("universityId").toString());
             batch=Integer.valueOf(targetMap.get("batch").toString());
         }
@@ -495,11 +495,11 @@ public class ScoreController {
         Float totalScore=(Float) map.get("totalScore");
         String areaTableName = scoreUtil.getAreaTableName(areaId,majorType);
         String year=(Integer.valueOf(scoreUtil.getYear())-1)+"";
-        String name = scoreAnalysisDAO.querySchoolNameById(schoolId);
-        String batchName = scoreAnalysisDAO.queryBatchNameById(batch);
-        float schoolLine = scoreAnalysisDAO.queryUnivsersityLowestScore(schoolId,areaId,batch,majorType,year);
+        String name = scoreAnalysisService.querySchoolNameById(schoolId);
+        String batchName = scoreAnalysisService.queryBatchNameById(batch);
+        float schoolLine = scoreAnalysisService.queryUnivsersityLowestScore(schoolId,areaId,batch,majorType,year);
         if (totalScore>schoolLine){
-            Integer stuNum = scoreAnalysisDAO.queryStuNumToLine(schoolLine,totalScore,areaTableName);
+            Integer stuNum = scoreAnalysisService.queryStuNumToLine(schoolLine,totalScore,areaTableName);
             Map<String,Object> resultMap=new HashedMap();
             resultMap.put("schoolId",schoolId);
             resultMap.put("batchName",batchName);
@@ -510,7 +510,7 @@ public class ScoreController {
             resultMap.put("schoolLine",schoolLine);
             return resultMap;
         }
-        Integer stuNum = scoreAnalysisDAO.queryStuNumToLine(totalScore,schoolLine,areaTableName);
+        Integer stuNum = scoreAnalysisService.queryStuNumToLine(totalScore,schoolLine,areaTableName);
 
         Map<String,Object> resultMap=new HashedMap();
 
@@ -539,7 +539,7 @@ public class ScoreController {
                                              @RequestParam long areaId,
                                              @RequestParam Integer majorType){
         String year = (Integer.valueOf(scoreUtil.getYear())-1)+"";
-        List<Map<String,Object>> resultMaps = scoreAnalysisDAO.queryUniversityScore(universityId,year,areaId,majorType);
+        List<Map<String,Object>> resultMaps = scoreAnalysisService.queryUniversityScore(universityId,year,areaId,majorType);
         return resultMaps;
     }
 
@@ -575,7 +575,7 @@ public class ScoreController {
         subjectMap2.put("历史","http://xuetang.zhigaokao.cn/course/explore/gelishi?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
         subjectMap2.put("地理","http://xuetang.zhigaokao.cn/course/explore/gedili?fliter%5Btype%5D=all&fliter%5Bprice%5D=all&fliter%5BcurrentLevelId%5D=all&orderBy=latest");
 
-        Integer grade = scoreAnalysisDAO.queryUserGrade(userId);
+        Integer grade = scoreAnalysisService.queryUserGrade(userId);
         if(grade==null || grade==2 || grade == 3){
             //推荐高二课程
             return subjectMap2.get(subject);
