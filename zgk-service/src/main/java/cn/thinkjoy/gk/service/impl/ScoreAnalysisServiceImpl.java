@@ -40,7 +40,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
 
     @Override
     public Integer queryStuNum(Object totalScore,String areaTableName) {
-        return scoreAnalysisDAO.queryStuNum(true,areaTableName);
+        return scoreAnalysisDAO.queryStuNum(totalScore,areaTableName);
     }
 
     @Override
