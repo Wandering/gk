@@ -84,7 +84,7 @@ public interface IScoreAnalysisService {
      * @param areaTableName
      * @return
      */
-    int queryProviceRank(Object totalScore,
+    Integer queryProviceRank(Object totalScore,
                          String areaTableName);
 
     /**

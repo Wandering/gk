@@ -36,20 +36,24 @@ public class HttpScoreTest extends TestCase{
 
 
 
-    public void testInsertUserInfo(){
-        String url=host + insertUserInfo_url + "?userId=1&provinceId=610000&cityId=610100&countyId=610102" +
-                "&schoolCode=6101024000&schoolName="+ URLEncoder.encode("西安二十九中")+"&gradeInfo="+URLEncoder.encode("高三")+"&classInfo="+URLEncoder.encode("一班")+"" +
-                "&source=1\n";
-        String result = RequestUtils.requestPost(url);
-        System.out.println("result = " + result);
-
-    }
+//    public void testInsertUserInfo(){
+//        String url=host + insertUserInfo_url + "?userId=1&provinceId=610000&cityId=610100&countyId=610102" +
+//                "&schoolCode=6101024000&schoolName="+ URLEncoder.encode("西安二十九中")+"&gradeInfo="+URLEncoder.encode("高三")+"&classInfo="+URLEncoder.encode("一班")+"" +
+//                "&source=1\n";
+//        String result = RequestUtils.requestPost(url);
+//        System.out.println("result = " + result);
+//
+//    }
     public void testQueryHighSchoolByCountyId(){
         String url=host + queryHighSchoolByCountyId_url + "?countyId=110101&schoolName=\n";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
 
     }
+
+    /**
+     * ---
+     */
     public void testQueryUserInfo(){
         String url=host + queryUserInfo_url + "?userId=1\n";
         System.out.println();
@@ -63,13 +67,13 @@ public class HttpScoreTest extends TestCase{
 
 
 
-
-    public void testInsertScoreRecord(){
-        String url=host + insertScoreRecord_url + "?userId=1&source=1&areaId=&majorType=&scores\n";
-        String result = RequestUtils.requestPost(url);
-        System.out.println("result = " + result);
-
-    }
+//
+//    public void testInsertScoreRecord(){
+//        String url=host + insertScoreRecord_url + "?userId=1&source=1&areaId=&majorType=&scores\n";
+//        String result = RequestUtils.requestPost(url);
+//        System.out.println("result = " + result);
+//
+//    }
 
     /**
      * ok
@@ -129,7 +133,7 @@ public class HttpScoreTest extends TestCase{
     }
 
     /**
-     * ok
+     * ---
      */
     public void testRecommendSchool(){
         String url=host +recommendSchool_url + "?totalScore=100&areaId=610000&majorType=1";

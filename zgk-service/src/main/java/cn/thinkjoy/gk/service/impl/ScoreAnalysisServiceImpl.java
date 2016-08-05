@@ -64,7 +64,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     }
 
     @Override
-    public int queryProviceRank(Object totalScore,String areaTableName) {
+    public Integer queryProviceRank(Object totalScore,String areaTableName) {
         return scoreAnalysisDAO.queryProviceRank(totalScore,areaTableName);
     }
 

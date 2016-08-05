@@ -178,7 +178,7 @@ deleteBySubjects
 
     <!--分数极端情况判定(不存在于一分一段表中)-->
     <select id="isExistScore" resultType="java.lang.Boolean">
-s        SELECT MIN(score)&lt;#{totalScore} from ${areaTableName} where score!=0
+        SELECT MIN(score)&lt;#{totalScore} from ${areaTableName} where score!=0
     </select>
 
     <select id="queryUnivsersityLowestScore" resultType="java.lang.Float">

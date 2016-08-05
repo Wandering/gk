@@ -257,7 +257,11 @@ public class ScoreController {
                 if(scoreAnalysisService.isExistScore(totalScore,areaTableName)) {
                     //需要超过多少人
                     Integer stuNum = scoreAnalysisService.queryStuNum(totalScore, areaTableName);
-                    Integer proviceRank = scoreAnalysisService.queryProviceRank(totalScore, areaTableName);
+                    Float totalScore1=totalScore;
+                    while (stuNum==null){
+                        stuNum = scoreAnalysisService.queryStuNum(totalScore1--, areaTableName);
+                    }
+                    Integer proviceRank = scoreAnalysisService.queryProviceRank(totalScore1, areaTableName);
                     resultMap.put("stuNum", stuNum);
                     resultMap.put("proviceRank", proviceRank);
                 }else {
