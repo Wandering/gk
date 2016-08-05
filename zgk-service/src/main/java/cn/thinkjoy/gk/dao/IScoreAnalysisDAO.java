@@ -62,7 +62,7 @@ public interface IScoreAnalysisDAO {
      * @param areaTableName
      * @return
      */
-    int queryStuNumToLine(@Param("totalScore")Object totalScore,
+    Integer queryStuNumToLine(@Param("totalScore")Object totalScore,
                           @Param("scoreLine")Object scoreLine,
                           @Param("areaTableName")String areaTableName);
 
