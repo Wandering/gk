@@ -15,6 +15,7 @@
         <result column="lengthOfSchooling" property="lengthOfSchooling" jdbcType="INTEGER" />
         <result column="schoolFee" property="schoolFee" jdbcType="INTEGER" />
         <result column="majorId" property="majorId" jdbcType="BIGINT" />
+        <result column="batch" property="batch" jdbcType="VARCHAR" />
         <result column="year" property="year" jdbcType="INTEGER" />
     </resultMap>
     <resultMap id="UniversityAverageScoreMap" type="cn.thinkjoy.gk.pojo.UniversityEnrollingView">
@@ -22,7 +23,7 @@
         <result column="year" property="averageYear" jdbcType="INTEGER" />
     </resultMap>
     <sql id="Base_Column_List">
-        id,universityName,universityId,year,areaId,majorType,majorName,planEnrolling,enrollType,lengthOfSchooling,schoolFee,majorId,year
+        id,universityName,universityId,year,areaId,majorType,majorName,planEnrolling,enrollType,lengthOfSchooling,schoolFee,majorId,year,batch
     </sql>
 
     <select id="selectList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.UniversityMajorEnrollingPlan">
@@ -36,9 +37,6 @@
             </if>
             <if test="universityId!=null">
                 and universityId=#{universityId,jdbcType=BIGINT}
-            </if>
-            <if test="year!=null">
-                and year=#{year,jdbcType=INTEGER}
             </if>
             <if test="areaId!=null">
                 and areaId=#{areaId,jdbcType=BIGINT}
@@ -61,6 +59,10 @@
             <if test="majorId!=null">
                 and majorId=#{majorId,jdbcType=BIGINT}
             </if>
+            <if test="batch!=null">
+                and batch=#{batch,jdbcType=VARCHAR}
+            </if>
+            and year=(select max(year) from  zgk_university_major_enrolling_plan where areaId=#{areaId})
         </where>
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}

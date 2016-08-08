@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IScoreAnalysisDAO">
+<!--
+getFavoritesByMajor
+getFavoritesBySubjectKey
+getFavoritesBySubject
+insertFavorites
+deleteById
+deleteBySubjects
+-->
+
+    <select id="queryScoreRecordByUserId" resultType="java.util.Map">
+        SELECT
+        (SELECT provinceId FROM  zgk_user_info WHERE id=#{userId}) as areaId,
+        (SELECT name from zgk_province WHERE id=areaId) as areaName,
+        (SELECT school_name from zgk_school_base where school_code = (SELECT schoolCode from zgk_user_info where id=1)) as schoolName,
+        major_type as majorType,
+        yw_score as ywScore,
+        sx_score as sxScore,
+        wy_score as wyScore,
+        wl_score as wlScore,
+        sw_score as swScore,
+        hx_score as hxScore,
+        ls_score as lsScore,
+        dl_score as dlScore,
+        zz_score as zzScore,
+        ty_score as tyScore,
+        yw_score_total as ywScoreTotal,
+        sx_score_total as sxScoreTotal,
+        wy_score_total as wyScoreTotal,
+        wl_score_total as wlScoreTotal,
+        sw_score_total as swScoreTotal,
+        hx_score_total as hxScoreTotal,
+        ls_score_total as lsScoreTotal,
+        dl_score_total as dlScoreTotal,
+        zz_score_total as zzScoreTotal,
+        ty_score_total as tyScoreTotal
+        from zgk_score_base
+        WHERE user_id = #{userId} ORDER BY id DESC LIMIT 1;
+     </select>
+
+    <insert id="insertScoreRecord" >
+        INSERT INTO zgk_score_base (
+        user_id,
+        yw_score_total,
+        yw_score,
+        sx_score_total,
+        sx_score,
+        wy_score_total,
+        wy_score,
+        wl_score_total,
+        wl_score,
+        hx_score_total,
+        hx_score,
+        sw_score_total,
+        sw_score,
+        ls_score_total,
+        ls_score,
+        dl_score_total,
+        dl_score,
+        zz_score_total,
+        zz_score,
+        ty_score_total,
+        ty_score,
+        total_score,
+        cdate,
+        major_type
+        ) VALUES (
+        #{userId},
+        #{scores.ywScoreTotal},
+        #{scores.ywScore},
+        #{scores.sxScoreTotal},
+        #{scores.sxScore},
+        #{scores.wyScoreTotal},
+        #{scores.wyScore},
+        #{scores.wlScoreTotal},
+        #{scores.wlScore},
+        #{scores.hxScoreTotal},
+        #{scores.hxScore},
+        #{scores.swScoreTotal},
+        #{scores.swScore},
+        #{scores.lsScoreTotal},
+        #{scores.lsScore},
+        #{scores.dlScoreTotal},
+        #{scores.dlScore},
+        #{scores.zzScoreTotal},
+        #{scores.zzScore},
+        #{scores.tyScoreTotal},
+        #{scores.tyScore},
+        #{totalScore},
+        #{cdate},
+        #{majorType}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="recordId">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+
+    <select id="queryInfoByRecordId" resultType="java.util.Map">
+        SELECT
+        major_type as majorType,
+        (SELECT provinceId FROM  zgk_user_info WHERE id=user_id) as areaId,
+        yw_score as ywScore,
+        sx_score as sxScore,
+        wy_score as wyScore,
+        wl_score as wlScore,
+        sw_score as swScore,
+        hx_score as hxScore,
+        ls_score as lsScore,
+        dl_score as dlScore,
+        zz_score as zzScore,
+        ty_score as tyScore,
+        yw_score_total as ywScoreTotal,
+        sx_score_total as sxScoreTotal,
+        wy_score_total as wyScoreTotal,
+        wl_score_total as wlScoreTotal,
+        sw_score_total as swScoreTotal,
+        hx_score_total as hxScoreTotal,
+        ls_score_total as lsScoreTotal,
+        dl_score_total as dlScoreTotal,
+        zz_score_total as zzScoreTotal,
+        ty_score_total as tyScoreTotal,
+        total_score as totalScore
+        from zgk_score_base
+        WHERE id = #{recordId};
+    </select>
+
+    <select id="queryAllRecordByUserId" resultType="java.util.Map">
+        SELECT
+        id as recordId,
+        major_type as majorType,
+        (SELECT provinceId FROM  zgk_user_info WHERE id=user_id) as areaId,
+        cdate,
+        yw_score as ywScore,
+        sx_score as sxScore,
+        wy_score as wyScore,
+        wl_score as wlScore,
+        sw_score as swScore,
+        hx_score as hxScore,
+        ls_score as lsScore,
+        dl_score as dlScore,
+        zz_score as zzScore,
+        ty_score as tyScore,
+        yw_score_total as ywScoreTotal,
+        sx_score_total as sxScoreTotal,
+        wy_score_total as wyScoreTotal,
+        wl_score_total as wlScoreTotal,
+        sw_score_total as swScoreTotal,
+        hx_score_total as hxScoreTotal,
+        ls_score_total as lsScoreTotal,
+        dl_score_total as dlScoreTotal,
+        zz_score_total as zzScoreTotal,
+        ty_score_total as tyScoreTotal,
+        total_score as totalScore
+        from zgk_score_base
+        WHERE user_id = #{userId} ORDER BY cdate;
+    </select>
+
+
+    <select id="queryAreaKey" resultType="java.lang.String">
+        SELECT code from zgk_province WHERE id=#{areaId}
+    </select>
+
+    <select id="queryStuNum" resultType="java.lang.Integer">
+        SELECT num from ${areaTableName} WHERE score = #{totalScore}
+    </select>
+    <select id="queryAllAreaStuNum" resultType="java.lang.Integer">
+        SELECT sum(num) from ${areaTableName}
+    </select>
+
+    <!--全省排名-->
+    <select id="queryProviceRank" resultType="java.lang.Integer">
+        SELECT avg_pre from ${areaTableName} WHERE score = #{totalScore}
+    </select>
+
+    <!--全省排名2-->
+    <select id="queryProviceRank2" resultType="java.lang.Integer">
+        SELECT (heigh_pre+low_pre)/2 from zgk_data.ln_2_y from ${areaTableName} WHERE score = #{totalScore}
+    </select>
+
+    <!--分数极端情况判定(最小值判定)(不存在于一分一段表中)-->
+    <select id="isExistScore" resultType="java.lang.Boolean">
+        SELECT MIN(score)&lt;#{totalScore} from ${areaTableName} where score!=0
+    </select>
+
+    <!--分数极端情况判定(最大值判定)(不存在于一分一段表中)-->
+    <select id="isExistMaxScore" resultType="java.lang.Boolean">
+        SELECT max(score)&lt;#{totalScore} from ${areaTableName} where score!=0
+    </select>
+
+
+
+    <select id="queryUnivsersityLowestScore" resultType="java.lang.Float">
+        select lowestScore from zgk_university_enrolling
+        WHERE universityId = #{schoolId}
+        and areaId=#{areaId}
+        and batch = #{batch}
+        and majorType = #{majorType}
+        and year = #{year}
+        limit 1
+    </select>
+
+    <select id="queryStuNumToLine" resultType="java.lang.Integer">
+        SELECT sum(num) from ${areaTableName} WHERE score > #{totalScore} and score  &lt; #{scoreLine};
+    </select>
+
+    <select id="queryScoreLine" resultType="java.lang.String">
+        SELECT config_value from zgk_system_parmas
+        WHERE config_key like '%_CONTROL_LINES'
+        and province_code = (SELECT code from zgk_province where id=#{areaId})
+        and major_type = #{majorType}
+        and year = #{year}
+    </select>
+
+    <select id="queryUnivsersityBatch" resultType="java.util.Map">
+        SELECT dictId,name FROM zgk_data_dict
+        WHERE type = 'BATCHTYPE2'
+        and dictId in (SELECT batch from zgk_university_enrolling WHERE areaId = #{areaId} and universityId = #{schooleId} and year = #{year} GROUP BY batch);
+    </select>
+
+    <select id="queryLastTarget" resultType="java.util.Map">
+         SELECT university_id as universityId,batch from zgk_favorite_university
+         WHERE user_id = #{userId} ORDER BY id DESC limit 1
+    </select>
+
+
+    <insert id="insertTarget">
+        INSERT INTO zgk_favorite_university (
+        user_id,
+        area_id,
+        university_id,
+        university_name,
+        batch,
+        cdate
+        ) VALUES (
+        #{userId},
+        #{areaId},
+        #{universityId},
+        (select name from zgk_university WHERE id=#{universityId}),
+        #{batch},
+        #{cdate}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+
+    <!--统计长度-->
+    <select id="countUniversity" resultType="java.lang.Integer">
+        SELECT count(*) from zgk_university_enrolling
+        WHERE areaId = #{areaId} and majorType=#{majorType} and year = #{year}
+        and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
+        and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
+    </select>
+
+    <!--推荐院校-->
+    <select id="queryUniversityByScore" resultType="java.util.Map">
+        SELECT * from (
+        SELECT
+        (SELECT name from zgk_university WHERE id = universityId LIMIT 1) as schoolName,
+        (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batch,
+        realEnrollingNumber as stuNum,
+        averageScore as averageScore,
+    	highestScore as highestScore,
+	    lowestScore as lowestScore,
+	    universityId,
+        (#{totalScore}-lowestScore) as gapSchool
+        from zgk_university_enrolling
+        WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
+        and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
+        and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
+        ORDER BY ABS(gapSchool) ASC
+        limit 20) tb ORDER BY gapSchool DESC;
+    </select>
+
+    <!--推荐高职前10院校-->
+    <select id="queryLowstUniversity" resultType="java.util.Map">
+        SELECT
+        (SELECT name from zgk_university WHERE id = universityId LIMIT 1) as schoolName,
+        (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batch,
+        realEnrollingNumber as stuNum,
+        averageScore as averageScore,
+        highestScore as highestScore,
+        lowestScore as lowestScore,
+        universityId,
+        (#{totalScore}-lowestScore) as gapSchool
+        from zgk_university_enrolling,(SELECT
+		universityId as uid
+	    FROM
+	    	zgk_university_enrolling_plan
+	    WHERE
+	    	majorType = #{majorType}
+	    AND YEAR = #{year}+1
+	    GROUP BY universityId) plan
+            WHERE plan.uid = universityId and  areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
+            and batch like '8%'
+            ORDER BY lowestScore desc
+        limit  10;
+
+    </select>
+
+    <!--查询高中-->
+    <select id="queryHighSchoolByCountyId" resultType="java.util.Map">
+        SELECT
+        school_code as schoolCode,
+        school_name as schoolName
+        from zgk_school_base
+        where school_type>300
+        and area_code = #{countyId}
+        <if test="schoolName!=null">
+            and school_name LIKE CONCAT('%',#{schoolName},'%')
+        </if>
+    </select>
+    <!--更新用户信息-->
+    <update id="setUserInfo">
+       update zgk_user_info
+       set
+       provinceId= #{provinceId},
+       cityId= #{cityId},
+       countyId=#{countyId},
+       schoolCode=#{schoolCode},
+       schoolName=#{schoolName},
+       gradeInfo=#{gradeInfo},
+       classInfo=#{classInfo}
+       where id=#{userId};
+    </update>
+    <select id="queryUserInfo" resultType="java.util.Map">
+        SELECT
+        provinceId,
+        (SELECT name from zgk_province where id=provinceId) as provinceName,
+        cityId,
+        (SELECT name from zgk_city where id=cityId) as cityName,
+        countyId,
+        (SELECT name from zgk_county where id=countyId) as countyName,
+        schoolCode,
+        schoolName,
+        gradeInfo,
+        classInfo
+        FROM zgk_user_info
+        WHERE
+        id = #{userId}
+    </select>
+
+    <select id="queryUniversityScore" resultType="java.util.Map">
+        SELECT
+        lowestScore,realEnrollingNumber,averageScore,year
+        FROM zgk_university_enrolling
+        WHERE universityId = #{universityId}
+        and year in (#{year},#{year}-1,#{year}-2)
+        and areaId=#{areaId}
+        and majorType=#{majorType} ORDER BY YEAR DESC limit 3
+    </select>
+
+    <!--判断用户年级-->
+    <select id="queryUserGrade" resultType="java.lang.Integer">
+        SELECT grade from zgk_user_info where id=#{userId}
+    </select>
+
+    <!--根据id获取学校名称-->
+    <select id="querySchoolNameById" resultType="java.lang.String">
+        SELECT name from zgk_university where id=#{id}
+    </select>
+
+    <!--根据id获取彼此名称-->
+    <select id="queryBatchNameById" resultType="java.lang.String">
+        SELECT name from zgk_data_dict where type = 'BATCHTYPE2' and dictId =#{id}
+    </select>
+
+</mapper>
+

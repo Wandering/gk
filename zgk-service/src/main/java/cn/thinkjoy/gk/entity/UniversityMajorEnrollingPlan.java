@@ -53,6 +53,8 @@ public class UniversityMajorEnrollingPlan extends CreateBaseDomain<Long> {
      */
     private Long majorId;
 
+    private String batch;
+
     @Override
     public Long getId() {
         return id;
@@ -149,5 +151,13 @@ public class UniversityMajorEnrollingPlan extends CreateBaseDomain<Long> {
 
     public void setMajorId(Long majorId) {
         this.majorId = majorId;
+    }
+
+    public String getBatch() {
+        return batch;
+    }
+
+    public void setBatch(String batch) {
+        this.batch = batch;
     }
 }

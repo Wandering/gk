@@ -41,4 +41,6 @@ public interface IMajoredDAO {
     String getMajorEmploymentRate(@Param("condition")Map<String,Object> params);
 
     String getMajorIntroduce(@Param("condition")Map<String,Object> params);
+
+    String getMajorSpecialisation(@Param("condition")Map<String,Object> params);
 }

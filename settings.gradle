@@ -4,69 +4,37 @@ include 'redis'
 
 include 'web-common'
 
-include 'after-domain'
-
-include 'after-service'
-
-include 'before-domain'
-
-include 'before-service'
+include 'protocol-common'
 
 include 'consult-domain'
 
 include 'consult-service'
 
-include 'guide-domain'
-
-include 'guide-service'
+include 'consult-web'
 
 include 'login-domain'
 
 include 'login-service'
 
+include 'login-web'
+
 include 'market-domain'
 
 include 'market-service'
 
-include 'question-domain'
-
-include 'question-service'
-
-include 'timer-domain'
-
-include 'timer-service'
+include 'market-web'
 
 include 'user-domain'
 
 include 'user-service'
 
+include 'user-web'
+
 include 'gk-service'
 
 include 'gk-domain'
 
-include 'protocol-common'
-
-include 'gk-user-web'
-
-include 'gk-question-web'
-
-include 'gk-login-web'
-
-include 'gk-before-web'
-
-include 'gk-consult-web'
-
-include 'gk-guide-web'
-
-include 'gk-market-web'
-
-include 'gk-orders-war'
-
 include 'zgk-war'
 
 include 'zgk-service'
-
-include 'data-domain'
-
-include 'data-service'
 

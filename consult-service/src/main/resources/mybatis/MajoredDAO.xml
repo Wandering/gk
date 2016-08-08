@@ -117,6 +117,9 @@
     <select id="getMajorIntroduce" parameterType="java.util.Map" resultType="java.lang.String">
         select major_introduce from zgk_major_detail mm where mm.id=#{condition.majorId}
     </select>
+    <select id="getMajorSpecialisation" parameterType="java.util.Map" resultType="java.lang.String">
+        select specialisation from zgk_major_detail mm where mm.id=#{condition.majorId}
+    </select>
 
 </mapper>
 

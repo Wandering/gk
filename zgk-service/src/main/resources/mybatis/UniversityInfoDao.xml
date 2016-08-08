@@ -108,10 +108,14 @@
             <if test="isRank==true">
                 and zgk_university.rank is not null
             </if>
+            <if test="majorType!=null">
+                and enrollPingPlan.majorType=#{majorType,jdbcType=INTEGER}
+            </if>
             and zgk_university.id is not null
             and dict.type='UNIVERSITY_TYPE'
             and enrollPingPlan.areaId=#{areaId}
             and enrollPingPlan.year=(select max(year) from  zgk_university_enrolling_plan where areaId=#{areaId})
+            and enrollPingPlan.batch=#{batch,jdbcType=VARCHAR}
             group by bData.universityId
             <if test="isRank==true">
                 order by zgk_university.rank asc
@@ -148,10 +152,14 @@
             <if test="isRank==true">
               and zgk_university.rank is not null
             </if>
+            <if test="majorType!=null">
+                and enrollPingPlan.majorType=#{majorType,jdbcType=INTEGER}
+            </if>
             and zgk_university.id is not null
             and dict.type='UNIVERSITY_TYPE'
             and enrollPingPlan.areaId=#{areaId}
             and enrollPingPlan.year=(select max(year) from  zgk_university_enrolling_plan where areaId=#{areaId})
+            and enrollPingPlan.batch=#{batch,jdbcType=VARCHAR}
             group by bData.universityId
             <if test="isRank==true">
               order by zgk_university.rank asc
