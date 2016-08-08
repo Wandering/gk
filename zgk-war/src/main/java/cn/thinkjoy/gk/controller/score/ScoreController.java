@@ -461,7 +461,7 @@ public class ScoreController {
         Integer year = Integer.valueOf(scoreUtil.getYear());
 
         list=scoreAnalysisService.queryUnivsersityBatch(areaId,schoolId,year.toString());
-        if(list==null){
+        if(list==null||list.size()==0){
             list=scoreAnalysisService.queryUnivsersityBatch(areaId,schoolId,(year-1)+"");
         }
 //        List<Map<String,Object>> list = new ArrayList<>();

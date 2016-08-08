@@ -129,7 +129,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryBatchsBySchoolIdAndAreaId(){
-        String url=host +queryBatchsBySchoolIdAndAreaId_url + "?areaId=530000&schoolId=2480";
+        String url=host +queryBatchsBySchoolIdAndAreaId_url + "?areaId=530000&schoolId=2317";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
