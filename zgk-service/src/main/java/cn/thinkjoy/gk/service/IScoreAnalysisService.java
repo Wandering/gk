@@ -217,13 +217,11 @@ public interface IScoreAnalysisService {
     /**
      * 查询院校近三年的成绩
      * @param universityId
-     * @param year
      * @param areaId
      * @param majorType
      * @return
      */
     List<Map<String,Object>>  queryUniversityScore(long universityId,
-                                                   String year,
                                                    long areaId,
                                                    Integer majorType);
 

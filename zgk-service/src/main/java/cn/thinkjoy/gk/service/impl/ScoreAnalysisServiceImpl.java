@@ -129,8 +129,8 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     }
 
     @Override
-    public List<Map<String, Object>> queryUniversityScore(long universityId,String year, long areaId,  Integer majorType) {
-        return scoreAnalysisDAO.queryUniversityScore(universityId,year,areaId,majorType);
+    public List<Map<String, Object>> queryUniversityScore(long universityId,long areaId,  Integer majorType) {
+        return scoreAnalysisDAO.queryUniversityScore(universityId,areaId,majorType);
     }
 
     @Override

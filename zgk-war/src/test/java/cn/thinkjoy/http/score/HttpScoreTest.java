@@ -14,9 +14,11 @@ public class HttpScoreTest extends TestCase{
 //        String host="http://10.136.56.195:8080";
 //        String host="http://zjtest.zhigaokao.cn";
 //        String host="http://localhost:8082";
-        String host="http://localhost:8080";
+//        String host="http://localhost:8080";
 //        String host="http://zgkser.zhigaokao.cn/";
 //        String host="http://zj.dev.zhigaokao.cn";
+        String host="http://zj.test.zhigaokao.cn";
+
         String base="/score/";
 
 
@@ -118,7 +120,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryGapBySchoolIdAndBatch(){
-        String url=host +queryGapBySchoolIdAndBatch_url + "?recordId=138&schoolId=2344&batch=1&userId=316";
+        String url=host +queryGapBySchoolIdAndBatch_url + "?recordId=272&schoolId=2480&batch=1&userId=286";
         String result = RequestUtils.requestPost(url);
         System.out.println("result = " + result);
     }
@@ -127,7 +129,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryBatchsBySchoolIdAndAreaId(){
-        String url=host +queryBatchsBySchoolIdAndAreaId_url + "?areaId=610000&schoolId=1";
+        String url=host +queryBatchsBySchoolIdAndAreaId_url + "?areaId=530000&schoolId=2480";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }

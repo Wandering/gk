@@ -217,12 +217,11 @@ public interface IScoreAnalysisDAO {
     /**
      * 查询院校近三年的成绩
      * @param universityId
-     * @param year
      * @param areaId
      * @param majorType
      * @return
      */
-    List<Map<String,Object>>  queryUniversityScore(@Param("universityId")long universityId,@Param("year")String year,@Param("areaId")long areaId,@Param("majorType")Integer majorType);
+    List<Map<String,Object>>  queryUniversityScore(@Param("universityId")long universityId,@Param("areaId")long areaId,@Param("majorType")Integer majorType);
 
     /**
      * 判断分数是否在一分一段表中存在

@@ -219,7 +219,9 @@ deleteBySubjects
     <select id="queryUnivsersityBatch" resultType="java.util.Map">
         SELECT dictId,name FROM zgk_data_dict
         WHERE type = 'BATCHTYPE2'
-        and dictId in (SELECT batch from zgk_university_enrolling WHERE areaId = #{areaId} and universityId = #{schooleId} and year = #{year} GROUP BY batch);
+        and dictId in
+        (SELECT batch from zgk_university_enrolling
+        WHERE areaId = #{areaId} and universityId = #{schooleId} and year = #{year} GROUP BY batch);
     </select>
 
     <select id="queryLastTarget" resultType="java.util.Map">
@@ -351,7 +353,6 @@ deleteBySubjects
         lowestScore,realEnrollingNumber,averageScore,year
         FROM zgk_university_enrolling
         WHERE universityId = #{universityId}
-        and year in (#{year},#{year}-1,#{year}-2)
         and areaId=#{areaId}
         and majorType=#{majorType} ORDER BY YEAR DESC limit 3
     </select>

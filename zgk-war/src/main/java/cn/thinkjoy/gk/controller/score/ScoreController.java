@@ -459,7 +459,13 @@ public class ScoreController {
 
 
         List<Map<String,Object>> list = null;
-        list=scoreAnalysisService.queryUnivsersityBatch(areaId,schoolId,scoreUtil.getYear());
+
+        Integer year = Integer.valueOf(scoreUtil.getYear());
+
+        list=scoreAnalysisService.queryUnivsersityBatch(areaId,schoolId,year.toString());
+        if(list==null){
+            list=scoreAnalysisService.queryUnivsersityBatch(areaId,schoolId,(year-1)+"");
+        }
 //        List<Map<String,Object>> list = new ArrayList<>();
 //        Map<String,Object> resultMap1=new HashedMap();
 //        resultMap1.put("batchId",1);
@@ -565,8 +571,7 @@ public class ScoreController {
     public Object queryUniversityScore(@RequestParam long universityId,
                                              @RequestParam long areaId,
                                              @RequestParam Integer majorType){
-        String year = (Integer.valueOf(scoreUtil.getYear())-1)+"";
-        List<Map<String,Object>> resultMaps = scoreAnalysisService.queryUniversityScore(universityId,year,areaId,majorType);
+        List<Map<String,Object>> resultMaps = scoreAnalysisService.queryUniversityScore(universityId,areaId,majorType);
         return resultMaps;
     }
 
