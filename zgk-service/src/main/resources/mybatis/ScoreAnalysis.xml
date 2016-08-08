@@ -199,7 +199,6 @@ deleteBySubjects
         and areaId=#{areaId}
         and batch = #{batch}
         and majorType = #{majorType}
-        and year IN (#{year}+1,#{year},#{year}-1)
         ORDER BY year DESC
         limit 1
     </select>
