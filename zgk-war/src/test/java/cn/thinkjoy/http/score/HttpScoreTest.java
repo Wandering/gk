@@ -100,7 +100,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryAllRecordByUserId(){
-        String url=host +queryAllRecordByUserId_url + "?userId=306";
+        String url=host +queryAllRecordByUserId_url + "?userId=9";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }

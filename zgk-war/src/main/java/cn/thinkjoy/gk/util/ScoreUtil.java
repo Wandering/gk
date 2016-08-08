@@ -279,6 +279,9 @@ public class ScoreUtil {
             };
 
         }
+        if(initFloat1-initFloat2<0.05 && initFloat1-initFloat2>-0.05){
+            weakSubject=strongSubject;
+        }
         return new String[]{strongSubject,weakSubject};
 
     }
@@ -296,4 +299,5 @@ public class ScoreUtil {
         return v1/v2;
 
     }
+
 }
