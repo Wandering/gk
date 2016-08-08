@@ -290,7 +290,7 @@ deleteBySubjects
         highestScore as highestScore,
         lowestScore as lowestScore,
         universityId,
-        ((lowestScore - #{line}) -  #{difference}) as gapSchool
+        (lowestScore-#{totalScore}) as gapSchool
         from zgk_university_enrolling,(SELECT
 		universityId as uid
 	    FROM

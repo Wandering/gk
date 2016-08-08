@@ -14,10 +14,10 @@ public class HttpScoreTest extends TestCase{
 //        String host="http://10.136.56.195:8080";
 //        String host="http://zjtest.zhigaokao.cn";
 //        String host="http://localhost:8082";
-//        String host="http://localhost:8080";
+        String host="http://localhost:8080";
 //        String host="http://zgkser.zhigaokao.cn/";
 //        String host="http://zj.dev.zhigaokao.cn";
-        String host="http://zj.test.zhigaokao.cn";
+//        String host="http://zj.test.zhigaokao.cn";
 
         String base="/score/";
 
@@ -138,7 +138,7 @@ public class HttpScoreTest extends TestCase{
      * ---
      */
     public void testRecommendSchool(){
-        String url=host +recommendSchool_url + "?totalScore=60&areaId=440000&majorType=1";
+        String url=host +recommendSchool_url + "?totalScore=111&areaId=530000&majorType=1";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }

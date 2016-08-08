@@ -408,9 +408,7 @@ public class ScoreController {
 
             //推荐10所高职院校
             return scoreAnalysisService.queryLowstUniversity(areaId,majorType,totalScore,lastYear.toString());
-
         }
-
         int batch= (int)line1s[2];
         //获得分差1  考生分-16年分数线
         float difference = totalScore-(Float) line1s[0];
