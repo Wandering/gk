@@ -59,23 +59,51 @@
     </select>
 
 
-    <!--根据专业ID查询专业信息-->
-    <!--查询内容有:专业Id、专业名称、就业率、薪资、专业代码、授予学位、修学年限、开设课程、专业解读-->
+    <!--根据查询专业对哪些院校开放-->
     <select id="getMajorOpenUniversityList" resultType="java.util.Map">
-        select
-        aa.id,
-        major_name as majorName,
-        aa.major_code as majorCode,
-        degree_offered as degreeOffered,
-        schooling_duration as schoolingDuration,
-        offer_courses as offerCourses,
-        major_introduce as majorIntroduce,
-        employmentRate,
-        salary_rank as salary
-        from zgk_major_base aa INNER JOIN zgk_major_detail bb ON aa.id=bb.id
+        SELECT
+        university.id as id ,
+        university.name as name ,
+        university.subjection as subjection ,
+        university.photo_url as photoUrl ,
+        university.property as property ,
+        leveldict.name as levelName,
+        university.rank as rank ,
+        typedict.name as typeName,
+        province.name as province,
+        university.lastModifier as lastModifier
+        FROM
+        zgk_university university
+        LEFT JOIN zgk_province province ON province.id = university.areaid
+        LEFT JOIN zgk_data_dict typedict ON typedict.dictId=university.type AND typedict.type='UNIVERSITY_TYPE'
+        LEFT JOIN zgk_data_dict leveldict ON leveldict.dictId = university.educationLevel AND leveldict.type='EDULEVEL'
+        where
+        university.id in (SELECT
+        universityId
+        FROM
+        zgk_university_major_base mm
         WHERE
-        major_name like CONCAT('%',#{majoredName},'%')
-        AND major_type = #{majorType}
+        major_code = (SELECT major_code from zgk_major_base where id=#{condition.majorId}) )
+        ORDER BY university.lastModifier DESC
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
     </select>
+    <select id="getMajorOpenUniversityCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(*)
+        from zgk_university uu
+        left join zgk_university_major_base mm on uu.id=mm.universityId
+        where mm.majorId=#{condition.majorId}
+        and mm.educationLevel=#{condition.educationLevel}
+    </select>
+
+    <select id="getMajorOpenUniversityCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(*)
+        from zgk_university uu
+        left join zgk_university_major_base mm on uu.id=mm.universityId
+        where mm.majorId=#{condition.majorId}
+        and mm.educationLevel=#{condition.educationLevel}
+    </select>
+
 </mapper>
 
