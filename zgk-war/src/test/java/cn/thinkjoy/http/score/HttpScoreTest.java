@@ -118,7 +118,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryGapBySchoolIdAndBatch(){
-        String url=host +queryGapBySchoolIdAndBatch_url + "?recordId=134&schoolId=2346&batch=1&userId=231";
+        String url=host +queryGapBySchoolIdAndBatch_url + "?recordId=138&schoolId=2344&batch=1&userId=316";
         String result = RequestUtils.requestPost(url);
         System.out.println("result = " + result);
     }

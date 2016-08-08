@@ -99,7 +99,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     }
 
     @Override
-    public Float queryUnivsersityLowestScore(long schoolId,long areaId,int batch,int majorType, String year) {
+    public Map<String, Object> queryUnivsersityLowestScore(long schoolId,long areaId,int batch,int majorType, String year) {
         return scoreAnalysisDAO.queryUnivsersityLowestScore(schoolId,areaId,batch,majorType,year);
     }
 

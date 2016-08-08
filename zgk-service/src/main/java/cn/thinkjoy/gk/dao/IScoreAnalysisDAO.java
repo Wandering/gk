@@ -149,7 +149,7 @@ public interface IScoreAnalysisDAO {
      * @param year
      * @return
      */
-    Float queryUnivsersityLowestScore(@Param("schoolId")long schoolId,
+    Map<String,Object> queryUnivsersityLowestScore(@Param("schoolId")long schoolId,
                                       @Param("areaId")long areaId,
                                       @Param("batch")int batch,
                                       @Param("majorType")int majorType,

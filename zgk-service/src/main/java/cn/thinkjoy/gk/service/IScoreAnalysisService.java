@@ -149,7 +149,7 @@ public interface IScoreAnalysisService {
      * @param year
      * @return
      */
-    Float queryUnivsersityLowestScore(long schoolId,
+    Map<String,Object> queryUnivsersityLowestScore(long schoolId,
                                       long areaId,
                                       int batch,
                                       int majorType,

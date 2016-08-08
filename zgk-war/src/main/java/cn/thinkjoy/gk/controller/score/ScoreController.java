@@ -516,7 +516,13 @@ public class ScoreController {
         String year=(Integer.valueOf(scoreUtil.getYear())-1)+"";
         String name = scoreAnalysisService.querySchoolNameById(schoolId);
         String batchName = scoreAnalysisService.queryBatchNameById(batch);
-        float schoolLine = scoreAnalysisService.queryUnivsersityLowestScore(schoolId,areaId,batch,majorType,year);
+        Map<String,Object> schoolLineMap = scoreAnalysisService.queryUnivsersityLowestScore(schoolId,areaId,batch,majorType,year);
+        Float schoolLine=null;
+        String schoolLineYear=null;
+        if(schoolLineMap!=null){
+            schoolLine=Float.valueOf(schoolLineMap.get("lowestScore").toString());
+            schoolLineYear=schoolLineMap.get("year").toString();
+        }
         if (totalScore>schoolLine){
             Integer stuNum = scoreAnalysisService.queryStuNumToLine(schoolLine,totalScore,areaTableName);
             Map<String,Object> resultMap=new HashedMap();
@@ -527,6 +533,7 @@ public class ScoreController {
             resultMap.put("stuNum",-stuNum);
             resultMap.put("batchLine",scoreUtil.getBatchScore(batch,areaId,majorType));
             resultMap.put("schoolLine",schoolLine);
+            resultMap.put("year",schoolLineYear);
             return resultMap;
         }
         Integer stuNum = scoreAnalysisService.queryStuNumToLine(totalScore,schoolLine,areaTableName);
@@ -541,6 +548,7 @@ public class ScoreController {
         resultMap.put("addScore",totalScore-schoolLine);
         resultMap.put("batchLine",scoreUtil.getBatchScore(batch,areaId,majorType));
         resultMap.put("schoolLine",schoolLine);
+        resultMap.put("year",schoolLineYear);
         return resultMap;
     }
 

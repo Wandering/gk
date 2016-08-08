@@ -193,13 +193,14 @@ deleteBySubjects
 
 
 
-    <select id="queryUnivsersityLowestScore" resultType="java.lang.Float">
-        select lowestScore from zgk_university_enrolling
+    <select id="queryUnivsersityLowestScore" resultType="java.util.Map">
+        select lowestScore,year from zgk_university_enrolling
         WHERE universityId = #{schoolId}
         and areaId=#{areaId}
         and batch = #{batch}
         and majorType = #{majorType}
-        and year = #{year}
+        and year IN (#{year}+1,#{year},#{year}-1)
+        ORDER BY year DESC
         limit 1
     </select>
 
