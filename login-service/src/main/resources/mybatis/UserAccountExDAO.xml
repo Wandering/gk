@@ -122,20 +122,6 @@
         </where>
     </select>
 
-    <select id="findOldUserAccountPojo" resultType="UserInfoPojo">
-
-        SELECT  user_id as id,phone as account,password,name,0 as vipStatus FROM zgk_user
-        <where>
-            1=1
-            <if test="id!=null">
-                and user_id = #{id}
-            </if>
-            <if test="account!=null">
-                and phone = #{account}
-            </if>
-        </where>
-    </select>
-
     <select id="findUserInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
         select acc.account,info.provinceId,info.cityId,info.countyId
         from zgk_user_account acc

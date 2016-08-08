@@ -13,7 +13,10 @@ public class HttpScoreTest extends TestCase{
 //        String host="http://10.254.130.33:9080";
 //        String host="http://10.136.56.195:8080";
 //        String host="http://zjtest.zhigaokao.cn";
+//        String host="http://localhost:8082";
         String host="http://localhost:8080";
+//        String host="http://zgkser.zhigaokao.cn/";
+//        String host="http://zj.dev.zhigaokao.cn";
         String base="/score/";
 
 
@@ -28,25 +31,32 @@ public class HttpScoreTest extends TestCase{
         String insertUserInfo_url=base+"insertUserInfo.do";
         String queryHighSchoolByCountyId_url=base+"queryHighSchoolByCountyId.do";
         String queryUserInfo_url=base+"queryUserInfo.do";
+        String queryUniversityScore_url=base+"queryUniversityScore.do";
+        String querySubjectByGrade_url=base+"querySubjectByGrade.do";
 
 
 
-    public void testInsertUserInfo(){
-        String url=host + insertUserInfo_url + "?userId=1&provinceId=610000&cityId=610100&countyId=610102" +
-                "&schoolCode=6101024000&schoolName="+ URLEncoder.encode("西安二十九中")+"&gradeInfo="+URLEncoder.encode("高三")+"&classInfo="+URLEncoder.encode("一班")+"" +
-                "&source=1\n";
-        String result = RequestUtils.requestPost(url);
-        System.out.println("result = " + result);
-
-    }
+//    public void testInsertUserInfo(){
+//        String url=host + insertUserInfo_url + "?userId=1&provinceId=610000&cityId=610100&countyId=610102" +
+//                "&schoolCode=6101024000&schoolName="+ URLEncoder.encode("西安二十九中")+"&gradeInfo="+URLEncoder.encode("高三")+"&classInfo="+URLEncoder.encode("一班")+"" +
+//                "&source=1\n";
+//        String result = RequestUtils.requestPost(url);
+//        System.out.println("result = " + result);
+//
+//    }
     public void testQueryHighSchoolByCountyId(){
         String url=host + queryHighSchoolByCountyId_url + "?countyId=110101&schoolName=\n";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
 
     }
+
+    /**
+     * ---
+     */
     public void testQueryUserInfo(){
         String url=host + queryUserInfo_url + "?userId=1\n";
+        System.out.println();
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
 
@@ -57,19 +67,20 @@ public class HttpScoreTest extends TestCase{
 
 
 
-
-    public void testInsertScoreRecord(){
-        String url=host + insertScoreRecord_url + "?userId=1&source=1&areaId=&majorType=&scores\n";
-        String result = RequestUtils.requestPost(url);
-        System.out.println("result = " + result);
-
-    }
+//
+//    public void testInsertScoreRecord(){
+//        String url=host + insertScoreRecord_url + "?userId=1&source=1&areaId=&majorType=&scores\n";
+//        String result = RequestUtils.requestPost(url);
+//        System.out.println("result = " + result);
+//
+//    }
 
     /**
      * ok
      */
      public void testQueryScoreRecordByUserId(){
          String url=host + queryScoreRecordByUserId_url + "?userId=1\n";
+         System.out.println(url);
          String result = RequestUtils.requestGet(url);
          System.out.println("result = " + result);
 
@@ -80,7 +91,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryInfoByRecordId(){
-        String url=host +queryInfoByRecordId_url + "?recordId=1";
+        String url=host +queryInfoByRecordId_url + "?recordId=135";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
@@ -89,7 +100,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryAllRecordByUserId(){
-        String url=host +queryAllRecordByUserId_url + "?userId=1&source=1";
+        String url=host +queryAllRecordByUserId_url + "?userId=306";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
@@ -98,7 +109,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryBatchLineByAreaId(){
-        String url=host +queryBatchLineByAreaId_url + "?totalScore=460&areaId=610000&majorType=2";
+        String url=host +queryBatchLineByAreaId_url + "?totalScore=60&areaId=440000&majorType=1";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
@@ -107,7 +118,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryGapBySchoolIdAndBatch(){
-        String url=host +queryGapBySchoolIdAndBatch_url + "?recordId=1&schoolId=1&batch=1&userId=1&source=1";
+        String url=host +queryGapBySchoolIdAndBatch_url + "?recordId=134&schoolId=2346&batch=1&userId=231";
         String result = RequestUtils.requestPost(url);
         System.out.println("result = " + result);
     }
@@ -122,13 +133,30 @@ public class HttpScoreTest extends TestCase{
     }
 
     /**
-     * ok
+     * ---
      */
     public void testRecommendSchool(){
-        String url=host +recommendSchool_url + "?totalScore=500&areaId=610000&majorType=1";
+        String url=host +recommendSchool_url + "?totalScore=60&areaId=440000&majorType=1";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
 
 
+    /**
+     * ok
+     */
+    public void testQueryUniversityScore(){
+        String url=host +queryUniversityScore_url + "?universityId=1&areaId=610000&majorType=1";
+        String result = RequestUtils.requestGet(url);
+        System.out.println("result = " + result);
+    }
+
+    /**
+     * ok
+     */
+    public void testQuerySubjectByGrade(){
+        String url=host +querySubjectByGrade_url + "?userId=13582&subject=语文";
+        String result = RequestUtils.requestGet(url);
+        System.out.println("result = " + result);
+    }
 }
