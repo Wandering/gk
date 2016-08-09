@@ -190,8 +190,8 @@ public class ScoreUtil {
                 break;
             case 3:
                 score=Float.parseFloat(scoreStrs[batch-1].split("\\|")[0]);
-
-                break;
+                //假如三批分数线为0滑落到下一批次
+                if(score==0)break;
             case 4:
                 score=Float.parseFloat(scoreStrs[batch-1].split("\\|")[0]);
 
@@ -202,6 +202,9 @@ public class ScoreUtil {
 
         return score;
     }
+
+
+
     public String floatToStr(Object f){
         if(f==null){
             return "";
@@ -299,5 +302,8 @@ public class ScoreUtil {
         return v1/v2;
 
     }
+
+
+
 
 }

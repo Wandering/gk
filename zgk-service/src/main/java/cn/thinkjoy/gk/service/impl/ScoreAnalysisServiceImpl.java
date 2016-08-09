@@ -84,8 +84,8 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     }
 
     @Override
-    public List<Map<String, Object>> queryUnivsersityBatch(long areaId,long schooleId,String year) {
-        return scoreAnalysisDAO.queryUnivsersityBatch(areaId,schooleId,year);
+    public List<Map<String, Object>> queryUnivsersityBatch(long areaId,long schooleId,String year,Integer majorType) {
+        return scoreAnalysisDAO.queryUnivsersityBatch(areaId,schooleId,year,majorType);
     }
 
     @Override
@@ -151,5 +151,10 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     @Override
     public Integer queryUserGrade(long userId) {
         return scoreAnalysisDAO.queryUserGrade(userId);
+    }
+
+    @Override
+    public Integer queryTotalScoreByAreaId(long areaId) {
+        return scoreAnalysisDAO.queryTotalScoreByAreaId(areaId);
     }
 }

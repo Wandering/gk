@@ -220,7 +220,7 @@ deleteBySubjects
         WHERE type = 'BATCHTYPE2'
         and dictId in
         (SELECT batch from zgk_university_enrolling
-        WHERE areaId = #{areaId} and universityId = #{schooleId} and year = #{year} GROUP BY batch);
+        WHERE areaId = #{areaId} and universityId = #{schooleId} and year = #{year} and majorType = #{majorType} GROUP BY batch);
     </select>
 
     <select id="queryLastTarget" resultType="java.util.Map">
@@ -371,5 +371,13 @@ deleteBySubjects
         SELECT name from zgk_data_dict where type = 'BATCHTYPE2' and dictId =#{id}
     </select>
 
+    <!--根据areaId获取当前省份总分 可能为空-->
+    <select id="queryTotalScoreByAreaId" resultType="java.lang.String">
+        SELECT config_value from  zgk_system_parmas
+        WHERE config_key like '%_DEFAULT_SCORE%'
+        AND province_code =
+        (SELECT code from
+        zgk_province WHERE id=#{areaId}) and major_type = #{majorType}
+    </select>
 </mapper>
 

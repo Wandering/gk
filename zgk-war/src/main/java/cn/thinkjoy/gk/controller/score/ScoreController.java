@@ -28,7 +28,6 @@ import java.util.*;
 @RequestMapping(value = "/score")
 public class ScoreController {
 
-
     @Autowired
     private IScoreAnalysisService scoreAnalysisService;
     @Autowired
@@ -82,9 +81,12 @@ public class ScoreController {
         insertMap.put("gradeInfo",gradeInfo);
         insertMap.put("classInfo",classInfo);
         try {
-            scoreAnalysisService.setUserInfo(insertMap);
-        }catch (Exception e){
-            throw new BizException("error","添加失败,用户异常!");
+            int uu = scoreAnalysisService.setUserInfo(insertMap);
+            if(uu==0){
+                throw new BizException("error","添加失败,用户不存在!");
+            }
+        }catch (BizException e){
+            throw e;
         }
         return true;
     }
@@ -211,20 +213,6 @@ public class ScoreController {
             resultMap.put("proviceRank", -allStuNum);
             resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
         }
-//        Map<String,Object> resultMap=new HashedMap();
-//        resultMap.put("totalScore",600);
-//        resultMap.put("majorType",1);
-//        resultMap.put("proviceRank",1000);
-//        resultMap.put("stuNum",50);
-//        Map<String,Object> scores = new HashedMap();
-//        scores.put("语文","90-100");
-//        scores.put("数学","90-100");
-//        scores.put("外语","90-100");
-//        scores.put("物理","90-100");
-//        scores.put("化学","90-100");
-//        scores.put("生物","90-100");
-//        resultMap.put("scores",scores);
-
         return resultMap;
     }
 
@@ -261,6 +249,7 @@ public class ScoreController {
                 resultMap.put("weak", subjects[1]);
 
 
+
                 //极端情况
                 if(scoreAnalysisService.isExistMaxScore(totalScore,areaTableName)){
                     //当前分数超过了一分一段表的最大值 或者  达到很高的值
@@ -289,26 +278,6 @@ public class ScoreController {
             }
         }
 
-
-//        List<Map<String,Object>> list = new ArrayList<>();
-//
-//        for(int i=0;i<5;i++) {
-//            Map<String, Object> resultMap = new HashedMap();
-//            resultMap.put("recordId", 1);
-//            resultMap.put("totalScore", 600);
-//            resultMap.put("majorType", 1);
-//            resultMap.put("proviceRank", 1000);
-//            resultMap.put("cdate", 146951915700l);
-//            Map<String, Object> scores = new HashedMap();
-//            scores.put("语文", "90-100");
-//            scores.put("数学", "90-100");
-//            scores.put("外语", "90-100");
-//            scores.put("物理", "90-100");
-//            scores.put("化学", "90-100");
-//            scores.put("生物", "90-100");
-//            resultMap.put("scores", scores);
-//            list.add(resultMap);
-//        }
         return list;
     }
 
@@ -374,19 +343,6 @@ public class ScoreController {
         }
         resultMap.put("topLine", topLine);
         resultMap.put("bottomLine", bottomLine);
-
-
-
-//        Map<String, Object> resultMap = new HashedMap();
-//        Map<String, Object> topLine = new HashedMap();
-//        Map<String, Object> bottomLine = new HashedMap();
-//
-//        topLine.put("batch","一批本科");
-//        topLine.put("score",430);
-//        bottomLine.put("batch","二批本科");
-//        bottomLine.put("score",380);
-//        resultMap.put("topLine", topLine);
-//        resultMap.put("bottomLine", bottomLine);
         return resultMap;
     }
 
@@ -396,7 +352,7 @@ public class ScoreController {
      */
     @RequestMapping(value = "/recommendSchool",method = RequestMethod.GET)
     @ResponseBody
-    public Object recommendSchool(float totalScore,long areaId,int majorType){
+    public Object recommendSchool(@RequestParam float totalScore,@RequestParam long areaId,@RequestParam int majorType){
 
         Integer lastYear = Integer.valueOf(scoreUtil.getYear())-1;
 
@@ -435,14 +391,7 @@ public class ScoreController {
         //返回前20个院校
         List<Map<String,Object>> resultList = scoreAnalysisService.queryUniversityByScore(areaId,(Integer)line1s[2],majorType,lastYear.toString(),difference,line2,totalScore,bc);
 
-//        List<Map<String,Object>> list = new ArrayList<>();
-//        Map<String,Object> resultMap=new HashedMap();
-//        resultMap.put("schoolName","北京大学");
-//        resultMap.put("batch","一批本科");
-//        resultMap.put("stuNum",100);
-//        resultMap.put("averageScore",600.0);
-//        resultMap.put("gapSchool",-20);
-//        list.add(resultMap);
+
         return resultList;
     }
 
@@ -453,35 +402,20 @@ public class ScoreController {
     @RequestMapping(value = "/queryBatchsBySchoolIdAndAreaId",method = RequestMethod.GET)
     @ResponseBody
 
-    public Object queryBatchsBySchoolIdAndAreaId(long areaId,long schoolId){
+    public Object queryBatchsBySchoolIdAndAreaId(@RequestParam long areaId,
+                                                 @RequestParam long schoolId,
+                                                 @RequestParam Integer majorType){
 
 
         List<Map<String,Object>> list = null;
 
         Integer year = Integer.valueOf(scoreUtil.getYear());
 
-        list=scoreAnalysisService.queryUnivsersityBatch(areaId,schoolId,year.toString());
+        list=scoreAnalysisService.queryUnivsersityBatch(areaId,schoolId,year.toString(),majorType);
+        //尝试获取最新的年份对应的录取批次,获取不到获取次年的录取批次
         if(list==null||list.size()==0){
-            list=scoreAnalysisService.queryUnivsersityBatch(areaId,schoolId,(year-1)+"");
+            list=scoreAnalysisService.queryUnivsersityBatch(areaId,schoolId,(year-1)+"",majorType);
         }
-//        List<Map<String,Object>> list = new ArrayList<>();
-//        Map<String,Object> resultMap1=new HashedMap();
-//        resultMap1.put("batchId",1);
-//        resultMap1.put("batchName","一批本科");
-//        Map<String,Object> resultMap2=new HashedMap();
-//        resultMap2.put("batchId",2);
-//        resultMap2.put("batchName","二批本科");
-//        Map<String,Object> resultMap3=new HashedMap();
-//        resultMap3.put("batchId",4);
-//        resultMap3.put("batchName","三批本科");
-//        Map<String,Object> resultMap4=new HashedMap();
-//        resultMap4.put("batchId",8);
-//        resultMap4.put("batchName","高职专科");
-//        list.add(resultMap1);
-//        list.add(resultMap2);
-//        list.add(resultMap3);
-//        list.add(resultMap4);
-//
         return list;
     }
 

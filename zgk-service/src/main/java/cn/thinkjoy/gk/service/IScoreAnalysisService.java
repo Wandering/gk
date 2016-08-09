@@ -124,7 +124,8 @@ public interface IScoreAnalysisService {
      */
     List<Map<String,Object>> queryUnivsersityBatch(long areaId,
                                                    long schooleId,
-                                                   String year);
+                                                   String year,
+                                                   Integer majorType);
 
     /**
      *  获取最后一次目标院校
@@ -262,4 +263,8 @@ public interface IScoreAnalysisService {
      * @return
      */
     Integer queryUserGrade(long userId);
+
+    Integer queryTotalScoreByAreaId(long areaId);
+
+
 }

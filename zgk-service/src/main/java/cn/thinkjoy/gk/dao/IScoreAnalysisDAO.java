@@ -124,7 +124,8 @@ public interface IScoreAnalysisDAO {
      */
     List<Map<String,Object>> queryUnivsersityBatch(@Param("areaId")long areaId,
                                                    @Param("schooleId")long schooleId,
-                                                   @Param("year")String year);
+                                                   @Param("year")String year,
+                                                   @Param("majorType")Integer majorType);
 
     /**
      *  获取最后一次目标院校
@@ -259,4 +260,11 @@ public interface IScoreAnalysisDAO {
      * @return
      */
     Integer queryUserGrade(@Param("userId")long userId);
+    /**
+     * 根据areaId获取当前省份总分 可能为空
+     * @param areaId
+     * @return
+     */
+    Integer queryTotalScoreByAreaId(@Param("areaId")long areaId);
+
 }

@@ -14,10 +14,11 @@ public class HttpScoreTest extends TestCase{
 //        String host="http://10.136.56.195:8080";
 //        String host="http://zjtest.zhigaokao.cn";
 //        String host="http://localhost:8082";
-        String host="http://localhost:8080";
+//        String host="http://localhost:8080";
 //        String host="http://zgkser.zhigaokao.cn/";
 //        String host="http://zj.dev.zhigaokao.cn";
 //        String host="http://zj.test.zhigaokao.cn";
+        String host="http://10.136.67.121:8080";
 
         String base="/score/";
 
@@ -81,7 +82,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
      public void testQueryScoreRecordByUserId(){
-         String url=host + queryScoreRecordByUserId_url + "?userId=1\n";
+         String url=host + queryScoreRecordByUserId_url + "?userId=20004\n";
          System.out.println(url);
          String result = RequestUtils.requestGet(url);
          System.out.println("result = " + result);
@@ -93,7 +94,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryInfoByRecordId(){
-        String url=host +queryInfoByRecordId_url + "?recordId=135";
+        String url=host +queryInfoByRecordId_url + "?recordId=338";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
@@ -120,7 +121,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryGapBySchoolIdAndBatch(){
-        String url=host +queryGapBySchoolIdAndBatch_url + "?recordId=272&schoolId=2317&batch=8&userId=286";
+        String url=host +queryGapBySchoolIdAndBatch_url + "?recordId=163&schoolId=2104&batch=1&userId=286";
         String result = RequestUtils.requestPost(url);
         System.out.println("result = " + result);
     }
@@ -129,7 +130,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryBatchsBySchoolIdAndAreaId(){
-        String url=host +queryBatchsBySchoolIdAndAreaId_url + "?areaId=530000&schoolId=2317";
+        String url=host +queryBatchsBySchoolIdAndAreaId_url + "?areaId=530000&schoolId=2317&majorType=1";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
@@ -138,7 +139,7 @@ public class HttpScoreTest extends TestCase{
      * ---
      */
     public void testRecommendSchool(){
-        String url=host +recommendSchool_url + "?totalScore=111&areaId=530000&majorType=1";
+        String url=host +recommendSchool_url + "?totalScore=300&areaId=410000&majorType=1";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
