@@ -469,6 +469,7 @@ public class ScoreController {
             resultMap.put("stuNum",-stuNum);
             resultMap.put("batchLine",scoreUtil.getBatchScore(batch,areaId,majorType));
             resultMap.put("schoolLine",schoolLine);
+            resultMap.put("batch",batch);
             resultMap.put("year",schoolLineYear);
             return resultMap;
         }
@@ -484,6 +485,7 @@ public class ScoreController {
         resultMap.put("addScore",totalScore-schoolLine);
         resultMap.put("batchLine",scoreUtil.getBatchScore(batch,areaId,majorType));
         resultMap.put("schoolLine",schoolLine);
+        resultMap.put("batch",batch);
         resultMap.put("year",schoolLineYear);
         return resultMap;
     }
@@ -501,7 +503,7 @@ public class ScoreController {
     public Object queryUniversityScore(@RequestParam long universityId,
                                        @RequestParam long areaId,
                                        @RequestParam Integer majorType,
-                                       @RequestParam Integer batch){
+                                       Integer batch){
         List<Map<String,Object>> resultMaps = scoreAnalysisService.queryUniversityScore(universityId,areaId,majorType,batch);
         return resultMaps;
     }
