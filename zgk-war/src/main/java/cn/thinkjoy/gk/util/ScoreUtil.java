@@ -191,7 +191,7 @@ public class ScoreUtil {
             case 3:
                 score=Float.parseFloat(scoreStrs[batch-1].split("\\|")[0]);
                 //假如三批分数线为0滑落到下一批次
-                if(score==0)break;
+                if(score!=0)break;
             case 4:
                 score=Float.parseFloat(scoreStrs[batch-1].split("\\|")[0]);
 
