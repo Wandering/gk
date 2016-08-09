@@ -224,7 +224,8 @@ public interface IScoreAnalysisService {
      */
     List<Map<String,Object>>  queryUniversityScore(long universityId,
                                                    long areaId,
-                                                   Integer majorType);
+                                                   Integer majorType,
+                                                   Integer batch);
 
     /**
      * 判断分数是否在一分一段表中存在

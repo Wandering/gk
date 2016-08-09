@@ -353,6 +353,7 @@ deleteBySubjects
         FROM zgk_university_enrolling
         WHERE universityId = #{universityId}
         and areaId=#{areaId}
+        and batch=#{batch}
         and majorType=#{majorType} ORDER BY YEAR DESC limit 3
     </select>
 

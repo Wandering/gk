@@ -501,9 +501,10 @@ public class ScoreController {
     @RequestMapping(value = "/queryUniversityScore",method = RequestMethod.GET)
     @ResponseBody
     public Object queryUniversityScore(@RequestParam long universityId,
-                                             @RequestParam long areaId,
-                                             @RequestParam Integer majorType){
-        List<Map<String,Object>> resultMaps = scoreAnalysisService.queryUniversityScore(universityId,areaId,majorType);
+                                       @RequestParam long areaId,
+                                       @RequestParam Integer majorType,
+                                       @RequestParam Integer batch){
+        List<Map<String,Object>> resultMaps = scoreAnalysisService.queryUniversityScore(universityId,areaId,majorType,batch);
         return resultMaps;
     }
 

@@ -222,7 +222,7 @@ public interface IScoreAnalysisDAO {
      * @param majorType
      * @return
      */
-    List<Map<String,Object>>  queryUniversityScore(@Param("universityId")long universityId,@Param("areaId")long areaId,@Param("majorType")Integer majorType);
+    List<Map<String,Object>>  queryUniversityScore(@Param("universityId")long universityId,@Param("areaId")long areaId,@Param("majorType")Integer majorType,@Param("batch")Integer batch);
 
     /**
      * 判断分数是否在一分一段表中存在

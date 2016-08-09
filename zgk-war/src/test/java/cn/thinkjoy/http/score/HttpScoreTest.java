@@ -149,7 +149,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryUniversityScore(){
-        String url=host +queryUniversityScore_url + "?universityId=1&areaId=610000&majorType=1";
+        String url=host +queryUniversityScore_url + "?universityId=1&areaId=610000&majorType=1&batch=1";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
