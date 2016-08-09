@@ -168,7 +168,7 @@ deleteBySubjects
         SELECT num from ${areaTableName} WHERE score = #{totalScore}
     </select>
     <select id="queryAllAreaStuNum" resultType="java.lang.Integer">
-        SELECT sum(num) from ${areaTableName}
+        SELECT MAX(avg_pre) from ${areaTableName}
     </select>
 
     <!--全省排名-->

@@ -197,9 +197,7 @@ public class ScoreController {
             Integer stuNum = scoreAnalysisService.queryStuNum(totalScore, areaTableName);
             //全省排名
             Integer proviceRank = scoreAnalysisService.queryProviceRank(totalScore, areaTableName);
-            if(proviceRank==null) {
-                proviceRank = scoreAnalysisService.queryProviceRank2(totalScore, areaTableName);
-            }
+
             resultMap.put("stuNum", stuNum);
             String[] nums = String.valueOf(100 - ((Float.valueOf(proviceRank) / Float.valueOf(allStuNum)) * 100)).split("\\.");
             String proviceRankPro = nums[0] + "." + nums[1].substring(0, 2) + "%";
