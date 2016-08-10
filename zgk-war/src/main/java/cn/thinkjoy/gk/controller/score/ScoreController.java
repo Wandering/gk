@@ -7,6 +7,7 @@ import cn.thinkjoy.gk.util.ScoreUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,7 @@ public class ScoreController {
     @Autowired
     private ScoreUtil scoreUtil;
 
+    Logger logger = Logger.getLogger(ScoreController.class);
 
     /**
      * 根据用户Id和用户来源查询用户最新的提交记录
@@ -184,11 +186,13 @@ public class ScoreController {
         //todo 获取用户上次成绩
         //第一次判定
         Float lastScore=null;
+        lastScore=scoreAnalysisService.queryLastScore(Long.valueOf(map.get("userId").toString()),recordId);
         if(lastScore!=null){
             //非第一次用户  有上一次成绩
             resultMap.put("difference",scoreUtil.floatToStr(lastScore-totalScore));
         }else {
             //第一次用户没有上一次成绩
+            logger.info("用户是第一次测评");
             resultMap.put("difference","off");
         }
 
@@ -198,33 +202,44 @@ public class ScoreController {
         String areaTableName = scoreUtil.getAreaTableName(areaId, majorType);
         //文或者理科总人数
         Integer allStuNum = scoreAnalysisService.queryAllAreaStuNum(areaTableName);
+        try {
+            //极端情况
+            if (scoreAnalysisService.isExistMaxScore(totalScore, areaTableName)) {
+                //当前分数超过了一分一段表的最大值 或者  达到很高的值
+                resultMap.put("proviceRank", -1);
+                resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
 
-        //极端情况
-        if(scoreAnalysisService.isExistMaxScore(totalScore,areaTableName)){
-            //当前分数超过了一分一段表的最大值 或者  达到很高的值
-            resultMap.put("proviceRank", -1);
-            resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
+            } else if (scoreAnalysisService.isExistScore(totalScore, areaTableName)) {
+                //            正常情况
+                //需要超过多少人
+                //一分超过多少人
+                Integer stuNum = scoreAnalysisService.queryStuNum(totalScore, areaTableName);
+                //全省排名
+                Integer proviceRank = scoreAnalysisService.queryProviceRank(totalScore, areaTableName);
+                Integer temp = allStuNum;
+                //重新定义全省人数
+                allStuNum = scoreAnalysisService.queryPeoNumByAreaAndType(areaId, majorType);
+                if (allStuNum == null || allStuNum == 0) {
+                    logger.info("该省没有总人数!");
+                    allStuNum = temp;
+                }
 
-        }else if(scoreAnalysisService.isExistScore(totalScore,areaTableName)) {
-            //            正常情况
-            //需要超过多少人
-            //一分超过多少人
-            Integer stuNum = scoreAnalysisService.queryStuNum(totalScore, areaTableName);
-            //全省排名
-            Integer proviceRank = scoreAnalysisService.queryProviceRank(totalScore, areaTableName);
+                resultMap.put("stuNum", stuNum);
+                String[] nums = String.valueOf(100 - ((Float.valueOf(proviceRank) / Float.valueOf(allStuNum)) * 100)).split("\\.");
+                String proviceRankPro = nums[0] + "." + nums[1].substring(0, 2) + "%";
+                resultMap.put("proviceRankPro", proviceRankPro);
+                resultMap.put("proviceRank", proviceRank);
 
-            resultMap.put("stuNum", stuNum);
-            String[] nums = String.valueOf(100 - ((Float.valueOf(proviceRank) / Float.valueOf(allStuNum)) * 100)).split("\\.");
-            String proviceRankPro = nums[0] + "." + nums[1].substring(0, 2) + "%";
-            resultMap.put("proviceRankPro", proviceRankPro);
-            resultMap.put("proviceRank", proviceRank);
-
-            resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
-        }else {
-            //           分数不在一分一段中的情况
-            //文或者理科总人数
-            resultMap.put("proviceRank", -allStuNum);
-            resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
+                resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
+            } else {
+                //           分数不在一分一段中的情况
+                //文或者理科总人数
+                resultMap.put("proviceRank", -allStuNum);
+                resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
+            }
+        }catch (Exception e){
+            logger.info("当前省份为"+map.get("areaName"));
+            throw new BizException("error","暂不支持"+map.get("areaName")+"!");
         }
         return resultMap;
     }
@@ -372,7 +387,12 @@ public class ScoreController {
 
         //确定当前分数对应当年批次分数
 //        long areaId,int majorType,Float totalScore,String year
-        Object[] line1s = scoreUtil.getBatchAndScore(areaId,majorType,totalScore,scoreUtil.getYear());
+        Object[] line1s = null;
+        try {
+            line1s=scoreUtil.getBatchAndScore(areaId, majorType, totalScore, scoreUtil.getYear());
+        }catch (Exception e){
+            throw new BizException("error","当前省份"+scoreUtil.getYear()+"年分数线为空!");
+        }
         if(line1s[2]==5){
             //todo 假如不足高职专科批次(分数超低)
 
@@ -474,6 +494,8 @@ public class ScoreController {
         if(schoolLineMap!=null){
             schoolLine=Float.valueOf(schoolLineMap.get("lowestScore").toString());
             schoolLineYear=schoolLineMap.get("year").toString();
+        }else {
+            throw new BizException("error","当前学校在当前批次无数据");
         }
         if (totalScore>schoolLine){
             Integer stuNum = scoreAnalysisService.queryStuNumToLine(schoolLine,totalScore,areaTableName);

@@ -267,4 +267,19 @@ public interface IScoreAnalysisDAO {
      */
     Integer queryTotalScoreByAreaId(@Param("areaId")long areaId);
 
+    /**
+     * 获取用户上一次成绩
+     * @param userId
+     * @param lastId
+     * @return
+     */
+    Float queryLastScore(@Param("userId")long userId,@Param("lastId")long lastId);
+
+    /**
+     * 获取当前省份当年参加高考人数 当不存在的时候为0或null
+     * @param areaId
+     * @return
+     */
+    Integer queryPeoNumByAreaAndType(@Param("areaId")long areaId,@Param("majorType")int majorType);
+
 }

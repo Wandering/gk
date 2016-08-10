@@ -157,4 +157,28 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     public Integer queryTotalScoreByAreaId(long areaId) {
         return scoreAnalysisDAO.queryTotalScoreByAreaId(areaId);
     }
+
+    /**
+     * 获取用户上一次成绩
+     *
+     * @param userId
+     * @param lastId
+     * @return
+     */
+    @Override
+    public Float queryLastScore(long userId, long lastId) {
+        return scoreAnalysisDAO.queryLastScore(userId,lastId);
+    }
+
+    /**
+     * 获取当前省份当年参加高考人数 当不存在的时候为0或null
+     *
+     * @param areaId
+     * @param majorType
+     * @return
+     */
+    @Override
+    public Integer queryPeoNumByAreaAndType(long areaId, int majorType) {
+        return scoreAnalysisDAO.queryPeoNumByAreaAndType(areaId,majorType);
+    }
 }
