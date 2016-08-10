@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.util;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.dao.IScoreAnalysisDAO;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.HashedMap;
@@ -129,6 +130,50 @@ public class ScoreUtil {
         }
         return scoreLines;
     }
+
+
+    /**
+     * 获取最接近的上层批次线
+     * @param areaId
+     * @param majorType
+     * @return
+     */
+    public String getTopBatchLine(long areaId,int majorType,Float totalScore){
+        if(totalScore==null){
+            throw new BizException("error","成绩不能为空!");
+        }
+        Integer[] scoreLines =null;
+        scoreLines = getBatchLine(areaId,majorType);
+
+
+        Float temp = null;
+        temp=scoreLines[3].floatValue();
+
+        //规划计算当前分数最接近的上层分数
+        for(int i=3;i>=0;i--){
+            //出现为0跳过当前轮
+            if(scoreLines[i]==0){
+                continue;
+            }
+            if(totalScore-scoreLines[i]<0){
+                break;
+            }
+            if(i==0&&totalScore-scoreLines[i]>0){
+                Integer areaTotal=null;
+                areaTotal=scoreAnalysisDAO.queryTotalScoreByAreaId(areaId);
+                if(areaTotal!=null){
+                    // 该省总分在数据库中存在
+                    temp=areaTotal.floatValue();
+                    break;
+                }else {
+                    throw new BizException("error","该省总分不存在");
+                }
+            }
+            temp=scoreLines[i].floatValue();
+        }
+        return floatToStr(temp);
+    }
+
 
     public Object[] getBatchAndScore(long areaId,int majorType,Float totalScore,String year){
 

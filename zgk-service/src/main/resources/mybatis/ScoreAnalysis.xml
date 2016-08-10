@@ -375,12 +375,12 @@ deleteBySubjects
     </select>
 
     <!--根据areaId获取当前省份总分 可能为空-->
-    <select id="queryTotalScoreByAreaId" resultType="java.lang.String">
+    <select id="queryTotalScoreByAreaId" resultType="java.lang.Integer">
         SELECT config_value from  zgk_system_parmas
-        WHERE config_key like '%_DEFAULT_SCORE%'
+        WHERE config_key like '%_DEFAULT_SCORE'
         AND province_code =
         (SELECT code from
-        zgk_province WHERE id=#{areaId}) and major_type = #{majorType}
+        zgk_province WHERE id=#{areaId})
     </select>
 </mapper>
 

@@ -265,6 +265,11 @@ public interface IScoreAnalysisService {
      */
     Integer queryUserGrade(long userId);
 
+    /**
+     * 根据areaId获取总分
+     * @param areaId
+     * @return
+     */
     Integer queryTotalScoreByAreaId(long areaId);
 
 

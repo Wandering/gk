@@ -180,6 +180,21 @@ public class ScoreController {
         Integer majorType=(Integer) map.get("majorType");
         resultMap.put("majorType",majorType);
         resultMap.put("scores",scoreUtil.getScores(map,majorType));
+
+        //todo 获取用户上次成绩
+        //第一次判定
+        Float lastScore=null;
+        if(lastScore!=null){
+            //非第一次用户  有上一次成绩
+            resultMap.put("difference",scoreUtil.floatToStr(lastScore-totalScore));
+        }else {
+            //第一次用户没有上一次成绩
+            resultMap.put("difference","off");
+        }
+
+        //TODO 推荐标签
+
+
         String areaTableName = scoreUtil.getAreaTableName(areaId, majorType);
         //文或者理科总人数
         Integer allStuNum = scoreAnalysisService.queryAllAreaStuNum(areaTableName);
@@ -237,6 +252,7 @@ public class ScoreController {
                 Integer majorType = (Integer) map.get("majorType");
                 resultMap.put("majorType", majorType);
                 resultMap.put("cdate", map.get("cdate"));
+                resultMap.put("upLine",scoreUtil.getTopBatchLine(areaId,majorType,totalScore));
                 Map<String,Object> scores =  scoreUtil.getScores(map,majorType);
 
                 resultMap.put("scores",scores);
