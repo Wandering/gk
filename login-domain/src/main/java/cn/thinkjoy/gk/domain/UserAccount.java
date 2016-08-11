@@ -37,6 +37,16 @@ public class UserAccount extends BaseDomain<Long>{
 	/** 年级。1：高中一年级；2：高中二年级；3：高中三年级 */
 	private int grade;
 
+	private long userId;
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
 	public int getGrade() {
 		return grade;
 	}
