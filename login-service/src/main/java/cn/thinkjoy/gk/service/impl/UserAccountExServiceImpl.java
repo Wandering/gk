@@ -93,6 +93,8 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         boolean flag;
         userAccountDAO.insert(userAccount);
         long id = userAccount.getId();
+        userAccount.setUserId(id);
+        userAccountDAO.update(userAccount);
         UserInfo userInfo = new UserInfo();
         userInfo.setId(id);
         String account = userAccount.getAccount();
@@ -107,11 +109,13 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         userVip.setId(id);
         userVip.setStatus(0);
         userVip.setCreateDate(System.currentTimeMillis());
+        userVip.setUserId(id);
         userVipDAO.insert(userVip);
         UserExam userExam = new UserExam();
         userExam.setId(id);
         userExam.setIsReported(0);
         userExam.setIsSurvey(0);
+        userExam.setUserId(id);
         userExamDAO.insert(userExam);
         insertUserMarketInfo(sharerId, sharerType, id);
         flag = true;
@@ -124,6 +128,7 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         boolean flag;
         UserMarket userMarket = new UserMarket();
         userMarket.setAccountId(id);
+        userMarket.setUserId(id);
         Integer agentLevel = 0;
         if(sharerType == 0){//供货商
             agentLevel =1;
