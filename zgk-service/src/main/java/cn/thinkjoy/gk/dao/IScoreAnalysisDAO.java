@@ -282,4 +282,12 @@ public interface IScoreAnalysisDAO {
      */
     Integer queryPeoNumByAreaAndType(@Param("areaId")long areaId,@Param("majorType")int majorType);
 
+    /**
+     *获取当前用户标签
+     * @param type
+     * @param configs
+     * @return
+     */
+    List<String> queryLabelByTypeAndConfig(@Param("type")Integer type,@Param("configs")List<Integer> configs);
+
 }

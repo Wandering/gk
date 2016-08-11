@@ -399,5 +399,13 @@ deleteBySubjects
         (SELECT code from
         zgk_province WHERE id=#{areaId}) AND  major_type = #{majorType}
     </select>
+
+    <!--获取当前用户标签-->
+    <select id="queryLabelByTypeAndConfig" resultType="java.lang.String">
+        SELECT DISTINCT label from
+        zgk_score_label
+        where type = #{type}
+        and config IN (<foreach collection="configs" separator="," item="item">#{item}</foreach>)
+    </select>
 </mapper>
 

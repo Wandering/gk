@@ -181,4 +181,15 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     public Integer queryPeoNumByAreaAndType(long areaId, int majorType) {
         return scoreAnalysisDAO.queryPeoNumByAreaAndType(areaId,majorType);
     }
+
+    /**
+     *获取当前用户标签
+     * @param type
+     * @param configs
+     * @return
+     */
+    @Override
+    public List<String> queryLabelByTypeAndConfig(Integer type, List<Integer> configs) {
+        return scoreAnalysisDAO.queryLabelByTypeAndConfig(type,configs);
+    }
 }

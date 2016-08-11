@@ -47,6 +47,9 @@ public class ScoreController {
         if(map==null){
             return new HashedMap();
         }
+
+
+
         Map<String,Object> resultMap = new HashedMap();
         resultMap.put("areaName",map.get("areaName"));
         Integer majorType=(Integer) map.get("majorType");
@@ -180,10 +183,12 @@ public class ScoreController {
         resultMap.put("totalScore",totalScore);
         resultMap.put("areaName",map.get("areaName"));
         Integer majorType=(Integer) map.get("majorType");
-        resultMap.put("majorType",majorType);
-        resultMap.put("scores",scoreUtil.getScores(map,majorType));
+        resultMap.put("majorType",majorType);;
+        Map<String,Object> scores=scoreUtil.getScores(map,majorType);
+        resultMap.put("scores",scores);
 
-        //todo 获取用户上次成绩
+
+        // 获取用户上次成绩
         //第一次判定
         Float lastScore=null;
         lastScore=scoreAnalysisService.queryLastScore(Long.valueOf(map.get("userId").toString()),recordId);
@@ -196,8 +201,10 @@ public class ScoreController {
             resultMap.put("difference","off");
         }
 
-        //TODO 推荐标签
+        // 推荐标签
 
+        List<String> labels=scoreUtil.getUserLabel(scoreUtil.getScores(map,majorType));
+        resultMap.put("labels",labels);
 
         String areaTableName = scoreUtil.getAreaTableName(areaId, majorType);
         //文或者理科总人数

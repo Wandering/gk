@@ -287,4 +287,12 @@ public interface IScoreAnalysisService {
      */
     Integer queryPeoNumByAreaAndType(long areaId,int majorType);
 
+    /**
+     *获取当前用户标签
+     * @param type
+     * @param configs
+     * @return
+     */
+    List<String> queryLabelByTypeAndConfig(Integer type,List<Integer> configs);
+
 }
