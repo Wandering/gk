@@ -39,6 +39,7 @@ selectList
     </sql>
     <insert id="insert" parameterType="UserMarket">
         INSERT INTO zgk_user_market (
+        id,
         accountId,
         sharerId,
         sharerType,
@@ -51,6 +52,7 @@ selectList
         modifier,
         userId
         ) VALUES (
+        #{id},
         #{accountId},
         #{sharerId},
         #{sharerType},
