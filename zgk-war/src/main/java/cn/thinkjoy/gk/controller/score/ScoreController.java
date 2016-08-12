@@ -280,10 +280,9 @@ public class ScoreController {
                 resultMap.put("scores",scores);
                 String areaTableName = scoreUtil.getAreaTableName(areaId,majorType);
                 //分析科目强弱
-                String [] subjects = scoreUtil.getScoreWeak(scores);
+                Object [] subjects = scoreUtil.getScoreWeak(scores);
                 resultMap.put("strong", subjects[0]);
                 resultMap.put("weak", subjects[1]);
-
 
 
                 //极端情况

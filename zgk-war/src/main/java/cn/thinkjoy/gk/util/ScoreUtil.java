@@ -308,7 +308,7 @@ public class ScoreUtil {
      * 查询当前分数的分数等级
      * @return
      */
-    public String[] getScoreWeak(Map<String,Object> scores){
+    public Object[] getScoreWeak(Map<String,Object> scores){
         String strongSubject=null;
         String weakSubject=null;
         Float initFloat1 = 1F;
@@ -331,7 +331,11 @@ public class ScoreUtil {
         if(initFloat1-initFloat2<0.05 && initFloat1-initFloat2>-0.05){
             weakSubject=strongSubject;
         }
-        return new String[]{strongSubject,weakSubject};
+
+
+
+
+        return new Object[]{getSubjectInfo(scores,strongSubject),getSubjectInfo(scores,weakSubject)};
 
     }
 
@@ -467,6 +471,43 @@ public class ScoreUtil {
     }
 
     /**
+     * 判断科目分数等级  1-4级
+     * @param score
+     * @param totalScore
+     * @return
+     */
+    private Map<String,Object> getScoreType(Float score,Float totalScore,String subject){
+        Float b = score/totalScore;
+        Map<String,Object> map=new HashedMap();
+        if(b-0.9>=0){
+            map.put("strong",subject);
+            map.put("strongDesc",UserScoreType.SUBJECT_DESC_1);
+            map.put("strongTag",UserScoreType.SUBJECT_TAG_1);
+            return map;
+        }else if(b-0.8>0){
+            map.put("strong",subject);
+            map.put("strongDesc",UserScoreType.SUBJECT_DESC_2);
+            map.put("strongTag",UserScoreType.SUBJECT_TAG_2);
+            return map;
+        }else if(b-0.6>0){
+            map.put("strong",subject);
+            map.put("strongDesc",UserScoreType.SUBJECT_DESC_3);
+            map.put("strongTag",UserScoreType.SUBJECT_TAG_3);
+            return map;
+        }else if(b-0.4>0){
+            map.put("strong",subject);
+            map.put("strongDesc",UserScoreType.SUBJECT_DESC_4);
+            map.put("strongTag",UserScoreType.SUBJECT_TAG_4);
+            return map;
+        }else{
+            map.put("strong",subject);
+            map.put("strongDesc",UserScoreType.SUBJECT_DESC_5);
+            map.put("strongTag",UserScoreType.SUBJECT_TAG_5);
+            return map;
+        }
+    }
+
+    /**
      * 返回随机数
      * @param list 备选号码
      * @param selected 备选数量
@@ -497,4 +538,15 @@ public class ScoreUtil {
 
         return reList;
     }
+    private Map<String,Object> getSubjectInfo(Map<String,Object> scores,String subject){
+        String[] strings = scores.get(subject).toString().split("-");
+        if(!"".equals(strings[0]) && !"".equals(strings[1])){
+            Float subjectScore = Float.valueOf(strings[0]);
+            Float subjectTotalScore = Float.valueOf(strings[1]);
+            return getScoreType(subjectScore,subjectTotalScore,subject);
+        }else {
+            throw new BizException("error","科目分数格式不正确!");
+        }
+    }
+
 }
