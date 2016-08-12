@@ -480,29 +480,29 @@ public class ScoreUtil {
         Float b = score/totalScore;
         Map<String,Object> map=new HashedMap();
         if(b-0.9>=0){
-            map.put("strong",subject);
-            map.put("strongDesc",UserScoreType.SUBJECT_DESC_1);
-            map.put("strongTag",UserScoreType.SUBJECT_TAG_1);
+            map.put("subject",subject);
+            map.put("desc",UserScoreType.SUBJECT_DESC_1);
+            map.put("tag",UserScoreType.SUBJECT_TAG_1);
             return map;
         }else if(b-0.8>0){
-            map.put("strong",subject);
-            map.put("strongDesc",UserScoreType.SUBJECT_DESC_2);
-            map.put("strongTag",UserScoreType.SUBJECT_TAG_2);
+            map.put("subject",subject);
+            map.put("desc",UserScoreType.SUBJECT_DESC_2);
+            map.put("tag",UserScoreType.SUBJECT_TAG_2);
             return map;
         }else if(b-0.6>0){
-            map.put("strong",subject);
-            map.put("strongDesc",UserScoreType.SUBJECT_DESC_3);
-            map.put("strongTag",UserScoreType.SUBJECT_TAG_3);
+            map.put("subject",subject);
+            map.put("desc",UserScoreType.SUBJECT_DESC_3);
+            map.put("tag",UserScoreType.SUBJECT_TAG_3);
             return map;
         }else if(b-0.4>0){
-            map.put("strong",subject);
-            map.put("strongDesc",UserScoreType.SUBJECT_DESC_4);
-            map.put("strongTag",UserScoreType.SUBJECT_TAG_4);
+            map.put("subject",subject);
+            map.put("desc",UserScoreType.SUBJECT_DESC_4);
+            map.put("tag",UserScoreType.SUBJECT_TAG_4);
             return map;
         }else{
-            map.put("strong",subject);
-            map.put("strongDesc",UserScoreType.SUBJECT_DESC_5);
-            map.put("strongTag",UserScoreType.SUBJECT_TAG_5);
+            map.put("subject",subject);
+            map.put("desc",UserScoreType.SUBJECT_DESC_5);
+            map.put("tag",UserScoreType.SUBJECT_TAG_5);
             return map;
         }
     }
