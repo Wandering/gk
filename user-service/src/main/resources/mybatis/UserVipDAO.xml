@@ -37,6 +37,7 @@ selectList
     </sql>
     <insert id="insert" parameterType="UserVip">
         INSERT INTO zgk_user_vip (
+        id,
         status,
         creator,
         createDate,
@@ -47,6 +48,7 @@ selectList
         isActiveGkxt,
         userId
         ) VALUES (
+        #{id},
         #{status},
         #{creator},
         #{createDate},

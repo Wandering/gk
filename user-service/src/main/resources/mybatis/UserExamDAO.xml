@@ -33,12 +33,14 @@ selectList
     </sql>
     <insert id="insert" parameterType="UserExam">
         INSERT INTO zgk_user_exam (
+        id,
         scores,
         ranking,
         isSurvey,
         isReported,
         userId
         ) VALUES (
+        #{id},
         #{scores},
         #{ranking},
         #{isSurvey},
