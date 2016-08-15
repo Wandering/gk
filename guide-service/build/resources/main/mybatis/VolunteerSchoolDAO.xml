@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IVolunteerSchoolDAO">
+<!--
+insert
+update
+updateNull
+deleteById
+deleteByCondition
+deleteByProperty
+fetch
+findOne
+findList
+findAll
+queryPage
+like
+queryList
+queryOne
+count
+selectMaxId
+updateOrSave
+selectOne
+selectList
+-->
+    <sql id="Base_Column_List">
+        id as id ,
+        categoryId as categoryId ,
+        title as title ,
+        summary as summary ,
+        content as content ,
+        sort as sort ,
+        status as status ,
+        creator as creator ,
+        createDate as createDate ,
+        lastModifier as lastModifier ,
+        lastModDate as lastModDate ,
+        hits as hits ,
+        areaId as areaId
+    </sql>
+    <insert id="insert" parameterType="VolunteerSchool">
+        INSERT INTO gk_volunteer_school (
+        categoryId,
+        title,
+        summary,
+        content,
+        sort,
+        status,
+        creator,
+        createDate,
+        lastModifier,
+        lastModDate,
+        hits,
+        areaId
+        ) VALUES (
+        #{categoryId},
+        #{title},
+        #{summary},
+        #{content},
+        #{sort},
+        #{status},
+        #{creator},
+        #{createDate},
+        #{lastModifier},
+        #{lastModDate},
+        #{hits},
+        #{areaId}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="VolunteerSchool">
+        UPDATE gk_volunteer_school
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="categoryId!=null">
+                categoryId = #{categoryId},
+            </if>
+            <if test="title!=null">
+                title = #{title},
+            </if>
+            <if test="summary!=null">
+                summary = #{summary},
+            </if>
+            <if test="content!=null">
+                content = #{content},
+            </if>
+            <if test="sort!=null">
+                sort = #{sort},
+            </if>
+            <if test="status!=null">
+                status = #{status},
+            </if>
+            <if test="creator!=null">
+                creator = #{creator},
+            </if>
+            <if test="createDate!=null">
+                createDate = #{createDate},
+            </if>
+            <if test="lastModifier!=null">
+                lastModifier = #{lastModifier},
+            </if>
+            <if test="lastModDate!=null">
+                lastModDate = #{lastModDate},
+            </if>
+            <if test="hits!=null">
+                hits = #{hits},
+            </if>
+            <if test="areaId!=null">
+                areaId = #{areaId},
+            </if>
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateMap">
+        UPDATE gk_volunteer_school
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.categoryId!=null">
+                categoryId = #{map.categoryId},
+            </if>
+            <if test="map.title!=null">
+                title = #{map.title},
+            </if>
+            <if test="map.summary!=null">
+                summary = #{map.summary},
+            </if>
+            <if test="map.content!=null">
+                content = #{map.content},
+            </if>
+            <if test="map.sort!=null">
+                sort = #{map.sort},
+            </if>
+            <if test="map.status!=null">
+                status = #{map.status},
+            </if>
+            <if test="map.creator!=null">
+                creator = #{map.creator},
+            </if>
+            <if test="map.createDate!=null">
+                createDate = #{map.createDate},
+            </if>
+            <if test="map.lastModifier!=null">
+                lastModifier = #{map.lastModifier},
+            </if>
+            <if test="map.lastModDate!=null">
+                lastModDate = #{map.lastModDate},
+            </if>
+            <if test="map.hits!=null">
+                hits = #{map.hits},
+            </if>
+            <if test="map.areaId!=null">
+                areaId = #{map.areaId},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE gk_volunteer_school
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.categoryId!=null">
+                categoryId = #{update.categoryId},
+            </if>
+            <if test="update.title!=null">
+                title = #{update.title},
+            </if>
+            <if test="update.summary!=null">
+                summary = #{update.summary},
+            </if>
+            <if test="update.content!=null">
+                content = #{update.content},
+            </if>
+            <if test="update.sort!=null">
+                sort = #{update.sort},
+            </if>
+            <if test="update.status!=null">
+                status = #{update.status},
+            </if>
+            <if test="update.creator!=null">
+                creator = #{update.creator},
+            </if>
+            <if test="update.createDate!=null">
+                createDate = #{update.createDate},
+            </if>
+            <if test="update.lastModifier!=null">
+                lastModifier = #{update.lastModifier},
+            </if>
+            <if test="update.lastModDate!=null">
+                lastModDate = #{update.lastModDate},
+            </if>
+            <if test="update.hits!=null">
+                hits = #{update.hits},
+            </if>
+            <if test="update.areaId!=null">
+                areaId = #{update.areaId},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.categoryId!=null">
+                AND categoryId = #{condition.categoryId}
+            </if>
+            <if test="condition.title!=null">
+                AND title = #{condition.title}
+            </if>
+            <if test="condition.summary!=null">
+                AND summary = #{condition.summary}
+            </if>
+            <if test="condition.content!=null">
+                AND content = #{condition.content}
+            </if>
+            <if test="condition.sort!=null">
+                AND sort = #{condition.sort}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.hits!=null">
+                AND hits = #{condition.hits}
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
+        </trim>
+    </update>
+
+    <insert id="insertMap" >
+        INSERT INTO gk_volunteer_school (
+        categoryId,
+        title,
+        summary,
+        content,
+        sort,
+        status,
+        creator,
+        createDate,
+        lastModifier,
+        lastModDate,
+        hits,
+        areaId
+        ) VALUES (
+        #{map.categoryId},
+        #{map.title},
+        #{map.summary},
+        #{map.content},
+        #{map.sort},
+        #{map.status},
+        #{map.creator},
+        #{map.createDate},
+        #{map.lastModifier},
+        #{map.lastModDate},
+        #{map.hits},
+        #{map.areaId}
+        )
+    </insert>
+
+
+    <update id="updateNull" parameterType="VolunteerSchool">
+        UPDATE gk_volunteer_school
+        <trim prefix="SET" suffixOverrides=",">
+            categoryId = #{categoryId},
+            title = #{title},
+            summary = #{summary},
+            content = #{content},
+            sort = #{sort},
+            status = #{status},
+            creator = #{creator},
+            createDate = #{createDate},
+            lastModifier = #{lastModifier},
+            lastModDate = #{lastModDate},
+            hits = #{hits},
+            areaId = #{areaId},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM gk_volunteer_school
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </delete>
+
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM gk_volunteer_school
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="categoryId!=null">
+                AND categoryId = #{categoryId}
+            </if>
+            <if test="title!=null">
+                AND title = #{title}
+            </if>
+            <if test="summary!=null">
+                AND summary = #{summary}
+            </if>
+            <if test="content!=null">
+                AND content = #{content}
+            </if>
+            <if test="sort!=null">
+                AND sort = #{sort}
+            </if>
+            <if test="status!=null">
+                AND status = #{status}
+            </if>
+            <if test="creator!=null">
+                AND creator = #{creator}
+            </if>
+            <if test="createDate!=null">
+                AND createDate = #{createDate}
+            </if>
+            <if test="lastModifier!=null">
+                AND lastModifier = #{lastModifier}
+            </if>
+            <if test="lastModDate!=null">
+                AND lastModDate = #{lastModDate}
+            </if>
+            <if test="hits!=null">
+                AND hits = #{hits}
+            </if>
+            <if test="areaId!=null">
+                AND areaId = #{areaId}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM gk_volunteer_school WHERE
+        ${property} = #{value}
+    </delete>
+
+    <select id="fetch" parameterType="java.lang.Long" resultType="VolunteerSchool">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_volunteer_school
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="VolunteerSchool">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_volunteer_school WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="VolunteerSchool">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_volunteer_school WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="VolunteerSchool">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_volunteer_school
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="VolunteerSchool">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_volunteer_school
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.id!=null">
+                ${condition.groupOp}   ${condition.id.field}  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.categoryId!=null">
+                ${condition.groupOp}   ${condition.categoryId.field}  ${condition.categoryId.op}  #{condition.categoryId.data}
+            </if>
+            <if test="condition.title!=null">
+                ${condition.groupOp}   ${condition.title.field}  ${condition.title.op}  #{condition.title.data}
+            </if>
+            <if test="condition.summary!=null">
+                ${condition.groupOp}   ${condition.summary.field}  ${condition.summary.op}  #{condition.summary.data}
+            </if>
+            <if test="condition.content!=null">
+                ${condition.groupOp}   ${condition.content.field}  ${condition.content.op}  #{condition.content.data}
+            </if>
+            <if test="condition.sort!=null">
+                ${condition.groupOp}   ${condition.sort.field}  ${condition.sort.op}  #{condition.sort.data}
+            </if>
+            <if test="condition.status!=null">
+                ${condition.groupOp}   ${condition.status.field}  ${condition.status.op}  #{condition.status.data}
+            </if>
+            <if test="condition.creator!=null">
+                ${condition.groupOp}   ${condition.creator.field}  ${condition.creator.op}  #{condition.creator.data}
+            </if>
+            <if test="condition.createDate!=null">
+                ${condition.groupOp}   ${condition.createDate.field}  ${condition.createDate.op}  #{condition.createDate.data}
+            </if>
+            <if test="condition.lastModifier!=null">
+                ${condition.groupOp}   ${condition.lastModifier.field}  ${condition.lastModifier.op}  #{condition.lastModifier.data}
+            </if>
+            <if test="condition.lastModDate!=null">
+                ${condition.groupOp}   ${condition.lastModDate.field}  ${condition.lastModDate.op}  #{condition.lastModDate.data}
+            </if>
+            <if test="condition.hits!=null">
+                ${condition.groupOp}   ${condition.hits.field}  ${condition.hits.op}  #{condition.hits.data}
+            </if>
+            <if test="condition.areaId!=null">
+                ${condition.groupOp}   ${condition.areaId.field}  in ( #{condition.areaId.data},'0')
+            </if>
+
+
+        </where>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="VolunteerSchool">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_volunteer_school
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id like CONCAT('%', #{condition.id} , '%')
+            </if>
+            <if test="condition.categoryId!=null">
+                AND categoryId like CONCAT('%', #{condition.categoryId} , '%')
+            </if>
+            <if test="condition.title!=null">
+                AND title like CONCAT('%', #{condition.title} , '%')
+            </if>
+            <if test="condition.summary!=null">
+                AND summary like CONCAT('%', #{condition.summary} , '%')
+            </if>
+            <if test="condition.content!=null">
+                AND content like CONCAT('%', #{condition.content} , '%')
+            </if>
+            <if test="condition.sort!=null">
+                AND sort like CONCAT('%', #{condition.sort} , '%')
+            </if>
+            <if test="condition.status!=null">
+                AND status like CONCAT('%', #{condition.status} , '%')
+            </if>
+            <if test="condition.creator!=null">
+                AND creator like CONCAT('%', #{condition.creator} , '%')
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate like CONCAT('%', #{condition.createDate} , '%')
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier like CONCAT('%', #{condition.lastModifier} , '%')
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate like CONCAT('%', #{condition.lastModDate} , '%')
+            </if>
+            <if test="condition.hits!=null">
+                AND hits like CONCAT('%', #{condition.hits} , '%')
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId like CONCAT('%', #{condition.areaId} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="VolunteerSchool">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_volunteer_school
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.categoryId!=null">
+                AND categoryId = #{condition.categoryId}
+            </if>
+            <if test="condition.title!=null">
+                AND title = #{condition.title}
+            </if>
+            <if test="condition.summary!=null">
+                AND summary = #{condition.summary}
+            </if>
+            <if test="condition.content!=null">
+                AND content = #{condition.content}
+            </if>
+            <if test="condition.sort!=null">
+                AND sort = #{condition.sort}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.hits!=null">
+                AND hits = #{condition.hits}
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId in ( #{condition.areaId},'0')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="VolunteerSchool">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_volunteer_school
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.categoryId!=null">
+                AND categoryId = #{condition.categoryId}
+            </if>
+            <if test="condition.title!=null">
+                AND title = #{condition.title}
+            </if>
+            <if test="condition.summary!=null">
+                AND summary = #{condition.summary}
+            </if>
+            <if test="condition.content!=null">
+                AND content = #{condition.content}
+            </if>
+            <if test="condition.sort!=null">
+                AND sort = #{condition.sort}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.hits!=null">
+                AND hits = #{condition.hits}
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(id) FROM gk_volunteer_school
+        <where>
+            <if test="id!=null">
+                ${groupOp} ${id.field} ${id.op}  #{id.data}
+            </if>
+            <if test="categoryId!=null">
+                ${groupOp} ${categoryId.field} ${categoryId.op}  #{categoryId.data}
+            </if>
+            <if test="title!=null">
+                ${groupOp} ${title.field} ${title.op}  #{title.data}
+            </if>
+            <if test="summary!=null">
+                ${groupOp} ${summary.field} ${summary.op}  #{summary.data}
+            </if>
+            <if test="content!=null">
+                ${groupOp} ${content.field} ${content.op}  #{content.data}
+            </if>
+            <if test="sort!=null">
+                ${groupOp} ${sort.field} ${sort.op}  #{sort.data}
+            </if>
+            <if test="status!=null">
+                ${groupOp} ${status.field} ${status.op}  #{status.data}
+            </if>
+            <if test="creator!=null">
+                ${groupOp} ${creator.field} ${creator.op}  #{creator.data}
+            </if>
+            <if test="createDate!=null">
+                ${groupOp} ${createDate.field} ${createDate.op}  #{createDate.data}
+            </if>
+            <if test="lastModifier!=null">
+                ${groupOp} ${lastModifier.field} ${lastModifier.op}  #{lastModifier.data}
+            </if>
+            <if test="lastModDate!=null">
+                ${groupOp} ${lastModDate.field} ${lastModDate.op}  #{lastModDate.data}
+            </if>
+            <if test="hits!=null">
+                ${groupOp} ${hits.field} ${hits.op}  #{hits.data}
+            </if>
+            <if test="areaId!=null">
+                ${groupOp} ${areaId.field} in ( #{areaId.data},'0')
+            </if>
+
+        </where>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Long">
+        SELECT
+        MAX(id)
+        FROM gk_volunteer_school
+    </select>
+
+</mapper>
+

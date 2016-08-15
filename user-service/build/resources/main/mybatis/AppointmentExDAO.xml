@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.ex.IAppointmentExDAO">
+
+    <sql id="Base_Column_List">
+        id,
+        status,
+        creator,
+        createDate,
+        lastModifier,
+        lastModDate,
+        title,
+        startDate,
+        endDate,
+        content,
+        name,
+        mobile,
+        qq,
+        userId
+    </sql>
+
+
+    <select id="like" parameterType="java.util.Map" resultType="Appointment">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_appointment
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="map.id!=null">
+                AND id like CONCAT('%', #{map.id} , '%')
+            </if>
+            <if test="map.status!=null">
+                AND status like CONCAT('%', #{map.status} , '%')
+            </if>
+            <if test="map.creator!=null">
+                AND creator like CONCAT('%', #{map.creator} , '%')
+            </if>
+            <if test="map.createDate!=null">
+                AND createDate like CONCAT('%', #{map.createDate} , '%')
+            </if>
+            <if test="map.lastModifier!=null">
+                AND lastModifier like CONCAT('%', #{map.lastModifier} , '%')
+            </if>
+            <if test="map.lastModDate!=null">
+                AND lastModDate like CONCAT('%', #{map.lastModDate} , '%')
+            </if>
+            <if test="map.title!=null">
+                AND title like CONCAT('%', #{map.title} , '%')
+            </if>
+            <if test="map.startDate!=null">
+                AND startDate like CONCAT('%', #{map.startDate} , '%')
+            </if>
+            <if test="map.endDate!=null">
+                AND endDate like CONCAT('%', #{map.endDate} , '%')
+            </if>
+            <if test="map.content!=null">
+                AND content like CONCAT('%', #{map.content} , '%')
+            </if>
+            <if test="map.name!=null">
+                AND name like CONCAT('%', #{map.name} , '%')
+            </if>
+            <if test="map.mobile!=null">
+                AND mobile like CONCAT('%', #{map.mobile} , '%')
+            </if>
+            <if test="map.qq!=null">
+                AND qq like CONCAT('%', #{map.qq} , '%')
+            </if>
+            <if test="map.userId!=null">
+                AND userId like CONCAT('%', #{map.userId} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+
+
+
+</mapper>
+

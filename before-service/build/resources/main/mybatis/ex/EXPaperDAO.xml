@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.ex.IEXPaperDAO">
+    <select id="getPaperPage" resultType="ExaminationPaper">
+        SELECT  * FROM gk_examination_paper WHERE 1=1
+        <if test="years != null">
+           AND years = #{years}
+        </if>
+        <if test="subjectId != null">
+            AND subjectId = #{subjectId}
+        </if>
+        <if test="searchName != null">
+           AND paperName LIKE  CONCAT('%', #{searchName} , '%')
+        </if>
+        <if test="areaId != null">
+            AND areaId in ( #{areaId},'0')
+        </if>
+        <if test="sortType == 1">
+            ORDER BY createDate DESC
+        </if>
+        <if test="sortType == 2">
+            ORDER BY downloadsAutomatic DESC
+        </if>
+        limit ${offSet}, ${rows}
+    </select>
+</mapper>

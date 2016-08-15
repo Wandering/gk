@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.information.ex.IAgentExDAO">
+<!--
+insert
+update
+updateNull
+deleteById
+deleteByCondition
+deleteByProperty
+fetch
+findOne
+findList
+findAll
+queryPage
+like
+queryList
+queryOne
+count
+selectMaxId
+updateOrSave
+selectOne
+selectList
+-->
+
+    <sql id="Base_Column_List">
+        agent.id as id ,
+        agent.status as status ,
+        agent.creator as creator ,
+        agent.createDate as createDate ,
+        agent.lastModifier as lastModifier ,
+        agent.lastModDate as lastModDate ,
+        agent.name as name ,
+        agent.telphone as telphone ,
+        agent.address as address ,
+        agent.areaId as areaId,
+        province.name as province
+    </sql>
+
+    <select id="queryPage" resultType="cn.thinkjoy.gk.entity.information.dto.AgentDTO">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_agent agent
+        LEFT JOIN zgk_province province ON province.id=agent.areaId
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.areaId!=null">
+                ${condition.groupOp}   ${condition.areaId.field}  ${condition.areaId.op}  #{condition.areaId.data}
+            </if>
+            <if test="condition.queryparam!=null">
+                ${condition.groupOp}  (province.name like #{condition.queryparam.data} OR agent.name like #{condition.queryparam.data} OR agent.telphone like #{condition.queryparam.data})
+            </if>
+
+
+
+    </where>
+        ORDER BY id DESC
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(agent.id)
+        FROM zgk_agent agent
+        LEFT JOIN zgk_province province ON province.id=agent.areaId
+       <where>
+           <if test="agentareaId!=null">
+               ${groupOp}   ${agentareaId.field}  ${agentareaId.op}  #{agentareaId.data}
+           </if>
+           <if test="queryparam!=null">
+               ${groupOp}  (province.name like #{queryparam.data} OR agent.name like #{queryparam.data} OR agent.telphone like #{queryparam.data})
+           </if>
+
+       </where>
+    </select>
+
+
+</mapper>
+

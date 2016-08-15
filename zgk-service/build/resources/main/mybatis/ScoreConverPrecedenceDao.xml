@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IScoreConverPrecedenceDao">
+    <resultMap id="BaseResultMap" type="cn.thinkjoy.gk.entity.ScoreConverPrecedence">
+        <result column="score" property="score" jdbcType="INTEGER" />
+        <result column="num" property="num" jdbcType="INTEGER" />
+        <result column="heigh_pre" property="heighPre" jdbcType="INTEGER" />
+        <result column="low_pre" property="lowPre" jdbcType="INTEGER" />
+        <result column="avg_pre" property="avgPre" jdbcType="INTEGER" />
+    </resultMap>
+    <resultMap id="MaxMinResultMap" type="cn.thinkjoy.gk.entity.ScoreMaxMin">
+        <result column="maxScore" property="maxScore" jdbcType="INTEGER" />
+        <result column="minScore" property="minScore" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        score,num,heigh_pre,low_pre,avg_pre
+    </sql>
+    <sql id="Max_Min_Column">
+        max(scoreMapData.score) as maxScore,min(scoreMapData.score) as minScore
+    </sql>
+    <!--获取分数映射的平均位次值-->
+    <select id="selectPrecedenceByScore" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select <include refid="Base_Column_List" /> from zgk_data.`${tableName}` as scoreMapData
+        <where>
+            <if test="score!=null">
+                and scoreMapData.score=#{score,jdbcType=INTEGER}
+            </if>
+            <if test="num!=null">
+                and scoreMapData.num=#{num,jdbcType=INTEGER}
+            </if>
+            <if test="heighPre!=null">
+                and scoreMapData.heigh_pre=#{heighPre,jdbcType=INTEGER}
+            </if>
+            <if test="lowPre!=null">
+                and scoreMapData.low_pre=#{lowPre,jdbcType=INTEGER}
+            </if>
+            <if test="avgPre!=null">
+                and scoreMapData.avg_pre=#{avgPre,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <!--获取一分一段最大值及最小值-->
+    <select id="selectMaxScore" resultMap="MaxMinResultMap" parameterType="java.util.Map">
+        select <include refid="Max_Min_Column" /> from zgk_data.`${tableName}` as scoreMapData
+    </select>
+</mapper>

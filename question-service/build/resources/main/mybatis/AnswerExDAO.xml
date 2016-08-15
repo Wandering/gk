@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IAnswerExDAO">
+
+    <select id="findAnswerQuestionPage" resultType="AnswerQuestionBean">
+        select * from (select a.id,a.userId,a.question,a.isAnswer,a.isOpen,a.freeStatus,a.createDate createTime,a.disableStatus,
+        b.createDate answerTime,c.name userName,c.icon userIcon
+        from shishuo_question a
+        left join shishuo_answer b on a.id = b.questionId
+        left join shishuo_user_info c on a.userId = c.id
+        <where>
+            a.status = 0
+            <if test="userId !=null">
+                AND a.userId = #{userId}
+            </if>
+        </where>
+        order by b.createDate,a.createDate desc
+        ) aa order by answerTime desc
+        <if test="startSize != null and endSize != null">
+            limit ${startSize}, ${endSize}
+        </if>
+    </select>
+
+    <select id="findAnswerQuestionCount" resultType="Integer">
+        select count(*)
+        from shishuo_question a
+        <where>
+            a.status = 0
+            <if test="userId !=null">
+                AND a.userId = #{userId}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateAnswerByQuestionId" parameterType="Answer">
+        UPDATE op_expert_answer
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="status!=null">
+                status = #{status},
+            </if>
+            <if test="createDate!=null">
+                createDate = #{createDate},
+            </if>
+            <if test="lastModDate!=null">
+                lastModDate = #{lastModDate},
+            </if>
+            <if test="userId!=null">
+                userId = #{userId},
+            </if>
+            <if test="expertId!=null">
+                expertId = #{expertId},
+            </if>
+            <if test="answer!=null">
+                answer = #{answer},
+            </if>
+            <if test="answerHtml!=null">
+                answerHtml = #{answerHtml},
+            </if>
+        </trim>
+        WHERE
+        id = #{questionId}
+    </update>
+
+</mapper>
+
