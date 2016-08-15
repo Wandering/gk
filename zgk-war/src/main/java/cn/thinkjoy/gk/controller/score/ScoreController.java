@@ -3,9 +3,7 @@ package cn.thinkjoy.gk.controller.score;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.service.IScoreAnalysisService;
-import cn.thinkjoy.gk.util.ScoreUtil;
-import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Maps;
+import cn.thinkjoy.gk.common.ScoreUtil;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.security.auth.Subject;
 import javax.servlet.http.HttpServletRequest;
-import java.text.NumberFormat;
 import java.util.*;
 
 /**
@@ -43,21 +39,18 @@ public class ScoreController {
     @RequestMapping(value = "/queryScoreRecordByUserId",method = RequestMethod.GET)
     @ResponseBody
     public Object queryScoreRecordByUserId(@RequestParam long userId){
-        Map<String,Object> map = scoreAnalysisService.queryScoreRecordByUserId(userId);
-        if(map==null){
-            return new HashedMap();
-        }
 
-
-
-        Map<String,Object> resultMap = new HashedMap();
-        resultMap.put("areaName",map.get("areaName"));
-        Integer majorType=(Integer) map.get("majorType");
-        resultMap.put("majorType",majorType);
-        resultMap.put("schoolName",map.get("schoolName"));
-        Map<String,Object> scores = scoreUtil.getScores(map,majorType);
-        resultMap.put("scores",scores);
-        return resultMap;
+//        特殊省份处理
+//        获取用户信息
+//        判断用户所在省份
+//        是特殊省份
+//        if(){
+//
+//        }else {
+//
+//        }
+//        不是特殊省份
+        return scoreAnalysisService.queryScoreRecordByUserId(userId);
     }
 
     /**
@@ -132,34 +125,7 @@ public class ScoreController {
         //获取成绩
         Map<String, Object> scores = scoreUtil.getScores(request);
 
-
-        Map<String,Object> insertMap = new HashedMap();
-        insertMap.put("userId",userId);
-        insertMap.put("areaId",areaId);
-        insertMap.put("majorType",majorType);
-        insertMap.put("cdate",System.currentTimeMillis());
-        Map<String,Object> insertScores = new HashedMap();
-
-        Iterator iterator=scores.keySet().iterator();
-        Float totalScore=0f;
-        while (iterator.hasNext()){
-            String key = (String) iterator.next();
-            String value = (String) scores.get(key);
-            String[] values = value.split("-");
-            totalScore+=Float.valueOf(values[0]);
-            insertScores.put(key+"Score",values[0]);
-            insertScores.put(key+"ScoreTotal",values[1]);
-        }
-        if(insertScores.size()!=12&&insertScores.size()!=14){
-            throw new BizException("error","提交科目不完整!");
-        }
-
-        insertMap.put("scores",insertScores);
-        insertMap.put("totalScore",totalScore);
-        scoreAnalysisService.insertScoreRecord(insertMap);
-        Map<String,Object> resultMap=new HashedMap();
-        resultMap.put("recordId",insertMap.get("recordId"));
-        return resultMap;
+        return scoreAnalysisService.insertScoreRecord(userId,areaId,majorType,scores);
     }
 
 
@@ -170,85 +136,7 @@ public class ScoreController {
     @RequestMapping(value = "/queryInfoByRecordId",method = RequestMethod.GET)
     @ResponseBody
     public Object queryInfoByRecordId(@RequestParam long recordId){
-
-        Map<String,Object> map = scoreAnalysisService.queryInfoByRecordId(recordId);
-        if(map==null){
-            return new HashedMap();
-        }
-        Map<String,Object> resultMap = new HashedMap();
-
-        Float totalScore = (Float) map.get("totalScore");
-        Long areaId = Long.valueOf(map.get("areaId").toString()) ;
-
-        resultMap.put("totalScore",totalScore);
-        resultMap.put("areaName",map.get("areaName"));
-        Integer majorType=(Integer) map.get("majorType");
-        resultMap.put("majorType",majorType);;
-        Map<String,Object> scores=scoreUtil.getScores(map,majorType);
-        resultMap.put("scores",scores);
-
-
-        // 获取用户上次成绩
-        //第一次判定
-        Float lastScore=null;
-        lastScore=scoreAnalysisService.queryLastScore(Long.valueOf(map.get("userId").toString()),recordId);
-        if(lastScore!=null){
-            //非第一次用户  有上一次成绩
-            resultMap.put("difference",scoreUtil.floatToStr(totalScore-lastScore));
-        }else {
-            //第一次用户没有上一次成绩
-            logger.info("用户是第一次测评");
-            resultMap.put("difference","off");
-        }
-
-        // 推荐标签
-
-        List<String> labels=scoreUtil.getUserLabel(scoreUtil.getScores(map,majorType));
-        resultMap.put("labels",labels);
-
-        String areaTableName = scoreUtil.getAreaTableName(areaId, majorType);
-        //文或者理科总人数
-        Integer allStuNum = scoreAnalysisService.queryAllAreaStuNum(areaTableName);
-        try {
-            //极端情况
-            if (scoreAnalysisService.isExistMaxScore(totalScore, areaTableName)) {
-                //当前分数超过了一分一段表的最大值 或者  达到很高的值
-                resultMap.put("proviceRank", -1);
-                resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
-
-            } else if (scoreAnalysisService.isExistScore(totalScore, areaTableName)) {
-                //            正常情况
-                //需要超过多少人
-                //一分超过多少人
-                Integer stuNum = scoreAnalysisService.queryStuNum(totalScore, areaTableName);
-                //全省排名
-                Integer proviceRank = scoreAnalysisService.queryProviceRank(totalScore, areaTableName);
-                Integer temp = allStuNum;
-                //重新定义全省人数
-                allStuNum = scoreAnalysisService.queryPeoNumByAreaAndType(areaId, majorType);
-                if (allStuNum == null || allStuNum == 0) {
-                    logger.info("该省没有总人数!");
-                    allStuNum = temp;
-                }
-
-                resultMap.put("stuNum", stuNum);
-                String[] nums = String.valueOf(100 - ((Float.valueOf(proviceRank) / Float.valueOf(allStuNum)) * 100)).split("\\.");
-                String proviceRankPro = nums[0] + "." + nums[1].substring(0, 2) + "%";
-                resultMap.put("proviceRankPro", proviceRankPro);
-                resultMap.put("proviceRank", proviceRank);
-
-                resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
-            } else {
-                //           分数不在一分一段中的情况
-                //文或者理科总人数
-                resultMap.put("proviceRank", -allStuNum);
-                resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
-            }
-        }catch (Exception e){
-            logger.info("当前省份为"+map.get("areaName"));
-            throw new BizException("error","暂不支持"+map.get("areaName")+"!");
-        }
-        return resultMap;
+        return scoreAnalysisService.queryInfoByRecordId(recordId);
     }
 
     /**
@@ -258,62 +146,7 @@ public class ScoreController {
     @RequestMapping(value = "/queryAllRecordByUserId",method = RequestMethod.GET)
     @ResponseBody
     public Object queryAllRecordByUserId(@RequestParam long userId){
-
-
-        List<Map<String,Object>> list = new ArrayList<>();
-
-        List<Map<String,Object>> queryList = scoreAnalysisService.queryAllRecordByUserId(userId);
-        if(queryList!=null && (!queryList.isEmpty())) {
-            for (Map<String, Object> map : queryList) {
-                Map<String, Object> resultMap = new HashedMap();
-                Float totalScore = (Float) map.get("totalScore");
-                Long areaId = Long.valueOf(map.get("areaId").toString()) ;
-                resultMap.put("recordId", map.get("recordId"));
-                resultMap.put("totalScore", totalScore);
-                resultMap.put("areaName", map.get("areaName"));
-                Integer majorType = (Integer) map.get("majorType");
-                resultMap.put("majorType", majorType);
-                resultMap.put("cdate", map.get("cdate"));
-                resultMap.put("upLine",scoreUtil.getTopBatchLine(areaId,majorType,totalScore));
-                Map<String,Object> scores =  scoreUtil.getScores(map,majorType);
-
-                resultMap.put("scores",scores);
-                String areaTableName = scoreUtil.getAreaTableName(areaId,majorType);
-                //分析科目强弱
-                Object [] subjects = scoreUtil.getScoreWeak(scores);
-                resultMap.put("strong", subjects[0]);
-                resultMap.put("weak", subjects[1]);
-
-
-                //极端情况
-                if(scoreAnalysisService.isExistMaxScore(totalScore,areaTableName)){
-                    //当前分数超过了一分一段表的最大值 或者  达到很高的值
-                    resultMap.put("proviceRank", -1);
-                    resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
-
-                }if(scoreAnalysisService.isExistScore(totalScore,areaTableName)) {
-                    //需要超过多少人
-                    Integer stuNum = scoreAnalysisService.queryStuNum(totalScore, areaTableName);
-                    Float totalScore1=totalScore;
-                    while (stuNum==null){
-                        stuNum = scoreAnalysisService.queryStuNum(totalScore1--, areaTableName);
-                    }
-                    Integer proviceRank = scoreAnalysisService.queryProviceRank(totalScore1, areaTableName);
-                    resultMap.put("stuNum", stuNum);
-                    resultMap.put("proviceRank", proviceRank);
-                }else {
-                    //TODO           分数不在一分一段中的情况
-                    //文或者理科总人数
-                    int allStuNum = scoreAnalysisService.queryAllAreaStuNum(areaTableName);
-                    resultMap.put("proviceRank", -allStuNum);
-                }
-
-
-                list.add(resultMap);
-            }
-        }
-
-        return list;
+        return scoreAnalysisService.queryAllRecordByUserId(userId);
     }
 
     /**
@@ -388,51 +221,7 @@ public class ScoreController {
     @RequestMapping(value = "/recommendSchool",method = RequestMethod.GET)
     @ResponseBody
     public Object recommendSchool(@RequestParam float totalScore,@RequestParam long areaId,@RequestParam int majorType){
-
-        Integer lastYear = Integer.valueOf(scoreUtil.getYear())-1;
-
-        //确定当前分数对应当年批次分数
-//        long areaId,int majorType,Float totalScore,String year
-        Object[] line1s = null;
-        try {
-            line1s=scoreUtil.getBatchAndScore(areaId, majorType, totalScore, scoreUtil.getYear());
-        }catch (Exception e){
-            throw new BizException("error","当前省份"+scoreUtil.getYear()+"年分数线为空!");
-        }
-        if(line1s[2]==5){
-            //todo 假如不足高职专科批次(分数超低)
-
-            //推荐10所高职院校
-            return scoreAnalysisService.queryLowstUniversity(areaId,majorType,totalScore,lastYear.toString());
-        }
-        int batch= (int)line1s[2];
-        //获得分差1  考生分-16年分数线
-        float difference = totalScore-(Float) line1s[0];
-        //确定点钱分数对应次年批次分数
-
-
-        Float line2 = scoreUtil.getLastBatchAndScore(areaId,majorType,batch,lastYear.toString());
-
-        //获得分差2  院校15年分-15年分数线 (15年分数线)
-
-
-
-        //计算公式为 lowestScore - line -  difference > = bc  || lowestScore - line -  difference > = -bc
-
-        int count =0;
-        int bc = 0;
-        do {
-            count = scoreAnalysisService.countUniversity(areaId,(Integer)line1s[2],majorType,lastYear.toString(),difference,line2,bc);
-            //增加步长
-            bc+=5;
-        }while (count<20&&bc<750);
-
-        bc-=5;
-        //返回前20个院校
-        List<Map<String,Object>> resultList = scoreAnalysisService.queryUniversityByScore(areaId,(Integer)line1s[2],majorType,lastYear.toString(),difference,line2,totalScore,bc);
-
-
-        return resultList;
+        return scoreAnalysisService.recommendSchool(totalScore,areaId,majorType);
     }
 
     /**
@@ -469,69 +258,7 @@ public class ScoreController {
                                              Long schoolId,
                                              Integer batch,
                                              @RequestParam long userId){
-
-        Map<String,Object> map = scoreAnalysisService.queryInfoByRecordId(recordId);
-        //假如院校没有传入 默认为使用上次院校
-        if(schoolId!=null && batch!=null){
-            Map<String,Object> insertMap = new HashedMap();
-            insertMap.put("userId",userId);
-            insertMap.put("areaId",map.get("areaId"));
-            insertMap.put("universityId",schoolId);
-            insertMap.put("batch",batch);
-            insertMap.put("cdate",System.currentTimeMillis());
-            scoreAnalysisService.insertTarget(insertMap);
-        }else {
-            //获取上次测评院校和批次
-            Map<String,Object> targetMap = scoreAnalysisService.queryLastTarget(userId);
-            schoolId=Long.valueOf(targetMap.get("universityId").toString());
-            batch=Integer.valueOf(targetMap.get("batch").toString());
-        }
-
-        long areaId = Long.valueOf(map.get("areaId").toString());
-        int majorType = (int)map.get("majorType");
-        Float totalScore=(Float) map.get("totalScore");
-        String areaTableName = scoreUtil.getAreaTableName(areaId,majorType);
-        String year=(Integer.valueOf(scoreUtil.getYear())-1)+"";
-        String name = scoreAnalysisService.querySchoolNameById(schoolId);
-        String batchName = scoreAnalysisService.queryBatchNameById(batch);
-        Map<String,Object> schoolLineMap = scoreAnalysisService.queryUnivsersityLowestScore(schoolId,areaId,batch,majorType,year);
-        Float schoolLine=null;
-        String schoolLineYear=null;
-        if(schoolLineMap!=null){
-            schoolLine=Float.valueOf(schoolLineMap.get("lowestScore").toString());
-            schoolLineYear=schoolLineMap.get("year").toString();
-        }else {
-            throw new BizException("error","当前学校在当前批次无数据");
-        }
-        if (totalScore>schoolLine){
-            Integer stuNum = scoreAnalysisService.queryStuNumToLine(schoolLine,totalScore,areaTableName);
-            Map<String,Object> resultMap=new HashedMap();
-            resultMap.put("schoolId",schoolId);
-            resultMap.put("batchName",batchName);
-            resultMap.put("schoolName",name);
-            resultMap.put("totalScore",totalScore);
-            resultMap.put("stuNum",-stuNum);
-            resultMap.put("batchLine",scoreUtil.getBatchScore(batch,areaId,majorType));
-            resultMap.put("schoolLine",schoolLine);
-            resultMap.put("batch",batch);
-            resultMap.put("year",schoolLineYear);
-            return resultMap;
-        }
-        Integer stuNum = scoreAnalysisService.queryStuNumToLine(totalScore,schoolLine,areaTableName);
-
-        Map<String,Object> resultMap=new HashedMap();
-
-        resultMap.put("schoolId",schoolId);
-        resultMap.put("schoolName",name);
-        resultMap.put("batchName",batchName);
-        resultMap.put("totalScore",totalScore);
-        resultMap.put("stuNum",stuNum);
-        resultMap.put("addScore",totalScore-schoolLine);
-        resultMap.put("batchLine",scoreUtil.getBatchScore(batch,areaId,majorType));
-        resultMap.put("schoolLine",schoolLine);
-        resultMap.put("batch",batch);
-        resultMap.put("year",schoolLineYear);
-        return resultMap;
+        return scoreAnalysisService.queryGapBySchoolIdAndBatch(recordId,schoolId,batch,userId);
     }
 
 

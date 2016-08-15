@@ -189,7 +189,7 @@ deleteBySubjects
 
     <!--分数极端情况判定(最大值判定)(不存在于一分一段表中)-->
     <select id="isExistMaxScore" resultType="java.lang.Boolean">
-        SELECT max(score)&lt;=#{totalScore} from ${areaTableName} where score!=0
+        SELECT max(score)&lt;= #{totalScore} from ${areaTableName} where score!=0
     </select>
 
 
