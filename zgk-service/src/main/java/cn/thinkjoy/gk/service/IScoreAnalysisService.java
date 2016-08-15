@@ -18,10 +18,16 @@ public interface IScoreAnalysisService {
 
     /**
      * 添加用户定位分数
-     * @param map
+     * @param userId
+     * @param areaId
+     * @param majorType
+     * @param scores
      * @return
      */
-    int insertScoreRecord(Map<String, Object> map);
+    Map<String, Object> insertScoreRecord(long userId,
+                                          long areaId,
+                                          Integer majorType,
+                                          Map<String,Object> scores);
 
     /**
      * 根据ID查询定位分数
@@ -295,4 +301,11 @@ public interface IScoreAnalysisService {
      */
     List<String> queryLabelByTypeAndConfig(Integer type,List<Integer> configs);
 
+
+    Object recommendSchool(float totalScore,long areaId,int majorType);
+
+    Object queryGapBySchoolIdAndBatch(long recordId,
+                                      Long schoolId,
+                                      Integer batch,
+                                      long userId);
 }

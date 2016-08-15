@@ -1,10 +1,9 @@
-package cn.thinkjoy.gk.util;
+package cn.thinkjoy.gk.common;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.service.IScoreAnalysisService;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.HashedMap;
-import org.apache.commons.collections.map.LinkedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -160,15 +159,19 @@ public class ScoreUtil {
                 break;
             }
             if(i==0&&totalScore-scoreLines[i]>0){
-                Integer areaTotal=null;
-                areaTotal=scoreAnalysisService.queryTotalScoreByAreaId(areaId);
-                if(areaTotal!=null){
-                    // 该省总分在数据库中存在
-                    temp=areaTotal.floatValue();
-                    break;
-                }else {
-                    throw new BizException("error","该省总分不存在");
-                }
+
+                temp=scoreLines[0].floatValue();
+
+//                Integer areaTotal=null;
+
+//                areaTotal=scoreAnalysisService.queryTotalScoreByAreaId(areaId);
+//                if(areaTotal!=null){
+//                    // 该省总分在数据库中存在
+//                    temp=areaTotal.floatValue();
+//                    break;
+//                }else {
+//                    throw new BizException("error","该省总分不存在");
+//                }
             }
             temp=scoreLines[i].floatValue();
         }
