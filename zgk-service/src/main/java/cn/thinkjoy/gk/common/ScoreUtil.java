@@ -147,10 +147,10 @@ public class ScoreUtil {
 
 
         Float temp = null;
-        temp=scoreLines[3].floatValue();
 
         //规划计算当前分数最接近的上层分数
         for(int i=3;i>=0;i--){
+            temp=scoreLines[i].floatValue();
             //出现为0跳过当前轮
             if(scoreLines[i]==0){
                 continue;
@@ -173,7 +173,7 @@ public class ScoreUtil {
 //                    throw new BizException("error","该省总分不存在");
 //                }
             }
-            temp=scoreLines[i].floatValue();
+
         }
         return floatToStr(temp);
     }
