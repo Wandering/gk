@@ -271,7 +271,7 @@ deleteBySubjects
     	highestScore as highestScore,
 	    lowestScore as lowestScore,
 	    universityId,
-        ((lowestScore - #{line}) -  #{difference}) as gapSchool
+        (#{difference} - (lowestScore - #{line}) ) as gapSchool
         from zgk_university_enrolling
         WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
         and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}

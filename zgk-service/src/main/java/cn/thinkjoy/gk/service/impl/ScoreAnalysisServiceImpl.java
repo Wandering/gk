@@ -196,7 +196,6 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                     //当前分数超过了一分一段表的最大值 或者  达到很高的值
                     resultMap.put("proviceRank", -1);
                     resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
-
                 }
                 if (scoreAnalysisDAO.isExistScore(totalScore, areaTableName)) {
                     //需要超过多少人
