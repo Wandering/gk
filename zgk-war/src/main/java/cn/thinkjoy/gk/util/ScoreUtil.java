@@ -479,32 +479,28 @@ public class ScoreUtil {
     private Map<String,Object> getScoreType(Float score,Float totalScore,String subject){
         Float b = score/totalScore;
         Map<String,Object> map=new HashedMap();
+        String desc=null;
+        Integer tag=null;
         if(b-0.9>=0){
-            map.put("subject",subject);
-            map.put("desc",UserScoreType.SUBJECT_DESC_1);
-            map.put("tag",UserScoreType.SUBJECT_TAG_1);
-            return map;
+            desc=UserScoreType.SUBJECT_DESC_1;
+            tag=UserScoreType.SUBJECT_TAG_1;
         }else if(b-0.8>0){
-            map.put("subject",subject);
-            map.put("desc",UserScoreType.SUBJECT_DESC_2);
-            map.put("tag",UserScoreType.SUBJECT_TAG_2);
-            return map;
+            desc=UserScoreType.SUBJECT_DESC_2;
+            tag=UserScoreType.SUBJECT_TAG_2;
         }else if(b-0.6>0){
-            map.put("subject",subject);
-            map.put("desc",UserScoreType.SUBJECT_DESC_3);
-            map.put("tag",UserScoreType.SUBJECT_TAG_3);
-            return map;
+            desc=UserScoreType.SUBJECT_DESC_3;
+            tag=UserScoreType.SUBJECT_TAG_3;
         }else if(b-0.4>0){
-            map.put("subject",subject);
-            map.put("desc",UserScoreType.SUBJECT_DESC_4);
-            map.put("tag",UserScoreType.SUBJECT_TAG_4);
-            return map;
+            desc=UserScoreType.SUBJECT_DESC_4;
+            tag=UserScoreType.SUBJECT_TAG_4;
         }else{
-            map.put("subject",subject);
-            map.put("desc",UserScoreType.SUBJECT_DESC_5);
-            map.put("tag",UserScoreType.SUBJECT_TAG_5);
-            return map;
+            desc=UserScoreType.SUBJECT_DESC_5;
+            tag=UserScoreType.SUBJECT_TAG_5;
         }
+        map.put("subject",subject);
+        map.put("desc",desc);
+        map.put("tag",tag);
+        return map;
     }
 
     /**

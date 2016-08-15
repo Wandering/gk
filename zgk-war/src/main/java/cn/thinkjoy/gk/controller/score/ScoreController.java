@@ -194,7 +194,7 @@ public class ScoreController {
         lastScore=scoreAnalysisService.queryLastScore(Long.valueOf(map.get("userId").toString()),recordId);
         if(lastScore!=null){
             //非第一次用户  有上一次成绩
-            resultMap.put("difference",scoreUtil.floatToStr(lastScore-totalScore));
+            resultMap.put("difference",scoreUtil.floatToStr(totalScore-lastScore));
         }else {
             //第一次用户没有上一次成绩
             logger.info("用户是第一次测评");
