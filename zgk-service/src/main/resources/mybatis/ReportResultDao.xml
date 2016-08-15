@@ -145,7 +145,7 @@
          select (select count(Distinct(score)) from zgk_report_result where score>#{score,jdbcType=INTEGER})+1 as ranking
     </select>
     <select id="selectPrecedence" resultType="java.lang.Integer"  parameterType="java.util.Map" >
-        (select distinct(precedence) from `${tableName}` where precedence&lt;=#{preceden,jdbcType=INTEGER} order by precedence desc limit 1) union
-        (select distinct(precedence) from `${tableName}` where precedence&gt;#{preceden,jdbcType=INTEGER} order by precedence asc limit 1)
+        (select distinct(precedence) from zgk_data.`${tableName}` where precedence&lt;=#{preceden,jdbcType=INTEGER} order by precedence desc limit 1) union
+        (select distinct(precedence) from zgk_data.`${tableName}` where precedence&gt;#{preceden,jdbcType=INTEGER} order by precedence asc limit 1)
     </select>
 </mapper>
