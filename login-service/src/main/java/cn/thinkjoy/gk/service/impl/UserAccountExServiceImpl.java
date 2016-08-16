@@ -6,6 +6,7 @@
  */
 package cn.thinkjoy.gk.service.impl;
 
+import cn.thinkjoy.common.utils.SqlOrderEnum;
 import cn.thinkjoy.gk.Utils.MatrixToImageWriter;
 import cn.thinkjoy.gk.Utils.StaticSource;
 import cn.thinkjoy.gk.dao.*;
@@ -187,7 +188,7 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
 
     @Override
     public UserAccount findUserAccountById(long id){
-        return userAccountDAO.fetch(id);
+        return userAccountDAO.findOne("id",id,"id", SqlOrderEnum.ASC.getAction());
     }
 
     @Override
