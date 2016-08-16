@@ -39,10 +39,6 @@ public interface IUserAccountExService {
 
     UserInfoPojo getUserInfoPojoById(long id);
 
-    UserInfoPojo findOldUserAccountPojoById(long id);
-
-    UserInfoPojo findOldUserAccountPojoByPhone(String phone);
-
     Map<String,Object> findUserInfo(Map<String, String> paramMap);
 
     Department findDepartMent(Map<String, String> paramMap);
