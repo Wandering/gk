@@ -18,10 +18,16 @@ public interface IScoreAnalysisService {
 
     /**
      * 添加用户定位分数
-     * @param map
+     * @param userId
+     * @param areaId
+     * @param majorType
+     * @param scores
      * @return
      */
-    int insertScoreRecord(Map<String, Object> map);
+    Map<String, Object> insertScoreRecord(long userId,
+                                          long areaId,
+                                          Integer majorType,
+                                          Map<String,Object> scores);
 
     /**
      * 根据ID查询定位分数
@@ -124,7 +130,8 @@ public interface IScoreAnalysisService {
      */
     List<Map<String,Object>> queryUnivsersityBatch(long areaId,
                                                    long schooleId,
-                                                   String year);
+                                                   String year,
+                                                   Integer majorType);
 
     /**
      *  获取最后一次目标院校
@@ -149,7 +156,7 @@ public interface IScoreAnalysisService {
      * @param year
      * @return
      */
-    Float queryUnivsersityLowestScore(long schoolId,
+    Map<String,Object> queryUnivsersityLowestScore(long schoolId,
                                       long areaId,
                                       int batch,
                                       int majorType,
@@ -217,15 +224,14 @@ public interface IScoreAnalysisService {
     /**
      * 查询院校近三年的成绩
      * @param universityId
-     * @param year
      * @param areaId
      * @param majorType
      * @return
      */
     List<Map<String,Object>>  queryUniversityScore(long universityId,
-                                                   String year,
                                                    long areaId,
-                                                   Integer majorType);
+                                                   Integer majorType,
+                                                   Integer batch);
 
     /**
      * 判断分数是否在一分一段表中存在
@@ -264,4 +270,42 @@ public interface IScoreAnalysisService {
      * @return
      */
     Integer queryUserGrade(long userId);
+
+    /**
+     * 根据areaId获取总分
+     * @param areaId
+     * @return
+     */
+    Integer queryTotalScoreByAreaId(long areaId);
+
+    /**
+     * 获取用户上一次成绩
+     * @param userId
+     * @param lastId
+     * @return
+     */
+    Float queryLastScore(long userId,long lastId);
+
+    /**
+     * 获取当前省份当年参加高考人数 当不存在的时候为0或null
+     * @param areaId
+     * @return
+     */
+    Integer queryPeoNumByAreaAndType(long areaId,int majorType);
+
+    /**
+     *获取当前用户标签
+     * @param type
+     * @param configs
+     * @return
+     */
+    List<String> queryLabelByTypeAndConfig(Integer type,List<Integer> configs);
+
+
+    Object recommendSchool(float totalScore,long areaId,int majorType);
+
+    Object queryGapBySchoolIdAndBatch(long recordId,
+                                      Long schoolId,
+                                      Integer batch,
+                                      long userId);
 }

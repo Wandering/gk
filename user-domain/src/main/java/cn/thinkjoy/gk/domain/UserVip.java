@@ -22,6 +22,16 @@ public class UserVip extends CreateBaseDomain<Long>{
 	private Long activeDate;
 	private boolean isActiveGkxt;
 
+	private long userId;
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
 	public boolean isActiveGkxt() {
 		return isActiveGkxt;
 	}

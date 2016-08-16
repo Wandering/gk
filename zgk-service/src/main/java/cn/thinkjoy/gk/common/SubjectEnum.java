@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.util;
+package cn.thinkjoy.gk.common;
 
 /**
  * Created by yangyongping on 16/7/26.
