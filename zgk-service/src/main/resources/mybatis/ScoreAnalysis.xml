@@ -407,5 +407,26 @@ deleteBySubjects
         where type = #{type}
         and config IN (<foreach collection="configs" separator="," item="item">#{item}</foreach>)
     </select>
+
+
+    <!--推荐院校浙江-->
+    <select id="queryZJUniversityByScore" resultType="java.util.Map">
+        SELECT * from (
+        SELECT
+        (SELECT name from zgk_university WHERE id = universityId LIMIT 1) as schoolName,
+        (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batch,
+        realEnrollingNumber as stuNum,
+        averageScore as averageScore,
+        highestScore as highestScore,
+        lowestScore as lowestScore,
+        universityId,
+        (#{difference} - (lowestScore - #{line})) as gapSchool
+        from zgk_university_enrolling
+        WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
+        and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
+        and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
+        ORDER BY ABS(gapSchool) ASC
+        limit 20) tb ORDER BY gapSchool DESC;
+    </select>
 </mapper>
 
