@@ -1,9 +1,9 @@
 package cn.thinkjoy.gk.controller.score;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.ScoreUtil;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.service.IScoreAnalysisService;
+import cn.thinkjoy.gk.common.ScoreUtil;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by yangyongping on 16/7/26.
@@ -27,6 +24,7 @@ import java.util.Map;
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping(value = "/score")
 public class ScoreController {
+
     @Autowired
     private IScoreAnalysisService scoreAnalysisService;
     @Autowired
@@ -60,13 +58,13 @@ public class ScoreController {
     @RequestMapping(value = "/insertUserInfo",method = RequestMethod.POST)
     @ResponseBody
     public Object insertUserInfo(@RequestParam long userId,
-                                    @RequestParam long provinceId,
-                                    @RequestParam long cityId,
-                                    @RequestParam long countyId,
-                                    @RequestParam long schoolCode,
-                                    @RequestParam String schoolName,
-                                    @RequestParam String gradeInfo,
-                                    @RequestParam String classInfo){
+                                 @RequestParam long provinceId,
+                                 @RequestParam long cityId,
+                                 @RequestParam long countyId,
+                                 @RequestParam long schoolCode,
+                                 @RequestParam String schoolName,
+                                 @RequestParam String gradeInfo,
+                                 @RequestParam String classInfo){
         //保存用户信息
 
         Map<String,Object> insertMap = new HashedMap();
@@ -126,7 +124,6 @@ public class ScoreController {
         Map<String, Object> scores = scoreUtil.getScores(request);
 
         return scoreAnalysisService.insertScoreRecord(userId,areaId,majorType,scores);
-
     }
 
 
@@ -231,6 +228,7 @@ public class ScoreController {
      */
     @RequestMapping(value = "/queryBatchsBySchoolIdAndAreaId",method = RequestMethod.GET)
     @ResponseBody
+
     public Object queryBatchsBySchoolIdAndAreaId(@RequestParam long areaId,
                                                  @RequestParam long schoolId,
                                                  @RequestParam Integer majorType){
