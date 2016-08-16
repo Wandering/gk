@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.thinkjoy.gk.dao.IScoreAnalysisDAO">
-<!--
-getFavoritesByMajor
-getFavoritesBySubjectKey
-getFavoritesBySubject
-insertFavorites
-deleteById
-deleteBySubjects
--->
+    <!--
+    getFavoritesByMajor
+    getFavoritesBySubjectKey
+    getFavoritesBySubject
+    insertFavorites
+    deleteById
+    deleteBySubjects
+    -->
 
     <select id="queryScoreRecordByUserId" resultType="java.util.Map">
         SELECT
@@ -125,7 +125,6 @@ deleteBySubjects
         ty_score_total as tyScoreTotal,
         total_score as totalScore,
         user_id as userId
-        total_score as totalScore
         from zgk_score_base
         WHERE id = #{recordId};
     </select>
@@ -194,8 +193,9 @@ deleteBySubjects
     </select>
 
 
-    <select id="queryUnivsersityLowestScore" resultType="java.lang.Float">
-        select lowestScore from zgk_university_enrolling
+
+    <select id="queryUnivsersityLowestScore" resultType="java.util.Map">
+        select lowestScore,year from zgk_university_enrolling
         WHERE universityId = #{schoolId}
         and areaId=#{areaId}
         and batch = #{batch}
@@ -221,12 +221,12 @@ deleteBySubjects
         WHERE type = 'BATCHTYPE2'
         and dictId in
         (SELECT batch from zgk_university_enrolling
-        and dictId in (SELECT batch from zgk_university_enrolling WHERE areaId = #{areaId} and universityId = #{schooleId} and year = #{year} GROUP BY batch);
+        WHERE areaId = #{areaId} and universityId = #{schooleId} and year = #{year} and majorType = #{majorType} GROUP BY batch);
     </select>
 
     <select id="queryLastTarget" resultType="java.util.Map">
-         SELECT university_id as universityId,batch from zgk_favorite_university
-         WHERE user_id = #{userId} ORDER BY id DESC limit 1
+        SELECT university_id as universityId,batch from zgk_favorite_university
+        WHERE user_id = #{userId} ORDER BY id DESC limit 1
     </select>
 
 
@@ -268,10 +268,10 @@ deleteBySubjects
         (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batch,
         realEnrollingNumber as stuNum,
         averageScore as averageScore,
-    	highestScore as highestScore,
-	    lowestScore as lowestScore,
-	    universityId,
-        (#{totalScore}-lowestScore) as gapSchool
+        highestScore as highestScore,
+        lowestScore as lowestScore,
+        universityId,
+        (#{difference} - (lowestScore - #{line}) ) as gapSchool
         from zgk_university_enrolling
         WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
         and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
@@ -292,16 +292,16 @@ deleteBySubjects
         universityId,
         (#{totalScore}-lowestScore) as gapSchool
         from zgk_university_enrolling,(SELECT
-		universityId as uid
-	    FROM
-	    	zgk_university_enrolling_plan
-	    WHERE
-	    	majorType = #{majorType}
-	    AND YEAR = #{year}+1
-	    GROUP BY universityId) plan
-            WHERE plan.uid = universityId and  areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
-            and batch like '8%'
-            ORDER BY lowestScore desc
+        universityId as uid
+        FROM
+        zgk_university_enrolling_plan
+        WHERE
+        majorType = #{majorType}
+        AND YEAR = #{year}+1
+        GROUP BY universityId) plan
+        WHERE plan.uid = universityId and  areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
+        and batch like '8%'
+        ORDER BY lowestScore desc
         limit  10;
 
     </select>
@@ -320,16 +320,16 @@ deleteBySubjects
     </select>
     <!--更新用户信息-->
     <update id="setUserInfo">
-       update zgk_user_info
-       set
-       provinceId= #{provinceId},
-       cityId= #{cityId},
-       countyId=#{countyId},
-       schoolCode=#{schoolCode},
-       schoolName=#{schoolName},
-       gradeInfo=#{gradeInfo},
-       classInfo=#{classInfo}
-       where id=#{userId};
+        update zgk_user_info
+        set
+        provinceId= #{provinceId},
+        cityId= #{cityId},
+        countyId=#{countyId},
+        schoolCode=#{schoolCode},
+        schoolName=#{schoolName},
+        gradeInfo=#{gradeInfo},
+        classInfo=#{classInfo}
+        where id=#{userId};
     </update>
     <select id="queryUserInfo" resultType="java.util.Map">
         SELECT
@@ -357,8 +357,6 @@ deleteBySubjects
         <if test="batch!=null">
             and batch=#{batch}
         </if>
-        and year in (#{year},#{year}-1,#{year}-2)
-        and areaId=#{areaId}
         and majorType=#{majorType} ORDER BY YEAR DESC limit 3
     </select>
 
