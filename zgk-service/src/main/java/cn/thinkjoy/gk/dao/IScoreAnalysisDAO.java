@@ -124,8 +124,12 @@ public interface IScoreAnalysisDAO {
      */
     List<Map<String,Object>> queryUnivsersityBatch(@Param("areaId")long areaId,
                                                    @Param("schooleId")long schooleId,
+<<<<<<< Updated upstream
                                                    @Param("year")String year,
                                                    @Param("majorType")Integer majorType);
+=======
+                                                   @Param("year")String year);
+>>>>>>> Stashed changes
 
     /**
      *  获取最后一次目标院校
@@ -150,7 +154,11 @@ public interface IScoreAnalysisDAO {
      * @param year
      * @return
      */
+<<<<<<< Updated upstream
     Map<String,Object> queryUnivsersityLowestScore(@Param("schoolId")long schoolId,
+=======
+    Float queryUnivsersityLowestScore(@Param("schoolId")long schoolId,
+>>>>>>> Stashed changes
                                       @Param("areaId")long areaId,
                                       @Param("batch")int batch,
                                       @Param("majorType")int majorType,
@@ -218,11 +226,19 @@ public interface IScoreAnalysisDAO {
     /**
      * 查询院校近三年的成绩
      * @param universityId
+<<<<<<< Updated upstream
+=======
+     * @param year
+>>>>>>> Stashed changes
      * @param areaId
      * @param majorType
      * @return
      */
+<<<<<<< Updated upstream
     List<Map<String,Object>>  queryUniversityScore(@Param("universityId")long universityId,@Param("areaId")long areaId,@Param("majorType")Integer majorType,@Param("batch")Integer batch);
+=======
+    List<Map<String,Object>>  queryUniversityScore(@Param("universityId")long universityId,@Param("year")String year,@Param("areaId")long areaId,@Param("majorType")Integer majorType);
+>>>>>>> Stashed changes
 
     /**
      * 判断分数是否在一分一段表中存在
@@ -260,6 +276,7 @@ public interface IScoreAnalysisDAO {
      * @return
      */
     Integer queryUserGrade(@Param("userId")long userId);
+<<<<<<< Updated upstream
     /**
      * 根据areaId获取当前省份总分 可能为空
      * @param areaId
@@ -290,4 +307,6 @@ public interface IScoreAnalysisDAO {
      */
     List<String> queryLabelByTypeAndConfig(@Param("type")Integer type,@Param("configs")List<Integer> configs);
 
+=======
+>>>>>>> Stashed changes
 }

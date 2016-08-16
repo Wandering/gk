@@ -17,9 +17,12 @@ public class HttpScoreTest extends TestCase{
         String host="http://localhost:8080";
 //        String host="http://zgkser.zhigaokao.cn/";
 //        String host="http://zj.dev.zhigaokao.cn";
+<<<<<<< Updated upstream
 //        String host="http://zj.test.zhigaokao.cn";
 //        String host="http://10.136.67.121:8080";
 
+=======
+>>>>>>> Stashed changes
         String base="/score/";
 
 
@@ -82,7 +85,11 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
      public void testQueryScoreRecordByUserId(){
+<<<<<<< Updated upstream
          String url=host + queryScoreRecordByUserId_url + "?userId=20004\n";
+=======
+         String url=host + queryScoreRecordByUserId_url + "?userId=1\n";
+>>>>>>> Stashed changes
          System.out.println(url);
          String result = RequestUtils.requestGet(url);
          System.out.println("result = " + result);
@@ -94,7 +101,11 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryInfoByRecordId(){
+<<<<<<< Updated upstream
         String url=host +queryInfoByRecordId_url + "?recordId=205";
+=======
+        String url=host +queryInfoByRecordId_url + "?recordId=135";
+>>>>>>> Stashed changes
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
@@ -103,7 +114,11 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryAllRecordByUserId(){
+<<<<<<< Updated upstream
         String url=host +queryAllRecordByUserId_url + "?userId=221";
+=======
+        String url=host +queryAllRecordByUserId_url + "?userId=306";
+>>>>>>> Stashed changes
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
@@ -121,7 +136,11 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryGapBySchoolIdAndBatch(){
+<<<<<<< Updated upstream
         String url=host +queryGapBySchoolIdAndBatch_url + "?recordId=478&schoolId=24606&batch=1&userId=24606&debug=true";
+=======
+        String url=host +queryGapBySchoolIdAndBatch_url + "?recordId=134&schoolId=2346&batch=1&userId=231";
+>>>>>>> Stashed changes
         String result = RequestUtils.requestPost(url);
         System.out.println("result = " + result);
     }
@@ -130,7 +149,11 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryBatchsBySchoolIdAndAreaId(){
+<<<<<<< Updated upstream
         String url=host +queryBatchsBySchoolIdAndAreaId_url + "?areaId=530000&schoolId=2317&majorType=1";
+=======
+        String url=host +queryBatchsBySchoolIdAndAreaId_url + "?areaId=610000&schoolId=1";
+>>>>>>> Stashed changes
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
@@ -139,7 +162,11 @@ public class HttpScoreTest extends TestCase{
      * ---
      */
     public void testRecommendSchool(){
+<<<<<<< Updated upstream
         String url=host +recommendSchool_url + "?totalScore=300&areaId=410000&majorType=1";
+=======
+        String url=host +recommendSchool_url + "?totalScore=60&areaId=440000&majorType=1";
+>>>>>>> Stashed changes
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
@@ -149,7 +176,11 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryUniversityScore(){
+<<<<<<< Updated upstream
         String url=host +queryUniversityScore_url + "?universityId=1&areaId=610000&majorType=1&batch=1";
+=======
+        String url=host +queryUniversityScore_url + "?universityId=1&areaId=610000&majorType=1";
+>>>>>>> Stashed changes
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }

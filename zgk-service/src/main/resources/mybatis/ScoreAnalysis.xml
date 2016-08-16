@@ -15,7 +15,11 @@ deleteBySubjects
         SELECT
         (SELECT provinceId FROM  zgk_user_info WHERE id=#{userId}) as areaId,
         (SELECT name from zgk_province WHERE id=areaId) as areaName,
+<<<<<<< Updated upstream
         (SELECT schoolName from zgk_user_info where id=#{userId}) as schoolName,
+=======
+        (SELECT school_name from zgk_school_base where school_code = (SELECT schoolCode from zgk_user_info where id=1)) as schoolName,
+>>>>>>> Stashed changes
         major_type as majorType,
         yw_score as ywScore,
         sx_score as sxScore,
@@ -123,8 +127,12 @@ deleteBySubjects
         dl_score_total as dlScoreTotal,
         zz_score_total as zzScoreTotal,
         ty_score_total as tyScoreTotal,
+<<<<<<< Updated upstream
         total_score as totalScore,
         user_id as userId
+=======
+        total_score as totalScore
+>>>>>>> Stashed changes
         from zgk_score_base
         WHERE id = #{recordId};
     </select>
@@ -169,7 +177,11 @@ deleteBySubjects
         SELECT num from ${areaTableName} WHERE score = #{totalScore}
     </select>
     <select id="queryAllAreaStuNum" resultType="java.lang.Integer">
+<<<<<<< Updated upstream
         SELECT MAX(avg_pre) from ${areaTableName}
+=======
+        SELECT sum(num) from ${areaTableName}
+>>>>>>> Stashed changes
     </select>
 
     <!--全省排名-->
@@ -189,18 +201,31 @@ deleteBySubjects
 
     <!--分数极端情况判定(最大值判定)(不存在于一分一段表中)-->
     <select id="isExistMaxScore" resultType="java.lang.Boolean">
+<<<<<<< Updated upstream
         SELECT max(score)&lt;= #{totalScore} from ${areaTableName} where score!=0
+=======
+        SELECT max(score)&lt;#{totalScore} from ${areaTableName} where score!=0
+>>>>>>> Stashed changes
     </select>
 
 
 
+<<<<<<< Updated upstream
     <select id="queryUnivsersityLowestScore" resultType="java.util.Map">
         select lowestScore,year from zgk_university_enrolling
+=======
+    <select id="queryUnivsersityLowestScore" resultType="java.lang.Float">
+        select lowestScore from zgk_university_enrolling
+>>>>>>> Stashed changes
         WHERE universityId = #{schoolId}
         and areaId=#{areaId}
         and batch = #{batch}
         and majorType = #{majorType}
+<<<<<<< Updated upstream
         ORDER BY year DESC
+=======
+        and year = #{year}
+>>>>>>> Stashed changes
         limit 1
     </select>
 
@@ -219,9 +244,13 @@ deleteBySubjects
     <select id="queryUnivsersityBatch" resultType="java.util.Map">
         SELECT dictId,name FROM zgk_data_dict
         WHERE type = 'BATCHTYPE2'
+<<<<<<< Updated upstream
         and dictId in
         (SELECT batch from zgk_university_enrolling
         WHERE areaId = #{areaId} and universityId = #{schooleId} and year = #{year} and majorType = #{majorType} GROUP BY batch);
+=======
+        and dictId in (SELECT batch from zgk_university_enrolling WHERE areaId = #{areaId} and universityId = #{schooleId} and year = #{year} GROUP BY batch);
+>>>>>>> Stashed changes
     </select>
 
     <select id="queryLastTarget" resultType="java.util.Map">
@@ -271,7 +300,11 @@ deleteBySubjects
     	highestScore as highestScore,
 	    lowestScore as lowestScore,
 	    universityId,
+<<<<<<< Updated upstream
         (#{difference} - (lowestScore - #{line}) ) as gapSchool
+=======
+        (#{totalScore}-lowestScore) as gapSchool
+>>>>>>> Stashed changes
         from zgk_university_enrolling
         WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
         and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
@@ -353,10 +386,15 @@ deleteBySubjects
         lowestScore,realEnrollingNumber,averageScore,year
         FROM zgk_university_enrolling
         WHERE universityId = #{universityId}
+<<<<<<< Updated upstream
         and areaId=#{areaId}
         <if test="batch!=null">
             and batch=#{batch}
         </if>
+=======
+        and year in (#{year},#{year}-1,#{year}-2)
+        and areaId=#{areaId}
+>>>>>>> Stashed changes
         and majorType=#{majorType} ORDER BY YEAR DESC limit 3
     </select>
 
@@ -375,6 +413,7 @@ deleteBySubjects
         SELECT name from zgk_data_dict where type = 'BATCHTYPE2' and dictId =#{id}
     </select>
 
+<<<<<<< Updated upstream
     <!--根据areaId获取当前省份总分 可能为空-->
     <select id="queryTotalScoreByAreaId" resultType="java.lang.Integer">
         SELECT config_value from  zgk_system_parmas
@@ -407,5 +446,7 @@ deleteBySubjects
         where type = #{type}
         and config IN (<foreach collection="configs" separator="," item="item">#{item}</foreach>)
     </select>
+=======
+>>>>>>> Stashed changes
 </mapper>
 

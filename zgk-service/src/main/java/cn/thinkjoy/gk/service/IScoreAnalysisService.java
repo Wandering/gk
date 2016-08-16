@@ -18,6 +18,7 @@ public interface IScoreAnalysisService {
 
     /**
      * 添加用户定位分数
+<<<<<<< Updated upstream
      * @param userId
      * @param areaId
      * @param majorType
@@ -28,6 +29,12 @@ public interface IScoreAnalysisService {
                                           long areaId,
                                           Integer majorType,
                                           Map<String,Object> scores);
+=======
+     * @param map
+     * @return
+     */
+    int insertScoreRecord(Map<String, Object> map);
+>>>>>>> Stashed changes
 
     /**
      * 根据ID查询定位分数
@@ -130,8 +137,12 @@ public interface IScoreAnalysisService {
      */
     List<Map<String,Object>> queryUnivsersityBatch(long areaId,
                                                    long schooleId,
+<<<<<<< Updated upstream
                                                    String year,
                                                    Integer majorType);
+=======
+                                                   String year);
+>>>>>>> Stashed changes
 
     /**
      *  获取最后一次目标院校
@@ -156,7 +167,11 @@ public interface IScoreAnalysisService {
      * @param year
      * @return
      */
+<<<<<<< Updated upstream
     Map<String,Object> queryUnivsersityLowestScore(long schoolId,
+=======
+    Float queryUnivsersityLowestScore(long schoolId,
+>>>>>>> Stashed changes
                                       long areaId,
                                       int batch,
                                       int majorType,
@@ -224,14 +239,24 @@ public interface IScoreAnalysisService {
     /**
      * 查询院校近三年的成绩
      * @param universityId
+<<<<<<< Updated upstream
+=======
+     * @param year
+>>>>>>> Stashed changes
      * @param areaId
      * @param majorType
      * @return
      */
     List<Map<String,Object>>  queryUniversityScore(long universityId,
+<<<<<<< Updated upstream
                                                    long areaId,
                                                    Integer majorType,
                                                    Integer batch);
+=======
+                                                   String year,
+                                                   long areaId,
+                                                   Integer majorType);
+>>>>>>> Stashed changes
 
     /**
      * 判断分数是否在一分一段表中存在
@@ -270,6 +295,7 @@ public interface IScoreAnalysisService {
      * @return
      */
     Integer queryUserGrade(long userId);
+<<<<<<< Updated upstream
 
     /**
      * 根据areaId获取总分
@@ -308,4 +334,6 @@ public interface IScoreAnalysisService {
                                       Long schoolId,
                                       Integer batch,
                                       long userId);
+=======
+>>>>>>> Stashed changes
 }
