@@ -30,8 +30,6 @@ public class ScoreController {
     @Autowired
     private ScoreUtil scoreUtil;
 
-    Logger logger = Logger.getLogger(ScoreController.class);
-
     /**
      * 根据用户Id和用户来源查询用户最新的提交记录
      * @return
