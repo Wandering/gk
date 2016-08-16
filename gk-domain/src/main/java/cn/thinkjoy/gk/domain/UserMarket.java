@@ -15,6 +15,15 @@ public class UserMarket extends CreateBaseDomain {
     private Integer fromType;
     private Long updateDate;
     private Integer modifier;
+    private long userId;
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
 	public UserMarket(){
 	}

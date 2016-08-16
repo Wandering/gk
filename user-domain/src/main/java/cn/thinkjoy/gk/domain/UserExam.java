@@ -22,6 +22,15 @@ public class UserExam extends BaseDomain<Long>{
     private Integer ranking;
     private Integer isSurvey;
     private Integer isReported;
+    private long userId;
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
 	public UserExam(){
 	}

@@ -124,7 +124,8 @@ public interface IScoreAnalysisDAO {
      */
     List<Map<String,Object>> queryUnivsersityBatch(@Param("areaId")long areaId,
                                                    @Param("schooleId")long schooleId,
-                                                   @Param("year")String year);
+                                                   @Param("year")String year,
+                                                   @Param("majorType")Integer majorType);
 
     /**
      *  获取最后一次目标院校
@@ -149,7 +150,7 @@ public interface IScoreAnalysisDAO {
      * @param year
      * @return
      */
-    Float queryUnivsersityLowestScore(@Param("schoolId")long schoolId,
+    Map<String,Object> queryUnivsersityLowestScore(@Param("schoolId")long schoolId,
                                       @Param("areaId")long areaId,
                                       @Param("batch")int batch,
                                       @Param("majorType")int majorType,
@@ -217,12 +218,11 @@ public interface IScoreAnalysisDAO {
     /**
      * 查询院校近三年的成绩
      * @param universityId
-     * @param year
      * @param areaId
      * @param majorType
      * @return
      */
-    List<Map<String,Object>>  queryUniversityScore(@Param("universityId")long universityId,@Param("year")String year,@Param("areaId")long areaId,@Param("majorType")Integer majorType);
+    List<Map<String,Object>>  queryUniversityScore(@Param("universityId")long universityId,@Param("areaId")long areaId,@Param("majorType")Integer majorType,@Param("batch")Integer batch);
 
     /**
      * 判断分数是否在一分一段表中存在
@@ -260,4 +260,34 @@ public interface IScoreAnalysisDAO {
      * @return
      */
     Integer queryUserGrade(@Param("userId")long userId);
+    /**
+     * 根据areaId获取当前省份总分 可能为空
+     * @param areaId
+     * @return
+     */
+    Integer queryTotalScoreByAreaId(@Param("areaId")long areaId);
+
+    /**
+     * 获取用户上一次成绩
+     * @param userId
+     * @param lastId
+     * @return
+     */
+    Float queryLastScore(@Param("userId")long userId,@Param("lastId")long lastId);
+
+    /**
+     * 获取当前省份当年参加高考人数 当不存在的时候为0或null
+     * @param areaId
+     * @return
+     */
+    Integer queryPeoNumByAreaAndType(@Param("areaId")long areaId,@Param("majorType")int majorType);
+
+    /**
+     *获取当前用户标签
+     * @param type
+     * @param configs
+     * @return
+     */
+    List<String> queryLabelByTypeAndConfig(@Param("type")Integer type,@Param("configs")List<Integer> configs);
+
 }

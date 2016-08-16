@@ -15,7 +15,7 @@ deleteBySubjects
         SELECT
         (SELECT provinceId FROM  zgk_user_info WHERE id=#{userId}) as areaId,
         (SELECT name from zgk_province WHERE id=areaId) as areaName,
-        (SELECT school_name from zgk_school_base where school_code = (SELECT schoolCode from zgk_user_info where id=1)) as schoolName,
+        (SELECT schoolName from zgk_user_info where id=#{userId}) as schoolName,
         major_type as majorType,
         yw_score as ywScore,
         sx_score as sxScore,
@@ -123,7 +123,8 @@ deleteBySubjects
         dl_score_total as dlScoreTotal,
         zz_score_total as zzScoreTotal,
         ty_score_total as tyScoreTotal,
-        total_score as totalScore
+        total_score as totalScore,
+        user_id as userId
         from zgk_score_base
         WHERE id = #{recordId};
     </select>
@@ -168,7 +169,7 @@ deleteBySubjects
         SELECT num from ${areaTableName} WHERE score = #{totalScore}
     </select>
     <select id="queryAllAreaStuNum" resultType="java.lang.Integer">
-        SELECT sum(num) from ${areaTableName}
+        SELECT MAX(avg_pre) from ${areaTableName}
     </select>
 
     <!--全省排名-->
@@ -188,18 +189,18 @@ deleteBySubjects
 
     <!--分数极端情况判定(最大值判定)(不存在于一分一段表中)-->
     <select id="isExistMaxScore" resultType="java.lang.Boolean">
-        SELECT max(score)&lt;#{totalScore} from ${areaTableName} where score!=0
+        SELECT max(score)&lt;= #{totalScore} from ${areaTableName} where score!=0
     </select>
 
 
 
-    <select id="queryUnivsersityLowestScore" resultType="java.lang.Float">
-        select lowestScore from zgk_university_enrolling
+    <select id="queryUnivsersityLowestScore" resultType="java.util.Map">
+        select lowestScore,year from zgk_university_enrolling
         WHERE universityId = #{schoolId}
         and areaId=#{areaId}
         and batch = #{batch}
         and majorType = #{majorType}
-        and year = #{year}
+        ORDER BY year DESC
         limit 1
     </select>
 
@@ -218,7 +219,9 @@ deleteBySubjects
     <select id="queryUnivsersityBatch" resultType="java.util.Map">
         SELECT dictId,name FROM zgk_data_dict
         WHERE type = 'BATCHTYPE2'
-        and dictId in (SELECT batch from zgk_university_enrolling WHERE areaId = #{areaId} and universityId = #{schooleId} and year = #{year} GROUP BY batch);
+        and dictId in
+        (SELECT batch from zgk_university_enrolling
+        WHERE areaId = #{areaId} and universityId = #{schooleId} and year = #{year} and majorType = #{majorType} GROUP BY batch);
     </select>
 
     <select id="queryLastTarget" resultType="java.util.Map">
@@ -268,7 +271,7 @@ deleteBySubjects
     	highestScore as highestScore,
 	    lowestScore as lowestScore,
 	    universityId,
-        (#{totalScore}-lowestScore) as gapSchool
+        (#{difference} - (lowestScore - #{line}) ) as gapSchool
         from zgk_university_enrolling
         WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
         and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
@@ -350,8 +353,10 @@ deleteBySubjects
         lowestScore,realEnrollingNumber,averageScore,year
         FROM zgk_university_enrolling
         WHERE universityId = #{universityId}
-        and year in (#{year},#{year}-1,#{year}-2)
         and areaId=#{areaId}
+        <if test="batch!=null">
+            and batch=#{batch}
+        </if>
         and majorType=#{majorType} ORDER BY YEAR DESC limit 3
     </select>
 
@@ -370,5 +375,37 @@ deleteBySubjects
         SELECT name from zgk_data_dict where type = 'BATCHTYPE2' and dictId =#{id}
     </select>
 
+    <!--根据areaId获取当前省份总分 可能为空-->
+    <select id="queryTotalScoreByAreaId" resultType="java.lang.Integer">
+        SELECT config_value from  zgk_system_parmas
+        WHERE config_key like '%_DEFAULT_SCORE'
+        AND province_code =
+        (SELECT code from
+        zgk_province WHERE id=#{areaId})
+    </select>
+
+
+
+    <!--获取用户上一次成绩-->
+    <select id="queryLastScore" resultType="java.lang.Float">
+        SELECT total_score from zgk_score_base where user_id=#{userId} AND id &lt; #{lastId} ORDER BY cdate desc limit 1
+    </select>
+
+    <!--获取当前省份当年参加高考人数 当不存在的时候为0或null-->
+    <select id="queryPeoNumByAreaAndType" resultType="java.lang.Integer">
+        SELECT config_value from  zgk_system_parmas
+        WHERE config_key like '%EXA_NUM'
+        AND province_code =
+        (SELECT code from
+        zgk_province WHERE id=#{areaId}) AND  major_type = #{majorType}
+    </select>
+
+    <!--获取当前用户标签-->
+    <select id="queryLabelByTypeAndConfig" resultType="java.lang.String">
+        SELECT DISTINCT label from
+        zgk_score_label
+        where type = #{type}
+        and config IN (<foreach collection="configs" separator="," item="item">#{item}</foreach>)
+    </select>
 </mapper>
 
