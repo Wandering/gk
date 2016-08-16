@@ -76,6 +76,34 @@ public class ScoreUtil {
         return scores;
     }
 
+
+    /**
+     * 生成江苏分数明细
+     * @param map
+     * @param majorType
+     * @return
+     */
+    public Map<String,Object> getJSScores(Map<String,Object> map, int majorType){
+        Map<String, Object> scores = new LinkedHashMap();
+        scores.put("语文", floatToStr(map.get("ywScore")) + "-" + floatToStr(map.get("ywScoreTotal")));
+        scores.put("数学", floatToStr(map.get("sxScore")) + "-" + floatToStr(map.get("sxScoreTotal")));
+        scores.put("外语", floatToStr(map.get("wyScore")) + "-" + floatToStr(map.get("wyScoreTotal")));
+
+        if (majorType == 2) {
+            scores.put("物理", floatToStr(map.get("wlScore")) + "-" + floatToStr(map.get("wlScoreTotal")));
+            scores.put("化学", floatToStr(map.get("hxScore")) + "-" + floatToStr(map.get("hxScoreTotal")));
+            scores.put("生物", floatToStr(map.get("swScore")) + "-" + floatToStr(map.get("swScoreTotal")));
+
+        } else if ((majorType == 1)) {
+            scores.put("政治", floatToStr(map.get("zzScore")) + "-" + floatToStr(map.get("zzScoreTotal")));
+            scores.put("历史", floatToStr(map.get("lsScore")) + "-" + floatToStr(map.get("lsScoreTotal")));
+            scores.put("地理", floatToStr(map.get("dlScore")) + "-" + floatToStr(map.get("dlScoreTotal")));
+        }
+        return scores;
+    }
+
+
+
     /**
      * 获取批次线
      * @param batch
@@ -189,7 +217,7 @@ public class ScoreUtil {
         int i=1;
         for(String scoreStr:scoreStrs){
             float score=Float.parseFloat(scoreStr.split("\\|")[0]);
-            if(totalScore-score>0){
+            if(totalScore-score>0F){
                 bottomScore=score;
                 break;
             }
@@ -288,16 +316,16 @@ public class ScoreUtil {
 
         Integer[] scoreLines = getBatchLine(areaId,majorType);
 
-            if(score - scoreLines[0]>50){
+            if(score - scoreLines[0]>50F){
                 //一本+50
                 return ScoreRankEnum.名垂校史.getSub();
-            }else if(score-scoreLines[0]>0){
+            }else if(score-scoreLines[0]>0F){
                 //一本+0-49
                 return ScoreRankEnum.校刊红人.getSub();
-            }else if(scoreLines[0]-score>0 && score - scoreLines[1]>0){
+            }else if(scoreLines[0]-score>0F && score - scoreLines[1]>0F){
                 //二本以上 一本以下
                 return ScoreRankEnum.三好学生.getSub();
-            }else if(scoreLines[1]-score>0 && score - scoreLines[2]>0){
+            }else if(scoreLines[1]-score>0F && score - scoreLines[2]>0F){
                 //三本以上 二本以下
                 return ScoreRankEnum.教师常客.getSub();
             }else{
@@ -331,7 +359,7 @@ public class ScoreUtil {
             };
 
         }
-        if(initFloat1-initFloat2<0.05 && initFloat1-initFloat2>-0.05){
+        if(initFloat1-initFloat2<0.05F && initFloat1-initFloat2>-0.05F){
             weakSubject=strongSubject;
         }
 
@@ -462,11 +490,11 @@ public class ScoreUtil {
      */
     private Integer getScoreType(Float score,Float totalScore){
         Float b = score/totalScore;
-        if(b-0.8>=0){
+        if(b-0.8F>=0){
             return UserScoreType.FULL_MARK_80_100;
-        }else if(b-0.6>0){
+        }else if(b-0.6F>0){
             return UserScoreType.FULL_MARK_60_80;
-        }else if(b-0.4>0){
+        }else if(b-0.4F>0){
             return UserScoreType.FULL_MARK_40_60;
         }else{
             return UserScoreType.FULL_MARK_0_40;
@@ -484,16 +512,16 @@ public class ScoreUtil {
         Map<String,Object> map=new HashedMap();
         String desc=null;
         Integer tag=null;
-        if(b-0.9>=0){
+        if(b-0.9F>=0){
             desc=UserScoreType.SUBJECT_DESC_1;
             tag=UserScoreType.SUBJECT_TAG_1;
-        }else if(b-0.8>0){
+        }else if(b-0.8F>0){
             desc=UserScoreType.SUBJECT_DESC_2;
             tag=UserScoreType.SUBJECT_TAG_2;
-        }else if(b-0.6>0){
+        }else if(b-0.6F>0){
             desc=UserScoreType.SUBJECT_DESC_3;
             tag=UserScoreType.SUBJECT_TAG_3;
-        }else if(b-0.4>0){
+        }else if(b-0.4F>0){
             desc=UserScoreType.SUBJECT_DESC_4;
             tag=UserScoreType.SUBJECT_TAG_4;
         }else{
@@ -548,4 +576,46 @@ public class ScoreUtil {
         }
     }
 
+
+    /**
+     * 量化等级对应成绩
+     * @param f
+     * @return
+     */
+    public String scoreToTag(Float f){
+        if(f-120F>=0){
+            return "A+";
+        }else if(f-100F>0){
+            return "A";
+        }else if(f-80F>0){
+            return "B+";
+        }else if(f-60F>0){
+            return "B";
+        }else if(f-40F>0){
+            return "C+";
+        }else{
+            return "C";
+        }
+    }
+
+    /**
+     * 转换成绩对应等级
+     * @param s
+     * @return
+     */
+    public Float tagToScore(String s){
+        if("A+".equals(s)){
+            return 120F;
+        }else if("A".equals(s)){
+            return 100F;
+        }else if("B+".equals(s)){
+            return 80F;
+        }else if("B".equals(s)){
+            return 60F;
+        }else if("C+".equals(s)){
+            return 40F;
+        }else {
+            return 20F;
+        }
+    }
 }
