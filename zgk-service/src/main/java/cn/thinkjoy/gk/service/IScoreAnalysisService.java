@@ -18,7 +18,6 @@ public interface IScoreAnalysisService {
 
     /**
      * 添加用户定位分数
-<<<<<<< Updated upstream
      * @param userId
      * @param areaId
      * @param majorType
@@ -28,13 +27,7 @@ public interface IScoreAnalysisService {
     Map<String, Object> insertScoreRecord(long userId,
                                           long areaId,
                                           Integer majorType,
-                                          Map<String,Object> scores);
-=======
-     * @param map
-     * @return
-     */
-    int insertScoreRecord(Map<String, Object> map);
->>>>>>> Stashed changes
+                                          Map<String, Object> scores);
 
     /**
      * 根据ID查询定位分数
@@ -57,7 +50,7 @@ public interface IScoreAnalysisService {
      * @return
      */
     Integer queryStuNum(Object totalScore,
-                    String areaTableName);
+                        String areaTableName);
 
     /**
      * 查询分数线之上有多少人
@@ -98,7 +91,7 @@ public interface IScoreAnalysisService {
      * @return
      */
     Integer queryProviceRank(Object totalScore,
-                         String areaTableName);
+                             String areaTableName);
 
     /**
      * 查询分数排名
@@ -107,7 +100,7 @@ public interface IScoreAnalysisService {
      * @return
      */
     Integer queryProviceRank2(Object totalScore,
-                             String areaTableName);
+                              String areaTableName);
 
 
     /**
@@ -137,12 +130,8 @@ public interface IScoreAnalysisService {
      */
     List<Map<String,Object>> queryUnivsersityBatch(long areaId,
                                                    long schooleId,
-<<<<<<< Updated upstream
                                                    String year,
                                                    Integer majorType);
-=======
-                                                   String year);
->>>>>>> Stashed changes
 
     /**
      *  获取最后一次目标院校
@@ -167,15 +156,11 @@ public interface IScoreAnalysisService {
      * @param year
      * @return
      */
-<<<<<<< Updated upstream
     Map<String,Object> queryUnivsersityLowestScore(long schoolId,
-=======
-    Float queryUnivsersityLowestScore(long schoolId,
->>>>>>> Stashed changes
-                                      long areaId,
-                                      int batch,
-                                      int majorType,
-                                      String year);
+                                                   long areaId,
+                                                   int batch,
+                                                   int majorType,
+                                                   String year);
 
 
     /**
@@ -239,24 +224,14 @@ public interface IScoreAnalysisService {
     /**
      * 查询院校近三年的成绩
      * @param universityId
-<<<<<<< Updated upstream
-=======
-     * @param year
->>>>>>> Stashed changes
      * @param areaId
      * @param majorType
      * @return
      */
     List<Map<String,Object>>  queryUniversityScore(long universityId,
-<<<<<<< Updated upstream
                                                    long areaId,
                                                    Integer majorType,
                                                    Integer batch);
-=======
-                                                   String year,
-                                                   long areaId,
-                                                   Integer majorType);
->>>>>>> Stashed changes
 
     /**
      * 判断分数是否在一分一段表中存在
@@ -295,7 +270,6 @@ public interface IScoreAnalysisService {
      * @return
      */
     Integer queryUserGrade(long userId);
-<<<<<<< Updated upstream
 
     /**
      * 根据areaId获取总分
@@ -310,14 +284,14 @@ public interface IScoreAnalysisService {
      * @param lastId
      * @return
      */
-    Float queryLastScore(long userId,long lastId);
+    Float queryLastScore(long userId, long lastId);
 
     /**
      * 获取当前省份当年参加高考人数 当不存在的时候为0或null
      * @param areaId
      * @return
      */
-    Integer queryPeoNumByAreaAndType(long areaId,int majorType);
+    Integer queryPeoNumByAreaAndType(long areaId, int majorType);
 
     /**
      *获取当前用户标签
@@ -325,15 +299,13 @@ public interface IScoreAnalysisService {
      * @param configs
      * @return
      */
-    List<String> queryLabelByTypeAndConfig(Integer type,List<Integer> configs);
+    List<String> queryLabelByTypeAndConfig(Integer type, List<Integer> configs);
 
 
-    Object recommendSchool(float totalScore,long areaId,int majorType);
+    Object recommendSchool(float totalScore, long areaId, int majorType);
 
     Object queryGapBySchoolIdAndBatch(long recordId,
                                       Long schoolId,
                                       Integer batch,
                                       long userId);
-=======
->>>>>>> Stashed changes
 }

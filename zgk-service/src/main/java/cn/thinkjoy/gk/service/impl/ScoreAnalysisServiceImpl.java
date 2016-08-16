@@ -1,6 +1,5 @@
 package cn.thinkjoy.gk.service.impl;
 
-<<<<<<< Updated upstream
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ScoreUtil;
 import cn.thinkjoy.gk.dao.IScoreAnalysisDAO;
@@ -12,13 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-=======
-import cn.thinkjoy.gk.dao.IScoreAnalysisDAO;
-import cn.thinkjoy.gk.service.IScoreAnalysisService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
->>>>>>> Stashed changes
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +23,6 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
 
     @Autowired
     private IScoreAnalysisDAO scoreAnalysisDAO;
-<<<<<<< Updated upstream
     @Autowired
     private ScoreUtil scoreUtil;
 
@@ -88,22 +79,10 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         Map<String, Object> resultMap = new HashedMap();
         resultMap.put("recordId", insertMap.get("recordId"));
         return resultMap;
-=======
-
-    @Override
-    public Map<String, Object> queryScoreRecordByUserId(long userId) {
-        return scoreAnalysisDAO.queryScoreRecordByUserId(userId);
-    }
-
-    @Override
-    public int insertScoreRecord(Map<String, Object> map) {
-        return scoreAnalysisDAO.insertScoreRecord(map);
->>>>>>> Stashed changes
     }
 
     @Override
     public Map<String, Object> queryInfoByRecordId(long recordId) {
-<<<<<<< Updated upstream
         Map<String, Object> map = scoreAnalysisDAO.queryInfoByRecordId(recordId);
         if (map == null) {
             return new HashedMap();
@@ -183,14 +162,10 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
             throw new BizException("error", "暂不支持" + map.get("areaName") + "!");
         }
         return resultMap;
-=======
-        return scoreAnalysisDAO.queryInfoByRecordId(recordId);
->>>>>>> Stashed changes
     }
 
     @Override
     public List<Map<String, Object>> queryAllRecordByUserId(long userId) {
-<<<<<<< Updated upstream
         List<Map<String, Object>> list = new ArrayList<>();
 
         List<Map<String, Object>> queryList = scoreAnalysisDAO.queryAllRecordByUserId(userId);
@@ -249,14 +224,6 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     @Override
     public Integer queryStuNum(Object totalScore, String areaTableName) {
         return scoreAnalysisDAO.queryStuNum(totalScore, areaTableName);
-=======
-        return scoreAnalysisDAO.queryAllRecordByUserId(userId);
-    }
-
-    @Override
-    public Integer queryStuNum(Object totalScore,String areaTableName) {
-        return scoreAnalysisDAO.queryStuNum(totalScore,areaTableName);
->>>>>>> Stashed changes
     }
 
     @Override
@@ -265,13 +232,8 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     }
 
     @Override
-<<<<<<< Updated upstream
     public Integer queryStuNumToLine(Object totalScore, Object scoreLine, String areaTableName) {
         return scoreAnalysisDAO.queryStuNumToLine(totalScore, scoreLine, areaTableName);
-=======
-    public Integer queryStuNumToLine(Object totalScore,Object scoreLine,String areaTableName) {
-        return scoreAnalysisDAO.queryStuNumToLine(totalScore,scoreLine,areaTableName);
->>>>>>> Stashed changes
     }
 
     @Override
@@ -285,7 +247,6 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     }
 
     @Override
-<<<<<<< Updated upstream
     public Integer queryProviceRank(Object totalScore, String areaTableName) {
         return scoreAnalysisDAO.queryProviceRank(totalScore, areaTableName);
     }
@@ -298,20 +259,6 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     @Override
     public String queryScoreLine(long areaId, int majorType, String year) {
         return scoreAnalysisDAO.queryScoreLine(areaId, majorType, year);
-=======
-    public Integer queryProviceRank(Object totalScore,String areaTableName) {
-        return scoreAnalysisDAO.queryProviceRank(totalScore,areaTableName);
-    }
-
-    @Override
-    public Integer queryProviceRank2(Object totalScore,String areaTableName) {
-        return scoreAnalysisDAO.queryProviceRank2(totalScore,areaTableName);
-    }
-
-    @Override
-    public String queryScoreLine(long areaId,int majorType,String year) {
-        return scoreAnalysisDAO.queryScoreLine(areaId,majorType,year);
->>>>>>> Stashed changes
     }
 
     @Override
@@ -320,13 +267,8 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     }
 
     @Override
-<<<<<<< Updated upstream
     public List<Map<String, Object>> queryUnivsersityBatch(long areaId, long schooleId, String year, Integer majorType) {
         return scoreAnalysisDAO.queryUnivsersityBatch(areaId, schooleId, year, majorType);
-=======
-    public List<Map<String, Object>> queryUnivsersityBatch(long areaId,long schooleId,String year) {
-        return scoreAnalysisDAO.queryUnivsersityBatch(areaId,schooleId,year);
->>>>>>> Stashed changes
     }
 
     @Override
@@ -340,7 +282,6 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     }
 
     @Override
-<<<<<<< Updated upstream
     public Map<String, Object> queryUnivsersityLowestScore(long schoolId, long areaId, int batch, int majorType, String year) {
         return scoreAnalysisDAO.queryUnivsersityLowestScore(schoolId, areaId, batch, majorType, year);
     }
@@ -353,29 +294,11 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     @Override
     public List<Map<String, Object>> queryUniversityByScore(long areaId, int batch, int majorType, String year, Float difference, Float line, Float totalScore, int bc) {
         return scoreAnalysisDAO.queryUniversityByScore(areaId, batch, majorType, year, difference, line, totalScore, bc);
-=======
-    public Float queryUnivsersityLowestScore(long schoolId,long areaId,int batch,int majorType, String year) {
-        return scoreAnalysisDAO.queryUnivsersityLowestScore(schoolId,areaId,batch,majorType,year);
-    }
-
-    @Override
-    public int countUniversity(long areaId,int batch, int majorType, String year, Float difference,Float line,int bc) {
-        return scoreAnalysisDAO.countUniversity(areaId,batch,majorType,year,difference,line,bc);
-    }
-
-    @Override
-    public List<Map<String, Object>> queryUniversityByScore(long areaId, int batch, int majorType, String year,Float difference,Float line,  Float totalScore,int bc) {
-        return scoreAnalysisDAO.queryUniversityByScore(areaId,batch,majorType,year,difference,line,totalScore,bc);
->>>>>>> Stashed changes
     }
 
     @Override
     public List<Map<String, Object>> queryHighSchoolByCountyId(long countyId, String schoolName) {
-<<<<<<< Updated upstream
         return scoreAnalysisDAO.queryHighSchoolByCountyId(countyId, schoolName);
-=======
-        return scoreAnalysisDAO.queryHighSchoolByCountyId(countyId,schoolName);
->>>>>>> Stashed changes
     }
 
     @Override
@@ -389,7 +312,6 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     }
 
     @Override
-<<<<<<< Updated upstream
     public List<Map<String, Object>> queryUniversityScore(long universityId, long areaId, Integer majorType, Integer batch) {
         return scoreAnalysisDAO.queryUniversityScore(universityId, areaId, majorType, batch);
     }
@@ -397,41 +319,22 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     @Override
     public boolean isExistScore(Object totalScore, String areaTableName) {
         return scoreAnalysisDAO.isExistScore(totalScore, areaTableName);
-=======
-    public List<Map<String, Object>> queryUniversityScore(long universityId,String year, long areaId,  Integer majorType) {
-        return scoreAnalysisDAO.queryUniversityScore(universityId,year,areaId,majorType);
-    }
-
-    @Override
-    public boolean isExistScore(Object totalScore,String areaTableName) {
-        return scoreAnalysisDAO.isExistScore(totalScore,areaTableName);
->>>>>>> Stashed changes
     }
 
     @Override
     public boolean isExistMaxScore(Object totalScore, String areaTableName) {
-<<<<<<< Updated upstream
         return scoreAnalysisDAO.isExistMaxScore(totalScore, areaTableName);
     }
 
     @Override
     public List<Map<String, Object>> queryLowstUniversity(long areaId, int majorType, Float totalScore, String year) {
         return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, year);
-=======
-        return scoreAnalysisDAO.isExistMaxScore(totalScore,areaTableName);
-    }
-
-    @Override
-    public List<Map<String, Object>> queryLowstUniversity(long areaId,int majorType,Float totalScore,String year) {
-        return scoreAnalysisDAO.queryLowstUniversity(areaId,majorType,totalScore,year);
->>>>>>> Stashed changes
     }
 
     @Override
     public Integer queryUserGrade(long userId) {
         return scoreAnalysisDAO.queryUserGrade(userId);
     }
-<<<<<<< Updated upstream
 
     @Override
     public Integer queryTotalScoreByAreaId(long areaId) {
@@ -589,6 +492,4 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         return resultMap;
 
     }
-=======
->>>>>>> Stashed changes
 }
