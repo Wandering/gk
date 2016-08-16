@@ -32,8 +32,6 @@ public class ScoreController {
     @Autowired
     private ScoreUtil scoreUtil;
 
-    Logger logger = Logger.getLogger(ScoreController.class);
-
     /**
      * 根据用户Id和用户来源查询用户最新的提交记录
      * @return
@@ -53,20 +51,6 @@ public class ScoreController {
 //        }
 //        不是特殊省份
         return scoreAnalysisService.queryScoreRecordByUserId(userId);
-//=======
-//        Map<String,Object> map = scoreAnalysisService.queryScoreRecordByUserId(userId);
-//        if(map==null){
-//            return new HashedMap();
-//        }
-//        Map<String,Object> resultMap = new HashedMap();
-//        resultMap.put("areaName",map.get("areaName"));
-//        Integer majorType=(Integer) map.get("majorType");
-//        resultMap.put("majorType",majorType);
-//        resultMap.put("schoolName",map.get("schoolName"));
-//        Map<String,Object> scores = scoreUtil.getScores(map,majorType);
-//        resultMap.put("scores",scores);
-//        return resultMap;
-//>>>>>>> Stashed changes
     }
 
     /**
@@ -142,35 +126,7 @@ public class ScoreController {
         Map<String, Object> scores = scoreUtil.getScores(request);
 
         return scoreAnalysisService.insertScoreRecord(userId,areaId,majorType,scores);
-//
-//        Map<String,Object> insertMap = new HashedMap();
-//        insertMap.put("userId",userId);
-//        insertMap.put("areaId",areaId);
-//        insertMap.put("majorType",majorType);
-//        insertMap.put("cdate",System.currentTimeMillis());
-//        Map<String,Object> insertScores = new HashedMap();
-//
-//        Iterator iterator=scores.keySet().iterator();
-//        Float totalScore=0f;
-//        while (iterator.hasNext()){
-//            String key = (String) iterator.next();
-//            String value = (String) scores.get(key);
-//            String[] values = value.split("-");
-//            totalScore+=Float.valueOf(values[0]);
-//            insertScores.put(key+"Score",values[0]);
-//            insertScores.put(key+"ScoreTotal",values[1]);
-//        }
-//        if(insertScores.size()!=12&&insertScores.size()!=14){
-//            throw new BizException("error","提交科目不完整!");
-//        }
-//
-//        insertMap.put("scores",insertScores);
-//        insertMap.put("totalScore",totalScore);
-//        scoreAnalysisService.insertScoreRecord(insertMap);
-//        Map<String,Object> resultMap=new HashedMap();
-//        resultMap.put("recordId",insertMap.get("recordId"));
-//        return resultMap;
-//>>>>>>> Stashed changes
+
     }
 
 
