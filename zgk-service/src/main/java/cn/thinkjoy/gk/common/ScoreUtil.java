@@ -316,22 +316,22 @@ public class ScoreUtil {
 
         Integer[] scoreLines = getBatchLine(areaId,majorType);
 
-            if(score - scoreLines[0]>50F){
-                //一本+50
-                return ScoreRankEnum.名垂校史.getSub();
-            }else if(score-scoreLines[0]>0F){
-                //一本+0-49
-                return ScoreRankEnum.校刊红人.getSub();
-            }else if(scoreLines[0]-score>0F && score - scoreLines[1]>0F){
-                //二本以上 一本以下
-                return ScoreRankEnum.三好学生.getSub();
-            }else if(scoreLines[1]-score>0F && score - scoreLines[2]>0F){
-                //三本以上 二本以下
-                return ScoreRankEnum.教师常客.getSub();
-            }else{
-                //三本以下
-                return ScoreRankEnum.逃课大军.getSub();
-            }
+        if(score - scoreLines[0]>50F){
+            //一本+50
+            return ScoreRankEnum.名垂校史.getSub();
+        }else if(score-scoreLines[0]>0F){
+            //一本+0-49
+            return ScoreRankEnum.校刊红人.getSub();
+        }else if(scoreLines[0]-score>0F && score - scoreLines[1]>0F){
+            //二本以上 一本以下
+            return ScoreRankEnum.三好学生.getSub();
+        }else if(scoreLines[1]-score>0F && score - scoreLines[2]>0F){
+            //三本以上 二本以下
+            return ScoreRankEnum.教师常客.getSub();
+        }else{
+            //三本以下
+            return ScoreRankEnum.逃课大军.getSub();
+        }
 
     }
 
@@ -573,49 +573,6 @@ public class ScoreUtil {
             return getScoreType(subjectScore,subjectTotalScore,subject);
         }else {
             throw new BizException("error","科目分数格式不正确!");
-        }
-    }
-
-
-    /**
-     * 量化等级对应成绩
-     * @param f
-     * @return
-     */
-    public String scoreToTag(Float f){
-        if(f-120F>=0){
-            return "A+";
-        }else if(f-100F>0){
-            return "A";
-        }else if(f-80F>0){
-            return "B+";
-        }else if(f-60F>0){
-            return "B";
-        }else if(f-40F>0){
-            return "C+";
-        }else{
-            return "C";
-        }
-    }
-
-    /**
-     * 转换成绩对应等级
-     * @param s
-     * @return
-     */
-    public Float tagToScore(String s){
-        if("A+".equals(s)){
-            return 120F;
-        }else if("A".equals(s)){
-            return 100F;
-        }else if("B+".equals(s)){
-            return 80F;
-        }else if("B".equals(s)){
-            return 60F;
-        }else if("C+".equals(s)){
-            return 40F;
-        }else {
-            return 20F;
         }
     }
 }
