@@ -195,7 +195,8 @@ public interface IScoreAnalysisService {
                                                      Float difference,
                                                      Float line,
                                                      Float totalScore,
-                                                     int bc);
+                                                     int bc,
+                                                     long userId);
 
     /**
      * 根据区Id获取当前区高中
@@ -302,7 +303,7 @@ public interface IScoreAnalysisService {
     List<String> queryLabelByTypeAndConfig(Integer type,List<Integer> configs);
 
 
-    Object recommendSchool(float totalScore,long areaId,int majorType);
+    Object recommendSchool(float totalScore,long areaId,int majorType,long userId);
 
     Object queryGapBySchoolIdAndBatch(long recordId,
                                       Long schoolId,

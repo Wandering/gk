@@ -189,7 +189,9 @@ public interface IScoreAnalysisDAO {
                                                      @Param("difference")Float difference,
                                                      @Param("line")Float line,
                                                      @Param("totalScore")Float totalScore,
-                                                     @Param("bc")int bc);
+                                                     @Param("bc")int bc,
+                                                     @Param("userId")long userId
+                                                     );
 
     /**
      * 统计当前推荐学校数量
@@ -224,7 +226,8 @@ public interface IScoreAnalysisDAO {
                                                      @Param("line")Float line,
                                                      @Param("totalScore")Float totalScore,
                                                      @Param("bc")int bc,
-                                                     @Param("xcRanks")List<String> xcRanks);
+                                                     @Param("xcRanks")List<String> xcRanks,
+                                                     @Param("userId")long userId);
     /**
      * 统计当前推荐学校数量
      * @param areaId

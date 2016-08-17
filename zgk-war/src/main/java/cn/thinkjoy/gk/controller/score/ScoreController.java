@@ -216,7 +216,7 @@ public class ScoreController {
             //江苏算法
             return scoreAnalysisService.recommendSchoolJS(totalScore,areaId,majorType,userId);
         }else {
-            return scoreAnalysisService.recommendSchool(totalScore,areaId,majorType);
+            return scoreAnalysisService.recommendSchool(totalScore,areaId,majorType,userId);
         }
 
     }
@@ -274,6 +274,8 @@ public class ScoreController {
                                        Integer batch){
         List<Map<String, Object>> resultMaps =null;
         if(areaId==330000) {
+            resultMaps = scoreAnalysisService.queryUniversityScore(universityId, areaId, majorType, batch);
+        }else if(areaId==320000){
             resultMaps = scoreAnalysisService.queryUniversityScore(universityId, areaId, majorType, batch);
         }else {
             if(majorType==null){

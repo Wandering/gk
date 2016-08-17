@@ -321,8 +321,8 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     }
 
     @Override
-    public List<Map<String, Object>> queryUniversityByScore(long areaId, int batch, int majorType, String year, Float difference, Float line, Float totalScore, int bc) {
-        return scoreAnalysisDAO.queryUniversityByScore(areaId, batch, majorType, year, difference, line, totalScore, bc);
+    public List<Map<String, Object>> queryUniversityByScore(long areaId, int batch, int majorType, String year, Float difference, Float line, Float totalScore, int bc,long userId) {
+        return scoreAnalysisDAO.queryUniversityByScore(areaId, batch, majorType, year, difference, line, totalScore, bc,userId);
     }
 
     @Override
@@ -414,7 +414,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
      * @return
      */
     @Override
-    public Object recommendSchool(float totalScore, long areaId, int majorType) {
+    public Object recommendSchool(float totalScore, long areaId, int majorType,long userId) {
         Integer lastYear = Integer.valueOf(scoreUtil.getYear()) - 1;
 
         //确定当前分数对应当年批次分数
@@ -452,7 +452,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         } while (count < 20 && bc < 750);
         bc -= 5;
         //返回前20个院校
-        List<Map<String, Object>> resultList = scoreAnalysisDAO.queryUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc);
+        List<Map<String, Object>> resultList = scoreAnalysisDAO.queryUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc,userId);
 
         return resultList;
     }
@@ -568,7 +568,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
             while (keys.hasNext()) {
                 String key = keys.next();
                 if ((!"语文".equals(key)) && (!"数学".equals(key)) && (!"外语".equals(key))) {
-                    String value = map.get(key).toString();
+                    String value = scores.get(key).toString();
                     map1.put(key,value);
                 }
             }
@@ -592,7 +592,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         } while (count < 20 && bc < 750);
         bc -= 5;
         //返回前20个院校
-        List<Map<String, Object>> resultList = scoreAnalysisDAO.queryJSUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc,xcRanks);
+        List<Map<String, Object>> resultList = scoreAnalysisDAO.queryJSUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc,xcRanks,userId);
 
 
 
@@ -732,10 +732,10 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         List<String> xcRanks=new ArrayList<>();
         Map<String,Object> map2=new HashedMap();
         map2.putAll(map);
-        String value1= scoreUtil.scoreToTag(Float.valueOf(map2.get(sub).toString()));
+        String value1= scoreUtil.scoreToTag(scoreUtil.tagToScore(map2.get(sub).toString()));
         map2.remove(sub);
         String key=map2.keySet().iterator().next();
-        String value2 = scoreUtil.scoreToTag(Float.valueOf(map2.get(key).toString()));
+        String value2 = scoreUtil.scoreToTag(scoreUtil.tagToScore(map2.get(key).toString()));
 
         //三种
 

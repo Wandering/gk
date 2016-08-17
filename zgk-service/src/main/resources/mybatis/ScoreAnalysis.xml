@@ -430,8 +430,8 @@ deleteBySubjects
         WHERE
         majorId in (<foreach collection="majorIds" item="item" separator=",">#{item}</foreach>)
         and areaId = #{areaId} and year = #{year}
-        and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
-        and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
+        and (averageScore - #{line}) -  #{difference} &lt;= #{bc}
+        and #{difference} -(averageScore - #{line})  &lt;= #{bc}
     </select>
     <!--推荐院校浙江-->
     <select id="queryZJUniversityByScore" resultType="java.util.Map">
@@ -498,8 +498,27 @@ deleteBySubjects
         ORDER BY ABS(gapSchool) ASC
         limit 20) tb ORDER BY gapSchool DESC;
     </select>
-
-
+    <!--统计江苏院校数量-->
+    <select id="countJSUniversity" resultType="java.lang.Integer">
+        SELECT count(*) from zgk_university_enrolling
+        INNER JOIN (
+        SELECT
+        universityId AS uid,
+        xcRank
+        FROM
+        zgk_university_enrolling_plan
+        WHERE
+        YEAR = #{year}+1
+        AND majorType = #{majorType}
+        AND batch = #{batch}
+        AND areaId = #{areaId}
+        AND xcRank in (<foreach collection="xcRanks" item="item" separator=",">#{item}</foreach>)
+        ) plan ON plan.uid = universityId
+        WHERE
+        areaId = #{areaId} and year = #{year} and majorType = #{majorType}
+        and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
+        and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
+    </select>
 
 </mapper>
 
