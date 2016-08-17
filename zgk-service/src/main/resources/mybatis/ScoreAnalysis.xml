@@ -427,7 +427,9 @@ deleteBySubjects
     <!--统计浙江院校数量-->
     <select id="countZJUniversity" resultType="java.lang.Integer">
         SELECT count(*) from zgk_university_major_enrolling
-        WHERE areaId = #{areaId} and year = #{year}
+        WHERE
+        majorId in (<foreach collection="majorIds" item="item" separator=",">#{item}</foreach>)
+        and areaId = #{areaId} and year = #{year}
         and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
         and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
     </select>
@@ -440,9 +442,13 @@ deleteBySubjects
         realEnrollingNumber as stuNum,
         averageScore as averageScore,
         universityId,
-        (#{difference} - (averageScore - #{line})) as gapSchool
+        (#{difference} - (averageScore - #{line})) as gapSchool,
+        (CASE ff.university_id WHEN university_id IS NULL THEN 0 ELSE 1 END) AS isFavorite
         from zgk_university_major_enrolling
-        WHERE areaId = #{areaId} and year = #{year}
+        LEFT JOIN (SELECT university_id from zgk_favorite_university WHERE user_id = #{userId}) ff ON ff.university_id = universityId
+        WHERE
+        majorId in (<foreach collection="majorIds" item="item" separator=",">#{item}</foreach>)
+        and areaId = #{areaId} and year = #{year}
         and (averageScore - #{line}) -  #{difference} &lt;= #{bc}
         and #{difference} -(averageScore - #{line})  &lt;= #{bc}
         ORDER BY ABS(gapSchool) ASC
@@ -450,8 +456,30 @@ deleteBySubjects
     </select>
 
     <!--获取当前用户标签-->
-    <select id="queryHistoryScore" resultType="java.lang.Map">
+    <select id="queryHistoryScore" resultType="java.util.Map">
         SELECT id,total_score,cdate from zgk_score_base WHERE user_id = #{userId}
+    </select>
+
+    <!--推荐院校-->
+    <select id="queryJSUniversityByScore" resultType="java.util.Map">
+        SELECT * from (
+        SELECT
+        (SELECT name from zgk_university WHERE id = universityId LIMIT 1) as schoolName,
+        (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batch,
+        realEnrollingNumber as stuNum,
+        averageScore as averageScore,
+        highestScore as highestScore,
+        lowestScore as lowestScore,
+        universityId,
+        (#{difference} - (lowestScore - #{line}) ) as gapSchool,
+        (CASE ff.university_id WHEN university_id IS NULL THEN 0 ELSE 1 END) AS isFavorite
+        from zgk_university_enrolling
+        LEFT JOIN (SELECT university_id from zgk_favorite_university WHERE user_id = #{userId}) ff ON ff.university_id = universityId
+        WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
+        and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
+        and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
+        ORDER BY ABS(gapSchool) ASC
+        limit 20) tb ORDER BY gapSchool DESC;
     </select>
 
 

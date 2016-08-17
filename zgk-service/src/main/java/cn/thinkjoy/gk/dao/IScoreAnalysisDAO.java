@@ -157,6 +157,7 @@ public interface IScoreAnalysisDAO {
                                       @Param("year")String year);
 
 
+
     /**
      * 统计当前推荐学校数量
      * @param areaId
@@ -166,14 +167,13 @@ public interface IScoreAnalysisDAO {
      * @return
      */
     int countUniversity(@Param("areaId")long areaId,
-                                      @Param("batch")int batch,
-                                      @Param("majorType")int majorType,
-                                      @Param("year")String year,
-                                      @Param("difference")Float difference,
-                                      @Param("line")Float line,
-                                      @Param("bc")int bc
-                        );
-
+                        @Param("batch")int batch,
+                        @Param("majorType")int majorType,
+                        @Param("year")String year,
+                        @Param("difference")Float difference,
+                        @Param("line")Float line,
+                        @Param("bc")int bc
+    );
     /**
      * 获取推荐学校详情
      * @param areaId
@@ -192,21 +192,29 @@ public interface IScoreAnalysisDAO {
                                                      @Param("bc")int bc);
 
     /**
+     * 统计当前推荐学校数量
+     * @param areaId
+     * @param year
+     * @return
+     */
+    int countZJUniversity(@Param("areaId")long areaId,
+                          @Param("year")String year,
+                          @Param("totalScore")Float totalScore,
+                          @Param("bc")int bc,
+                          @Param("majorIds")List<Integer> majorIds
+    );
+
+    /**
      * 获取推荐学校详情
      * @param areaId
-     * @param batch
-     * @param majorType
      * @param year
      * @return
      */
     List<Map<String,Object>>  queryZJUniversityByScore(@Param("areaId")long areaId,
-                                                     @Param("batch")int batch,
-                                                     @Param("majorType")int majorType,
                                                      @Param("year")String year,
-                                                     @Param("difference")Float difference,
-                                                     @Param("line")Float line,
                                                      @Param("totalScore")Float totalScore,
-                                                     @Param("bc")int bc);
+                                                     @Param("bc")int bc,
+                                                     @Param("majorIds")List<Integer> majorIds);
 
     /**
      * 根据区Id获取当前区高中

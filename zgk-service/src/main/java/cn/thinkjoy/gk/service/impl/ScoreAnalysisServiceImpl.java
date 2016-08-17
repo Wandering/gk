@@ -3,6 +3,7 @@ package cn.thinkjoy.gk.service.impl;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ScoreUtil;
 import cn.thinkjoy.gk.dao.IScoreAnalysisDAO;
+import cn.thinkjoy.gk.dao.IZGK3in7DAO;
 import cn.thinkjoy.gk.service.IScoreAnalysisService;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.log4j.Logger;
@@ -20,6 +21,10 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
 
     @Autowired
     private IScoreAnalysisDAO scoreAnalysisDAO;
+
+    @Autowired
+    private IZGK3in7DAO zgk3in7DAO;
+
     @Autowired
     private ScoreUtil scoreUtil;
 
@@ -386,6 +391,13 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         return scoreAnalysisDAO.queryLabelByTypeAndConfig(type, configs);
     }
 
+    /**
+     * 通用算法
+     * @param totalScore
+     * @param areaId
+     * @param majorType
+     * @return
+     */
     public Object recommendSchool(float totalScore, long areaId, int majorType) {
         Integer lastYear = Integer.valueOf(scoreUtil.getYear()) - 1;
 
@@ -433,10 +445,61 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
      * 浙江算法
      * @param totalScore
      * @param areaId
+     * @return
+     */
+    public Object recommendSchoolZJ(float totalScore, long areaId,long userId) {
+
+        //根据用户ID获取用户上一次测评成绩和测评科目
+        Map<String, Object> map = scoreAnalysisDAO.queryScoreRecordByUserId(userId);
+        Map<String,Object> scores = scoreUtil.getScores(map, null);
+        Iterator<String> keys = scores.keySet().iterator();
+        //一定是三门成绩 否则异常
+        String[] subjects =null;
+        try {
+            //提取科目
+            subjects = new String[3];
+            int i = 0;
+            while (keys.hasNext()) {
+                String key = keys.next();
+                if (!("语文".equals(key)) && (!"数学".equals(key)) && (!"外语".equals(key))) {
+                    subjects[i++] = key;
+                }
+            }
+        }catch (Exception e){
+            throw new BizException("error","当前科目不正确!");
+        }
+
+        Integer lastYear = Integer.valueOf(scoreUtil.getYear()) - 1;
+        //计算公式为 学生成绩 - 平均分 > = bc  || 平均分 - 学生成绩 < = bc
+        //计算专业提取范围
+        map = new HashedMap();
+        map.put("subjectItemList", combineAlgorithm(subjects));
+        List<Integer> majorIds  = zgk3in7DAO.getMajorRange(map);
+
+        int count = 0;
+        int bc = 0;
+        do {
+            count = scoreAnalysisDAO.countZJUniversity(areaId,lastYear.toString(),totalScore,bc,majorIds);
+            //增加步长
+            bc += 5;
+        } while (count < 20 && bc < 750);
+        bc -= 5;
+
+        //返回前20个院校
+        List<Map<String, Object>> resultList = scoreAnalysisDAO.queryZJUniversityByScore(areaId, lastYear.toString(), totalScore, bc,majorIds);
+
+        return resultList;
+    }
+
+
+    /**
+     * 江苏算法
+     * @param totalScore
+     * @param areaId
      * @param majorType
      * @return
      */
-    public Object recommendSchoolZJ(float totalScore, long areaId, int majorType) {
+    public Object recommendSchoolJS(float totalScore, long areaId, int majorType) {
         Integer lastYear = Integer.valueOf(scoreUtil.getYear()) - 1;
 
         //确定当前分数对应当年批次分数
@@ -465,20 +528,27 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         //计算公式为 lowestScore - line -  difference > = bc  || lowestScore - line -  difference > = -bc
 
 
-        int count = 0;
-        int bc = 0;
-        do {
-            count = scoreAnalysisDAO.countUniversity(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, bc);
-            //增加步长
-            bc += 5;
-        } while (count < 20 && bc < 750);
-        bc -= 5;
-
-        //返回前20个院校
-        List<Map<String, Object>> resultList = scoreAnalysisDAO.queryZJUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc);
-
-        return resultList;
+//        /**
+//         * 这里需要去比对院校招生表
+//         */
+//        int count = 0;
+//        int bc = 0;
+//        do {
+//            count = scoreAnalysisDAO.countJSUniversity(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, bc);
+//            //增加步长
+//            bc += 5;
+//        } while (count < 20 && bc < 750);
+//        bc -= 5;
+//        //返回前20个院校
+//        List<Map<String, Object>> resultList = scoreAnalysisDAO.queryJSUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc);
+//
+//
+//
+//        return resultList;
+        return null;
     }
+
+
 
 
     public Object queryGapBySchoolIdAndBatch(long recordId,
@@ -574,7 +644,6 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         }
         return scores;
     }
-
 
     private List<Map<String,Object>> combineAlgorithm(String[] str){
 

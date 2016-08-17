@@ -49,7 +49,7 @@ public class ScoreUtil {
      * @param majorType
      * @return
      */
-    public Map<String,Object> getScores(Map<String,Object> map, int majorType){
+    public Map<String,Object> getScores(Map<String,Object> map, Integer majorType){
         Map<String, Object> scores =  new LinkedHashMap();
         scores.put("语文", floatToStr(map.get("ywScore")) + "-" + floatToStr(map.get("ywScoreTotal")));
         scores.put("数学", floatToStr(map.get("sxScore")) + "-" + floatToStr(map.get("sxScoreTotal")));
