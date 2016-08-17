@@ -207,8 +207,18 @@ public class ScoreController {
      */
     @RequestMapping(value = "/recommendSchool",method = RequestMethod.GET)
     @ResponseBody
-    public Object recommendSchool(@RequestParam float totalScore,@RequestParam long areaId,@RequestParam int majorType){
-        return scoreAnalysisService.recommendSchool(totalScore,areaId,majorType);
+    public Object recommendSchool(@RequestParam float totalScore,@RequestParam long areaId,Integer majorType,@RequestParam long userId){
+
+        if(areaId==330000){
+            //浙江算法
+            return scoreAnalysisService.recommendSchoolZJ(totalScore,areaId,userId);
+        }else if(areaId==320000){
+            //江苏算法
+            return scoreAnalysisService.recommendSchoolJS(totalScore,areaId,majorType,userId);
+        }else {
+            return scoreAnalysisService.recommendSchool(totalScore,areaId,majorType);
+        }
+
     }
 
     /**

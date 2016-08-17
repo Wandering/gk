@@ -194,6 +194,40 @@ public interface IScoreAnalysisDAO {
     /**
      * 统计当前推荐学校数量
      * @param areaId
+     * @param batch
+     * @param majorType
+     * @param year
+     * @return
+     */
+    int countJSUniversity(@Param("areaId")long areaId,
+                        @Param("batch")int batch,
+                        @Param("majorType")int majorType,
+                        @Param("year")String year,
+                        @Param("difference")Float difference,
+                        @Param("line")Float line,
+                        @Param("bc")int bc,
+                        @Param("xcRanks")List<String> xcRanks
+    );
+    /**
+     * 获取推荐学校详情
+     * @param areaId
+     * @param batch
+     * @param majorType
+     * @param year
+     * @return
+     */
+    List<Map<String,Object>>  queryJSUniversityByScore(@Param("areaId")long areaId,
+                                                     @Param("batch")int batch,
+                                                     @Param("majorType")int majorType,
+                                                     @Param("year")String year,
+                                                     @Param("difference")Float difference,
+                                                     @Param("line")Float line,
+                                                     @Param("totalScore")Float totalScore,
+                                                     @Param("bc")int bc,
+                                                     @Param("xcRanks")List<String> xcRanks);
+    /**
+     * 统计当前推荐学校数量
+     * @param areaId
      * @param year
      * @return
      */

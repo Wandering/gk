@@ -90,12 +90,11 @@ public class ScoreUtil {
         scores.put("数学", floatToStr(map.get("sxScore")) + "-" + floatToStr(map.get("sxScoreTotal")));
         scores.put("外语", floatToStr(map.get("wyScore")) + "-" + floatToStr(map.get("wyScoreTotal")));
         //分析当前分数的
+//        map.get
         if (majorType == 2) {
             scores.put("物理", floatToStr(map.get("wlScore")) + "-" + floatToStr(map.get("wlScoreTotal")));
-            scores.put("化学", floatToStr(map.get("hxScore")) + "-" + floatToStr(map.get("hxScoreTotal")));
         } else {
             scores.put("历史", floatToStr(map.get("zzScore")) + "-" + floatToStr(map.get("zzScoreTotal")));
-            scores.put("化学", floatToStr(map.get("hxScore")) + "-" + floatToStr(map.get("hxScoreTotal")));
         }
         return scores;
     }

@@ -458,6 +458,9 @@ deleteBySubjects
     <!--获取当前用户标签-->
     <select id="queryHistoryScore" resultType="java.util.Map">
         SELECT id,total_score,cdate from zgk_score_base WHERE user_id = #{userId}
+        <if test="rows!=null">
+            limit ${rows}
+        </if>
     </select>
 
     <!--推荐院校-->
@@ -472,8 +475,22 @@ deleteBySubjects
         lowestScore as lowestScore,
         universityId,
         (#{difference} - (lowestScore - #{line}) ) as gapSchool,
+        xcRank,
         (CASE ff.university_id WHEN university_id IS NULL THEN 0 ELSE 1 END) AS isFavorite
         from zgk_university_enrolling
+        INNER JOIN (
+			SELECT
+				universityId AS uid,
+				xcRank
+			FROM
+				zgk_university_enrolling_plan
+			WHERE
+				YEAR = #{year}+1
+			AND majorType = #{majorType}
+			AND batch = #{batch}
+			AND areaId = #{areaId}
+			AND xcRank in (<foreach collection="xcRanks" item="item" separator=",">#{item}</foreach>)
+		) plan ON plan.uid = universityId
         LEFT JOIN (SELECT university_id from zgk_favorite_university WHERE user_id = #{userId}) ff ON ff.university_id = universityId
         WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
         and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}

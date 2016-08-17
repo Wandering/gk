@@ -310,4 +310,21 @@ public interface IScoreAnalysisService {
                                       long userId);
 
     List<String> queryHistoryScore(long userId,Integer rows);
+
+    /**
+     * 江苏算法
+     * @param totalScore
+     * @param areaId
+     * @param majorType
+     * @return
+     */
+    public Object recommendSchoolJS(float totalScore, long areaId, int majorType,long userId);
+
+    /**
+     * 浙江算法
+     * @param totalScore
+     * @param areaId
+     * @return
+     */
+    public Object recommendSchoolZJ(float totalScore, long areaId,long userId);
 }

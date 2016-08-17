@@ -398,6 +398,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
      * @param majorType
      * @return
      */
+    @Override
     public Object recommendSchool(float totalScore, long areaId, int majorType) {
         Integer lastYear = Integer.valueOf(scoreUtil.getYear()) - 1;
 
@@ -447,6 +448,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
      * @param areaId
      * @return
      */
+    @Override
     public Object recommendSchoolZJ(float totalScore, long areaId,long userId) {
 
         //根据用户ID获取用户上一次测评成绩和测评科目
@@ -499,7 +501,8 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
      * @param majorType
      * @return
      */
-    public Object recommendSchoolJS(float totalScore, long areaId, int majorType) {
+    @Override
+    public Object recommendSchoolJS(float totalScore, long areaId, int majorType,long userId) {
         Integer lastYear = Integer.valueOf(scoreUtil.getYear()) - 1;
 
         //确定当前分数对应当年批次分数
@@ -528,29 +531,55 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         //计算公式为 lowestScore - line -  difference > = bc  || lowestScore - line -  difference > = -bc
 
 
-//        /**
-//         * 这里需要去比对院校招生表
-//         */
-//        int count = 0;
-//        int bc = 0;
-//        do {
-//            count = scoreAnalysisDAO.countJSUniversity(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, bc);
-//            //增加步长
-//            bc += 5;
-//        } while (count < 20 && bc < 750);
-//        bc -= 5;
-//        //返回前20个院校
-//        List<Map<String, Object>> resultList = scoreAnalysisDAO.queryJSUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc);
-//
-//
-//
-//        return resultList;
-        return null;
+        /**
+         * =================================
+         * 这里需要计算江苏省的选考等级
+         * 两种情况
+         * 1、单科固定 另一门随机
+         * 2、任意一门顺序不限 如:AB  物理A 政治B 或者 政治A 物理B
+         * =================================
+         */
+
+        //根据用户ID获取用户上一次测评成绩和测评科目
+        Map<String, Object> map = scoreAnalysisDAO.queryScoreRecordByUserId(userId);
+        Map<String,Object> scores = scoreUtil.getScoresJS(map, majorType);
+        Iterator<String> keys = scores.keySet().iterator();
+        //江苏一定是两门额外科目  否则抛异常
+
+        while (keys.hasNext()){
+            String key = keys.next();
+            if((!"语文".equals(key))&&(!"数学".equals(key))&&(!"外语".equals(key))){
+                String value = map.get(key).toString();
+            }
+        }
+
+        List<String> xcRanks=new ArrayList<>();
+        xcRanks.add("AB");
+        xcRanks.add("BA");
+
+        /**
+         * 这里需要去比对院校招生表
+         */
+        int count = 0;
+        int bc = 0;
+        do {
+            count = scoreAnalysisDAO.countJSUniversity(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, bc,xcRanks);
+            //增加步长
+            bc += 5;
+        } while (count < 20 && bc < 750);
+        bc -= 5;
+        //返回前20个院校
+        List<Map<String, Object>> resultList = scoreAnalysisDAO.queryJSUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc,xcRanks);
+
+
+
+        return resultList;
     }
 
 
 
 
+    @Override
     public Object queryGapBySchoolIdAndBatch(long recordId,
                                              Long schoolId,
                                              Integer batch,
@@ -624,6 +653,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
 
     }
 
+    @Override
     public List<String> queryHistoryScore(long userId,Integer rows){
         return scoreAnalysisDAO.queryHistoryScore(userId,rows);
     }
