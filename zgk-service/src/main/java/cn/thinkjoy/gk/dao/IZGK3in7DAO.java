@@ -19,4 +19,5 @@ public interface IZGK3in7DAO{
     Map<String,Object> getSubjectByMajor(Map<String, Object> map);
     List<Map<String,Object>> queryPage(Map<String, Object> map);
     int count(Map<String, Object> map);
+    List<Integer> getMajorRange(Map<String, Object> map);
 }

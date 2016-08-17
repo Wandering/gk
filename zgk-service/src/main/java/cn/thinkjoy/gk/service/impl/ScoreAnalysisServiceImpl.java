@@ -9,10 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by yangyongping on 16/7/27.
@@ -34,14 +31,16 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         if (map == null) {
             return new HashedMap();
         }
-
+        long areaId=(Long) map.get("areaId");
         Map<String, Object> resultMap = new HashedMap();
         resultMap.put("areaName", map.get("areaName"));
         Integer majorType = (Integer) map.get("majorType");
         resultMap.put("majorType", majorType);
         resultMap.put("schoolName", map.get("schoolName"));
-        Map<String, Object> scores = scoreUtil.getScores(map, majorType);
-        resultMap.put("scores", scores);
+
+        getScores(areaId,majorType,map,resultMap);
+
+
         return resultMap;
     }
 
@@ -62,16 +61,32 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         Iterator iterator = scores.keySet().iterator();
         Float totalScore = 0f;
         while (iterator.hasNext()) {
-            String key = (String) iterator.next();
-            String value = (String) scores.get(key);
-            String[] values = value.split("-");
-            totalScore += Float.valueOf(values[0]);
-            insertScores.put(key + "Score", values[0]);
-            insertScores.put(key + "ScoreTotal", values[1]);
+            //判断
+
+            if (areaId == 320000) {
+                //江苏判定
+                String key = (String) iterator.next();
+                String value = (String) scores.get(key);
+                if("语文".equals(key)||"数学".equals(key)||"外语".equals(key)) {
+                    String[] values = value.split("-");
+                    totalScore += Float.valueOf(values[0]);
+                    insertScores.put(key + "Score", values[0]);
+                    insertScores.put(key + "ScoreTotal", values[1]);
+                }else {
+                    insertScores.put(key + "Score",scoreUtil.tagToScore(value));
+                }
+            } else {
+                String key = (String) iterator.next();
+                String value = (String) scores.get(key);
+                String[] values = value.split("-");
+                totalScore += Float.valueOf(values[0]);
+                insertScores.put(key + "Score", values[0]);
+                insertScores.put(key + "ScoreTotal", values[1]);
+            }
         }
-        if (insertScores.size() != 12 && insertScores.size() != 14) {
-            throw new BizException("error", "提交科目不完整!");
-        }
+//        if (insertScores.size() != 12 && insertScores.size() != 14) {
+//            throw new BizException("error", "提交科目不完整!");
+//        }
 
         insertMap.put("scores", insertScores);
         insertMap.put("totalScore", totalScore);
@@ -96,10 +111,8 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         resultMap.put("areaName", map.get("areaName"));
         Integer majorType = (Integer) map.get("majorType");
         resultMap.put("majorType", majorType);
-        ;
-        Map<String, Object> scores = scoreUtil.getScores(map, majorType);
-        resultMap.put("scores", scores);
 
+        getScores(areaId,majorType,map,resultMap);
 
         // 获取用户上次成绩
         //第一次判定
@@ -181,12 +194,10 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                 resultMap.put("majorType", majorType);
                 resultMap.put("cdate", map.get("cdate"));
                 resultMap.put("upLine", scoreUtil.getTopBatchLine(areaId, majorType, totalScore));
-                Map<String, Object> scores = scoreUtil.getScores(map, majorType);
-
-                resultMap.put("scores", scores);
+                Map<String,Object> scores = getScores(areaId,majorType,map,resultMap);
                 String areaTableName = scoreUtil.getAreaTableName(areaId, majorType);
                 //分析科目强弱
-                Object[] subjects = scoreUtil.getScoreWeak(scores);
+                Object[] subjects = scoreUtil.getScoreWeak(scores,areaId);
                 resultMap.put("strong", subjects[0]);
                 resultMap.put("weak", subjects[1]);
 
@@ -213,8 +224,6 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                     int allStuNum = scoreAnalysisDAO.queryAllAreaStuNum(areaTableName);
                     resultMap.put("proviceRank", -allStuNum);
                 }
-
-
                 list.add(resultMap);
             }
         }
@@ -399,13 +408,12 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         float difference = totalScore - (Float) line1s[0];
         //确定点钱分数对应次年批次分数
 
-
         Float line2 = scoreUtil.getLastBatchAndScore(areaId, majorType, batch, lastYear.toString());
 
         //获得分差2  院校15年分-15年分数线 (15年分数线)
 
-
         //计算公式为 lowestScore - line -  difference > = bc  || lowestScore - line -  difference > = -bc
+
 
         int count = 0;
         int bc = 0;
@@ -414,14 +422,64 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
             //增加步长
             bc += 5;
         } while (count < 20 && bc < 750);
-
         bc -= 5;
         //返回前20个院校
         List<Map<String, Object>> resultList = scoreAnalysisDAO.queryUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc);
 
+        return resultList;
+    }
+
+    /**
+     * 浙江算法
+     * @param totalScore
+     * @param areaId
+     * @param majorType
+     * @return
+     */
+    public Object recommendSchoolZJ(float totalScore, long areaId, int majorType) {
+        Integer lastYear = Integer.valueOf(scoreUtil.getYear()) - 1;
+
+        //确定当前分数对应当年批次分数
+//        long areaId,int majorType,Float totalScore,String year
+        Object[] line1s = null;
+        try {
+            line1s = scoreUtil.getBatchAndScore(areaId, majorType, totalScore, scoreUtil.getYear());
+        } catch (Exception e) {
+            throw new BizException("error", "当前省份" + scoreUtil.getYear() + "年分数线为空!");
+        }
+        if (line1s[2] == 5) {
+            //todo 假如不足高职专科批次(分数超低)
+
+            //推荐10所高职院校
+            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString());
+        }
+        int batch = (int) line1s[2];
+        //获得分差1  考生分-16年分数线
+        float difference = totalScore - (Float) line1s[0];
+        //确定点钱分数对应次年批次分数
+
+        Float line2 = scoreUtil.getLastBatchAndScore(areaId, majorType, batch, lastYear.toString());
+
+        //获得分差2  院校15年分-15年分数线 (15年分数线)
+
+        //计算公式为 lowestScore - line -  difference > = bc  || lowestScore - line -  difference > = -bc
+
+
+        int count = 0;
+        int bc = 0;
+        do {
+            count = scoreAnalysisDAO.countUniversity(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, bc);
+            //增加步长
+            bc += 5;
+        } while (count < 20 && bc < 750);
+        bc -= 5;
+
+        //返回前20个院校
+        List<Map<String, Object>> resultList = scoreAnalysisDAO.queryZJUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc);
 
         return resultList;
     }
+
 
     public Object queryGapBySchoolIdAndBatch(long recordId,
                                              Long schoolId,
@@ -454,6 +512,9 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         Map<String, Object> schoolLineMap = scoreAnalysisDAO.queryUnivsersityLowestScore(schoolId, areaId, batch, majorType, year);
         Float schoolLine = null;
         String schoolLineYear = null;
+
+
+
         if (schoolLineMap != null) {
             schoolLine = Float.valueOf(schoolLineMap.get("lowestScore").toString());
             schoolLineYear = schoolLineMap.get("year").toString();
@@ -491,5 +552,54 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
 
         return resultMap;
 
+    }
+
+    public List<String> queryHistoryScore(long userId,Integer rows){
+        return scoreAnalysisDAO.queryHistoryScore(userId,rows);
+    }
+
+
+
+
+    private Map<String,Object> getScores(long areaId,int majorType,Map<String,Object> map,Map<String,Object> resultMap){
+        Map<String, Object> scores =null;
+        if(areaId==320000){
+            //  江苏
+            scores = scoreUtil.getScoresJS(map, majorType);
+            resultMap.put("scores", scores);
+        }else {
+            //  其他 包括浙江
+            scores = scoreUtil.getScores(map, majorType);
+            resultMap.put("scores", scores);
+        }
+        return scores;
+    }
+
+
+    private List<Map<String,Object>> combineAlgorithm(String[] str){
+
+        int nCnt = str.length;
+
+        int nBit = (0xFFFFFFFF >>> (32 - nCnt));
+
+
+        List<Map<String,Object>> mapList=null;
+        Map<String,Object> map=null;
+        Map<String,Object> subjectItemMap=null;
+        List<Map<String,Object>> lists=new ArrayList<>();
+        for (int i = 1; i <= nBit; i++) {
+            mapList=new ArrayList<>();
+            for (int j = 0; j < nCnt; j++) {
+                if ((i << (31 - j)) >> 31 == -1) {
+                    map=new HashMap<>();
+                    map.put("selectSubject",str[j]);
+                    mapList.add(map);
+                }
+            }
+            subjectItemMap=new HashMap<>();
+            subjectItemMap.put("subjectItem",mapList);
+            lists.add(subjectItemMap);
+        }
+        return lists;
     }
 }

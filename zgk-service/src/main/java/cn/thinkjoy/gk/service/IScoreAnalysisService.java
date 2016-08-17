@@ -308,4 +308,6 @@ public interface IScoreAnalysisService {
                                       Long schoolId,
                                       Integer batch,
                                       long userId);
+
+    List<String> queryHistoryScore(long userId,Integer rows);
 }

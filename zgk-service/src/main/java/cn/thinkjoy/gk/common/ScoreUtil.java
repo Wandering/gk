@@ -78,6 +78,30 @@ public class ScoreUtil {
 
 
     /**
+     * 生成分数明细
+     * @param map
+     * @param majorType
+     * @return
+     */
+    public Map<String,Object> getScoresJS(Map<String,Object> map, int majorType){
+
+        Map<String, Object> scores =  new LinkedHashMap();
+        scores.put("语文", floatToStr(map.get("ywScore")) + "-" + floatToStr(map.get("ywScoreTotal")));
+        scores.put("数学", floatToStr(map.get("sxScore")) + "-" + floatToStr(map.get("sxScoreTotal")));
+        scores.put("外语", floatToStr(map.get("wyScore")) + "-" + floatToStr(map.get("wyScoreTotal")));
+        //分析当前分数的
+        if (majorType == 2) {
+            scores.put("物理", floatToStr(map.get("wlScore")) + "-" + floatToStr(map.get("wlScoreTotal")));
+            scores.put("化学", floatToStr(map.get("hxScore")) + "-" + floatToStr(map.get("hxScoreTotal")));
+        } else {
+            scores.put("历史", floatToStr(map.get("zzScore")) + "-" + floatToStr(map.get("zzScoreTotal")));
+            scores.put("化学", floatToStr(map.get("hxScore")) + "-" + floatToStr(map.get("hxScoreTotal")));
+        }
+        return scores;
+    }
+
+
+    /**
      * 生成江苏分数明细
      * @param map
      * @param majorType
@@ -339,32 +363,56 @@ public class ScoreUtil {
      * 查询当前分数的分数等级
      * @return
      */
-    public Object[] getScoreWeak(Map<String,Object> scores){
+    public Object[] getScoreWeak(Map<String,Object> scores,long areaId){
         String strongSubject=null;
         String weakSubject=null;
         Float initFloat1 = 1F;
         Float initFloat2 = 0F;
-        Iterator<String> iterator =  scores.keySet().iterator();
-        while (iterator.hasNext()){
-            String key = iterator.next();
-            String value = (String) scores.get(key);
-            Float scoreProportion = getProportion(value);
-            if(scoreProportion<initFloat1){
-                initFloat1=scoreProportion;
-                weakSubject = key;
-            };
-            if(scoreProportion>initFloat2 && scoreProportion<=1F){
-                initFloat2=scoreProportion;
-                strongSubject = key;
-            };
+        if(areaId==320000) {
+            Iterator<String> iterator = scores.keySet().iterator();
+            while (iterator.hasNext()) {
+                String key = iterator.next();
+                String value = (String) scores.get(key);
+                Float scoreProportion=null;
+                if("语文".equals(key)||"数学".equals(key)||"外语".equals(key)) {
+                    scoreProportion = getProportion(value);
+                }else {
+                    scoreProportion = getProportionJS(value);
+                }
 
+                if (scoreProportion < initFloat1) {
+                    initFloat1 = scoreProportion;
+                    weakSubject = key;
+                }
+
+                if (scoreProportion > initFloat2 && scoreProportion <= 1F) {
+                    initFloat2 = scoreProportion;
+                    strongSubject = key;
+                }
+            }
+            if (initFloat1 - initFloat2 < 0.05F && initFloat1 - initFloat2 > -0.05F) {
+                weakSubject = strongSubject;
+            }
+        }else {
+            Iterator<String> iterator = scores.keySet().iterator();
+            while (iterator.hasNext()) {
+                String key = iterator.next();
+                String value = (String) scores.get(key);
+                Float scoreProportion = getProportion(value);
+                if (scoreProportion < initFloat1) {
+                    initFloat1 = scoreProportion;
+                    weakSubject = key;
+                }
+                if (scoreProportion > initFloat2 && scoreProportion <= 1F) {
+                    initFloat2 = scoreProportion;
+                    strongSubject = key;
+                }
+
+            }
+            if (initFloat1 - initFloat2 < 0.05F && initFloat1 - initFloat2 > -0.05F) {
+                weakSubject = strongSubject;
+            }
         }
-        if(initFloat1-initFloat2<0.05F && initFloat1-initFloat2>-0.05F){
-            weakSubject=strongSubject;
-        }
-
-
-
 
         return new Object[]{getSubjectInfo(scores,strongSubject),getSubjectInfo(scores,weakSubject)};
 
@@ -381,6 +429,11 @@ public class ScoreUtil {
             v2 =Float.valueOf(scores[1]);
         }
         return v1/v2;
+
+    }
+    public Float getProportionJS(String value){
+        Float v1 =Float.valueOf(value);
+        return v1/120F;
 
     }
 
@@ -592,9 +645,9 @@ public class ScoreUtil {
         }else if(f-60F>0){
             return "B";
         }else if(f-40F>0){
-            return "C+";
-        }else{
             return "C";
+        }else{
+            return "D";
         }
     }
 
@@ -612,7 +665,7 @@ public class ScoreUtil {
             return 80F;
         }else if("B".equals(s)){
             return 60F;
-        }else if("C+".equals(s)){
+        }else if("C".equals(s)){
             return 40F;
         }else {
             return 20F;
