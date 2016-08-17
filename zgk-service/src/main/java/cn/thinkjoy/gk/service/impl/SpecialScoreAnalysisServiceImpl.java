@@ -44,7 +44,7 @@ public class SpecialScoreAnalysisServiceImpl implements ISpecialScoreAnalysisSer
         /**
          * 获取江苏成绩
          */
-        Map<String, Object> scores = scoreUtil.getJSScores(map, majorType);
+        Map<String, Object> scores = scoreUtil.getScoresJS(map, majorType);
         resultMap.put("scores", scores);
 
         return resultMap;

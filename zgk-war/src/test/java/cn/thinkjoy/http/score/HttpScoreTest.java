@@ -1,6 +1,7 @@
 package cn.thinkjoy.http.score;
 
 import cn.thinkjoy.common.RequestUtils;
+import cn.thinkjoy.gk.common.SubjectEnum;
 import junit.framework.TestCase;
 
 import java.net.URL;
@@ -82,19 +83,26 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
      public void testQueryScoreRecordByUserId(){
-         String url=host + queryScoreRecordByUserId_url + "?userId=20004\n";
+         String url=host + queryScoreRecordByUserId_url + "?userId=1\n";
          System.out.println(url);
          String result = RequestUtils.requestGet(url);
          System.out.println("result = " + result);
 
+
      }
 
+    /**
+     * ok
+     */
+    public void test2(){
+        SubjectEnum.valueOf("sx").getSub();
+    }
 
     /**
      * ok
      */
     public void testQueryInfoByRecordId(){
-        String url=host +queryInfoByRecordId_url + "?recordId=205";
+        String url=host +queryInfoByRecordId_url + "?recordId=244";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
@@ -103,7 +111,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryAllRecordByUserId(){
-        String url=host +queryAllRecordByUserId_url + "?userId=221";
+        String url=host +queryAllRecordByUserId_url + "?userId=1";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
@@ -112,7 +120,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryBatchLineByAreaId(){
-        String url=host +queryBatchLineByAreaId_url + "?totalScore=60&areaId=440000&majorType=1";
+        String url=host +queryBatchLineByAreaId_url + "?totalScore=60&areaId=320000";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }

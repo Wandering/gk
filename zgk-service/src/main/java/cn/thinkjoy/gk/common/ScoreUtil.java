@@ -17,6 +17,8 @@ import java.util.*;
 public class ScoreUtil {
 
     private static int RANDOM_NUM=10;
+
+    private static int JS_AREA_CODE=320000;
     @Autowired
     private IScoreAnalysisService scoreAnalysisService;
 
@@ -78,52 +80,65 @@ public class ScoreUtil {
 
 
     /**
-     * 生成分数明细
-     * @param map
-     * @param majorType
-     * @return
-     */
-    public Map<String,Object> getScoresJS(Map<String,Object> map, int majorType){
-
-        Map<String, Object> scores =  new LinkedHashMap();
-        scores.put("语文", floatToStr(map.get("ywScore")) + "-" + floatToStr(map.get("ywScoreTotal")));
-        scores.put("数学", floatToStr(map.get("sxScore")) + "-" + floatToStr(map.get("sxScoreTotal")));
-        scores.put("外语", floatToStr(map.get("wyScore")) + "-" + floatToStr(map.get("wyScoreTotal")));
-        //分析当前分数的
-//        map.get
-        if (majorType == 2) {
-            scores.put("物理", floatToStr(map.get("wlScore")) + "-" + floatToStr(map.get("wlScoreTotal")));
-        } else {
-            scores.put("历史", floatToStr(map.get("zzScore")) + "-" + floatToStr(map.get("zzScoreTotal")));
-        }
-        return scores;
-    }
-
-
-    /**
      * 生成江苏分数明细
      * @param map
      * @param majorType
      * @return
      */
-    public Map<String,Object> getJSScores(Map<String,Object> map, int majorType){
-        Map<String, Object> scores = new LinkedHashMap();
-        scores.put("语文", floatToStr(map.get("ywScore")) + "-" + floatToStr(map.get("ywScoreTotal")));
-        scores.put("数学", floatToStr(map.get("sxScore")) + "-" + floatToStr(map.get("sxScoreTotal")));
-        scores.put("外语", floatToStr(map.get("wyScore")) + "-" + floatToStr(map.get("wyScoreTotal")));
+    public Map<String,Object> getScoresJS(Map<String,Object> map, int majorType){
+        //删除额外字段,确保剩余都是分数字段
+        Map<String,Object> map1 = new HashedMap();
+        map1.putAll(map);
 
-        if (majorType == 2) {
-            scores.put("物理", floatToStr(map.get("wlScore")) + "-" + floatToStr(map.get("wlScoreTotal")));
-            scores.put("化学", floatToStr(map.get("hxScore")) + "-" + floatToStr(map.get("hxScoreTotal")));
-            scores.put("生物", floatToStr(map.get("swScore")) + "-" + floatToStr(map.get("swScoreTotal")));
-
-        } else if ((majorType == 1)) {
-            scores.put("政治", floatToStr(map.get("zzScore")) + "-" + floatToStr(map.get("zzScoreTotal")));
-            scores.put("历史", floatToStr(map.get("lsScore")) + "-" + floatToStr(map.get("lsScoreTotal")));
-            scores.put("地理", floatToStr(map.get("dlScore")) + "-" + floatToStr(map.get("dlScoreTotal")));
+        List<String> removes = new ArrayList<>();
+        removes.add("totalScore");
+        Iterator<String> iterator = map1.keySet().iterator();
+        while (iterator.hasNext()){
+            String key = iterator.next();
+            if(key.indexOf("Score")==-1){
+                removes.add(key);
+            }
         }
+        for(String remove:removes) {
+            map1.remove(remove);
+        }
+
+        //============================================
+
+
+
+        Map<String, Object> scores =  new LinkedHashMap();
+        scores.put("语文", floatToStr(map1.get("ywScore")) + "-" + floatToStr(map1.get("ywScoreTotal")));
+        map1.remove("ywScore");
+        map1.remove("ywScoreTotal");
+        scores.put("数学", floatToStr(map1.get("sxScore")) + "-" + floatToStr(map1.get("sxScoreTotal")));
+        map1.remove("sxScore");
+        map1.remove("sxScoreTotal");
+        scores.put("外语", floatToStr(map1.get("wyScore")) + "-" + floatToStr(map1.get("wyScoreTotal")));
+        map1.remove("wyScore");
+        map1.remove("wyScoreTotal");
+        //分析当前分数的
+//        map.get
+        if (majorType == 2) {
+            scores.put("物理", scoreToTag(Float.valueOf(map1.get("wlScore").toString())));
+            map1.remove("wlScore");
+            map1.remove("wlScoreTotal");
+        } else {
+            scores.put("历史", floatToStr(map1.get("lsScore")) + "-" + floatToStr(map1.get("lsScoreTotal")));
+            map1.remove("lsScore");
+            map1.remove("lsScoreTotal");
+        }
+        try {
+            //一定会有一个值  如果没有说明入参有误 异常
+            String key = map1.keySet().iterator().next();
+            scores.put(SubjectEnum.valueOf(key.substring(0,2)).getSub(), scoreToTag(Float.valueOf(map1.get(key).toString())));
+        }catch (Exception e){
+                throw new BizException("error","上次添加值有误!");
+            }
         return scores;
     }
+
+
 
 
 
@@ -367,16 +382,15 @@ public class ScoreUtil {
         String weakSubject=null;
         Float initFloat1 = 1F;
         Float initFloat2 = 0F;
-        if(areaId==320000) {
             Iterator<String> iterator = scores.keySet().iterator();
             while (iterator.hasNext()) {
                 String key = iterator.next();
                 String value = (String) scores.get(key);
                 Float scoreProportion=null;
-                if("语文".equals(key)||"数学".equals(key)||"外语".equals(key)) {
-                    scoreProportion = getProportion(value);
-                }else {
+                if(areaId==JS_AREA_CODE&&("政治".equals(key)||"历史".equals(key)||"地理".equals(key)||"物理".equals(key)||"化学".equals(key)||"生物".equals(key))){
                     scoreProportion = getProportionJS(value);
+                }else {
+                    scoreProportion = getProportion(value);
                 }
 
                 if (scoreProportion < initFloat1) {
@@ -392,28 +406,9 @@ public class ScoreUtil {
             if (initFloat1 - initFloat2 < 0.05F && initFloat1 - initFloat2 > -0.05F) {
                 weakSubject = strongSubject;
             }
-        }else {
-            Iterator<String> iterator = scores.keySet().iterator();
-            while (iterator.hasNext()) {
-                String key = iterator.next();
-                String value = (String) scores.get(key);
-                Float scoreProportion = getProportion(value);
-                if (scoreProportion < initFloat1) {
-                    initFloat1 = scoreProportion;
-                    weakSubject = key;
-                }
-                if (scoreProportion > initFloat2 && scoreProportion <= 1F) {
-                    initFloat2 = scoreProportion;
-                    strongSubject = key;
-                }
 
-            }
-            if (initFloat1 - initFloat2 < 0.05F && initFloat1 - initFloat2 > -0.05F) {
-                weakSubject = strongSubject;
-            }
-        }
 
-        return new Object[]{getSubjectInfo(scores,strongSubject),getSubjectInfo(scores,weakSubject)};
+        return new Object[]{getSubjectInfo(scores,strongSubject,areaId),getSubjectInfo(scores,weakSubject,areaId)};
 
     }
 
@@ -431,7 +426,7 @@ public class ScoreUtil {
 
     }
     public Float getProportionJS(String value){
-        Float v1 =Float.valueOf(value);
+        Float v1 =tagToScore(value);
         return v1/120F;
 
     }
@@ -442,7 +437,7 @@ public class ScoreUtil {
      * @param scores
      * @return
      */
-    public List<String> getUserLabel(Map<String,Object> scores){
+    public List<String> getUserLabel(Map<String,Object> scores,long areaId){
 
         List<String> labels = new ArrayList<>();
         if(scores==null){
@@ -460,7 +455,12 @@ public class ScoreUtil {
             //子分数逻辑
             String key=iterator.next();
             String value = (String) scores.get(key);
-            String[] strings = value.split("-");
+            String[] strings =null;
+            if(areaId==JS_AREA_CODE&&("政治".equals(key)||"历史".equals(key)||"地理".equals(key)||"物理".equals(key)||"化学".equals(key)||"生物".equals(key))) {
+                strings = new String[]{tagToScore(value).toString(),"120"};
+            }else {
+                strings = value.split("-");
+            }
             if(!"".equals(strings[0]) && !"".equals(strings[1])){
                 Float subjectScore = Float.valueOf(strings[0]);
                 Float subjectTotalScore = Float.valueOf(strings[1]);
@@ -475,20 +475,25 @@ public class ScoreUtil {
                 //抽取带有专业特色的标签
                 configs=new ArrayList<>();
                 configs.add(UserScoreType.LABEL_SUB_ALL);
-                List<String> subAllLabel1s = getSubLabel(getScoreType(subjectScore,subjectTotalScore),configs);
+                List<String> subAllLabel1s = null;
+
+                subAllLabel1s = getSubLabel(getScoreType(subjectScore,subjectTotalScore),configs);
+
                 if(subAllLabel1s!=null && subAllLabel1s.size()!=0){
                     List<String> subAllLabel2s=new ArrayList<>();
                     for(String sub:subAllLabel1s){
                         sub=sub.replace("_",key);
-                        if(("语文".equals(key)||"数学".equals(key)||"外语".equals(key))&&sub.contains("#")){
+                        if(("语文".equals(key)||"数学".equals(key)||"外语".equals(key)||"通用技术".equals(key))&&sub.contains("#")){
                             continue;
                         }else {
-                            if("政治".equals(key)||"历史".equals(key)||"地理".equals(key)){
-                                sub=sub.replace("#",UserScoreType.TYPE_WEN);
-                            }
-                            if("物理".equals(key)||"化学".equals(key)||"生物".equals(key)){
-                                sub=sub.replace("#",UserScoreType.TYPE_LI);
-                            }
+                                if("政治".equals(key)||"历史".equals(key)||"地理".equals(key)){
+                                    sub=sub.replace("#",UserScoreType.TYPE_WEN);
+                                }
+                                if("物理".equals(key)||"化学".equals(key)||"生物".equals(key)){
+                                    sub=sub.replace("#",UserScoreType.TYPE_LI);
+                                }
+
+
                         }
                         subAllLabel2s.add(sub);
                     }
@@ -617,8 +622,13 @@ public class ScoreUtil {
 
         return reList;
     }
-    private Map<String,Object> getSubjectInfo(Map<String,Object> scores,String subject){
-        String[] strings = scores.get(subject).toString().split("-");
+    private Map<String,Object> getSubjectInfo(Map<String,Object> scores,String subject,long areaId){
+        String[] strings=null;
+        if(areaId==JS_AREA_CODE&&("政治".equals(subject)||"历史".equals(subject)||"地理".equals(subject)||"物理".equals(subject)||"化学".equals(subject)||"生物".equals(subject))) {
+            strings = new String[]{tagToScore(scores.get(subject).toString()).toString(),"120"};
+        }else {
+            strings = scores.get(subject).toString().split("-");
+        }
         if(!"".equals(strings[0]) && !"".equals(strings[1])){
             Float subjectScore = Float.valueOf(strings[0]);
             Float subjectTotalScore = Float.valueOf(strings[1]);
@@ -637,13 +647,13 @@ public class ScoreUtil {
     public String scoreToTag(Float f){
         if(f-120F>=0){
             return "A+";
-        }else if(f-100F>0){
+        }else if(f-100F>=0F){
             return "A";
-        }else if(f-80F>0){
+        }else if(f-80F>=0F){
             return "B+";
-        }else if(f-60F>0){
+        }else if(f-60F>=0F){
             return "B";
-        }else if(f-40F>0){
+        }else if(f-40F>=0F){
             return "C";
         }else{
             return "D";

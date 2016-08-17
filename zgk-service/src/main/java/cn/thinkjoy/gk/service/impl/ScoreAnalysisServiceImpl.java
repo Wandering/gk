@@ -18,7 +18,8 @@ import java.util.*;
 @Service
 public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
 
-
+    private static int JS_AREA_CODE=320000;
+    private static int ZJ_AREA_CODE=330000;
     @Autowired
     private IScoreAnalysisDAO scoreAnalysisDAO;
 
@@ -36,7 +37,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         if (map == null) {
             return new HashedMap();
         }
-        long areaId=(Long) map.get("areaId");
+        long areaId=Long.valueOf(map.get("areaId").toString());
         Map<String, Object> resultMap = new HashedMap();
         resultMap.put("areaName", map.get("areaName"));
         Integer majorType = (Integer) map.get("majorType");
@@ -68,11 +69,11 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         while (iterator.hasNext()) {
             //判断
 
-            if (areaId == 320000) {
+            if (areaId == JS_AREA_CODE) {
                 //江苏判定
                 String key = (String) iterator.next();
                 String value = (String) scores.get(key);
-                if("语文".equals(key)||"数学".equals(key)||"外语".equals(key)) {
+                if("yw".equals(key)||"sx".equals(key)||"wy".equals(key)) {
                     String[] values = value.split("-");
                     totalScore += Float.valueOf(values[0]);
                     insertScores.put(key + "Score", values[0]);
@@ -117,7 +118,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         Integer majorType = (Integer) map.get("majorType");
         resultMap.put("majorType", majorType);
 
-        getScores(areaId,majorType,map,resultMap);
+        Map<String,Object> scores = getScores(areaId,majorType,map,resultMap);
 
         // 获取用户上次成绩
         //第一次判定
@@ -134,50 +135,57 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
 
         // 推荐标签
 
-        List<String> labels = scoreUtil.getUserLabel(scoreUtil.getScores(map, majorType));
+        List<String> labels = scoreUtil.getUserLabel(scores,areaId);
         resultMap.put("labels", labels);
+        /**
+         * ================
+         * 浙江没有一分一段,所以浙江跳过
+         * ================
+         */
+        if(areaId!=ZJ_AREA_CODE){
 
-        String areaTableName = scoreUtil.getAreaTableName(areaId, majorType);
-        //文或者理科总人数
-        Integer allStuNum = scoreAnalysisDAO.queryAllAreaStuNum(areaTableName);
-        try {
-            //极端情况
-            if (scoreAnalysisDAO.isExistMaxScore(totalScore, areaTableName)) {
-                //当前分数超过了一分一段表的最大值 或者  达到很高的值
-                resultMap.put("proviceRank", -1);
-                resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
+            String areaTableName = scoreUtil.getAreaTableName(areaId, majorType);
+            //文或者理科总人数
+            Integer allStuNum = scoreAnalysisDAO.queryAllAreaStuNum(areaTableName);
+            try {
+                //极端情况
+                if (scoreAnalysisDAO.isExistMaxScore(totalScore, areaTableName)) {
+                    //当前分数超过了一分一段表的最大值 或者  达到很高的值
+                    resultMap.put("proviceRank", -1);
+                    resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
 
-            } else if (scoreAnalysisDAO.isExistScore(totalScore, areaTableName)) {
-                //            正常情况
-                //需要超过多少人
-                //一分超过多少人
-                Integer stuNum = scoreAnalysisDAO.queryStuNum(totalScore, areaTableName);
-                //全省排名
-                Integer proviceRank = scoreAnalysisDAO.queryProviceRank(totalScore, areaTableName);
-                Integer temp = allStuNum;
-                //重新定义全省人数
-                allStuNum = scoreAnalysisDAO.queryPeoNumByAreaAndType(areaId, majorType);
-                if (allStuNum == null || allStuNum == 0) {
-                    logger.info("该省没有总人数!");
-                    allStuNum = temp;
+                } else if (scoreAnalysisDAO.isExistScore(totalScore, areaTableName)) {
+                    //            正常情况
+                    //需要超过多少人
+                    //一分超过多少人
+                    Integer stuNum = scoreAnalysisDAO.queryStuNum(totalScore, areaTableName);
+                    //全省排名
+                    Integer proviceRank = scoreAnalysisDAO.queryProviceRank(totalScore, areaTableName);
+                    Integer temp = allStuNum;
+                    //重新定义全省人数
+                    allStuNum = scoreAnalysisDAO.queryPeoNumByAreaAndType(areaId, majorType);
+                    if (allStuNum == null || allStuNum == 0) {
+                        logger.info("该省没有总人数!");
+                        allStuNum = temp;
+                    }
+
+                    resultMap.put("stuNum", stuNum);
+                    String[] nums = String.valueOf(100 - ((Float.valueOf(proviceRank) / Float.valueOf(allStuNum)) * 100)).split("\\.");
+                    String proviceRankPro = nums[0] + "." + nums[1].substring(0, 2) + "%";
+                    resultMap.put("proviceRankPro", proviceRankPro);
+                    resultMap.put("proviceRank", proviceRank);
+
+                    resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
+                } else {
+                    //           分数不在一分一段中的情况
+                    //文或者理科总人数
+                    resultMap.put("proviceRank", -allStuNum);
+                    resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
                 }
-
-                resultMap.put("stuNum", stuNum);
-                String[] nums = String.valueOf(100 - ((Float.valueOf(proviceRank) / Float.valueOf(allStuNum)) * 100)).split("\\.");
-                String proviceRankPro = nums[0] + "." + nums[1].substring(0, 2) + "%";
-                resultMap.put("proviceRankPro", proviceRankPro);
-                resultMap.put("proviceRank", proviceRank);
-
-                resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
-            } else {
-                //           分数不在一分一段中的情况
-                //文或者理科总人数
-                resultMap.put("proviceRank", -allStuNum);
-                resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
+            } catch (Exception e) {
+                logger.info("当前省份为" + map.get("areaName"));
+                throw new BizException("error", "暂不支持" + map.get("areaName") + "!");
             }
-        } catch (Exception e) {
-            logger.info("当前省份为" + map.get("areaName"));
-            throw new BizException("error", "暂不支持" + map.get("areaName") + "!");
         }
         return resultMap;
     }
@@ -206,28 +214,35 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                 resultMap.put("strong", subjects[0]);
                 resultMap.put("weak", subjects[1]);
 
+                /**
+                 * ================
+                 * 浙江没有一分一段,所以浙江跳过
+                 * ================
+                 */
+                if(areaId!=ZJ_AREA_CODE) {
 
-                //极端情况
-                if (scoreAnalysisDAO.isExistMaxScore(totalScore, areaTableName)) {
-                    //当前分数超过了一分一段表的最大值 或者  达到很高的值
-                    resultMap.put("proviceRank", -1);
-                    resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
-                }
-                if (scoreAnalysisDAO.isExistScore(totalScore, areaTableName)) {
-                    //需要超过多少人
-                    Integer stuNum = scoreAnalysisDAO.queryStuNum(totalScore, areaTableName);
-                    Float totalScore1 = totalScore;
-                    while (stuNum == null) {
-                        stuNum = scoreAnalysisDAO.queryStuNum(totalScore1--, areaTableName);
+                    //极端情况
+                    if (scoreAnalysisDAO.isExistMaxScore(totalScore, areaTableName)) {
+                        //当前分数超过了一分一段表的最大值 或者  达到很高的值
+                        resultMap.put("proviceRank", -1);
+                        resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
                     }
-                    Integer proviceRank = scoreAnalysisDAO.queryProviceRank(totalScore1, areaTableName);
-                    resultMap.put("stuNum", stuNum);
-                    resultMap.put("proviceRank", proviceRank);
-                } else {
-                    //TODO           分数不在一分一段中的情况
-                    //文或者理科总人数
-                    int allStuNum = scoreAnalysisDAO.queryAllAreaStuNum(areaTableName);
-                    resultMap.put("proviceRank", -allStuNum);
+                    if (scoreAnalysisDAO.isExistScore(totalScore, areaTableName)) {
+                        //需要超过多少人
+                        Integer stuNum = scoreAnalysisDAO.queryStuNum(totalScore, areaTableName);
+                        Float totalScore1 = totalScore;
+                        while (stuNum == null) {
+                            stuNum = scoreAnalysisDAO.queryStuNum(totalScore1--, areaTableName);
+                        }
+                        Integer proviceRank = scoreAnalysisDAO.queryProviceRank(totalScore1, areaTableName);
+                        resultMap.put("stuNum", stuNum);
+                        resultMap.put("proviceRank", proviceRank);
+                    } else {
+                        //TODO           分数不在一分一段中的情况
+                        //文或者理科总人数
+                        int allStuNum = scoreAnalysisDAO.queryAllAreaStuNum(areaTableName);
+                        resultMap.put("proviceRank", -allStuNum);
+                    }
                 }
                 list.add(resultMap);
             }
@@ -467,7 +482,8 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                     subjects[i++] = key;
                 }
             }
-        }catch (Exception e){
+        }catch (IndexOutOfBoundsException e){
+            //数组越界的错误
             throw new BizException("error","当前科目不正确!");
         }
 
@@ -486,6 +502,8 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
             bc += 5;
         } while (count < 20 && bc < 750);
         bc -= 5;
+
+
 
         //返回前20个院校
         List<Map<String, Object>> resultList = scoreAnalysisDAO.queryZJUniversityByScore(areaId, lastYear.toString(), totalScore, bc,majorIds);
@@ -545,17 +563,22 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         Map<String,Object> scores = scoreUtil.getScoresJS(map, majorType);
         Iterator<String> keys = scores.keySet().iterator();
         //江苏一定是两门额外科目  否则抛异常
+        Map<String,Object> map1=new LinkedHashMap<>();
 
-        while (keys.hasNext()){
-            String key = keys.next();
-            if((!"语文".equals(key))&&(!"数学".equals(key))&&(!"外语".equals(key))){
-                String value = map.get(key).toString();
+            while (keys.hasNext()) {
+                String key = keys.next();
+                if ((!"语文".equals(key)) && (!"数学".equals(key)) && (!"外语".equals(key))) {
+                    String value = map.get(key).toString();
+                    map1.put(key,value);
+                }
             }
-        }
 
-        List<String> xcRanks=new ArrayList<>();
-        xcRanks.add("AB");
-        xcRanks.add("BA");
+        List<String> xcRanks=null;
+        if(map1.size()==2){
+            xcRanks=getLevelList(map1,majorType);
+        }else{
+            throw new BizException("error","科目不正确!");
+        }
 
         /**
          * 这里需要去比对院校招生表
@@ -663,7 +686,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
 
     private Map<String,Object> getScores(long areaId,int majorType,Map<String,Object> map,Map<String,Object> resultMap){
         Map<String, Object> scores =null;
-        if(areaId==320000){
+        if(areaId==JS_AREA_CODE){
             //  江苏
             scores = scoreUtil.getScoresJS(map, majorType);
             resultMap.put("scores", scores);
@@ -701,4 +724,25 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         }
         return lists;
     }
+    private List<String> getLevelList(Map<String,Object> map,Integer majorType){
+        String sub = "历史";
+        if(majorType == 2){
+            sub = "物理";
+        }
+        List<String> xcRanks=new ArrayList<>();
+        Map<String,Object> map2=new HashedMap();
+        map2.putAll(map);
+        String value1= scoreUtil.scoreToTag(Float.valueOf(map2.get(sub).toString()));
+        map2.remove(sub);
+        String key=map2.keySet().iterator().next();
+        String value2 = scoreUtil.scoreToTag(Float.valueOf(map2.get(key).toString()));
+
+        //三种
+
+        xcRanks.add(value1+value2);
+        xcRanks.add(value2+value1);
+        xcRanks.add(sub+value1+",另一门"+value2);
+        return xcRanks;
+    }
+
 }

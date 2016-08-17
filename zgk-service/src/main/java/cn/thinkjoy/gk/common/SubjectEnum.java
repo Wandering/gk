@@ -23,6 +23,7 @@ public enum SubjectEnum {
     地理("dl"),
     通用技术("ty"),
     物理("wl"),
+    思想政治("zz"),
     政治("zz");
     /** The code. */
     private final String sub;
