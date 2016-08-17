@@ -320,6 +320,6 @@ public interface IScoreAnalysisDAO {
      * @param userId
      * @return
      */
-    List<String> queryHistoryScore(@Param("type")long userId,@Param("rows")Integer rows);
+    List<String> queryHistoryScore(@Param("userId")long userId,@Param("rows")Integer rows);
 
 }
