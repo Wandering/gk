@@ -131,7 +131,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryGapBySchoolIdAndBatch(){
-        String url=host +queryGapBySchoolIdAndBatch_url + "?recordId=478&schoolId=24606&batch=1&userId=24606&debug=true";
+        String url=host +queryGapBySchoolIdAndBatch_url + "?recordId=265&schoolId=2&batch=1&userId=1&debug=true";
         String result = RequestUtils.requestPost(url);
         System.out.println("result = " + result);
     }
@@ -140,7 +140,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryBatchsBySchoolIdAndAreaId(){
-        String url=host +queryBatchsBySchoolIdAndAreaId_url + "?areaId=530000&schoolId=2317&majorType=1";
+        String url=host +queryBatchsBySchoolIdAndAreaId_url + "?areaId=320000&schoolId=2317&majorType=1";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
@@ -151,7 +151,7 @@ public class HttpScoreTest extends TestCase{
     public void testRecommendSchool(){
         long start=System.currentTimeMillis();
         System.out.println("我开始了");
-        String url=host +recommendSchool_url + "?totalScore=450&areaId=320000&userId=2&majorType=1";
+        String url=host +recommendSchool_url + "?totalScore=500&areaId=320000&userId=1&majorType=2";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
         long end=System.currentTimeMillis();
@@ -163,7 +163,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryUniversityScore(){
-        String url=host +queryUniversityScore_url + "?universityId=1&areaId=610000&majorType=1&batch=2";
+        String url=host +queryUniversityScore_url + "?universityId=1&areaId=330000&majorType=1&batch=1";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
@@ -192,7 +192,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryGapBySchoolIdAndMajor(){
-        String url=host +queryGapBySchoolIdAndMajor_url + "?userId=2&schoolId=1&majorCode=30301&recordId=244";
+        String url=host +queryGapBySchoolIdAndMajor_url + "?userId=2&schoolId=2&majorCode=030101K&recordId=244";
         String result = RequestUtils.requestPost(url);
         System.out.println("result = " + result);
     }

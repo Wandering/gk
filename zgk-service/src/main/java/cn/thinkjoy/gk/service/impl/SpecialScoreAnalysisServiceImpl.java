@@ -111,7 +111,7 @@ public class SpecialScoreAnalysisServiceImpl implements ISpecialScoreAnalysisSer
      * @param majorType
      * @return
      */
-    public Object recommendSchool(float totalScore, long areaId, int majorType) {
+    public Object recommendSchool(float totalScore, long areaId, int majorType,long userId) {
         Integer lastYear = Integer.valueOf(scoreUtil.getYear()) - 1;
 
 
@@ -131,7 +131,7 @@ public class SpecialScoreAnalysisServiceImpl implements ISpecialScoreAnalysisSer
             //todo 假如不足高职专科批次(分数超低)
 
             //推荐10所高职院校
-            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString());
+            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
         }
         int batch = (int) line1s[2];
         //获得分差1  考生分-16年分数线

@@ -317,7 +317,8 @@ public interface IScoreAnalysisDAO {
     List<Map<String,Object>> queryLowstUniversity(@Param("areaId")long areaId,
                                  @Param("majorType")int majorType,
                                  @Param("totalScore")Float totalScore,
-                                 @Param("year")String year);
+                                 @Param("year")String year,
+                                 @Param("userId")long userId);
 
     /**
      * 获取用户年级
@@ -368,5 +369,12 @@ public interface IScoreAnalysisDAO {
      * @return
      */
     List<Map<String,Object>> queryMajorBySchoolIdAndAreaId(Map<String,Object> map);
+
+    /**
+     * 获取院校测评等级
+     * @param map
+     * @return
+     */
+    String queryUniversitySubLevel(Map<String,Object> map);
 
 }

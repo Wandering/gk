@@ -311,10 +311,19 @@ public class ScoreController {
         if(areaId==330000) {
             resultMaps = scoreAnalysisService.queryUniversityScore(universityId, areaId, majorType, batch);
         }else if(areaId==320000){
+            if(majorType==null){
+                throw new BizException("error","学科类型不能为空");
+            }
+            if(batch==null){
+                throw new BizException("error","批次不能为空");
+            }
             resultMaps = scoreAnalysisService.queryUniversityScore(universityId, areaId, majorType, batch);
         }else {
             if(majorType==null){
                 throw new BizException("error","学科类型不能为空");
+            }
+            if(batch==null){
+                throw new BizException("error","批次不能为空");
             }
             resultMaps =scoreAnalysisService.queryUniversityScore(universityId, areaId, majorType, batch);
         }

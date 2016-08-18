@@ -205,7 +205,7 @@ deleteBySubjects
     </select>
 
     <select id="queryMajorLowestScore" resultType="java.util.Map">
-        select lowestScore,year from zgk_university_major_enrolling
+        select averageScore,year from zgk_university_major_enrolling
         WHERE universityId = #{schoolId}
         and areaId=#{areaId}
         and majorCode = #{majorCode}
@@ -372,18 +372,23 @@ deleteBySubjects
 
     <select id="queryUniversityScore" resultType="java.util.Map">
         SELECT
-        lowestScore,realEnrollingNumber,averageScore,year
-        FROM zgk_university_enrolling
-        WHERE universityId = #{universityId}
-        and areaId=#{areaId}
+        enrolling.lowestScore,enrolling.realEnrollingNumber,enrolling.averageScore,enrolling.year
+        <if test="areaId==320000">
+        ,plan.xcRank
+        </if>
+        FROM zgk_university_enrolling enrolling
+        <if test="areaId==320000">
+            LEFT JOIN (SELECT xcRank,year,universityId,areaId from zgk_university_enrolling_plan)
+            plan on plan.areaId =enrolling.areaId and plan.year=enrolling.year
+            and plan.universityId=enrolling.universityId
+        </if>
+        WHERE enrolling.universityId = #{universityId}
+        and enrolling.areaId=#{areaId}
         <if test="batch!=null">
-            and batch=#{batch}
+            and enrolling.batch=#{batch}
         </if>
         <if test="majorType!=null">
-            and majorType=#{majorType} ORDER BY YEAR DESC limit 3
-        </if>
-        <if test="majorType==null">
-            and majorType=#{majorType} ORDER BY YEAR DESC limit 3
+            and enrolling.majorType=#{majorType} GROUP BY YEAR DESC limit 3
         </if>
     </select>
 
@@ -542,7 +547,7 @@ deleteBySubjects
     </select>
     <!--统计江苏院校数量-->
     <select id="countJSUniversity" resultType="java.lang.Integer">
-        SELECT count(*) from zgk_university_enrolling
+        SELECT count(*) from (SELECT * FROM  zgk_university_enrolling WHERE areaId = #{areaId} and year = #{year} and majorType = #{majorType}) enrolling
         INNER JOIN (
         SELECT
         universityId AS uid,
@@ -557,8 +562,7 @@ deleteBySubjects
         AND xcRank in (<foreach collection="xcRanks" item="item" separator=",">#{item}</foreach>)
         ) plan ON plan.uid = universityId
         WHERE
-        areaId = #{areaId} and year = #{year} and majorType = #{majorType}
-        and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
+        (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
         and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
     </select>
 
@@ -566,7 +570,7 @@ deleteBySubjects
     <!--获取专业过滤没有code对应的,必须在计划表中存在,必须根据用户选择的科目来确定,并且要在2015年招生信息中存在-->
     <select id="queryMajorBySchoolIdAndAreaId" resultType="java.util.Map">
         SELECT enrolling.majorCode,enrolling.majorName FROM
-        INNER JOIN (select majorCode,universityId from zgk_university_major_enrolling where universityId=#{universityId}
+        (select majorCode,universityId from zgk_university_major_enrolling where universityId=#{universityId}
         and areaId = #{areaId} and year = #{year} and majorCode is not null)
         enrolling
         INNER JOIN (SELECT
@@ -584,6 +588,18 @@ deleteBySubjects
                 )
             </if>
         </where>)  3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
+    </select>
+
+    <!--获取当前学校的最新选测等级-->
+    <select id="queryUniversitySubLevel" resultType="java.lang.String">
+        SELECT
+        xcRank
+        FROM
+        zgk_university_enrolling_plan
+        WHERE
+        YEAR = #{year}
+        AND areaId=#{areaId}
+        AND universityId = #{universityId} limit 1
     </select>
 </mapper>
 

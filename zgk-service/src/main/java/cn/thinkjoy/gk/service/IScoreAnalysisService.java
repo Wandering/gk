@@ -263,7 +263,8 @@ public interface IScoreAnalysisService {
     List<Map<String,Object>> queryLowstUniversity(long areaId,
                                                   int majorType,
                                                   Float totalScore,
-                                                  String year);
+                                                  String year,
+                                                  long userId);
 
     /**
      * 获取用户年级

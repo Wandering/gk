@@ -134,10 +134,16 @@ public class ScoreUtil {
         //分析当前分数的
 //        map.get
         if (majorType == 2) {
+            if(!map1.containsKey("wlScore")){
+                throw new BizException("error","理科必须有物理");
+            }
             scores.put("物理", scoreToTag(Float.valueOf(map1.get("wlScore").toString())));
             map1.remove("wlScore");
             map1.remove("wlScoreTotal");
         } else {
+            if(!map1.containsKey("lsScore")){
+                throw new BizException("error","文科必须有历史");
+            }
             scores.put("历史", floatToStr(map1.get("lsScore")) + "-" + floatToStr(map1.get("lsScoreTotal")));
             map1.remove("lsScore");
             map1.remove("lsScoreTotal");
