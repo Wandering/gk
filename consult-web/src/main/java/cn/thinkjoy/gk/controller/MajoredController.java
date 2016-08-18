@@ -145,6 +145,7 @@ public class MajoredController extends ZGKBaseController {
      * 获取初始化信息
      * @return
      */
+    @Deprecated
     @RequestMapping(value = "/getInitInfo",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> getInitInfo(){
@@ -212,6 +213,7 @@ public class MajoredController extends ZGKBaseController {
      * @param query
      * @return
      */
+    @Deprecated
     @RequestMapping(value = "/searchMajored",method = RequestMethod.GET)
     @ResponseBody
     public List<SubjectDto> searchMajored(MajoredQuery query){
@@ -227,6 +229,7 @@ public class MajoredController extends ZGKBaseController {
      * @param query
      * @return
      */
+    @Deprecated
     @RequestMapping(value = "/searchMajoredCount",method = RequestMethod.GET)
     @ResponseBody
     public Integer searchMajoredCount(MajoredQuery query){
@@ -244,6 +247,7 @@ public class MajoredController extends ZGKBaseController {
      *获取专业基本信息
      * @return
      */
+    @Deprecated
     @RequestMapping(value = "/getMajoredInfo",method = RequestMethod.GET)
     @ResponseBody
     public MajoredDto getMajoredInfo(){
@@ -257,6 +261,7 @@ public class MajoredController extends ZGKBaseController {
      * 获取专业详细信息
      * @return
      */
+    @Deprecated
     @RequestMapping(value = "/getMajoredDetail",method = RequestMethod.GET)
     @ResponseBody
     public MajoredDetailDto getMajoredDetail(@RequestParam(value="code",required=false) String majoredCode,
@@ -310,6 +315,7 @@ public class MajoredController extends ZGKBaseController {
      * 获取专业信息
      * @return
      */
+    @Deprecated
     @RequestMapping(value = "/majorList",method = RequestMethod.GET)
     @ResponseBody
     public List<MajorDetailPojo> majorList(@RequestParam(value="code",required=false) String code,

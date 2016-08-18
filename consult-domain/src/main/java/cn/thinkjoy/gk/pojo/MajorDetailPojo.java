@@ -8,6 +8,8 @@ public class MajorDetailPojo {
 
     private Long id;
 
+    private String majorCode;
+
     private String name;
 
     private Integer planNum;
@@ -19,6 +21,14 @@ public class MajorDetailPojo {
     private String schoolLength;
 
     private String feeStandard;
+
+    public String getMajorCode() {
+        return majorCode;
+    }
+
+    public void setMajorCode(String majorCode) {
+        this.majorCode = majorCode;
+    }
 
     public Long getId() {
         return id;

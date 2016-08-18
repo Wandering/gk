@@ -84,7 +84,7 @@
 
     <!-- 根据关键词查询专业基本信息 -->
     <select id="getMajoredInfoByKeywords" parameterType="java.util.Map" resultType="MajorDetailPojo">
-        select id,major_name as name from zgk_major where major_name like CONCAT('%',#{keywords},'%') LIMIT 5
+        select id,major_name as name,major_code as majorCode from zgk_major_base where major_name like CONCAT('%',#{keywords},'%') LIMIT 5
     </select>
 
     <select id="getMajorOpenUniversityList" parameterType="java.util.Map" resultType="java.util.Map">
