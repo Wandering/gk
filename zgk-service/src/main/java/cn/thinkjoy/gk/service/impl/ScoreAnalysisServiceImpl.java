@@ -768,7 +768,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     }
 
 
-    private Map<String,Object> getScores(long areaId,int majorType,Map<String,Object> map,Map<String,Object> resultMap){
+    private Map<String,Object> getScores(long areaId,Integer majorType,Map<String,Object> map,Map<String,Object> resultMap){
         Map<String, Object> scores =null;
         if(areaId==JS_AREA_CODE){
             //  江苏
