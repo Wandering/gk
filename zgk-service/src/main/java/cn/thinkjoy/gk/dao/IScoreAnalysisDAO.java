@@ -157,6 +157,19 @@ public interface IScoreAnalysisDAO {
                                       @Param("year")String year);
 
 
+    /**
+     * 查询院校专业平均分
+     * @param schoolId
+     * @param areaId
+     * @param majorCode
+     * @param year
+     * @return
+     */
+    Map<String,Object> queryMajorLowestScore(@Param("schoolId")long schoolId,
+                                                   @Param("areaId")long areaId,
+                                                   @Param("majorCode")String majorCode,
+                                                   @Param("year")String year);
+
 
     /**
      * 统计当前推荐学校数量
@@ -351,10 +364,9 @@ public interface IScoreAnalysisDAO {
 
     /**
      * 根据院校ID和地区code查询专业
-     * @param areaId
-     * @param universityId
+     * @param map
      * @return
      */
-    List<Map<String,Object>> queryMajorBySchoolIdAndAreaId(@Param("areaId")long areaId,@Param("universityId")long universityId);
+    List<Map<String,Object>> queryMajorBySchoolIdAndAreaId(Map<String,Object> map);
 
 }

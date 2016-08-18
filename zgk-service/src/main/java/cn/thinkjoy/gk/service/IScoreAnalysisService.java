@@ -340,5 +340,5 @@ public interface IScoreAnalysisService {
      * @param universityId
      * @return
      */
-    List<Map<String,Object>> queryMajorBySchoolIdAndAreaId(long areaId,long universityId);
+    List<Map<String,Object>> queryMajorBySchoolIdAndAreaId(long areaId,long universityId,long userId);
 }

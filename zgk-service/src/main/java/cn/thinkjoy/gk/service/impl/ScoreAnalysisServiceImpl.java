@@ -5,6 +5,7 @@ import cn.thinkjoy.gk.common.ScoreUtil;
 import cn.thinkjoy.gk.dao.IScoreAnalysisDAO;
 import cn.thinkjoy.gk.dao.IZGK3in7DAO;
 import cn.thinkjoy.gk.service.IScoreAnalysisService;
+import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -471,31 +472,14 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     @Override
     public Object recommendSchoolZJ(float totalScore, long areaId,long userId) {
 
-        //根据用户ID获取用户上一次测评成绩和测评科目
-        Map<String, Object> map = scoreAnalysisDAO.queryScoreRecordByUserId(userId);
-        Map<String,Object> scores = scoreUtil.getScores(map, null);
-        Iterator<String> keys = scores.keySet().iterator();
+
         //一定是三门成绩 否则异常
-        String[] subjects =null;
-        try {
-            //提取科目
-            subjects = new String[3];
-            int i = 0;
-            while (keys.hasNext()) {
-                String key = keys.next();
-                if (!("语文".equals(key)) && (!"数学".equals(key)) && (!"外语".equals(key))) {
-                    subjects[i++] = key;
-                }
-            }
-        }catch (IndexOutOfBoundsException e){
-            //数组越界的错误
-            throw new BizException("error","当前科目不正确!");
-        }
+        String[] subjects =getZJUserScore(userId);
 
         Integer lastYear = Integer.valueOf(scoreUtil.getYear()) - 1;
         //计算公式为 学生成绩 - 平均分 > = bc  || 平均分 - 学生成绩 < = bc
         //计算专业提取范围
-        map = new HashedMap();
+        Map<String,Object> map = new HashedMap();
         map.put("subjectItemList", combineAlgorithm(subjects));
         map.put("areaId",areaId);
         map.put("year",lastYear.toString());
@@ -648,7 +632,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
 
 
 
-        if (schoolLineMap != null) {
+        if (schoolLineMap != null&&schoolLineMap.size()>0) {
             schoolLine = Float.valueOf(schoolLineMap.get("lowestScore").toString());
             schoolLineYear = schoolLineMap.get("year").toString();
         } else {
@@ -692,12 +676,17 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                                              Long schoolId,
                                              String majorCode,
                                              long userId) {
+
         Map<String, Object> map = scoreAnalysisDAO.queryInfoByRecordId(recordId);
+        long areaId = Long.valueOf(map.get("areaId").toString());
+        if(areaId!=ZJ_AREA_CODE){
+            throw new BizException("error","当前用户不属于浙江用户!");
+        }
         //假如院校没有传入 默认为使用上次院校
         if (schoolId != null && majorCode != null) {
             Map<String, Object> insertMap = new HashedMap();
             insertMap.put("userId", userId);
-            insertMap.put("areaId", map.get("areaId"));
+            insertMap.put("areaId",areaId);
             insertMap.put("universityId", schoolId);
             insertMap.put("majorCode", majorCode);
             insertMap.put("cdate", System.currentTimeMillis());
@@ -709,55 +698,31 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
             majorCode = targetMap.get("majorCode").toString();
         }
         //浙江一般是浙江省
-        long areaId = Long.valueOf(map.get("areaId").toString());
-//        int majorType = (int) map.get("majorType");
         Float totalScore = (Float) map.get("totalScore");
 //        没有一分一段
-//        String areaTableName = scoreUtil.getAreaTableName(areaId, majorType);
-//        String year = (Integer.valueOf(scoreUtil.getYear()) - 1) + "";
-//        String name = scoreAnalysisDAO.querySchoolNameById(schoolId);
-//        String batchName = scoreAnalysisDAO.queryBatchNameById(batch);
-//        Map<String, Object> schoolLineMap = scoreAnalysisDAO.queryUnivsersityLowestScore(schoolId, areaId, batch, majorType, year);
-//        Float schoolLine = null;
-//        String schoolLineYear = null;
-//
-//
-//
-//        if (schoolLineMap != null) {
-//            schoolLine = Float.valueOf(schoolLineMap.get("lowestScore").toString());
-//            schoolLineYear = schoolLineMap.get("year").toString();
-//        } else {
-//            throw new BizException("error", "当前学校在当前批次无数据");
-//        }
-//        if (totalScore > schoolLine) {
-//            Integer stuNum = scoreAnalysisDAO.queryStuNumToLine(schoolLine, totalScore, areaTableName);
-//            Map<String, Object> resultMap = new HashedMap();
-//            resultMap.put("schoolId", schoolId);
-//            resultMap.put("schoolName", name);
-//            resultMap.put("totalScore", totalScore);
-//            resultMap.put("majorLine", scoreUtil.getBatchScore(batch, areaId, majorType));
-//            resultMap.put("schoolLine", schoolLine);
-//            resultMap.put("batch", batch);
-//            resultMap.put("year", schoolLineYear);
-//            return resultMap;
-//        }
-//        Integer stuNum = scoreAnalysisDAO.queryStuNumToLine(totalScore, schoolLine, areaTableName);
-//
-//        Map<String, Object> resultMap = new HashedMap();
-//
-//        resultMap.put("schoolId", schoolId);
-//        resultMap.put("schoolName", name);
-//        resultMap.put("batchName", batchName);
-//        resultMap.put("totalScore", totalScore);
-//        resultMap.put("stuNum", stuNum);
-//        resultMap.put("addScore", totalScore - schoolLine);
-//        resultMap.put("batchLine", scoreUtil.getBatchScore(batch, areaId, majorType));
-//        resultMap.put("schoolLine", schoolLine);
-//        resultMap.put("batch", batch);
-//        resultMap.put("year", schoolLineYear);
-//
-//        return resultMap;
-        return null;
+        String year = (Integer.valueOf(scoreUtil.getYear()) - 1) + "";
+        String name = scoreAnalysisDAO.querySchoolNameById(schoolId);
+
+
+        Map<String, Object> schoolLineMap = scoreAnalysisDAO.queryMajorLowestScore(schoolId, areaId, majorCode, year);
+        Float schoolLine = null;
+        String schoolLineYear = null;
+        if (schoolLineMap != null&&schoolLineMap.size()>0) {
+            schoolLine = Float.valueOf(schoolLineMap.get("averageScore").toString());
+            schoolLineYear = schoolLineMap.get("year").toString();
+        } else {
+            throw new BizException("error", "当前学校在"+year+"年无数据");
+        }
+        Map<String, Object> resultMap = new HashedMap();
+
+        resultMap.put("schoolId", schoolId);
+        resultMap.put("schoolName", name);
+        resultMap.put("totalScore", totalScore);
+        resultMap.put("addScore", totalScore - schoolLine);
+        resultMap.put("schoolLine", schoolLine);
+        resultMap.put("year", schoolLineYear);
+
+        return resultMap;
     }
 
     @Override
@@ -766,8 +731,15 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     }
 
     @Override
-    public List<Map<String,Object>> queryMajorBySchoolIdAndAreaId(long areaId,long universityId){
-        return scoreAnalysisDAO.queryMajorBySchoolIdAndAreaId(areaId,universityId);
+    public List<Map<String,Object>> queryMajorBySchoolIdAndAreaId(long areaId,long universityId,long userId){
+        Map<String,Object> map = new HashedMap();
+        map.put("areaId",areaId);
+        map.put("universityId",universityId);
+        //一定是三门成绩 否则异常
+        String[] subjects =getZJUserScore(userId);
+        //计算专业提取范围
+        map.put("subjectItemList", combineAlgorithm(subjects));
+        return scoreAnalysisDAO.queryMajorBySchoolIdAndAreaId(map);
     }
 
 
@@ -862,6 +834,30 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                 list.add("D");
         }
         return list;
+    }
+
+    private String[] getZJUserScore(long userId){
+        Map<String, Object> map = scoreAnalysisDAO.queryScoreRecordByUserId(userId);
+        Map<String,Object> scores = scoreUtil.getScores(map, null);
+        Iterator<String> keys = scores.keySet().iterator();
+        //一定是三门成绩 否则异常
+        String[] subjects =null;
+        try {
+            //提取科目
+            subjects = new String[3];
+            int i = 0;
+            while (keys.hasNext()) {
+                String key = keys.next();
+                if (!("语文".equals(key)) && (!"数学".equals(key)) && (!"外语".equals(key))) {
+                    subjects[i++] = key;
+                }
+            }
+        }catch (IndexOutOfBoundsException e){
+            //数组越界的错误
+            throw new BizException("error","当前科目不正确!");
+        }
+        return subjects;
+
     }
 
 }

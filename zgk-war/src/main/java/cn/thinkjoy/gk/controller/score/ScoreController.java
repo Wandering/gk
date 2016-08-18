@@ -211,9 +211,13 @@ public class ScoreController {
 
         if(areaId==330000){
             //浙江算法
+            if(majorType==null)
+                throw new BizException("error","majorType不能为空!");
             return scoreAnalysisService.recommendSchoolZJ(totalScore,areaId,userId);
         }else if(areaId==320000){
             //江苏算法
+            if(majorType==null)
+                throw new BizException("error","majorType不能为空!");
             return scoreAnalysisService.recommendSchoolJS(totalScore,areaId,majorType,userId);
         }else {
             return scoreAnalysisService.recommendSchool(totalScore,areaId,majorType,userId);
@@ -256,24 +260,25 @@ public class ScoreController {
     @ResponseBody
 
     public Object queryMajorBySchoolIdAndAreaId(@RequestParam long areaId,
-                                                 @RequestParam long schoolId){
+                                                 @RequestParam long schoolId,
+                                                 @RequestParam long userId){
 
         // 去查询院校对应的专业,从招生计划中获取
-        return scoreAnalysisService.queryMajorBySchoolIdAndAreaId(areaId,schoolId);
+        return scoreAnalysisService.queryMajorBySchoolIdAndAreaId(areaId,schoolId,userId);
     }
 
-//    /**
-//     * 根据用户总分、学校ID、批次信息查询用户与目标院校距离
-//     * @return
-//     */
-//    @RequestMapping(value = "/queryGapBySchoolIdAndMajor",method = RequestMethod.POST)
-//    @ResponseBody
-//    public Object queryGapBySchoolIdAndMajor(@RequestParam long recordId,
-//                                             Long schoolId,
-//                                             String majorCode,
-//                                             @RequestParam long userId){
-//        return scoreAnalysisService.queryGapBySchoolIdAndBatch(recordId,schoolId,batch,userId);
-//    }
+    /**
+     * 根据用户总分、学校ID、批次信息查询用户与目标院校距离
+     * @return
+     */
+    @RequestMapping(value = "/queryGapBySchoolIdAndMajor",method = RequestMethod.POST)
+    @ResponseBody
+    public Object queryGapBySchoolIdAndMajor(@RequestParam long recordId,
+                                             Long schoolId,
+                                             String majorCode,
+                                             @RequestParam long userId){
+        return scoreAnalysisService.queryGapBySchoolIdAndMajor(recordId,schoolId,majorCode,userId);
+    }
 
     /**
      * 根据用户总分、学校ID、批次信息查询用户与目标院校距离

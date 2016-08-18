@@ -204,6 +204,15 @@ deleteBySubjects
         limit 1
     </select>
 
+    <select id="queryMajorLowestScore" resultType="java.util.Map">
+        select lowestScore,year from zgk_university_major_enrolling
+        WHERE universityId = #{schoolId}
+        and areaId=#{areaId}
+        and majorCode = #{majorCode}
+        ORDER BY year DESC
+        limit 1
+    </select>
+
     <select id="queryStuNumToLine" resultType="java.lang.Integer">
         SELECT sum(num) from ${areaTableName} WHERE score > #{totalScore} and score  &lt; #{scoreLine};
     </select>
@@ -241,14 +250,16 @@ deleteBySubjects
         university_id,
         university_name,
         batch,
-        cdate
+        cdate,
+        major_code
         ) VALUES (
         #{userId},
         #{areaId},
         #{universityId},
         (select name from zgk_university WHERE id=#{universityId}),
         #{batch},
-        #{cdate}
+        #{cdate},
+        #{majorCode}
         )
         <selectKey resultType="java.lang.Long" keyProperty="id">
             SELECT LAST_INSERT_ID() AS ID
@@ -450,11 +461,12 @@ deleteBySubjects
     <select id="queryZJUniversityByScore" resultType="java.util.Map">
         SELECT * from (
         SELECT
-        (SELECT name from zgk_university WHERE id = universityId LIMIT 1) as schoolName,
+        (SELECT name from zgk_university WHERE id = enrolling.universityId LIMIT 1) as schoolName,
         (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batch,
+        (SELECT major_name from zgk_major_base WHERE major_code= enrolling.majorCode) as majorName,
         realEnrollingNumber as stuNum,
         averageScore as averageScore,
-        universityId,
+        enrolling.universityId,
         (#{totalScore} - averageScore) as gapSchool,
         (CASE ff.university_id WHEN university_id IS NULL THEN 0 ELSE 1 END) AS isFavorite
         from (select majorCode,universityId,averageScore,realEnrollingNumber,batch from zgk_university_major_enrolling   where areaId = #{areaId} and year = #{year}
@@ -475,7 +487,7 @@ deleteBySubjects
                 )
             </if>
         </where>)  3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
-        LEFT JOIN (SELECT university_id from zgk_favorite_university WHERE user_id = #{userId}) ff ON ff.university_id = universityId
+        LEFT JOIN (SELECT university_id from zgk_favorite_university WHERE user_id = #{userId}) ff ON ff.university_id = enrolling.universityId
         ORDER BY ABS(gapSchool) ASC
         limit 20) tb ORDER BY gapSchool DESC;
     </select>
@@ -551,11 +563,27 @@ deleteBySubjects
     </select>
 
 
-    <!--获取专业过滤没有code对应的-->
+    <!--获取专业过滤没有code对应的,必须在计划表中存在,必须根据用户选择的科目来确定,并且要在2015年招生信息中存在-->
     <select id="queryMajorBySchoolIdAndAreaId" resultType="java.util.Map">
-          SELECT majorCode,majorName from zgk_university_major_enrolling_plan
-          WHERE areaId=#{areaId} and universityId=#{universityId} and majorCode is not null
+        SELECT enrolling.majorCode,enrolling.majorName FROM
+        INNER JOIN (select majorCode,universityId from zgk_university_major_enrolling where universityId=#{universityId}
+        and areaId = #{areaId} and year = #{year} and majorCode is not null)
+        enrolling
+        INNER JOIN (SELECT
+        majorCode,universityId
+        FROM zgk_zj_3in7
+        <where>
+            <if test="subjectItemList!=null">
+                (
+                <foreach item="subjectItems" collection="subjectItemList"  separator=" or " index="">
+                    <foreach item="mapList" collection="subjectItems.subjectItem" open="(" close=")" separator="and" index="">
+                        selectSubject LIKE CONCAT('%','${mapList.selectSubject}','%')
+                    </foreach>
+                </foreach>
+                OR selectSubject = ''
+                )
+            </if>
+        </where>)  3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
     </select>
-
 </mapper>
 
