@@ -178,7 +178,7 @@ deleteBySubjects
 
     <select id="getMajorRange" resultType="java.lang.Integer">
         SELECT
-        majorId
+        majorCode
         FROM zgk_zj_3in7 3in7
         <where>
             <if test="subjectItemList!=null">

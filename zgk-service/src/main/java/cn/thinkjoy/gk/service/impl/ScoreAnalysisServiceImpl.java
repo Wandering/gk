@@ -573,6 +573,9 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                 }
             }
 
+
+
+
         List<String> xcRanks=null;
         if(map1.size()==2){
             xcRanks=getLevelList(map1,majorType);
@@ -729,7 +732,6 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         if(majorType == 2){
             sub = "物理";
         }
-        List<String> xcRanks=new ArrayList<>();
         Map<String,Object> map2=new HashedMap();
         map2.putAll(map);
         String value1= scoreUtil.scoreToTag(scoreUtil.tagToScore(map2.get(sub).toString()));
@@ -737,12 +739,45 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         String key=map2.keySet().iterator().next();
         String value2 = scoreUtil.scoreToTag(scoreUtil.tagToScore(map2.get(key).toString()));
 
-        //三种
 
-        xcRanks.add(value1+value2);
-        xcRanks.add(value2+value1);
-        xcRanks.add(sub+value1+",另一门"+value2);
-        return xcRanks;
+        return getScoreLevel(value1,value2,sub);
+    }
+
+    private List<String> getScoreLevel(String v1,String v2,String sub){
+        Set<String> levels = new HashSet<>();
+        List<String> v1s=getScoreLevels(v1);
+        List<String> v2s=getScoreLevels(v2);
+        //遍历所有组合
+        for(String v3:v1s){
+            for(String v4:v1s) {
+                levels.add(v3 + v4);
+                levels.add(v4 + v3);
+                levels.add(sub + v3 + ",另一门" + v4);
+            }
+        }
+        List<String> list = new ArrayList<>();
+        list.addAll(levels);
+        return list;
+    }
+
+    private List<String> getScoreLevels(String v1){
+        List<String> list= new ArrayList<>();
+        //遍历所有组合
+        switch (v1){
+            case "A+":
+                list.add("A+");
+            case "A":
+                list.add("A");
+            case "B+":
+                list.add("B+");
+            case "B":
+                list.add("B");
+            case "C":
+                list.add("C");
+            case "D":
+                list.add("D");
+        }
+        return list;
     }
 
 }
