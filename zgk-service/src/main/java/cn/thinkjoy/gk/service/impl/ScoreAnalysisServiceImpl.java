@@ -210,7 +210,10 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                     resultMap.put("upLine", scoreUtil.getTopBatchLine(areaId, majorType, totalScore));
                 }
                 Map<String,Object> scores = getScores(areaId,majorType,map,resultMap);
-                String areaTableName = scoreUtil.getAreaTableName(areaId, majorType);
+                String areaTableName=null;
+                if(areaId!=ZJ_AREA_CODE) {
+                    areaTableName = scoreUtil.getAreaTableName(areaId, majorType);
+                }
                 //分析科目强弱
                 Object[] subjects = scoreUtil.getScoreWeak(scores,areaId);
                 resultMap.put("strong", subjects[0]);
