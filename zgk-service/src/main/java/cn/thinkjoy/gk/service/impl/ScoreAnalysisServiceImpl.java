@@ -206,7 +206,9 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                 Integer majorType = (Integer) map.get("majorType");
                 resultMap.put("majorType", majorType);
                 resultMap.put("cdate", map.get("cdate"));
-                resultMap.put("upLine", scoreUtil.getTopBatchLine(areaId, majorType, totalScore));
+                if(areaId!=ZJ_AREA_CODE) {
+                    resultMap.put("upLine", scoreUtil.getTopBatchLine(areaId, majorType, totalScore));
+                }
                 Map<String,Object> scores = getScores(areaId,majorType,map,resultMap);
                 String areaTableName = scoreUtil.getAreaTableName(areaId, majorType);
                 //分析科目强弱
@@ -444,13 +446,13 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
 
 
         int count = 0;
-        int bc = 0;
+        int bc = 10;
         do {
             count = scoreAnalysisDAO.countUniversity(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, bc);
             //增加步长
-            bc += 5;
-        } while (count < 20 && bc < 750);
-        bc -= 5;
+            bc += 10;
+        } while (count < 20 && bc < 300);
+        bc -= 10;
         //返回前20个院校
         List<Map<String, Object>> resultList = scoreAnalysisDAO.queryUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc,userId);
 
@@ -492,21 +494,24 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         //计算专业提取范围
         map = new HashedMap();
         map.put("subjectItemList", combineAlgorithm(subjects));
-        List<Integer> majorIds  = zgk3in7DAO.getMajorRange(map);
+        map.put("areaId",areaId);
+        map.put("year",lastYear.toString());
+        map.put("totalScore",totalScore);
 
         int count = 0;
-        int bc = 0;
+        int bc = 10;
         do {
-            count = scoreAnalysisDAO.countZJUniversity(areaId,lastYear.toString(),totalScore,bc,majorIds);
+            map.put("bc",bc);
+            count = scoreAnalysisDAO.countZJUniversity(map);
             //增加步长
-            bc += 5;
-        } while (count < 20 && bc < 750);
-        bc -= 5;
-
-
+            bc += 10;
+        } while (count < 20 && bc < 300);
+        bc -= 10;
+        map.put("bc",bc);
+        map.put("userId",userId);
 
         //返回前20个院校
-        List<Map<String, Object>> resultList = scoreAnalysisDAO.queryZJUniversityByScore(areaId, lastYear.toString(), totalScore, bc,majorIds);
+        List<Map<String, Object>> resultList = scoreAnalysisDAO.queryZJUniversityByScore(map);
 
         return resultList;
     }
@@ -591,9 +596,9 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         do {
             count = scoreAnalysisDAO.countJSUniversity(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, bc,xcRanks);
             //增加步长
-            bc += 5;
-        } while (count < 20 && bc < 750);
-        bc -= 5;
+            bc += 10;
+        } while (count < 20 && bc < 300);
+        bc -= 10;
         //返回前20个院校
         List<Map<String, Object>> resultList = scoreAnalysisDAO.queryJSUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc,xcRanks,userId);
 
@@ -680,11 +685,87 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     }
 
     @Override
+    public Object queryGapBySchoolIdAndMajor(long recordId,
+                                             Long schoolId,
+                                             String majorCode,
+                                             long userId) {
+        Map<String, Object> map = scoreAnalysisDAO.queryInfoByRecordId(recordId);
+        //假如院校没有传入 默认为使用上次院校
+        if (schoolId != null && majorCode != null) {
+            Map<String, Object> insertMap = new HashedMap();
+            insertMap.put("userId", userId);
+            insertMap.put("areaId", map.get("areaId"));
+            insertMap.put("universityId", schoolId);
+            insertMap.put("majorCode", majorCode);
+            insertMap.put("cdate", System.currentTimeMillis());
+            scoreAnalysisDAO.insertTarget(insertMap);
+        } else {
+            //获取上次测评院校和批次
+            Map<String, Object> targetMap = scoreAnalysisDAO.queryLastTarget(userId);
+            schoolId = Long.valueOf(targetMap.get("universityId").toString());
+            majorCode = targetMap.get("majorCode").toString();
+        }
+        //浙江一般是浙江省
+        long areaId = Long.valueOf(map.get("areaId").toString());
+//        int majorType = (int) map.get("majorType");
+        Float totalScore = (Float) map.get("totalScore");
+//        没有一分一段
+//        String areaTableName = scoreUtil.getAreaTableName(areaId, majorType);
+//        String year = (Integer.valueOf(scoreUtil.getYear()) - 1) + "";
+//        String name = scoreAnalysisDAO.querySchoolNameById(schoolId);
+//        String batchName = scoreAnalysisDAO.queryBatchNameById(batch);
+//        Map<String, Object> schoolLineMap = scoreAnalysisDAO.queryUnivsersityLowestScore(schoolId, areaId, batch, majorType, year);
+//        Float schoolLine = null;
+//        String schoolLineYear = null;
+//
+//
+//
+//        if (schoolLineMap != null) {
+//            schoolLine = Float.valueOf(schoolLineMap.get("lowestScore").toString());
+//            schoolLineYear = schoolLineMap.get("year").toString();
+//        } else {
+//            throw new BizException("error", "当前学校在当前批次无数据");
+//        }
+//        if (totalScore > schoolLine) {
+//            Integer stuNum = scoreAnalysisDAO.queryStuNumToLine(schoolLine, totalScore, areaTableName);
+//            Map<String, Object> resultMap = new HashedMap();
+//            resultMap.put("schoolId", schoolId);
+//            resultMap.put("schoolName", name);
+//            resultMap.put("totalScore", totalScore);
+//            resultMap.put("majorLine", scoreUtil.getBatchScore(batch, areaId, majorType));
+//            resultMap.put("schoolLine", schoolLine);
+//            resultMap.put("batch", batch);
+//            resultMap.put("year", schoolLineYear);
+//            return resultMap;
+//        }
+//        Integer stuNum = scoreAnalysisDAO.queryStuNumToLine(totalScore, schoolLine, areaTableName);
+//
+//        Map<String, Object> resultMap = new HashedMap();
+//
+//        resultMap.put("schoolId", schoolId);
+//        resultMap.put("schoolName", name);
+//        resultMap.put("batchName", batchName);
+//        resultMap.put("totalScore", totalScore);
+//        resultMap.put("stuNum", stuNum);
+//        resultMap.put("addScore", totalScore - schoolLine);
+//        resultMap.put("batchLine", scoreUtil.getBatchScore(batch, areaId, majorType));
+//        resultMap.put("schoolLine", schoolLine);
+//        resultMap.put("batch", batch);
+//        resultMap.put("year", schoolLineYear);
+//
+//        return resultMap;
+        return null;
+    }
+
+    @Override
     public List<String> queryHistoryScore(long userId,Integer rows){
         return scoreAnalysisDAO.queryHistoryScore(userId,rows);
     }
 
-
+    @Override
+    public List<Map<String,Object>> queryMajorBySchoolIdAndAreaId(long areaId,long universityId){
+        return scoreAnalysisDAO.queryMajorBySchoolIdAndAreaId(areaId,universityId);
+    }
 
 
     private Map<String,Object> getScores(long areaId,int majorType,Map<String,Object> map,Map<String,Object> resultMap){

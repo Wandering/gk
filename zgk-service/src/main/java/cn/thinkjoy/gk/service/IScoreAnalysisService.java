@@ -310,6 +310,11 @@ public interface IScoreAnalysisService {
                                       Integer batch,
                                       long userId);
 
+    Object queryGapBySchoolIdAndMajor(long recordId,
+                                      Long schoolId,
+                                      String majorCode,
+                                      long userId);
+
     List<String> queryHistoryScore(long userId,Integer rows);
 
     /**
@@ -328,4 +333,12 @@ public interface IScoreAnalysisService {
      * @return
      */
     public Object recommendSchoolZJ(float totalScore, long areaId,long userId);
+
+    /**
+     * 根据院校ID和地区code查询专业
+     * @param areaId
+     * @param universityId
+     * @return
+     */
+    List<Map<String,Object>> queryMajorBySchoolIdAndAreaId(long areaId,long universityId);
 }

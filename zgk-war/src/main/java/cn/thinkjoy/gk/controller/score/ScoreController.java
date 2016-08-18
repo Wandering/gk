@@ -221,7 +221,7 @@ public class ScoreController {
 
     }
 
-    /**
+     /**
      * 根据大学ID和省份ID查询相应的录取批次
      * @return
      */
@@ -233,17 +233,47 @@ public class ScoreController {
                                                  Integer majorType){
 
 
-        List<Map<String,Object>> list = null;
+        List<Map<String, Object>> list = null;
 
         Integer year = Integer.valueOf(scoreUtil.getYear());
 
-        list=scoreAnalysisService.queryUnivsersityBatch(areaId,schoolId,year.toString(),majorType);
+        list = scoreAnalysisService.queryUnivsersityBatch(areaId, schoolId, year.toString(), majorType);
         //尝试获取最新的年份对应的录取批次,获取不到获取次年的录取批次
-        if(list==null||list.size()==0){
-            list=scoreAnalysisService.queryUnivsersityBatch(areaId,schoolId,(year-1)+"",majorType);
+        if (list == null || list.size() == 0) {
+            list = scoreAnalysisService.queryUnivsersityBatch(areaId, schoolId, (year - 1) + "", majorType);
         }
+
+
         return list;
     }
+
+
+    /**
+     * 根据大学ID和省份ID查询相应的专业,浙江专用
+     * @return
+     */
+    @RequestMapping(value = "/queryMajorBySchoolIdAndAreaId",method = RequestMethod.GET)
+    @ResponseBody
+
+    public Object queryMajorBySchoolIdAndAreaId(@RequestParam long areaId,
+                                                 @RequestParam long schoolId){
+
+        // 去查询院校对应的专业,从招生计划中获取
+        return scoreAnalysisService.queryMajorBySchoolIdAndAreaId(areaId,schoolId);
+    }
+
+//    /**
+//     * 根据用户总分、学校ID、批次信息查询用户与目标院校距离
+//     * @return
+//     */
+//    @RequestMapping(value = "/queryGapBySchoolIdAndMajor",method = RequestMethod.POST)
+//    @ResponseBody
+//    public Object queryGapBySchoolIdAndMajor(@RequestParam long recordId,
+//                                             Long schoolId,
+//                                             String majorCode,
+//                                             @RequestParam long userId){
+//        return scoreAnalysisService.queryGapBySchoolIdAndBatch(recordId,schoolId,batch,userId);
+//    }
 
     /**
      * 根据用户总分、学校ID、批次信息查询用户与目标院校距离

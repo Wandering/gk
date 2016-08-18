@@ -175,23 +175,5 @@ deleteBySubjects
         </where>
     </select>
 
-
-    <select id="getMajorRange" resultType="java.lang.Integer">
-        SELECT
-        majorCode
-        FROM zgk_zj_3in7 3in7
-        <where>
-            <if test="subjectItemList!=null">
-                (
-                <foreach item="subjectItems" collection="subjectItemList"  separator=" or " index="">
-                    <foreach item="mapList" collection="subjectItems.subjectItem" open="(" close=")" separator="and" index="">
-                        3in7.selectSubject LIKE CONCAT('%','${mapList.selectSubject}','%')
-                    </foreach>
-                </foreach>
-                OR  3in7.selectSubject = ''
-                )
-            </if>
-        </where>
-    </select>
 </mapper>
 

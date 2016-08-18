@@ -230,28 +230,18 @@ public interface IScoreAnalysisDAO {
                                                      @Param("userId")long userId);
     /**
      * 统计当前推荐学校数量
-     * @param areaId
-     * @param year
+     * @param map
      * @return
      */
-    int countZJUniversity(@Param("areaId")long areaId,
-                          @Param("year")String year,
-                          @Param("totalScore")Float totalScore,
-                          @Param("bc")int bc,
-                          @Param("majorIds")List<Integer> majorIds
+    int countZJUniversity(Map<String,Object> map
     );
 
     /**
      * 获取推荐学校详情
-     * @param areaId
-     * @param year
+     * @param map
      * @return
      */
-    List<Map<String,Object>>  queryZJUniversityByScore(@Param("areaId")long areaId,
-                                                     @Param("year")String year,
-                                                     @Param("totalScore")Float totalScore,
-                                                     @Param("bc")int bc,
-                                                     @Param("majorIds")List<Integer> majorIds);
+    List<Map<String,Object>>  queryZJUniversityByScore(Map<String,Object> map);
 
     /**
      * 根据区Id获取当前区高中
@@ -358,5 +348,13 @@ public interface IScoreAnalysisDAO {
      * @return
      */
     List<String> queryHistoryScore(@Param("userId")long userId,@Param("rows")Integer rows);
+
+    /**
+     * 根据院校ID和地区code查询专业
+     * @param areaId
+     * @param universityId
+     * @return
+     */
+    List<Map<String,Object>> queryMajorBySchoolIdAndAreaId(@Param("areaId")long areaId,@Param("universityId")long universityId);
 
 }
