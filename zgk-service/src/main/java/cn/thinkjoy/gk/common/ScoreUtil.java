@@ -461,6 +461,28 @@ public class ScoreUtil {
      * 查询当前分数的分数等级
      * @return
      */
+    public Integer getScoreRankZJ(long areaId,Float score){
+
+        Float totalScore =  750F;
+
+        if(score - (totalScore*0.9F) >=0F){
+            return ScoreRankEnum.名垂校史.getSub();
+        }else if(score - (totalScore*0.8F) >=0F){
+            return ScoreRankEnum.校刊红人.getSub();
+        }else if(score - (totalScore*0.6F) >=0F){
+            return ScoreRankEnum.三好学生.getSub();
+        }else if(score - (totalScore*0.4F)  >=0F){
+            return ScoreRankEnum.教师常客.getSub();
+        }else{
+            return ScoreRankEnum.逃课大军.getSub();
+        }
+
+    }
+
+    /**
+     * 查询当前分数的分数等级
+     * @return
+     */
     public Object[] getScoreWeak(Map<String,Object> scores,long areaId){
         String strongSubject=null;
         String weakSubject=null;

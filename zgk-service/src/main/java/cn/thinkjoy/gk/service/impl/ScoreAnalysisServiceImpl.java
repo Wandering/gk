@@ -134,7 +134,9 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
             logger.info("用户是第一次测评");
             resultMap.put("difference", "off");
         }
-
+        if(areaId==ZJ_AREA_CODE){
+            resultMap.put("scoreRank", scoreUtil.getScoreRankZJ(areaId, totalScore));
+        }
         // 推荐标签
 
         List<String> labels = scoreUtil.getUserLabel(scores,areaId);

@@ -296,7 +296,7 @@ deleteBySubjects
         (#{difference} - (lowestScore - #{line}) ) as gapSchool,
         (CASE WHEN ff.university_id is null THEN 0 ELSE 1 END) AS isFavorite
         from zgk_university_enrolling
-        LEFT JOIN (SELECT DISTINCT university_id from zgk_favorite_university WHERE user_id = #{userId}) ff ON ff.university_id = universityId
+        LEFT JOIN (SELECT university_id from zgk_favorite_university WHERE user_id = #{userId} GROUP BY university_id) ff ON ff.university_id = universityId
         WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
         and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
         and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
@@ -327,7 +327,7 @@ deleteBySubjects
 	    	majorType = #{majorType}
 	    AND YEAR = #{year}+1
 	    GROUP BY universityId) plan,
-	    (SELECT DISTINCT university_id from zgk_favorite_university WHERE user_id = #{userId}) ff
+	    (SELECT university_id from zgk_favorite_university WHERE user_id = #{userId} GROUP BY university_id) ff
             WHERE plan.uid = universityId and  areaId = #{areaId} and majorType = #{majorType}  and year = #{year} and ff.university_id = universityId
             and batch like '8%'
             ORDER BY lowestScore desc
@@ -499,7 +499,7 @@ deleteBySubjects
                 )
             </if>
         </where>)  3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
-        LEFT JOIN (SELECT DISTINCT university_id from zgk_favorite_university WHERE user_id = #{userId}) ff ON ff.university_id = enrolling.universityId
+        LEFT JOIN (SELECT university_id from zgk_favorite_university WHERE user_id = #{userId} GROUP BY university_id) ff ON ff.university_id = enrolling.universityId
         ORDER BY ABS(gapSchool) ASC
         limit 20) tb ORDER BY gapSchool DESC;
     </select>
@@ -541,7 +541,7 @@ deleteBySubjects
         AND areaId = #{areaId}
         AND xcRank in (<foreach collection="xcRanks" item="item" separator=",">#{item}</foreach>)
         ) plan ON plan.uid = universityId
-        LEFT JOIN (SELECT DISTINCT university_id from zgk_favorite_university WHERE user_id = #{userId}) ff ON ff.university_id = universityId
+        LEFT JOIN (SELECT university_id from zgk_favorite_university WHERE user_id = #{userId} GROUP BY university_id) ff ON ff.university_id = universityId
         WHERE
         plan.uid = enrolling.universityId
         and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
