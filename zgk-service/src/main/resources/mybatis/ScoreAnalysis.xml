@@ -294,9 +294,10 @@ deleteBySubjects
 	    lowestScore as lowestScore,
 	    universityId,
         (#{difference} - (lowestScore - #{line}) ) as gapSchool,
-        (CASE WHEN ff.university_id is null THEN 0 ELSE 1 END) AS isFavorite
+        (SELECT
+        CASE WHEN university_id is null THEN 0 ELSE 1 END
+        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = universityId) AS isFavorite
         from zgk_university_enrolling
-        LEFT JOIN (SELECT university_id from zgk_favorite_university WHERE user_id = #{userId} GROUP BY university_id) ff ON ff.university_id = universityId
         WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
         and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
         and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
@@ -315,7 +316,9 @@ deleteBySubjects
         lowestScore as lowestScore,
         universityId,
         (#{totalScore}-lowestScore) as gapSchool,
-        (CASE WHEN ff.university_id is null THEN 0 ELSE 1 END) AS isFavorite
+        (SELECT
+        CASE WHEN university_id is null THEN 0 ELSE 1 END
+        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = universityId) AS isFavorite
         from zgk_university_enrolling,(SELECT
 		universityId as uid
         <if test="areaId==320000">
@@ -326,9 +329,8 @@ deleteBySubjects
 	    WHERE
 	    	majorType = #{majorType}
 	    AND YEAR = #{year}+1
-	    GROUP BY universityId) plan,
-	    (SELECT university_id from zgk_favorite_university WHERE user_id = #{userId} GROUP BY university_id) ff
-            WHERE plan.uid = universityId and  areaId = #{areaId} and majorType = #{majorType}  and year = #{year} and ff.university_id = universityId
+	    GROUP BY universityId) plan
+            WHERE plan.uid = universityId and  areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
             and batch like '8%'
             ORDER BY lowestScore desc
         limit  10;
@@ -479,8 +481,9 @@ deleteBySubjects
         realEnrollingNumber as stuNum,
         averageScore as averageScore,
         enrolling.universityId,
-        (#{totalScore} - averageScore) as gapSchool,
-        (CASE WHEN ff.university_id is null THEN 0 ELSE 1 END) AS isFavorite
+        (SELECT
+        CASE WHEN university_id is null THEN 0 ELSE 1 END
+        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = universityId) AS isFavorite
         from (select majorCode,universityId,averageScore,realEnrollingNumber,batch from zgk_university_major_enrolling   where areaId = #{areaId} and year = #{year}
         and averageScore - #{totalScore} &lt;= #{bc}
         and #{totalScore} -averageScore  &lt;= #{bc}) enrolling
@@ -499,7 +502,6 @@ deleteBySubjects
                 )
             </if>
         </where>)  3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
-        LEFT JOIN (SELECT university_id from zgk_favorite_university WHERE user_id = #{userId} GROUP BY university_id) ff ON ff.university_id = enrolling.universityId
         ORDER BY ABS(gapSchool) ASC
         limit 20) tb ORDER BY gapSchool DESC;
     </select>
@@ -522,7 +524,9 @@ deleteBySubjects
         universityId,
         (#{difference} - (lowestScore - #{line}) ) as gapSchool,
         xcRank,
-        (CASE WHEN ff.university_id is null THEN 0 ELSE 1 END) AS isFavorite
+        (SELECT
+        CASE WHEN university_id is null THEN 0 ELSE 1 END
+        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = universityId) AS isFavorite
         from
         (select realEnrollingNumber,highestScore,averageScore,lowestScore,universityId,batch from zgk_university_enrolling
         WHERE areaId = #{areaId}
@@ -541,7 +545,6 @@ deleteBySubjects
         AND areaId = #{areaId}
         AND xcRank in (<foreach collection="xcRanks" item="item" separator=",">#{item}</foreach>)
         ) plan ON plan.uid = universityId
-        LEFT JOIN (SELECT university_id from zgk_favorite_university WHERE user_id = #{userId} GROUP BY university_id) ff ON ff.university_id = universityId
         WHERE
         plan.uid = enrolling.universityId
         and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
