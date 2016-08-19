@@ -299,14 +299,14 @@ deleteBySubjects
         (#{difference} - (lowestScore - #{line}) ) as gapSchool,
         (SELECT
         CASE WHEN university_id is null THEN 0 ELSE 1 END
-        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = universityId  limit 1)) AS isFavorite
+        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = universityId  limit 1) AS isFavorite
         from zgk_university_enrolling
         LEFT JOIN (SELECT id,areaid as areaId,rank,name from zgk_university ) university ON university.id = enrolling.universityId
         WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
         and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
         and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
         ORDER BY ABS(gapSchool) ASC
-        limit 20) tb ORDER BY universityAreaId=${areaId},isFavorite=1,rank ASC
+        limit 20) tb ORDER BY universityAreaId !=${areaId},isFavorite!=1,rank is null,rank  ASC
     </select>
 
     <!--推荐高职前10院校-->
@@ -492,7 +492,7 @@ deleteBySubjects
         (#{totalScore} - averageScore) as gapSchool,
         (SELECT
         CASE WHEN university_id is null THEN 0 ELSE 1 END
-        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = enrolling.universityId  limit 1)) AS isFavorite
+        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = enrolling.universityId  limit 1) AS isFavorite
         from (select majorCode,universityId,averageScore,realEnrollingNumber,batch from zgk_university_major_enrolling   where areaId = #{areaId} and year = #{year}
         and averageScore - #{totalScore} &lt;= #{bc}
         and #{totalScore} -averageScore  &lt;= #{bc}) enrolling
@@ -513,7 +513,7 @@ deleteBySubjects
         </where>)  3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
         LEFT JOIN (SELECT id,areaid as areaId,rank,name from zgk_university) university ON university.id = enrolling.universityId
         ORDER BY ABS(gapSchool) ASC
-        limit 20) tb ORDER BY universityAreaId=${areaId},isFavorite=1,rank ASC
+        limit 20) tb ORDER BY universityAreaId !=${areaId},isFavorite!=1,rank is null,rank  ASC
 
     </select>
 
@@ -540,7 +540,7 @@ deleteBySubjects
         xcRank,
         (SELECT
         CASE WHEN university_id is null THEN 0 ELSE 1 END
-        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = universityId  limit 1)) AS isFavorite
+        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = universityId  limit 1) AS isFavorite
         from
         (select realEnrollingNumber,highestScore,averageScore,lowestScore,universityId,batch from zgk_university_enrolling
         WHERE areaId = #{areaId}
@@ -565,7 +565,7 @@ deleteBySubjects
         and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
         and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
         ORDER BY ABS(gapSchool) ASC
-        limit 20) tb ORDER BY universityAreaId=${areaId},isFavorite=1,rank ASC
+        limit 20) ttb ORDER BY universityAreaId !=${areaId},isFavorite!=1,rank is null,rank  ASC
     </select>
     <!--统计江苏院校数量-->
     <select id="countJSUniversity" resultType="java.lang.Integer">
