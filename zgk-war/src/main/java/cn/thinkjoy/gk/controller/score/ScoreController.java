@@ -211,8 +211,6 @@ public class ScoreController {
 
         if(areaId==330000){
             //浙江算法
-            if(majorType==null)
-                throw new BizException("error","majorType不能为空!");
             return scoreAnalysisService.recommendSchoolZJ(totalScore,areaId,userId);
         }else if(areaId==320000){
             //江苏算法

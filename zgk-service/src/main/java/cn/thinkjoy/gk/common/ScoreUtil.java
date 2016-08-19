@@ -510,9 +510,9 @@ public class ScoreUtil {
 
     }
     public Float getProportionJS(String value){
-        Float v1 =tagToScore(value);
+        String[] values=value.split("-");
+        Float v1 =tagToScore(values[0]);
         return v1/120F;
-
     }
 
 
