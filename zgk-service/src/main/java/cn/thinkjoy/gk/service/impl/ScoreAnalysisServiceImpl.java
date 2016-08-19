@@ -902,30 +902,42 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         return getScoreLevel(subs[1],subs[3],subs[0]);
     }
 
-    private String[] getScoreLevel(Map<String,Object> scores,Integer majorType){
+    private String[] getScoreLevel(Map<String,Object> scores,Integer majorType) {
 
         Iterator<String> keys = scores.keySet().iterator();
         //江苏一定是两门额外科目  否则抛异常
-        Map<String,Object> map1=new LinkedHashMap<>();
+        Map<String, Object> map1 = new LinkedHashMap<>();
 
         while (keys.hasNext()) {
             String key = keys.next();
             if ((!"语文".equals(key)) && (!"数学".equals(key)) && (!"外语".equals(key))) {
                 String value = scores.get(key).toString();
-                map1.put(key,value);
+                map1.put(key, value);
             }
         }
 
         String sub = "历史";
-        if(majorType == 2){
+        if (majorType == 2) {
             sub = "物理";
         }
-        Map<String,Object> map2=new HashedMap();
+        Map<String, Object> map2 = new HashedMap();
         map2.putAll(map1);
-        String value1= scoreUtil.scoreToTag(Float.valueOf(map2.get(sub).toString().split("-")[0]));
+        String v1 = map2.get(sub).toString();
+        String value1 =null;
+        if (v1.indexOf("-")>0){
+            value1 = scoreUtil.scoreToTag(Float.valueOf(map2.get(sub).toString().split("-")[0]));
+        }else {
+            value1=v1;
+        }
         map2.remove(sub);
         String key=map2.keySet().iterator().next();
-        String value2 = scoreUtil.scoreToTag(Float.valueOf(map2.get(key).toString().split("-")[0]));
+        String v2 = map2.get(key).toString();
+        String value2=null;
+        if(v2.indexOf("-")>0){
+            value2 = scoreUtil.scoreToTag(Float.valueOf(map2.get(key).toString().split("-")[0]));
+        }else {
+            value2=v2;
+        }
         return new String[]{sub,value1,key,value2};
     }
 
