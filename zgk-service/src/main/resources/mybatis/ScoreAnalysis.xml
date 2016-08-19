@@ -242,7 +242,7 @@ deleteBySubjects
     </select>
 
     <select id="queryLastTarget" resultType="java.util.Map">
-         SELECT university_id as universityId,batch from zgk_favorite_university
+         SELECT university_id as universityId,batch,majorCode from zgk_favorite_university
          WHERE user_id = #{userId} ORDER BY id DESC limit 1
     </select>
 
@@ -392,8 +392,9 @@ deleteBySubjects
             and enrolling.batch=#{batch}
         </if>
         <if test="majorType!=null">
-            and enrolling.majorType=#{majorType} GROUP BY YEAR DESC limit 3
+            and enrolling.majorType=#{majorType}
         </if>
+        GROUP BY YEAR DESC limit 3
     </select>
 
     <!--判断用户年级-->
