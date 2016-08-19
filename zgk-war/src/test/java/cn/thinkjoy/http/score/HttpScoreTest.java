@@ -104,7 +104,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryInfoByRecordId(){
-        String url=host +queryInfoByRecordId_url + "?recordId=244";
+        String url=host +queryInfoByRecordId_url + "?recordId=325";
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }

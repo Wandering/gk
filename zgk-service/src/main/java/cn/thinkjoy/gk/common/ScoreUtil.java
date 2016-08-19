@@ -144,7 +144,7 @@ public class ScoreUtil {
             if(!map1.containsKey("lsScore")){
                 throw new BizException("error","文科必须有历史");
             }
-            scores.put("历史", floatToStr(map1.get("lsScore")) + "-" + floatToStr(map1.get("lsScoreTotal")));
+            scores.put("历史", Float.valueOf(map1.get("lsScore").toString()));
             map1.remove("lsScore");
             map1.remove("lsScoreTotal");
         }
