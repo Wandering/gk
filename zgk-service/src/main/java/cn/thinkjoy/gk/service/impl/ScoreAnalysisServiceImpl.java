@@ -745,6 +745,15 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         String name = scoreAnalysisDAO.querySchoolNameById(schoolId);
 
 
+        Map<String, Object> majorLineMap = scoreAnalysisDAO.queryMajorLowestScore(schoolId, areaId, majorCode, year);
+        Float majorLine = null;
+        if (majorLineMap != null&&majorLineMap.size()>0) {
+            majorLine = Float.valueOf(majorLineMap.get("averageScore").toString());
+        } else {
+            throw new BizException("error", "当前学校在"+year+"年无数据");
+        }
+
+
         Map<String, Object> schoolLineMap = scoreAnalysisDAO.queryMajorLowestScore(schoolId, areaId, majorCode, year);
         Float schoolLine = null;
         String schoolLineYear = null;
@@ -776,6 +785,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         Map<String,Object> map = new HashedMap();
         map.put("areaId",areaId);
         map.put("universityId",universityId);
+        map.put("year",Integer.valueOf(scoreUtil.getYear())-1);
         //一定是三门成绩 否则异常
         String[] subjects =getZJUserScore(userId);
         //计算专业提取范围
