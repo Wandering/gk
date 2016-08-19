@@ -248,9 +248,9 @@ public class ScoreUtil {
             case 2:
                 return scoreStrs[1].split("\\|")[0];
             case 4:
-                return scoreStrs[3].split("\\|")[0];
+                return scoreStrs[2].split("\\|")[0];
             case 8:
-                return scoreStrs[4].split("\\|")[0];
+                return scoreStrs[3].split("\\|")[0];
 
         }
 
