@@ -470,6 +470,13 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         //返回前20个院校
         List<Map<String, Object>> resultList = scoreAnalysisDAO.queryUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc,userId);
 
+        if(resultList==null){
+            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
+        }else if(resultList.size()==0) {
+
+            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
+
+        }
         return resultList;
     }
 
@@ -510,9 +517,26 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         //返回前20个院校
         List<Map<String, Object>> resultList = scoreAnalysisDAO.queryZJUniversityByScore(map);
 
-        return resultList;
+        return listToTreeList(resultList);
     }
 
+
+    private Map<String, List<Map<String,Object>>> listToTreeList(List<Map<String, Object>> resultList){
+        Map<String, List<Map<String,Object>>> treeMap = new LinkedHashMap<>();
+        for(Map<String, Object> map : resultList){
+            String majorName = map.get("majorName").toString();
+            if(treeMap.containsKey(majorName)){
+
+                List<Map<String,Object>> l1=treeMap.get(majorName);
+                l1.add(map);
+            }else {
+                List<Map<String,Object>> l1=new ArrayList<>();
+                l1.add(map);
+                treeMap.put(majorName,l1);
+            }
+        }
+        return treeMap;
+    }
 
     /**
      * 江苏算法
@@ -584,6 +608,14 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         bc -= 10;
         //返回前20个院校
         List<Map<String, Object>> resultList = scoreAnalysisDAO.queryJSUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc,xcRanks,userId);
+
+        if(resultList==null){
+            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
+        }else if(resultList.size()==0) {
+
+            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
+
+        }
         return resultList;
     }
 

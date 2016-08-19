@@ -318,7 +318,9 @@ deleteBySubjects
         (CASE WHEN ff.university_id is null THEN 0 ELSE 1 END) AS isFavorite
         from zgk_university_enrolling,(SELECT
 		universityId as uid
-
+        <if test="areaId==320000">
+            ,xcRank
+        </if>
 	    FROM
 	    	zgk_university_enrolling_plan
 	    WHERE
