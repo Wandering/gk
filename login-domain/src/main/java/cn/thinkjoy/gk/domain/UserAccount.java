@@ -41,6 +41,30 @@ public class UserAccount extends BaseDomain<Long>{
 
 	private long userId;
 
+	private String nickName;
+
+	private String avatar;
+
+	public String getNickName()
+	{
+		return nickName;
+	}
+
+	public void setNickName(String nickName)
+	{
+		this.nickName = nickName;
+	}
+
+	public String getAvatar()
+	{
+		return avatar;
+	}
+
+	public void setAvatar(String avatar)
+	{
+		this.avatar = avatar;
+	}
+
 	public int getIsRegisterXueTang() {
 		return isRegisterXueTang;
 	}

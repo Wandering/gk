@@ -46,4 +46,6 @@ public interface IUserAccountExService {
     List<Map<String,Object>> getOrderList(Map<String, String> paramMap);
 
     int updateUserAccountRegistXueTang(Map<String, Object> paramMap);
+
+    Map<String,Object> findUserInfoByAlipayId(String aliUserId);
 }

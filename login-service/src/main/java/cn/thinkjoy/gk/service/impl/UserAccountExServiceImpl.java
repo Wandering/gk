@@ -218,4 +218,11 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         return userAccountExDAO.updateUserAccountRegistXueTang(paramMap);
     }
 
+    @Override
+    public Map<String, Object> findUserInfoByAlipayId(String alipayId)
+    {
+        Map<String, String> params = new HashMap<String,String>();
+        params.put("alipayUserId",alipayId);
+        return userAccountExDAO.findUserInfoByAlipayId(params);
+    }
 }
