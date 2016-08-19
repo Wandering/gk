@@ -871,6 +871,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     }
 
     private String[] getScoreLevel(Map<String,Object> scores,Integer majorType){
+
         Iterator<String> keys = scores.keySet().iterator();
         //江苏一定是两门额外科目  否则抛异常
         Map<String,Object> map1=new LinkedHashMap<>();
@@ -888,13 +889,11 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
             sub = "物理";
         }
         Map<String,Object> map2=new HashedMap();
-        map2.putAll(scores);
-        Float v1= scoreUtil.tagToScore(map2.get(sub).toString());
-        String value1= scoreUtil.scoreToTag(v1);
+        map2.putAll(map1);
+        String value1= scoreUtil.scoreToTag(Float.valueOf(map2.get(sub).toString().split("-")[0]));
         map2.remove(sub);
         String key=map2.keySet().iterator().next();
-        Float v2 = scoreUtil.tagToScore(map2.get(key).toString());
-        String value2 = scoreUtil.scoreToTag(v2);
+        String value2 = scoreUtil.scoreToTag(Float.valueOf(map2.get(key).toString().split("-")[0]));
         return new String[]{sub,value1,key,value2};
     }
 

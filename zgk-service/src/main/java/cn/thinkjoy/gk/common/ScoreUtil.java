@@ -510,8 +510,15 @@ public class ScoreUtil {
 
     }
     public Float getProportionJS(String value){
-        String[] values=value.split("-");
-        Float v1 =tagToScore(values[0]);
+        if(value.indexOf("-")>0) {
+            String[] values = value.split("-");
+            value=values[0];
+        }
+        Float v1 =null;
+        Float score = tagToScore(value);
+        if(score==null) {
+            v1=Float.valueOf(value);
+        }
         return v1/120F;
     }
 
@@ -708,11 +715,11 @@ public class ScoreUtil {
     }
     private Map<String,Object> getSubjectInfo(Map<String,Object> scores,String subject,long areaId){
         String[] strings=null;
-        if(areaId==JS_AREA_CODE&&("政治".equals(subject)||"历史".equals(subject)||"地理".equals(subject)||"物理".equals(subject)||"化学".equals(subject)||"生物".equals(subject))) {
-            strings = new String[]{tagToScore(scores.get(subject).toString()).toString(),"120"};
-        }else {
+//        if(areaId==JS_AREA_CODE&&("政治".equals(subject)||"历史".equals(subject)||"地理".equals(subject)||"物理".equals(subject)||"化学".equals(subject)||"生物".equals(subject))) {
+//            strings = new String[]{tagToScore(scores.get(subject).toString()).toString(),"120"};
+//        }else {
             strings = scores.get(subject).toString().split("-");
-        }
+//        }
         if(!"".equals(strings[0]) && !"".equals(strings[1])){
             Float subjectScore = Float.valueOf(strings[0]);
             Float subjectTotalScore = Float.valueOf(strings[1]);
@@ -729,19 +736,36 @@ public class ScoreUtil {
      * @return
      */
     public String scoreToTag(Float f){
-        if(f-120F>=0){
-            return "A+";
-        }else if(f-100F>=0F){
-            return "A";
-        }else if(f-80F>=0F){
-            return "B+";
-        }else if(f-60F>=0F){
-            return "B";
-        }else if(f-40F>=0F){
-            return "C";
-        }else{
-            return "D";
+
+        switch (f.toString()){
+            case "120.0":
+                return "A+";
+            case "100.0":
+                return "A";
+            case "80.0":
+                return "B+";
+            case "60.0":
+                return "B";
+            case "40.0":
+                return "C";
+            case "20.0":
+                return "D";
         }
+        return null;
+
+//        if(f-120F==0){
+//            return "A+";
+//        }else if(f-100F==0F){
+//            return "A";
+//        }else if(f-80F==0F){
+//            return "B+";
+//        }else if(f-60F==0F){
+//            return "B";
+//        }else if(f-40F==0F){
+//            return "C";
+//        }else{
+//            return "D";
+//        }
     }
 
     /**
@@ -750,18 +774,35 @@ public class ScoreUtil {
      * @return
      */
     public Float tagToScore(String s){
-        if("A+".equals(s)){
-            return 120F;
-        }else if("A".equals(s)){
-            return 100F;
-        }else if("B+".equals(s)){
-            return 80F;
-        }else if("B".equals(s)){
-            return 60F;
-        }else if("C".equals(s)){
-            return 40F;
-        }else {
-            return 20F;
+
+//        if("A+".equals(s)){
+//            return 120F;
+//        }else if("A".equals(s)){
+//            return 100F;
+//        }else if("B+".equals(s)){
+//            return 80F;
+//        }else if("B".equals(s)){
+//            return 60F;
+//        }else if("C".equals(s)){
+//            return 40F;
+//        }else {
+//            return 20F;
+//        }
+
+        switch (s){
+            case "A+":
+                return 120F;
+            case "A":
+                return 100F;
+            case "B+":
+                return 80F;
+            case "B":
+                return 60F;
+            case "C":
+                return 40F;
+            case "D":
+                return 20F;
         }
+        return null;
     }
 }
