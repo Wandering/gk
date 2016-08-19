@@ -300,9 +300,9 @@ deleteBySubjects
         (SELECT
         CASE WHEN university_id is null THEN 0 ELSE 1 END
         from zgk_favorite_university WHERE user_id = #{userId} AND university_id = universityId  limit 1) AS isFavorite
-        from zgk_university_enrolling
+        from zgk_university_enrolling enrolling
         LEFT JOIN (SELECT id,areaid as areaId,rank,name from zgk_university ) university ON university.id = enrolling.universityId
-        WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
+        WHERE enrolling.areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
         and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
         and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
         ORDER BY ABS(gapSchool) ASC
