@@ -625,7 +625,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         String level2=null;
         String universityLevel =null;
         if(areaId==JS_AREA_CODE){
-            Map<String,Object> jsScore = scoreUtil.getScoresJS(map,majorType);
+            Map<String,Object> jsScore = scoreUtil.getScoresJS2(map,majorType);
             /**
              * ================
              * 江苏成绩必须是5们 否则报错
