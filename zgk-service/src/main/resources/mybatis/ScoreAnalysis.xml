@@ -537,7 +537,7 @@ deleteBySubjects
         WHERE
         YEAR = #{year}+1
         AND majorType = #{majorType}
-        AND batch = #{batch}
+        <!--AND batch = #{batch}-->
         AND areaId = #{areaId}
         AND xcRank in (<foreach collection="xcRanks" item="item" separator=",">#{item}</foreach>)
         ) plan ON plan.uid = universityId
@@ -561,7 +561,7 @@ deleteBySubjects
         WHERE
         YEAR = #{year}+1
         AND majorType = #{majorType}
-        AND batch = #{batch}
+        <!--AND batch = #{batch}-->
         AND areaId = #{areaId}
         AND xcRank in (<foreach collection="xcRanks" item="item" separator=",">#{item}</foreach>)
         ) plan ON plan.uid = universityId
