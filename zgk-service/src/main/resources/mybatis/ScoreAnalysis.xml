@@ -570,7 +570,7 @@ deleteBySubjects
     <!--获取专业过滤没有code对应的,必须在计划表中存在,必须根据用户选择的科目来确定,并且要在2015年招生信息中存在-->
     <select id="queryMajorBySchoolIdAndAreaId" resultType="java.util.Map">
         SELECT enrolling.majorCode,enrolling.majorName FROM
-        (select majorCode,universityId from zgk_university_major_enrolling where universityId=#{universityId}
+        (select majorCode,universityId,majorName from zgk_university_major_enrolling where universityId=#{universityId}
         and areaId = #{areaId} and year = #{year} and majorCode is not null)
         enrolling
         INNER JOIN (SELECT
