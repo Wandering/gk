@@ -27,7 +27,7 @@ public interface IScoreAnalysisService {
     Map<String, Object> insertScoreRecord(long userId,
                                           long areaId,
                                           Integer majorType,
-                                          Map<String, Object> scores);
+                                          Map<String,Object> scores);
 
     /**
      * 根据ID查询定位分数
@@ -50,7 +50,7 @@ public interface IScoreAnalysisService {
      * @return
      */
     Integer queryStuNum(Object totalScore,
-                        String areaTableName);
+                    String areaTableName);
 
     /**
      * 查询分数线之上有多少人
@@ -91,7 +91,7 @@ public interface IScoreAnalysisService {
      * @return
      */
     Integer queryProviceRank(Object totalScore,
-                             String areaTableName);
+                         String areaTableName);
 
     /**
      * 查询分数排名
@@ -100,7 +100,7 @@ public interface IScoreAnalysisService {
      * @return
      */
     Integer queryProviceRank2(Object totalScore,
-                              String areaTableName);
+                             String areaTableName);
 
 
     /**
@@ -195,7 +195,8 @@ public interface IScoreAnalysisService {
                                                      Float difference,
                                                      Float line,
                                                      Float totalScore,
-                                                     int bc);
+                                                     int bc,
+                                                     long userId);
 
     /**
      * 根据区Id获取当前区高中
@@ -262,7 +263,8 @@ public interface IScoreAnalysisService {
     List<Map<String,Object>> queryLowstUniversity(long areaId,
                                                   int majorType,
                                                   Float totalScore,
-                                                  String year);
+                                                  String year,
+                                                  long userId);
 
     /**
      * 获取用户年级
@@ -302,10 +304,42 @@ public interface IScoreAnalysisService {
     List<String> queryLabelByTypeAndConfig(Integer type, List<Integer> configs);
 
 
-    Object recommendSchool(float totalScore, long areaId, int majorType);
+    Object recommendSchool(float totalScore,long areaId,int majorType,long userId);
 
     Object queryGapBySchoolIdAndBatch(long recordId,
                                       Long schoolId,
                                       Integer batch,
                                       long userId);
+
+    Object queryGapBySchoolIdAndMajor(long recordId,
+                                      Long schoolId,
+                                      String majorCode,
+                                      long userId);
+
+    List<String> queryHistoryScore(long userId,Integer rows);
+
+    /**
+     * 江苏算法
+     * @param totalScore
+     * @param areaId
+     * @param majorType
+     * @return
+     */
+    public Object recommendSchoolJS(float totalScore, long areaId, int majorType,long userId);
+
+    /**
+     * 浙江算法
+     * @param totalScore
+     * @param areaId
+     * @return
+     */
+    public Object recommendSchoolZJ(float totalScore, long areaId,long userId);
+
+    /**
+     * 根据院校ID和地区code查询专业
+     * @param areaId
+     * @param universityId
+     * @return
+     */
+    List<Map<String,Object>> queryMajorBySchoolIdAndAreaId(long areaId,long universityId,long userId);
 }

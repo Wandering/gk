@@ -37,17 +37,6 @@ public class ScoreController {
     @RequestMapping(value = "/queryScoreRecordByUserId",method = RequestMethod.GET)
     @ResponseBody
     public Object queryScoreRecordByUserId(@RequestParam long userId){
-
-//        特殊省份处理
-//        获取用户信息
-//        判断用户所在省份
-//        是特殊省份
-//        if(){
-//
-//        }else {
-//
-//        }
-//        不是特殊省份
         return scoreAnalysisService.queryScoreRecordByUserId(userId);
     }
 
@@ -118,7 +107,7 @@ public class ScoreController {
     @ResponseBody
     public Object insertScoreRecord(@RequestParam long userId,
                                     @RequestParam long areaId,
-                                    @RequestParam Integer majorType,
+                                    Integer majorType,
                                     HttpServletRequest request){
         //获取成绩
         Map<String, Object> scores = scoreUtil.getScores(request);
@@ -218,11 +207,25 @@ public class ScoreController {
      */
     @RequestMapping(value = "/recommendSchool",method = RequestMethod.GET)
     @ResponseBody
-    public Object recommendSchool(@RequestParam float totalScore,@RequestParam long areaId,@RequestParam int majorType){
-        return scoreAnalysisService.recommendSchool(totalScore,areaId,majorType);
+    public Object recommendSchool(@RequestParam float totalScore,@RequestParam long areaId,Integer majorType,@RequestParam long userId){
+
+        if(areaId==330000){
+            //浙江算法
+            if(majorType==null)
+                throw new BizException("error","majorType不能为空!");
+            return scoreAnalysisService.recommendSchoolZJ(totalScore,areaId,userId);
+        }else if(areaId==320000){
+            //江苏算法
+            if(majorType==null)
+                throw new BizException("error","majorType不能为空!");
+            return scoreAnalysisService.recommendSchoolJS(totalScore,areaId,majorType,userId);
+        }else {
+            return scoreAnalysisService.recommendSchool(totalScore,areaId,majorType,userId);
+        }
+
     }
 
-    /**
+     /**
      * 根据大学ID和省份ID查询相应的录取批次
      * @return
      */
@@ -231,19 +234,50 @@ public class ScoreController {
 
     public Object queryBatchsBySchoolIdAndAreaId(@RequestParam long areaId,
                                                  @RequestParam long schoolId,
-                                                 @RequestParam Integer majorType){
+                                                 Integer majorType){
 
 
-        List<Map<String,Object>> list = null;
+        List<Map<String, Object>> list = null;
 
         Integer year = Integer.valueOf(scoreUtil.getYear());
 
-        list=scoreAnalysisService.queryUnivsersityBatch(areaId,schoolId,year.toString(),majorType);
+        list = scoreAnalysisService.queryUnivsersityBatch(areaId, schoolId, year.toString(), majorType);
         //尝试获取最新的年份对应的录取批次,获取不到获取次年的录取批次
-        if(list==null||list.size()==0){
-            list=scoreAnalysisService.queryUnivsersityBatch(areaId,schoolId,(year-1)+"",majorType);
+        if (list == null || list.size() == 0) {
+            list = scoreAnalysisService.queryUnivsersityBatch(areaId, schoolId, (year - 1) + "", majorType);
         }
+
+
         return list;
+    }
+
+
+    /**
+     * 根据大学ID和省份ID查询相应的专业,浙江专用
+     * @return
+     */
+    @RequestMapping(value = "/queryMajorBySchoolIdAndAreaId",method = RequestMethod.GET)
+    @ResponseBody
+
+    public Object queryMajorBySchoolIdAndAreaId(@RequestParam long areaId,
+                                                 @RequestParam long schoolId,
+                                                 @RequestParam long userId){
+
+        // 去查询院校对应的专业,从招生计划中获取
+        return scoreAnalysisService.queryMajorBySchoolIdAndAreaId(areaId,schoolId,userId);
+    }
+
+    /**
+     * 根据用户总分、学校ID、批次信息查询用户与目标院校距离
+     * @return
+     */
+    @RequestMapping(value = "/queryGapBySchoolIdAndMajor",method = RequestMethod.POST)
+    @ResponseBody
+    public Object queryGapBySchoolIdAndMajor(@RequestParam long recordId,
+                                             Long schoolId,
+                                             String majorCode,
+                                             @RequestParam long userId){
+        return scoreAnalysisService.queryGapBySchoolIdAndMajor(recordId,schoolId,majorCode,userId);
     }
 
     /**
@@ -264,16 +298,35 @@ public class ScoreController {
      * 查询院校近三年成绩
      * @param universityId
      * @param areaId
-     * @param majorType
+     * @param majorType 允许留空 兼容浙江
      * @return
      */
     @RequestMapping(value = "/queryUniversityScore",method = RequestMethod.GET)
     @ResponseBody
     public Object queryUniversityScore(@RequestParam long universityId,
                                        @RequestParam long areaId,
-                                       @RequestParam Integer majorType,
+                                       Integer majorType,
                                        Integer batch){
-        List<Map<String,Object>> resultMaps = scoreAnalysisService.queryUniversityScore(universityId,areaId,majorType,batch);
+        List<Map<String, Object>> resultMaps =null;
+        if(areaId==330000) {
+            resultMaps = scoreAnalysisService.queryUniversityScore(universityId, areaId, majorType, batch);
+        }else if(areaId==320000){
+            if(majorType==null){
+                throw new BizException("error","学科类型不能为空");
+            }
+            if(batch==null){
+                throw new BizException("error","批次不能为空");
+            }
+            resultMaps = scoreAnalysisService.queryUniversityScore(universityId, areaId, majorType, batch);
+        }else {
+            if(majorType==null){
+                throw new BizException("error","学科类型不能为空");
+            }
+            if(batch==null){
+                throw new BizException("error","批次不能为空");
+            }
+            resultMaps =scoreAnalysisService.queryUniversityScore(universityId, areaId, majorType, batch);
+        }
         return resultMaps;
     }
 
@@ -313,12 +366,22 @@ public class ScoreController {
         if(grade==null || grade==2 || grade == 3){
             //推荐高二课程
             return subjectMap2.get(subject);
-
         }else {
             //推荐高一课程
             return subjectMap1.get(subject);
         }
 
+    }
+
+    /**
+     * 获取用户历史成绩
+     * @return
+     */
+    @RequestMapping(value = "/queryHistoryScore",method = RequestMethod.GET)
+    @ResponseBody
+    public Object queryHistoryScore(@RequestParam long userId){
+        Integer rows=5;
+        return scoreAnalysisService.queryHistoryScore(userId,rows);
     }
 
 }

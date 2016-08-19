@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.thinkjoy.gk.dao.IScoreAnalysisDAO">
-    <!--
-    getFavoritesByMajor
-    getFavoritesBySubjectKey
-    getFavoritesBySubject
-    insertFavorites
-    deleteById
-    deleteBySubjects
-    -->
+<!--
+getFavoritesByMajor
+getFavoritesBySubjectKey
+getFavoritesBySubject
+insertFavorites
+deleteById
+deleteBySubjects
+-->
 
     <select id="queryScoreRecordByUserId" resultType="java.util.Map">
         SELECT
@@ -197,9 +197,22 @@
     <select id="queryUnivsersityLowestScore" resultType="java.util.Map">
         select lowestScore,year from zgk_university_enrolling
         WHERE universityId = #{schoolId}
-        and areaId=#{areaId}
+            and areaId=#{areaId}
+        <if test="batch!=null">
         and batch = #{batch}
+        </if>
+        <if test="majorType!=null">
         and majorType = #{majorType}
+        </if>
+        ORDER BY year DESC
+        limit 1
+    </select>
+
+    <select id="queryMajorLowestScore" resultType="java.util.Map">
+        select averageScore,year,majorName from zgk_university_major_enrolling
+        WHERE universityId = #{schoolId}
+        and areaId=#{areaId}
+        and majorCode = #{majorCode}
         ORDER BY year DESC
         limit 1
     </select>
@@ -221,12 +234,16 @@
         WHERE type = 'BATCHTYPE2'
         and dictId in
         (SELECT batch from zgk_university_enrolling
-        WHERE areaId = #{areaId} and universityId = #{schooleId} and year = #{year} and majorType = #{majorType} GROUP BY batch);
+        WHERE areaId = #{areaId} and universityId = #{schooleId} and year = #{year}
+        <if test="majorType!=null">
+        and majorType = #{majorType}
+        </if>
+        GROUP BY batch);
     </select>
 
     <select id="queryLastTarget" resultType="java.util.Map">
-        SELECT university_id as universityId,batch from zgk_favorite_university
-        WHERE user_id = #{userId} ORDER BY id DESC limit 1
+         SELECT university_id as universityId,batch from zgk_favorite_university
+         WHERE user_id = #{userId} ORDER BY id DESC limit 1
     </select>
 
 
@@ -237,14 +254,16 @@
         university_id,
         university_name,
         batch,
-        cdate
+        cdate,
+        major_code
         ) VALUES (
         #{userId},
         #{areaId},
         #{universityId},
         (select name from zgk_university WHERE id=#{universityId}),
         #{batch},
-        #{cdate}
+        #{cdate},
+        #{majorCode}
         )
         <selectKey resultType="java.lang.Long" keyProperty="id">
             SELECT LAST_INSERT_ID() AS ID
@@ -260,6 +279,9 @@
         and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
     </select>
 
+
+
+
     <!--推荐院校-->
     <select id="queryUniversityByScore" resultType="java.util.Map">
         SELECT * from (
@@ -268,11 +290,13 @@
         (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batch,
         realEnrollingNumber as stuNum,
         averageScore as averageScore,
-        highestScore as highestScore,
-        lowestScore as lowestScore,
-        universityId,
-        (#{difference} - (lowestScore - #{line}) ) as gapSchool
+    	highestScore as highestScore,
+	    lowestScore as lowestScore,
+	    universityId,
+        (#{difference} - (lowestScore - #{line}) ) as gapSchool,
+        (CASE WHEN ff.university_id is null THEN 0 ELSE 1 END) AS isFavorite
         from zgk_university_enrolling
+        LEFT JOIN (SELECT university_id from zgk_favorite_university WHERE user_id = #{userId}) ff ON ff.university_id = universityId
         WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
         and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
         and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
@@ -290,20 +314,22 @@
         highestScore as highestScore,
         lowestScore as lowestScore,
         universityId,
-        (#{totalScore}-lowestScore) as gapSchool
+        (#{totalScore}-lowestScore) as gapSchool,
+        (CASE WHEN ff.university_id is null THEN 0 ELSE 1 END) AS isFavorite
         from zgk_university_enrolling,(SELECT
-        universityId as uid
-        FROM
-        zgk_university_enrolling_plan
-        WHERE
-        majorType = #{majorType}
-        AND YEAR = #{year}+1
-        GROUP BY universityId) plan
-        WHERE plan.uid = universityId and  areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
-        and batch like '8%'
-        ORDER BY lowestScore desc
-        limit  10;
+		universityId as uid
 
+	    FROM
+	    	zgk_university_enrolling_plan
+	    WHERE
+	    	majorType = #{majorType}
+	    AND YEAR = #{year}+1
+	    GROUP BY universityId) plan,
+	    (SELECT university_id from zgk_favorite_university WHERE user_id = #{userId}) ff
+            WHERE plan.uid = universityId and  areaId = #{areaId} and majorType = #{majorType}  and year = #{year} and ff.university_id = universityId
+            and batch like '8%'
+            ORDER BY lowestScore desc
+        limit  10;
     </select>
 
     <!--查询高中-->
@@ -320,16 +346,16 @@
     </select>
     <!--更新用户信息-->
     <update id="setUserInfo">
-        update zgk_user_info
-        set
-        provinceId= #{provinceId},
-        cityId= #{cityId},
-        countyId=#{countyId},
-        schoolCode=#{schoolCode},
-        schoolName=#{schoolName},
-        gradeInfo=#{gradeInfo},
-        classInfo=#{classInfo}
-        where id=#{userId};
+       update zgk_user_info
+       set
+       provinceId= #{provinceId},
+       cityId= #{cityId},
+       countyId=#{countyId},
+       schoolCode=#{schoolCode},
+       schoolName=#{schoolName},
+       gradeInfo=#{gradeInfo},
+       classInfo=#{classInfo}
+       where id=#{userId};
     </update>
     <select id="queryUserInfo" resultType="java.util.Map">
         SELECT
@@ -350,14 +376,24 @@
 
     <select id="queryUniversityScore" resultType="java.util.Map">
         SELECT
-        lowestScore,realEnrollingNumber,averageScore,year
-        FROM zgk_university_enrolling
-        WHERE universityId = #{universityId}
-        and areaId=#{areaId}
-        <if test="batch!=null">
-            and batch=#{batch}
+        enrolling.lowestScore,enrolling.realEnrollingNumber,enrolling.averageScore,enrolling.year
+        <if test="areaId==320000">
+        ,plan.xcRank
         </if>
-        and majorType=#{majorType} ORDER BY YEAR DESC limit 3
+        FROM zgk_university_enrolling enrolling
+        <if test="areaId==320000">
+            LEFT JOIN (SELECT xcRank,year,universityId,areaId from zgk_university_enrolling_plan)
+            plan on plan.areaId =enrolling.areaId and plan.year=enrolling.year
+            and plan.universityId=enrolling.universityId
+        </if>
+        WHERE enrolling.universityId = #{universityId}
+        and enrolling.areaId=#{areaId}
+        <if test="batch!=null">
+            and enrolling.batch=#{batch}
+        </if>
+        <if test="majorType!=null">
+            and enrolling.majorType=#{majorType} GROUP BY YEAR DESC limit 3
+        </if>
     </select>
 
     <!--判断用户年级-->
@@ -406,6 +442,165 @@
         zgk_score_label
         where type = #{type}
         and config IN (<foreach collection="configs" separator="," item="item">#{item}</foreach>)
+    </select>
+
+    <!--统计浙江院校数量-->
+    <select id="countZJUniversity" resultType="java.lang.Integer">
+        SELECT count(*) from (SELECT majorCode,universityId from zgk_university_major_enrolling WHERE areaId = #{areaId} and year = #{year}
+        and averageScore - #{totalScore} &lt;= #{bc}
+        and #{totalScore} - averageScore   &lt;= #{bc}) enrolling
+        INNER JOIN (SELECT
+        majorCode,universityId
+        FROM zgk_zj_3in7
+        <where>
+            <if test="subjectItemList!=null">
+                (
+                <foreach item="subjectItems" collection="subjectItemList"  separator=" or " index="">
+                    <foreach item="mapList" collection="subjectItems.subjectItem" open="(" close=")" separator="and" index="">
+                        selectSubject LIKE CONCAT('%','${mapList.selectSubject}','%')
+                    </foreach>
+                </foreach>
+                OR selectSubject = ''
+                )
+            </if>
+        </where>)  3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
+
+    </select>
+    <!--推荐院校浙江-->
+    <select id="queryZJUniversityByScore" resultType="java.util.Map">
+        SELECT * from (
+        SELECT
+        (SELECT name from zgk_university WHERE id = enrolling.universityId LIMIT 1) as schoolName,
+        (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batch,
+        (SELECT major_name from zgk_major_base WHERE major_code= enrolling.majorCode) as majorName,
+        realEnrollingNumber as stuNum,
+        averageScore as averageScore,
+        enrolling.universityId,
+        (#{totalScore} - averageScore) as gapSchool,
+        (CASE WHEN ff.university_id is null THEN 0 ELSE 1 END) AS isFavorite
+        from (select majorCode,universityId,averageScore,realEnrollingNumber,batch from zgk_university_major_enrolling   where areaId = #{areaId} and year = #{year}
+        and averageScore - #{totalScore} &lt;= #{bc}
+        and #{totalScore} -averageScore  &lt;= #{bc}) enrolling
+        INNER JOIN (SELECT
+        majorCode,universityId
+        FROM zgk_zj_3in7
+        <where>
+            <if test="subjectItemList!=null">
+                (
+                <foreach item="subjectItems" collection="subjectItemList"  separator=" or " index="">
+                    <foreach item="mapList" collection="subjectItems.subjectItem" open="(" close=")" separator="and" index="">
+                        selectSubject LIKE CONCAT('%','${mapList.selectSubject}','%')
+                    </foreach>
+                </foreach>
+                OR selectSubject = ''
+                )
+            </if>
+        </where>)  3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
+        LEFT JOIN (SELECT university_id from zgk_favorite_university WHERE user_id = #{userId}) ff ON ff.university_id = enrolling.universityId
+        ORDER BY ABS(gapSchool) ASC
+        limit 20) tb ORDER BY gapSchool DESC;
+    </select>
+
+    <!--获取当前用户标签-->
+    <select id="queryHistoryScore" resultType="java.util.Map">
+        SELECT id,total_score as totalScore,cdate from zgk_score_base WHERE user_id = #{userId} ORDER BY cdate DESC
+    </select>
+
+    <!--推荐院校-->
+    <select id="queryJSUniversityByScore" resultType="java.util.Map">
+        SELECT * from (
+        SELECT
+        (SELECT name from zgk_university WHERE id = universityId LIMIT 1) as schoolName,
+        (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batch,
+        realEnrollingNumber as stuNum,
+        averageScore as averageScore,
+        highestScore as highestScore,
+        lowestScore as lowestScore,
+        universityId,
+        (#{difference} - (lowestScore - #{line}) ) as gapSchool,
+        xcRank,
+        (CASE WHEN ff.university_id is null THEN 0 ELSE 1 END) AS isFavorite
+        from
+        (select realEnrollingNumber,highestScore,averageScore,lowestScore,universityId,batch from zgk_university_enrolling
+        WHERE areaId = #{areaId}
+        and majorType = #{majorType}
+        and year = #{year}) enrolling
+        INNER JOIN (
+        SELECT
+        universityId AS uid,
+        xcRank
+        FROM
+        zgk_university_enrolling_plan
+        WHERE
+        YEAR = #{year}+1
+        AND majorType = #{majorType}
+        AND batch = #{batch}
+        AND areaId = #{areaId}
+        AND xcRank in (<foreach collection="xcRanks" item="item" separator=",">#{item}</foreach>)
+        ) plan ON plan.uid = universityId
+        LEFT JOIN (SELECT university_id from zgk_favorite_university WHERE user_id = #{userId}) ff ON ff.university_id = universityId
+        WHERE
+        plan.uid = enrolling.universityId
+        and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
+        and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
+        ORDER BY ABS(gapSchool) ASC
+        limit 20) tb ORDER BY gapSchool DESC;
+    </select>
+    <!--统计江苏院校数量-->
+    <select id="countJSUniversity" resultType="java.lang.Integer">
+        SELECT count(*) from (SELECT * FROM  zgk_university_enrolling WHERE areaId = #{areaId} and year = #{year} and majorType = #{majorType}) enrolling
+        INNER JOIN (
+        SELECT
+        universityId AS uid,
+        xcRank
+        FROM
+        zgk_university_enrolling_plan
+        WHERE
+        YEAR = #{year}+1
+        AND majorType = #{majorType}
+        AND batch = #{batch}
+        AND areaId = #{areaId}
+        AND xcRank in (<foreach collection="xcRanks" item="item" separator=",">#{item}</foreach>)
+        ) plan ON plan.uid = universityId
+        WHERE
+        (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
+        and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
+    </select>
+
+
+    <!--获取专业过滤没有code对应的,必须在计划表中存在,必须根据用户选择的科目来确定,并且要在2015年招生信息中存在-->
+    <select id="queryMajorBySchoolIdAndAreaId" resultType="java.util.Map">
+        SELECT enrolling.majorCode,enrolling.majorName FROM
+        (select majorCode,universityId,majorName from zgk_university_major_enrolling where universityId=#{universityId}
+        and areaId = #{areaId} and year = #{year} and majorCode is not null)
+        enrolling
+        INNER JOIN (SELECT
+        majorCode,universityId
+        FROM zgk_zj_3in7
+        <where>
+            <if test="subjectItemList!=null">
+                (
+                <foreach item="subjectItems" collection="subjectItemList"  separator=" or " index="">
+                    <foreach item="mapList" collection="subjectItems.subjectItem" open="(" close=")" separator="and" index="">
+                        selectSubject LIKE CONCAT('%','${mapList.selectSubject}','%')
+                    </foreach>
+                </foreach>
+                OR selectSubject = ''
+                )
+            </if>
+        </where>)  3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
+    </select>
+
+    <!--获取当前学校的最新选测等级-->
+    <select id="queryUniversitySubLevel" resultType="java.lang.String">
+        SELECT
+        xcRank
+        FROM
+        zgk_university_enrolling_plan
+        WHERE
+        YEAR = #{year}
+        AND areaId=#{areaId}
+        AND universityId = #{universityId} limit 1
     </select>
 </mapper>
 
