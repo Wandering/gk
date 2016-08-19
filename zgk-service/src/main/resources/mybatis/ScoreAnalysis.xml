@@ -197,15 +197,19 @@ deleteBySubjects
     <select id="queryUnivsersityLowestScore" resultType="java.util.Map">
         select lowestScore,year from zgk_university_enrolling
         WHERE universityId = #{schoolId}
-        and areaId=#{areaId}
+            and areaId=#{areaId}
+        <if test="batch!=null">
         and batch = #{batch}
+        </if>
+        <if test="majorType!=null">
         and majorType = #{majorType}
+        </if>
         ORDER BY year DESC
         limit 1
     </select>
 
     <select id="queryMajorLowestScore" resultType="java.util.Map">
-        select averageScore,year from zgk_university_major_enrolling
+        select averageScore,year,majorName from zgk_university_major_enrolling
         WHERE universityId = #{schoolId}
         and areaId=#{areaId}
         and majorCode = #{majorCode}

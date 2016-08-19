@@ -159,6 +159,70 @@ public class ScoreUtil {
     }
 
 
+    /**
+     * 生成江苏分数明细
+     * @param map
+     * @param majorType
+     * @return
+     */
+    public Map<String,Object> getScoresJS2(Map<String,Object> map, int majorType){
+        //删除额外字段,确保剩余都是分数字段
+        Map<String,Object> map1 = new HashedMap();
+        map1.putAll(map);
+
+        List<String> removes = new ArrayList<>();
+        removes.add("totalScore");
+        Iterator<String> iterator = map1.keySet().iterator();
+        while (iterator.hasNext()){
+            String key = iterator.next();
+            if(key.indexOf("Score")==-1){
+                removes.add(key);
+            }
+        }
+        for(String remove:removes) {
+            map1.remove(remove);
+        }
+
+        //============================================
+
+
+
+        Map<String, Object> scores =  new LinkedHashMap();
+        scores.put("语文", floatToStr(map1.get("ywScore")) + "-" + floatToStr(map1.get("ywScoreTotal")));
+        map1.remove("ywScore");
+        map1.remove("ywScoreTotal");
+        scores.put("数学", floatToStr(map1.get("sxScore")) + "-" + floatToStr(map1.get("sxScoreTotal")));
+        map1.remove("sxScore");
+        map1.remove("sxScoreTotal");
+        scores.put("外语", floatToStr(map1.get("wyScore")) + "-" + floatToStr(map1.get("wyScoreTotal")));
+        map1.remove("wyScore");
+        map1.remove("wyScoreTotal");
+        //分析当前分数的
+//        map.get
+        if (majorType == 2) {
+            if(!map1.containsKey("wlScore")){
+                throw new BizException("error","理科必须有物理");
+            }
+            scores.put("物理", floatToStr(map1.get("wlScore")) + "-" + 120);
+            map1.remove("wlScore");
+            map1.remove("wlScoreTotal");
+        } else {
+            if(!map1.containsKey("lsScore")){
+                throw new BizException("error","文科必须有历史");
+            }
+            scores.put("历史", floatToStr(map1.get("lsScore")) + "-" + 120);
+            map1.remove("lsScore");
+            map1.remove("lsScoreTotal");
+        }
+        try {
+            //一定会有一个值  如果没有说明入参有误 异常
+            String key = map1.keySet().iterator().next();
+            scores.put(SubjectEnum.valueOf(key.substring(0,2)).getSub(), Float.valueOf(map1.get(key).toString())+"-"+120);
+        }catch (Exception e){
+            throw new BizException("error","上次添加值有误!");
+        }
+        return scores;
+    }
 
 
 

@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.dao;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.jdbc.Null;
 
 import java.util.List;
 import java.util.Map;
@@ -152,8 +153,8 @@ public interface IScoreAnalysisDAO {
      */
     Map<String,Object> queryUnivsersityLowestScore(@Param("schoolId")long schoolId,
                                       @Param("areaId")long areaId,
-                                      @Param("batch")int batch,
-                                      @Param("majorType")int majorType,
+                                      @Param("batch")Integer batch,
+                                      @Param("majorType")Integer majorType,
                                       @Param("year")String year);
 
 

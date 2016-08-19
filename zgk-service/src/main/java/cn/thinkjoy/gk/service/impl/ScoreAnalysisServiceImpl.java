@@ -119,7 +119,8 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         Integer majorType = (Integer) map.get("majorType");
         resultMap.put("majorType", majorType);
 
-        Map<String,Object> scores = getScores(areaId,majorType,map,resultMap);
+        Map<String,Object> scores = getScores2(areaId,majorType,map,resultMap);
+
 
         // 获取用户上次成绩
         //第一次判定
@@ -210,7 +211,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                 if(areaId!=ZJ_AREA_CODE) {
                     resultMap.put("upLine", scoreUtil.getTopBatchLine(areaId, majorType, totalScore));
                 }
-                Map<String,Object> scores = getScores(areaId,majorType,map,resultMap);
+                Map<String,Object> scores = getScores2(areaId,majorType,map,resultMap);
                 String areaTableName=null;
                 if(areaId!=ZJ_AREA_CODE) {
                     areaTableName = scoreUtil.getAreaTableName(areaId, majorType);
@@ -747,18 +748,20 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
 
         Map<String, Object> majorLineMap = scoreAnalysisDAO.queryMajorLowestScore(schoolId, areaId, majorCode, year);
         Float majorLine = null;
+        String majorName = null;
         if (majorLineMap != null&&majorLineMap.size()>0) {
             majorLine = Float.valueOf(majorLineMap.get("averageScore").toString());
+            majorName = majorLineMap.get("majorName").toString();
         } else {
             throw new BizException("error", "当前学校在"+year+"年无数据");
         }
 
 
-        Map<String, Object> schoolLineMap = scoreAnalysisDAO.queryMajorLowestScore(schoolId, areaId, majorCode, year);
+        Map<String, Object> schoolLineMap = scoreAnalysisDAO.queryUnivsersityLowestScore(schoolId, areaId,null,null, year);
         Float schoolLine = null;
         String schoolLineYear = null;
         if (schoolLineMap != null&&schoolLineMap.size()>0) {
-            schoolLine = Float.valueOf(schoolLineMap.get("averageScore").toString());
+            schoolLine = Float.valueOf(schoolLineMap.get("lowestScore").toString());
             schoolLineYear = schoolLineMap.get("year").toString();
         } else {
             throw new BizException("error", "当前学校在"+year+"年无数据");
@@ -768,6 +771,8 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         resultMap.put("schoolId", schoolId);
         resultMap.put("schoolName", name);
         resultMap.put("totalScore", totalScore);
+        resultMap.put("majorLine", majorLine);
+        resultMap.put("majorName", majorName);
         resultMap.put("addScore", totalScore - schoolLine);
         resultMap.put("schoolLine", schoolLine);
         resultMap.put("year", schoolLineYear);
@@ -799,6 +804,20 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         if(areaId==JS_AREA_CODE){
             //  江苏
             scores = scoreUtil.getScoresJS(map, majorType);
+            resultMap.put("scores", scores);
+        }else {
+            //  其他 包括浙江
+            scores = scoreUtil.getScores(map, majorType);
+            resultMap.put("scores", scores);
+        }
+        return scores;
+    }
+
+    private Map<String,Object> getScores2(long areaId,Integer majorType,Map<String,Object> map,Map<String,Object> resultMap){
+        Map<String, Object> scores =null;
+        if(areaId==JS_AREA_CODE){
+            //  江苏
+            scores = scoreUtil.getScoresJS2(map, majorType);
             resultMap.put("scores", scores);
         }else {
             //  其他 包括浙江
