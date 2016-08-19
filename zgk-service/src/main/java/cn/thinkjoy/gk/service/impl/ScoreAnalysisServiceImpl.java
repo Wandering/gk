@@ -214,7 +214,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                 Map<String,Object> scores = getScores2(areaId,majorType,map,resultMap);
                 if(areaId==JS_AREA_CODE){
                     String[] xcRanks = getScoreLevel(scores,majorType);
-                    if(xcRanks[1].compareTo(xcRanks[3])>0){
+                    if(xcRanks[1].compareTo(xcRanks[3])<0){
                         resultMap.put("xcRank",xcRanks[1]+xcRanks[3]);
                     }else {
                         resultMap.put("xcRank",xcRanks[3]+xcRanks[1]);
