@@ -547,11 +547,11 @@ public class ScoreUtil {
             String key=iterator.next();
             String value = (String) scores.get(key);
             String[] strings =null;
-            if(areaId==JS_AREA_CODE&&("政治".equals(key)||"历史".equals(key)||"地理".equals(key)||"物理".equals(key)||"化学".equals(key)||"生物".equals(key))) {
-                strings = new String[]{tagToScore(value).toString(),"120"};
-            }else {
+//            if(areaId==JS_AREA_CODE&&("政治".equals(key)||"历史".equals(key)||"地理".equals(key)||"物理".equals(key)||"化学".equals(key)||"生物".equals(key))) {
+//                strings = new String[]{tagToScore(value).toString(),"120"};
+//            }else {
                 strings = value.split("-");
-            }
+//            }
             if(!"".equals(strings[0]) && !"".equals(strings[1])){
                 Float subjectScore = Float.valueOf(strings[0]);
                 Float subjectTotalScore = Float.valueOf(strings[1]);

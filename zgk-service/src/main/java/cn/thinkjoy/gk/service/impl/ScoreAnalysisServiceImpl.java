@@ -214,7 +214,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                 Map<String,Object> scores = getScores2(areaId,majorType,map,resultMap);
                 if(areaId==JS_AREA_CODE){
                     String[] xcRanks = getScoreLevel(scores,majorType);
-                    if(xcRanks[1].compareTo(xcRanks[3])<0){
+                    if(xcRanks[1].compareTo(xcRanks[3])>0){
                         resultMap.put("xcRank",xcRanks[1]+xcRanks[3]);
                     }else {
                         resultMap.put("xcRank",xcRanks[3]+xcRanks[1]);
@@ -964,9 +964,9 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     private boolean compareToLevel(String v1,String v2,String v3){
         //如果选测等级是一门。。另一门的形式  直接比较
         if(v1.indexOf("另一门")>0){
-            return v1.compareTo(v2)<0;
+            return v1.compareTo(v2)>0;
         }else {
-            return v1.compareTo(v3)<0;
+            return v1.compareTo(v3)>0;
         }
     }
 
