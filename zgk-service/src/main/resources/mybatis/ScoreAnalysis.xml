@@ -299,7 +299,7 @@ deleteBySubjects
         (#{difference} - (lowestScore - #{line}) ) as gapSchool,
         (SELECT
         CASE WHEN university_id is null THEN 0 ELSE 1 END
-        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = universityId) AS isFavorite
+        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = universityId  limit 1)) AS isFavorite
         from zgk_university_enrolling
         LEFT JOIN (SELECT id,areaid as areaId,rank,name from zgk_university ) university ON university.id = enrolling.universityId
         WHERE areaId = #{areaId} and majorType = #{majorType}  and year = #{year}
@@ -323,7 +323,7 @@ deleteBySubjects
         (#{totalScore}-lowestScore) as gapSchool,
         (SELECT
         CASE WHEN university_id is null THEN 0 ELSE 1 END
-        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = universityId) AS isFavorite
+        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = universityId limit 1) AS isFavorite
         from zgk_university_enrolling,(SELECT
 		universityId as uid
         <if test="areaId==320000">
@@ -492,7 +492,7 @@ deleteBySubjects
         (#{totalScore} - averageScore) as gapSchool,
         (SELECT
         CASE WHEN university_id is null THEN 0 ELSE 1 END
-        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = enrolling.universityId) AS isFavorite
+        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = enrolling.universityId  limit 1)) AS isFavorite
         from (select majorCode,universityId,averageScore,realEnrollingNumber,batch from zgk_university_major_enrolling   where areaId = #{areaId} and year = #{year}
         and averageScore - #{totalScore} &lt;= #{bc}
         and #{totalScore} -averageScore  &lt;= #{bc}) enrolling
@@ -540,7 +540,7 @@ deleteBySubjects
         xcRank,
         (SELECT
         CASE WHEN university_id is null THEN 0 ELSE 1 END
-        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = universityId) AS isFavorite
+        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = universityId  limit 1)) AS isFavorite
         from
         (select realEnrollingNumber,highestScore,averageScore,lowestScore,universityId,batch from zgk_university_enrolling
         WHERE areaId = #{areaId}
