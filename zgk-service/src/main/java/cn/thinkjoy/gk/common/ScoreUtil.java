@@ -217,7 +217,7 @@ public class ScoreUtil {
         try {
             //一定会有一个值  如果没有说明入参有误 异常
             String key = map1.keySet().iterator().next();
-            scores.put(SubjectEnum.valueOf(key.substring(0,2)).getSub(), Float.valueOf(map1.get(key).toString())+"-"+120);
+            scores.put(SubjectEnum.valueOf(key.substring(0,2)).getSub(), floatToStr(Float.valueOf(map1.get(key).toString()))+"-"+120);
         }catch (Exception e){
             throw new BizException("error","上次添加值有误!");
         }
