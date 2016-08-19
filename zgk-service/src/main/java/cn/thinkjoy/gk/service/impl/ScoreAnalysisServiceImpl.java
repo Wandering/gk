@@ -212,6 +212,15 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                     resultMap.put("upLine", scoreUtil.getTopBatchLine(areaId, majorType, totalScore));
                 }
                 Map<String,Object> scores = getScores2(areaId,majorType,map,resultMap);
+                if(areaId==JS_AREA_CODE){
+                    String[] xcRanks = getScoreLevel(scores,majorType);
+                    if(xcRanks[1].compareTo(xcRanks[3])<0){
+                        resultMap.put("xcRank",xcRanks[1]+xcRanks[3]);
+                    }else {
+                        resultMap.put("xcRank",xcRanks[3]+xcRanks[1]);
+                    }
+
+                }
                 String areaTableName=null;
                 if(areaId!=ZJ_AREA_CODE) {
                     areaTableName = scoreUtil.getAreaTableName(areaId, majorType);
