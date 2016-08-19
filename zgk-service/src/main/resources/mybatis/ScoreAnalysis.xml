@@ -242,7 +242,7 @@ deleteBySubjects
     </select>
 
     <select id="queryLastTarget" resultType="java.util.Map">
-         SELECT university_id as universityId,batch,majorCode from zgk_favorite_university
+         SELECT university_id as universityId,batch,major_code as majorCode from zgk_favorite_university
          WHERE user_id = #{userId} ORDER BY id DESC limit 1
     </select>
 
