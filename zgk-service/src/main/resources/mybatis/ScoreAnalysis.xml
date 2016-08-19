@@ -306,7 +306,7 @@ deleteBySubjects
         and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
         and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
         ORDER BY ABS(gapSchool) ASC
-        limit 20) tb ORDER BY universityAreaId !=${areaId},isFavorite!=1,rank is null,rank  ASC
+        limit 20) tb ORDER BY universityAreaId !=${areaId},isFavorite is null,rank is null,rank  ASC
     </select>
 
     <!--推荐高职前10院校-->
@@ -513,7 +513,7 @@ deleteBySubjects
         </where>)  3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
         LEFT JOIN (SELECT id,areaid as areaId,rank,name from zgk_university) university ON university.id = enrolling.universityId
         ORDER BY ABS(gapSchool) ASC
-        limit 20) tb ORDER BY universityAreaId !=${areaId},isFavorite!=1,rank is null,rank  ASC
+        limit 20) tb ORDER BY universityAreaId !=${areaId},isFavorite is null,rank is null,rank  ASC
 
     </select>
 
@@ -565,7 +565,7 @@ deleteBySubjects
         and (lowestScore - #{line}) -  #{difference} &lt;= #{bc}
         and #{difference} -(lowestScore - #{line})  &lt;= #{bc}
         ORDER BY ABS(gapSchool) ASC
-        limit 20) ttb ORDER BY universityAreaId !=${areaId},isFavorite!=1,rank is null,rank  ASC
+        limit 20) ttb ORDER BY universityAreaId !=${areaId},isFavorite is null,rank is null,rank  ASC
     </select>
     <!--统计江苏院校数量-->
     <select id="countJSUniversity" resultType="java.lang.Integer">
