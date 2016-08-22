@@ -87,3 +87,4 @@
 /.idea/
 *.iml
 /classes/
+*.class
