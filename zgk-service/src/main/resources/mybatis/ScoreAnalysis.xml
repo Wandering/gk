@@ -13,6 +13,7 @@ deleteBySubjects
 
     <select id="queryScoreRecordByUserId" resultType="java.util.Map">
         SELECT
+        id,
         (SELECT provinceId FROM  zgk_user_info WHERE id=#{userId}) as areaId,
         (SELECT name from zgk_province WHERE id=areaId) as areaName,
         (SELECT schoolName from zgk_user_info where id=#{userId}) as schoolName,

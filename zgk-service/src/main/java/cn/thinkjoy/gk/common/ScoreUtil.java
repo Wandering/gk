@@ -263,9 +263,12 @@ public class ScoreUtil {
      * @param majorType
      * @return
      */
-    public Integer[] getBatchLine(long areaId,int majorType){
+    public Map<String,Object>  getBatchLine(long areaId,int majorType){
         Integer year = Integer.valueOf(getYear());
 
+        /**
+         * 获取最新批次线 当年没有获取次年
+         */
         String scoreLine =null;
         do{
             scoreLine = scoreAnalysisService.queryScoreLine(areaId,majorType,year.toString());
@@ -274,11 +277,17 @@ public class ScoreUtil {
 
 
         String [] scoreStrs = scoreLine.split("-");
-        Integer [] scoreLines = new Integer[4];
+        Integer[][] scoreLines = new Integer[4][4];
         for(int i=0;i<4;i++){
-            scoreLines[i]=Integer.valueOf(scoreStrs[i].split("\\|")[0]);
+            String[] scoreLineStr2=scoreStrs[i].split("\\|");
+            for(int j=0;j<scoreLineStr2.length;j++) {
+                scoreLines[i][j]=Integer.valueOf(scoreLineStr2[j]);
+            }
         }
-        return scoreLines;
+        Map<String,Object> rtnMap = new HashedMap();
+        rtnMap.put("batchLine",scoreLines);
+        rtnMap.put("year",year);
+        return rtnMap;
     }
 
 
@@ -288,44 +297,56 @@ public class ScoreUtil {
      * @param majorType
      * @return
      */
-    public String getTopBatchLine(long areaId,int majorType,Float totalScore){
+    public Map<String,Object> getTopBatchLine(long areaId,int majorType,Float totalScore){
+
         if(totalScore==null){
             throw new BizException("error","成绩不能为空!");
         }
-        Integer[] scoreLines =null;
-        scoreLines = getBatchLine(areaId,majorType);
-
-
+        Map<String,Object> scoreLinesMap = getBatchLine(areaId,majorType);
+        Integer[][] scoreLines =null;
+        scoreLines =(Integer[][]) scoreLinesMap.get("batchLine");
+        // 当前有4层
         Float temp = null;
+        String tempName = null;
 
         //规划计算当前分数最接近的上层分数
         for(int i=3;i>=0;i--){
-            temp=scoreLines[i].floatValue();
+
+            temp=scoreLines[i][0].floatValue();
             //出现为0跳过当前轮
-            if(scoreLines[i]==0){
+            if(scoreLines[i][0]==0){
                 continue;
             }
-            if(totalScore-scoreLines[i]<0){
+            if(totalScore-scoreLines[i][0]<0){
                 break;
             }
-            if(i==0&&totalScore-scoreLines[i]>0){
+            if(i==0&&totalScore-scoreLines[i][0]>0){
+                temp=scoreLines[0][0].floatValue();
+                //todo  这里目前写死为一二三高专批 当可以判断是专1还是专A时候更改
+                switch (i){
+                    case 3:
+                        tempName="一批本科";
+                        break;
+                    case 2:
+                        tempName="二批本科";
+                        break;
+                    case 1:
+                        tempName="三批本科";
+                        break;
+                    case 0:
+                        tempName="高职专科";
+                        break;
 
-                temp=scoreLines[0].floatValue();
-
-//                Integer areaTotal=null;
-
-//                areaTotal=scoreAnalysisService.queryTotalScoreByAreaId(areaId);
-//                if(areaTotal!=null){
-//                    // 该省总分在数据库中存在
-//                    temp=areaTotal.floatValue();
-//                    break;
-//                }else {
-//                    throw new BizException("error","该省总分不存在");
-//                }
+                }
             }
-
         }
-        return floatToStr(temp);
+//        temp=scoreLines[0][0].floatValue();
+
+        Map<String,Object> rtnMap = new HashedMap();
+        rtnMap.put("score",floatToStr(temp));
+        rtnMap.put("name",tempName);
+        rtnMap.put("year",scoreLinesMap.get("year"));
+        return rtnMap;
     }
 
 
@@ -436,18 +457,22 @@ public class ScoreUtil {
      */
     public Integer getScoreRank(long areaId,int majorType,Float score){
 
-        Integer[] scoreLines = getBatchLine(areaId,majorType);
+        Map<String,Object> scoreLinesMap = getBatchLine(areaId,majorType);
+        Integer[][] scoreLines=(Integer[][]) scoreLinesMap.get("batchLine");
 
-        if(score - scoreLines[0]>50F){
+        /**
+         * 按照每个成绩等级第一个分数来计算
+         */
+        if(score - scoreLines[0][0]>50F){
             //一本+50
             return ScoreRankEnum.名垂校史.getSub();
-        }else if(score-scoreLines[0]>0F){
+        }else if(score-scoreLines[0][0]>0F){
             //一本+0-49
             return ScoreRankEnum.校刊红人.getSub();
-        }else if(scoreLines[0]-score>0F && score - scoreLines[1]>0F){
+        }else if(scoreLines[0][0]-score>0F && score - scoreLines[1][0]>0F){
             //二本以上 一本以下
             return ScoreRankEnum.三好学生.getSub();
-        }else if(scoreLines[1]-score>0F && score - scoreLines[2]>0F){
+        }else if(scoreLines[1][0]-score>0F && score - scoreLines[2][0]>0F){
             //三本以上 二本以下
             return ScoreRankEnum.教师常客.getSub();
         }else{

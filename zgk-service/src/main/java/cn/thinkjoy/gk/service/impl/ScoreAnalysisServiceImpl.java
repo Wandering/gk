@@ -44,6 +44,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         Integer majorType = (Integer) map.get("majorType");
         resultMap.put("majorType", majorType);
         resultMap.put("schoolName", map.get("schoolName"));
+        resultMap.put("recordId", map.get("id"));
 
         getScores(areaId,majorType,map,resultMap);
 
@@ -211,7 +212,10 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                 resultMap.put("majorType", majorType);
                 resultMap.put("cdate", map.get("cdate"));
                 if(areaId!=ZJ_AREA_CODE) {
-                    resultMap.put("upLine", scoreUtil.getTopBatchLine(areaId, majorType, totalScore));
+                    Map<String,Object> scoreLineMap = scoreUtil.getTopBatchLine(areaId, majorType, totalScore);
+                    resultMap.put("upLine",scoreLineMap.get("score"));
+                    resultMap.put("upLineName", scoreLineMap.get("name"));
+                    resultMap.put("upLineYear", scoreLineMap.get("year"));
                 }
                 Map<String,Object> scores = getScores2(areaId,majorType,map,resultMap);
                 if(areaId==JS_AREA_CODE){
