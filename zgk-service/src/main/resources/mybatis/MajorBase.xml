@@ -97,13 +97,5 @@
         and mm.educationLevel=#{condition.educationLevel}
     </select>
 
-    <select id="getMajorOpenUniversityCount" parameterType="java.util.Map" resultType="java.lang.Integer">
-        select count(*)
-        from zgk_university uu
-        left join zgk_university_major_base mm on uu.id=mm.universityId
-        where mm.majorId=#{condition.majorId}
-        and mm.educationLevel=#{condition.educationLevel}
-    </select>
-
 </mapper>
 
