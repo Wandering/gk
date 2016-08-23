@@ -195,6 +195,9 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         return resultMap;
     }
 
+
+
+
     @Override
     public List<Map<String, Object>> queryAllRecordByUserId(long userId) {
         List<Map<String, Object>> list = new ArrayList<>();
@@ -720,11 +723,8 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
             }
         }
 
-        if (totalScore > schoolLine) {
+        if (totalScore >= schoolLine) {
             Integer stuNum = scoreAnalysisDAO.queryStuNumToLine(schoolLine, totalScore, areaTableName);
-            if(stuNum==null){
-                 stuNum=0;
-            }
             resultMap.put("schoolId", schoolId);
             resultMap.put("batchName", batchName);
             resultMap.put("schoolName", name);
@@ -743,9 +743,6 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
             resultMap.put("batchName", batchName);
             resultMap.put("totalScore", totalScore);
             resultMap.put("stuNum", stuNum);
-            if(stuNum==null){
-                   stuNum=0;
-            }
             resultMap.put("addScore", totalScore - schoolLine);
             resultMap.put("batchLine", scoreUtil.getBatchScore(batch, areaId, majorType));
             resultMap.put("schoolLine", schoolLine);
