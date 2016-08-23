@@ -719,9 +719,12 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                 resultMap.put("schoollevel", universityLevel);
             }
         }
+
         if (totalScore > schoolLine) {
             Integer stuNum = scoreAnalysisDAO.queryStuNumToLine(schoolLine, totalScore, areaTableName);
-
+            if(stuNum==null){
+                 stuNum=0;
+            }
             resultMap.put("schoolId", schoolId);
             resultMap.put("batchName", batchName);
             resultMap.put("schoolName", name);
@@ -740,6 +743,9 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
             resultMap.put("batchName", batchName);
             resultMap.put("totalScore", totalScore);
             resultMap.put("stuNum", stuNum);
+            if(stuNum==null){
+                   stuNum=0;
+            }
             resultMap.put("addScore", totalScore - schoolLine);
             resultMap.put("batchLine", scoreUtil.getBatchScore(batch, areaId, majorType));
             resultMap.put("schoolLine", schoolLine);
