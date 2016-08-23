@@ -219,7 +219,7 @@ deleteBySubjects
     </select>
 
     <select id="queryStuNumToLine" resultType="java.lang.Integer">
-        SELECT sum(num) from ${areaTableName} WHERE score > #{totalScore} and score  &lt; #{scoreLine};
+        SELECT sum(num) from ${areaTableName} WHERE score >= #{totalScore} and score  &lt;= #{scoreLine};
     </select>
 
     <select id="queryScoreLine" resultType="java.lang.String">
