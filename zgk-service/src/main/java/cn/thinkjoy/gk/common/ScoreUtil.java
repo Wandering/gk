@@ -852,4 +852,20 @@ public class ScoreUtil {
         }
         return null;
     }
+
+    public Map<String,Object> getScores2(HttpServletRequest request){
+        Map<String, Object> scores = Maps.newLinkedHashMap();
+
+        String prop = null;
+        Enumeration<String> names = request.getParameterNames();
+        while (names.hasMoreElements()) {
+            prop = names.nextElement();
+            if(prop.startsWith("scores")){
+                String key = prop.substring(prop.lastIndexOf("scores[")+"scores[".length(),prop.lastIndexOf("]"));
+                scores.put(key, request.getParameter(prop));
+            }
+        }
+
+        return scores;
+    }
 }

@@ -3,6 +3,9 @@ package cn.thinkjoy.http.gk3in7;
 import cn.thinkjoy.common.RequestUtils;
 import junit.framework.TestCase;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * Created by admin on 2016/1/14.
  */
@@ -97,5 +100,22 @@ public class Http7in3Test extends TestCase {
     public void testRemoveBySubjects() {
             String url = host + removeBySubjects + RequestUtils.genParam("subjects=%e5%8e%86%e5%8f%b2+-+%e7%89%a9%e7%90%86","&token=GM%2BX0KMwbKG9fj19q5XN8Q%3D%3D&userKey=tj");
         String result = RequestUtils.requestPost(url);
+    }
+
+    /**
+     * 删除通过专业组合
+     */
+    public void testMain() {
+        Map<String,Object> m1=new  LinkedHashMap();
+        m1.put("苹果",1);
+        m1.put("栗子",2);
+        m1.put("香蕉",3);
+        Map<String,Object> m2=new  LinkedHashMap();
+        m2.put("苹果",1);
+        m2.put("栗子",2);
+        m2.put("香蕉",3);
+        System.out.println(m1.hashCode());
+        System.out.println(m2.hashCode());
+
     }
 }

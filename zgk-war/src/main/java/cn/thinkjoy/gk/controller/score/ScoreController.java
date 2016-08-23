@@ -1,9 +1,11 @@
 package cn.thinkjoy.gk.controller.score;
 
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.common.SubjectEnum;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.service.IScoreAnalysisService;
 import cn.thinkjoy.gk.common.ScoreUtil;
+import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class ScoreController {
     private IScoreAnalysisService scoreAnalysisService;
     @Autowired
     private ScoreUtil scoreUtil;
+
+    private static long JS_AREA_CODE=320000;
 
     /**
      * 根据用户Id和用户来源查询用户最新的提交记录
@@ -111,7 +115,18 @@ public class ScoreController {
                                     HttpServletRequest request){
         //获取成绩
         Map<String, Object> scores = scoreUtil.getScores(request);
+        Map<String, Object> scores2 = scoreUtil.getScores2(request);
 
+        Map<String, Object> lastScoreInfo = scoreAnalysisService.queryScoreRecordByUserId(userId);
+
+        if(lastScoreInfo!=null && lastScoreInfo.size()!=0) {
+            Map<String, Object> lastScores = (Map<String, Object>) lastScoreInfo.get("scores");
+            if (scores2.hashCode() == lastScores.hashCode()) {
+
+                return lastScoreInfo.get("recordId");
+
+            }
+        }
         return scoreAnalysisService.insertScoreRecord(userId,areaId,majorType,scores);
     }
 
@@ -376,5 +391,6 @@ public class ScoreController {
         Integer rows=5;
         return scoreAnalysisService.queryHistoryScore(userId,rows);
     }
+
 
 }

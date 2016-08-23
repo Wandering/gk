@@ -148,7 +148,7 @@ public class HttpScoreTest extends TestCase{
     public void testRecommendSchool(){
         long start=System.currentTimeMillis();
         System.out.println("我开始了");
-        String url=host +recommendSchool_url + "?totalScore=270&areaId=340000&majorType=2&userId=309";
+        String url=host +recommendSchool_url + "?totalScore=500&areaId=340000&majorType=2&userId=309";
         System.out.println(url);
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
