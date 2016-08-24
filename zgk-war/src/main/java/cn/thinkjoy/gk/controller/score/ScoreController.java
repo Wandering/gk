@@ -122,12 +122,24 @@ public class ScoreController {
         if(lastScoreInfo!=null && lastScoreInfo.size()!=0) {
             Map<String, Object> lastScores = (Map<String, Object>) lastScoreInfo.get("scores");
             if (scores2.hashCode() == lastScores.hashCode()) {
-
-                return lastScoreInfo.get("recordId");
+                Map<String, Object> resultMap = new HashedMap();
+                resultMap.put("recordId", lastScoreInfo.get("recordId"));
+                return resultMap;
 
             }
         }
         return scoreAnalysisService.insertScoreRecord(userId,areaId,majorType,scores);
+    }
+
+    /**
+     * 用户填写完分数信息后，提交成绩信息
+     * @return
+     */
+    @RequestMapping(value = "/queryUserIsFirst",method = RequestMethod.GET)
+    @ResponseBody
+    public Object queryUserIsFirst(@RequestParam long userId){
+
+        return scoreAnalysisService.queryUserIsFirst(userId);
     }
 
 

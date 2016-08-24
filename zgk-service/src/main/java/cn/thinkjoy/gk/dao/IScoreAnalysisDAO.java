@@ -377,4 +377,19 @@ public interface IScoreAnalysisDAO {
      */
     String queryUniversitySubLevel(Map<String,Object> map);
 
+
+    /**
+     *  获取用户测评条数
+     * @param userId
+     * @return
+     */
+    Integer queryScoreCount(long userId);
+
+    /**
+     * 获取用户年级
+     * @param userId
+     * @return
+     */
+    String queryUserGradeInfo(long userId);
+
 }

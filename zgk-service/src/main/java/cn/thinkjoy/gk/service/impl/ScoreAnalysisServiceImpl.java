@@ -52,6 +52,30 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         return resultMap;
     }
 
+    /**
+     * 判断用户是否是第一次进来
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public Integer queryUserIsFirst(long userId) {
+
+        //        三种状态
+        String gradeInfo = scoreAnalysisDAO.queryUserGradeInfo(userId);
+        Integer count = scoreAnalysisDAO.queryScoreCount(userId);
+//        0:未保存个人信息，未测评
+//        1:保存个人信息，未测评
+//        2:保存了个人信息，做了测评
+        if("".equals(gradeInfo) && count==0){
+            return 0;
+        }else if((!"".equals(gradeInfo)) && count==0){
+            return 1;
+        }else {
+            return 2;
+        }
+    }
+
     @Override
     public Map<String, Object> insertScoreRecord(long userId,
                                                  long areaId,
