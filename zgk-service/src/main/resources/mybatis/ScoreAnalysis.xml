@@ -287,7 +287,6 @@ deleteBySubjects
     <select id="queryUniversityByScore" resultType="java.util.Map">
         SELECT * from (
         SELECT
-        DISTINCT
         university.areaId as universityAreaId,
         university.rank as rank,
         university.name as schoolName,
@@ -313,7 +312,6 @@ deleteBySubjects
     <!--推荐高职前10院校-->
     <select id="queryLowstUniversity" resultType="java.util.Map">
         SELECT
-        DISTINCT
         (SELECT name from zgk_university WHERE id = universityId LIMIT 1) as schoolName,
         (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batch,
         realEnrollingNumber as stuNum,
@@ -481,7 +479,7 @@ deleteBySubjects
     <select id="queryZJUniversityByScore" resultType="java.util.Map">
         SELECT * from (
         SELECT
-        DISTINCT
+
         university.areaId as universityAreaId,
         university.rank as rank,
         university.name as schoolName,
@@ -527,7 +525,6 @@ deleteBySubjects
     <select id="queryJSUniversityByScore" resultType="java.util.Map">
         SELECT * from (
         SELECT
-        DISTINCT
         university.areaId as universityAreaId,
         university.rank as rank,
         university.name as schoolName,
