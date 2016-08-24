@@ -183,5 +183,11 @@
     <update id="updateUserAccountRegistXueTang" parameterType="java.util.HashMap">
         UPDATE zgk_user_account SET isRegisterXueTang=#{isRegisterXueTang} WHERE id=#{id}
     </update>
+
+    <select id="findUserInfoByAlipayId" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT info.id, info.provinceId
+        FROM zgk_user_info info
+        WHERE info.alipayUserId=#{alipayUserId}
+    </select>
 </mapper>
 

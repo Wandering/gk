@@ -97,7 +97,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         map.put("batch", universityInfoParmasView.getBatch());
 
         //判定算法走向
-        boolean isScore = super.isScoreSupplementary(universityInfoParmasView,"4");
+        boolean isScore = super.isScoreSupplementary(universityInfoParmasView,"8");
 
 
         if (isScore) // true 走分数补充发    false 走位次法

@@ -298,7 +298,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
             return false;
 
         //是否为压线生
-        result=isLine(logicTrend,batch,cate,provinceCode,score,"3"); //3:高职高专
+        result=isLine(logicTrend,batch,cate,provinceCode,score,"8"); //3:高职高专
         Integer plusValue= Integer.valueOf(systemParmas.getConfigValue());
 
 
