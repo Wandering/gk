@@ -7,6 +7,7 @@ import cn.thinkjoy.gk.dao.IZGK3in7DAO;
 import cn.thinkjoy.gk.service.IScoreAnalysisService;
 import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,9 +68,9 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
 //        0:未保存个人信息，未测评
 //        1:保存个人信息，未测评
 //        2:保存了个人信息，做了测评
-        if("".equals(gradeInfo) && count==0){
+        if(StringUtils.isEmpty(gradeInfo) && count==0){
             return 0;
-        }else if((!"".equals(gradeInfo)) && count==0){
+        }else if(StringUtils.isNotEmpty(gradeInfo) && count==0){
             return 1;
         }else {
             return 2;
