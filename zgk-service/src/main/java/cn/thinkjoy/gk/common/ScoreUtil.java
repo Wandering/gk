@@ -274,7 +274,7 @@ public class ScoreUtil {
             scoreLine = scoreAnalysisService.queryScoreLine(areaId,majorType,year.toString());
             year--;
         }while (scoreLine==null);
-
+        year+=1;
 
         String [] scoreStrs = scoreLine.split("-");
         Integer[][] scoreLines = new Integer[4][4];
