@@ -856,8 +856,48 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     }
 
     @Override
-    public List<String> queryHistoryScore(long userId,Integer rows){
-        return scoreAnalysisDAO.queryHistoryScore(userId,rows);
+    public List<Map<String,Object>> queryHistoryScore(long userId,Integer rows,Long areaId){
+        List<Map<String, Object>> maps = scoreAnalysisDAO.queryHistoryScore(userId, rows, areaId);
+        List<Map<String, Object>> rtnMaps = new ArrayList<>();
+
+
+
+        if(areaId==JS_AREA_CODE) {
+            if(maps!=null && !maps.isEmpty()) {
+                for (Map<String,Object> map : maps){
+                    Map<String,Object> map1 = new HashedMap();
+
+                    map1.putAll(map);
+                    String rank1=null;
+                    String rank2=null;
+                    String rank=null;
+                    Iterator<String> iterator = map1.keySet().iterator();
+                    while (iterator.hasNext()){
+                        String key = iterator.next();
+                        if(key.indexOf("Score")>0 && key.indexOf("totalScore")<0){
+                            map.remove(key);
+                            if(map1.get(key)!=null) {
+                                if(StringUtils.isEmpty(rank1))
+                                    rank1 = scoreUtil.scoreToTag(Float.valueOf(map1.get(key).toString()));
+                                else
+                                    rank2 = scoreUtil.scoreToTag(Float.valueOf(map1.get(key).toString()));
+                            }else {
+                                continue;
+                            }
+                        }
+                    }
+                    if(rank1.compareTo(rank2)<0){
+                        rank = rank1+rank2;
+                    }else {
+                        rank = rank2+rank1;
+                    }
+                    map.put("xcRank",rank);
+                }
+            }
+        }else {
+            rtnMaps=maps;
+        }
+        return maps;
     }
 
     @Override
@@ -1042,9 +1082,9 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     private boolean compareToLevel(String v1,String v2,String v3){
         //如果选测等级是一门。。另一门的形式  直接比较
         if(v1.indexOf("另一门")>0){
-            return v1.compareTo(v2)>0;
+            return v1.compareTo(v2)<=0;
         }else {
-            return v1.compareTo(v3)>0;
+            return v1.compareTo(v3)<=0;
         }
     }
 

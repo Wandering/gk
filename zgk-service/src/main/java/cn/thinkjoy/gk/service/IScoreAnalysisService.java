@@ -324,7 +324,7 @@ public interface IScoreAnalysisService {
                                       String majorCode,
                                       long userId);
 
-    List<String> queryHistoryScore(long userId,Integer rows);
+    List<Map<String,Object>> queryHistoryScore(long userId,Integer rows,Long areaId);
 
     /**
      * 江苏算法

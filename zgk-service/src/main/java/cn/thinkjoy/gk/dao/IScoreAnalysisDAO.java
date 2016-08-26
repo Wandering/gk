@@ -361,7 +361,7 @@ public interface IScoreAnalysisDAO {
      * @param userId
      * @return
      */
-    List<String> queryHistoryScore(@Param("userId")long userId,@Param("rows")Integer rows);
+    List<Map<String,Object>> queryHistoryScore(@Param("userId")long userId,@Param("rows")Integer rows,@Param("areaId")Long areaId);
 
     /**
      * 根据院校ID和地区code查询专业

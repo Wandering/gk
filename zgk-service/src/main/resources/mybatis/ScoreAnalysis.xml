@@ -518,8 +518,18 @@ deleteBySubjects
 
     <!--获取当前用户标签-->
     <select id="queryHistoryScore" resultType="java.util.Map">
-        SELECT id,total_score as totalScore,cdate from zgk_score_base WHERE user_id = #{userId} ORDER BY cdate DESC
+        SELECT id,total_score as totalScore,cdate
+        <if test="areaId==320000">
+           ,wl_score as wlScore,
+            sw_score as swScore,
+            hx_score as hxScore,
+            ls_score as lsScore,
+            dl_score as dlScore,
+            zz_score as zzScore
+        </if>
+         from zgk_score_base WHERE user_id = #{userId} ORDER BY cdate DESC
     </select>
+
 
     <!--推荐院校-->
     <select id="queryJSUniversityByScore" resultType="java.util.Map">
