@@ -881,39 +881,39 @@ public class ScoreUtil {
                 i--;
             case "A+A":
                 i--;
-            case "A+B+":
-                i--;
-            case "A+B":
-                i--;
-            case "A+C":
-                i--;
-            case "A+D":
-                i--;
             case "AA":
+                i--;
+            case "A+B+":
                 i--;
             case "AB+":
                 i--;
-            case "AB":
-                i--;
-            case "AC":
-                i--;
-            case "AD":
-                i--;
             case "B+B+":
+                i--;
+            case "A+B":
+                i--;
+            case "AB":
                 i--;
             case "B+B":
                 i--;
-            case "B+C":
-                i--;
-            case "B+D":
-                i--;
             case "BB":
+                i--;
+            case "A+C":
+                i--;
+            case "AC":
+                i--;
+            case "B+C":
                 i--;
             case "BC":
                 i--;
-            case "BD":
-                i--;
             case "CC":
+                i--;
+            case "A+D":
+                i--;
+            case "AD":
+                i--;
+            case "B+D":
+                i--;
+            case "BD":
                 i--;
             case "CD":
                 i--;
