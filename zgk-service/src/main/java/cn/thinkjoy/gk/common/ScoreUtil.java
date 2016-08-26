@@ -868,4 +868,71 @@ public class ScoreUtil {
 
         return scores;
     }
+
+    public static int getTagNum(String v1){
+        if(v1.indexOf("另一门")>0){//物理A+,另一门B+
+            String t1=v1.substring(2,v1.lastIndexOf(","));
+            String t2=v1.substring(v1.lastIndexOf("另一门")+"另一门".length(),v1.length());
+            v1=t1+t2;
+        }
+        Integer i=0;
+        switch (v1){
+            case "A+A+":
+                i--;
+            case "A+A":
+                i--;
+            case "A+B+":
+                i--;
+            case "A+B":
+                i--;
+            case "A+C":
+                i--;
+            case "A+D":
+                i--;
+            case "AA":
+                i--;
+            case "AB+":
+                i--;
+            case "AB":
+                i--;
+            case "AC":
+                i--;
+            case "AD":
+                i--;
+            case "B+B+":
+                i--;
+            case "B+B":
+                i--;
+            case "B+C":
+                i--;
+            case "B+D":
+                i--;
+            case "BB":
+                i--;
+            case "BC":
+                i--;
+            case "BD":
+                i--;
+            case "CC":
+                i--;
+            case "CD":
+                i--;
+            case "DD":
+                i--;
+            case "A+":
+                i--;
+            case "A":
+                i--;
+            case "B":
+                i--;
+            case "C":
+                i--;
+            case "D":
+                i--;
+            default:
+                i--;
+
+        }
+        return i;
+    }
 }

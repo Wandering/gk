@@ -248,7 +248,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                 Map<String,Object> scores = getScores2(areaId,majorType,map,resultMap);
                 if(areaId==JS_AREA_CODE){
                     String[] xcRanks = getScoreLevel(scores,majorType);
-                    if(xcRanks[1].compareTo(xcRanks[3])<0){
+                    if(scoreUtil.getTagNum(xcRanks[1])<scoreUtil.getTagNum(xcRanks[3])){
                         resultMap.put("xcRank",xcRanks[1]+xcRanks[3]);
                     }else {
                         resultMap.put("xcRank",xcRanks[3]+xcRanks[1]);
@@ -886,7 +886,8 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                             }
                         }
                     }
-                    if(rank1.compareTo(rank2)<0){
+
+                    if(scoreUtil.getTagNum(rank1)<scoreUtil.getTagNum(rank2)){
                         rank = rank1+rank2;
                     }else {
                         rank = rank2+rank1;
@@ -1081,11 +1082,15 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
 
     private boolean compareToLevel(String v1,String v2,String v3){
         //如果选测等级是一门。。另一门的形式  直接比较
+
         if(v1.indexOf("另一门")>0){
-            return v1.compareTo(v2)<=0;
+            //数字较小比较大
+            return scoreUtil.getTagNum(v1)>=scoreUtil.getTagNum(v2);
         }else {
-            return v1.compareTo(v3)<=0;
+            return scoreUtil.getTagNum(v1)>=scoreUtil.getTagNum(v3);
         }
     }
+
+
 
 }
