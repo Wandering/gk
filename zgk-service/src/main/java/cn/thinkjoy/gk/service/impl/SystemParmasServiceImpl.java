@@ -151,7 +151,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
             } else {
                 Integer btLine = Integer.valueOf(batchLine);
                 if (btLine > 0) {
-                    String batch = String.valueOf((i + 1));
+                    String batch = ReportUtil.ConverNewBatch(String.valueOf((i + 1)));
                     BatchView batchView = batchConfig(cate, batch, 0, provinceCode, batchLine);
                     batchView.setYear(systemParmas.getYear());
 
