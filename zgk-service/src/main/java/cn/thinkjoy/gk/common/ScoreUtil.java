@@ -17,6 +17,8 @@ import java.util.*;
 public class ScoreUtil {
 
     private static int RANDOM_NUM=10;
+
+    private static int JS_AREA_CODE=320000;
     @Autowired
     private IScoreAnalysisService scoreAnalysisService;
 
@@ -49,32 +51,180 @@ public class ScoreUtil {
      * @param majorType
      * @return
      */
-    public Map<String,Object> getScores(Map<String,Object> map, int majorType){
+    public Map<String,Object> getScores(Map<String,Object> map, Integer majorType){
         Map<String, Object> scores =  new LinkedHashMap();
         scores.put("语文", floatToStr(map.get("ywScore")) + "-" + floatToStr(map.get("ywScoreTotal")));
         scores.put("数学", floatToStr(map.get("sxScore")) + "-" + floatToStr(map.get("sxScoreTotal")));
         scores.put("外语", floatToStr(map.get("wyScore")) + "-" + floatToStr(map.get("wyScoreTotal")));
-
+        if(majorType==null || (majorType!=1 &&majorType!=2)){
+            if(map.containsKey("wlScore")) {
+                scores.put("物理", floatToStr(map.get("wlScore")) + "-" + floatToStr(map.get("wlScoreTotal")));
+            }
+            if(map.containsKey("hxScore")) {
+                scores.put("化学", floatToStr(map.get("hxScore")) + "-" + floatToStr(map.get("hxScoreTotal")));
+            }
+            if(map.containsKey("swScore")) {
+                scores.put("生物", floatToStr(map.get("swScore")) + "-" + floatToStr(map.get("swScoreTotal")));
+            }
+            if(map.containsKey("zzScore")) {
+                scores.put("思想政治", floatToStr(map.get("zzScore")) + "-" + floatToStr(map.get("zzScoreTotal")));
+            }
+            if(map.containsKey("lsScore")) {
+                scores.put("历史", floatToStr(map.get("lsScore")) + "-" + floatToStr(map.get("lsScoreTotal")));
+            }
+            if(map.containsKey("dlScore")) {
+                scores.put("地理", floatToStr(map.get("dlScore")) + "-" + floatToStr(map.get("dlScoreTotal")));
+            }
+            if(map.containsKey("tyScore")) {
+                scores.put("通用技术", floatToStr(map.get("tyScore")) + "-" + floatToStr(map.get("tyScoreTotal")));
+            }
+        }else
         if (majorType == 2) {
             scores.put("物理", floatToStr(map.get("wlScore")) + "-" + floatToStr(map.get("wlScoreTotal")));
             scores.put("化学", floatToStr(map.get("hxScore")) + "-" + floatToStr(map.get("hxScoreTotal")));
             scores.put("生物", floatToStr(map.get("swScore")) + "-" + floatToStr(map.get("swScoreTotal")));
 
-        } else if ((majorType == 1)) {
+        } else if (majorType == 1) {
             scores.put("政治", floatToStr(map.get("zzScore")) + "-" + floatToStr(map.get("zzScoreTotal")));
             scores.put("历史", floatToStr(map.get("lsScore")) + "-" + floatToStr(map.get("lsScoreTotal")));
             scores.put("地理", floatToStr(map.get("dlScore")) + "-" + floatToStr(map.get("dlScoreTotal")));
-        } else {
-            scores.put("物理", floatToStr(map.get("wlScore")) + "-" + floatToStr(map.get("wlScoreTotal")));
-            scores.put("化学", floatToStr(map.get("hxScore")) + "-" + floatToStr(map.get("hxScoreTotal")));
-            scores.put("生物", floatToStr(map.get("swScore")) + "-" + floatToStr(map.get("swScoreTotal")));
-            scores.put("思想政治", floatToStr(map.get("zzScore")) + "-" + floatToStr(map.get("zzScoreTotal")));
-            scores.put("历史", floatToStr(map.get("lsScore")) + "-" + floatToStr(map.get("lsScoreTotal")));
-            scores.put("地理", floatToStr(map.get("dlScore")) + "-" + floatToStr(map.get("dlScoreTotal")));
-            scores.put("通用技术", floatToStr(map.get("tyScore")) + "-" + floatToStr(map.get("tyScoreTotal")));
         }
         return scores;
     }
+
+
+    /**
+     * 生成江苏分数明细
+     * @param map
+     * @param majorType
+     * @return
+     */
+    public Map<String,Object> getScoresJS(Map<String,Object> map, int majorType){
+        //删除额外字段,确保剩余都是分数字段
+        Map<String,Object> map1 = new HashedMap();
+        map1.putAll(map);
+
+        List<String> removes = new ArrayList<>();
+        removes.add("totalScore");
+        Iterator<String> iterator = map1.keySet().iterator();
+        while (iterator.hasNext()){
+            String key = iterator.next();
+            if(key.indexOf("Score")==-1){
+                removes.add(key);
+            }
+        }
+        for(String remove:removes) {
+            map1.remove(remove);
+        }
+
+        //============================================
+
+
+
+        Map<String, Object> scores =  new LinkedHashMap();
+        scores.put("语文", floatToStr(map1.get("ywScore")) + "-" + floatToStr(map1.get("ywScoreTotal")));
+        map1.remove("ywScore");
+        map1.remove("ywScoreTotal");
+        scores.put("数学", floatToStr(map1.get("sxScore")) + "-" + floatToStr(map1.get("sxScoreTotal")));
+        map1.remove("sxScore");
+        map1.remove("sxScoreTotal");
+        scores.put("外语", floatToStr(map1.get("wyScore")) + "-" + floatToStr(map1.get("wyScoreTotal")));
+        map1.remove("wyScore");
+        map1.remove("wyScoreTotal");
+        //分析当前分数的
+//        map.get
+        if (majorType == 2) {
+            if(!map1.containsKey("wlScore")){
+                throw new BizException("error","理科必须有物理");
+            }
+            scores.put("物理", scoreToTag(Float.valueOf(map1.get("wlScore").toString())));
+            map1.remove("wlScore");
+            map1.remove("wlScoreTotal");
+        } else {
+            if(!map1.containsKey("lsScore")){
+                throw new BizException("error","文科必须有历史");
+            }
+            scores.put("历史", scoreToTag(Float.valueOf(map1.get("lsScore").toString())));
+            map1.remove("lsScore");
+            map1.remove("lsScoreTotal");
+        }
+        try {
+            //一定会有一个值  如果没有说明入参有误 异常
+            String key = map1.keySet().iterator().next();
+            scores.put(SubjectEnum.valueOf(key.substring(0,2)).getSub(), scoreToTag(Float.valueOf(map1.get(key).toString())));
+        }catch (Exception e){
+                throw new BizException("error","上次添加值有误!");
+            }
+        return scores;
+    }
+
+
+    /**
+     * 生成江苏分数明细
+     * @param map
+     * @param majorType
+     * @return
+     */
+    public Map<String,Object> getScoresJS2(Map<String,Object> map, int majorType){
+        //删除额外字段,确保剩余都是分数字段
+        Map<String,Object> map1 = new HashedMap();
+        map1.putAll(map);
+
+        List<String> removes = new ArrayList<>();
+        removes.add("totalScore");
+        Iterator<String> iterator = map1.keySet().iterator();
+        while (iterator.hasNext()){
+            String key = iterator.next();
+            if(key.indexOf("Score")==-1){
+                removes.add(key);
+            }
+        }
+        for(String remove:removes) {
+            map1.remove(remove);
+        }
+
+        //============================================
+
+
+
+        Map<String, Object> scores =  new LinkedHashMap();
+        scores.put("语文", floatToStr(map1.get("ywScore")) + "-" + floatToStr(map1.get("ywScoreTotal")));
+        map1.remove("ywScore");
+        map1.remove("ywScoreTotal");
+        scores.put("数学", floatToStr(map1.get("sxScore")) + "-" + floatToStr(map1.get("sxScoreTotal")));
+        map1.remove("sxScore");
+        map1.remove("sxScoreTotal");
+        scores.put("外语", floatToStr(map1.get("wyScore")) + "-" + floatToStr(map1.get("wyScoreTotal")));
+        map1.remove("wyScore");
+        map1.remove("wyScoreTotal");
+        //分析当前分数的
+//        map.get
+        if (majorType == 2) {
+            if(!map1.containsKey("wlScore")){
+                throw new BizException("error","理科必须有物理");
+            }
+            scores.put("物理", floatToStr(map1.get("wlScore")) + "-" + 120);
+            map1.remove("wlScore");
+            map1.remove("wlScoreTotal");
+        } else {
+            if(!map1.containsKey("lsScore")){
+                throw new BizException("error","文科必须有历史");
+            }
+            scores.put("历史", floatToStr(map1.get("lsScore")) + "-" + 120);
+            map1.remove("lsScore");
+            map1.remove("lsScoreTotal");
+        }
+        try {
+            //一定会有一个值  如果没有说明入参有误 异常
+            String key = map1.keySet().iterator().next();
+            scores.put(SubjectEnum.valueOf(key.substring(0,2)).getSub(), floatToStr(Float.valueOf(map1.get(key).toString()))+"-"+120);
+        }catch (Exception e){
+            throw new BizException("error","上次添加值有误!");
+        }
+        return scores;
+    }
+
+
 
     /**
      * 获取批次线
@@ -98,9 +248,9 @@ public class ScoreUtil {
             case 2:
                 return scoreStrs[1].split("\\|")[0];
             case 4:
-                return scoreStrs[3].split("\\|")[0];
+                return scoreStrs[2].split("\\|")[0];
             case 8:
-                return scoreStrs[4].split("\\|")[0];
+                return scoreStrs[3].split("\\|")[0];
 
         }
 
@@ -113,22 +263,31 @@ public class ScoreUtil {
      * @param majorType
      * @return
      */
-    public Integer[] getBatchLine(long areaId,int majorType){
+    public Map<String,Object>  getBatchLine(long areaId,int majorType){
         Integer year = Integer.valueOf(getYear());
 
+        /**
+         * 获取最新批次线 当年没有获取次年
+         */
         String scoreLine =null;
         do{
             scoreLine = scoreAnalysisService.queryScoreLine(areaId,majorType,year.toString());
             year--;
         }while (scoreLine==null);
-
+        year+=1;
 
         String [] scoreStrs = scoreLine.split("-");
-        Integer [] scoreLines = new Integer[4];
+        Integer[][] scoreLines = new Integer[4][4];
         for(int i=0;i<4;i++){
-            scoreLines[i]=Integer.valueOf(scoreStrs[i].split("\\|")[0]);
+            String[] scoreLineStr2=scoreStrs[i].split("\\|");
+            for(int j=0;j<scoreLineStr2.length;j++) {
+                scoreLines[i][j]=Integer.valueOf(scoreLineStr2[j]);
+            }
         }
-        return scoreLines;
+        Map<String,Object> rtnMap = new HashedMap();
+        rtnMap.put("batchLine",scoreLines);
+        rtnMap.put("year",year);
+        return rtnMap;
     }
 
 
@@ -138,44 +297,56 @@ public class ScoreUtil {
      * @param majorType
      * @return
      */
-    public String getTopBatchLine(long areaId,int majorType,Float totalScore){
+    public Map<String,Object> getTopBatchLine(long areaId,int majorType,Float totalScore){
+
         if(totalScore==null){
             throw new BizException("error","成绩不能为空!");
         }
-        Integer[] scoreLines =null;
-        scoreLines = getBatchLine(areaId,majorType);
-
-
+        Map<String,Object> scoreLinesMap = getBatchLine(areaId,majorType);
+        Integer[][] scoreLines =null;
+        scoreLines =(Integer[][]) scoreLinesMap.get("batchLine");
+        // 当前有4层
         Float temp = null;
+        String tempName = null;
 
         //规划计算当前分数最接近的上层分数
         for(int i=3;i>=0;i--){
-            temp=scoreLines[i].floatValue();
+
+            temp=scoreLines[i][0].floatValue();
             //出现为0跳过当前轮
-            if(scoreLines[i]==0){
+            if(scoreLines[i][0]==0){
                 continue;
             }
-            if(totalScore-scoreLines[i]<0){
+            if(totalScore-scoreLines[i][0]<0){
                 break;
             }
-            if(i==0&&totalScore-scoreLines[i]>0){
+            if(i==0&&totalScore-scoreLines[i][0]>0){
+                temp=scoreLines[0][0].floatValue();
+                //todo  这里目前写死为一二三高专批 当可以判断是专1还是专A时候更改
+                switch (i){
+                    case 3:
+                        tempName="一批本科";
+                        break;
+                    case 2:
+                        tempName="二批本科";
+                        break;
+                    case 1:
+                        tempName="三批本科";
+                        break;
+                    case 0:
+                        tempName="高职专科";
+                        break;
 
-                temp=scoreLines[0].floatValue();
-
-//                Integer areaTotal=null;
-
-//                areaTotal=scoreAnalysisService.queryTotalScoreByAreaId(areaId);
-//                if(areaTotal!=null){
-//                    // 该省总分在数据库中存在
-//                    temp=areaTotal.floatValue();
-//                    break;
-//                }else {
-//                    throw new BizException("error","该省总分不存在");
-//                }
+                }
             }
-
         }
-        return floatToStr(temp);
+//        temp=scoreLines[0][0].floatValue();
+
+        Map<String,Object> rtnMap = new HashedMap();
+        rtnMap.put("score",floatToStr(temp));
+        rtnMap.put("name",tempName);
+        rtnMap.put("year",scoreLinesMap.get("year"));
+        return rtnMap;
     }
 
 
@@ -189,7 +360,7 @@ public class ScoreUtil {
         int i=1;
         for(String scoreStr:scoreStrs){
             float score=Float.parseFloat(scoreStr.split("\\|")[0]);
-            if(totalScore-score>0){
+            if(totalScore-score>0F){
                 bottomScore=score;
                 break;
             }
@@ -286,24 +457,28 @@ public class ScoreUtil {
      */
     public Integer getScoreRank(long areaId,int majorType,Float score){
 
-        Integer[] scoreLines = getBatchLine(areaId,majorType);
+        Map<String,Object> scoreLinesMap = getBatchLine(areaId,majorType);
+        Integer[][] scoreLines=(Integer[][]) scoreLinesMap.get("batchLine");
 
-            if(score - scoreLines[0]>50){
-                //一本+50
-                return ScoreRankEnum.名垂校史.getSub();
-            }else if(score-scoreLines[0]>0){
-                //一本+0-49
-                return ScoreRankEnum.校刊红人.getSub();
-            }else if(scoreLines[0]-score>0 && score - scoreLines[1]>0){
-                //二本以上 一本以下
-                return ScoreRankEnum.三好学生.getSub();
-            }else if(scoreLines[1]-score>0 && score - scoreLines[2]>0){
-                //三本以上 二本以下
-                return ScoreRankEnum.教师常客.getSub();
-            }else{
-                //三本以下
-                return ScoreRankEnum.逃课大军.getSub();
-            }
+        /**
+         * 按照每个成绩等级第一个分数来计算
+         */
+        if(score - scoreLines[0][0]>50F){
+            //一本+50
+            return ScoreRankEnum.名垂校史.getSub();
+        }else if(score-scoreLines[0][0]>0F){
+            //一本+0-49
+            return ScoreRankEnum.校刊红人.getSub();
+        }else if(scoreLines[0][0]-score>0F && score - scoreLines[1][0]>0F){
+            //二本以上 一本以下
+            return ScoreRankEnum.三好学生.getSub();
+        }else if(scoreLines[1][0]-score>0F && score - scoreLines[2][0]>0F){
+            //三本以上 二本以下
+            return ScoreRankEnum.教师常客.getSub();
+        }else{
+            //三本以下
+            return ScoreRankEnum.逃课大军.getSub();
+        }
 
     }
 
@@ -311,34 +486,60 @@ public class ScoreUtil {
      * 查询当前分数的分数等级
      * @return
      */
-    public Object[] getScoreWeak(Map<String,Object> scores){
+    public Integer getScoreRankZJ(long areaId,Float score){
+
+        Float totalScore =  750F;
+
+        if(score - (totalScore*0.9F) >=0F){
+            return ScoreRankEnum.名垂校史.getSub();
+        }else if(score - (totalScore*0.8F) >=0F){
+            return ScoreRankEnum.校刊红人.getSub();
+        }else if(score - (totalScore*0.6F) >=0F){
+            return ScoreRankEnum.三好学生.getSub();
+        }else if(score - (totalScore*0.4F)  >=0F){
+            return ScoreRankEnum.教师常客.getSub();
+        }else{
+            return ScoreRankEnum.逃课大军.getSub();
+        }
+
+    }
+
+    /**
+     * 查询当前分数的分数等级
+     * @return
+     */
+    public Object[] getScoreWeak(Map<String,Object> scores,long areaId){
         String strongSubject=null;
         String weakSubject=null;
         Float initFloat1 = 1F;
         Float initFloat2 = 0F;
-        Iterator<String> iterator =  scores.keySet().iterator();
-        while (iterator.hasNext()){
-            String key = iterator.next();
-            String value = (String) scores.get(key);
-            Float scoreProportion = getProportion(value);
-            if(scoreProportion<initFloat1){
-                initFloat1=scoreProportion;
-                weakSubject = key;
-            };
-            if(scoreProportion>initFloat2 && scoreProportion<=1F){
-                initFloat2=scoreProportion;
-                strongSubject = key;
-            };
+            Iterator<String> iterator = scores.keySet().iterator();
+            while (iterator.hasNext()) {
+                String key = iterator.next();
+                String value = (String) scores.get(key);
+                Float scoreProportion=null;
+                if(areaId==JS_AREA_CODE&&("政治".equals(key)||"历史".equals(key)||"地理".equals(key)||"物理".equals(key)||"化学".equals(key)||"生物".equals(key))){
+                    scoreProportion = getProportionJS(value);
+                }else {
+                    scoreProportion = getProportion(value);
+                }
 
-        }
-        if(initFloat1-initFloat2<0.05 && initFloat1-initFloat2>-0.05){
-            weakSubject=strongSubject;
-        }
+                if (scoreProportion < initFloat1) {
+                    initFloat1 = scoreProportion;
+                    weakSubject = key;
+                }
+
+                if (scoreProportion > initFloat2 && scoreProportion <= 1F) {
+                    initFloat2 = scoreProportion;
+                    strongSubject = key;
+                }
+            }
+            if (initFloat1 - initFloat2 < 0.05F && initFloat1 - initFloat2 > -0.05F) {
+                weakSubject = strongSubject;
+            }
 
 
-
-
-        return new Object[]{getSubjectInfo(scores,strongSubject),getSubjectInfo(scores,weakSubject)};
+        return new Object[]{getSubjectInfo(scores,strongSubject,areaId),getSubjectInfo(scores,weakSubject,areaId)};
 
     }
 
@@ -355,6 +556,18 @@ public class ScoreUtil {
         return v1/v2;
 
     }
+    public Float getProportionJS(String value){
+        if(value.indexOf("-")>0) {
+            String[] values = value.split("-");
+            value=values[0];
+        }
+        Float v1 =null;
+        Float score = tagToScore(value);
+        if(score==null) {
+            v1=Float.valueOf(value);
+        }
+        return v1/120F;
+    }
 
 
     /**
@@ -362,7 +575,7 @@ public class ScoreUtil {
      * @param scores
      * @return
      */
-    public List<String> getUserLabel(Map<String,Object> scores){
+    public List<String> getUserLabel(Map<String,Object> scores,long areaId){
 
         List<String> labels = new ArrayList<>();
         if(scores==null){
@@ -380,7 +593,12 @@ public class ScoreUtil {
             //子分数逻辑
             String key=iterator.next();
             String value = (String) scores.get(key);
-            String[] strings = value.split("-");
+            String[] strings =null;
+//            if(areaId==JS_AREA_CODE&&("政治".equals(key)||"历史".equals(key)||"地理".equals(key)||"物理".equals(key)||"化学".equals(key)||"生物".equals(key))) {
+//                strings = new String[]{tagToScore(value).toString(),"120"};
+//            }else {
+                strings = value.split("-");
+//            }
             if(!"".equals(strings[0]) && !"".equals(strings[1])){
                 Float subjectScore = Float.valueOf(strings[0]);
                 Float subjectTotalScore = Float.valueOf(strings[1]);
@@ -395,20 +613,25 @@ public class ScoreUtil {
                 //抽取带有专业特色的标签
                 configs=new ArrayList<>();
                 configs.add(UserScoreType.LABEL_SUB_ALL);
-                List<String> subAllLabel1s = getSubLabel(getScoreType(subjectScore,subjectTotalScore),configs);
+                List<String> subAllLabel1s = null;
+
+                subAllLabel1s = getSubLabel(getScoreType(subjectScore,subjectTotalScore),configs);
+
                 if(subAllLabel1s!=null && subAllLabel1s.size()!=0){
                     List<String> subAllLabel2s=new ArrayList<>();
                     for(String sub:subAllLabel1s){
                         sub=sub.replace("_",key);
-                        if(("语文".equals(key)||"数学".equals(key)||"外语".equals(key))&&sub.contains("#")){
+                        if(("语文".equals(key)||"数学".equals(key)||"外语".equals(key)||"通用技术".equals(key))&&sub.contains("#")){
                             continue;
                         }else {
-                            if("政治".equals(key)||"历史".equals(key)||"地理".equals(key)){
-                                sub=sub.replace("#",UserScoreType.TYPE_WEN);
-                            }
-                            if("物理".equals(key)||"化学".equals(key)||"生物".equals(key)){
-                                sub=sub.replace("#",UserScoreType.TYPE_LI);
-                            }
+                                if("政治".equals(key)||"历史".equals(key)||"地理".equals(key)){
+                                    sub=sub.replace("#",UserScoreType.TYPE_WEN);
+                                }
+                                if("物理".equals(key)||"化学".equals(key)||"生物".equals(key)){
+                                    sub=sub.replace("#",UserScoreType.TYPE_LI);
+                                }
+
+
                         }
                         subAllLabel2s.add(sub);
                     }
@@ -462,11 +685,11 @@ public class ScoreUtil {
      */
     private Integer getScoreType(Float score,Float totalScore){
         Float b = score/totalScore;
-        if(b-0.8>=0){
+        if(b-0.8F>=0){
             return UserScoreType.FULL_MARK_80_100;
-        }else if(b-0.6>0){
+        }else if(b-0.6F>0){
             return UserScoreType.FULL_MARK_60_80;
-        }else if(b-0.4>0){
+        }else if(b-0.4F>0){
             return UserScoreType.FULL_MARK_40_60;
         }else{
             return UserScoreType.FULL_MARK_0_40;
@@ -484,16 +707,16 @@ public class ScoreUtil {
         Map<String,Object> map=new HashedMap();
         String desc=null;
         Integer tag=null;
-        if(b-0.9>=0){
+        if(b-0.9F>=0){
             desc=UserScoreType.SUBJECT_DESC_1;
             tag=UserScoreType.SUBJECT_TAG_1;
-        }else if(b-0.8>0){
+        }else if(b-0.8F>0){
             desc=UserScoreType.SUBJECT_DESC_2;
             tag=UserScoreType.SUBJECT_TAG_2;
-        }else if(b-0.6>0){
+        }else if(b-0.6F>0){
             desc=UserScoreType.SUBJECT_DESC_3;
             tag=UserScoreType.SUBJECT_TAG_3;
-        }else if(b-0.4>0){
+        }else if(b-0.4F>0){
             desc=UserScoreType.SUBJECT_DESC_4;
             tag=UserScoreType.SUBJECT_TAG_4;
         }else{
@@ -537,8 +760,13 @@ public class ScoreUtil {
 
         return reList;
     }
-    private Map<String,Object> getSubjectInfo(Map<String,Object> scores,String subject){
-        String[] strings = scores.get(subject).toString().split("-");
+    private Map<String,Object> getSubjectInfo(Map<String,Object> scores,String subject,long areaId){
+        String[] strings=null;
+//        if(areaId==JS_AREA_CODE&&("政治".equals(subject)||"历史".equals(subject)||"地理".equals(subject)||"物理".equals(subject)||"化学".equals(subject)||"生物".equals(subject))) {
+//            strings = new String[]{tagToScore(scores.get(subject).toString()).toString(),"120"};
+//        }else {
+            strings = scores.get(subject).toString().split("-");
+//        }
         if(!"".equals(strings[0]) && !"".equals(strings[1])){
             Float subjectScore = Float.valueOf(strings[0]);
             Float subjectTotalScore = Float.valueOf(strings[1]);
@@ -548,4 +776,163 @@ public class ScoreUtil {
         }
     }
 
+
+    /**
+     * 量化等级对应成绩
+     * @param f
+     * @return
+     */
+    public String scoreToTag(Float f){
+
+        switch (f.toString()){
+            case "120.0":
+                return "A+";
+            case "100.0":
+                return "A";
+            case "80.0":
+                return "B+";
+            case "60.0":
+                return "B";
+            case "40.0":
+                return "C";
+            case "20.0":
+                return "D";
+        }
+        return null;
+
+//        if(f-120F==0){
+//            return "A+";
+//        }else if(f-100F==0F){
+//            return "A";
+//        }else if(f-80F==0F){
+//            return "B+";
+//        }else if(f-60F==0F){
+//            return "B";
+//        }else if(f-40F==0F){
+//            return "C";
+//        }else{
+//            return "D";
+//        }
+    }
+
+    /**
+     * 转换成绩对应等级
+     * @param s
+     * @return
+     */
+    public Float tagToScore(String s){
+
+//        if("A+".equals(s)){
+//            return 120F;
+//        }else if("A".equals(s)){
+//            return 100F;
+//        }else if("B+".equals(s)){
+//            return 80F;
+//        }else if("B".equals(s)){
+//            return 60F;
+//        }else if("C".equals(s)){
+//            return 40F;
+//        }else {
+//            return 20F;
+//        }
+
+        switch (s){
+            case "A+":
+                return 120F;
+            case "A":
+                return 100F;
+            case "B+":
+                return 80F;
+            case "B":
+                return 60F;
+            case "C":
+                return 40F;
+            case "D":
+                return 20F;
+        }
+        return null;
+    }
+
+    public Map<String,Object> getScores2(HttpServletRequest request){
+        Map<String, Object> scores = Maps.newLinkedHashMap();
+
+        String prop = null;
+        Enumeration<String> names = request.getParameterNames();
+        while (names.hasMoreElements()) {
+            prop = names.nextElement();
+            if(prop.startsWith("scores")){
+                String key = prop.substring(prop.lastIndexOf("scores[")+"scores[".length(),prop.lastIndexOf("]"));
+                scores.put(key, request.getParameter(prop));
+            }
+        }
+
+        return scores;
+    }
+
+    public static int getTagNum(String v1){
+        if(v1.indexOf("另一门")>0){//物理A+,另一门B+
+            String t1=v1.substring(2,v1.lastIndexOf(","));
+            String t2=v1.substring(v1.lastIndexOf("另一门")+"另一门".length(),v1.length());
+            v1=t1+t2;
+        }
+        Integer i=0;
+        switch (v1){
+            case "A+A+":
+                i--;
+            case "A+A":
+                i--;
+            case "AA":
+                i--;
+            case "A+B+":
+                i--;
+            case "AB+":
+                i--;
+            case "B+B+":
+                i--;
+            case "A+B":
+                i--;
+            case "AB":
+                i--;
+            case "B+B":
+                i--;
+            case "BB":
+                i--;
+            case "A+C":
+                i--;
+            case "AC":
+                i--;
+            case "B+C":
+                i--;
+            case "BC":
+                i--;
+            case "CC":
+                i--;
+            case "A+D":
+                i--;
+            case "AD":
+                i--;
+            case "B+D":
+                i--;
+            case "BD":
+                i--;
+            case "CD":
+                i--;
+            case "DD":
+                i--;
+            case "A+":
+                i--;
+            case "A":
+                i--;
+            case "B":
+                i--;
+            case "C":
+                i--;
+            case "D":
+                i--;
+            default:
+                i--;
+
+        }
+        return i;
+    }
 }

@@ -152,9 +152,23 @@ public interface IScoreAnalysisDAO {
      */
     Map<String,Object> queryUnivsersityLowestScore(@Param("schoolId")long schoolId,
                                       @Param("areaId")long areaId,
-                                      @Param("batch")int batch,
-                                      @Param("majorType")int majorType,
+                                      @Param("batch")Integer batch,
+                                      @Param("majorType")Integer majorType,
                                       @Param("year")String year);
+
+
+    /**
+     * 查询院校专业平均分
+     * @param schoolId
+     * @param areaId
+     * @param majorCode
+     * @param year
+     * @return
+     */
+    Map<String,Object> queryMajorLowestScore(@Param("schoolId")long schoolId,
+                                                   @Param("areaId")long areaId,
+                                                   @Param("majorCode")String majorCode,
+                                                   @Param("year")String year);
 
 
     /**
@@ -166,14 +180,13 @@ public interface IScoreAnalysisDAO {
      * @return
      */
     int countUniversity(@Param("areaId")long areaId,
-                                      @Param("batch")int batch,
-                                      @Param("majorType")int majorType,
-                                      @Param("year")String year,
-                                      @Param("difference")Float difference,
-                                      @Param("line")Float line,
-                                      @Param("bc")int bc
-                        );
-
+                        @Param("batch")int batch,
+                        @Param("majorType")int majorType,
+                        @Param("year")String year,
+                        @Param("difference")Float difference,
+                        @Param("line")Float line,
+                        @Param("bc")int bc
+    );
     /**
      * 获取推荐学校详情
      * @param areaId
@@ -189,7 +202,59 @@ public interface IScoreAnalysisDAO {
                                                      @Param("difference")Float difference,
                                                      @Param("line")Float line,
                                                      @Param("totalScore")Float totalScore,
-                                                     @Param("bc")int bc);
+                                                     @Param("bc")int bc,
+                                                     @Param("userId")long userId
+                                                     );
+
+    /**
+     * 统计当前推荐学校数量
+     * @param areaId
+     * @param batch
+     * @param majorType
+     * @param year
+     * @return
+     */
+    int countJSUniversity(@Param("areaId")long areaId,
+                        @Param("batch")int batch,
+                        @Param("majorType")int majorType,
+                        @Param("year")String year,
+                        @Param("difference")Float difference,
+                        @Param("line")Float line,
+                        @Param("bc")int bc,
+                        @Param("xcRanks")List<String> xcRanks
+    );
+    /**
+     * 获取推荐学校详情
+     * @param areaId
+     * @param batch
+     * @param majorType
+     * @param year
+     * @return
+     */
+    List<Map<String,Object>>  queryJSUniversityByScore(@Param("areaId")long areaId,
+                                                     @Param("batch")int batch,
+                                                     @Param("majorType")int majorType,
+                                                     @Param("year")String year,
+                                                     @Param("difference")Float difference,
+                                                     @Param("line")Float line,
+                                                     @Param("totalScore")Float totalScore,
+                                                     @Param("bc")int bc,
+                                                     @Param("xcRanks")List<String> xcRanks,
+                                                     @Param("userId")long userId);
+    /**
+     * 统计当前推荐学校数量
+     * @param map
+     * @return
+     */
+    int countZJUniversity(Map<String,Object> map
+    );
+
+    /**
+     * 获取推荐学校详情
+     * @param map
+     * @return
+     */
+    List<Map<String,Object>>  queryZJUniversityByScore(Map<String,Object> map);
 
     /**
      * 根据区Id获取当前区高中
@@ -252,7 +317,8 @@ public interface IScoreAnalysisDAO {
     List<Map<String,Object>> queryLowstUniversity(@Param("areaId")long areaId,
                                  @Param("majorType")int majorType,
                                  @Param("totalScore")Float totalScore,
-                                 @Param("year")String year);
+                                 @Param("year")String year,
+                                 @Param("userId")long userId);
 
     /**
      * 获取用户年级
@@ -289,5 +355,41 @@ public interface IScoreAnalysisDAO {
      * @return
      */
     List<String> queryLabelByTypeAndConfig(@Param("type")Integer type,@Param("configs")List<Integer> configs);
+
+    /**
+     * 查询用户历史记录
+     * @param userId
+     * @return
+     */
+    List<Map<String,Object>> queryHistoryScore(@Param("userId")long userId,@Param("rows")Integer rows,@Param("areaId")Long areaId);
+
+    /**
+     * 根据院校ID和地区code查询专业
+     * @param map
+     * @return
+     */
+    List<Map<String,Object>> queryMajorBySchoolIdAndAreaId(Map<String,Object> map);
+
+    /**
+     * 获取院校测评等级
+     * @param map
+     * @return
+     */
+    String queryUniversitySubLevel(Map<String,Object> map);
+
+
+    /**
+     *  获取用户测评条数
+     * @param userId
+     * @return
+     */
+    Integer queryScoreCount(long userId);
+
+    /**
+     * 获取用户年级
+     * @param userId
+     * @return
+     */
+    String queryUserGradeInfo(long userId);
 
 }

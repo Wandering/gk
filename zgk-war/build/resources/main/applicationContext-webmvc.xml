@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                     http://www.springframework.org/schema/beans/spring-beans.xsd
+                     http://www.springframework.org/schema/tx
+                     http://www.springframework.org/schema/tx/spring-tx.xsd
+                     http://www.springframework.org/schema/context
+                     http://www.springframework.org/schema/context/spring-context.xsd
+                     http://www.springframework.org/schema/aop
+                     http://www.springframework.org/schema/aop/spring-aop.xsd
+                     http://www.springframework.org/schema/jdbc
+                     http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+                     http://www.springframework.org/schema/util
+                     http://www.springframework.org/schema/util/spring-util-3.2.xsd
+                     http://www.springframework.org/schema/mvc
+                     http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+    <!-- @Controller, @Service, @Configuration, etc. -->
+    <context:component-scan base-package="cn.thinkjoy" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Component" />
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
+
+    <mvc:interceptors >
+        <bean class="cn.thinkjoy.gk.interceptor.LoginInterceptor"></bean>
+        <bean class="cn.thinkjoy.gk.interceptor.CrossInterceptor" ></bean>
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/index.do"/>-->
+        <!--</mvc:interceptor>-->
+    </mvc:interceptors>
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+    <mvc:default-servlet-handler />
+    <!-- Enables the Spring MVC @Controller programming model -->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <ref bean="fastJsonHttpMessageConverter" />
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">
+        <property name="caseSensitive" value="true" />
+    </bean>
+
+    <!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" >
+        <property name="messageConverters">
+            <list>
+                <ref bean="fastJsonHttpMessageConverter" /><!-- json转换器 -->
+            </list>
+        </property>
+    </bean>
+
+    <bean id="fastJsonHttpMessageConverter"
+          class="cn.thinkjoy.gk.common.FastJsonHttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>application/json; charset=utf-8</value>
+            </list>
+        </property>
+
+        <property name="features">
+            <array value-type="com.alibaba.fastjson.serializer.SerializerFeature">
+                <value>DisableCircularReferenceDetect</value>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+        <property name="config">
+            <bean class="com.google.code.kaptcha.util.Config">
+                <constructor-arg>
+                    <props>
+                        <prop key="kaptcha.border">yes</prop>
+                        <prop key="kaptcha.border.color">black</prop>
+                        <prop key="kaptcha.textproducer.font.color">black</prop>
+                        <prop key="kaptcha.textproducer.font.size">32</prop>
+                        <prop key="kaptcha.textproducer.font.names">courier new,Light Italic,Regular Italic,Medium Italic,Bold Italic,Mono Regular Italic</prop>
+                        <prop key="kaptcha.textproducer.char.string">acdefhjkmnpqrstuvwxy0123456789</prop>
+                        <prop key="kaptcha.textproducer.char.length">6</prop>
+                        <prop key="kaptcha.image.width">123</prop>
+                        <prop key="kaptcha.image.height">42</prop>
+                        <prop key="kaptcha.session.key">valicode</prop>
+                        <prop key="kaptcha.noise.impl">com.google.code.kaptcha.impl.DefaultNoise</prop>
+                        <prop key="kaptcha.noise.color">black</prop>
+                        <prop key="kaptcha.background.impl">com.google.code.kaptcha.impl.DefaultBackground</prop>
+                        <prop key="kaptcha.background.clear.from">203,223,241</prop>
+                        <prop key="kaptcha.background.clear.to">212,231,230</prop>
+                        <prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.FishEyeGimpy</prop>
+                    </props>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+</beans>
+

@@ -12,7 +12,9 @@ public enum ScoreConfigEnum {
     生物(7),
     政治(8),
     历史(9),
-    地理(10);
+    地理(10),
+    通用技术(13),
+    思想政治(14);
     /** The code. */
     private final Integer sub;
 

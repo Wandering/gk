@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IMajoredDAO">
+
+    <select id="getMajoreByParentId" parameterType="java.lang.Integer" resultType="java.util.Map">
+        select  id,name from gk_majored_category where 1=1
+        and parentId=#{parentId}
+    </select>
+
+    <select id="searchMajored" parameterType="java.util.Map" resultType="SubjectDto">
+        select a.id as majoredId,a.name as name,b.enrollNumber as planNumber,
+        b.schoolLength,b.foreignLanguage as foreginLanguage,b.feeStandard,b.universityId,b.universityName
+        from gk_majored a  left join gk_enroll_plan  b  on a.id=b.majoredId  where 1=1
+        <if test="condition.subjectTypeName!=null and condition.subjectTypeName!=''">
+             and a.subjectType=#{condition.subjectTypeName}
+        </if>
+        <if test="condition.year!=null">
+            and b.year=#{condition.year}
+        </if>
+        <if test="condition.majoredTypeName!=null and condition.majoredTypeName!=''">
+            and a.majoredType=#{condition.majoredTypeName}
+        </if>
+        <if test="condition.searchName!=null and condition.searchName!=''">
+            and a.name like CONCAT('%',#{condition.searchName},'%')
+        </if>
+        <if test="condition.batchTypeName!=null and condition.batchTypeName!=''">
+             and b.batch=#{condition.batchTypeName}
+        </if>
+        limit #{condition.pageNo},#{condition.pageSize}
+    </select>
+
+    <select id="searchMajoredCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(a.id) from gk_enroll_plan b left join gk_majored a on a.id=b.majoredId where 1=1
+            <if test="condition.subjectTypeName!=null and condition.subjectTypeName!=''">
+            and a.subjectType =#{condition.subjectTypeName}
+        </if>
+        <if test="condition.year!=null">
+            and b.year=#{condition.year}
+        </if>
+        <if test="condition.majoredTypeName!=null and condition.majoredTypeName!=''">
+            and a.majoredType=#{condition.majoredTypeName}
+        </if>
+
+        <if test="condition.searchName!=null and condition.searchName!=''">
+            and a.name like CONCAT('%',#{condition.searchName},'%')
+        </if>
+        <if test="condition.batchTypeName!=null and condition.batchTypeName!=''">
+            and b.batch=#{condition.batchTypeName}
+        </if>
+    </select>
+
+    <select id="getMajoredById" parameterType="java.lang.String" resultType="MajoredDto">
+        select  id as majoredId, name,educationLevel,subjectType,majoredType,degree,similarMajored,mainCourse,workGuide
+         from gk_majored where 1=1 and id=#{id}
+    </select>
+
+
+    <select id="getUniversityById" parameterType="java.lang.String" resultType="java.util.Map">
+        select  id,name
+        from gk_enroll_plan where 1=1 and batch=#{batchName} and majoredId=#{id}
+    </select>
+
+
+    <select id="getMajorDetailList" resultType="MajorDetailPojo">
+        SELECT majoredId id,majoredName name,subject,schoolLength,feeStandard,enrollNumber planNum
+        FROM gk_enroll_plan
+        <where>
+            1=1
+            <if test="id!=null">
+                and universityId = #{id}
+            </if>
+            <if test="batch!=null">
+                and batch = #{batch}
+            </if>
+            <if test="year!=null">
+                and year = #{year}
+            </if>
+            <if test="subject!=null">
+                and subject = #{subject}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据关键词查询专业基本信息 -->
+    <select id="getMajoredInfoByKeywords" parameterType="java.util.Map" resultType="MajorDetailPojo">
+        select id,major_name as name from zgk_major where major_name like CONCAT('%',#{keywords},'%') LIMIT 5
+    </select>
+
+    <select id="getMajorOpenUniversityList" parameterType="java.util.Map" resultType="java.util.Map">
+        select uu.id,uu.photo_url,uu.name,uu.property,uu.provinceCode,pp.name as province,uu.rank,uu.subjection,dd.name as typeName,uu.url,mm.majorRank
+        from zgk_university uu
+        left join zgk_university_major mm on uu.id=mm.universityId
+        left join zgk_province pp on pp.id=uu.provinceCode
+        left join zgk_data_dict dd on dd.type='PROPERTY' and dd.dictId=uu.type
+        where mm.majorId=#{condition.majorId}
+          and mm.educationLevel=#{condition.educationLevel}
+        ORDER BY if(isnull(mm.majorRank),10000,mm.majorRank) asc
+        limit #{condition.offset},#{condition.rows}
+    </select>
+
+    <select id="getMajorOpenUniversityCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(*)
+        from zgk_university uu
+        left join zgk_university_major mm on uu.id=mm.universityId
+        left join zgk_province pp on pp.id=uu.provinceCode
+        left join zgk_data_dict dd on dd.type='PROPERTY' and dd.dictId=uu.type
+        where mm.majorId=#{condition.majorId}
+          and mm.educationLevel=#{condition.educationLevel}
+
+    </select>
+
+    <select id="getMajorEmploymentRate" parameterType="java.util.Map" resultType="java.lang.String">
+        select employmentRate from zgk_major mm where mm.id=#{condition.majorId}
+    </select>
+
+    <select id="getMajorIntroduce" parameterType="java.util.Map" resultType="java.lang.String">
+        select major_introduce from zgk_major_detail mm where mm.id=#{condition.majorId}
+    </select>
+    <select id="getMajorSpecialisation" parameterType="java.util.Map" resultType="java.lang.String">
+        select specialisation from zgk_major_detail mm where mm.id=#{condition.majorId}
+    </select>
+
+</mapper>
+

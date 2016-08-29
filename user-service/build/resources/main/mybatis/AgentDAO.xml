@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IAgentDAO">
+    <!--
+    insert
+    update
+    updateNull
+    deleteById
+    deleteByCondition
+    deleteByProperty
+    fetch
+    findOne
+    findList
+    findAll
+    queryPage
+    like
+    queryList
+    queryOne
+    count
+    selectMaxId
+    updateOrSave
+    selectOne
+    selectList
+    -->
+
+    <sql id="Base_Column_List">
+        id as id ,
+        status as status ,
+        creator as creator ,
+        createDate as createDate ,
+        lastModifier as lastModifier ,
+        lastModDate as lastModDate ,
+        name as name ,
+        telphone as telphone ,
+        address as address ,
+        areaId as areaId
+    </sql>
+    <insert id="insert" parameterType="Agent">
+        INSERT INTO gk_agent (
+        status,
+        creator,
+        createDate,
+        lastModifier,
+        lastModDate,
+        name,
+        telphone,
+        address,
+        areaId
+        ) VALUES (
+        #{status},
+        #{creator},
+        #{createDate},
+        #{lastModifier},
+        #{lastModDate},
+        #{name},
+        #{telphone},
+        #{address},
+        #{areaId}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="Agent">
+        UPDATE gk_agent
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="status!=null">
+                status = #{status},
+            </if>
+            <if test="creator!=null">
+                creator = #{creator},
+            </if>
+            <if test="createDate!=null">
+                createDate = #{createDate},
+            </if>
+            <if test="lastModifier!=null">
+                lastModifier = #{lastModifier},
+            </if>
+            <if test="lastModDate!=null">
+                lastModDate = #{lastModDate},
+            </if>
+            <if test="name!=null">
+                name = #{name},
+            </if>
+            <if test="telphone!=null">
+                telphone = #{telphone},
+            </if>
+            <if test="address!=null">
+                address = #{address},
+            </if>
+            <if test="areaId!=null">
+                areaId = #{areaId},
+            </if>
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateMap">
+        UPDATE gk_agent
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.status!=null">
+                status = #{map.status},
+            </if>
+            <if test="map.creator!=null">
+                creator = #{map.creator},
+            </if>
+            <if test="map.createDate!=null">
+                createDate = #{map.createDate},
+            </if>
+            <if test="map.lastModifier!=null">
+                lastModifier = #{map.lastModifier},
+            </if>
+            <if test="map.lastModDate!=null">
+                lastModDate = #{map.lastModDate},
+            </if>
+            <if test="map.name!=null">
+                name = #{map.name},
+            </if>
+            <if test="map.telphone!=null">
+                telphone = #{map.telphone},
+            </if>
+            <if test="map.address!=null">
+                address = #{map.address},
+            </if>
+            <if test="map.areaId!=null">
+                areaId = #{map.areaId},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE gk_agent
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.status!=null">
+                status = #{update.status},
+            </if>
+            <if test="update.creator!=null">
+                creator = #{update.creator},
+            </if>
+            <if test="update.createDate!=null">
+                createDate = #{update.createDate},
+            </if>
+            <if test="update.lastModifier!=null">
+                lastModifier = #{update.lastModifier},
+            </if>
+            <if test="update.lastModDate!=null">
+                lastModDate = #{update.lastModDate},
+            </if>
+            <if test="update.name!=null">
+                name = #{update.name},
+            </if>
+            <if test="update.telphone!=null">
+                telphone = #{update.telphone},
+            </if>
+            <if test="update.address!=null">
+                address = #{update.address},
+            </if>
+            <if test="update.areaId!=null">
+                areaId = #{update.areaId},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.name!=null">
+                AND name = #{condition.name}
+            </if>
+            <if test="condition.telphone!=null">
+                AND telphone = #{condition.telphone}
+            </if>
+            <if test="condition.address!=null">
+                AND address = #{condition.address}
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
+        </trim>
+    </update>
+
+    <insert id="insertMap" >
+        INSERT INTO gk_agent (
+        status,
+        creator,
+        createDate,
+        lastModifier,
+        lastModDate,
+        name,
+        telphone,
+        address,
+        areaId
+        ) VALUES (
+        #{map.status},
+        #{map.creator},
+        #{map.createDate},
+        #{map.lastModifier},
+        #{map.lastModDate},
+        #{map.name},
+        #{map.telphone},
+        #{map.address},
+        #{map.areaId}
+        )
+    </insert>
+
+
+    <update id="updateNull" parameterType="Agent">
+        UPDATE gk_agent
+        <trim prefix="SET" suffixOverrides=",">
+            status = #{status},
+            creator = #{creator},
+            createDate = #{createDate},
+            lastModifier = #{lastModifier},
+            lastModDate = #{lastModDate},
+            name = #{name},
+            telphone = #{telphone},
+            address = #{address},
+            areaId = #{areaId},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM gk_agent
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </delete>
+
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM gk_agent
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="status!=null">
+                AND status = #{status}
+            </if>
+            <if test="creator!=null">
+                AND creator = #{creator}
+            </if>
+            <if test="createDate!=null">
+                AND createDate = #{createDate}
+            </if>
+            <if test="lastModifier!=null">
+                AND lastModifier = #{lastModifier}
+            </if>
+            <if test="lastModDate!=null">
+                AND lastModDate = #{lastModDate}
+            </if>
+            <if test="name!=null">
+                AND name = #{name}
+            </if>
+            <if test="telphone!=null">
+                AND telphone = #{telphone}
+            </if>
+            <if test="address!=null">
+                AND address = #{address}
+            </if>
+            <if test="areaId!=null">
+                AND areaId = #{areaId}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM gk_agent WHERE
+        ${property} = #{value}
+    </delete>
+
+    <select id="fetch" parameterType="java.lang.Long" resultType="Agent">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_agent
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="Agent">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_agent WHERE
+        ${property} = #{value}
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="Agent">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_agent WHERE
+        ${property} = #{value}
+    </select>
+
+    <select id="findAll" resultType="Agent">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_agent
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="Agent">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_agent
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.id!=null">
+                ${condition.groupOp}   ${condition.id.field}  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.status!=null">
+                ${condition.groupOp}   ${condition.status.field}  ${condition.status.op}  #{condition.status.data}
+            </if>
+            <if test="condition.creator!=null">
+                ${condition.groupOp}   ${condition.creator.field}  ${condition.creator.op}  #{condition.creator.data}
+            </if>
+            <if test="condition.createDate!=null">
+                ${condition.groupOp}   ${condition.createDate.field}  ${condition.createDate.op}  #{condition.createDate.data}
+            </if>
+            <if test="condition.lastModifier!=null">
+                ${condition.groupOp}   ${condition.lastModifier.field}  ${condition.lastModifier.op}  #{condition.lastModifier.data}
+            </if>
+            <if test="condition.lastModDate!=null">
+                ${condition.groupOp}   ${condition.lastModDate.field}  ${condition.lastModDate.op}  #{condition.lastModDate.data}
+            </if>
+            <if test="condition.name!=null">
+                ${condition.groupOp}   ${condition.name.field}  ${condition.name.op}  #{condition.name.data}
+            </if>
+            <if test="condition.telphone!=null">
+                ${condition.groupOp}   ${condition.telphone.field}  ${condition.telphone.op}  #{condition.telphone.data}
+            </if>
+            <if test="condition.address!=null">
+                ${condition.groupOp}   ${condition.address.field}  ${condition.address.op}  #{condition.address.data}
+            </if>
+            <if test="condition.areaId!=null">
+                ${condition.groupOp}   ${condition.areaId.field}  in ( #{condition.areaId.data},'0')
+            </if>
+
+
+        </where>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="Agent">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_agent
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id like CONCAT('%', #{condition.id} , '%')
+            </if>
+            <if test="condition.status!=null">
+                AND status like CONCAT('%', #{condition.status} , '%')
+            </if>
+            <if test="condition.creator!=null">
+                AND creator like CONCAT('%', #{condition.creator} , '%')
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate like CONCAT('%', #{condition.createDate} , '%')
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier like CONCAT('%', #{condition.lastModifier} , '%')
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate like CONCAT('%', #{condition.lastModDate} , '%')
+            </if>
+            <if test="condition.name!=null">
+                AND name like CONCAT('%', #{condition.name} , '%')
+            </if>
+            <if test="condition.telphone!=null">
+                AND telphone like CONCAT('%', #{condition.telphone} , '%')
+            </if>
+            <if test="condition.address!=null">
+                AND address like CONCAT('%', #{condition.address} , '%')
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId like CONCAT('%', #{condition.areaId} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="Agent">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_agent
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.name!=null">
+                AND name = #{condition.name}
+            </if>
+            <if test="condition.telphone!=null">
+                AND telphone = #{condition.telphone}
+            </if>
+            <if test="condition.address!=null">
+                AND address = #{condition.address}
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId in ( #{condition.areaId},'0')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="Agent">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM gk_agent
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.name!=null">
+                AND name = #{condition.name}
+            </if>
+            <if test="condition.telphone!=null">
+                AND telphone = #{condition.telphone}
+            </if>
+            <if test="condition.address!=null">
+                AND address = #{condition.address}
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId in ( #{condition.areaId},'0')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(id) FROM gk_agent
+        <where>
+            <if test="id!=null">
+                ${groupOp} ${id.field} ${id.op}  #{id.data}
+            </if>
+            <if test="status!=null">
+                ${groupOp} ${status.field} ${status.op}  #{status.data}
+            </if>
+            <if test="creator!=null">
+                ${groupOp} ${creator.field} ${creator.op}  #{creator.data}
+            </if>
+            <if test="createDate!=null">
+                ${groupOp} ${createDate.field} ${createDate.op}  #{createDate.data}
+            </if>
+            <if test="lastModifier!=null">
+                ${groupOp} ${lastModifier.field} ${lastModifier.op}  #{lastModifier.data}
+            </if>
+            <if test="lastModDate!=null">
+                ${groupOp} ${lastModDate.field} ${lastModDate.op}  #{lastModDate.data}
+            </if>
+            <if test="name!=null">
+                ${groupOp} ${name.field} ${name.op}  #{name.data}
+            </if>
+            <if test="telphone!=null">
+                ${groupOp} ${telphone.field} ${telphone.op}  #{telphone.data}
+            </if>
+            <if test="address!=null">
+                ${groupOp} ${address.field} ${address.op}  #{address.data}
+            </if>
+            <if test="areaId!=null">
+                ${groupOp} ${areaId.field} in ( #{areaId.data},'0')
+            </if>
+
+        </where>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Long">
+        SELECT
+        MAX(id)
+        FROM gk_agent
+    </select>
+
+</mapper>
+
