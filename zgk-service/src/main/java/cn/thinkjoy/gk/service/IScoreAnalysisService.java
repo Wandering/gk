@@ -16,6 +16,14 @@ public interface IScoreAnalysisService {
      */
     Map<String,Object> queryScoreRecordByUserId(long userId);
 
+
+    /**
+     * 判断用户是否是第一次进来
+     * @param userId
+     * @return
+     */
+    Integer queryUserIsFirst(long userId);
+
     /**
      * 添加用户定位分数
      * @param userId
@@ -316,7 +324,7 @@ public interface IScoreAnalysisService {
                                       String majorCode,
                                       long userId);
 
-    List<String> queryHistoryScore(long userId,Integer rows);
+    List<Map<String,Object>> queryHistoryScore(long userId,Integer rows,Long areaId);
 
     /**
      * 江苏算法

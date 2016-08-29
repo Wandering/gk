@@ -217,7 +217,7 @@ public class ScoreUtil {
         try {
             //一定会有一个值  如果没有说明入参有误 异常
             String key = map1.keySet().iterator().next();
-            scores.put(SubjectEnum.valueOf(key.substring(0,2)).getSub(), Float.valueOf(map1.get(key).toString())+"-"+120);
+            scores.put(SubjectEnum.valueOf(key.substring(0,2)).getSub(), floatToStr(Float.valueOf(map1.get(key).toString()))+"-"+120);
         }catch (Exception e){
             throw new BizException("error","上次添加值有误!");
         }
@@ -248,9 +248,9 @@ public class ScoreUtil {
             case 2:
                 return scoreStrs[1].split("\\|")[0];
             case 4:
-                return scoreStrs[3].split("\\|")[0];
+                return scoreStrs[2].split("\\|")[0];
             case 8:
-                return scoreStrs[4].split("\\|")[0];
+                return scoreStrs[3].split("\\|")[0];
 
         }
 
@@ -263,22 +263,31 @@ public class ScoreUtil {
      * @param majorType
      * @return
      */
-    public Integer[] getBatchLine(long areaId,int majorType){
+    public Map<String,Object>  getBatchLine(long areaId,int majorType){
         Integer year = Integer.valueOf(getYear());
 
+        /**
+         * 获取最新批次线 当年没有获取次年
+         */
         String scoreLine =null;
         do{
             scoreLine = scoreAnalysisService.queryScoreLine(areaId,majorType,year.toString());
             year--;
         }while (scoreLine==null);
-
+        year+=1;
 
         String [] scoreStrs = scoreLine.split("-");
-        Integer [] scoreLines = new Integer[4];
+        Integer[][] scoreLines = new Integer[4][4];
         for(int i=0;i<4;i++){
-            scoreLines[i]=Integer.valueOf(scoreStrs[i].split("\\|")[0]);
+            String[] scoreLineStr2=scoreStrs[i].split("\\|");
+            for(int j=0;j<scoreLineStr2.length;j++) {
+                scoreLines[i][j]=Integer.valueOf(scoreLineStr2[j]);
+            }
         }
-        return scoreLines;
+        Map<String,Object> rtnMap = new HashedMap();
+        rtnMap.put("batchLine",scoreLines);
+        rtnMap.put("year",year);
+        return rtnMap;
     }
 
 
@@ -288,44 +297,56 @@ public class ScoreUtil {
      * @param majorType
      * @return
      */
-    public String getTopBatchLine(long areaId,int majorType,Float totalScore){
+    public Map<String,Object> getTopBatchLine(long areaId,int majorType,Float totalScore){
+
         if(totalScore==null){
             throw new BizException("error","成绩不能为空!");
         }
-        Integer[] scoreLines =null;
-        scoreLines = getBatchLine(areaId,majorType);
-
-
+        Map<String,Object> scoreLinesMap = getBatchLine(areaId,majorType);
+        Integer[][] scoreLines =null;
+        scoreLines =(Integer[][]) scoreLinesMap.get("batchLine");
+        // 当前有4层
         Float temp = null;
+        String tempName = null;
 
         //规划计算当前分数最接近的上层分数
         for(int i=3;i>=0;i--){
-            temp=scoreLines[i].floatValue();
+
+            temp=scoreLines[i][0].floatValue();
             //出现为0跳过当前轮
-            if(scoreLines[i]==0){
+            if(scoreLines[i][0]==0){
                 continue;
             }
-            if(totalScore-scoreLines[i]<0){
+            if(totalScore-scoreLines[i][0]<0){
                 break;
             }
-            if(i==0&&totalScore-scoreLines[i]>0){
+            if(i==0&&totalScore-scoreLines[i][0]>0){
+                temp=scoreLines[0][0].floatValue();
+                //todo  这里目前写死为一二三高专批 当可以判断是专1还是专A时候更改
+                switch (i){
+                    case 3:
+                        tempName="一批本科";
+                        break;
+                    case 2:
+                        tempName="二批本科";
+                        break;
+                    case 1:
+                        tempName="三批本科";
+                        break;
+                    case 0:
+                        tempName="高职专科";
+                        break;
 
-                temp=scoreLines[0].floatValue();
-
-//                Integer areaTotal=null;
-
-//                areaTotal=scoreAnalysisService.queryTotalScoreByAreaId(areaId);
-//                if(areaTotal!=null){
-//                    // 该省总分在数据库中存在
-//                    temp=areaTotal.floatValue();
-//                    break;
-//                }else {
-//                    throw new BizException("error","该省总分不存在");
-//                }
+                }
             }
-
         }
-        return floatToStr(temp);
+//        temp=scoreLines[0][0].floatValue();
+
+        Map<String,Object> rtnMap = new HashedMap();
+        rtnMap.put("score",floatToStr(temp));
+        rtnMap.put("name",tempName);
+        rtnMap.put("year",scoreLinesMap.get("year"));
+        return rtnMap;
     }
 
 
@@ -436,22 +457,48 @@ public class ScoreUtil {
      */
     public Integer getScoreRank(long areaId,int majorType,Float score){
 
-        Integer[] scoreLines = getBatchLine(areaId,majorType);
+        Map<String,Object> scoreLinesMap = getBatchLine(areaId,majorType);
+        Integer[][] scoreLines=(Integer[][]) scoreLinesMap.get("batchLine");
 
-        if(score - scoreLines[0]>50F){
+        /**
+         * 按照每个成绩等级第一个分数来计算
+         */
+        if(score - scoreLines[0][0]>50F){
             //一本+50
             return ScoreRankEnum.名垂校史.getSub();
-        }else if(score-scoreLines[0]>0F){
+        }else if(score-scoreLines[0][0]>0F){
             //一本+0-49
             return ScoreRankEnum.校刊红人.getSub();
-        }else if(scoreLines[0]-score>0F && score - scoreLines[1]>0F){
+        }else if(scoreLines[0][0]-score>0F && score - scoreLines[1][0]>0F){
             //二本以上 一本以下
             return ScoreRankEnum.三好学生.getSub();
-        }else if(scoreLines[1]-score>0F && score - scoreLines[2]>0F){
+        }else if(scoreLines[1][0]-score>0F && score - scoreLines[2][0]>0F){
             //三本以上 二本以下
             return ScoreRankEnum.教师常客.getSub();
         }else{
             //三本以下
+            return ScoreRankEnum.逃课大军.getSub();
+        }
+
+    }
+
+    /**
+     * 查询当前分数的分数等级
+     * @return
+     */
+    public Integer getScoreRankZJ(long areaId,Float score){
+
+        Float totalScore =  750F;
+
+        if(score - (totalScore*0.9F) >=0F){
+            return ScoreRankEnum.名垂校史.getSub();
+        }else if(score - (totalScore*0.8F) >=0F){
+            return ScoreRankEnum.校刊红人.getSub();
+        }else if(score - (totalScore*0.6F) >=0F){
+            return ScoreRankEnum.三好学生.getSub();
+        }else if(score - (totalScore*0.4F)  >=0F){
+            return ScoreRankEnum.教师常客.getSub();
+        }else{
             return ScoreRankEnum.逃课大军.getSub();
         }
 
@@ -510,9 +557,16 @@ public class ScoreUtil {
 
     }
     public Float getProportionJS(String value){
-        Float v1 =tagToScore(value);
+        if(value.indexOf("-")>0) {
+            String[] values = value.split("-");
+            value=values[0];
+        }
+        Float v1 =null;
+        Float score = tagToScore(value);
+        if(score==null) {
+            v1=Float.valueOf(value);
+        }
         return v1/120F;
-
     }
 
 
@@ -540,11 +594,11 @@ public class ScoreUtil {
             String key=iterator.next();
             String value = (String) scores.get(key);
             String[] strings =null;
-            if(areaId==JS_AREA_CODE&&("政治".equals(key)||"历史".equals(key)||"地理".equals(key)||"物理".equals(key)||"化学".equals(key)||"生物".equals(key))) {
-                strings = new String[]{tagToScore(value).toString(),"120"};
-            }else {
+//            if(areaId==JS_AREA_CODE&&("政治".equals(key)||"历史".equals(key)||"地理".equals(key)||"物理".equals(key)||"化学".equals(key)||"生物".equals(key))) {
+//                strings = new String[]{tagToScore(value).toString(),"120"};
+//            }else {
                 strings = value.split("-");
-            }
+//            }
             if(!"".equals(strings[0]) && !"".equals(strings[1])){
                 Float subjectScore = Float.valueOf(strings[0]);
                 Float subjectTotalScore = Float.valueOf(strings[1]);
@@ -708,11 +762,11 @@ public class ScoreUtil {
     }
     private Map<String,Object> getSubjectInfo(Map<String,Object> scores,String subject,long areaId){
         String[] strings=null;
-        if(areaId==JS_AREA_CODE&&("政治".equals(subject)||"历史".equals(subject)||"地理".equals(subject)||"物理".equals(subject)||"化学".equals(subject)||"生物".equals(subject))) {
-            strings = new String[]{tagToScore(scores.get(subject).toString()).toString(),"120"};
-        }else {
+//        if(areaId==JS_AREA_CODE&&("政治".equals(subject)||"历史".equals(subject)||"地理".equals(subject)||"物理".equals(subject)||"化学".equals(subject)||"生物".equals(subject))) {
+//            strings = new String[]{tagToScore(scores.get(subject).toString()).toString(),"120"};
+//        }else {
             strings = scores.get(subject).toString().split("-");
-        }
+//        }
         if(!"".equals(strings[0]) && !"".equals(strings[1])){
             Float subjectScore = Float.valueOf(strings[0]);
             Float subjectTotalScore = Float.valueOf(strings[1]);
@@ -729,19 +783,36 @@ public class ScoreUtil {
      * @return
      */
     public String scoreToTag(Float f){
-        if(f-120F>=0){
-            return "A+";
-        }else if(f-100F>=0F){
-            return "A";
-        }else if(f-80F>=0F){
-            return "B+";
-        }else if(f-60F>=0F){
-            return "B";
-        }else if(f-40F>=0F){
-            return "C";
-        }else{
-            return "D";
+
+        switch (f.toString()){
+            case "120.0":
+                return "A+";
+            case "100.0":
+                return "A";
+            case "80.0":
+                return "B+";
+            case "60.0":
+                return "B";
+            case "40.0":
+                return "C";
+            case "20.0":
+                return "D";
         }
+        return null;
+
+//        if(f-120F==0){
+//            return "A+";
+//        }else if(f-100F==0F){
+//            return "A";
+//        }else if(f-80F==0F){
+//            return "B+";
+//        }else if(f-60F==0F){
+//            return "B";
+//        }else if(f-40F==0F){
+//            return "C";
+//        }else{
+//            return "D";
+//        }
     }
 
     /**
@@ -750,18 +821,118 @@ public class ScoreUtil {
      * @return
      */
     public Float tagToScore(String s){
-        if("A+".equals(s)){
-            return 120F;
-        }else if("A".equals(s)){
-            return 100F;
-        }else if("B+".equals(s)){
-            return 80F;
-        }else if("B".equals(s)){
-            return 60F;
-        }else if("C".equals(s)){
-            return 40F;
-        }else {
-            return 20F;
+
+//        if("A+".equals(s)){
+//            return 120F;
+//        }else if("A".equals(s)){
+//            return 100F;
+//        }else if("B+".equals(s)){
+//            return 80F;
+//        }else if("B".equals(s)){
+//            return 60F;
+//        }else if("C".equals(s)){
+//            return 40F;
+//        }else {
+//            return 20F;
+//        }
+
+        switch (s){
+            case "A+":
+                return 120F;
+            case "A":
+                return 100F;
+            case "B+":
+                return 80F;
+            case "B":
+                return 60F;
+            case "C":
+                return 40F;
+            case "D":
+                return 20F;
         }
+        return null;
+    }
+
+    public Map<String,Object> getScores2(HttpServletRequest request){
+        Map<String, Object> scores = Maps.newLinkedHashMap();
+
+        String prop = null;
+        Enumeration<String> names = request.getParameterNames();
+        while (names.hasMoreElements()) {
+            prop = names.nextElement();
+            if(prop.startsWith("scores")){
+                String key = prop.substring(prop.lastIndexOf("scores[")+"scores[".length(),prop.lastIndexOf("]"));
+                scores.put(key, request.getParameter(prop));
+            }
+        }
+
+        return scores;
+    }
+
+    public static int getTagNum(String v1){
+        if(v1.indexOf("另一门")>0){//物理A+,另一门B+
+            String t1=v1.substring(2,v1.lastIndexOf(","));
+            String t2=v1.substring(v1.lastIndexOf("另一门")+"另一门".length(),v1.length());
+            v1=t1+t2;
+        }
+        Integer i=0;
+        switch (v1){
+            case "A+A+":
+                i--;
+            case "A+A":
+                i--;
+            case "AA":
+                i--;
+            case "A+B+":
+                i--;
+            case "AB+":
+                i--;
+            case "B+B+":
+                i--;
+            case "A+B":
+                i--;
+            case "AB":
+                i--;
+            case "B+B":
+                i--;
+            case "BB":
+                i--;
+            case "A+C":
+                i--;
+            case "AC":
+                i--;
+            case "B+C":
+                i--;
+            case "BC":
+                i--;
+            case "CC":
+                i--;
+            case "A+D":
+                i--;
+            case "AD":
+                i--;
+            case "B+D":
+                i--;
+            case "BD":
+                i--;
+            case "CD":
+                i--;
+            case "DD":
+                i--;
+            case "A+":
+                i--;
+            case "A":
+                i--;
+            case "B":
+                i--;
+            case "C":
+                i--;
+            case "D":
+                i--;
+            default:
+                i--;
+
+        }
+        return i;
     }
 }

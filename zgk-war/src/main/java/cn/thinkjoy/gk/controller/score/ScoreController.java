@@ -1,9 +1,13 @@
 package cn.thinkjoy.gk.controller.score;
 
+import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.common.SubjectEnum;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.service.IScoreAnalysisService;
 import cn.thinkjoy.gk.common.ScoreUtil;
+import cn.thinkjoy.gk.util.RedisUtil;
+import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,10 @@ public class ScoreController {
     private IScoreAnalysisService scoreAnalysisService;
     @Autowired
     private ScoreUtil scoreUtil;
+
+    private static long JS_AREA_CODE=320000;
+
+
 
     /**
      * 根据用户Id和用户来源查询用户最新的提交记录
@@ -111,8 +119,31 @@ public class ScoreController {
                                     HttpServletRequest request){
         //获取成绩
         Map<String, Object> scores = scoreUtil.getScores(request);
+        Map<String, Object> scores2 = scoreUtil.getScores2(request);
 
+        Map<String, Object> lastScoreInfo = scoreAnalysisService.queryScoreRecordByUserId(userId);
+
+        if(lastScoreInfo!=null && lastScoreInfo.size()!=0) {
+            Map<String, Object> lastScores = (Map<String, Object>) lastScoreInfo.get("scores");
+            if (scores2.hashCode() == lastScores.hashCode()) {
+                Map<String, Object> resultMap = new HashedMap();
+                resultMap.put("recordId", lastScoreInfo.get("recordId"));
+                return resultMap;
+
+            }
+        }
         return scoreAnalysisService.insertScoreRecord(userId,areaId,majorType,scores);
+    }
+
+    /**
+     * 用户填写完分数信息后，提交成绩信息
+     * @return
+     */
+    @RequestMapping(value = "/queryUserIsFirst",method = RequestMethod.GET)
+    @ResponseBody
+    public Object queryUserIsFirst(@RequestParam long userId){
+
+        return scoreAnalysisService.queryUserIsFirst(userId);
     }
 
 
@@ -208,20 +239,19 @@ public class ScoreController {
     @RequestMapping(value = "/recommendSchool",method = RequestMethod.GET)
     @ResponseBody
     public Object recommendSchool(@RequestParam float totalScore,@RequestParam long areaId,Integer majorType,@RequestParam long userId){
-
+        Object rtnObj=null;
         if(areaId==330000){
             //浙江算法
-            if(majorType==null)
-                throw new BizException("error","majorType不能为空!");
-            return scoreAnalysisService.recommendSchoolZJ(totalScore,areaId,userId);
+            rtnObj = scoreAnalysisService.recommendSchoolZJ(totalScore,areaId,userId);
         }else if(areaId==320000){
             //江苏算法
             if(majorType==null)
                 throw new BizException("error","majorType不能为空!");
-            return scoreAnalysisService.recommendSchoolJS(totalScore,areaId,majorType,userId);
+            rtnObj = scoreAnalysisService.recommendSchoolJS(totalScore,areaId,majorType,userId);
         }else {
-            return scoreAnalysisService.recommendSchool(totalScore,areaId,majorType,userId);
+            rtnObj = scoreAnalysisService.recommendSchool(totalScore,areaId,majorType,userId);
         }
+        return rtnObj;
 
     }
 
@@ -310,17 +340,12 @@ public class ScoreController {
         List<Map<String, Object>> resultMaps =null;
         if(areaId==330000) {
             resultMaps = scoreAnalysisService.queryUniversityScore(universityId, areaId, majorType, batch);
-        }else if(areaId==320000){
-            if(majorType==null){
-                throw new BizException("error","学科类型不能为空");
-            }
-            if(batch==null){
-                throw new BizException("error","批次不能为空");
-            }
-            resultMaps = scoreAnalysisService.queryUniversityScore(universityId, areaId, majorType, batch);
         }else {
             if(majorType==null){
                 throw new BizException("error","学科类型不能为空");
+            }
+            if(majorType!=1&&majorType!=2){
+                throw new BizException("error","学科类型智能为1或2");
             }
             if(batch==null){
                 throw new BizException("error","批次不能为空");
@@ -379,9 +404,15 @@ public class ScoreController {
      */
     @RequestMapping(value = "/queryHistoryScore",method = RequestMethod.GET)
     @ResponseBody
-    public Object queryHistoryScore(@RequestParam long userId){
-        Integer rows=5;
-        return scoreAnalysisService.queryHistoryScore(userId,rows);
+    public Object queryHistoryScore(@RequestParam long userId,Integer rows){
+
+        Long areaId=null;
+        Map<String,Object> userInfo = scoreAnalysisService.queryUserInfo(userId);
+        if (userInfo!=null&&userInfo.containsKey("provinceId"))
+                areaId=Long.valueOf(userInfo.get("provinceId").toString());
+        //获取用户所在省份
+        return scoreAnalysisService.queryHistoryScore(userId,rows,areaId);
     }
+
 
 }

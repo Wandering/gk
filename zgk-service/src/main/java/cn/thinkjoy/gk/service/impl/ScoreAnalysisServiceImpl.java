@@ -7,6 +7,7 @@ import cn.thinkjoy.gk.dao.IZGK3in7DAO;
 import cn.thinkjoy.gk.service.IScoreAnalysisService;
 import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,11 +45,36 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         Integer majorType = (Integer) map.get("majorType");
         resultMap.put("majorType", majorType);
         resultMap.put("schoolName", map.get("schoolName"));
+        resultMap.put("recordId", map.get("id"));
 
         getScores(areaId,majorType,map,resultMap);
 
 
         return resultMap;
+    }
+
+    /**
+     * 判断用户是否是第一次进来
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public Integer queryUserIsFirst(long userId) {
+
+        //        三种状态
+        String gradeInfo = scoreAnalysisDAO.queryUserGradeInfo(userId);
+        Integer count = scoreAnalysisDAO.queryScoreCount(userId);
+//        0:未保存个人信息，未测评
+//        1:保存个人信息，未测评
+//        2:保存了个人信息，做了测评
+        if(StringUtils.isEmpty(gradeInfo) && count==0){
+            return 0;
+        }else if(StringUtils.isNotEmpty(gradeInfo) && count==0){
+            return 1;
+        }else {
+            return 2;
+        }
     }
 
     @Override
@@ -134,7 +160,9 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
             logger.info("用户是第一次测评");
             resultMap.put("difference", "off");
         }
-
+        if(areaId==ZJ_AREA_CODE){
+            resultMap.put("scoreRank", scoreUtil.getScoreRankZJ(areaId, totalScore));
+        }
         // 推荐标签
 
         List<String> labels = scoreUtil.getUserLabel(scores,areaId);
@@ -192,6 +220,9 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         return resultMap;
     }
 
+
+
+
     @Override
     public List<Map<String, Object>> queryAllRecordByUserId(long userId) {
         List<Map<String, Object>> list = new ArrayList<>();
@@ -209,9 +240,21 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                 resultMap.put("majorType", majorType);
                 resultMap.put("cdate", map.get("cdate"));
                 if(areaId!=ZJ_AREA_CODE) {
-                    resultMap.put("upLine", scoreUtil.getTopBatchLine(areaId, majorType, totalScore));
+                    Map<String,Object> scoreLineMap = scoreUtil.getTopBatchLine(areaId, majorType, totalScore);
+                    resultMap.put("upLine",scoreLineMap.get("score"));
+                    resultMap.put("upLineName", scoreLineMap.get("name"));
+                    resultMap.put("upLineYear", scoreLineMap.get("year"));
                 }
                 Map<String,Object> scores = getScores2(areaId,majorType,map,resultMap);
+                if(areaId==JS_AREA_CODE){
+                    String[] xcRanks = getScoreLevel(scores,majorType);
+                    if(scoreUtil.getTagNum(xcRanks[1])<scoreUtil.getTagNum(xcRanks[3])){
+                        resultMap.put("xcRank",xcRanks[1]+xcRanks[3]);
+                    }else {
+                        resultMap.put("xcRank",xcRanks[3]+xcRanks[1]);
+                    }
+
+                }
                 String areaTableName=null;
                 if(areaId!=ZJ_AREA_CODE) {
                     areaTableName = scoreUtil.getAreaTableName(areaId, majorType);
@@ -461,6 +504,13 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         //返回前20个院校
         List<Map<String, Object>> resultList = scoreAnalysisDAO.queryUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc,userId);
 
+        if(resultList==null){
+            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
+        }else if(resultList.size()==0) {
+
+            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
+
+        }
         return resultList;
     }
 
@@ -501,9 +551,26 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         //返回前20个院校
         List<Map<String, Object>> resultList = scoreAnalysisDAO.queryZJUniversityByScore(map);
 
-        return resultList;
+        return listToTreeList(resultList);
     }
 
+
+    private Map<String, List<Map<String,Object>>> listToTreeList(List<Map<String, Object>> resultList){
+        Map<String, List<Map<String,Object>>> treeMap = new LinkedHashMap<>();
+        for(Map<String, Object> map : resultList){
+            String majorName = map.get("majorName").toString();
+            if(treeMap.containsKey(majorName)){
+
+                List<Map<String,Object>> l1=treeMap.get(majorName);
+                l1.add(map);
+            }else {
+                List<Map<String,Object>> l1=new ArrayList<>();
+                l1.add(map);
+                treeMap.put(majorName,l1);
+            }
+        }
+        return treeMap;
+    }
 
     /**
      * 江苏算法
@@ -575,6 +642,14 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         bc -= 10;
         //返回前20个院校
         List<Map<String, Object>> resultList = scoreAnalysisDAO.queryJSUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc,xcRanks,userId);
+
+        if(resultList==null){
+            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
+        }else if(resultList.size()==0) {
+
+            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
+
+        }
         return resultList;
     }
 
@@ -616,7 +691,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         String level2=null;
         String universityLevel =null;
         if(areaId==JS_AREA_CODE){
-            Map<String,Object> jsScore = scoreUtil.getScoresJS(map,majorType);
+            Map<String,Object> jsScore = scoreUtil.getScoresJS2(map,majorType);
             /**
              * ================
              * 江苏成绩必须是5们 否则报错
@@ -672,9 +747,9 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                 resultMap.put("schoollevel", universityLevel);
             }
         }
-        if (totalScore > schoolLine) {
-            Integer stuNum = scoreAnalysisDAO.queryStuNumToLine(schoolLine, totalScore, areaTableName);
 
+        if (totalScore >= schoolLine) {
+            Integer stuNum = scoreAnalysisDAO.queryStuNumToLine(schoolLine, totalScore, areaTableName);
             resultMap.put("schoolId", schoolId);
             resultMap.put("batchName", batchName);
             resultMap.put("schoolName", name);
@@ -781,8 +856,49 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     }
 
     @Override
-    public List<String> queryHistoryScore(long userId,Integer rows){
-        return scoreAnalysisDAO.queryHistoryScore(userId,rows);
+    public List<Map<String,Object>> queryHistoryScore(long userId,Integer rows,Long areaId){
+        List<Map<String, Object>> maps = scoreAnalysisDAO.queryHistoryScore(userId, rows, areaId);
+        List<Map<String, Object>> rtnMaps = new ArrayList<>();
+
+
+
+        if(areaId==JS_AREA_CODE) {
+            if(maps!=null && !maps.isEmpty()) {
+                for (Map<String,Object> map : maps){
+                    Map<String,Object> map1 = new HashedMap();
+
+                    map1.putAll(map);
+                    String rank1=null;
+                    String rank2=null;
+                    String rank=null;
+                    Iterator<String> iterator = map1.keySet().iterator();
+                    while (iterator.hasNext()){
+                        String key = iterator.next();
+                        if(key.indexOf("Score")>0 && key.indexOf("totalScore")<0){
+                            map.remove(key);
+                            if(map1.get(key)!=null) {
+                                if(StringUtils.isEmpty(rank1))
+                                    rank1 = scoreUtil.scoreToTag(Float.valueOf(map1.get(key).toString()));
+                                else
+                                    rank2 = scoreUtil.scoreToTag(Float.valueOf(map1.get(key).toString()));
+                            }else {
+                                continue;
+                            }
+                        }
+                    }
+
+                    if(scoreUtil.getTagNum(rank1)<scoreUtil.getTagNum(rank2)){
+                        rank = rank1+rank2;
+                    }else {
+                        rank = rank2+rank1;
+                    }
+                    map.put("xcRank",rank);
+                }
+            }
+        }else {
+            rtnMaps=maps;
+        }
+        return maps;
     }
 
     @Override
@@ -861,31 +977,42 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         return getScoreLevel(subs[1],subs[3],subs[0]);
     }
 
-    private String[] getScoreLevel(Map<String,Object> scores,Integer majorType){
+    private String[] getScoreLevel(Map<String,Object> scores,Integer majorType) {
+
         Iterator<String> keys = scores.keySet().iterator();
         //江苏一定是两门额外科目  否则抛异常
-        Map<String,Object> map1=new LinkedHashMap<>();
+        Map<String, Object> map1 = new LinkedHashMap<>();
 
         while (keys.hasNext()) {
             String key = keys.next();
             if ((!"语文".equals(key)) && (!"数学".equals(key)) && (!"外语".equals(key))) {
                 String value = scores.get(key).toString();
-                map1.put(key,value);
+                map1.put(key, value);
             }
         }
 
         String sub = "历史";
-        if(majorType == 2){
+        if (majorType == 2) {
             sub = "物理";
         }
-        Map<String,Object> map2=new HashedMap();
-        map2.putAll(scores);
-        Float v1= scoreUtil.tagToScore(map2.get(sub).toString());
-        String value1= scoreUtil.scoreToTag(v1);
+        Map<String, Object> map2 = new HashedMap();
+        map2.putAll(map1);
+        String v1 = map2.get(sub).toString();
+        String value1 =null;
+        if (v1.indexOf("-")>0){
+            value1 = scoreUtil.scoreToTag(Float.valueOf(map2.get(sub).toString().split("-")[0]));
+        }else {
+            value1=v1;
+        }
         map2.remove(sub);
         String key=map2.keySet().iterator().next();
-        Float v2 = scoreUtil.tagToScore(map2.get(key).toString());
-        String value2 = scoreUtil.scoreToTag(v2);
+        String v2 = map2.get(key).toString();
+        String value2=null;
+        if(v2.indexOf("-")>0){
+            value2 = scoreUtil.scoreToTag(Float.valueOf(map2.get(key).toString().split("-")[0]));
+        }else {
+            value2=v2;
+        }
         return new String[]{sub,value1,key,value2};
     }
 
@@ -955,11 +1082,15 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
 
     private boolean compareToLevel(String v1,String v2,String v3){
         //如果选测等级是一门。。另一门的形式  直接比较
+
         if(v1.indexOf("另一门")>0){
-            return v1.compareTo(v2)<0;
+            //数字较小比较大
+            return scoreUtil.getTagNum(v1)>=scoreUtil.getTagNum(v2);
         }else {
-            return v1.compareTo(v3)<0;
+            return scoreUtil.getTagNum(v1)>=scoreUtil.getTagNum(v3);
         }
     }
+
+
 
 }
