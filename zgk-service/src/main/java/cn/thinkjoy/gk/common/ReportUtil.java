@@ -303,6 +303,42 @@ public class ReportUtil {
         return batchArr;
     }
 
+    public static String ConverNewBatch(String oldBatch){
+        String newBatch="";
+        switch (oldBatch){
+            case "1-1":
+                newBatch="11";
+                break;
+            case "1-2":
+                newBatch="12";
+                break;
+            case "2-1":
+                newBatch="21";
+                break;
+            case "2-2":
+                newBatch="22";
+                break;
+            case "3":
+                newBatch="4";
+                break;
+            case "3-1":
+                newBatch="41";
+                break;
+            case "3-2":
+                newBatch="42";
+                break;
+            case "4":
+                newBatch="8";
+                break;
+            case "4-1":
+                newBatch="81";
+                break;
+            case "4-2":
+                newBatch="82";
+                break;
+        }
+        return newBatch;
+    }
     /**
      * 批次结果排序
      * @param batchViews
