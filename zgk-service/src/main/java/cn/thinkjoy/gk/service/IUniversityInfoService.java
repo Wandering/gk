@@ -1,6 +1,8 @@
 package cn.thinkjoy.gk.service;
 
+import cn.thinkjoy.gk.entity.UniversityInfoEnrolling;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
+import cn.thinkjoy.gk.pojo.ReportForecastView;
 import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 
 import java.util.List;
@@ -33,6 +35,19 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
      */
     public List<UniversityInfoView> selectUniversityInfoViewByLogic(UniversityInfoParmasView universityInfoParmasView);
 
+    /**
+     * 分数转换位次
+     * @param parmasView
+     * @return
+     */
+    public Integer converPreByScore(ReportForecastView parmasView );
+
+    /**
+     * 分数转换线差
+     * @param parmasView
+     * @return
+     */
+    public Integer converScoreDiffByScore(ReportForecastView parmasView);
     /**
      * 院校录取信息查询条件
      * @param map
@@ -83,4 +98,26 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
      * @return
      */
     List<Map<String, Object>> getBatchByYearAndArea(Map<String, Object> map);
+
+    /**
+     * 难易预测
+     * @param reportForecastView
+     * @return
+     */
+    String getEnrollingByForecast(ReportForecastView reportForecastView);
+
+
+    /**
+     * 难易预测位次
+     * @param reportParm
+     * @return
+     */
+    public List<UniversityInfoEnrolling> getUniversityEnrollingsByPrecedence(ReportForecastView reportParm);
+
+    /**
+     * 难易预测线差
+     * @param reportParm
+     * @return
+     */
+    public List<UniversityInfoEnrolling> getUniversityEnrollingsByScoreDiff(ReportForecastView reportParm);
 }

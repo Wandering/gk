@@ -499,6 +499,36 @@ public class SmartReportController extends ZGKBaseController {
     }
 
     /**
+     * 难易预测
+     * 获取用户  输入分数、位次、文理 过滤院校清单
+     * @return
+     */
+    @RequestMapping(value = "/forecast",method=RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> reportMain(
+            @RequestParam(value = "batch") String batch,
+            @RequestParam(value = "score") Integer score,
+            @RequestParam(value = "province") String province,
+            @RequestParam(value = "categorie") Integer categorie,
+            @RequestParam(value="uid") Integer uid) {
+
+        ReportForecastView reportForecastView = new ReportForecastView();
+        reportForecastView.setBatch(batch);
+        reportForecastView.setScore(score);
+        reportForecastView.setProvince(province);
+        reportForecastView.setCategorie(categorie);
+        reportForecastView.setUid(uid);
+        reportForecastView.setPrecedence(iUniversityInfoService.converPreByScore(reportForecastView));
+        reportForecastView.setScoreDiff(iUniversityInfoService.converScoreDiffByScore(reportForecastView));
+        reportForecastView.setJoin(false);
+
+        String enrolling = iUniversityInfoService.getEnrollingByForecast(reportForecastView);
+        Map map = new HashMap();
+        map.put("enrolling", enrolling);
+        return map;
+    }
+
+    /**
      * 智能报告保存
      * @param reportResult
      * @return

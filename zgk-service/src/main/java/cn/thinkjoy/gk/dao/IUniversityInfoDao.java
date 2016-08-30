@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.dao;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
+import cn.thinkjoy.gk.entity.UniversityInfoEnrolling;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,7 +31,12 @@ public interface IUniversityInfoDao extends IBaseDAO<UniversityInfoView> {
      * @return
      */
     public List<UniversityInfoView> selectUniversityInfoByLineDiff(Map map);
-
+    /**
+     * 难易预测&成绩分析
+     * @param map
+     * @return
+     */
+    List<UniversityInfoEnrolling> selectUniversityEnrolling(Map map);
 
     /**
      * 获取计划招生数
@@ -65,6 +71,7 @@ public interface IUniversityInfoDao extends IBaseDAO<UniversityInfoView> {
     List<Map<String, Object>> getUniversityspecialMajors(Object universityId);
 
     List<Map<String, Object>> getUniversityEnrollingInfo(Map<String, String> map);
+
 
     /**
      * 通过年份和地区获取批次
