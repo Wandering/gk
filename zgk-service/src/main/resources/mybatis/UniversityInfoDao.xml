@@ -37,6 +37,9 @@
     <sql id="Base_Column_List">
         id,universityId,universityName,scoreDiff,preScoreDiff,enrollRate,scoreUseRate
     </sql>
+    <sql id="Enrolling_Column_List">
+        id,batch,universityId,universityName,enrollRate
+    </sql>
     <sql id="Search_Column_List">
          bData.*,zgk_university.isProportion,zgk_university.isRange,zgk_university.rankTrend,zgk_university.subjection,zgk_university.type,zgk_university.property,province.id as areaId,
         province.name as areaName,zgk_university_enroll.averageScore ,province.code as code,dict.name as typeName,
@@ -137,10 +140,10 @@
     </select>
     <!---难易预测&成绩分析-->
     <select id="selectUniversityEnrolling" resultMap="EnrollingMap" parameterType="java.util.Map">
-        select <include refid="Search_Column_List_Ranking" /> from zgk_data.`${tableName}` as bData
-        <if test="isJoin==true">
-            <include refid=""/>
-        </if>
+        select <include refid="Enrolling_Column_List" /> from zgk_data.`${tableName}` as bData
+        <!--<if test="isJoin==true">-->
+            <!--<include refid=""/>-->
+        <!--</if>-->
         <where>
             <if test="universityId!=null">
                 and universityId=#{universityId}

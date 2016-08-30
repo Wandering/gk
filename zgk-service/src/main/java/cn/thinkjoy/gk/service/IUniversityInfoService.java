@@ -40,7 +40,7 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
      * @param parmasView
      * @return
      */
-    public Integer converPreByScore(ReportForecastView parmasView );
+    public Integer converPreByScore(ReportForecastView parmasView,String key );
 
     /**
      * 分数转换线差

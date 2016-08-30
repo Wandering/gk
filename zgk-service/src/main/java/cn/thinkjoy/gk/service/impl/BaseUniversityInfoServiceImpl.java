@@ -222,9 +222,10 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
      * @return
      */
     @Override
-    public boolean enrollingLogin(String key) {
+    public boolean enrollingLogin(String key,Integer cate) {
         Map map = new HashMap();
         map.put("configKey", key);
+        map.put("majorType",cate);
         SystemParmas systemParmas = iSystemParmasService.selectModel(map);
         return systemParmas == null ? false : (Integer.valueOf(systemParmas.getConfigValue()) == 1 ? true : false);
     }

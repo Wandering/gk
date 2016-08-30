@@ -85,12 +85,17 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
 
     /**
      * 分数转换位次
-     * @param parmasView
+     * @param reportParm
      * @return
      */
     @Override
-    public Integer converPreByScore(ReportForecastView parmasView ) {
-        return iScoreConverPrecedenceService.converPrecedenceByScore(parmasView.getScore(), parmasView.getProvince(), parmasView.getCategorie(), parmasView.getBatch());
+    public Integer converPreByScore(ReportForecastView reportParm,String key  ) {
+        //一分一段 查找分数对应位次
+        Integer prevPre= iScoreConverPrecedenceService.converPrecedenceByScore(reportParm.getScore(), reportParm.getProvince(), reportParm.getCategorie(), reportParm.getBatch());
+        //找位次临近值
+        String tableName= ReportUtil.getTableName(reportParm.getProvince(), reportParm.getCategorie(), reportParm.getBatch(), isPre(reportParm,key));
+
+        return iReportResultService.getPrecedence(tableName,prevPre);
     }
 
     /**
@@ -236,6 +241,13 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         return universityInfoViews;
     }
 
+    private boolean isPre(ReportForecastView reportForecastView,String key){
+        String parmasKey = ReportUtil.combSystemParmasKey(reportForecastView.getProvince(), key);
+
+        //是否走位次
+        return enrollingLogin(parmasKey,reportForecastView.getCategorie());
+    }
+
     /**
      * 录取难易预测
      * @param reportForecastView 参数打包
@@ -244,15 +256,15 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     @Override
     public String getEnrollingByForecast(ReportForecastView reportForecastView) {
 
-        String parmasKey = ReportUtil.combSystemParmasKey(reportForecastView.getProvince(), ReportUtil.FORECAST_ENROLLING_LOGIC);
-
-        //是否走位次
-        boolean isPre = enrollingLogin(parmasKey);
+//        String parmasKey = ReportUtil.combSystemParmasKey(reportForecastView.getProvince(), ReportUtil.FORECAST_ENROLLING_LOGIC);
+//
+//        //是否走位次
+//        boolean isPre = enrollingLogin(parmasKey,reportForecastView.getCategorie());
 
         Integer preEnroll = 0, scoreDiffEnroll = 0, resultEnroll = 0;
 
         scoreDiffEnroll = getScoreDiffEnrolling(reportForecastView);
-        if (isPre)
+        if (isPre(reportForecastView,ReportUtil.FORECAST_ENROLLING_LOGIC))
             preEnroll = getPreEnrolling(reportForecastView);
 
         String[] configkeyArr = {ReportUtil.FORECAST_ENROLLING_DIFF, ReportUtil.FORECAST_ENROLLING_RANDOM};
@@ -270,8 +282,9 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         Integer resultEnroll = scoreDiffEnroll;
         if (preEnroll > 0) {
             String proCode = forecastView.getProvince(), diffConKey = configKeyArr[0], randomConkey = configKeyArr[1];
-            Integer diffV = getDiffValue(proCode, diffConKey);
-            resultEnroll = (preEnroll - scoreDiffEnroll) > diffV ? preEnroll - getEnrollRandom(proCode, randomConkey) : scoreDiffEnroll;
+            Integer cate=forecastView.getCategorie();
+            Integer diffV = getDiffValue(proCode, diffConKey,cate);
+            resultEnroll = (preEnroll - scoreDiffEnroll) > diffV ? preEnroll - getEnrollRandom(proCode, randomConkey,cate) : scoreDiffEnroll;
         }
         return (resultEnroll == 100 ? 98 : resultEnroll);
     }
@@ -282,8 +295,8 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
      * @param key
      * @return
      */
-    private Integer getEnrollRandom(String proCode,String key) {
-        SystemParmas systemParmas = getSystemParmasModelByKey(proCode, key);
+    private Integer getEnrollRandom(String proCode,String key,Integer cate) {
+        SystemParmas systemParmas = getSystemParmasModelByKey(proCode, key,cate);
 
         if (systemParmas == null)
             return null;
@@ -298,14 +311,15 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
      * @param key
      * @return
      */
-    private Integer getDiffValue(String proCode,String key) {
-        SystemParmas systemParmas = getSystemParmasModelByKey(proCode,key);
+    private Integer getDiffValue(String proCode,String key,Integer cate) {
+        SystemParmas systemParmas = getSystemParmasModelByKey(proCode,key,cate);
         return systemParmas == null ? -1 : Integer.valueOf(systemParmas.getConfigValue());
     }
-    private SystemParmas getSystemParmasModelByKey(String proCode,String key) {
+    private SystemParmas getSystemParmasModelByKey(String proCode,String key,Integer cate) {
         String parmasKey = ReportUtil.combSystemParmasKey(proCode, key);
         Map map = new HashMap();
         map.put("configKey", parmasKey);
+        map.put("majorType",cate);
         return iSystemParmasService.selectModel(map);
     }
     /**

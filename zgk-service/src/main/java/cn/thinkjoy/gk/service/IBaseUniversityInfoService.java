@@ -95,7 +95,7 @@ public interface IBaseUniversityInfoService {
      * @param key
      * @return
      */
-    public boolean enrollingLogin(String key);
+    public boolean enrollingLogin(String key,Integer cate);
 //
 //    /**
 //     * 位次录取率&线差录取率 差值
