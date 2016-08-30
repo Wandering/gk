@@ -306,11 +306,17 @@ public class ReportUtil {
     public static String ConverNewBatch(String oldBatch){
         String newBatch="";
         switch (oldBatch){
+            case "1":
+                newBatch="1";
+                break;
             case "1-1":
                 newBatch="11";
                 break;
             case "1-2":
                 newBatch="12";
+                break;
+            case "2":
+                newBatch="2";
                 break;
             case "2-1":
                 newBatch="21";
