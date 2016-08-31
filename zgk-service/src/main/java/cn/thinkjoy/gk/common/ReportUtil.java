@@ -106,6 +106,25 @@ public class ReportUtil {
      */
     public static final String PRECEDENCE_SP_FIRST_OR_UN_FIRST_KEY="PRECEDENCE_SP_FIRST_OR_UN_FIRST";
 
+    /****************************************************难易预测****************************************************/
+
+    /**
+     * 录取率差值
+     */
+    public static final String FORECAST_ENROLLING_DIFF="FORECAST_ENROLLING_DIFF";
+
+    /**
+     * 逻辑走向   1:存在一分一段  位次&线差 0:无一分一段  单线差
+     */
+    public static final String FORECAST_ENROLLING_LOGIC="FORECAST_ENROLLING_LOGIC";
+
+    /**
+     * 随机范围
+     */
+    public static final String FORECAST_ENROLLING_RANDOM="FORECAST_ENROLLING_RANDOM";
+
+    /****************************************************难易预测****************************************************/
+
 
     /**
      * 规则值拆分符
@@ -170,6 +189,9 @@ public class ReportUtil {
 //        return ;
     }
 
+    public static String combSystemParmasKey(String procode,String suffix) {
+        return procode.toUpperCase() + ReportUtil.ROLE_KEY_SPLIT_SYMBOL + suffix;
+    }
     /**
      * 线差值范围Key组装
      * @return
@@ -177,6 +199,7 @@ public class ReportUtil {
     public static String getLineDiffRangeKey(String procode,String batch) {
         return procode.toUpperCase() + ReportUtil.ROLE_KEY_SPLIT_SYMBOL + ReportUtil.LINE_DIFF_RANGE_KEY + ReportUtil.ROLE_KEY_SPLIT_SYMBOL + batch;
     }
+
     /**
      * 批次规则拆分
      * @param batchStr
@@ -203,6 +226,10 @@ public class ReportUtil {
      */
     public static String[] getBatchTagArr(String batchTag){
         return batchTag.split(VOLUNTEER_KEY_SPLIT_SYMBOL);
+    }
+
+    public static String[] getEnrollRandomArr(String randomValue) {
+        return randomValue.split(ROLE_VALUE_SPLIT_SYMBOL);
     }
     /**
      * 组装位次表名

@@ -89,5 +89,29 @@ public interface IBaseUniversityInfoService {
 
 
 
+    /**********************************难易预测&成绩分析**********************************/
+    /**
+     * 获取逻辑走向
+     * @param key
+     * @return
+     */
+    public boolean enrollingLogin(String key,Integer cate);
+//
+//    /**
+//     * 位次录取率&线差录取率 差值
+//     * @param preEnrolling
+//     * @param scoreEnrolling
+//     * @return
+//     */
+//    public Integer enrollingDiff(Integer preEnrolling ,Integer scoreEnrolling);
+//
+//    /**
+//     * 位次
+//     * @param preEnrolling
+//     * @return
+//     */
+//    public Integer enrollingResult(Integer preEnrolling);
+    /**********************************难易预测&成绩分析**********************************/
+
 
 }

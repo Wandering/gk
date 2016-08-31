@@ -41,9 +41,19 @@
         <result column="averageScore" property="averageScore" jdbcType="INTEGER" />
         <result column="isFavorite" property="isFavorite"  jdbcType="INTEGER"/>
     </resultMap>
+    <resultMap id="EnrollingMap" type="cn.thinkjoy.gk.entity.UniversityInfoEnrolling">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="batch" property="batch" jdbcType="VARCHAR" />
+        <result column="universityId" property="universityId" jdbcType="BIGINT" />
+        <result column="universityName" property="universityName" jdbcType="VARCHAR" />
+        <result column="enrollRate" property="enrollRate" jdbcType="NUMERIC" />
+    </resultMap>
 
     <sql id="Base_Column_List">
         id,universityId,universityName,scoreDiff,preScoreDiff,enrollRate,scoreUseRate
+    </sql>
+    <sql id="Enrolling_Column_List">
+        id,batch,universityId,universityName,enrollRate
     </sql>
     <sql id="Search_Column_List">
          bData.*,zgk_university.isProportion,zgk_university.isRange,zgk_university.rankTrend,zgk_university.subjection,zgk_university.type,zgk_university.property,province.id as areaId,
@@ -141,6 +151,30 @@
         </where>
         <if test="isEnrolling==true and begin!=null and end!=null">
             limit #{begin,jdbcType=INTEGER},#{end,jdbcType=INTEGER}
+        </if>
+    </select>
+    <!---难易预测&成绩分析-->
+    <select id="selectUniversityEnrolling" resultMap="EnrollingMap" parameterType="java.util.Map">
+        select <include refid="Enrolling_Column_List" /> from zgk_data.`${tableName}` as bData
+        <!--<if test="isJoin==true">-->
+            <!--<include refid=""/>-->
+        <!--</if>-->
+        <where>
+            <if test="universityId!=null">
+                and universityId=#{universityId}
+            </if>
+            <if test="precedence!=null">
+                and precedence=#{precedence}
+            </if>
+            <if test="scoreDiff!=null">
+                and scoreDiff=#{scoreDiff}
+            </if>
+        </where>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
         </if>
     </select>
     <!--按排名-->

@@ -3,7 +3,10 @@ package cn.thinkjoy.gk.service.impl;
 import cn.thinkjoy.gk.common.ReportEnum;
 import cn.thinkjoy.gk.common.ReportUtil;
 import cn.thinkjoy.gk.entity.UniversityEnrollView;
+import cn.thinkjoy.gk.entity.SystemParmas;
+import cn.thinkjoy.gk.entity.UniversityInfoEnrolling;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
+import cn.thinkjoy.gk.pojo.ReportForecastView;
 import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 import cn.thinkjoy.gk.service.IReportResultService;
 import cn.thinkjoy.gk.service.IScoreConverPrecedenceService;
@@ -13,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,6 +84,30 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         return universityInfoViews;
     }
 
+    /**
+     * 分数转换位次
+     * @param reportParm
+     * @return
+     */
+    @Override
+    public Integer converPreByScore(ReportForecastView reportParm,String key  ) {
+        //一分一段 查找分数对应位次
+        Integer prevPre= iScoreConverPrecedenceService.converPrecedenceByScore(reportParm.getScore(), reportParm.getProvince(), reportParm.getCategorie(), reportParm.getBatch());
+        //找位次临近值
+        String tableName= ReportUtil.getTableName(reportParm.getProvince(), reportParm.getCategorie(), reportParm.getBatch(), isPre(reportParm,key));
+
+        return iReportResultService.getPrecedence(tableName,prevPre);
+    }
+
+    /**
+     * 分数转换线差
+     * @param parmasView
+     * @return
+     */
+    @Override
+    public Integer converScoreDiffByScore(ReportForecastView parmasView){
+        return super.getLineDiff(parmasView.getBatch(), parmasView.getScore(), parmasView.getCategorie(), parmasView.getProvince());
+    }
     /**
      * 位次法
      * @param map
@@ -214,6 +242,152 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         return universityInfoViews;
     }
 
+    private boolean isPre(ReportForecastView reportForecastView,String key){
+        String parmasKey = ReportUtil.combSystemParmasKey(reportForecastView.getProvince(), key);
+
+        //是否走位次
+        return enrollingLogin(parmasKey,reportForecastView.getCategorie());
+    }
+
+    /**
+     * 录取难易预测
+     * @param reportForecastView 参数打包
+     * @return
+     */
+    @Override
+    public String getEnrollingByForecast(ReportForecastView reportForecastView) {
+
+//        String parmasKey = ReportUtil.combSystemParmasKey(reportForecastView.getProvince(), ReportUtil.FORECAST_ENROLLING_LOGIC);
+//
+//        //是否走位次
+//        boolean isPre = enrollingLogin(parmasKey,reportForecastView.getCategorie());
+
+        Integer preEnroll = 0, scoreDiffEnroll = 0, resultEnroll = 0;
+
+        scoreDiffEnroll = getScoreDiffEnrolling(reportForecastView);
+        if (isPre(reportForecastView,ReportUtil.FORECAST_ENROLLING_LOGIC))
+            preEnroll = getPreEnrolling(reportForecastView);
+
+        String[] configkeyArr = {ReportUtil.FORECAST_ENROLLING_DIFF, ReportUtil.FORECAST_ENROLLING_RANDOM};
+
+        resultEnroll = getResultEnroll(reportForecastView,preEnroll, scoreDiffEnroll,configkeyArr);
+
+        return resultEnroll.toString();
+    }
+
+    /**
+     * 计算最终录取率
+     * @return
+     */
+    private Integer getResultEnroll(ReportForecastView forecastView ,Integer preEnroll,Integer scoreDiffEnroll,String[] configKeyArr) {
+        Integer resultEnroll = scoreDiffEnroll;
+        if (preEnroll > 0) {
+            String proCode = forecastView.getProvince(), diffConKey = configKeyArr[0], randomConkey = configKeyArr[1];
+            Integer cate=forecastView.getCategorie();
+            Integer diffV = getDiffValue(proCode, diffConKey,cate);
+            resultEnroll = (preEnroll - scoreDiffEnroll) > diffV ? preEnroll - getEnrollRandom(proCode, randomConkey,cate) : scoreDiffEnroll;
+        }
+        return (resultEnroll == 100 ? 98 : resultEnroll);
+    }
+
+    /**
+     * 获取随机录取率范围
+     * @param proCode
+     * @param key
+     * @return
+     */
+    private Integer getEnrollRandom(String proCode,String key,Integer cate) {
+        SystemParmas systemParmas = getSystemParmasModelByKey(proCode, key,cate);
+
+        if (systemParmas == null)
+            return null;
+        String enrollRandom = systemParmas.getConfigValue();
+        String[] randomArr = ReportUtil.getEnrollRandomArr(enrollRandom);
+
+        Integer startR = Integer.valueOf(randomArr[0]), endR = Integer.valueOf(randomArr[1]);
+        return (int) (startR + Math.random() * endR);
+    }
+    /**
+     * 获取位次&线差相差阀值
+     * @param key
+     * @return
+     */
+    private Integer getDiffValue(String proCode,String key,Integer cate) {
+        SystemParmas systemParmas = getSystemParmasModelByKey(proCode,key,cate);
+        return systemParmas == null ? -1 : Integer.valueOf(systemParmas.getConfigValue());
+    }
+    private SystemParmas getSystemParmasModelByKey(String proCode,String key,Integer cate) {
+        String parmasKey = ReportUtil.combSystemParmasKey(proCode, key);
+        Map map = new HashMap();
+        map.put("configKey", parmasKey);
+        map.put("majorType",cate);
+        return iSystemParmasService.selectModel(map);
+    }
+    /**
+     * 线差录取率
+     * @param reportForecastView
+     * @return
+     */
+    private Integer getScoreDiffEnrolling(ReportForecastView reportForecastView){
+        BigDecimal bigDecimal=new BigDecimal(100);
+        Integer preEnroll=0;
+        //位次获得值
+        List<UniversityInfoEnrolling> universityInfoEnrollings= getUniversityEnrollingsByScoreDiff(reportForecastView);
+
+        if(universityInfoEnrollings!=null) {
+            UniversityInfoEnrolling universityInfoEnrolling = universityInfoEnrollings.get(0);
+            preEnroll = bigDecimal.multiply(universityInfoEnrolling.getEnrollRate()).intValue();
+        }
+        return preEnroll;
+    }
+    /**
+     * 位次录取率
+     * @param reportForecastView
+     * @return
+     */
+    private Integer getPreEnrolling(ReportForecastView reportForecastView){
+        BigDecimal bigDecimal=new BigDecimal(100);
+        Integer preEnroll=0;
+        //位次获得值
+        List<UniversityInfoEnrolling> universityInfoEnrollings=getUniversityEnrollingsByPrecedence(reportForecastView);
+
+        if(universityInfoEnrollings!=null) {
+            UniversityInfoEnrolling universityInfoEnrolling = universityInfoEnrollings.get(0);
+            preEnroll = bigDecimal.multiply(universityInfoEnrolling.getEnrollRate()).intValue();
+        }
+        return preEnroll;
+    }
+    /**
+     * 难易预测 位次
+     * @param reportParm
+     * @return
+     */
+    @Override
+    public List<UniversityInfoEnrolling> getUniversityEnrollingsByPrecedence(ReportForecastView reportParm) {
+        Map parmasMap = new HashMap();
+        parmasMap.put("tableName", ReportUtil.getTableName(reportParm.getProvince(), reportParm.getCategorie(), reportParm.getBatch(), true));
+        parmasMap.put("universityId", reportParm.getUid());
+        parmasMap.put("precedence", reportParm.getPrecedence());
+        parmasMap.put("isJoin", reportParm.isJoin());
+        List<UniversityInfoEnrolling> universityInfoEnrollings = iUniversityInfoDao.selectUniversityEnrolling(parmasMap);
+        return universityInfoEnrollings;
+    }
+
+    /**
+     * 难易预测 线差
+     * @param reportParm
+     * @return
+     */
+    @Override
+    public List<UniversityInfoEnrolling> getUniversityEnrollingsByScoreDiff(ReportForecastView reportParm) {
+        Map parmasMap = new HashMap();
+        parmasMap.put("tableName", ReportUtil.getTableName(reportParm.getProvince(), reportParm.getCategorie(), reportParm.getBatch(), false));
+        parmasMap.put("universityId", reportParm.getUid());
+        parmasMap.put("scoreDiff", reportParm.getScoreDiff());
+        parmasMap.put("isJoin", reportParm.isJoin());
+        List<UniversityInfoEnrolling> universityInfoEnrollings = iUniversityInfoDao.selectUniversityEnrolling(parmasMap);
+        return universityInfoEnrollings;
+    }
     @Override
     public List<Map<String, Object>> getUniversityEnrollingConditions(Map<String, String> map) {
         return iUniversityInfoDao.getUniversityEnrollingConditions(map);

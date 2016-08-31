@@ -194,7 +194,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
         String controleLine = getControleLine(bch[0], cate, provinceCode);
         String[] conLineArr = controleLine.split(ReportUtil.VOLUNTEER_KEY_SPLIT_SYMBOL);
         Integer line = 0;
-        if (conLineArr.length > 1) {
+        if (bch.length > 1) {
             line = (score - Integer.valueOf(conLineArr[Integer.valueOf(bch[1])-1]));
         } else
             line = (score - Integer.valueOf(conLineArr[0]));
