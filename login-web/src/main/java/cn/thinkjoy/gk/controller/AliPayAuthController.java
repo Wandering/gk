@@ -13,10 +13,8 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
-import com.alipay.api.request.AlipayOpenPublicGisQueryRequest;
 import com.alipay.api.request.AlipaySystemOauthTokenRequest;
 import com.alipay.api.request.AlipayUserUserinfoShareRequest;
-import com.alipay.api.response.AlipayOpenPublicGisQueryResponse;
 import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import com.alipay.api.response.AlipayUserUserinfoShareResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -99,9 +97,9 @@ public class AliPayAuthController
         return getRedirectUrl(userId, aliUserId);
     }
 
-    private String getRedirectUrl(String userId, String areaId)
+    private String getRedirectUrl(String userId, String aliUserId)
     {
-        return "redirect:http://alipay.test.zhigaokao.cn/results-confirm.html?userId="+userId+"&aliUserId="+areaId;
+        return "redirect:http://alipay.test.zhigaokao.cn/results-confirm.html?userId="+userId+"&aliUserId="+ aliUserId;
     }
 
     private String getResult(String accessToken)
@@ -207,29 +205,5 @@ public class AliPayAuthController
         paramMap.put("return_url", AlipayConfig.return_url);
         paramMap.put("target_service", AlipayConfig.target_service);
         return AlipaySubmit.buildRequest(paramMap,"POST","submitButton");
-    }
-
-    @RequestMapping(value = "/getGis", produces = "application/json; charset=utf-8")
-    @ResponseBody
-    public String gis()
-    {
-        AlipayOpenPublicGisQueryRequest request = new AlipayOpenPublicGisQueryRequest();
-        request.setBizContent("{\"userId\":\2088402907729754\"}");
-        AlipayOpenPublicGisQueryResponse response;
-        try
-        {
-            response = alipayClient.execute(request);
-        }
-        catch (AlipayApiException e)
-        {
-            throw new BizException(e.getErrCode(), e.getMessage());
-        }
-        String areaInfo = "";
-        if(null != response)
-        {
-            areaInfo = response.getBody();
-        }
-        System.out.println(areaInfo);
-        return response.getBody();
     }
 }

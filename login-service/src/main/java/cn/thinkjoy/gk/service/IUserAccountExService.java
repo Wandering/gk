@@ -48,4 +48,6 @@ public interface IUserAccountExService {
     int updateUserAccountRegistXueTang(Map<String, Object> paramMap);
 
     Map<String,Object> findUserInfoByAlipayId(String aliUserId);
+
+    boolean bindUserAccount(UserAccount userAccount);
 }

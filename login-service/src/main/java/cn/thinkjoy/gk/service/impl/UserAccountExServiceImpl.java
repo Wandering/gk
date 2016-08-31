@@ -225,4 +225,12 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         params.put("alipayUserId",alipayId);
         return userAccountExDAO.findUserInfoByAlipayId(params);
     }
+
+    @Override
+    public boolean bindUserAccount(UserAccount userAccount) {
+        boolean flag;
+        userAccountDAO.update(userAccount);
+        flag = true;
+        return flag;
+    }
 }
