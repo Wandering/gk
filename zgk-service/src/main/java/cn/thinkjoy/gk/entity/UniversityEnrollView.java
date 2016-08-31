@@ -1,8 +1,10 @@
 package cn.thinkjoy.gk.entity;
 
 import cn.thinkjoy.common.domain.CreateBaseDomain;
+import cn.thinkjoy.gk.common.ReportUtil;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by yyp on 16/30/8.
@@ -143,6 +145,11 @@ public class UniversityEnrollView extends CreateBaseDomain<Long> implements Comp
     }
 
     public void setEnrollRate(BigDecimal enrollRate) {
+
+
+        this.enrollRate = enrollRate;
+    }
+    public void setEnrollRate(BigDecimal enrollRate,String province) {
         this.enrollRate = enrollRate;
     }
 

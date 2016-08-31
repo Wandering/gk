@@ -6,8 +6,13 @@ import cn.thinkjoy.gk.common.ReportUtil;
 import cn.thinkjoy.gk.common.ScoreUtil;
 import cn.thinkjoy.gk.dao.IScoreAnalysisDAO;
 import cn.thinkjoy.gk.dao.ISystemParmasDao;
+import cn.thinkjoy.gk.entity.CheckBatchMsg;
 import cn.thinkjoy.gk.entity.SystemParmas;
+import cn.thinkjoy.gk.entity.UniversityEnrollView;
+import cn.thinkjoy.gk.entity.UniversityInfoEnrolling;
 import cn.thinkjoy.gk.pojo.BatchView;
+import cn.thinkjoy.gk.pojo.ReportForecastView;
+import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 import cn.thinkjoy.gk.service.IScoreAnalysisService;
 import cn.thinkjoy.gk.service.IScoreConverPrecedenceService;
 import cn.thinkjoy.gk.service.ISystemParmasService;
@@ -19,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -498,35 +504,142 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         LOGGER.info("成绩:" + score);
         LOGGER.info("科类:" + majorType);
         LOGGER.info("省份:" + province);
-
-        /**
-         * 逻辑走向
-         */
-        Integer loginTrend=getLogic(province, majorType);
-        LOGGER.info("逻辑:" + loginTrend);
-        List<BatchView> batchViews = iSystemParmasService.selectSystemParmas(majorType, score,sap, province,loginTrend);
-        Collections.sort(batchViews);
-        LOGGER.info("该学生达标:" + batchViews.size() + "个批次");
+        String batch = getBatchByScore(province,majorType,score);
+        LOGGER.info("该学生被定为在:"+batch+"批次");
         LOGGER.info("=======批次及批次控制线信息 End========");
 
+
         LOGGER.info("=======获取推荐学校 Start=======");
-        if(batchViews.size()==0){
-            throw new BizException("error","没有批次信息!");
-        }
-        String batch = batchViews.get(0).getBatch();
-        String sortBy="";
-        LOGGER.info("该学生被定为在:"+batch+"批次");
+        List<Map<String,Object>> resultMaps = getResultListByScore(batch,score,province,majorType,userId,areaId);
+        return resultMaps;
+    }
+
+    public List<Map<String,Object>> getResultListByScore(String batch,Integer score,String province,Integer majorType,long userId,long areaId){
         Map<String,Object> condition = new HashedMap();
         condition.put("userId",userId);
         condition.put("batch",batch);
-        condition.put("year",2015);
+        condition.put("year",getConfigValueInt(province,majorType,ReportUtil.SCORE_ENROLLING_YEAR));
         condition.put("majorType",majorType);
         condition.put("areaId",areaId);
-        universityInfoService.selectUnivEnrollInfo(condition,sortBy);
-        LOGGER.info("=======获取推荐学校 End========");
 
-//        return resultList;
-        return null;
+
+
+        LOGGER.info("=======放置参数 Start========");
+        ReportForecastView reportForecastView = new ReportForecastView();
+        reportForecastView.setBatch(batch);
+        reportForecastView.setScore(score);
+        reportForecastView.setProvince(province);
+        reportForecastView.setCategorie(majorType);
+        reportForecastView.setPrecedence(universityInfoService.converPreByScore(reportForecastView,ReportUtil.SCORE_ENROLLING_LOGIC));
+        reportForecastView.setScoreDiff(universityInfoService.converScoreDiffByScore(reportForecastView));
+        reportForecastView.setJoin(false);
+        reportForecastView.setLimit(getConfigValueInt(province,majorType,ReportUtil.SCORE_ENROLLING_LIMIT));
+
+        List<Map<String,Object>> universityInfoEnrollings = getEnrollingByScore(reportForecastView);
+        LOGGER.info("=======放置参数 End========");
+
+        condition.put("universitys",universityInfoEnrollings);
+        String sortBy = getConfigValueString(province,majorType,ReportUtil.SCORE_SORT_BY);
+        LOGGER.info("排序方式:"+sortBy);
+        List<UniversityEnrollView> universityEnrollViews =universityInfoService.selectUnivEnrollInfo(condition,sortBy);
+        LOGGER.info("=======获取推荐学校 End========");
+        LOGGER.info("=======组装返回值 Start========");
+        List<Map<String,Object>> resultList = new ArrayList<>();
+        for(Map<String,Object> map:universityInfoEnrollings){
+            LOGGER.info("当前组装学校:"+map.get("universityName"));
+            for(UniversityEnrollView universityEnrollView:universityEnrollViews){
+                if(map.get("universityName").equals(universityEnrollView.getUniversityName())){
+                    map.put("batch",universityEnrollView.getBatchName());
+                    map.put("highestScore",universityEnrollView.getHighestScore());
+                    map.put("lowestScore",universityEnrollView.getLowestScore());
+                    map.put("averageScor",universityEnrollView.getAverageScore());
+                    Integer isFavorite = universityEnrollView.getIsFavorite()==null?0:universityEnrollView.getIsFavorite();
+                    map.put("isFavorite",isFavorite);
+                    resultList.add(map);
+                };
+
+            }
+        }
+        LOGGER.info("=======组装返回值 End========");
+
+
+        return resultList;
+
+    }
+
+    /**
+     * 成绩分析获取推荐院校列表
+     * @param reportForecastView 参数打包
+     * @return
+     */
+    private List<Map<String,Object>> getEnrollingByScore(ReportForecastView reportForecastView) {
+
+
+        List<UniversityInfoEnrolling> universityInfoDiffEnrollings=null;
+        List<UniversityInfoEnrolling> universityInfoPreEnrollings=null;
+        //线差法
+        universityInfoDiffEnrollings=universityInfoService.getUniversityEnrollingsByScoreDiff(reportForecastView);
+        //算法走向 0线差 1位次
+        if (isPre(reportForecastView,ReportUtil.SCORE_ENROLLING_LOGIC)) {
+            LOGGER.info("这是位次法");
+            //  位次法
+            universityInfoPreEnrollings = universityInfoService.getUniversityEnrollingsByPrecedence(reportForecastView);
+        }
+        Map<String,Object> map=null;
+        String[] configkeyArr = {ReportUtil.FORECAST_ENROLLING_DIFF, ReportUtil.FORECAST_ENROLLING_RANDOM};
+        List<Map<String,Object>> mapList=new ArrayList<>();
+
+
+            for(int i=0;i<universityInfoDiffEnrollings.size();i++){
+                map = new HashedMap();
+                Integer preRate=0;
+                if(universityInfoPreEnrollings!=null){
+                    preRate=getEnrollRate(universityInfoPreEnrollings.get(i));
+                }
+                Integer enrollRate = universityInfoService.getResultEnroll(reportForecastView.getProvince(),
+                        reportForecastView.getCategorie(),
+                        preRate,
+                        getEnrollRate(universityInfoDiffEnrollings.get(i)),
+                        configkeyArr
+                );
+                map.put("enrollRate",enrollRate);
+                map.put("universityName",universityInfoDiffEnrollings.get(i).getUniversityName());
+                map.put("universityId",universityInfoDiffEnrollings.get(i).getUniversityId());
+                mapList.add(map);
+            }
+
+        LOGGER.info("推荐出院校个数:"+mapList.size());
+        return mapList;
+    }
+
+
+    /**
+     * 获取录取率
+     * @param universityInfoEnrolling
+     * @return
+     */
+    private Integer getEnrollRate(UniversityInfoEnrolling universityInfoEnrolling){
+        BigDecimal bigDecimal=new BigDecimal(100);
+        Integer preEnroll=0;
+
+        if(universityInfoEnrolling!=null) {
+            preEnroll = bigDecimal.multiply(universityInfoEnrolling.getEnrollRate()).intValue();
+        }
+        return preEnroll;
+    }
+
+
+    /**
+     * 是否走位次法
+     * @param reportForecastView
+     * @param key
+     * @return
+     */
+    private boolean isPre(ReportForecastView reportForecastView,String key){
+        String parmasKey = ReportUtil.combSystemParmasKey(reportForecastView.getProvince(), key);
+
+        //是否走位次
+        return universityInfoService.enrollingLogin(parmasKey,reportForecastView.getCategorie());
     }
 
 
@@ -1178,5 +1291,51 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         return logic;
     }
 
+    /**
+     * 当前算法推算院校数量
+     * @return
+     */
+    private Integer getConfigValueInt(String province,Integer categorie,String configKey){
+        Map map=new HashedMap();
+        map.put("configKey",ReportUtil.combSystemParmasKey(province,configKey));
+        map.put("majorType",categorie);
+        SystemParmas systemParmas=iSystemParmasService.selectModel(map);
+        return Integer.valueOf(systemParmas.getConfigValue());
+    }
 
+    /**
+     * 当前算法推算院校数量
+     * @return
+     */
+    private String getConfigValueString(String province,Integer categorie,String configKey){
+        Map map=new HashedMap();
+        map.put("configKey",ReportUtil.combSystemParmasKey(province,configKey));
+        map.put("majorType",categorie);
+        SystemParmas systemParmas=iSystemParmasService.selectModel(map);
+        return systemParmas.getConfigValue();
+    }
+    /**
+     * 当前算法推算院校数量
+     * @return
+     */
+    private String getBatchByScore(String province,Integer categorie,Integer score){
+        /**
+         * 逻辑走向
+         */
+        Integer loginTrend=getLogic(province, categorie);
+        LOGGER.info("逻辑:" + loginTrend);
+        UniversityInfoParmasView universityInfoParmasView = new UniversityInfoParmasView();
+        universityInfoParmasView.setBatch("1");
+        universityInfoParmasView.setCategorie(categorie);
+        universityInfoParmasView.setProvince(province);
+        universityInfoParmasView.setScore(score);
+
+        CheckBatchMsg checkBatchMsg = iSystemParmasService.checkBatchAlert(universityInfoParmasView);
+        String batch=checkBatchMsg.getMatch();
+        if(batch==null){
+            LOGGER.info("分数太低没有定位到批次");
+            throw new BizException("error","分数太低没有定位到批次");
+        }
+        return batch;
+    }
 }

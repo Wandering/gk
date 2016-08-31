@@ -122,6 +122,25 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
      */
     public List<UniversityInfoEnrolling> getUniversityEnrollingsByScoreDiff(ReportForecastView reportParm);
 
+
+    /**
+     * 成绩分析 获取院校录取信息
+     * @param condition
+     * @param sortBy
+     * @return
+     */
+
     List<UniversityEnrollView> selectUnivEnrollInfo(Map<String, Object> condition,
                                                     String sortBy);
+
+    /**
+     * 成绩分析 计算最终录取率
+     * @param province
+     * @param cate
+     * @param preEnroll
+     * @param scoreDiffEnroll
+     * @param configKeyArr
+     * @return
+     */
+    Integer getResultEnroll(String province,Integer cate,Integer preEnroll,Integer scoreDiffEnroll,String[] configKeyArr);
 }

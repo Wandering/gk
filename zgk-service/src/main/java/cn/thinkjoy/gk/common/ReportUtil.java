@@ -150,11 +150,39 @@ public class ReportUtil {
      * 一分一段表后缀
      */
     public static final String ONESCORE_KEY_SYMBOL="y";
+    /****************************************************难易预测****************************************************/
 
     /**
-     * 成绩分析-逻辑走向
+     * 成绩分析-逻辑走向 1:存在一分一段  位次&线差 0:无一分一段  单线差
      */
     public static final String SCORE_ENROLLING_LOGIC = "SCORE_ENROLLING_LOGIC";
+
+    /**
+     * 随机范围
+     */
+    public static final String SCORE_ENROLLING_RANDOM="SCORE_ENROLLING_RANDOM";
+
+    /**
+     * 录取率差值
+     */
+    public static final String SCORE_ENROLLING_DIFF="SCORE_ENROLLING_DIFF";
+    /**
+     * 成绩分析limit
+     */
+    public static final String SCORE_ENROLLING_LIMIT="SCORE_ENROLLING_LIMIT";
+
+    /**
+     * 成绩分析sortBy
+     */
+    public static final String SCORE_SORT_BY="SCORE_SORT_BY";
+    /**
+     * 成绩分析录取数据所用年份
+     */
+    public static final String SCORE_ENROLLING_YEAR="SCORE_ENROLLING_YEAR";
+
+
+    /****************************************************难易预测****************************************************/
+
 
 
 

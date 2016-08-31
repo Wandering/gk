@@ -173,8 +173,8 @@
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
         </if>
-        <if test="offset != null">
-            limit ${offset}, ${rows}
+        <if test="rows != null">
+            limit 0, ${rows}
         </if>
     </select>
     <!--按排名-->
@@ -499,11 +499,11 @@ GROUP BY
 	batch
     </select>
 
-    <select id="selectUnivEnrollInfo" resultType="java.util.Map">
+    <select id="selectUnivEnrollInfo" resultType="java.util.Map" resultMap="UniversityEnrollMap">
           SELECT * from (SELECT
           university.areaId as universityAreaId,
           university.rank as rank,
-          university.name as schoolName,
+          university.name as universityName,
           (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batchName,
           realEnrollingNumber as stuNum,
           averageScore as averageScore,
@@ -512,19 +512,19 @@ GROUP BY
 	      universityId,
           (SELECT
             CASE WHEN university_id is null THEN 0 ELSE 1 END
-          from zgk_favorite_university WHERE user_id = #{condition.userId} AND university_id = universityId  limit 1) AS isFavorite
+          from zgk_favorite_university WHERE user_id = #{condition.userId} AND university_id = enrolling.universityId  limit 1) AS isFavorite
           from zgk_university_enrolling enrolling
           LEFT JOIN (SELECT id,areaid as areaId,rank,name from zgk_university) university ON university.id = enrolling.universityId
           WHERE
-          universityId in (
+          enrolling.universityId in (
           <foreach collection="condition.universitys" item="obj" separator=",">
               #{obj.universityId}
           </foreach>
           )
-          and batch = #{condition.batch}
-          and year = #{condition.year}
-          and majorType = #{condition.majorType}
-          and areaId = #{condition.areaId})
+          and enrolling.batch = #{condition.batch}
+          and enrolling.year = #{condition.year}
+          and enrolling.majorType = #{condition.majorType}
+          and enrolling.areaId = #{condition.areaId}) univenrollinfo
           ORDER BY universityAreaId !=${condition.areaId}
           <if test="sortBy">
               <!--universityAreaId !=${areaId},isFavorite is null,rank is null,rank ASC-->
