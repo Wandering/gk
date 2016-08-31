@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.service;
 
+import cn.thinkjoy.gk.entity.UniversityEnrollView;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
 import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 
@@ -83,4 +84,7 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
      * @return
      */
     List<Map<String, Object>> getBatchByYearAndArea(Map<String, Object> map);
+
+    List<UniversityEnrollView> selectUnivEnrollInfo(Map<String, Object> condition,
+                                                    String sortBy);
 }

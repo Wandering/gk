@@ -49,6 +49,24 @@ public class AreaMaps {
         }
     }
 
+    /**
+     * 获取省份对应简码  -2016/30/8
+     * @param areaId
+     * @return
+     */
+    public String getAreaCode(long areaId){
+        //默认为空
+        try{
+            for (String  provinceCode:areaMap.keySet()) {
+                long provinceId = areaMap.get(provinceCode);
+                if(provinceId==areaId)return provinceCode;
+            }
+            return null;
+        }catch (Exception e){
+            return null;
+        }
+    }
+
     public Long getAreaId(){
         //当使用这一方法默认不使用分库
         return getAreaId(true);

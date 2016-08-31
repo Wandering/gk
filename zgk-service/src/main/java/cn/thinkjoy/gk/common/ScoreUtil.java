@@ -1,9 +1,12 @@
 package cn.thinkjoy.gk.common;
 
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.pojo.BatchView;
 import cn.thinkjoy.gk.service.IScoreAnalysisService;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.HashedMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +19,7 @@ import java.util.*;
 @Component
 public class ScoreUtil {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ScoreUtil.class);
     private static int RANDOM_NUM=10;
 
     private static int JS_AREA_CODE=320000;

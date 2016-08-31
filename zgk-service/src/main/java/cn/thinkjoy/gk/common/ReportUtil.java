@@ -132,6 +132,11 @@ public class ReportUtil {
      */
     public static final String ONESCORE_KEY_SYMBOL="y";
 
+    /**
+     * 成绩分析-逻辑走向
+     */
+    public static final String SCORE_ENROLLING_LOGIC = "SCORE_ENROLLING_LOGIC";
+
 
 
 

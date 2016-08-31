@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.gk.common.ReportEnum;
 import cn.thinkjoy.gk.common.ReportUtil;
+import cn.thinkjoy.gk.entity.UniversityEnrollView;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
 import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 import cn.thinkjoy.gk.service.IReportResultService;
@@ -251,5 +252,9 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     @Override
     public List<Map<String, Object>> getBatchByYearAndArea(Map<String, Object> map) {
         return iUniversityInfoDao.getBatchByYearAndArea(map);
+    }
+    public  List<UniversityEnrollView> selectUnivEnrollInfo(Map<String, Object> condition,
+                                                            String sortBy){
+        return iUniversityInfoDao.selectUnivEnrollInfo(condition,sortBy);
     }
 }

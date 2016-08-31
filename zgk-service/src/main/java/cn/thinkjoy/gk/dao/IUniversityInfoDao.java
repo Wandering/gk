@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.dao;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
+import cn.thinkjoy.gk.entity.UniversityEnrollView;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
 import org.apache.ibatis.annotations.Param;
 
@@ -75,4 +76,7 @@ public interface IUniversityInfoDao extends IBaseDAO<UniversityInfoView> {
 
     List getUniversityMajorListByUniversityId(@Param("condition") Map<String, Object> condition, @Param("offset") int offset, @Param("rows") int rows,
                              @Param("orderBy") String orderBy, @Param("sortBy") String sortBy,@Param("selector")Map<String, Object> selectorpage);
+
+    List<UniversityEnrollView> selectUnivEnrollInfo(@Param("condition") Map<String, Object> condition,
+                                                    @Param("sortBy") String sortBy);
 }

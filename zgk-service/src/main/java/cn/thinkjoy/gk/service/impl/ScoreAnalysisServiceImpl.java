@@ -1,17 +1,24 @@
 package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.common.AreaMaps;
+import cn.thinkjoy.gk.common.ReportUtil;
 import cn.thinkjoy.gk.common.ScoreUtil;
 import cn.thinkjoy.gk.dao.IScoreAnalysisDAO;
-import cn.thinkjoy.gk.dao.IZGK3in7DAO;
+import cn.thinkjoy.gk.dao.ISystemParmasDao;
+import cn.thinkjoy.gk.entity.SystemParmas;
+import cn.thinkjoy.gk.pojo.BatchView;
 import cn.thinkjoy.gk.service.IScoreAnalysisService;
-import com.sun.org.apache.regexp.internal.RE;
+import cn.thinkjoy.gk.service.IScoreConverPrecedenceService;
+import cn.thinkjoy.gk.service.ISystemParmasService;
+import cn.thinkjoy.gk.service.IUniversityInfoService;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -24,14 +31,22 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     private static int ZJ_AREA_CODE=330000;
     @Autowired
     private IScoreAnalysisDAO scoreAnalysisDAO;
-
+    @Resource
+    ISystemParmasDao iSystemParmasDao;
+    @Resource
+    IScoreConverPrecedenceService iScoreConverPrecedenceService;
+    @Resource
+    ISystemParmasService iSystemParmasService;
+    @Resource
+    IUniversityInfoService universityInfoService;
     @Autowired
-    private IZGK3in7DAO zgk3in7DAO;
+    AreaMaps areaMaps;
+
 
     @Autowired
     private ScoreUtil scoreUtil;
 
-    Logger logger = Logger.getLogger(ScoreAnalysisServiceImpl.class);
+    private static final org.slf4j.Logger LOGGER= LoggerFactory.getLogger(ScoreAnalysisServiceImpl.class);
 
     @Override
     public Map<String, Object> queryScoreRecordByUserId(long userId) {
@@ -157,7 +172,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
             resultMap.put("difference", scoreUtil.floatToStr(totalScore - lastScore));
         } else {
             //第一次用户没有上一次成绩
-            logger.info("用户是第一次测评");
+            LOGGER.info("用户是第一次测评");
             resultMap.put("difference", "off");
         }
         if(areaId==ZJ_AREA_CODE){
@@ -195,7 +210,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                     //重新定义全省人数
                     allStuNum = scoreAnalysisDAO.queryPeoNumByAreaAndType(areaId, majorType);
                     if (allStuNum == null || allStuNum == 0) {
-                        logger.info("该省没有总人数!");
+                        LOGGER.info("该省没有总人数!");
                         allStuNum = temp;
                     }
 
@@ -213,7 +228,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                     resultMap.put("scoreRank", scoreUtil.getScoreRank(areaId, majorType, totalScore));
                 }
             } catch (Exception e) {
-                logger.info("当前省份为" + map.get("areaName"));
+                LOGGER.info("当前省份为" + map.get("areaName"));
                 throw new BizException("error", "暂不支持" + map.get("areaName") + "!");
             }
         }
@@ -465,55 +480,117 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
      */
     @Override
     public Object recommendSchool(float totalScore, long areaId, int majorType,long userId) {
-        Integer lastYear = Integer.valueOf(scoreUtil.getYear()) - 1;
 
-        //确定当前分数对应当年批次分数
-//        long areaId,int majorType,Float totalScore,String year
-        Object[] line1s = null;
-        try {
-            line1s = scoreUtil.getBatchAndScore(areaId, majorType, totalScore, scoreUtil.getYear());
-        } catch (Exception e) {
-            throw new BizException("error", "当前省份" + scoreUtil.getYear() + "年分数线为空!");
+        LOGGER.info("totalScore:"+totalScore);
+        LOGGER.info("areaId:"+areaId);
+        LOGGER.info("majorType:"+majorType);
+        LOGGER.info("userId:"+userId);
+
+
+        LOGGER.info("=======参数整理 Start=======");
+        String province = areaMaps.getAreaCode(areaId);
+        Integer sap=getLogic(province,majorType);
+        Integer score = Integer.parseInt(scoreUtil.floatToStr(totalScore));
+        LOGGER.info("=======参数整理 End=======");
+
+        LOGGER.info("=======批次及批次控制线信息 Start=======");
+        LOGGER.info("分数||位次:" + sap);
+        LOGGER.info("成绩:" + score);
+        LOGGER.info("科类:" + majorType);
+        LOGGER.info("省份:" + province);
+
+        /**
+         * 逻辑走向
+         */
+        Integer loginTrend=getLogic(province, majorType);
+        LOGGER.info("逻辑:" + loginTrend);
+        List<BatchView> batchViews = iSystemParmasService.selectSystemParmas(majorType, score,sap, province,loginTrend);
+        Collections.sort(batchViews);
+        LOGGER.info("该学生达标:" + batchViews.size() + "个批次");
+        LOGGER.info("=======批次及批次控制线信息 End========");
+
+        LOGGER.info("=======获取推荐学校 Start=======");
+        if(batchViews.size()==0){
+            throw new BizException("error","没有批次信息!");
         }
-        if (line1s[2] == 5) {
-            //todo 假如不足高职专科批次(分数超低)
+        String batch = batchViews.get(0).getBatch();
+        String sortBy="";
+        LOGGER.info("该学生被定为在:"+batch+"批次");
+        Map<String,Object> condition = new HashedMap();
+        condition.put("userId",userId);
+        condition.put("batch",batch);
+        condition.put("year",2015);
+        condition.put("majorType",majorType);
+        condition.put("areaId",areaId);
+        universityInfoService.selectUnivEnrollInfo(condition,sortBy);
+        LOGGER.info("=======获取推荐学校 End========");
 
-            //推荐10所高职院校
-            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
-        }
-        int batch = (int) line1s[2];
-        //获得分差1  考生分-16年分数线
-        float difference = totalScore - (Float) line1s[0];
-        //确定点钱分数对应次年批次分数
-
-        Float line2 = scoreUtil.getLastBatchAndScore(areaId, majorType, batch, lastYear.toString());
-
-        //获得分差2  院校15年分-15年分数线 (15年分数线)
-
-        //计算公式为 lowestScore - line -  difference > = bc  || lowestScore - line -  difference > = -bc
-
-
-        int count = 0;
-        int bc = 10;
-        do {
-            count = scoreAnalysisDAO.countUniversity(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, bc);
-            //增加步长
-            bc += 10;
-        } while (count < 20 && bc < 300);
-        bc -= 10;
-        //返回前20个院校
-        List<Map<String, Object>> resultList = scoreAnalysisDAO.queryUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc,userId);
-
-        if(resultList==null){
-            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
-        }else if(resultList.size()==0) {
-
-            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
-
-        }
-        return resultList;
+//        return resultList;
+        return null;
     }
 
+
+
+
+
+
+//    /**
+//     * 通用算法
+//     * @param totalScore
+//     * @param areaId
+//     * @param majorType
+//     * @return
+//     */
+//    @Override
+//    public Object recommendSchool(float totalScore, long areaId, int majorType,long userId) {
+//        Integer lastYear = Integer.valueOf(scoreUtil.getYear()) - 1;
+//
+//        //确定当前分数对应当年批次分数
+////        long areaId,int majorType,Float totalScore,String year
+//        Object[] line1s = null;
+//        try {
+//            line1s = scoreUtil.getBatchAndScore(areaId, majorType, totalScore, scoreUtil.getYear());
+//        } catch (Exception e) {
+//            throw new BizException("error", "当前省份" + scoreUtil.getYear() + "年分数线为空!");
+//        }
+//        if (line1s[2] == 5) {
+//            //todo 假如不足高职专科批次(分数超低)
+//
+//            //推荐10所高职院校
+//            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
+//        }
+//        int batch = (int) line1s[2];
+//        //获得分差1  考生分-16年分数线
+//        float difference = totalScore - (Float) line1s[0];
+//        //确定点钱分数对应次年批次分数
+
+//        Float line2 = scoreUtil.getLastBatchAndScore(areaId, majorType, batch, lastYear.toString());
+//
+//        //获得分差2  院校15年分-15年分数线 (15年分数线)
+//
+//        //计算公式为 lowestScore - line -  difference > = bc  || lowestScore - line -  difference > = -bc
+//
+//
+//        int count = 0;
+//        int bc = 10;
+//        do {
+//            count = scoreAnalysisDAO.countUniversity(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, bc);
+//            //增加步长
+//            bc += 10;
+//        } while (count < 20 && bc < 300);
+//        bc -= 10;
+//        //返回前20个院校
+//        List<Map<String, Object>> resultList = scoreAnalysisDAO.queryUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc,userId);
+//
+//        if(resultList==null){
+//            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
+//        }else if(resultList.size()==0) {
+//
+//            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
+//
+//        }
+//        return resultList;
+//    }
     /**
      * 浙江算法
      * @param totalScore
@@ -555,6 +632,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
     }
 
 
+
     private Map<String, List<Map<String,Object>>> listToTreeList(List<Map<String, Object>> resultList){
         Map<String, List<Map<String,Object>>> treeMap = new LinkedHashMap<>();
         for(Map<String, Object> map : resultList){
@@ -592,7 +670,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
             throw new BizException("error", "当前省份" + scoreUtil.getYear() + "年分数线为空!");
         }
         if (line1s[2] == 5) {
-            //todo 假如不足高职专科批次(分数超低)
+            // 假如不足高职专科批次(分数超低)
 
             //推荐10所高职院校
             return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
@@ -747,32 +825,22 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                 resultMap.put("schoollevel", universityLevel);
             }
         }
-
+        resultMap.put("schoolId", schoolId);
+        resultMap.put("batchName", batchName);
+        resultMap.put("schoolName", name);
+        resultMap.put("totalScore", totalScore);
+        resultMap.put("batch", batch);
+        resultMap.put("batchLine", scoreUtil.getBatchScore(batch, areaId, majorType));
+        resultMap.put("schoolLine", schoolLine);
+        resultMap.put("year", schoolLineYear);
         if (totalScore >= schoolLine) {
             Integer stuNum = scoreAnalysisDAO.queryStuNumToLine(schoolLine, totalScore, areaTableName);
-            resultMap.put("schoolId", schoolId);
-            resultMap.put("batchName", batchName);
-            resultMap.put("schoolName", name);
-            resultMap.put("totalScore", totalScore);
             resultMap.put("stuNum", -stuNum);
-            resultMap.put("batchLine", scoreUtil.getBatchScore(batch, areaId, majorType));
-            resultMap.put("schoolLine", schoolLine);
-            resultMap.put("batch", batch);
-            resultMap.put("year", schoolLineYear);
-
             return resultMap;
         }else {
             Integer stuNum = scoreAnalysisDAO.queryStuNumToLine(totalScore, schoolLine, areaTableName);
-            resultMap.put("schoolId", schoolId);
-            resultMap.put("schoolName", name);
-            resultMap.put("batchName", batchName);
-            resultMap.put("totalScore", totalScore);
             resultMap.put("stuNum", stuNum);
             resultMap.put("addScore", totalScore - schoolLine);
-            resultMap.put("batchLine", scoreUtil.getBatchScore(batch, areaId, majorType));
-            resultMap.put("schoolLine", schoolLine);
-            resultMap.put("batch", batch);
-            resultMap.put("year", schoolLineYear);
         }
 
 
@@ -1091,6 +1159,24 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         }
     }
 
+    /**
+     * 逻辑走向
+     * @param proCode
+     * @param cate
+     * @return
+     */
+    private Integer getLogic(String proCode,Integer cate) {
+        LOGGER.info("========算法逻辑走向 start=======");
+        LOGGER.info("province:" + proCode);
+        LOGGER.info("cate:" + cate);
+        SystemParmas systemParmas = iSystemParmasService.getThresoldModel(proCode, ReportUtil.SCORE_ENROLLING_LOGIC, cate);
+        if (systemParmas == null)
+            return 0;
+        Integer logic = Integer.valueOf(systemParmas.getConfigValue());
+        LOGGER.info("logic:" + logic);
+        LOGGER.info("========算法逻辑走向 start=======");
+        return logic;
+    }
 
 
 }

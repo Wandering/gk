@@ -26,6 +26,21 @@
         <result column="typeName" property="typeName" jdbcType="VARCHAR" />
         <result column="batch" property="batch" jdbcType="VARCHAR" />
     </resultMap>
+    <resultMap id="UniversityEnrollMap" type="cn.thinkjoy.gk.entity.UniversityEnrollView">
+        <result column="year" property="year" jdbcType="VARCHAR" />
+        <result column="majorType" property="majorType" jdbcType="VARCHAR" />
+        <result column="universityId" property="universityId" jdbcType="VARCHAR" />
+        <result column="batch" property="batch" jdbcType="VARCHAR" />
+        <result column="batchName" property="batchName" jdbcType="VARCHAR" />
+        <result column="universityName" property="universityName" jdbcType="VARCHAR" />
+        <result column="stuNum" property="planEnrolling" jdbcType="INTEGER" />
+        <result column="universityId" property="universityId" jdbcType="BIGINT" />
+        <result column="universityName" property="universityName" jdbcType="VARCHAR" />
+        <result column="highestScore" property="highestScore" jdbcType="INTEGER" />
+        <result column="lowestScore" property="lowestScore" jdbcType="INTEGER" />
+        <result column="averageScore" property="averageScore" jdbcType="INTEGER" />
+        <result column="isFavorite" property="isFavorite"  jdbcType="INTEGER"/>
+    </resultMap>
 
     <sql id="Base_Column_List">
         id,universityId,universityName,scoreDiff,preScoreDiff,enrollRate,scoreUseRate
@@ -448,5 +463,38 @@ WHERE
 a.batch = b.dictid
 GROUP BY
 	batch
+    </select>
+
+    <select id="selectUnivEnrollInfo" resultType="java.util.Map">
+          SELECT * from (SELECT
+          university.areaId as universityAreaId,
+          university.rank as rank,
+          university.name as schoolName,
+          (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batchName,
+          realEnrollingNumber as stuNum,
+          averageScore as averageScore,
+    	  highestScore as highestScore,
+	      lowestScore as lowestScore,
+	      universityId,
+          (SELECT
+            CASE WHEN university_id is null THEN 0 ELSE 1 END
+          from zgk_favorite_university WHERE user_id = #{condition.userId} AND university_id = universityId  limit 1) AS isFavorite
+          from zgk_university_enrolling enrolling
+          LEFT JOIN (SELECT id,areaid as areaId,rank,name from zgk_university) university ON university.id = enrolling.universityId
+          WHERE
+          universityId in (
+          <foreach collection="condition.universitys" item="obj" separator=",">
+              #{obj.universityId}
+          </foreach>
+          )
+          and batch = #{condition.batch}
+          and year = #{condition.year}
+          and majorType = #{condition.majorType}
+          and areaId = #{condition.areaId})
+          ORDER BY universityAreaId !=${condition.areaId}
+          <if test="sortBy">
+              <!--universityAreaId !=${areaId},isFavorite is null,rank is null,rank ASC-->
+             ${sortBy}
+          </if>
     </select>
 </mapper>
