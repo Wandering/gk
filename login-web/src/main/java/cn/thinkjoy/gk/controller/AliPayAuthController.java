@@ -13,8 +13,10 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
+import com.alipay.api.request.AlipayOpenPublicGisQueryRequest;
 import com.alipay.api.request.AlipaySystemOauthTokenRequest;
 import com.alipay.api.request.AlipayUserUserinfoShareRequest;
+import com.alipay.api.response.AlipayOpenPublicGisQueryResponse;
 import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import com.alipay.api.response.AlipayUserUserinfoShareResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -71,12 +73,12 @@ public class AliPayAuthController
         String result = getResult(accessToken);
         String[] resultArray = result.split("@@");
         String userId = resultArray[0];
-        String areaId = null;
+        String aliUserId = null;
         if(resultArray.length>1)
         {
-            areaId = resultArray[1];
+            aliUserId = resultArray[1];
         }
-        return getRedirectUrl(userId, areaId);
+        return getRedirectUrl(userId, aliUserId);
     }
 
     @RequestMapping(value = "/getUserId", produces = "application/json; charset=utf-8")
@@ -94,23 +96,22 @@ public class AliPayAuthController
             return "redirect:"+userInfoAuthURL;
         }
         String userId = userInfoMap.get("id") + "";
-        String areaId = userInfoMap.get("provinceId") + "";
-        return getRedirectUrl(userId, areaId);
+        return getRedirectUrl(userId, aliUserId);
     }
 
     private String getRedirectUrl(String userId, String areaId)
     {
-        return "redirect:http://alipay.test.zhigaokao.cn/results-confirm.html?userId="+userId+"&areaId="+areaId;
+        return "redirect:http://alipay.test.zhigaokao.cn/results-confirm.html?userId="+userId+"&aliUserId="+areaId;
     }
 
     private String getResult(String accessToken)
     {
         String userId = "";
-        String areaId = "";
+        String aliUserId = "";
         AlipayUserUserinfoShareRequest request = new AlipayUserUserinfoShareRequest();
         try {
             AlipayUserUserinfoShareResponse userinfoShareResponse = alipayClient.execute(request, accessToken);
-            String aliUserId = userinfoShareResponse.getAlipayUserId();
+            aliUserId = userinfoShareResponse.getAlipayUserId();
             String nickName = userinfoShareResponse.getNickName();
             String avatar = userinfoShareResponse.getAvatar();
             String provinceName = userinfoShareResponse.getProvince();
@@ -134,7 +135,6 @@ public class AliPayAuthController
                 Province province = (Province)provinceService.findOne("name", provinceName);
                 if(null != province)
                 {
-                    areaId = String.valueOf(province.getId());
                     userAccount.setAreaId(province.getId());
                     userAccount.setProvinceId(province.getId()+"");
                 }
@@ -151,7 +151,7 @@ public class AliPayAuthController
         } catch (AlipayApiException e) {
             e.printStackTrace();
         }
-        return userId+"@@"+areaId;
+        return userId+"@@"+ aliUserId;
     }
 
     private String getAccessToken(AlipaySystemOauthTokenResponse oauthTokenResponse)
@@ -207,5 +207,29 @@ public class AliPayAuthController
         paramMap.put("return_url", AlipayConfig.return_url);
         paramMap.put("target_service", AlipayConfig.target_service);
         return AlipaySubmit.buildRequest(paramMap,"POST","submitButton");
+    }
+
+    @RequestMapping(value = "/getGis", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String gis()
+    {
+        AlipayOpenPublicGisQueryRequest request = new AlipayOpenPublicGisQueryRequest();
+        request.setBizContent("{\"userId\":\2088402907729754\"}");
+        AlipayOpenPublicGisQueryResponse response;
+        try
+        {
+            response = alipayClient.execute(request);
+        }
+        catch (AlipayApiException e)
+        {
+            throw new BizException(e.getErrCode(), e.getMessage());
+        }
+        String areaInfo = "";
+        if(null != response)
+        {
+            areaInfo = response.getBody();
+        }
+        System.out.println(areaInfo);
+        return response.getBody();
     }
 }
