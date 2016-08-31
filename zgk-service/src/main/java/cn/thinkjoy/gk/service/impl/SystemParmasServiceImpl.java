@@ -186,7 +186,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
             }
         }
 
-        return converBatchViewBatch(batchViews);
+        return batchViews;
     }
     private List<BatchView> converBatchViewBatch(List<BatchView> batchViews) {
         List<BatchView> batchViewList=new ArrayList<>();
