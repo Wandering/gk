@@ -131,8 +131,10 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
                     map.put("batch",universityEnrollView.getBatchName());
                     map.put("highestScore",universityEnrollView.getHighestScore());
                     map.put("lowestScore",universityEnrollView.getLowestScore());
-                    map.put("averageScor",universityEnrollView.getAverageScore());
+                    map.put("averageScore",universityEnrollView.getAverageScore());
                     map.put("xcRank",universityEnrollView.getXcRank());
+                    map.put("schoolName",universityEnrollView.getUniversityName());
+                    map.put("stuNum",universityEnrollView.getPlanEnrolling());
                     Integer isFavorite = universityEnrollView.getIsFavorite()==null?0:universityEnrollView.getIsFavorite();
                     map.put("isFavorite",isFavorite);
                     resultList.add(map);
