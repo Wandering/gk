@@ -283,11 +283,11 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         Integer resultEnroll = scoreDiffEnroll;
         if (preEnroll > 0) {
             String proCode = forecastView.getProvince(), diffConKey = configKeyArr[0], randomConkey = configKeyArr[1];
-            Integer cate=forecastView.getCategorie();
-            Integer diffV = getDiffValue(proCode, diffConKey,cate);
-            resultEnroll = (preEnroll - scoreDiffEnroll) > diffV ? preEnroll - getEnrollRandom(proCode, randomConkey,cate) : scoreDiffEnroll;
+            Integer cate = forecastView.getCategorie();
+            Integer diffV = getDiffValue(proCode, diffConKey, cate);
+            resultEnroll = (preEnroll - scoreDiffEnroll) > diffV ? preEnroll - getEnrollRandom(proCode, randomConkey, cate) : scoreDiffEnroll;
         }
-        return (resultEnroll == 100 ? 98 : resultEnroll);
+        return (resultEnroll == 100 ? 98 : (resultEnroll == 0 ? 2 : resultEnroll));
     }
 
     /**
