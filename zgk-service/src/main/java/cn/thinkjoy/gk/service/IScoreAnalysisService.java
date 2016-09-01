@@ -312,7 +312,7 @@ public interface IScoreAnalysisService {
     List<String> queryLabelByTypeAndConfig(Integer type, List<Integer> configs);
 
 
-    Object recommendSchool(float totalScore,long areaId,int majorType,long userId);
+
 
     Object queryGapBySchoolIdAndBatch(long recordId,
                                       Long schoolId,
@@ -326,22 +326,6 @@ public interface IScoreAnalysisService {
 
     List<Map<String,Object>> queryHistoryScore(long userId,Integer rows,Long areaId);
 
-    /**
-     * 江苏算法
-     * @param totalScore
-     * @param areaId
-     * @param majorType
-     * @return
-     */
-    public Object recommendSchoolJS(float totalScore, long areaId, int majorType,long userId);
-
-    /**
-     * 浙江算法
-     * @param totalScore
-     * @param areaId
-     * @return
-     */
-    public Object recommendSchoolZJ(float totalScore, long areaId,long userId);
 
     /**
      * 根据院校ID和地区code查询专业

@@ -43,21 +43,11 @@ public class ScoreController {
 
     private static long JS_AREA_CODE=320000;
     private static long ZJ_AREA_CODE=330000;
-    @Resource
-    IUniversityInfoService iUniversityInfoService;
-    @Resource
-    ISystemParmasService iSystemParmasService;
-    @Resource
-    IUniversityMajorEnrollingService iUniversityMajorEnrollingService;
-    @Resource
-    IReportResultService iReportResultService;
 
-    @Resource
-    IReportLockService iReportLockService;
-    @Resource
-    IRiskForecastService iRiskForecastService;
-    @Resource
-    IScoreConverPrecedenceService iScoreConverPrecedenceService;
+
+
+    @Autowired
+    IScoreAlgorithmService scoreAlgorithmService;
 
 
     /**
@@ -264,14 +254,9 @@ public class ScoreController {
         Object rtnObj=null;
         if(areaId==ZJ_AREA_CODE){
             //浙江算法
-            rtnObj = scoreAnalysisService.recommendSchoolZJ(totalScore,areaId,userId);
-        }else if(areaId==JS_AREA_CODE){
-            //江苏算法
-            if(majorType==null)
-                throw new BizException("error","majorType不能为空!");
-            rtnObj = scoreAnalysisService.recommendSchoolJS(totalScore,areaId,majorType,userId);
+            rtnObj = scoreAlgorithmService.recommendSchoolZJ(totalScore,areaId,userId);
         }else {
-            rtnObj = scoreAnalysisService.recommendSchool(totalScore,areaId,majorType,userId);
+            rtnObj = scoreAlgorithmService.recommendSchool(totalScore,areaId,majorType,userId);
         }
         return rtnObj;
 

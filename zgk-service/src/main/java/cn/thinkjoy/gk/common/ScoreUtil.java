@@ -939,4 +939,145 @@ public class ScoreUtil {
         }
         return i;
     }
+
+    public List<Map<String,Object>> combineAlgorithm(String[] str){
+
+        int nCnt = str.length;
+
+        int nBit = (0xFFFFFFFF >>> (32 - nCnt));
+
+
+        List<Map<String,Object>> mapList=null;
+        Map<String,Object> map=null;
+        Map<String,Object> subjectItemMap=null;
+        List<Map<String,Object>> lists=new ArrayList<>();
+        for (int i = 1; i <= nBit; i++) {
+            mapList=new ArrayList<>();
+            for (int j = 0; j < nCnt; j++) {
+                if ((i << (31 - j)) >> 31 == -1) {
+                    map=new HashMap<>();
+                    map.put("selectSubject",str[j]);
+                    mapList.add(map);
+                }
+            }
+            subjectItemMap=new HashMap<>();
+            subjectItemMap.put("subjectItem",mapList);
+            lists.add(subjectItemMap);
+        }
+        return lists;
+    }
+
+    public String[] getZJUserScore(long userId){
+        Map<String, Object> map = scoreAnalysisService.queryScoreRecordByUserId(userId);
+        Map<String,Object> scores = getScores(map, null);
+        Iterator<String> keys = scores.keySet().iterator();
+        //一定是三门成绩 否则异常
+        String[] subjects =null;
+        try {
+            //提取科目
+            subjects = new String[3];
+            int i = 0;
+            while (keys.hasNext()) {
+                String key = keys.next();
+                if (!("语文".equals(key)) && (!"数学".equals(key)) && (!"外语".equals(key))) {
+                    subjects[i++] = key;
+                }
+            }
+        }catch (IndexOutOfBoundsException e){
+            //数组越界的错误
+            throw new BizException("error","当前科目不正确!");
+        }
+        return subjects;
+
+    }
+
+
+    public List<String> getLevelList(Map<String,Object> map,Integer majorType){
+
+        String [] subs = getScoreLevel(map,majorType);
+
+
+        return getScoreLevel(subs[1],subs[3],subs[0]);
+    }
+
+    private List<String> getScoreLevel(String v1,String v2,String sub){
+        Set<String> levels = new HashSet<>();
+        List<String> v1s=getScoreLevels(v1);
+        List<String> v2s=getScoreLevels(v2);
+        //遍历所有组合
+        for(String v3:v1s){
+            for(String v4:v1s) {
+                if(tagToScore(v3)-tagToScore(v4)>0F) {
+                    levels.add(v3 + v4);
+                }else {
+                    levels.add(v4 + v3);
+                }
+                levels.add(sub + v3 + ",另一门" + v4);
+            }
+        }
+        List<String> list = new ArrayList<>();
+        list.addAll(levels);
+        return list;
+    }
+    public String[] getScoreLevel(Map<String,Object> scores,Integer majorType) {
+
+        Iterator<String> keys = scores.keySet().iterator();
+        //江苏一定是两门额外科目  否则抛异常
+        Map<String, Object> map1 = new LinkedHashMap<>();
+
+        while (keys.hasNext()) {
+            String key = keys.next();
+            if ((!"语文".equals(key)) && (!"数学".equals(key)) && (!"外语".equals(key))) {
+                String value = scores.get(key).toString();
+                map1.put(key, value);
+            }
+        }
+
+        String sub = "历史";
+        if (majorType == 2) {
+            sub = "物理";
+        }
+        Map<String, Object> map2 = new HashedMap();
+        map2.putAll(map1);
+        String v1 = map2.get(sub).toString();
+        String value1 =null;
+        if (v1.indexOf("-")>0){
+            value1 = scoreToTag(Float.valueOf(map2.get(sub).toString().split("-")[0]));
+        }else {
+            value1=v1;
+        }
+        map2.remove(sub);
+        String key=map2.keySet().iterator().next();
+        String v2 = map2.get(key).toString();
+        String value2=null;
+        if(v2.indexOf("-")>0){
+            value2 = scoreToTag(Float.valueOf(map2.get(key).toString().split("-")[0]));
+        }else {
+            value2=v2;
+        }
+        return new String[]{sub,value1,key,value2};
+    }
+
+
+
+    private List<String> getScoreLevels(String v1){
+        List<String> list= new ArrayList<>();
+        //遍历所有组合
+        switch (v1){
+            case "A+":
+                list.add("A+");
+            case "A":
+                list.add("A");
+            case "B+":
+                list.add("B+");
+            case "B":
+                list.add("B");
+            case "C":
+                list.add("C");
+            case "D":
+                list.add("D");
+        }
+        return list;
+    }
+
 }

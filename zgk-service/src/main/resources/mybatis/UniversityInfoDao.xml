@@ -40,6 +40,7 @@
         <result column="lowestScore" property="lowestScore" jdbcType="INTEGER" />
         <result column="averageScore" property="averageScore" jdbcType="INTEGER" />
         <result column="isFavorite" property="isFavorite"  jdbcType="INTEGER"/>
+        <result column="xcRank" property="xcRank"  jdbcType="VARCHAR"/>
     </resultMap>
     <resultMap id="EnrollingMap" type="cn.thinkjoy.gk.entity.UniversityInfoEnrolling">
         <id column="id" property="id" jdbcType="BIGINT" />
@@ -505,16 +506,36 @@ GROUP BY
           university.rank as rank,
           university.name as universityName,
           (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batchName,
-          realEnrollingNumber as stuNum,
-          averageScore as averageScore,
-    	  highestScore as highestScore,
-	      lowestScore as lowestScore,
-	      universityId,
+          enrolling.realEnrollingNumber as stuNum,
+          enrolling.averageScore as averageScore,
+          enrolling.highestScore as highestScore,
+          enrolling.lowestScore as lowestScore,
+          enrolling.universityId,
+          <!-- 江苏省输出选测等级 -->
+          <if test="condition.areaId==320000">
+              plan.xcRank,
+          </if>
           (SELECT
             CASE WHEN university_id is null THEN 0 ELSE 1 END
           from zgk_favorite_university WHERE user_id = #{condition.userId} AND university_id = enrolling.universityId  limit 1) AS isFavorite
           from zgk_university_enrolling enrolling
           LEFT JOIN (SELECT id,areaid as areaId,rank,name from zgk_university) university ON university.id = enrolling.universityId
+          <!-- 江苏省输出选测等级 -->
+          <if test="condition.areaId==320000">
+              INNER JOIN (SELECT universityId,xcRank FROM
+              zgk_university_enrolling_plan
+              WHERE
+              majorType = #{condition.majorType}
+              AND YEAR = #{condition.year} AND areaId=320000
+              AND batch = #{condition.batch}
+              AND universityId in (
+              <foreach collection="condition.universitys" item="obj" separator=",">
+                  #{obj.universityId}
+              </foreach>
+              )
+              ) plan
+              ON plan.universityId = enrolling.universityId
+          </if>
           WHERE
           enrolling.universityId in (
           <foreach collection="condition.universitys" item="obj" separator=",">

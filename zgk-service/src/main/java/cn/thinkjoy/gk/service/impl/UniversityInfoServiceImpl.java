@@ -291,20 +291,6 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     }
 
     /**
-     * 成绩分析计算最终录取率
-     * @return
-     */
-    @Override
-    public Integer getResultEnroll(String province,Integer cate,Integer preEnroll,Integer scoreDiffEnroll,String[] configKeyArr) {
-        Integer resultEnroll = scoreDiffEnroll;
-        if (preEnroll > 0) {
-            String proCode = province, diffConKey = configKeyArr[0], randomConkey = configKeyArr[1];
-            Integer diffV = getDiffValue(proCode, diffConKey,cate);
-            resultEnroll = (preEnroll - scoreDiffEnroll) > diffV ? preEnroll - getEnrollRandom(proCode, randomConkey,cate) : scoreDiffEnroll;
-        }
-        return (resultEnroll == 100 ? 98 : resultEnroll);
-    }
-    /**
      * 获取随机录取率范围
      * @param proCode
      * @param key
@@ -383,6 +369,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         parmasMap.put("universityId", reportParm.getUid());
         parmasMap.put("precedence", reportParm.getPrecedence());
         parmasMap.put("isJoin", reportParm.isJoin());
+        parmasMap.put("orderBy", reportParm.getOrderBy());
         parmasMap.put("rows", (reportParm.getLimit()==null?1:reportParm.getLimit()));
         List<UniversityInfoEnrolling> universityInfoEnrollings = iUniversityInfoDao.selectUniversityEnrolling(parmasMap);
         return universityInfoEnrollings;
@@ -400,6 +387,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         parmasMap.put("universityId", reportParm.getUid());
         parmasMap.put("scoreDiff", reportParm.getScoreDiff());
         parmasMap.put("isJoin", reportParm.isJoin());
+        parmasMap.put("orderBy", reportParm.getOrderBy());
         parmasMap.put("rows", (reportParm.getLimit()==null?1:reportParm.getLimit()));
 
         List<UniversityInfoEnrolling> universityInfoEnrollings = iUniversityInfoDao.selectUniversityEnrolling(parmasMap);

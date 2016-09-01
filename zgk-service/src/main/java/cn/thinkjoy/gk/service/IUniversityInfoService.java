@@ -133,14 +133,5 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
     List<UniversityEnrollView> selectUnivEnrollInfo(Map<String, Object> condition,
                                                     String sortBy);
 
-    /**
-     * 成绩分析 计算最终录取率
-     * @param province
-     * @param cate
-     * @param preEnroll
-     * @param scoreDiffEnroll
-     * @param configKeyArr
-     * @return
-     */
-    Integer getResultEnroll(String province,Integer cate,Integer preEnroll,Integer scoreDiffEnroll,String[] configKeyArr);
+
 }

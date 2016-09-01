@@ -75,6 +75,10 @@ public class UniversityEnrollView extends CreateBaseDomain<Long> implements Comp
      */
     private Integer rank;
 
+    /**
+     * 院校排名
+     */
+    private String xcRank;
 
     public Integer getHighestScore() {
         return highestScore;
@@ -199,6 +203,15 @@ public class UniversityEnrollView extends CreateBaseDomain<Long> implements Comp
 
     public void setRank(Integer rank) {
         this.rank = rank;
+    }
+
+
+    public String getXcRank() {
+        return xcRank;
+    }
+
+    public void setXcRank(String xcRank) {
+        this.xcRank = xcRank;
     }
 
     @Override
