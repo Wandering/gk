@@ -53,7 +53,7 @@ public class AliPayAuthController
     @RequestMapping(value = "/authPage")
     public String authPage() throws Exception
     {
-        String redirectUrl= "http%3A%2F%2F10.136.13.245:8086%2FalipayAuth%2FgetUserId";
+        String redirectUrl= "http%3A%2F%2F10.136.13.245:8086%2FalipayAuth%2FgetUserId.do";
         StringBuffer baseAuthURL = new StringBuffer(baseAuthUrl);
         baseAuthURL.append("app_id=").append(AlipayConfig.APP_ID);
         baseAuthURL.append("&scope=").append("auth_base");
@@ -87,7 +87,7 @@ public class AliPayAuthController
         Map<String, Object> userInfoMap = userAccountExService.findUserInfoByAlipayId(aliUserId);
         if(null == userInfoMap || userInfoMap.isEmpty())
         {
-            String redirectUrl= "http%3A%2F%2F10.136.13.245:8086%2FalipayAuth%2FgetAuthToken";
+            String redirectUrl= "http%3A%2F%2F10.136.13.245:8086%2FalipayAuth%2FgetAuthToken.do";
             StringBuffer userInfoAuthURL = new StringBuffer(baseAuthUrl);
             userInfoAuthURL.append("app_id=").append(AlipayConfig.APP_ID);
             userInfoAuthURL.append("&scope=").append("auth_userinfo");
