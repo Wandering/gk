@@ -53,7 +53,7 @@ public class AliPayAuthController
     @RequestMapping(value = "/authPage")
     public String authPage() throws Exception
     {
-        String redirectUrl= "http%3A%2F%2Fzgkser.zhigaokao.cn%2FalipayAuth%2FgetUserId";
+        String redirectUrl= "http%3A%2F%2F10.136.13.245:8086%2FalipayAuth%2FgetUserId";
         StringBuffer baseAuthURL = new StringBuffer(baseAuthUrl);
         baseAuthURL.append("app_id=").append(AlipayConfig.APP_ID);
         baseAuthURL.append("&scope=").append("auth_base");
