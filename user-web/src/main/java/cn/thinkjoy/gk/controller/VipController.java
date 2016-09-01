@@ -174,4 +174,10 @@ public class VipController extends ZGKBaseController implements Watched {
     public void init(){
         addWatcher(watcher);
     }
+
+    public static void main(String[] args)
+    {
+        Date d = new Date(1465979223097l);
+        System.out.println(d.toString());
+    }
 }
