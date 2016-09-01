@@ -215,6 +215,20 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
     public Integer getLineDiff(String batch, Integer score, Integer cate, String provinceCode) {
         return  iSystemParmasService.getLineDiff(batch,score,cate,provinceCode);
     }
+
+    /**
+     * 难以预测 -逻辑走向   1-true:存在
+     * @param key
+     * @return
+     */
+    @Override
+    public boolean enrollingLogin(String key,Integer cate) {
+        Map map = new HashMap();
+        map.put("configKey", key);
+        map.put("majorType",cate);
+        SystemParmas systemParmas = iSystemParmasService.selectModel(map);
+        return systemParmas == null ? false : (Integer.valueOf(systemParmas.getConfigValue()) == 1 ? true : false);
+    }
     /*************************************************线差法*************************************************/
     /**
      * 根据线差信息获取线差法动态参数
