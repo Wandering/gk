@@ -24,8 +24,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -100,7 +98,7 @@ public class AliPayAuthController
 
     private String getRedirectUrl(String userId, String aliUserId)
     {
-        return "redirect:http://alipay.test.zhigaokao.cn/results-confirm.html?userId="+userId+"&aliUserId="+ aliUserId;
+        return "redirect:http://sn.local.zhigaokao.cn:3005/login-third-back.html?userId="+userId+"&aliUserId="+ aliUserId;
     }
 
     private String getResult(String accessToken)
