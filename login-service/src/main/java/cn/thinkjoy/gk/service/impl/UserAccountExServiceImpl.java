@@ -21,6 +21,7 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.jlusoft.microschool.core.utils.JsonMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
@@ -99,7 +100,18 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         UserInfo userInfo = new UserInfo();
         userInfo.setId(id);
         String account = userAccount.getAccount();
-        userInfo.setName("gk-" + account.substring(0,3)+"****"+account.substring(account.length()-4,account.length()));
+        if(StringUtils.isNotBlank(userAccount.getNickName()))
+        {
+            userInfo.setName(userAccount.getNickName());
+        }else
+        {
+            userInfo.setName("gk-" + account.substring(0, 3) + "****" + account.substring(account.length() - 4, account.length()));
+        }
+        if(StringUtils.isNotBlank(userAccount.getAvatar()))
+        {
+            userInfo.setIcon(userAccount.getAvatar());
+        }
+        userInfo.setAlipayUserId(account);
         userInfo.setToken(UUID.randomUUID().toString());
         userInfo.setProvinceId(userAccount.getProvinceId());
         userInfo.setCityId(userAccount.getCityId());
