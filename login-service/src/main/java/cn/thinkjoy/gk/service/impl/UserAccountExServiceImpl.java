@@ -105,13 +105,13 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
             userInfo.setName(userAccount.getNickName());
         }else if (StringUtils.isNotBlank(account))
         {
-            userInfo.setAlipayUserId(account);
             userInfo.setName("gk-" + account.substring(0, 3) + "****" + account.substring(account.length() - 4, account.length()));
         }
         if(StringUtils.isNotBlank(userAccount.getAvatar()))
         {
             userInfo.setIcon(userAccount.getAvatar());
         }
+        userInfo.setAlipayUserId(account);
         userInfo.setToken(UUID.randomUUID().toString());
         userInfo.setProvinceId(userAccount.getProvinceId());
         userInfo.setCityId(userAccount.getCityId());
