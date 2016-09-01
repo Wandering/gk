@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -86,7 +87,7 @@ public class AliPayAuthController
         Map<String, Object> userInfoMap = userAccountExService.findUserInfoByAlipayId(aliUserId);
         if(null == userInfoMap || userInfoMap.isEmpty())
         {
-            String redirectUrl= "http%3A%2F%2Fzgkser.zhigaokao.cn%2FalipayAuth%2FgetAuthToken";
+            String redirectUrl= "http%3A%2F%2F10.136.13.245:8086%2FalipayAuth%2FgetAuthToken";
             StringBuffer userInfoAuthURL = new StringBuffer(baseAuthUrl);
             userInfoAuthURL.append("app_id=").append(AlipayConfig.APP_ID);
             userInfoAuthURL.append("&scope=").append("auth_userinfo");
