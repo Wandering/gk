@@ -17,6 +17,7 @@ import cn.thinkjoy.gk.service.IScoreConverPrecedenceService;
 import cn.thinkjoy.gk.service.ISystemParmasService;
 import cn.thinkjoy.gk.service.IUniversityInfoService;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -127,7 +128,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         for(Map<String,Object> map:universityInfoEnrollings){
             LOGGER.info("当前组装学校:"+map.get("universityName"));
             for(UniversityEnrollView universityEnrollView:universityEnrollViews){
-                if(map.get("universityName").equals(universityEnrollView.getUniversityName())){
+                if(StringUtils.isNotEmpty(map.get("universityId")!=null?"":map.get("universityId").toString())&&map.get("universityName").equals(universityEnrollView.getUniversityName())){
                     map.put("batch",universityEnrollView.getBatchName());
                     map.put("highestScore",universityEnrollView.getHighestScore());
                     map.put("lowestScore",universityEnrollView.getLowestScore());
