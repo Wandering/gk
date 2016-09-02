@@ -78,7 +78,7 @@ public class LoginController extends ZGKBaseController {
 				{
 					long userIdLong = Long.parseLong(userId);
 					UserAccountPojo userInfo = userAccountExService.findUserAccountPojoById(userIdLong);
-					if(userInfo.getAccount().equals(aliUserId))
+					if(!userInfo.getAccount().equals(aliUserId))
 					{
 						throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "参数错误");
 					}

@@ -146,7 +146,6 @@ public class RegisterController extends ZGKBaseController
                 }
                 try
                 {
-
                     userAccount.setId(userIdLong);
                     boolean flag = userAccountExService.bindUserAccount(userAccount);
                     if (!flag)
