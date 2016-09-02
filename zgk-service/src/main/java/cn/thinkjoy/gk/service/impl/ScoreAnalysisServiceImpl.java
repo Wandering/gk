@@ -262,8 +262,8 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                 resultMap.put("cdate", map.get("cdate"));
                 if(areaId!=ZJ_AREA_CODE) {
                     Map<String,Object> scoreLineMap = scoreUtil.getTopBatchLine(areaId, majorType, totalScore);
-                    resultMap.put("upLine",scoreLineMap.get("score"));
-                    resultMap.put("upLineName", scoreLineMap.get("name"));
+                    resultMap.put("upLine",scoreLineMap.get("scoreTop"));
+                    resultMap.put("upLineName", scoreLineMap.get("nameTop"));
                     resultMap.put("upLineYear", scoreLineMap.get("year"));
                 }
                 Map<String,Object> scores = getScores2(areaId,majorType,map,resultMap);
