@@ -75,7 +75,14 @@ public class AliPayAuthController
         {
             aliUserId = resultArray[1];
         }
-        return getRedirectUrl(userId, aliUserId);
+        Map<String, Object> userInfoMap = userAccountExService.findUserInfoByAlipayId(aliUserId);
+        String account = userInfoMap.get("account") + "";
+        String bindStatus = "1";
+        if(account.length() == 11)
+        {
+            bindStatus = "2";
+        }
+        return getRedirectUrl(userId, aliUserId, bindStatus);
     }
 
     @RequestMapping(value = "/getUserId", produces = "application/json; charset=utf-8")
@@ -93,12 +100,18 @@ public class AliPayAuthController
             return "redirect:"+userInfoAuthURL;
         }
         String userId = userInfoMap.get("id") + "";
-        return getRedirectUrl(userId, aliUserId);
+        String account = userInfoMap.get("account") + "";
+        String bindStatus = "1";
+        if(account.length()==11)
+        {
+            bindStatus = "2";
+        }
+        return getRedirectUrl(userId, aliUserId, bindStatus);
     }
 
-    private String getRedirectUrl(String userId, String aliUserId)
+    private String getRedirectUrl(String userId, String aliUserId, String bindStatus)
     {
-        return "redirect:http://sn.local.zhigaokao.cn:3005/login-third-back.html?userId="+userId+"&aliUserId="+ aliUserId;
+        return "redirect:http://sn.local.zhigaokao.cn:3005/login-third-back.html?userId="+userId+"&aliUserId="+ aliUserId+"&bindStatus="+bindStatus;
     }
 
     private String getResult(String accessToken)
