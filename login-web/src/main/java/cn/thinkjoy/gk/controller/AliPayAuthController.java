@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.controller;
 
+import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.alipay.AlipayConfig;
 import cn.thinkjoy.gk.alipay.AlipaySubmit;
@@ -56,10 +57,26 @@ public class AliPayAuthController extends ZGKBaseController
     @Autowired
     private IProvinceService provinceService;
 
+    private static String interAddress;
+
+    private static String returnAddress;
+
+    static {
+        try
+        {
+            interAddress = DynConfigClientFactory.getClient().getConfig("common", "interAddress");
+            returnAddress = DynConfigClientFactory.getClient().getConfig("common", "returnAddress");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     @RequestMapping(value = "/authPage")
     public String authPage() throws Exception
     {
-        String redirectUrl= "http%3A%2F%2F10.136.13.245:8086%2FalipayAuth%2FgetUserId.do";
+        String redirectUrl= "http%3A%2F%2F"+ interAddress +"%2FalipayAuth%2FgetUserId.do";
         StringBuffer baseAuthURL = new StringBuffer(baseAuthUrl);
         baseAuthURL.append("app_id=").append(AlipayConfig.APP_ID);
         baseAuthURL.append("&scope=").append("auth_base");
@@ -144,7 +161,7 @@ public class AliPayAuthController extends ZGKBaseController
         Map<String, Object> userInfoMap = userAccountExService.findUserInfoByAlipayId(aliUserId);
         if(null == userInfoMap || userInfoMap.isEmpty())
         {
-            String redirectUrl= "http%3A%2F%2F10.136.13.245:8086%2FalipayAuth%2FgetAuthToken.do";
+            String redirectUrl= "http%3A%2F%2F"+ interAddress +"%2FalipayAuth%2FgetAuthToken.do";
             StringBuffer userInfoAuthURL = new StringBuffer(baseAuthUrl);
             userInfoAuthURL.append("app_id=").append(AlipayConfig.APP_ID);
             userInfoAuthURL.append("&scope=").append("auth_userinfo");
@@ -161,7 +178,7 @@ public class AliPayAuthController extends ZGKBaseController
 
     private String getRedirectUrl(String userId, String aliUserId, String bindStatus, String loginCode)
     {
-        return "redirect:http://sn.local.zhigaokao.cn:3005/login-third-back.html?userId="+userId+"&aliUserId="+
+        return "redirect:"+ returnAddress +"?userId="+userId+"&aliUserId="+
             aliUserId+"&bindStatus="+bindStatus + "&loginCode="+loginCode;
     }
 
@@ -275,6 +292,7 @@ public class AliPayAuthController extends ZGKBaseController
     public Map<String, Object> getLoginInfoByCode(@RequestParam(value="loginCode",required=false)String code) throws Exception
     {
         Map<String, Object> resultMap = (Map<String, Object>)RedisUtil.getInstance().get(code);
+        RedisUtil.getInstance().del(code);
         return resultMap;
     }
 }
