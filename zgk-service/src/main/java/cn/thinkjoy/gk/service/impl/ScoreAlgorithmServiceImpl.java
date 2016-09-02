@@ -83,20 +83,22 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         LOGGER.info("成绩:" + score);
         LOGGER.info("科类:" + majorType);
         LOGGER.info("省份:" + province);
-        String batch = getBatchByScore(province,majorType,score);
-        LOGGER.info("该学生被定为在:"+batch+"批次");
+        String[] batchs = getBatchByScore(province,majorType,score,areaId);
+        LOGGER.info("该学生被定为在(只能填报):"+batchs[1]+"批次");
+        LOGGER.info("该学生被定为在:"+batchs[0]+"批次");
         LOGGER.info("=======批次及批次控制线信息 End========");
 
 
         LOGGER.info("=======获取推荐学校 Start=======");
-        List<Map<String,Object>> resultMaps = getResultListByScore(batch,score,province,majorType,userId,areaId);
+        List<Map<String,Object>> resultMaps = getResultListByScore(batchs,score,province,majorType,userId,areaId);
         return resultMaps;
     }
 
-    public List<Map<String,Object>> getResultListByScore(String batch,Integer score,String province,Integer majorType,long userId,long areaId){
+    public List<Map<String,Object>> getResultListByScore(String[] batchs,Integer score,String province,Integer majorType,long userId,long areaId){
         Map<String,Object> condition = new HashedMap();
         condition.put("userId",userId);
-        condition.put("batch",batch);
+        //这里批次用统一批次
+        condition.put("batch",batchs[0]);
         condition.put("year",getConfigValueInt(province,majorType, ReportUtil.SCORE_ENROLLING_YEAR));
         condition.put("majorType",majorType);
         condition.put("areaId",areaId);
@@ -105,11 +107,14 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
 
         LOGGER.info("=======放置参数 Start========");
         ReportForecastView reportForecastView = new ReportForecastView();
-        reportForecastView.setBatch(batch);
+        //这里批次用智能填报批次
+        reportForecastView.setBatch(batchs[1]);
         reportForecastView.setScore(score);
         reportForecastView.setProvince(province);
         reportForecastView.setCategorie(majorType);
-        reportForecastView.setPrecedence(universityInfoService.converPreByScore(reportForecastView,ReportUtil.SCORE_ENROLLING_LOGIC));
+        if(isPre(reportForecastView,ReportUtil.SCORE_ENROLLING_LOGIC)) {
+            reportForecastView.setPrecedence(universityInfoService.converPreByScore(reportForecastView, ReportUtil.SCORE_ENROLLING_LOGIC));
+        }
         reportForecastView.setScoreDiff(universityInfoService.converScoreDiffByScore(reportForecastView));
         reportForecastView.setJoin(false);
         reportForecastView.setOrderBy("enrollRate desc");
@@ -128,7 +133,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         for(Map<String,Object> map:universityInfoEnrollings){
             LOGGER.info("当前组装学校:"+map.get("universityName"));
             for(UniversityEnrollView universityEnrollView:universityEnrollViews){
-                if(StringUtils.isNotEmpty(map.get("universityId")!=null?"":map.get("universityId").toString())&&map.get("universityName").equals(universityEnrollView.getUniversityName())){
+                if(map.get("universityName").equals(universityEnrollView.getUniversityName())){
                     map.put("batch",universityEnrollView.getBatchName());
                     map.put("highestScore",universityEnrollView.getHighestScore());
                     map.put("lowestScore",universityEnrollView.getLowestScore());
@@ -451,25 +456,14 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
      * 当前算法推算院校数量
      * @return
      */
-    private String getBatchByScore(String province,Integer categorie,Integer score){
-        /**
-         * 逻辑走向
-         */
-        Integer loginTrend=getLogic(province, categorie);
-        LOGGER.info("逻辑:" + loginTrend);
-        UniversityInfoParmasView universityInfoParmasView = new UniversityInfoParmasView();
-        universityInfoParmasView.setBatch("1");
-        universityInfoParmasView.setCategorie(categorie);
-        universityInfoParmasView.setProvince(province);
-        universityInfoParmasView.setScore(score);
+    private String[] getBatchByScore(String province,Integer categorie,Integer score,long areaId){
 
-        CheckBatchMsg checkBatchMsg = iSystemParmasService.checkBatchAlert(universityInfoParmasView);
-        String batch=checkBatchMsg.getMatch();
-        if(batch==null){
-            LOGGER.info("分数太低没有定位到批次");
-            throw new BizException("error","分数太低没有定位到批次");
-        }
-        return batch;
+        Map<String,Object> map = scoreUtil.getTopBatchLine(areaId,categorie,Float.valueOf(score));
+        String batch = map.get("batchBottom").toString();
+        String newBatch = scoreUtil.ConverNewBatch(batch);
+
+        //
+        return new String[]{batch,newBatch};
     }
 
     /**

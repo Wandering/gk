@@ -50,4 +50,6 @@ public interface IUserAccountExService {
     Map<String,Object> findUserInfoByAlipayId(String aliUserId);
 
     boolean bindUserAccount(UserAccount userAccount);
+
+    boolean bindUserAccountExist(UserAccountPojo userAccountPojo, String userId, String aliUserId);
 }

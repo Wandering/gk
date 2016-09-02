@@ -11,4 +11,5 @@ import java.util.Map;
 public interface IDataDictService {
 
     List<Map<String, Object>> queryDictList(Map<String, Object> map);
+    Map<String, Object> queryDictByDictId(Map<String, Object> map);
 }
