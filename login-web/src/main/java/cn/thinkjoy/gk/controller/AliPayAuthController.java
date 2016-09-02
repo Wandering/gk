@@ -3,12 +3,18 @@ package cn.thinkjoy.gk.controller;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.alipay.AlipayConfig;
 import cn.thinkjoy.gk.alipay.AlipaySubmit;
+import cn.thinkjoy.gk.common.DESUtil;
+import cn.thinkjoy.gk.common.GkxtUtil;
 import cn.thinkjoy.gk.common.TimeUtil;
+import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.domain.UserAccount;
+import cn.thinkjoy.gk.pojo.UserAccountPojo;
+import cn.thinkjoy.gk.pojo.UserInfoPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IProvinceService;
 import cn.thinkjoy.gk.service.IUserAccountExService;
+import cn.thinkjoy.gk.util.RedisUtil;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
@@ -26,6 +32,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by liusven on 16/7/28.
@@ -33,7 +41,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/alipayAuth")
 @Scope("prototype")
-public class AliPayAuthController
+public class AliPayAuthController extends ZGKBaseController
 {
     private String userInfoUrl = "https://openapi.alipay.com/gateway.do";
 
@@ -61,6 +69,7 @@ public class AliPayAuthController
 
     @RequestMapping(value = "/getAuthToken", produces = "application/json; charset=utf-8")
     public String getAuthToken(@RequestParam(value="auth_code",required=false) String authCode)
+        throws Exception
     {
         String accessToken = getAccessToken(getOauthTokenResponse(authCode));
         if(null == accessToken)
@@ -78,15 +87,58 @@ public class AliPayAuthController
         Map<String, Object> userInfoMap = userAccountExService.findUserInfoByAlipayId(aliUserId);
         String account = userInfoMap.get("account") + "";
         String bindStatus = "1";
+        String loginCode = UUID.randomUUID().toString();
+        bindStatus = setLoginInfo(account, bindStatus, loginCode);
+        return getRedirectUrl(userId, aliUserId, bindStatus, loginCode);
+    }
+
+    private String setLoginInfo(String account, String bindStatus, String loginCode)
+        throws Exception
+    {
         if(account.length() == 11)
         {
             bindStatus = "2";
+            Map<String, Object> resultMap = new HashMap<>();
+            UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
+            Long id = userAccountBean.getId();
+            UserInfoPojo userInfoPojo=userAccountExService.getUserInfoPojoById(id);
+            /**
+             * 老用户生成二维码
+             */
+            if(null == userInfoPojo.getAccountId() && null == userInfoPojo.getQrCodeUrl())
+            {
+                userAccountExService.insertUserMarketInfo(0L, 0 , id);
+                userInfoPojo=userAccountExService.getUserInfoPojoById(id);
+            }
+            /**
+             * 判断VIP用户是否失效
+             */
+            if("1".equals(userInfoPojo.getVipStatus()))
+            {
+                if(null != userInfoPojo.getEndDate() && System.currentTimeMillis() > Long.parseLong(userInfoPojo.getEndDate()))
+                {
+                    userInfoPojo.setVipStatus("0");
+                }
+            }
+            String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), userInfoPojo.getAccount());
+            String encryptToken = DESUtil.encrypt(token, DESUtil.key);
+            setUserAccountPojo(userAccountBean, encryptToken);
+            resultMap.put("token", encryptToken);
+            String gkxtToken = GkxtUtil.getLoginToken(userInfoPojo.getAccount(), userInfoPojo.getName());
+            userInfoPojo.setGkxtToken(gkxtToken);
+            userInfoPojo.setPassword(null);
+            userInfoPojo.setId(null);
+            userInfoPojo.setStatus(null);
+            resultMap.put("userInfo", userInfoPojo);
+            resultMap.put("gkxtToken", gkxtToken);
+            RedisUtil.getInstance().set(loginCode, resultMap, 4l, TimeUnit.HOURS);
         }
-        return getRedirectUrl(userId, aliUserId, bindStatus);
+        return bindStatus;
     }
 
     @RequestMapping(value = "/getUserId", produces = "application/json; charset=utf-8")
     public String getUserId(@RequestParam(value="auth_code",required=false) String authCode)
+        throws Exception
     {
         String aliUserId = getUserId(getOauthTokenResponse(authCode));
         Map<String, Object> userInfoMap = userAccountExService.findUserInfoByAlipayId(aliUserId);
@@ -102,16 +154,15 @@ public class AliPayAuthController
         String userId = userInfoMap.get("id") + "";
         String account = userInfoMap.get("account") + "";
         String bindStatus = "1";
-        if(account.length()==11)
-        {
-            bindStatus = "2";
-        }
-        return getRedirectUrl(userId, aliUserId, bindStatus);
+        String loginCode = UUID.randomUUID().toString();
+        bindStatus = setLoginInfo(account, bindStatus, loginCode);
+        return getRedirectUrl(userId, aliUserId, bindStatus, loginCode);
     }
 
-    private String getRedirectUrl(String userId, String aliUserId, String bindStatus)
+    private String getRedirectUrl(String userId, String aliUserId, String bindStatus, String loginCode)
     {
-        return "redirect:http://sn.local.zhigaokao.cn:3005/login-third-back.html?userId="+userId+"&aliUserId="+ aliUserId+"&bindStatus="+bindStatus;
+        return "redirect:http://sn.local.zhigaokao.cn:3005/login-third-back.html?userId="+userId+"&aliUserId="+
+            aliUserId+"&bindStatus="+bindStatus + "&loginCode"+loginCode;
     }
 
     private String getResult(String accessToken)
@@ -217,5 +268,13 @@ public class AliPayAuthController
         paramMap.put("return_url", AlipayConfig.return_url);
         paramMap.put("target_service", AlipayConfig.target_service);
         return AlipaySubmit.buildRequest(paramMap,"POST","submitButton");
+    }
+
+    @RequestMapping(value = "/getLoginInfoByCode")
+    @ResponseBody
+    public Map<String, Object> getLoginInfoByCode(String code) throws Exception
+    {
+        Map<String, Object> resultMap = (Map<String, Object>)RedisUtil.getInstance().get(code);
+        return resultMap;
     }
 }
