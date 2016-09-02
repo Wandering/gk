@@ -22,4 +22,9 @@ public class DataDictServiceImpl implements IDataDictService {
     public List<Map<String, Object>> queryDictList(Map<String, Object> map) {
         return iDataDictDao.queryDictList(map);
     }
+
+    @Override
+    public Map<String, Object> queryDictByDictId(Map<String, Object> map) {
+        return iDataDictDao.queryDictByDictId(map);
+    }
 }
