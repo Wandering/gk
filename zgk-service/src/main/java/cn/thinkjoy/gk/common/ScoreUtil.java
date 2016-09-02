@@ -969,7 +969,7 @@ public class ScoreUtil {
 
     public String[] getZJUserScore(long userId){
         Map<String, Object> map = scoreAnalysisService.queryScoreRecordByUserId(userId);
-        Map<String,Object> scores = getScores(map, null);
+        Map<String,Object> scores = (Map<String,Object>)map.get("scores");
         Iterator<String> keys = scores.keySet().iterator();
         //一定是三门成绩 否则异常
         String[] subjects =null;

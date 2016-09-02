@@ -479,7 +479,6 @@ deleteBySubjects
     <select id="queryZJUniversityByScore" resultType="java.util.Map">
         SELECT * from (
         SELECT
-
         university.areaId as universityAreaId,
         university.rank as rank,
         university.name as schoolName,
@@ -492,25 +491,24 @@ deleteBySubjects
         (SELECT
         CASE WHEN university_id is null THEN 0 ELSE 1 END
         from zgk_favorite_university WHERE user_id = #{userId} AND university_id = enrolling.universityId  limit 1) AS isFavorite
-        from (select majorCode,universityId,averageScore,realEnrollingNumber,batch from zgk_university_major_enrolling   where areaId = #{areaId} and year = #{year}
-        and averageScore - #{totalScore} &lt;= #{bc}
-        and #{totalScore} -averageScore  &lt;= #{bc}) enrolling
-        INNER JOIN (SELECT
-        majorCode,universityId
-        FROM zgk_zj_3in7
-        <where>
-            <if test="subjectItemList!=null">
-                (
-                <foreach item="subjectItems" collection="subjectItemList"  separator=" or " index="">
-                    <foreach item="mapList" collection="subjectItems.subjectItem" open="(" close=")" separator="and" index="">
-                        selectSubject LIKE CONCAT('%','${mapList.selectSubject}','%')
-                    </foreach>
+        from  zgk_university_major_enrolling as enrolling
+        INNER JOIN zgk_zj_3in7 as 3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
+        <if test="subjectItemList!=null">
+            AND
+            (
+            <foreach item="subjectItems"  collection="subjectItemList"  separator=" or " index="">
+                <foreach item="mapList" collection="subjectItems.subjectItem" open="(" close=")" separator="and" index="">
+                    3in7.selectSubject LIKE CONCAT('%','${mapList.selectSubject}','%')
                 </foreach>
-                OR selectSubject = ''
-                )
-            </if>
-        </where>)  3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
-        LEFT JOIN (SELECT id,areaid as areaId,rank,name from zgk_university) university ON university.id = enrolling.universityId
+            </foreach>
+            OR 3in7.selectSubject = ''
+            )
+        </if>
+        LEFT JOIN zgk_university university ON university.id = enrolling.universityId
+        where
+        enrolling.areaId = #{areaId} and enrolling.year = #{year}
+        and enrolling.averageScore - #{totalScore} &lt;= #{bc}
+        and #{totalScore} -enrolling.averageScore  &lt;= #{bc}
         ORDER BY ABS(gapSchool) ASC
         limit 20) tb ORDER BY universityAreaId !=${areaId},isFavorite is null,rank is null,rank  ASC
 
