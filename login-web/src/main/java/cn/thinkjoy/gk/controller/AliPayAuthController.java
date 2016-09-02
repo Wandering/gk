@@ -162,7 +162,7 @@ public class AliPayAuthController extends ZGKBaseController
     private String getRedirectUrl(String userId, String aliUserId, String bindStatus, String loginCode)
     {
         return "redirect:http://sn.local.zhigaokao.cn:3005/login-third-back.html?userId="+userId+"&aliUserId="+
-            aliUserId+"&bindStatus="+bindStatus + "&loginCode"+loginCode;
+            aliUserId+"&bindStatus="+bindStatus + "&loginCode="+loginCode;
     }
 
     private String getResult(String accessToken)
