@@ -272,7 +272,7 @@ public class AliPayAuthController extends ZGKBaseController
 
     @RequestMapping(value = "/getLoginInfoByCode")
     @ResponseBody
-    public Map<String, Object> getLoginInfoByCode(String code) throws Exception
+    public Map<String, Object> getLoginInfoByCode(@RequestParam(value="loginCode",required=false)String code) throws Exception
     {
         Map<String, Object> resultMap = (Map<String, Object>)RedisUtil.getInstance().get(code);
         return resultMap;
