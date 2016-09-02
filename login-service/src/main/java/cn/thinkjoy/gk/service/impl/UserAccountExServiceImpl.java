@@ -245,4 +245,22 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         flag = true;
         return flag;
     }
+
+    @Override
+    public boolean bindUserAccountExist(UserAccountPojo userAccountPojo, String userId, String aliUserId)
+    {
+        boolean flag;
+        userAccountDAO.deleteById(userId);
+        userInfoDAO.deleteById(userId);
+        userVipDAO.deleteById(userId);
+        userExamDAO.deleteById(userId);
+        userMarketDAO.deleteById(userId);
+        Long existUserId = userAccountPojo.getId();
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(existUserId);
+        userInfo.setAlipayUserId(aliUserId);
+        userInfoExDAO.updateUserAliUserId(userInfo);
+        flag = true;
+        return flag;
+    }
 }

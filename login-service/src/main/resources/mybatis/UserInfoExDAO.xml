@@ -100,6 +100,9 @@
         WHERE info.id=#{id}
         limit 1
     </select>
-    <!--end-->
+
+    <update id="updateUserAliUserId">
+        UPDATE zgk_user_info SET alipayUserId=#{alipayUserId} WHERE id=#{id}
+    </update>
 </mapper>
 
