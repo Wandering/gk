@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.dao;
 
+import cn.thinkjoy.gk.dto.MajorInfoDTO;
 import cn.thinkjoy.gk.pojo.MajorDetailPojo;
 import cn.thinkjoy.gk.pojo.MajoredDto;
 import cn.thinkjoy.gk.pojo.SubjectDto;
@@ -43,4 +44,12 @@ public interface IMajoredDAO {
     String getMajorIntroduce(@Param("condition")Map<String,Object> params);
 
     String getMajorSpecialisation(@Param("condition")Map<String,Object> params);
+
+    List getCategoryMajoredList(@Param("categoryId")long categoryId);
+
+    List getMajoredCategory(@Param("type")long type);
+
+    List getMajoredByName(@Param("condition")Map<String,Object> params);
+
+    MajorInfoDTO getMajoredInfoById(@Param("majorCode")String majorCode);
 }

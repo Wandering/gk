@@ -54,29 +54,50 @@ public class MajoredController extends ZGKBaseController {
     @Autowired
     private cn.thinkjoy.zgk.remote.IMajoredService iremoteMajoredService;
 
+    /**
+     * 根据分类获取专业
+     * @param categoryId
+     * @return
+     */
     @RequestMapping(value = "getCategoryMajoredList",method = RequestMethod.GET)
     @ResponseBody
     public Object getCategoryMajoredList(@RequestParam(value = "categoryId",required = true)long categoryId){
-        return iremoteMajoredService.getCategoryMajoredList(categoryId);
+        return iMajoredService.getCategoryMajoredList(categoryId);
     }
 
+    /**
+     * 根据类型获取分类
+     * @param type
+     * @return
+     */
     @RequestMapping(value = "getMajoredCategory",method = RequestMethod.GET)
     @ResponseBody
     public Object getMajoredCategory(@RequestParam(value = "type",required = true)long type){
-        return iremoteMajoredService.getMajoredCategory(type);
+        return iMajoredService.getMajoredCategory(type);
     }
 
+    /**
+     * 根据专业名称模糊查找专业
+     * @param majoredName
+     * @param type
+     * @return
+     */
     @RequestMapping(value = "getMajoredByName",method = RequestMethod.GET)
     @ResponseBody
     public Object getMajoredByName(@RequestParam(value = "majoredName",required = true)String majoredName,@RequestParam(value = "type",required = true)String type){
-        return iremoteMajoredService.getMajoredByName(majoredName,type);
+        return iMajoredService.getMajoredByName(majoredName,type);
     }
 
+    /**
+     * 查询专业详情
+     * @param majoredId
+     * @return
+     */
     @RequestMapping(value = "getMajoredInfoById",method = RequestMethod.GET)
     @ResponseBody
-    public Map getMajoredInfoById(@RequestParam(value = "majoredId", required = true) int majoredId){
+    public Map getMajoredInfoById(@RequestParam(value = "majoredId", required = true) String majoredId){
         //专业Id、专业名称、就业率、薪资、专业代码、授予学位、修学年限、开设课程、专业解读、
-        return iremoteMajoredService.getMajoredInfoById(Long.valueOf(majoredId));
+        return iMajoredService.getMajoredInfoById(majoredId);
     }
 
     @RequestMapping(value = "/getMajorOpenUniversityList",method = RequestMethod.GET)
