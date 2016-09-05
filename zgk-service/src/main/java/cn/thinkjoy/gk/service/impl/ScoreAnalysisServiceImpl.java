@@ -507,6 +507,9 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         } else {
             //获取上次测评院校和批次
             Map<String, Object> targetMap = scoreAnalysisDAO.queryLastTarget(userId);
+            if(targetMap==null){
+                throw new BizException("error","当前用户没有经过第一次测评!");
+            }
             schoolId = Long.valueOf(targetMap.get("universityId").toString());
             batch = Integer.valueOf(targetMap.get("batch").toString());
         }
@@ -630,6 +633,9 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         } else {
             //获取上次测评院校和批次
             Map<String, Object> targetMap = scoreAnalysisDAO.queryLastTarget(userId);
+            if(targetMap==null){
+                throw new BizException("error","当前用户没有经过第一次测评!");
+            }
             schoolId = Long.valueOf(targetMap.get("universityId").toString());
             majorCode = targetMap.get("majorCode").toString();
         }
