@@ -334,7 +334,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         //位次获得值
         List<UniversityInfoEnrolling> universityInfoEnrollings= getUniversityEnrollingsByScoreDiff(reportForecastView);
 
-        if(universityInfoEnrollings!=null) {
+        if(universityInfoEnrollings!=null&&universityInfoEnrollings.size()>0) {
             UniversityInfoEnrolling universityInfoEnrolling = universityInfoEnrollings.get(0);
             preEnroll = bigDecimal.multiply(universityInfoEnrolling.getEnrollRate()).intValue();
         }
@@ -351,7 +351,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         //位次获得值
         List<UniversityInfoEnrolling> universityInfoEnrollings=getUniversityEnrollingsByPrecedence(reportForecastView);
 
-        if(universityInfoEnrollings!=null) {
+        if(universityInfoEnrollings!=null&&universityInfoEnrollings.size()>0) {
             UniversityInfoEnrolling universityInfoEnrolling = universityInfoEnrollings.get(0);
             preEnroll = bigDecimal.multiply(universityInfoEnrolling.getEnrollRate()).intValue();
         }
