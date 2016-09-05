@@ -513,7 +513,7 @@ public class SmartReportController extends ZGKBaseController {
             @RequestParam(value="uid") Integer uid) {
 
         ReportForecastView reportForecastView = new ReportForecastView();
-        reportForecastView.setBatch(batch);
+        reportForecastView.setBatch( ReportUtil.ConverOldBatch(batch));
         reportForecastView.setScore(score);
         reportForecastView.setProvince(province);
         reportForecastView.setCategorie(categorie);

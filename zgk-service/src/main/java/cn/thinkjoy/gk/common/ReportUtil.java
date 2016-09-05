@@ -484,7 +484,48 @@ public class ReportUtil {
 
         return false;
     }
-
+    public static String ConverOldBatch(String newBatch) {
+        String oldBatch = "";
+        switch (newBatch) {
+            case "1":
+                oldBatch = "1";
+                break;
+            case "11":
+                oldBatch = "1-1";
+                break;
+            case "12":
+                oldBatch = "1-2";
+                break;
+            case "2":
+                oldBatch = "2";
+                break;
+            case "21":
+                oldBatch = "2-1";
+                break;
+            case "22":
+                oldBatch = "2-2";
+                break;
+            case "4":
+                oldBatch = "3";
+                break;
+            case "41":
+                oldBatch = "3-1";
+                break;
+            case "42":
+                oldBatch = "3-2";
+                break;
+            case "8":
+                oldBatch = "4";
+                break;
+            case "81":
+                oldBatch = "4-1";
+                break;
+            case "82":
+                oldBatch = "4-2";
+                break;
+        }
+        return oldBatch;
+    }
     public static void main(String[] arg) throws IOException {
         String s="[{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"268\",\"averageScore\":\"0\",\"enrollRate\":\"100%\",\"name\":\"上海金融学院\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"上海市\",\"type\":\"8\",\"typeName\":\"财经\"},\"sequence\":1},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"1415\",\"averageScore\":\"530\",\"enrollRate\":\"100%\",\"name\":\"西北政法大学\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"陕西省\",\"type\":\"9\",\"typeName\":\"政法\"},\"sequence\":2},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"837\",\"averageScore\":\"554\",\"enrollRate\":\"100%\",\"name\":\"湖南财政经济学院\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"湖南省\",\"type\":\"8\",\"typeName\":\"财经\"},\"sequence\":3},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"465\",\"averageScore\":\"0\",\"enrollRate\":\"100%\",\"name\":\"上海工程技术大学\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"上海市\",\"type\":\"2\",\"typeName\":\"工科\"},\"sequence\":4},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"555\",\"averageScore\":\"0\",\"enrollRate\":\"100%\",\"name\":\"三峡大学\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"湖北省\",\"type\":\"1\",\"typeName\":\"综合\"},\"sequence\":5},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"1633\",\"averageScore\":\"0\",\"enrollRate\":\"100%\",\"name\":\"河北经贸大学\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"河北省\",\"type\":\"8\",\"typeName\":\"财经\"},\"sequence\":6}]";
         ObjectMapper mapper = new ObjectMapper();
