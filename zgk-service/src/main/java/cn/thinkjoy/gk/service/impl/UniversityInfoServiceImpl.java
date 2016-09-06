@@ -99,6 +99,23 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         return iReportResultService.getPrecedence(tableName,prevPre);
     }
 
+
+    /**
+     * 分数转换位次 ---录取难易预测
+     * @param reportParm
+     * @return
+     */
+    @Override
+    public Integer converPreByScoreV2(ReportForecastView reportParm,String key  ) {
+        //一分一段 查找分数对应位次
+        Integer prevPre= iScoreConverPrecedenceService.converPrecedenceByScoreV2(reportParm.getScore(), reportParm.getProvince(), reportParm.getCategorie(), reportParm.getBatch());
+        //找位次临近值
+        String tableName= ReportUtil.getTableName(reportParm.getProvince(), reportParm.getCategorie(), reportParm.getBatch(), isPre(reportParm,key));
+
+        return iReportResultService.getPrecedence(tableName,prevPre);
+    }
+
+
     /**
      * 分数转换线差
      * @param parmasView
@@ -334,7 +351,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         //位次获得值
         List<UniversityInfoEnrolling> universityInfoEnrollings= getUniversityEnrollingsByScoreDiff(reportForecastView);
 
-        if(universityInfoEnrollings!=null) {
+        if(universityInfoEnrollings!=null&&universityInfoEnrollings.size()>0) {
             UniversityInfoEnrolling universityInfoEnrolling = universityInfoEnrollings.get(0);
             preEnroll = bigDecimal.multiply(universityInfoEnrolling.getEnrollRate()).intValue();
         }
@@ -351,7 +368,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         //位次获得值
         List<UniversityInfoEnrolling> universityInfoEnrollings=getUniversityEnrollingsByPrecedence(reportForecastView);
 
-        if(universityInfoEnrollings!=null) {
+        if(universityInfoEnrollings!=null&&universityInfoEnrollings.size()>0) {
             UniversityInfoEnrolling universityInfoEnrolling = universityInfoEnrollings.get(0);
             preEnroll = bigDecimal.multiply(universityInfoEnrolling.getEnrollRate()).intValue();
         }
