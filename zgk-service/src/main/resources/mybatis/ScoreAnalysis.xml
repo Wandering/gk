@@ -504,6 +504,7 @@ deleteBySubjects
         enrolling.areaId = #{areaId} and enrolling.year = #{year}
         and enrolling.averageScore - #{totalScore} &lt;= #{bc}
         and #{totalScore} -enrolling.averageScore  &lt;= #{bc}
+        and enrolling.majorCode is not NULL
         ORDER BY ABS(gapSchool) ASC
         limit 20) tb ORDER BY universityAreaId !=${areaId},isFavorite is null,rank is null,rank  ASC
 
