@@ -475,13 +475,27 @@ deleteBySubjects
     </select>
     <!--推荐院校浙江-->
     <select id="queryZJUniversityByScore" resultType="java.util.Map">
-        SELECT * from (
         SELECT
-        university.areaId as universityAreaId,
+        areaId as universityAreaId,
+        rank,
+        schoolName,
+        (SELECT name from zgk_data_dict where dictId = tb.batch and type='BATCHTYPE2' limit 1) as batch,
+        (SELECT major_name from zgk_major_base WHERE major_code= majorCode) as majorName,
+        stuNum,
+        averageScore,
+        universityId,
+        majorType,
+        gapSchool,
+        (SELECT
+        CASE WHEN university_id is null THEN 0 ELSE 1 END
+        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = tb.universityId  limit 1) AS isFavorite
+        from (
+        SELECT
+        university.areaId,
         university.rank as rank,
         university.name as schoolName,
-        (SELECT name from zgk_data_dict where dictId = enrolling.batch and type='BATCHTYPE2' limit 1) as batch,
-        (SELECT major_name from zgk_major_base WHERE major_code= enrolling.majorCode) as majorName,
+        enrolling.batch as batch,
+        enrolling.majorCode,
         enrolling.realEnrollingNumber as stuNum,
         enrolling.averageScore as averageScore,
         enrolling.universityId,
@@ -491,7 +505,9 @@ deleteBySubjects
         CASE WHEN university_id is null THEN 0 ELSE 1 END
         from zgk_favorite_university WHERE user_id = #{userId} AND university_id = enrolling.universityId  limit 1) AS isFavorite
         from  zgk_university_major_enrolling as enrolling
-        INNER JOIN zgk_zj_3in7 as 3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
+        INNER JOIN zgk_zj_3in7 as 3in7 ON 3in7.majorCode=enrolling.majorCode
+        AND 3in7.universityId=enrolling.universityId
+        AND 3in7.majorCode is not NULL
         <if test="subjectItem!=null">
             AND INSTR(#{subjectItem},3in7.selectSubject)
             <if test="subjectItem2!=null">
@@ -597,6 +613,7 @@ deleteBySubjects
         FROM zgk_university_major_enrolling enrolling
         INNER JOIN  zgk_zj_3in7 3in7 ON
         3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
+        and 3in7.majorCode is not null
         <if test="subjectItem!=null">
            AND INSTR(#{subjectItem},3in7.selectSubject)
             <if test="subjectItem2!=null">
@@ -643,7 +660,9 @@ deleteBySubjects
     <select id="countMajorRepeat" resultType="java.lang.Integer">
         SELECT count(*) from(
         SELECT enrolling.majorCode,enrolling.universityId from zgk_university_major_enrolling enrolling
-        INNER JOIN zgk_zj_3in7 as 3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
+        INNER JOIN zgk_zj_3in7 as 3in7 ON 3in7.majorCode=enrolling.majorCode
+        AND 3in7.universityId=enrolling.universityId
+        AND 3in7.majorCode is not NULL
         <if test="subjectItem!=null">
             AND INSTR(#{subjectItem},3in7.selectSubject)
             <if test="subjectItem2!=null">
