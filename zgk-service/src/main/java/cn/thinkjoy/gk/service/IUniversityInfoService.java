@@ -42,6 +42,15 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
      */
     public Integer converPreByScore(ReportForecastView parmasView,String key );
 
+
+    /**
+     * 分数转换位次  ---录取难易预测
+     * @param parmasView
+     * @return
+     */
+    public Integer converPreByScoreV2(ReportForecastView parmasView,String key );
+
+
     /**
      * 分数转换线差
      * @param parmasView

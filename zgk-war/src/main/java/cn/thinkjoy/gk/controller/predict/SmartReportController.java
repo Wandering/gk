@@ -518,7 +518,7 @@ public class SmartReportController extends ZGKBaseController {
         reportForecastView.setProvince(province);
         reportForecastView.setCategorie(categorie);
         reportForecastView.setUid(uid);
-        reportForecastView.setPrecedence(iUniversityInfoService.converPreByScore(reportForecastView,ReportUtil.FORECAST_ENROLLING_LOGIC));
+        reportForecastView.setPrecedence(iUniversityInfoService.converPreByScoreV2(reportForecastView,ReportUtil.FORECAST_ENROLLING_LOGIC));
         reportForecastView.setScoreDiff(iUniversityInfoService.converScoreDiffByScore(reportForecastView));
         reportForecastView.setJoin(false);
 

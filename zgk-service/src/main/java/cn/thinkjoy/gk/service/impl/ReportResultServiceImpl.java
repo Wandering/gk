@@ -93,6 +93,8 @@ public class ReportResultServiceImpl implements IReportResultService {
         map.put("tableName",tableName);
         map.put("preceden",precedence);
         List<Integer> preList = selectPrecedence(map);
+        if(preList==null||preList.size()<=0)
+            return 0;
         final Integer size = preList.size();
         Integer[] preArr = (Integer[]) preList.toArray(new Integer[size]);
         Integer result = ReportUtil.binarysearchKey(preArr, precedence);

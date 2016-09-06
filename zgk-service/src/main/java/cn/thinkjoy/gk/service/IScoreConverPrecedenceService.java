@@ -34,6 +34,17 @@ public interface IScoreConverPrecedenceService {
     public Integer converPrecedenceByScore(Integer score,String proCode,Integer cate,String batch);
 
     /**
+     * 分数转换位次
+     * @param score 分数
+     * @param proCode 省份
+     * @param cate    科类
+     * @param batch   批次
+     * @return
+     */
+    public Integer converPrecedenceByScoreV2(Integer score,String proCode,Integer cate,String batch);
+
+
+    /**
      * 校验用户位次准确性
      * @param score
      * @param proCode
