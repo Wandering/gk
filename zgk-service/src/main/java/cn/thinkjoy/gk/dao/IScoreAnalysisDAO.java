@@ -165,7 +165,7 @@ public interface IScoreAnalysisDAO {
      * @param year
      * @return
      */
-    Map<String,Object> queryMajorLowestScore(@Param("schoolId")long schoolId,
+    List<Map<String,Object>> queryMajorLowestScore(@Param("schoolId")long schoolId,
                                                    @Param("areaId")long areaId,
                                                    @Param("majorCode")String majorCode,
                                                    @Param("year")String year);
@@ -391,5 +391,10 @@ public interface IScoreAnalysisDAO {
      * @return
      */
     String queryUserGradeInfo(long userId);
+
+    /**
+     *
+     */
+    Integer countMajorRepeat(Map<String,Object> map);
 
 }

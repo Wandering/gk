@@ -123,15 +123,8 @@ deleteBySubjects
             INNER JOIN (SELECT code FROM  zgk_university WHERE areaid in (${areaId})) university ON 3in7.universityCode=university.code
         </if>
         <where>
-            <if test="subjectItemList!=null">
-                (
-            <foreach item="subjectItems" collection="subjectItemList"  separator=" or " index="">
-                <foreach item="mapList" collection="subjectItems.subjectItem" open="(" close=")" separator="and" index="">
-                    3in7.selectSubject LIKE CONCAT('%','${mapList.selectSubject}','%')
-                </foreach>
-            </foreach>
-            OR  3in7.selectSubject = ''
-                )
+            <if test="subjectItem!=null">
+                AND INSTR(#{subjectItem},3in7.selectSubject)
             </if>
             <if test="universityName!= null">
                 and 3in7.universityName LIKE CONCAT('%', #{universityName} , '%')
@@ -159,18 +152,8 @@ deleteBySubjects
             INNER JOIN (SELECT code FROM  zgk_university WHERE areaid in (${areaId})) university ON 3in7.universityCode=university.code
         </if>
         <where>
-            <if test="subjectItemList!=null">
-                (
-                <foreach item="subjectItems" collection="subjectItemList"  separator=" or " index="">
-                    <foreach item="mapList" collection="subjectItems.subjectItem" open="(" close=")" separator="and" index="">
-                        3in7.selectSubject LIKE CONCAT('%','${mapList.selectSubject}','%')
-                    </foreach>
-                </foreach>
-                OR  3in7.selectSubject = ''
-                )
-            </if>
-            <if test="universityName!= null">
-                and 3in7.universityName LIKE CONCAT('%', #{universityName} , '%')
+            <if test="subjectItem!=null">
+                AND INSTR(#{subjectItem},3in7.selectSubject)
             </if>
         </where>
     </select>

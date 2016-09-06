@@ -12,10 +12,10 @@ public class HttpScoreTest extends TestCase{
 //        String host="http://10.136.56.195:8080";
 //        String host="http://zjtest.zhigaokao.cn";
 //        String host="http://localhost:8082";
-//        String host="http://localhost:8080";
+        String host="http://localhost:8080";
 //        String host="http://zgkser.zhigaokao.cn/";
 //        String host="http://zj.dev.zhigaokao.cn";
-        String host="http://zj.test.zhigaokao.cn";
+//        String host="http://zj.test.zhigaokao.cn";
 //        String host="http://10.136.67.121:8080";
 
         String base="/score/";
@@ -149,7 +149,7 @@ public class HttpScoreTest extends TestCase{
     public void testRecommendSchool(){
         long start=System.currentTimeMillis();
         System.out.println("我开始了");
-        String url=host +recommendSchool_url + "?totalScore=700&areaId=610000&majorType=2&userId=309";
+        String url=host +recommendSchool_url + "?totalScore=510&areaId=330000&userId=1";
         System.out.println(url);
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
@@ -182,7 +182,7 @@ public class HttpScoreTest extends TestCase{
      */
     public void testQueryMajorBySchoolIdAndAreaId(){
 
-        String url=host +queryMajorBySchoolIdAndAreaId_url + "?userId=217&areaId=330000&schoolId=2";
+        String url=host +queryMajorBySchoolIdAndAreaId_url + "?userId=216&areaId=330000&schoolId=94";
         System.out.println(url);
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
@@ -193,7 +193,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryGapBySchoolIdAndMajor(){
-        String url=host +queryGapBySchoolIdAndMajor_url + "?userId=219&schoolId=&majorCode=&recordId=1109";
+        String url=host +queryGapBySchoolIdAndMajor_url + "?userId=1&schoolId=94&majorCode=&recordId=1109";
         String result = RequestUtils.requestPost(url);
         System.out.println("result = " + result);
     }

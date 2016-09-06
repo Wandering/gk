@@ -9,6 +9,7 @@ import cn.thinkjoy.gk.controller.api.base.BaseApiController;
 import cn.thinkjoy.gk.service.IZGK3in7Service;
 import cn.thinkjoy.zgk.domain.BizData4Page;
 import cn.thinkjoy.zgk.remote.IGkPhoneService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -40,7 +41,13 @@ public class GkSubjectByMajorController {
                                  String[] subjects,String areaId,String universityName){
         Map<String,Object> map = new HashMap<>();
         if(subjects!=null) {
-            map.put("subjectItemList", combineAlgorithm(subjects));
+            String subjectItem="";
+            for(String sub:subjects){
+                if(StringUtils.isNotEmpty(sub)) {
+                    subjectItem += sub + " ";
+                }
+            }
+            map.put("subjectItem", subjectItem.substring(0,subjectItem.length()-1));
         }
         if(subjects!=null){
             Arrays.sort(subjects);

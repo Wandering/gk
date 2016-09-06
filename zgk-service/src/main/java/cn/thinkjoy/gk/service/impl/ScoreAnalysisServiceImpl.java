@@ -646,11 +646,21 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         String name = scoreAnalysisDAO.querySchoolNameById(schoolId);
 
 
-        Map<String, Object> majorLineMap = scoreAnalysisDAO.queryMajorLowestScore(schoolId, areaId, majorCode, year);
+        List<Map<String, Object>> majorLineMaps = scoreAnalysisDAO.queryMajorLowestScore(schoolId, areaId, majorCode, year);
         Float majorLine = null;
         String majorName = null;
-        if (majorLineMap != null&&majorLineMap.size()>0) {
-            majorLine = Float.valueOf(majorLineMap.get("averageScore").toString());
+        if (majorLineMaps != null&&majorLineMaps.size()>0) {
+            Map<String, Object> majorLineMap=null;
+            if(majorLineMaps.size()>1){
+                for(Map<String, Object> rMap : majorLineMaps){
+                    if("2".equals(rMap.get("majorType"))) {
+                        majorLineMap = rMap;
+                        break;
+                    }
+                }
+            }
+
+            majorLine = Float.valueOf(majorLineMap.get("lowestScore").toString());
             majorName = majorLineMap.get("majorName").toString();
         } else {
             throw new BizException("error", "当前学校在"+year+"年无数据");
@@ -735,7 +745,13 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         //一定是三门成绩 否则异常
         String[] subjects =scoreUtil.getZJUserScore(userId);
         //计算专业提取范围
-        map.put("subjectItemList", scoreUtil.combineAlgorithm(subjects));
+        String subjectItem="";
+        for(String sub:subjects){
+            if(StringUtils.isNotEmpty(sub)) {
+                subjectItem += sub + " ";
+            }
+        }
+        map.put("subjectItem", subjectItem.substring(0,subjectItem.length()-1));
         return scoreAnalysisDAO.queryMajorBySchoolIdAndAreaId(map);
     }
 

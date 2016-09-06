@@ -47,7 +47,7 @@ public class ScoreController {
 
 
     @Autowired
-    IScoreAlgorithmService scoreAlgorithmService;
+    private IScoreAlgorithmService scoreAlgorithmService;
 
 
     /**
@@ -350,7 +350,7 @@ public class ScoreController {
                 throw new BizException("error","学科类型不能为空");
             }
             if(majorType!=1&&majorType!=2){
-                throw new BizException("error","学科类型智能为1或2");
+                throw new BizException("error","学科类型只能为1或2");
             }
             if(batch==null){
                 throw new BizException("error","批次不能为空");

@@ -49,6 +49,9 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
     @Autowired
     AreaMaps areaMaps;
 
+    private static String MAJORTYPE_WEN = "1";
+    private static String MAJORTYPE_LI = "2";
+
 
     @Autowired
     private ScoreUtil scoreUtil;
@@ -80,7 +83,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
 
         LOGGER.info("=======批次及批次控制线信息 Start=======");
         LOGGER.info("分数||位次:" + sap);
-        LOGGER.info("成绩:" + score);
+        LOGGER.info("成绩: " + score);
         LOGGER.info("科类:" + majorType);
         LOGGER.info("省份:" + province);
         String[] batchs = getBatchByScore(province,majorType,score,areaId);
@@ -386,22 +389,31 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         //计算公式为 学生成绩 - 平均分 > = bc  || 平均分 - 学生成绩 < = bc
         //计算专业提取范围
         Map<String,Object> map = new HashedMap();
-        map.put("subjectItemList", scoreUtil.combineAlgorithm(subjects));
+        String subjectItem="";
+        for(String sub:subjects){
+            if(StringUtils.isNotEmpty(sub)) {
+                subjectItem += sub + " ";
+            }
+        }
+        map.put("subjectItem", subjectItem.substring(0,subjectItem.length()-1));
         map.put("areaId",areaId);
         map.put("year",lastYear.toString());
         map.put("totalScore",totalScore);
 
         int count = 0;
-        int bc = 10;
+        int bc = 0;
         do {
+            bc += 10;
             map.put("bc",bc);
             count = scoreAnalysisDAO.countZJUniversity(map);
             //增加步长
-            bc += 10;
+
         } while (count < 20 && bc < 300);
-        bc -= 10;
-        map.put("bc",bc);
         map.put("userId",userId);
+        Integer rows = 20;
+        rows+=scoreAnalysisDAO.countMajorRepeat(map);
+        map.put("rows",rows);
+
 
         //返回前20个院校
         List<Map<String, Object>> resultList = scoreAnalysisDAO.queryZJUniversityByScore(map);
@@ -528,7 +540,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
             if(treeMap.containsKey(majorName)){
 
                 List<Map<String,Object>> l1=treeMap.get(majorName);
-                l1.add(map);
+                removeRepeat(l1,map);
             }else {
                 List<Map<String,Object>> l1=new ArrayList<>();
                 l1.add(map);
@@ -538,6 +550,23 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         return treeMap;
     }
 
+    private void removeRepeat(List<Map<String,Object>> mapList,Map<String,Object> map){
+
+        for(Map<String, Object> rMap : mapList){
+            String universityId = rMap.get("universityId").toString();
+            if(universityId.equals(map.get("universityId").toString())){
+                String majorType = map.get("majorType").toString();
+                if(MAJORTYPE_LI.equals(majorType)){
+                    mapList.remove(rMap);
+                    mapList.add(map);
+                    break;
+                }
+            }else {
+                mapList.add(map);
+            }
+        }
+
+    }
 
     //======================================================================================================================
 }
