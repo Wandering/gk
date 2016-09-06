@@ -44,7 +44,9 @@ public class LoginController extends ZGKBaseController {
 	@ResponseBody
 	public Map<String, Object> login(@RequestParam(value="account",required=false) String account,
 					  @RequestParam(value="password",required=false) String password,
-					  @RequestParam(value="basePassword",required = false) String basePassword) throws Exception {
+					  @RequestParam(value="basePassword",required = false) String basePassword,
+		              @RequestParam(value = "userId", required = false) String userId,
+		              @RequestParam(value = "aliUserId", required = false) String aliUserId) throws Exception {
 		long id = 0L;
 		UserInfoPojo userInfoPojo=null;
 		Map<String, Object> resultMap = new HashMap<>();
@@ -72,6 +74,27 @@ public class LoginController extends ZGKBaseController {
 
 			if(null != userInfoPojo)
 			{
+				if(org.apache.commons.lang3.StringUtils.isNotBlank(userId) && org.apache.commons.lang3.StringUtils.isNotBlank(aliUserId))
+				{
+					long userIdLong = Long.parseLong(userId);
+					UserAccountPojo userInfo = userAccountExService.findUserAccountPojoById(userIdLong);
+					if(!userInfo.getAccount().equals(aliUserId))
+					{
+						throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "参数错误");
+					}
+					try
+					{
+						boolean flag = userAccountExService.bindUserAccountExist(userAccountBean, userId, aliUserId);
+						if (!flag)
+						{
+							throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "账户绑定失败");
+						}
+					}
+					catch (Exception e)
+					{
+						throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "账户绑定失败");
+					}
+				}
 				/**
 				 * 老用户生成二维码
 				 */

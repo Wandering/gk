@@ -105,13 +105,13 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
             userInfo.setName(userAccount.getNickName());
         }else if (StringUtils.isNotBlank(account))
         {
-            userInfo.setAlipayUserId(account);
             userInfo.setName("gk-" + account.substring(0, 3) + "****" + account.substring(account.length() - 4, account.length()));
         }
         if(StringUtils.isNotBlank(userAccount.getAvatar()))
         {
             userInfo.setIcon(userAccount.getAvatar());
         }
+        userInfo.setAlipayUserId(account);
         userInfo.setToken(UUID.randomUUID().toString());
         userInfo.setProvinceId(userAccount.getProvinceId());
         userInfo.setCityId(userAccount.getCityId());
@@ -242,6 +242,24 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
     public boolean bindUserAccount(UserAccount userAccount) {
         boolean flag;
         userAccountDAO.update(userAccount);
+        flag = true;
+        return flag;
+    }
+
+    @Override
+    public boolean bindUserAccountExist(UserAccountPojo userAccountPojo, String userId, String aliUserId)
+    {
+        boolean flag;
+        userAccountDAO.deleteById(userId);
+        userInfoDAO.deleteById(userId);
+        userVipDAO.deleteById(userId);
+        userExamDAO.deleteById(userId);
+        userMarketDAO.deleteById(userId);
+        Long existUserId = userAccountPojo.getId();
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(existUserId);
+        userInfo.setAlipayUserId(aliUserId);
+        userInfoExDAO.updateUserAliUserId(userInfo);
         flag = true;
         return flag;
     }

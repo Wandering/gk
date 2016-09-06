@@ -140,13 +140,12 @@ public class RegisterController extends ZGKBaseController
             {
                 long userIdLong = Long.parseLong(userId);
                 UserAccountPojo userInfo = userAccountExService.findUserAccountPojoById(userIdLong);
-                if(userInfo.getAccount().equals(aliUserId))
+                if(!userInfo.getAccount().equals(aliUserId))
                 {
                     throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "参数错误");
                 }
                 try
                 {
-
                     userAccount.setId(userIdLong);
                     boolean flag = userAccountExService.bindUserAccount(userAccount);
                     if (!flag)

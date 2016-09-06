@@ -1,10 +1,13 @@
 package cn.thinkjoy.gk.common;
 
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.dao.IDataDictDAO;
 import cn.thinkjoy.gk.pojo.BatchView;
+import cn.thinkjoy.gk.service.IDataDictService;
 import cn.thinkjoy.gk.service.IScoreAnalysisService;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +26,12 @@ public class ScoreUtil {
     private static int RANDOM_NUM=10;
 
     private static int JS_AREA_CODE=320000;
+    private static String BATCHTYPE2="BATCHTYPE2";
     @Autowired
     private IScoreAnalysisService scoreAnalysisService;
+
+    @Autowired
+    private IDataDictService dataDictService;
 
     public String getYear(){
         Calendar calendar = Calendar.getInstance();
@@ -310,45 +317,104 @@ public class ScoreUtil {
         Integer[][] scoreLines =null;
         scoreLines =(Integer[][]) scoreLinesMap.get("batchLine");
         // 当前有4层
+
+        //批次信息缓存上限
+        Float tempTop = 0f;
+        String tempBatchTop = "0";
+
+        //批次信息缓存下限
+        Float tempBottom = 0f;
+        String tempBatchBottom = "0";
+
+
+        //批次信息缓存下限
         Float temp = null;
-        String tempName = null;
+        String tempBatch = null;
 
         //规划计算当前分数最接近的上层分数
-        for(int i=3;i>=0;i--){
 
-            temp=scoreLines[i][0].floatValue();
-            //出现为0跳过当前轮
-            if(scoreLines[i][0]==0){
-                continue;
-            }
-            if(totalScore-scoreLines[i][0]<0){
-                break;
-            }
-            if(i==0&&totalScore-scoreLines[i][0]>0){
-                temp=scoreLines[0][0].floatValue();
-                //todo  这里目前写死为一二三高专批 当可以判断是专1还是专A时候更改
-                switch (i){
-                    case 3:
-                        tempName="一批本科";
-                        break;
-                    case 2:
-                        tempName="二批本科";
-                        break;
-                    case 1:
-                        tempName="三批本科";
-                        break;
-                    case 0:
-                        tempName="高职专科";
-                        break;
-
+        int t = 3;
+        flag:for(int i=t;i>=0;i--){
+            for(int j=t;j>=0;j--){
+                //出现为0/NULL跳过当前轮
+                if(scoreLines[i][j]==null||scoreLines[i][j]==0){
+                    continue;
                 }
+
+                //缓存值信息
+                temp=scoreLines[i][j].floatValue();
+                tempBatch=(i==0?1:(((i==1||i==2)?i:i+1)*2))+""+(j==0?"":(j+1));
+
+                //取出当前批次线作为最接近批次线
+                if(totalScore-scoreLines[i][j]<0){
+                    //记录顶部值
+                    tempTop=scoreLines[i][j].floatValue();
+                    tempBatchTop=(i==0?1:(((i==1||i==2)?i:i+1)*2))+""+(j==0?"":(j+1));
+                    break flag;
+                }
+
+                //记录上一次的信息为底部值
+                tempBottom=temp;
+                tempBatchBottom=tempBatch;
+
             }
+
+//            temp=scoreLines[i][0].floatValue();
+//            //出现为0跳过当前轮
+//            if(scoreLines[i][0]==0){
+//                continue;
+//            }
+//            scoreLines[i][0].
+//            if(totalScore-scoreLines[i][0]<0){
+//                break;
+//            }
+//            if(i==0&&totalScore-scoreLines[i][0]>0){
+//                temp=scoreLines[0][0].floatValue();
+//                //todo  这里目前写死为一二三高专批 当可以判断是专1还是专A时候更改
+//                switch (i){
+//                    case 3:
+//                        tempName="一批本科";
+//                        break;
+//                    case 2:
+//                        tempName="二批本科";
+//                        break;
+//                    case 1:
+//                        tempName="三批本科";
+//                        break;
+//                    case 0:
+//                        tempName="高职专科";
+//                        break;
+//
+//                }
+//            }
         }
 //        temp=scoreLines[0][0].floatValue();
 
         Map<String,Object> rtnMap = new HashedMap();
-        rtnMap.put("score",floatToStr(temp));
-        rtnMap.put("name",tempName);
+
+
+        Map<String,Object> map = new HashedMap();
+        map.put("type",BATCHTYPE2);
+        //当出现这种情况的时候同步顶部和底部的分数
+        if("0".equals(tempBatchTop)){
+            tempBatchTop=tempBatchBottom;
+            tempTop=tempBottom;
+        }
+        map.put("dictId",tempBatchTop);
+        Map<String,Object> dict = dataDictService.queryDictByDictId(map);
+        rtnMap.put("scoreTop",floatToStr(tempTop));
+        rtnMap.put("batchTop",tempBatchTop);
+        rtnMap.put("nameTop",dict.get("name"));
+        if("0".equals(tempBatchBottom)){
+            rtnMap.put("batchBottom",tempBatchTop);
+            rtnMap.put("nameBottom",dict.get("name"));
+        }else {
+            map.put("dictId",tempBatchBottom);
+            dict = dataDictService.queryDictByDictId(map);
+            rtnMap.put("scoreBottom",floatToStr(tempBottom));
+            rtnMap.put("batchBottom",tempBatchBottom);
+            rtnMap.put("nameBottom",dict.get("name"));
+        }
         rtnMap.put("year",scoreLinesMap.get("year"));
         return rtnMap;
     }
@@ -969,7 +1035,7 @@ public class ScoreUtil {
 
     public String[] getZJUserScore(long userId){
         Map<String, Object> map = scoreAnalysisService.queryScoreRecordByUserId(userId);
-        Map<String,Object> scores = getScores(map, null);
+        Map<String,Object> scores = (Map<String,Object>)map.get("scores");
         Iterator<String> keys = scores.keySet().iterator();
         //一定是三门成绩 否则异常
         String[] subjects =null;
@@ -1080,4 +1146,67 @@ public class ScoreUtil {
         return list;
     }
 
+    public String ConverNewBatch(String oldBatch){
+        String newBatch="";
+        switch (oldBatch){
+            case "1":
+                newBatch="1";
+                break;
+            case "11":
+                newBatch="1-1";
+                break;
+            case "12":
+                newBatch="1-2";
+                break;
+            case "2":
+                newBatch="2";
+                break;
+            case "21":
+                newBatch="2-1";
+                break;
+            case "22":
+                newBatch="2-2";
+                break;
+            case "3":
+                newBatch="4";
+                break;
+            case "4-1":
+                newBatch="3-1";
+                break;
+            case "4-2":
+                newBatch="3-2";
+                break;
+            case "8":
+                newBatch="4";
+                break;
+            case "81":
+                newBatch="4-1";
+                break;
+            case "42":
+                newBatch="4-2";
+                break;
+            case "43":
+                newBatch="4-3";
+                break;
+            case "44":
+                newBatch="4-4";
+                break;
+        }
+        return newBatch;
+    }
+
+    public void setSubjectItem(String[] subjects,Map<String,Object> map){
+        if(subjects!=null) {
+            String subjectItem="";
+            for(String sub:subjects){
+                if(StringUtils.isNotEmpty(sub)) {
+                    subjectItem += sub + " ";
+                }
+            }
+            map.put("subjectItem", subjectItem.substring(0,subjectItem.length()-1));
+            if(StringUtils.isNotEmpty(subjects[0])&&StringUtils.isNotEmpty(subjects[2]))
+                map.put("subjectItem2", subjects[0]+" "+subjects[2]);
+
+        }
+    }
 }

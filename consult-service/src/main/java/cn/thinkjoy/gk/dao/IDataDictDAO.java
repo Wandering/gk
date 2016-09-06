@@ -11,4 +11,5 @@ import java.util.Map;
  */
 public interface IDataDictDAO {
     List<Map<String, Object>> queryDictList(@Param("condition")Map<String, Object> map);
+    Map<String, Object> queryDictByDictId(@Param("condition")Map<String, Object> map);
 }

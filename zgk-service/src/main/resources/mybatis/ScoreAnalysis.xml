@@ -210,12 +210,11 @@ deleteBySubjects
     </select>
 
     <select id="queryMajorLowestScore" resultType="java.util.Map">
-        select averageScore,year,majorName from zgk_university_major_enrolling
+        select averageScore,year,majorName,majorType from zgk_university_major_enrolling
         WHERE universityId = #{schoolId}
         and areaId=#{areaId}
         and majorCode = #{majorCode}
         ORDER BY year DESC
-        limit 1
     </select>
 
     <select id="queryStuNumToLine" resultType="java.lang.Integer">
@@ -455,62 +454,73 @@ deleteBySubjects
 
     <!--统计浙江院校数量-->
     <select id="countZJUniversity" resultType="java.lang.Integer">
-        SELECT count(*) from (SELECT majorCode,universityId from zgk_university_major_enrolling WHERE areaId = #{areaId} and year = #{year}
-        and averageScore - #{totalScore} &lt;= #{bc}
-        and #{totalScore} - averageScore   &lt;= #{bc}) enrolling
-        INNER JOIN (SELECT
-        majorCode,universityId
-        FROM zgk_zj_3in7
-        <where>
-            <if test="subjectItemList!=null">
-                (
-                <foreach item="subjectItems" collection="subjectItemList"  separator=" or " index="">
-                    <foreach item="mapList" collection="subjectItems.subjectItem" open="(" close=")" separator="and" index="">
-                        selectSubject LIKE CONCAT('%','${mapList.selectSubject}','%')
-                    </foreach>
-                </foreach>
-                OR selectSubject = ''
-                )
+        SELECT
+        count(*)
+        FROM
+        (SELECT majorCode,universityId FROM zgk_university_major_enrolling WHERE areaId = #{areaId}
+        AND YEAR = #{year}
+        AND averageScore - #{totalScore} &lt;= #{bc}
+        AND #{totalScore} - averageScore &lt;= #{bc})
+        enrolling
+        INNER JOIN
+        zgk_zj_3in7 3in7 ON 3in7.majorCode = enrolling.majorCode
+        AND 3in7.universityId = enrolling.universityId
+        <if test="subjectItem!=null">
+            AND INSTR(#{subjectItem},3in7.selectSubject)
+            <if test="subjectItem2!=null">
+            OR
+            3in7.selectSubject=#{subjectItem2}
             </if>
-        </where>)  3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
-
+        </if>
     </select>
     <!--推荐院校浙江-->
     <select id="queryZJUniversityByScore" resultType="java.util.Map">
-        SELECT * from (
         SELECT
-
-        university.areaId as universityAreaId,
+        areaId as universityAreaId,
+        rank,
+        schoolName,
+        (SELECT name from zgk_data_dict where dictId = tb.batch and type='BATCHTYPE2' limit 1) as batch,
+        (SELECT major_name from zgk_major_base WHERE major_code= majorCode) as majorName,
+        stuNum,
+        averageScore,
+        universityId,
+        majorType,
+        gapSchool,
+        (SELECT
+        CASE WHEN university_id is null THEN 0 ELSE 1 END
+        from zgk_favorite_university WHERE user_id = #{userId} AND university_id = tb.universityId  limit 1) AS isFavorite
+        from (
+        SELECT
+        university.areaId,
         university.rank as rank,
         university.name as schoolName,
-        (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batch,
-        (SELECT major_name from zgk_major_base WHERE major_code= enrolling.majorCode) as majorName,
-        realEnrollingNumber as stuNum,
-        averageScore as averageScore,
+        enrolling.batch as batch,
+        enrolling.majorCode,
+        enrolling.realEnrollingNumber as stuNum,
+        enrolling.averageScore as averageScore,
         enrolling.universityId,
+        enrolling.majorType as majorType,
         (#{totalScore} - averageScore) as gapSchool,
         (SELECT
         CASE WHEN university_id is null THEN 0 ELSE 1 END
         from zgk_favorite_university WHERE user_id = #{userId} AND university_id = enrolling.universityId  limit 1) AS isFavorite
-        from (select majorCode,universityId,averageScore,realEnrollingNumber,batch from zgk_university_major_enrolling   where areaId = #{areaId} and year = #{year}
-        and averageScore - #{totalScore} &lt;= #{bc}
-        and #{totalScore} -averageScore  &lt;= #{bc}) enrolling
-        INNER JOIN (SELECT
-        majorCode,universityId
-        FROM zgk_zj_3in7
-        <where>
-            <if test="subjectItemList!=null">
-                (
-                <foreach item="subjectItems" collection="subjectItemList"  separator=" or " index="">
-                    <foreach item="mapList" collection="subjectItems.subjectItem" open="(" close=")" separator="and" index="">
-                        selectSubject LIKE CONCAT('%','${mapList.selectSubject}','%')
-                    </foreach>
-                </foreach>
-                OR selectSubject = ''
-                )
+        from  zgk_university_major_enrolling as enrolling
+        INNER JOIN zgk_zj_3in7 as 3in7 ON 3in7.majorCode=enrolling.majorCode
+        AND 3in7.universityId=enrolling.universityId
+        AND 3in7.majorCode is not NULL
+        <if test="subjectItem!=null">
+            AND INSTR(#{subjectItem},3in7.selectSubject)
+            <if test="subjectItem2!=null">
+                OR
+                3in7.selectSubject=#{subjectItem2}
             </if>
-        </where>)  3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
-        LEFT JOIN (SELECT id,areaid as areaId,rank,name from zgk_university) university ON university.id = enrolling.universityId
+        </if>
+        LEFT JOIN zgk_university university ON university.id = enrolling.universityId
+        where
+        enrolling.areaId = #{areaId} and enrolling.year = #{year}
+        and enrolling.averageScore - #{totalScore} &lt;= #{bc}
+        and #{totalScore} -enrolling.averageScore  &lt;= #{bc}
+        and enrolling.majorCode is not NULL
         ORDER BY ABS(gapSchool) ASC
         limit 20) tb ORDER BY universityAreaId !=${areaId},isFavorite is null,rank is null,rank  ASC
 
@@ -599,25 +609,20 @@ deleteBySubjects
 
     <!--获取专业过滤没有code对应的,必须在计划表中存在,必须根据用户选择的科目来确定,并且要在2015年招生信息中存在-->
     <select id="queryMajorBySchoolIdAndAreaId" resultType="java.util.Map">
-        SELECT enrolling.majorCode,enrolling.majorName FROM
-        (select majorCode,universityId,majorName from zgk_university_major_enrolling where universityId=#{universityId}
-        and areaId = #{areaId} and year = #{year} and majorCode is not null)
-        enrolling
-        INNER JOIN (SELECT
-        majorCode,universityId
-        FROM zgk_zj_3in7
-        <where>
-            <if test="subjectItemList!=null">
-                (
-                <foreach item="subjectItems" collection="subjectItemList"  separator=" or " index="">
-                    <foreach item="mapList" collection="subjectItems.subjectItem" open="(" close=")" separator="and" index="">
-                        selectSubject LIKE CONCAT('%','${mapList.selectSubject}','%')
-                    </foreach>
-                </foreach>
-                OR selectSubject = ''
-                )
+        SELECT DISTINCT enrolling.majorCode,enrolling.majorName
+        FROM zgk_university_major_enrolling enrolling
+        INNER JOIN  zgk_zj_3in7 3in7 ON
+        3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
+        and 3in7.majorCode is not null
+        <if test="subjectItem!=null">
+           AND INSTR(#{subjectItem},3in7.selectSubject)
+            <if test="subjectItem2!=null">
+                OR
+                3in7.selectSubject=#{subjectItem2}
             </if>
-        </where>)  3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
+        </if>
+        where enrolling.universityId=#{universityId}
+        and enrolling.areaId = #{areaId} and enrolling.year = #{year} and enrolling.majorCode is not null
     </select>
 
     <!--获取当前学校的最新选测等级-->
@@ -649,5 +654,31 @@ deleteBySubjects
         from zgk_user_info
         WHERE id = #{userId} limit 1
     </select>
+
+
+    <!--统计当前分数区间段中文理,批次是否有重复-->
+    <select id="countMajorRepeat" resultType="java.lang.Integer">
+        SELECT count(*) from(
+        SELECT enrolling.majorCode,enrolling.universityId from zgk_university_major_enrolling enrolling
+        INNER JOIN zgk_zj_3in7 as 3in7 ON 3in7.majorCode=enrolling.majorCode
+        AND 3in7.universityId=enrolling.universityId
+        AND 3in7.majorCode is not NULL
+        <if test="subjectItem!=null">
+            AND INSTR(#{subjectItem},3in7.selectSubject)
+            <if test="subjectItem2!=null">
+                OR
+                3in7.selectSubject=#{subjectItem2}
+            </if>
+        </if>
+        WHERE
+        1=1 and enrolling.year = #{year}
+        and enrolling.areaId=#{areaId}
+        and enrolling.majorCode is not null
+        and #{totalScore}-enrolling.averageScore &lt;=#{bc}
+        and enrolling.averageScore-#{totalScore} &lt;=#{bc}
+        GROUP BY
+        enrolling.majorCode,enrolling.universityId HAVING count(*) >1) tb
+    </select>
+
 </mapper>
 

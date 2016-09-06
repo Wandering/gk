@@ -149,7 +149,7 @@ public class HttpScoreTest extends TestCase{
     public void testRecommendSchool(){
         long start=System.currentTimeMillis();
         System.out.println("我开始了");
-        String url=host +recommendSchool_url + "?totalScore=400&areaId=320000&majorType=2&userId=309";
+        String url=host +recommendSchool_url + "?totalScore=510&areaId=330000&userId=1";
         System.out.println(url);
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
@@ -182,7 +182,7 @@ public class HttpScoreTest extends TestCase{
      */
     public void testQueryMajorBySchoolIdAndAreaId(){
 
-        String url=host +queryMajorBySchoolIdAndAreaId_url + "?userId=217&areaId=330000&schoolId=2";
+        String url=host +queryMajorBySchoolIdAndAreaId_url + "?userId=216&areaId=330000&schoolId=94";
         System.out.println(url);
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
@@ -193,7 +193,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryGapBySchoolIdAndMajor(){
-        String url=host +queryGapBySchoolIdAndMajor_url + "?userId=2&schoolId=2&majorCode=030101K&recordId=244";
+        String url=host +queryGapBySchoolIdAndMajor_url + "?userId=216&schoolId=94&majorCode=80202&recordId=759";
         String result = RequestUtils.requestPost(url);
         System.out.println("result = " + result);
     }

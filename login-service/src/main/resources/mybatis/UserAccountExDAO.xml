@@ -185,8 +185,9 @@
     </update>
 
     <select id="findUserInfoByAlipayId" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        SELECT info.id, info.provinceId
+        SELECT info.id, info.provinceId,account.account
         FROM zgk_user_info info
+        LEFT JOIN zgk_user_account account on info.id=account.id
         WHERE info.alipayUserId=#{alipayUserId}
     </select>
 </mapper>
