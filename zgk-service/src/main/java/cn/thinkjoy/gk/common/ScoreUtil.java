@@ -7,6 +7,7 @@ import cn.thinkjoy.gk.service.IDataDictService;
 import cn.thinkjoy.gk.service.IScoreAnalysisService;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -1192,5 +1193,20 @@ public class ScoreUtil {
                 break;
         }
         return newBatch;
+    }
+
+    public void setSubjectItem(String[] subjects,Map<String,Object> map){
+        if(subjects!=null) {
+            String subjectItem="";
+            for(String sub:subjects){
+                if(StringUtils.isNotEmpty(sub)) {
+                    subjectItem += sub + " ";
+                }
+            }
+            map.put("subjectItem", subjectItem.substring(0,subjectItem.length()-1));
+            if(StringUtils.isNotEmpty(subjects[0])&&StringUtils.isNotEmpty(subjects[2]))
+                map.put("subjectItem2", subjects[0]+" "+subjects[2]);
+
+        }
     }
 }

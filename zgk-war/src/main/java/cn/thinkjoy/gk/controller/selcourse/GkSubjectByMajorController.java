@@ -4,6 +4,7 @@ import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
 import cn.thinkjoy.common.service.IBaseService;
 import cn.thinkjoy.common.utils.SqlOrderEnum;
+import cn.thinkjoy.gk.common.ScoreUtil;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
 import cn.thinkjoy.gk.service.IZGK3in7Service;
@@ -31,7 +32,8 @@ public class GkSubjectByMajorController {
 
     @Autowired
     private IZGK3in7Service zgk3in7Service;
-
+    @Autowired
+    private ScoreUtil scoreUtil;
 
 
     @RequestMapping(value = "/queryMajorBySubject",method = RequestMethod.GET)
@@ -40,15 +42,7 @@ public class GkSubjectByMajorController {
                                     @RequestParam(defaultValue = "10",required = false) Integer rows,
                                  String[] subjects,String areaId,String universityName){
         Map<String,Object> map = new HashMap<>();
-        if(subjects!=null) {
-            String subjectItem="";
-            for(String sub:subjects){
-                if(StringUtils.isNotEmpty(sub)) {
-                    subjectItem += sub + " ";
-                }
-            }
-            map.put("subjectItem", subjectItem.substring(0,subjectItem.length()-1));
-        }
+        scoreUtil.setSubjectItem(subjects,map);
         if(subjects!=null){
             Arrays.sort(subjects);
             StringBuffer buffer=new StringBuffer();
@@ -124,4 +118,5 @@ public class GkSubjectByMajorController {
         }
         return lists;
     }
+
 }

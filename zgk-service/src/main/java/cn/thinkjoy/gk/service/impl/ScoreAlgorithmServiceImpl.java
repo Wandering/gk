@@ -389,13 +389,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         //计算公式为 学生成绩 - 平均分 > = bc  || 平均分 - 学生成绩 < = bc
         //计算专业提取范围
         Map<String,Object> map = new HashedMap();
-        String subjectItem="";
-        for(String sub:subjects){
-            if(StringUtils.isNotEmpty(sub)) {
-                subjectItem += sub + " ";
-            }
-        }
-        map.put("subjectItem", subjectItem.substring(0,subjectItem.length()-1));
+        scoreUtil.setSubjectItem(subjects,map);
         map.put("areaId",areaId);
         map.put("year",lastYear.toString());
         map.put("totalScore",totalScore);
@@ -551,8 +545,9 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
     }
 
     private void removeRepeat(List<Map<String,Object>> mapList,Map<String,Object> map){
-
-        for(Map<String, Object> rMap : mapList){
+        List<Map<String,Object>> mapListCP =new ArrayList<>();
+        mapListCP.addAll(mapList);
+        for(Map<String, Object> rMap : mapListCP){
             String universityId = rMap.get("universityId").toString();
             if(universityId.equals(map.get("universityId").toString())){
                 String majorType = map.get("majorType").toString();

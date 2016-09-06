@@ -467,6 +467,10 @@ deleteBySubjects
         AND 3in7.universityId = enrolling.universityId
         <if test="subjectItem!=null">
             AND INSTR(#{subjectItem},3in7.selectSubject)
+            <if test="subjectItem2!=null">
+            OR
+            3in7.selectSubject=#{subjectItem2}
+            </if>
         </if>
     </select>
     <!--推荐院校浙江-->
@@ -490,6 +494,10 @@ deleteBySubjects
         INNER JOIN zgk_zj_3in7 as 3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
         <if test="subjectItem!=null">
             AND INSTR(#{subjectItem},3in7.selectSubject)
+            <if test="subjectItem2!=null">
+                OR
+                3in7.selectSubject=#{subjectItem2}
+            </if>
         </if>
         LEFT JOIN zgk_university university ON university.id = enrolling.universityId
         where
@@ -584,15 +592,19 @@ deleteBySubjects
 
     <!--获取专业过滤没有code对应的,必须在计划表中存在,必须根据用户选择的科目来确定,并且要在2015年招生信息中存在-->
     <select id="queryMajorBySchoolIdAndAreaId" resultType="java.util.Map">
-        SELECT enrolling.majorCode,enrolling.majorName
+        SELECT DISTINCT enrolling.majorCode,enrolling.majorName
         FROM zgk_university_major_enrolling enrolling
         INNER JOIN  zgk_zj_3in7 3in7 ON
         3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
         <if test="subjectItem!=null">
-           AND INSTR(#{subjectItem},selectSubject)
+           AND INSTR(#{subjectItem},3in7.selectSubject)
+            <if test="subjectItem2!=null">
+                OR
+                3in7.selectSubject=#{subjectItem2}
+            </if>
         </if>
-        where universityId=#{universityId}
-        and areaId = #{areaId} and year = #{year} and majorCode is not null
+        where enrolling.universityId=#{universityId}
+        and enrolling.areaId = #{areaId} and enrolling.year = #{year} and enrolling.majorCode is not null
     </select>
 
     <!--获取当前学校的最新选测等级-->
@@ -633,6 +645,10 @@ deleteBySubjects
         INNER JOIN zgk_zj_3in7 as 3in7 ON 3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
         <if test="subjectItem!=null">
             AND INSTR(#{subjectItem},3in7.selectSubject)
+            <if test="subjectItem2!=null">
+                OR
+                3in7.selectSubject=#{subjectItem2}
+            </if>
         </if>
         WHERE
         1=1 and enrolling.year = #{year}

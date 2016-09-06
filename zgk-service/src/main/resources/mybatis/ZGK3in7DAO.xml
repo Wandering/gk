@@ -125,6 +125,10 @@ deleteBySubjects
         <where>
             <if test="subjectItem!=null">
                 AND INSTR(#{subjectItem},3in7.selectSubject)
+                <if test="subjectItem2!=null">
+                    OR
+                    3in7.selectSubject=#{subjectItem2}
+                </if>
             </if>
             <if test="universityName!= null">
                 and 3in7.universityName LIKE CONCAT('%', #{universityName} , '%')
@@ -154,6 +158,10 @@ deleteBySubjects
         <where>
             <if test="subjectItem!=null">
                 AND INSTR(#{subjectItem},3in7.selectSubject)
+                <if test="subjectItem2!=null">
+                    OR
+                    3in7.selectSubject=#{subjectItem2}
+                </if>
             </if>
         </where>
     </select>
