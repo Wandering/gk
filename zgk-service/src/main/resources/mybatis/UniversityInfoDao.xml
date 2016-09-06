@@ -285,7 +285,7 @@
 
     <select id="getUniversityMajors" parameterType="java.util.Map" resultType="java.util.Map">
         select
-        t.majorId,t.majorName,t.majorFeature,t.educationLevel
+        t.major_code as majorId,t.major_name as majorName,t.majorFeature,t.educationLevel
         from zgk_university_major t
         <where>
             <if test="universityId!=null">

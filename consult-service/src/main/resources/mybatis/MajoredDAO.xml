@@ -84,16 +84,16 @@
 
     <!-- 根据关键词查询专业基本信息 -->
     <select id="getMajoredInfoByKeywords" parameterType="java.util.Map" resultType="MajorDetailPojo">
-        select id,major_name as name from zgk_major where major_name like CONCAT('%',#{keywords},'%') LIMIT 5
+        select id,major_name as name,major_code as majorCode from zgk_major_base where major_name like CONCAT('%',#{keywords},'%') LIMIT 5
     </select>
 
     <select id="getMajorOpenUniversityList" parameterType="java.util.Map" resultType="java.util.Map">
         select uu.id,uu.photo_url,uu.name,uu.property,uu.provinceCode,pp.name as province,uu.rank,uu.subjection,dd.name as typeName,uu.url,mm.majorRank
         from zgk_university uu
-        left join zgk_university_major mm on uu.id=mm.universityId
+        left join zgk_university_major_base mm on uu.code=mm.university_code
         left join zgk_province pp on pp.id=uu.provinceCode
         left join zgk_data_dict dd on dd.type='PROPERTY' and dd.dictId=uu.type
-        where mm.majorId=#{condition.majorId}
+        where mm.major_code=#{condition.majorId}
           and mm.educationLevel=#{condition.educationLevel}
         ORDER BY if(isnull(mm.majorRank),10000,mm.majorRank) asc
         limit #{condition.offset},#{condition.rows}
@@ -119,6 +119,49 @@
     </select>
     <select id="getMajorSpecialisation" parameterType="java.util.Map" resultType="java.lang.String">
         select specialisation from zgk_major_detail mm where mm.id=#{condition.majorId}
+    </select>
+
+    <select id="getCategoryMajoredList" resultType="cn.thinkjoy.gk.dto.CategoryMajoredDTO">
+        SELECT
+            major_code as majoredId,
+            discipline_sub_code as majorCategoryId,
+            discipline_sub_name as majorCategoryName,
+            discipline_code as disciplineCategoriesId,
+            discipline_name as disciplineCategoriesName,
+            major_name as majoredName
+        from zgk_major_base
+        WHERE discipline_code=#{categoryId}
+    </select>
+
+    <select id="getMajoredCategory" resultType="cn.thinkjoy.gk.dto.MajoredCategoryRemoteDTO">
+        select DISTINCT discipline_code as id,discipline_name as name,major_type as parentId from zgk_major_base where major_type=#{type}
+    </select>
+
+    <select id="getMajoredByName" resultType="cn.thinkjoy.gk.dto.MajoredQueryDTO">
+        select
+          discipline_name as disciplineCategoriesName,
+          discipline_sub_name as majorCategoryName,
+          major_name as majoredName,
+          major_code as majoredId
+        from zgk_major_base
+        where major_name like CONCAT('%',#{condition.majoredName},'%')
+        and major_type = #{condition.type}
+    </select>
+
+    <select id="getMajoredInfoById" resultType="cn.thinkjoy.gk.dto.MajorInfoDTO">
+        select zmb.major_code as id,
+            zmb.major_name as majorName,
+            zmb.employmentRate as employmentRate,
+            zmb.salary_rank as salaryRank,
+            zmb.major_code as majorCode,
+		    zmd.degree_offered as degreeOffered,
+		    zmd.schooling_duration as schoolingDuration,
+		    zmd.offer_courses as offerCourses,
+		    zmd.major_introduce as majorIntroduce
+        from zgk_major_base zmb
+        left join zgk_major_detail zmd on zmb.major_code=zmd.major_code
+        where zmb.major_code=#{majorCode}
+        limit 1
     </select>
 
 </mapper>
