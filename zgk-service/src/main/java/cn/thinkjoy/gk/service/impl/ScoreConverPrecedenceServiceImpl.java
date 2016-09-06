@@ -50,6 +50,24 @@ public class ScoreConverPrecedenceServiceImpl implements IScoreConverPrecedenceS
         return converPrecedence == null ? 0 : converPrecedence.getLowPre();
     }
 
+    @Override
+    public Integer converPrecedenceByScoreV2(Integer score,String proCode,Integer cate,String batch) {
+        Map scoreMap = new HashMap();
+        scoreMap.put("tableName", ReportUtil.getOneScoreTableName(proCode, cate, batch));
+        ScoreMaxMin scoreMaxMin = selectMaxScore(scoreMap);
+
+        //超过最大及最小分数   按最大、最小分数走
+        if (score >= scoreMaxMin.getMaxScore())
+            score = scoreMaxMin.getMaxScore();
+        if (score <= scoreMaxMin.getMinScore())
+            return 0;
+
+        scoreMap.put("score", score);
+        //根据分数 查找对应位次
+        ScoreConverPrecedence converPrecedence = selectPrecedenceByScore(scoreMap);
+        return converPrecedence == null ? 0 : converPrecedence.getLowPre();
+    }
+
     /**
      * 校验用户位次准确性
      * @param score
