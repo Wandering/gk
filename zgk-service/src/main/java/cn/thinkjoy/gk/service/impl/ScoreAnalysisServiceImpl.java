@@ -653,14 +653,19 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
             Map<String, Object> majorLineMap=null;
             if(majorLineMaps.size()>1){
                 for(Map<String, Object> rMap : majorLineMaps){
-                    if("2".equals(rMap.get("majorType"))) {
+                    if("2".equals(rMap.get("majorType").toString())) {
                         majorLineMap = rMap;
                         break;
                     }
                 }
+                if(majorLineMap==null){
+                    majorLineMap = majorLineMaps.get(0);
+                }
+            }else {
+                majorLineMap = majorLineMaps.get(0);
             }
 
-            majorLine = Float.valueOf(majorLineMap.get("lowestScore").toString());
+            majorLine = Float.valueOf(majorLineMap.get("averageScore").toString());
             majorName = majorLineMap.get("majorName").toString();
         } else {
             throw new BizException("error", "当前学校在"+year+"年无数据");
