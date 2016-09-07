@@ -89,11 +89,14 @@ public class ReportResultServiceImpl implements IReportResultService {
      */
     @Override
     public Integer getPrecedence(String tableName,Integer precedence) {
-        Map map=new HashMap();
-        map.put("tableName",tableName);
-        map.put("preceden",precedence);
+        if (precedence <= 0)
+            return 0;
+        Map map = new HashMap();
+        map.put("tableName", tableName);
+        map.put("preceden", precedence);
+
         List<Integer> preList = selectPrecedence(map);
-        if(preList==null||preList.size()<=0)
+        if (preList == null || preList.size() <= 0)
             return 0;
         final Integer size = preList.size();
         Integer[] preArr = (Integer[]) preList.toArray(new Integer[size]);
