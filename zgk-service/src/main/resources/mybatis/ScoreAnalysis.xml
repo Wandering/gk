@@ -475,7 +475,7 @@ deleteBySubjects
     </select>
     <!--推荐院校浙江-->
     <select id="queryZJUniversityByScore" resultType="java.util.Map">
-        SELECT
+        SELECT DISTINCT
         areaId as universityAreaId,
         rank,
         schoolName,
