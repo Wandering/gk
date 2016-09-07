@@ -513,14 +513,22 @@ public class SmartReportController extends ZGKBaseController {
             @RequestParam(value="uid") Integer uid) {
 
         ReportForecastView reportForecastView = new ReportForecastView();
-        reportForecastView.setBatch( ReportUtil.ConverOldBatch(batch));
+        reportForecastView.setBatch(ReportUtil.ConverOldBatch(batch));
         reportForecastView.setScore(score);
         reportForecastView.setProvince(province);
         reportForecastView.setCategorie(categorie);
         reportForecastView.setUid(uid);
-        reportForecastView.setPrecedence(iUniversityInfoService.converPreByScoreV2(reportForecastView,ReportUtil.FORECAST_ENROLLING_LOGIC));
+
+        String parmasKey = ReportUtil.combSystemParmasKey(reportForecastView.getProvince(), ReportUtil.FORECAST_ENROLLING_LOGIC);
+
+        //是否走位次
+        boolean isPre = iUniversityInfoService.enrollingLogin(parmasKey, reportForecastView.getCategorie());
+
+        if (isPre)
+            reportForecastView.setPrecedence(iUniversityInfoService.converPreByScoreV2(reportForecastView, ReportUtil.FORECAST_ENROLLING_LOGIC));
         reportForecastView.setScoreDiff(iUniversityInfoService.converScoreDiffByScore(reportForecastView));
         reportForecastView.setJoin(false);
+
 
         String enrolling = iUniversityInfoService.getEnrollingByForecast(reportForecastView);
         Map map = new HashMap();
