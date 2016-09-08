@@ -124,50 +124,51 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
 
         List<Map<String,Object>> universityInfoEnrollings = getEnrollingByScore(reportForecastView);
         LOGGER.info("=======放置参数 End========");
-
-        condition.put("universitys",universityInfoEnrollings);
-        String sortBy = getConfigValueString(province,majorType,ReportUtil.SCORE_SORT_BY);
-        LOGGER.info("排序方式:"+sortBy);
-        List<UniversityEnrollView> universityEnrollViews =universityInfoService.selectUnivEnrollInfo(condition,sortBy);
-        LOGGER.info("=======获取推荐学校 End========");
-        LOGGER.info("=======组装返回值 Start========");
-        List<Map<String,Object>> resultList = new ArrayList<>();
-        for(Map<String,Object> map:universityInfoEnrollings){
-            LOGGER.info("当前组装学校:"+map.get("universityName"));
-            boolean flag=true;
-            for(UniversityEnrollView universityEnrollView:universityEnrollViews){
-                if(map.get("universityName").equals(universityEnrollView.getUniversityName())){
-                    map.put("batch",universityEnrollView.getBatchName());
-                    map.put("highestScore",universityEnrollView.getHighestScore());
-                    map.put("lowestScore",universityEnrollView.getLowestScore());
-                    map.put("averageScore",universityEnrollView.getAverageScore());
-                    map.put("xcRank",universityEnrollView.getXcRank());
-                    map.put("schoolName",universityEnrollView.getUniversityName());
-                    map.put("stuNum",universityEnrollView.getPlanEnrolling());
-                    Integer isFavorite = universityEnrollView.getIsFavorite()==null?0:universityEnrollView.getIsFavorite();
-                    map.put("isFavorite",isFavorite);
-                    resultList.add(map);
-                    flag=false;
+        if(universityInfoEnrollings!=null && universityInfoEnrollings.size()>0) {
+            condition.put("universitys", universityInfoEnrollings);
+            String sortBy = getConfigValueString(province, majorType, ReportUtil.SCORE_SORT_BY);
+            LOGGER.info("排序方式:" + sortBy);
+            List<UniversityEnrollView> universityEnrollViews = universityInfoService.selectUnivEnrollInfo(condition, sortBy);
+            LOGGER.info("=======获取推荐学校 End========");
+            LOGGER.info("=======组装返回值 Start========");
+            List<Map<String, Object>> resultList = new ArrayList<>();
+            for (Map<String, Object> map : universityInfoEnrollings) {
+                LOGGER.info("当前组装学校:" + map.get("universityName"));
+                boolean flag = true;
+                for (UniversityEnrollView universityEnrollView : universityEnrollViews) {
+                    if (map.get("universityName").equals(universityEnrollView.getUniversityName())) {
+                        map.put("batch", universityEnrollView.getBatchName());
+                        map.put("highestScore", universityEnrollView.getHighestScore());
+                        map.put("lowestScore", universityEnrollView.getLowestScore());
+                        map.put("averageScore", universityEnrollView.getAverageScore());
+                        map.put("xcRank", universityEnrollView.getXcRank());
+                        map.put("schoolName", universityEnrollView.getUniversityName());
+                        map.put("stuNum", universityEnrollView.getPlanEnrolling());
+                        Integer isFavorite = universityEnrollView.getIsFavorite() == null ? 0 : universityEnrollView.getIsFavorite();
+                        map.put("isFavorite", isFavorite);
+                        resultList.add(map);
+                        flag = false;
+                    }
                 }
-            }
-            if(flag){
-                Map<String,Object> dataMap = new HashedMap();
-                dataMap.put("type",ScoreUtil.BATCHTYPE2);
-                dataMap.put("dictId",batchs[0]);
-                Map<String,Object> dict =dataDictService.queryDictByDictId(dataMap);
-                map.put("batch",dict.get("name"));
-                String schoolName=map.get("universityName")==null?null:(String) map.get("universityName");
-                map.put("schoolName",schoolName);
-                map.put("isFavorite",0);
-                resultList.add(map);
-            }
+                if (flag) {
+                    Map<String, Object> dataMap = new HashedMap();
+                    dataMap.put("type", ScoreUtil.BATCHTYPE2);
+                    dataMap.put("dictId", batchs[0]);
+                    Map<String, Object> dict = dataDictService.queryDictByDictId(dataMap);
+                    map.put("batch", dict.get("name"));
+                    String schoolName = map.get("universityName") == null ? null : (String) map.get("universityName");
+                    map.put("schoolName", schoolName);
+                    map.put("isFavorite", 0);
+                    resultList.add(map);
+                }
 
+            }
+            LOGGER.info("=======组装返回值 End========");
+
+
+            return resultList;
         }
-        LOGGER.info("=======组装返回值 End========");
-
-
-        return resultList;
-
+        return new ArrayList<>();
     }
 
 

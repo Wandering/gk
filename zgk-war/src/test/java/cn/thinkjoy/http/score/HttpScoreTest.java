@@ -3,6 +3,7 @@ package cn.thinkjoy.http.score;
 import cn.thinkjoy.common.RequestUtils;
 import cn.thinkjoy.gk.common.SubjectEnum;
 import junit.framework.TestCase;
+import org.junit.Assert;
 
 /**
  * Created by admin on 2016/1/14.
@@ -207,4 +208,19 @@ public class HttpScoreTest extends TestCase{
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
+    /**
+     *
+     */
+    public void testRecommendSchool1(){
+                for(int i=1;i<=700;i++) {
+                    String url = "http://zj.test.zhigaokao.cn/score/recommendSchool.do?totalScore=" + i + "&areaId=610000&majorType=2&userId=221\n";
+                    String result = RequestUtils.requestGet(url);
+                    if(result.indexOf("1000001")>0){
+                        System.out.println(i+",");
+                    }
+                }
+
+
+    }
 }
+
