@@ -345,7 +345,7 @@ deleteBySubjects
         school_code as schoolCode,
         school_name as schoolName
         from zgk_school_base
-        where school_type=4
+        where school_type in (4,5)
         and area_code = #{countyId}
         <if test="schoolName!=null">
             and school_name LIKE CONCAT('%',#{schoolName},'%')

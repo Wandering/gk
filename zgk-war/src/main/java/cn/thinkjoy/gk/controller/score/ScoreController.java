@@ -13,6 +13,7 @@ import cn.thinkjoy.gk.common.ScoreUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +85,7 @@ public class ScoreController {
         insertMap.put("schoolCode",schoolCode);
         insertMap.put("schoolName",schoolName);
         insertMap.put("gradeInfo",gradeInfo);
+
         insertMap.put("classInfo",classInfo);
         try {
             int uu = scoreAnalysisService.setUserInfo(insertMap);
@@ -116,7 +118,15 @@ public class ScoreController {
     @RequestMapping(value = "/queryUserInfo",method = RequestMethod.GET)
     @ResponseBody
     public Object queryUserInfo(@RequestParam long userId){
-        return scoreAnalysisService.queryUserInfo(userId);
+        Map<String,Object> map = scoreAnalysisService.queryUserInfo(userId);
+        String gradeInfo = null;
+        if(map.containsKey("gradeInfo")) {
+            gradeInfo=map.get("gradeInfo")==null?null:map.get("gradeInfo").toString();
+        }
+        if(StringUtils.isEmpty(gradeInfo)){
+            return null;
+        }
+        return map;
     }
 
     /**
