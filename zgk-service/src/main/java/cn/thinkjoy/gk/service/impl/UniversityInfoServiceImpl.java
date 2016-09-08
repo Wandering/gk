@@ -1,9 +1,10 @@
 package cn.thinkjoy.gk.service.impl;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ReportEnum;
 import cn.thinkjoy.gk.common.ReportUtil;
-import cn.thinkjoy.gk.entity.UniversityEnrollView;
 import cn.thinkjoy.gk.entity.SystemParmas;
+import cn.thinkjoy.gk.entity.UniversityEnrollView;
 import cn.thinkjoy.gk.entity.UniversityInfoEnrolling;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
 import cn.thinkjoy.gk.pojo.ReportForecastView;
@@ -354,7 +355,8 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         if(universityInfoEnrollings!=null&&universityInfoEnrollings.size()>0) {
             UniversityInfoEnrolling universityInfoEnrolling = universityInfoEnrollings.get(0);
             preEnroll = bigDecimal.multiply(universityInfoEnrolling.getEnrollRate()).intValue();
-        }
+        }else
+            throw new BizException("1000001","未知异常");
         return preEnroll;
     }
     /**
