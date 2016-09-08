@@ -12,10 +12,7 @@ import cn.thinkjoy.gk.entity.UniversityEnrollView;
 import cn.thinkjoy.gk.entity.UniversityInfoEnrolling;
 import cn.thinkjoy.gk.pojo.ReportForecastView;
 import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
-import cn.thinkjoy.gk.service.IScoreAlgorithmService;
-import cn.thinkjoy.gk.service.IScoreConverPrecedenceService;
-import cn.thinkjoy.gk.service.ISystemParmasService;
-import cn.thinkjoy.gk.service.IUniversityInfoService;
+import cn.thinkjoy.gk.service.*;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.LoggerFactory;
@@ -46,6 +43,8 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
     ISystemParmasService iSystemParmasService;
     @Resource
     IUniversityInfoService universityInfoService;
+    @Resource
+    IDataDictService dataDictService;
     @Autowired
     AreaMaps areaMaps;
 
@@ -135,6 +134,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         List<Map<String,Object>> resultList = new ArrayList<>();
         for(Map<String,Object> map:universityInfoEnrollings){
             LOGGER.info("当前组装学校:"+map.get("universityName"));
+            boolean flag=true;
             for(UniversityEnrollView universityEnrollView:universityEnrollViews){
                 if(map.get("universityName").equals(universityEnrollView.getUniversityName())){
                     map.put("batch",universityEnrollView.getBatchName());
@@ -147,9 +147,21 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
                     Integer isFavorite = universityEnrollView.getIsFavorite()==null?0:universityEnrollView.getIsFavorite();
                     map.put("isFavorite",isFavorite);
                     resultList.add(map);
-                };
-
+                    flag=false;
+                }
             }
+            if(flag){
+                Map<String,Object> dataMap = new HashedMap();
+                dataMap.put("type",ScoreUtil.BATCHTYPE2);
+                dataMap.put("dictId",batchs[0]);
+                Map<String,Object> dict =dataDictService.queryDictByDictId(dataMap);
+                map.put("batch",dict.get("name"));
+                String schoolName=map.get("universityName")==null?null:(String) map.get("universityName");
+                map.put("schoolName",schoolName);
+                map.put("isFavorite",0);
+                resultList.add(map);
+            }
+
         }
         LOGGER.info("=======组装返回值 End========");
 
