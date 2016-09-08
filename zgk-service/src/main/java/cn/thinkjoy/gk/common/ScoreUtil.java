@@ -358,37 +358,7 @@ public class ScoreUtil {
                 tempBatchBottom=tempBatch;
 
             }
-
-//            temp=scoreLines[i][0].floatValue();
-//            //出现为0跳过当前轮
-//            if(scoreLines[i][0]==0){
-//                continue;
-//            }
-//            scoreLines[i][0].
-//            if(totalScore-scoreLines[i][0]<0){
-//                break;
-//            }
-//            if(i==0&&totalScore-scoreLines[i][0]>0){
-//                temp=scoreLines[0][0].floatValue();
-//                //todo  这里目前写死为一二三高专批 当可以判断是专1还是专A时候更改
-//                switch (i){
-//                    case 3:
-//                        tempName="一批本科";
-//                        break;
-//                    case 2:
-//                        tempName="二批本科";
-//                        break;
-//                    case 1:
-//                        tempName="三批本科";
-//                        break;
-//                    case 0:
-//                        tempName="高职专科";
-//                        break;
-//
-//                }
-//            }
         }
-//        temp=scoreLines[0][0].floatValue();
 
         Map<String,Object> rtnMap = new HashedMap();
 
@@ -1169,6 +1139,9 @@ public class ScoreUtil {
                 break;
             case "3":
                 newBatch="4";
+                break;
+            case "4":
+                newBatch="3";
                 break;
             case "4-1":
                 newBatch="3-1";

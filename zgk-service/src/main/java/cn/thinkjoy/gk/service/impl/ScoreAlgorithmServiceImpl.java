@@ -49,8 +49,8 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
     @Autowired
     AreaMaps areaMaps;
 
-    private static String MAJORTYPE_WEN = "1";
-    private static String MAJORTYPE_LI = "2";
+    private static Integer MAJORTYPE_WEN = 1;
+    private static Integer MAJORTYPE_LI = 2;
 
 
     @Autowired
@@ -383,7 +383,8 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
 
 
         //一定是三门成绩 否则异常
-        String[] subjects =scoreUtil.getZJUserScore(userId);
+//        String[] subjects =scoreUtil.getZJUserScore(userId);
+        String[] subjects =new String[]{"思想政治","历史","地理"};
 
         Integer lastYear = Integer.valueOf(scoreUtil.getYear()) - 1;
         //计算公式为 学生成绩 - 平均分 > = bc  || 平均分 - 学生成绩 < = bc
@@ -547,19 +548,21 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
     private void removeRepeat(List<Map<String,Object>> mapList,Map<String,Object> map){
         List<Map<String,Object>> mapListCP =new ArrayList<>();
         mapListCP.addAll(mapList);
+        boolean flag = true;
         for(Map<String, Object> rMap : mapListCP){
-            String universityId = rMap.get("universityId").toString();
-            if(universityId.equals(map.get("universityId").toString())){
-                String majorType = map.get("majorType").toString();
-                if(MAJORTYPE_LI.equals(majorType)){
+            //使用rmap循环遍历mapList是否有相等的院校相等专业相等的记录,若有 判断专业类别是否是理科,假如是理科删除原来的文科的,使用理科的
+            Integer universityId = (Integer) rMap.get("universityId");
+            if(universityId==map.get("universityId")){
+                Integer majorType = (Integer) map.get("majorType");
+                if(MAJORTYPE_LI==majorType){
                     mapList.remove(rMap);
                     mapList.add(map);
+                    flag=false;
                     break;
                 }
-            }else {
-                mapList.add(map);
             }
         }
+        if(flag)mapList.add(map);
 
     }
 
