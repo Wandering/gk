@@ -199,7 +199,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
         } else
             line = (score - Integer.valueOf(conLineArr[0]));
 
-        return line;
+        return line<0?0:line;
     }
     @Override
     public boolean isScoreSupplementaryLindDiff(UniversityInfoParmasView parmasView,String flag) {

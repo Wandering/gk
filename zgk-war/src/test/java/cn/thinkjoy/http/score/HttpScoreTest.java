@@ -3,7 +3,19 @@ package cn.thinkjoy.http.score;
 import cn.thinkjoy.common.RequestUtils;
 import cn.thinkjoy.gk.common.SubjectEnum;
 import junit.framework.TestCase;
+import net.esoar.modules.utils.ThreadUtils;
 import org.junit.Assert;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 /**
  * Created by admin on 2016/1/14.
@@ -212,13 +224,123 @@ public class HttpScoreTest extends TestCase{
      *
      */
     public void testRecommendSchool1(){
-                for(int i=1;i<=700;i++) {
-                    String url = "http://zj.test.zhigaokao.cn/score/recommendSchool.do?totalScore=" + i + "&areaId=610000&majorType=2&userId=221\n";
-                    String result = RequestUtils.requestGet(url);
-                    if(result.indexOf("1000001")>0){
-                        System.out.println(i+",");
+
+        Object[] strings=new Object[]{
+                220000,
+                230000,
+                310000,
+                320000,
+                330000,
+                340000,
+                350000,
+                360000,
+                370000,
+                410000,
+                420000,
+                430000,
+                440000,
+                450000,
+                460000,
+                500000,
+                510000,
+                520000,
+                530000,
+                540000,
+                610000,
+                620000,
+                630000,
+                640000,
+                650000,
+                710000,
+                810000,
+                820000
+
+        };
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+                for(Object areaId : strings) {
+
+                    executorService.submit(new Run1(areaId.toString()));
+
+
+                }
+
+                while (!executorService.isShutdown()){
+
+                }
+        System.out.println("end");
+
+    }
+
+    class  Run1 implements  Runnable{
+        private Object areaId;
+        /**
+         * When an object implementing interface <code>Runnable</code> is used
+         * to create a thread, starting the thread causes the object's
+         * <code>run</code> method to be called in that separately executing
+         * thread.
+         * <p>
+         * The general contract of the method <code>run</code> is that it may
+         * take any action whatsoever.
+         *
+         * @see Thread#run()
+         */
+        @Override
+        public void run() {
+            StringBuffer buffer = new StringBuffer();
+            for(int j =1;j<=2;j++)
+
+                for (int i = 1; i <= 700; i++) {
+                    String url = "http://zj.test.zhigaokao.cn/score/recommendSchool.do?totalScore=" + i + "&areaId="+areaId+"&majorType="+j+"&userId=221\n";
+                    String result = requestGet(url);
+
+                    if (result.indexOf("1000001") > 0 || result.indexOf("[]")>0) {
+                        buffer.append(i + "-"+areaId+"-"+j+",");
                     }
                 }
+            System.out.println(buffer.toString());
+        }
+
+        public  Run1(String areaId) {
+            this.areaId=areaId;
+        }
+
+        public String requestGet(String url){
+            String result = "";
+            try {
+                URL url1= new URL(url);
+
+                HttpURLConnection connection = (HttpURLConnection)url1.openConnection();
+                connection.setDoOutput(true);
+                connection.setDoInput(true);
+                connection.setRequestMethod("GET");
+                connection.setUseCaches(false);
+                connection.setInstanceFollowRedirects(true);
+                connection.setRequestProperty("Content-Type",
+                        "application/x-www-form-urlencoded");
+
+                connection.connect();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String lines;
+                StringBuffer sb = new StringBuffer("");
+                while ((lines = reader.readLine()) != null) {
+                    lines = new String(lines.getBytes(), "utf-8");
+                    sb.append(lines);
+                }
+                result = sb.toString();
+                reader.close();
+                connection.disconnect();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+//        System.out.println("Response data:" + result);
+            return result;
+        }
+
 
 
     }
