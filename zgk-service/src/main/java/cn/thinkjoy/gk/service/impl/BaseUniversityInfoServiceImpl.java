@@ -389,7 +389,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
 
         LOGGER.info("batch:" + batch);
 
-        Integer preNum = (batch == 4 ? Integer.valueOf(systemParmas.getConfigValue()) : Integer.valueOf(precedence)), firstValue = Integer.valueOf(first);
+        Integer preNum = (batch == 8 ? Integer.valueOf(systemParmas.getConfigValue()) : Integer.valueOf(precedence)), firstValue = Integer.valueOf(first);
 
         LOGGER.info("阀值:" + preNum);
 

@@ -188,6 +188,16 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
 
         return batchViews;
     }
+    private List<BatchView> converBatchViewBatch(List<BatchView> batchViews) {
+        List<BatchView> batchViewList=new ArrayList<>();
+        for(BatchView batchView:batchViews){
+
+            batchView.setBatch(ReportUtil.ConverNewBatch(batchView.getBatch()));
+
+            batchViewList.add(batchView);
+        }
+        return batchViewList;
+    }
     @Override
     public Integer getLineDiff(String batch, Integer score, Integer cate, String provinceCode) {
         String[] bch = batch.split(ReportUtil.ROLE_VALUE_SPLIT_SYMBOL);
@@ -298,7 +308,7 @@ public class SystemParmasServiceImpl implements ISystemParmasService {
             return false;
 
         //是否为压线生
-        result=isLine(logicTrend,batch,cate,provinceCode,score,"3"); //3:高职高专
+        result=isLine(logicTrend,batch,cate,provinceCode,score,"8"); //3:高职高专
         Integer plusValue= Integer.valueOf(systemParmas.getConfigValue());
 
 
