@@ -141,7 +141,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         }
         map.put("precedence", universityInfoParmasView.getPrecedence()); //user precedence
         map.put("first", universityInfoParmasView.getFirst());
-        map.put("batch", universityInfoParmasView.getBatch());
+        map.put("batch", ReportUtil.ConverNewBatch(universityInfoParmasView.getBatch()));
 
         //判定算法走向
         boolean isScore = super.isScoreSupplementary(universityInfoParmasView,"4");
