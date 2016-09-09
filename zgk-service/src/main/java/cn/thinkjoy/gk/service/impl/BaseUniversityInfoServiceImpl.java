@@ -302,7 +302,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
             map.put("majorType", initMap.get("majorType"));
             map.put("scoreDiff", initMap.get("scoreDiff"));
             map.put("areaId",initMap.get("areaId"));
-            map.put("batch",initMap.get("batch"));
+            map.put("batch", ReportUtil.ConverOldBatch(initMap.get("batch").toString()));
                     //院校排名规则
             if (rankingRoleParmas.getWhoDim() == ReportEnum.RankDim.RANK.getValue()) {
                 LOGGER.info("-------走排名规则 start-------");
@@ -442,7 +442,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
             map.put("majorType", initMap.get("majorType"));
             map.put("precedenceParmas", initMap.get("precedenceParmas"));
             map.put("areaId",initMap.get("areaId"));
-            map.put("batch",initMap.get("batch"));
+            map.put("batch", ReportUtil.ConverOldBatch(initMap.get("batch").toString()));
             //院校排名规则
             if (rankingRoleParmas.getWhoDim() == ReportEnum.RankDim.RANK.getValue()) {
                 LOGGER.info("-------走排名规则 start-------");
