@@ -26,7 +26,7 @@ public class ScoreUtil {
     private static int RANDOM_NUM=10;
 
     private static int JS_AREA_CODE=320000;
-    private static String BATCHTYPE2="BATCHTYPE2";
+    public static String BATCHTYPE2="BATCHTYPE2";
     @Autowired
     private IScoreAnalysisService scoreAnalysisService;
 
