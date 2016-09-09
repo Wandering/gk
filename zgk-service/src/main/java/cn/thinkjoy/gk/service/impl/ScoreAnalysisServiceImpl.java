@@ -222,7 +222,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
 
                     resultMap.put("stuNum", stuNum);
                     String[] nums = String.valueOf(100 - ((Float.valueOf(proviceRank) / Float.valueOf(allStuNum)) * 100)).split("\\.");
-                    String proviceRankPro = nums[0] + "." + nums[1].substring(0, 2) + "%";
+                    String proviceRankPro = Math.abs(Float.valueOf(nums[0] + "." + nums[1].substring(0, 2))) + "%";
                     resultMap.put("proviceRankPro", proviceRankPro);
                     resultMap.put("proviceRank", proviceRank);
 
@@ -518,6 +518,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         int majorType = (int) map.get("majorType");
 
 
+
         /**
          * 分数等级,江苏专用
          */
@@ -589,17 +590,16 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         resultMap.put("batchLine", scoreUtil.getBatchScore(batch, areaId, majorType));
         resultMap.put("schoolLine", schoolLine);
         resultMap.put("year", schoolLineYear);
-        if (totalScore >= schoolLine) {
-            Integer stuNum = scoreAnalysisDAO.queryStuNumToLine(schoolLine, totalScore, areaTableName);
+        Float addScore=totalScore - schoolLine;
+        Integer stuNum =null;
+        if (addScore>=0) {
+            stuNum = scoreAnalysisDAO.queryStuNumToLine(schoolLine, totalScore, areaTableName);
             resultMap.put("stuNum", -stuNum);
-            return resultMap;
         }else {
-            Integer stuNum = scoreAnalysisDAO.queryStuNumToLine(totalScore, schoolLine, areaTableName);
+            stuNum = scoreAnalysisDAO.queryStuNumToLine(totalScore, schoolLine, areaTableName);
             resultMap.put("stuNum", stuNum);
-            resultMap.put("addScore", totalScore - schoolLine);
         }
-
-
+        resultMap.put("existStuNum", stuNum==null?1:2);
         return resultMap;
 
     }

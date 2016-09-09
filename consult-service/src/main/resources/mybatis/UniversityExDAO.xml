@@ -250,7 +250,7 @@
 
     <!-- 根据关键词查询学校基本信息 -->
     <select id="getUniversityInfoByKeywords" parameterType="java.util.Map" resultType="University">
-        SELECT id,name from zgk_university where name ='电子科技大学' union
+        SELECT id,name from zgk_university where name =#{keywords} union
         select id,name from zgk_university where name like CONCAT('%',#{keywords},'%') LIMIT 5
     </select>
 

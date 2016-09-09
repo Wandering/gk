@@ -1128,6 +1128,12 @@ public class ScoreUtil {
             case "12":
                 newBatch="1-2";
                 break;
+            case "13":
+                newBatch="1-3";
+                break;
+            case "14":
+                newBatch="1-4";
+                break;
             case "2":
                 newBatch="2";
                 break;
@@ -1137,17 +1143,41 @@ public class ScoreUtil {
             case "22":
                 newBatch="2-2";
                 break;
+            case "23":
+                newBatch="2-3";
+                break;
+            case "24":
+                newBatch="2-4";
+                break;
             case "3":
                 newBatch="4";
+                break;
+            case "31":
+                newBatch="4-1";
+                break;
+            case "32":
+                newBatch="4-2";
+                break;
+            case "33":
+                newBatch="4-3";
+                break;
+            case "34":
+                newBatch="4-4";
                 break;
             case "4":
                 newBatch="3";
                 break;
-            case "4-1":
+            case "41":
                 newBatch="3-1";
                 break;
-            case "4-2":
+            case "42":
                 newBatch="3-2";
+                break;
+            case "43":
+                newBatch="3-3";
+                break;
+            case "44":
+                newBatch="3-4";
                 break;
             case "8":
                 newBatch="4";
@@ -1155,15 +1185,16 @@ public class ScoreUtil {
             case "81":
                 newBatch="4-1";
                 break;
-            case "42":
+            case "82":
                 newBatch="4-2";
                 break;
-            case "43":
+            case "83":
                 newBatch="4-3";
                 break;
-            case "44":
+            case "84":
                 newBatch="4-4";
                 break;
+
         }
         return newBatch;
     }
