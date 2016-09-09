@@ -591,6 +591,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         resultMap.put("schoolLine", schoolLine);
         resultMap.put("year", schoolLineYear);
         Float addScore=totalScore - schoolLine;
+        resultMap.put("addScore", addScore);
         Integer stuNum =null;
         if (addScore>=0) {
             stuNum = scoreAnalysisDAO.queryStuNumToLine(schoolLine, totalScore, areaTableName);
