@@ -495,7 +495,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         if (scoreDiffEnroll > 0) {
             resultEnroll=scoreDiffEnroll - getEnrollRandom(randomArr);
         }
-        return ((resultEnroll == 100 ? 98 : resultEnroll)==0?2 : resultEnroll);
+        return ((resultEnroll >= 100 ? 98 : resultEnroll)<=0?2 : resultEnroll);
     }
     /**
      * 获取随机录取率范围
