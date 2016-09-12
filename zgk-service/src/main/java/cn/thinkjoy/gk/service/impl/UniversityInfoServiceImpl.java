@@ -305,7 +305,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
             Integer diffV = getDiffValue(proCode, diffConKey, cate);
             resultEnroll = (preEnroll - scoreDiffEnroll) > diffV ? preEnroll - getEnrollRandom(proCode, randomConkey, cate) : scoreDiffEnroll;
         }
-        return (resultEnroll == 100 ? 98 : (resultEnroll == 0 ? 2 : resultEnroll));
+        return (resultEnroll > 98 ? 98 : (resultEnroll <2 ? 2 : resultEnroll));
     }
 
     /**

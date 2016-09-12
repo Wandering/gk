@@ -266,6 +266,7 @@ public class ScoreController {
             //浙江算法
             rtnObj = scoreAlgorithmService.recommendSchoolZJ(totalScore,areaId,userId);
         }else {
+            if(majorType==null)throw new BizException("error","majorType is not null");
             rtnObj = scoreAlgorithmService.recommendSchool(totalScore,areaId,majorType,userId);
         }
         return rtnObj;

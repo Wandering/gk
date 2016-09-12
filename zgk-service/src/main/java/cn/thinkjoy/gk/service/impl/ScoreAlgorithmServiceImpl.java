@@ -32,7 +32,6 @@ import java.util.Map;
 @Service
 public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
 
-//======================================================================================================================
     private static final org.slf4j.Logger LOGGER= LoggerFactory.getLogger(ScoreAlgorithmServiceImpl.class);
 
     @Resource
@@ -100,11 +99,10 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         Map<String,Object> condition = new HashedMap();
         condition.put("userId",userId);
         //这里批次用统一批次
-        condition.put("batch",batchs[0]);
+        condition.put("batchs",getBatchs(batchs[0]));
         condition.put("year",getConfigValueInt(province,majorType, ReportUtil.SCORE_ENROLLING_YEAR));
         condition.put("majorType",majorType);
         condition.put("areaId",areaId);
-
 
 
         LOGGER.info("=======放置参数 Start========");
@@ -132,12 +130,19 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
             LOGGER.info("=======获取推荐学校 End========");
             LOGGER.info("=======组装返回值 Start========");
             List<Map<String, Object>> resultList = new ArrayList<>();
-            for (Map<String, Object> map : universityInfoEnrollings) {
-                LOGGER.info("当前组装学校:" + map.get("universityName"));
-                boolean flag = true;
-                for (UniversityEnrollView universityEnrollView : universityEnrollViews) {
-                    if (map.get("universityName").equals(universityEnrollView.getUniversityName())) {
-                        map.put("batch", universityEnrollView.getBatchName());
+            /**
+             * 循环遍历组装返回数据
+             * 如股票
+             */
+            for (UniversityEnrollView universityEnrollView: universityEnrollViews) {
+                Map<String,Object> map = new HashedMap();
+                LOGGER.info("当前组装学校:" + universityEnrollView.getUniversityName());
+                for (Map<String,Object> hMap : universityInfoEnrollings) {
+                    if (hMap.get("universityName").equals(universityEnrollView.getUniversityName())) {
+                        map.put("universityName", hMap.get("universityName"));
+                        map.put("universityId", hMap.get("universityId"));
+                        map.put("enrollRate", hMap.get("enrollRate"));
+                        map.put("batch", universityEnrollView.getBatchName()==null?getBatch(batchs[0]):universityEnrollView.getBatchName());
                         map.put("highestScore", universityEnrollView.getHighestScore());
                         map.put("lowestScore", universityEnrollView.getLowestScore());
                         map.put("averageScore", universityEnrollView.getAverageScore());
@@ -147,21 +152,8 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
                         Integer isFavorite = universityEnrollView.getIsFavorite() == null ? 0 : universityEnrollView.getIsFavorite();
                         map.put("isFavorite", isFavorite);
                         resultList.add(map);
-                        flag = false;
                     }
                 }
-                if (flag) {
-                    Map<String, Object> dataMap = new HashedMap();
-                    dataMap.put("type", ScoreUtil.BATCHTYPE2);
-                    dataMap.put("dictId", batchs[0]);
-                    Map<String, Object> dict = dataDictService.queryDictByDictId(dataMap);
-                    map.put("batch", dict.get("name"));
-                    String schoolName = map.get("universityName") == null ? null : (String) map.get("universityName");
-                    map.put("schoolName", schoolName);
-                    map.put("isFavorite", 0);
-                    resultList.add(map);
-                }
-
             }
             LOGGER.info("=======组装返回值 End========");
 
@@ -171,6 +163,41 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         return new ArrayList<>();
     }
 
+    /**
+     * 根据批次code获取它的名称
+     * @param batch
+     * @return
+     */
+    private String getBatch(String batch){
+        Map<String, Object> dataMap = new HashedMap();
+        dataMap.put("type", ScoreUtil.BATCHTYPE2);
+        dataMap.put("dictId", batch);
+        Map<String, Object> dict = dataDictService.queryDictByDictId(dataMap);
+        return dict.get("name").toString();
+    };
+
+    /**
+     * 根据批次获取可能出现的批次
+     * (应对类似本科1批A,本科一批B合并或者本科一批拆分为1批AB段的问题)
+     * 例子:
+     * 11——>1,11,12,13,14
+     * 1——>1,11,12,13,14
+     * @param batch
+     * @return
+     */
+    private String[] getBatchs(String batch){
+        if(batch.length()>1){
+            batch=batch.substring(0,1);
+        }
+        //组织11,12,13,14,1
+        String[] strings = new String[5];
+        for(int i =1;i<=4;i++) {
+            strings[i-1]=batch+""+i;
+            System.out.println(batch+""+i);
+        }
+        strings[4]=batch;
+        return strings;
+    }
 
     /**
      * 江苏算法
@@ -323,68 +350,6 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         return universityInfoService.enrollingLogin(parmasKey,reportForecastView.getCategorie());
     }
 
-
-
-
-
-
-//    /**
-//     * 通用算法
-//     * @param totalScore
-//     * @param areaId
-//     * @param majorType
-//     * @return
-//     */
-//    @Override
-//    public Object recommendSchool(float totalScore, long areaId, int majorType,long userId) {
-//        Integer lastYear = Integer.valueOf(scoreUtil.getYear()) - 1;
-//
-//        //确定当前分数对应当年批次分数
-////        long areaId,int majorType,Float totalScore,String year
-//        Object[] line1s = null;
-//        try {
-//            line1s = scoreUtil.getBatchAndScore(areaId, majorType, totalScore, scoreUtil.getYear());
-//        } catch (Exception e) {
-//            throw new BizException("error", "当前省份" + scoreUtil.getYear() + "年分数线为空!");
-//        }
-//        if (line1s[2] == 5) {
-//            //todo 假如不足高职专科批次(分数超低)
-//
-//            //推荐10所高职院校
-//            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
-//        }
-//        int batch = (int) line1s[2];
-//        //获得分差1  考生分-16年分数线
-//        float difference = totalScore - (Float) line1s[0];
-//        //确定点钱分数对应次年批次分数
-
-//        Float line2 = scoreUtil.getLastBatchAndScore(areaId, majorType, batch, lastYear.toString());
-//
-//        //获得分差2  院校15年分-15年分数线 (15年分数线)
-//
-//        //计算公式为 lowestScore - line -  difference > = bc  || lowestScore - line -  difference > = -bc
-//
-//
-//        int count = 0;
-//        int bc = 10;
-//        do {
-//            count = scoreAnalysisDAO.countUniversity(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, bc);
-//            //增加步长
-//            bc += 10;
-//        } while (count < 20 && bc < 300);
-//        bc -= 10;
-//        //返回前20个院校
-//        List<Map<String, Object>> resultList = scoreAnalysisDAO.queryUniversityByScore(areaId, (Integer) line1s[2], majorType, lastYear.toString(), difference, line2, totalScore, bc,userId);
-//
-//        if(resultList==null){
-//            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
-//        }else if(resultList.size()==0) {
-//
-//            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
-//
-//        }
-//        return resultList;
-//    }
     /**
      * 浙江算法
      * @param totalScore
@@ -396,8 +361,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
 
 
         //一定是三门成绩 否则异常
-//        String[] subjects =scoreUtil.getZJUserScore(userId);
-        String[] subjects =new String[]{"思想政治","历史","地理"};
+        String[] subjects =scoreUtil.getZJUserScore(userId);
 
         Integer lastYear = Integer.valueOf(scoreUtil.getYear()) - 1;
         //计算公式为 学生成绩 - 平均分 > = bc  || 平均分 - 学生成绩 < = bc
@@ -408,6 +372,10 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         map.put("year",lastYear.toString());
         map.put("totalScore",totalScore);
 
+        /**
+         * 每次循环增加步长,在计算出来的分数+-bc,统计有多少个学校
+         * 当学校数量超过一定数量(20)的时候结束循环
+         */
         int count = 0;
         int bc = 0;
         do {
@@ -422,10 +390,17 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         rows+=scoreAnalysisDAO.countMajorRepeat(map);
         map.put("rows",rows);
 
-
+        /**
+         * 用统计出来的参数去获取最终学校
+         */
         //返回前20个院校
         List<Map<String, Object>> resultList = scoreAnalysisDAO.queryZJUniversityByScore(map);
 
+        /**
+         *
+         *  做返回之前的部分值转换
+         *
+         */
         return listToTreeList(resultList);
     }
 
@@ -482,7 +457,6 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         String batch = map.get("batchBottom").toString();
         String newBatch = scoreUtil.ConverNewBatch(batch);
 
-        //
         return new String[]{batch,newBatch};
     }
 
@@ -495,20 +469,20 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         if (scoreDiffEnroll > 0) {
             resultEnroll=scoreDiffEnroll - getEnrollRandom(randomArr);
         }
-        return ((resultEnroll >= 100 ? 98 : resultEnroll)<=0?2 : resultEnroll);
+        /**
+         *
+         * 计算最终录取率时,
+         * 当resultEnroll>98&&resultEnroll<2时候,取2&&98 ,
+         * 当resultEnroll<=98&&resultEnroll>=2&&resultEnroll>=98&&resultEnroll>2时候,取2<=resultEnroll<=98
+         *
+         */
+        return (resultEnroll > 98 ? 98 : (resultEnroll <2 ? 2 : resultEnroll));
     }
     /**
      * 获取随机录取率范围
      * @return
      */
     private Integer getEnrollRandom(String[] randomArr) {
-//        SystemParmas systemParmas = getSystemParmasModelByKey(proCode, key,cate);
-//
-//        if (systemParmas == null)
-//            return null;
-//        String enrollRandom = systemParmas.getConfigValue();
-//        String[] randomArr = ReportUtil.getEnrollRandomArr(enrollRandom);
-
         Integer startR = Integer.valueOf(randomArr[0]), endR = Integer.valueOf(randomArr[1]);
         return (int) (startR + Math.random() * endR);
     }
@@ -520,13 +494,14 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
      * @return
      */
     private String[] getEnrollRandom(String proCode,String key,Integer cate) {
+        /**
+         * 从数据库拿出录取率的范围KEY = XX_FORECAST_ENROLLING_RANDOM  xx为省份code  如sn,zj
+         */
         String string = getConfigValueString(proCode,cate,key);
 
         if (string == null)
             return null;
         String[] randomArr = ReportUtil.getEnrollRandomArr(string);
-
-        Integer startR = Integer.valueOf(randomArr[0]), endR = Integer.valueOf(randomArr[1]);
         return randomArr;
     }
 
@@ -541,10 +516,18 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         return systemParmas == null ? -1 : Integer.valueOf(systemParmas);
     }
 
+    /**
+     * 把线性结构转换成树形结构
+     * @param resultList
+     * @return
+     */
     private Map<String, List<Map<String,Object>>> listToTreeList(List<Map<String, Object>> resultList){
         Map<String, List<Map<String,Object>>> treeMap = new LinkedHashMap<>();
         for(Map<String, Object> map : resultList){
             String majorName = map.get("majorName").toString();
+            /**
+             * 按照专业名称去做树形结构
+             */
             if(treeMap.containsKey(majorName)){
 
                 List<Map<String,Object>> l1=treeMap.get(majorName);
@@ -558,12 +541,22 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         return treeMap;
     }
 
+    /**
+     * 去除文理重复的记录
+     * @param mapList
+     * @param map
+     */
     private void removeRepeat(List<Map<String,Object>> mapList,Map<String,Object> map){
         List<Map<String,Object>> mapListCP =new ArrayList<>();
         mapListCP.addAll(mapList);
+        //设置标记位,当标记位为true的时候,当前map添加到mapList中
         boolean flag = true;
         for(Map<String, Object> rMap : mapListCP){
-            //使用rmap循环遍历mapList是否有相等的院校相等专业相等的记录,若有 判断专业类别是否是理科,假如是理科删除原来的文科的,使用理科的
+            /**
+             * 使用rmap循环遍历mapList是否有相等的院校相等专业相等的记录,
+             * 若有 判断专业类别是否是理科,
+             * 假如是理科删除原来的文科的,使用理科的
+             */
             Integer universityId = (Integer) rMap.get("universityId");
             if(universityId==map.get("universityId")){
                 Integer majorType = (Integer) map.get("majorType");
@@ -578,6 +571,4 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         if(flag)mapList.add(map);
 
     }
-
-    //======================================================================================================================
 }

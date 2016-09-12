@@ -595,7 +595,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         Integer stuNum =null;
         if (addScore>=0) {
             stuNum = scoreAnalysisDAO.queryStuNumToLine(schoolLine, totalScore, areaTableName);
-            resultMap.put("stuNum", -stuNum);
+            resultMap.put("stuNum", stuNum==null?null:-stuNum);
         }else {
             stuNum = scoreAnalysisDAO.queryStuNumToLine(totalScore, schoolLine, areaTableName);
             resultMap.put("stuNum", stuNum);

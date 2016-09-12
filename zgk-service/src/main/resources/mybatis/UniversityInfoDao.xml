@@ -502,10 +502,10 @@ GROUP BY
 
     <select id="selectUnivEnrollInfo" resultType="java.util.Map" resultMap="UniversityEnrollMap">
           SELECT * from (SELECT
-          university.areaId as universityAreaId,
+          university.areaid as universityAreaId,
           university.rank as rank,
           university.name as universityName,
-          (SELECT name from zgk_data_dict where dictId = batch and type='BATCHTYPE2' limit 1) as batchName,
+          (SELECT name from zgk_data_dict where dictId = enrolling.batch and type='BATCHTYPE2' limit 1) as batchName,
           enrolling.realEnrollingNumber as stuNum,
           enrolling.averageScore as averageScore,
           enrolling.highestScore as highestScore,
@@ -517,9 +517,23 @@ GROUP BY
           </if>
           (SELECT
             CASE WHEN university_id is null THEN 0 ELSE 1 END
-          from zgk_favorite_university WHERE user_id = #{condition.userId} AND university_id = enrolling.universityId  limit 1) AS isFavorite
-          from zgk_university_enrolling enrolling
-          LEFT JOIN (SELECT id,areaid as areaId,rank,name from zgk_university) university ON university.id = enrolling.universityId
+          from zgk_favorite_university WHERE user_id = #{condition.userId} AND university_id = university.id  limit 1) AS isFavorite
+          <!-- 用做university表做主表,enrolling做关联表 -->
+          from  zgk_university university
+          LEFT JOIN zgk_university_enrolling enrolling
+          ON university.id = enrolling.universityId
+          and enrolling.batch in
+          <foreach collection="condition.batchs" item="obj" separator="," open="(" close=")">
+            #{obj}
+          </foreach>
+          and enrolling.year = #{condition.year}
+          and enrolling.majorType = #{condition.majorType}
+          and enrolling.areaId = #{condition.areaId}
+          and enrolling.universityId in (
+        <foreach collection="condition.universitys" item="obj" separator=",">
+            #{obj.universityId}
+        </foreach>
+        )
           <!-- 江苏省输出选测等级 -->
           <if test="condition.areaId==320000">
               INNER JOIN (SELECT universityId,xcRank FROM
@@ -527,25 +541,27 @@ GROUP BY
               WHERE
               majorType = #{condition.majorType}
               AND YEAR = #{condition.year} AND areaId=320000
-              AND batch = #{condition.batch}
+              AND batch in
+              <foreach collection="condition.batchs" item="obj" open="(" separator="," close=")">
+                  #{obj}
+              </foreach>
               AND universityId in (
               <foreach collection="condition.universitys" item="obj" separator=",">
                   #{obj.universityId}
               </foreach>
               )
               ) plan
-              ON plan.universityId = enrolling.universityId
+              ON plan.universityId = university.id
           </if>
-          WHERE
-          enrolling.universityId in (
+          <where>
+          university.id in (
           <foreach collection="condition.universitys" item="obj" separator=",">
               #{obj.universityId}
           </foreach>
           )
-          and enrolling.batch = #{condition.batch}
-          and enrolling.year = #{condition.year}
-          and enrolling.majorType = #{condition.majorType}
-          and enrolling.areaId = #{condition.areaId}) univenrollinfo
+          </where>
+          ) univenrollinfo
+        <!--按照本省,定位学校,外省 顺序进行排序-->
           ORDER BY universityAreaId !=${condition.areaId}
           <if test="sortBy">
               <!--universityAreaId !=${areaId},isFavorite is null,rank is null,rank ASC-->

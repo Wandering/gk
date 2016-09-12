@@ -25,11 +25,11 @@ public class HttpScoreTest extends TestCase{
 //        String host="http://10.136.56.195:8080";
 //        String host="http://zjtest.zhigaokao.cn";
 //        String host="http://localhost:8082";
-//        String host="http://localhost:8080";
+        String host="http://localhost:8080";
 //        String host="http://zgkser.zhigaokao.cn/";
 //        String host="http://zj.dev.zhigaokao.cn";
 //        String host="http://zj.test.zhigaokao.cn";
-            String host="http://fj.zhigaokao.cn/";
+//            String host="http://fj.zhigaokao.cn/";
 
 //        String host="http://10.136.67.121:8080";
 
@@ -164,7 +164,7 @@ public class HttpScoreTest extends TestCase{
     public void testRecommendSchool(){
         long start=System.currentTimeMillis();
         System.out.println("我开始了");
-        String url=host +recommendSchool_url + "?totalScore=510&areaId=330000&userId=1";
+        String url=host +recommendSchool_url + "?totalScore=510&areaId=360000&majorType=1&userId=1";
         System.out.println(url);
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
@@ -345,6 +345,28 @@ public class HttpScoreTest extends TestCase{
 
 
 
+    }
+
+    /**
+     * ---
+     */
+    public void testBatchs(){
+        String batch="11";
+        getBatchs(batch);
+    }
+
+    private String[] getBatchs(String batch){
+        if(batch.length()>1){
+            batch=batch.substring(0,1);
+        }
+        //组织11,12,13,14,1
+        String[] strings = new String[5];
+        for(int i =1;i<=4;i++) {
+            strings[i-1]=batch+""+i;
+            System.out.println(batch+""+i);
+        }
+        strings[4]=batch;
+        return strings;
     }
 }
 
