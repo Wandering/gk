@@ -123,7 +123,7 @@ public class VipController extends ZGKBaseController implements Watched {
         }
         else
         {
-            c.add(Calendar.YEAR, 1);
+            c.add(Calendar.YEAR, 3);
             c.set(Calendar.MONTH, 8);
             c.set(Calendar.DAY_OF_MONTH, 1);
         }
