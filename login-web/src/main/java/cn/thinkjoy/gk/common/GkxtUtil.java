@@ -34,9 +34,8 @@ public class GkxtUtil {
         String sign = getSign(clientId, secret, code, salt);
         Map<String, Object> paramMap = Maps.newHashMap();
         paramMap.put("clientId", clientId);
+        paramMap.put("mobile", account);
         paramMap.put("secret", secret);
-        paramMap.put("nickname", name);
-        paramMap.put("userId", account);
         paramMap.put("sign", sign);
         String content = HttpClientUtil.postContents(url, paramMap);
         String result = StringEscapeUtils.unescapeJava(content);

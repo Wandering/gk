@@ -39,7 +39,7 @@ public class VipController extends ZGKBaseController implements Watched {
     private ICardExService cardExService;
 
     //高考学堂注册接口
-    private String gkxtActiveUrl = "http://xuetang.zhigaokao.cn/userapi/tovip?mobile=%s&duration=12&unit=month&levelId=1";
+    private String gkxtActiveUrl = "http://xuetang.zhigaokao.cn/userapi/tovip?mobile=%s&duration=12&unit=month&levelId=2";
 
     @RequestMapping(value = "/upgradeVipByCard")
     @ResponseBody
@@ -123,7 +123,7 @@ public class VipController extends ZGKBaseController implements Watched {
         }
         else
         {
-            c.add(Calendar.YEAR, 1);
+            c.add(Calendar.YEAR, 3);
             c.set(Calendar.MONTH, 8);
             c.set(Calendar.DAY_OF_MONTH, 1);
         }
@@ -175,9 +175,4 @@ public class VipController extends ZGKBaseController implements Watched {
         addWatcher(watcher);
     }
 
-    public static void main(String[] args)
-    {
-        Date d = new Date(1465979223097l);
-        System.out.println(d.toString());
-    }
 }
