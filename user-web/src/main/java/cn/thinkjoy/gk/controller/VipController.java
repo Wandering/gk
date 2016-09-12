@@ -39,7 +39,7 @@ public class VipController extends ZGKBaseController implements Watched {
     private ICardExService cardExService;
 
     //高考学堂注册接口
-    private String gkxtActiveUrl = "http://xuetang.zhigaokao.cn/userapi/tovip?mobile=%s&duration=12&unit=month&levelId=1";
+    private String gkxtActiveUrl = "http://xuetang.zhigaokao.cn/userapi/tovip?mobile=%s&duration=12&unit=month&levelId=2";
 
     @RequestMapping(value = "/upgradeVipByCard")
     @ResponseBody
