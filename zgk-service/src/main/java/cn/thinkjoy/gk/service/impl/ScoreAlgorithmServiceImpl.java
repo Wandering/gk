@@ -126,7 +126,8 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
             condition.put("universitys", universityInfoEnrollings);
             String sortBy = getConfigValueString(province, majorType, ReportUtil.SCORE_SORT_BY);
             LOGGER.info("排序方式:" + sortBy);
-            List<UniversityEnrollView> universityEnrollViews = universityInfoService.selectUnivEnrollInfo(condition, sortBy);
+            List<UniversityEnrollView> universityEnrollViews = getUniversityEnrollViews(condition,batchs,province,majorType);
+
             LOGGER.info("=======获取推荐学校 End========");
             LOGGER.info("=======组装返回值 Start========");
             List<Map<String, Object>> resultList = new ArrayList<>();
@@ -164,6 +165,50 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
     }
 
     /**
+     * 根据智能填报算法院校获取学校录取信息
+     * @param
+     * @return
+     */
+    private List<UniversityEnrollView> getUniversityEnrollViews(Map<String,Object> condition,String[] batchs,String province,Integer majorType){
+        String sortBy = getConfigValueString(province, majorType, ReportUtil.SCORE_SORT_BY);
+        LOGGER.info("排序方式:" + sortBy);
+        List<UniversityEnrollView> universityEnrollViews = universityInfoService.selectUnivEnrollInfo(condition, sortBy);
+        if(universityEnrollViews!=null && universityEnrollViews.size()>3){
+            boolean flag = false;
+            for(int i=0;i<3;i++) {
+                UniversityEnrollView universityEnrollView = universityEnrollViews.get(i);
+                /**
+                 * 判断
+                 * 当前有没有获取到学校的录取信息
+                 * 判断条件为(取当前列表的前3条数据,假如全为空,降低一个批次获取)
+                 */
+                if (StringUtils.isEmpty(universityEnrollView.getLowestScore() == null ? null : universityEnrollView.getLowestScore().toString())
+                        &&
+                        StringUtils.isEmpty(universityEnrollView.getAverageScore() == null ? null : universityEnrollView.getAverageScore().toString())
+                        &&
+                        StringUtils.isEmpty(universityEnrollView.getHighestScore() == null ? null : universityEnrollView.getHighestScore().toString())
+                        &&
+                        StringUtils.isEmpty(universityEnrollView.getHighestScore() == null ? null : universityEnrollView.getHighestScore().toString())
+                        &&
+                        StringUtils.isEmpty(universityEnrollView.getPlanEnrolling() == null ? null : universityEnrollView.getPlanEnrolling().toString())
+                        ) {
+                    flag=true;
+                }else {
+                    flag=false;
+                }
+            }
+
+            if (flag){
+                condition.put("batchs", getBatchs(getBatchMerge(batchs[0])));
+                universityEnrollViews = universityInfoService.selectUnivEnrollInfo(condition, sortBy);
+            }
+        }
+        return universityEnrollViews;
+    };
+
+
+
+    /**
      * 根据批次code获取它的名称
      * @param batch
      * @return
@@ -176,6 +221,36 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         return dict.get("name").toString();
     };
 
+    /**
+     * 处理批次合并问题
+     * @param batch
+     * @return
+     */
+    private String getBatchMerge(String batch){
+        if(batch.length()>1){
+            batch=batch.substring(0,1);
+        }
+        String batchMerge = "";
+        switch (batch){
+            case "1":
+                batchMerge="2";
+                break;
+            case "2":
+                batchMerge="4";
+                break;
+            case "4":
+                batchMerge="8";
+                break;
+            case "8":
+                batchMerge="8";
+                break;
+            default:
+                batchMerge="8";
+                break;
+        }
+
+        return batchMerge;
+    };
     /**
      * 根据批次获取可能出现的批次
      * (应对类似本科1批A,本科一批B合并或者本科一批拆分为1批AB段的问题)
