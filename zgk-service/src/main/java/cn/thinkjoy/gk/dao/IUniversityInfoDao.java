@@ -84,6 +84,19 @@ public interface IUniversityInfoDao extends IBaseDAO<UniversityInfoView> {
     List getUniversityMajorListByUniversityId(@Param("condition") Map<String, Object> condition, @Param("offset") int offset, @Param("rows") int rows,
                              @Param("orderBy") String orderBy, @Param("sortBy") String sortBy,@Param("selector")Map<String, Object> selectorpage);
 
-    List<UniversityEnrollView> selectUnivEnrollInfo(@Param("condition") Map<String, Object> condition,
+    /**
+     * 查询学校录取信息
+     * @param condition
+     * @param sortBy
+     * @return
+     */
+    List<UniversityEnrollView> selectUnivEnrollInfo(@Param("maps") List<Map<String, Object>> condition,@Param("isJoin") boolean isJoin,
                                                     @Param("sortBy") String sortBy);
+
+    /**
+     * 查询学校是否在该批次录取
+     * @param condition
+     * @return
+     */
+    List<Long> selectUnivInfoIdInBatch(@Param("condition") Map<String, Object> condition);
 }

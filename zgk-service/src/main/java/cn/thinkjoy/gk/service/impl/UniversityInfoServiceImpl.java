@@ -451,8 +451,19 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     public List<Map<String, Object>> getBatchByYearAndArea(Map<String, Object> map) {
         return iUniversityInfoDao.getBatchByYearAndArea(map);
     }
-    public  List<UniversityEnrollView> selectUnivEnrollInfo(Map<String, Object> condition,
+    public  List<UniversityEnrollView> selectUnivEnrollInfo(List<Map<String, Object>> maps,boolean isJoin,
                                                             String sortBy){
-        return iUniversityInfoDao.selectUnivEnrollInfo(condition,sortBy);
+        return iUniversityInfoDao.selectUnivEnrollInfo(maps,isJoin,sortBy);
+    }
+
+    /**
+     * 成绩分析 获取院校录取信息
+     *
+     * @param condition
+     * @return
+     */
+    @Override
+    public List<Long> selectUnivInfoIdInBatch(Map<String, Object> condition) {
+        return iUniversityInfoDao.selectUnivInfoIdInBatch(condition);
     }
 }

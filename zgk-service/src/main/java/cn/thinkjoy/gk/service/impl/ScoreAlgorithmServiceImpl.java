@@ -170,42 +170,46 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
      * @return
      */
     private List<UniversityEnrollView> getUniversityEnrollViews(Map<String,Object> condition,String[] batchs,String province,Integer majorType){
+        Map<String,Object> univ_exist_map = new HashedMap();
+        Map<String,Object> univ_no_exist_map = new HashedMap();
+        List<Map<String,Object>> univ_maps = new ArrayList<>();
+
+        //获取能在本批次获取到的学校
+        List<Long> univ_ids = universityInfoService.selectUnivInfoIdInBatch(condition);
+        //获取能在本批次获取不到的学校
+        List<Long> no_univ_ids = getUnivIdList(univ_ids,condition);
+        //获取排序方式
         String sortBy = getConfigValueString(province, majorType, ReportUtil.SCORE_SORT_BY);
         LOGGER.info("排序方式:" + sortBy);
-        List<UniversityEnrollView> universityEnrollViews = universityInfoService.selectUnivEnrollInfo(condition, sortBy);
-        if(universityEnrollViews!=null && universityEnrollViews.size()>3){
-            boolean flag = false;
-            for(int i=0;i<3;i++) {
-                UniversityEnrollView universityEnrollView = universityEnrollViews.get(i);
-                /**
-                 * 判断
-                 * 当前有没有获取到学校的录取信息
-                 * 判断条件为(取当前列表的前3条数据,假如全为空,降低一个批次获取)
-                 */
-                if (StringUtils.isEmpty(universityEnrollView.getLowestScore() == null ? null : universityEnrollView.getLowestScore().toString())
-                        &&
-                        StringUtils.isEmpty(universityEnrollView.getAverageScore() == null ? null : universityEnrollView.getAverageScore().toString())
-                        &&
-                        StringUtils.isEmpty(universityEnrollView.getHighestScore() == null ? null : universityEnrollView.getHighestScore().toString())
-                        &&
-                        StringUtils.isEmpty(universityEnrollView.getHighestScore() == null ? null : universityEnrollView.getHighestScore().toString())
-                        &&
-                        StringUtils.isEmpty(universityEnrollView.getPlanEnrolling() == null ? null : universityEnrollView.getPlanEnrolling().toString())
-                        ) {
-                    flag=true;
-                }else {
-                    flag=false;
-                }
-            }
+        univ_exist_map.putAll(condition);
+        univ_exist_map.put("universitys",univ_ids);
+        univ_maps.add(univ_exist_map);
+        if(no_univ_ids.size()>0) {
+            univ_no_exist_map.putAll(condition);
+            univ_no_exist_map.put("universitys", no_univ_ids);
+            univ_no_exist_map.put("batchs", getBatchs(getBatchMerge(batchs[0])));
+            univ_maps.add(univ_no_exist_map);
+        }
+        boolean isJoin = (ScoreUtil.JS_AREA_CODE==Long.valueOf(condition.get("areaId").toString()));
+        /**
+         * 去获取院校数据
+         */
+        List<UniversityEnrollView> universityEnrollViews = universityInfoService.selectUnivEnrollInfo(univ_maps,isJoin,sortBy);
+        return universityEnrollViews;
+    }
 
-            if (flag){
-                condition.put("batchs", getBatchs(getBatchMerge(batchs[0])));
-                universityEnrollViews = universityInfoService.selectUnivEnrollInfo(condition, sortBy);
+    private List<Long> getUnivIdList(List<Long> list,Map<String,Object> condition){
+        List<Long> no_univ_ids=new ArrayList<>();
+        List<Map<String,Object>> universityInfoEnrollings = (List<Map<String,Object>>)condition.get("universitys");
+        for(Map<String,Object> universityInfoEnrolling:universityInfoEnrollings){
+            Long univId = universityInfoEnrolling.get("universityId")==null?null:Long.valueOf(universityInfoEnrolling.get("universityId").toString());
+            if(univId==null)continue ;
+            if(list.lastIndexOf(univId)<0) {
+                no_univ_ids.add(univId);
             }
         }
-        return universityEnrollViews;
-    };
-
+        return no_univ_ids;
+    }
 
 
     /**

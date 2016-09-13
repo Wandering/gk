@@ -500,8 +500,29 @@ GROUP BY
 	batch
     </select>
 
+
+    <select id="selectUnivInfoIdInBatch" resultType="java.lang.Long">
+        SELECT universityId from
+        zgk_university_enrolling enrolling
+        where
+         enrolling.batch in
+        <foreach collection="condition.batchs" item="obj" separator="," open="(" close=")">
+            #{obj}
+        </foreach>
+        and enrolling.year = #{condition.year}
+        and enrolling.majorType = #{condition.majorType}
+        and enrolling.areaId = #{condition.areaId}
+        and enrolling.universityId in
+        <foreach collection="condition.universitys" item="obj" open="(" close=")" separator=",">
+            #{obj.universityId}
+        </foreach>
+    </select>
+
     <select id="selectUnivEnrollInfo" resultType="java.util.Map" resultMap="UniversityEnrollMap">
-          SELECT * from (SELECT
+          SELECT * from (
+          <!-- maps为跨批次定位,有可能为一个,也有可能为多个,主要由上面的sql确定 -->
+          <foreach collection="maps" item="condition" separator="UNION">
+          SELECT
           university.areaid as universityAreaId,
           university.rank as rank,
           university.name as universityName,
@@ -512,7 +533,7 @@ GROUP BY
           enrolling.lowestScore as lowestScore,
           enrolling.universityId,
           <!-- 江苏省输出选测等级 -->
-          <if test="condition.areaId==320000">
+          <if test="isJoin==true">
               plan.xcRank,
           </if>
           (SELECT
@@ -531,11 +552,11 @@ GROUP BY
           and enrolling.areaId = #{condition.areaId}
           and enrolling.universityId in (
         <foreach collection="condition.universitys" item="obj" separator=",">
-            #{obj.universityId}
+            #{obj}
         </foreach>
         )
           <!-- 江苏省输出选测等级 -->
-          <if test="condition.areaId==320000">
+          <if test="isJoin==true">
               INNER JOIN (SELECT universityId,xcRank FROM
               zgk_university_enrolling_plan
               WHERE
@@ -547,7 +568,7 @@ GROUP BY
               </foreach>
               AND universityId in (
               <foreach collection="condition.universitys" item="obj" separator=",">
-                  #{obj.universityId}
+                  #{obj}
               </foreach>
               )
               ) plan
@@ -556,10 +577,11 @@ GROUP BY
           <where>
           university.id in (
           <foreach collection="condition.universitys" item="obj" separator=",">
-              #{obj.universityId}
+              #{obj}
           </foreach>
           )
           </where>
+          </foreach>
           ) univenrollinfo
         <!--按照本省,定位学校,外省 顺序进行排序-->
           ORDER BY universityAreaId !=${condition.areaId}

@@ -475,7 +475,7 @@ deleteBySubjects
     </select>
     <!--推荐院校浙江-->
     <select id="queryZJUniversityByScore" resultType="java.util.Map">
-        SELECT DISTINCT
+        SELECT
         areaId as universityAreaId,
         rank,
         schoolName,
@@ -490,7 +490,7 @@ deleteBySubjects
         CASE WHEN university_id is null THEN 0 ELSE 1 END
         from zgk_favorite_university WHERE user_id = #{userId} AND university_id = tb.universityId  limit 1) AS isFavorite
         from (
-        SELECT
+        SELECT DISTINCT
         university.areaId,
         university.rank as rank,
         university.name as schoolName,

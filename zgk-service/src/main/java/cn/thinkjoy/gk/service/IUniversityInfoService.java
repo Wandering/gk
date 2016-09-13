@@ -139,8 +139,16 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
      * @return
      */
 
-    List<UniversityEnrollView> selectUnivEnrollInfo(Map<String, Object> condition,
+    List<UniversityEnrollView> selectUnivEnrollInfo(List<Map<String, Object>> maps,boolean isJoin,
                                                     String sortBy);
 
+
+    /**
+     * 成绩分析 获取院校录取信息
+     * @param condition
+     * @return
+     */
+
+    List<Long> selectUnivInfoIdInBatch(Map<String, Object> condition);
 
 }

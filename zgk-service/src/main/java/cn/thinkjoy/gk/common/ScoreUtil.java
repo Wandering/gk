@@ -25,8 +25,9 @@ public class ScoreUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(ScoreUtil.class);
     private static int RANDOM_NUM=10;
 
-    private static int JS_AREA_CODE=320000;
+    public static long JS_AREA_CODE=320000;
     public static String BATCHTYPE2="BATCHTYPE2";
+    public static long ZJ_AREA_CODE=330000;
     @Autowired
     private IScoreAnalysisService scoreAnalysisService;
 
