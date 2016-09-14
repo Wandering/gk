@@ -41,6 +41,7 @@
         <result column="averageScore" property="averageScore" jdbcType="INTEGER" />
         <result column="isFavorite" property="isFavorite"  jdbcType="INTEGER"/>
         <result column="xcRank" property="xcRank"  jdbcType="VARCHAR"/>
+        <result column="isCurrArea" property="isCurrArea"  jdbcType="INTEGER"/>
     </resultMap>
     <resultMap id="EnrollingMap" type="cn.thinkjoy.gk.entity.UniversityInfoEnrolling">
         <id column="id" property="id" jdbcType="BIGINT" />
@@ -172,7 +173,7 @@
             </if>
         </where>
         <if test="orderBy!=null">
-            ORDER BY ${orderBy} ${sortBy}
+            ORDER BY ${orderBy}
         </if>
         <if test="rows != null">
             limit 0, ${rows}
@@ -523,6 +524,7 @@ GROUP BY
           <!-- maps为跨批次定位,有可能为一个,也有可能为多个,主要由上面的sql确定 -->
           <foreach collection="maps" item="condition" separator="UNION">
           SELECT
+          (university.areaid=${condition.areaId}) as isCurrArea,
           university.areaid as universityAreaId,
           university.rank as rank,
           university.name as universityName,

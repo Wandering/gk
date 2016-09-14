@@ -75,6 +75,12 @@ public class UniversityEnrollView extends CreateBaseDomain<Long> implements Comp
      */
     private Integer rank;
 
+
+    /**
+     * 是否是当前省份
+     */
+    private Integer isCurrArea;
+
     /**
      * 院校排名
      */
@@ -212,6 +218,14 @@ public class UniversityEnrollView extends CreateBaseDomain<Long> implements Comp
 
     public void setXcRank(String xcRank) {
         this.xcRank = xcRank;
+    }
+
+    public Integer getIsCurrArea() {
+        return isCurrArea;
+    }
+
+    public void setIsCurrArea(Integer isCurrArea) {
+        this.isCurrArea = isCurrArea;
     }
 
     @Override

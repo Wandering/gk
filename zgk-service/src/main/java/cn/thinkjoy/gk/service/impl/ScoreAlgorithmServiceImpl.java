@@ -4,6 +4,7 @@ import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.AreaMaps;
 import cn.thinkjoy.gk.common.ReportUtil;
 import cn.thinkjoy.gk.common.ScoreUtil;
+import cn.thinkjoy.gk.common.SortUtilForList;
 import cn.thinkjoy.gk.dao.IScoreAnalysisDAO;
 import cn.thinkjoy.gk.dao.ISystemParmasDao;
 import cn.thinkjoy.gk.entity.CheckBatchMsg;
@@ -21,10 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by yangyongping on 16/9/1.
@@ -67,30 +65,30 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
     @Override
     public Object recommendSchool(float totalScore, long areaId, int majorType,long userId) {
 
-        LOGGER.info("totalScore:"+totalScore);
-        LOGGER.info("areaId:"+areaId);
-        LOGGER.info("majorType:"+majorType);
-        LOGGER.info("userId:"+userId);
+        LOGGER.debug("totalScore:"+totalScore);
+        LOGGER.debug("areaId:"+areaId);
+        LOGGER.debug("majorType:"+majorType);
+        LOGGER.debug("userId:"+userId);
 
 
-        LOGGER.info("=======参数整理 Start=======");
+        LOGGER.debug("=======参数整理 Start=======");
         String province = areaMaps.getAreaCode(areaId);
         Integer sap=getLogic(province,majorType);
         Integer score = Integer.parseInt(scoreUtil.floatToStr(totalScore));
-        LOGGER.info("=======参数整理 End=======");
+        LOGGER.debug("=======参数整理 End=======");
 
-        LOGGER.info("=======批次及批次控制线信息 Start=======");
-        LOGGER.info("分数||位次:" + sap);
-        LOGGER.info("成绩: " + score);
-        LOGGER.info("科类:" + majorType);
-        LOGGER.info("省份:" + province);
+        LOGGER.debug("=======批次及批次控制线信息 Start=======");
+        LOGGER.debug("分数||位次:" + sap);
+        LOGGER.debug("成绩: " + score);
+        LOGGER.debug("科类:" + majorType);
+        LOGGER.debug("省份:" + province);
         String[] batchs = getBatchByScore(province,majorType,score,areaId);
-        LOGGER.info("该学生被定为在(只能填报):"+batchs[1]+"批次");
-        LOGGER.info("该学生被定为在:"+batchs[0]+"批次");
-        LOGGER.info("=======批次及批次控制线信息 End========");
+        LOGGER.debug("该学生被定为在(只能填报):"+batchs[1]+"批次");
+        LOGGER.debug("该学生被定为在:"+batchs[0]+"批次");
+        LOGGER.debug("=======批次及批次控制线信息 End========");
 
 
-        LOGGER.info("=======获取推荐学校 Start=======");
+        LOGGER.debug("=======获取推荐学校 Start=======");
         List<Map<String,Object>> resultMaps = getResultListByScore(batchs,score,province,majorType,userId,areaId);
         return resultMaps;
     }
@@ -105,7 +103,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         condition.put("areaId",areaId);
 
 
-        LOGGER.info("=======放置参数 Start========");
+        LOGGER.debug("=======放置参数 Start========");
         ReportForecastView reportForecastView = new ReportForecastView();
         //这里批次用智能填报批次
         reportForecastView.setBatch(batchs[1]);
@@ -121,25 +119,27 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         reportForecastView.setLimit(getConfigValueInt(province,majorType,ReportUtil.SCORE_ENROLLING_LIMIT));
 
         List<Map<String,Object>> universityInfoEnrollings = getEnrollingByScore(reportForecastView);
-        LOGGER.info("=======放置参数 End========");
+        LOGGER.debug("=======放置参数 End========");
         if(universityInfoEnrollings!=null && universityInfoEnrollings.size()>0) {
             condition.put("universitys", universityInfoEnrollings);
             String sortBy = getConfigValueString(province, majorType, ReportUtil.SCORE_SORT_BY);
-            LOGGER.info("排序方式:" + sortBy);
+            LOGGER.debug("排序方式:" + sortBy);
             List<UniversityEnrollView> universityEnrollViews = getUniversityEnrollViews(condition,batchs,province,majorType);
 
-            LOGGER.info("=======获取推荐学校 End========");
-            LOGGER.info("=======组装返回值 Start========");
+            LOGGER.debug("=======获取推荐学校 End========");
+            LOGGER.debug("=======组装返回值 Start========");
             List<Map<String, Object>> resultList = new ArrayList<>();
+
             /**
              * 循环遍历组装返回数据
              * 如股票
              */
             for (UniversityEnrollView universityEnrollView: universityEnrollViews) {
                 Map<String,Object> map = new HashedMap();
-                LOGGER.info("当前组装学校:" + universityEnrollView.getUniversityName());
+                LOGGER.debug("当前组装学校:" + universityEnrollView.getUniversityName());
                 for (Map<String,Object> hMap : universityInfoEnrollings) {
                     if (hMap.get("universityName").equals(universityEnrollView.getUniversityName())) {
+                        map.put("isCurrArea", universityEnrollView.getIsCurrArea());
                         map.put("universityName", hMap.get("universityName"));
                         map.put("universityId", hMap.get("universityId"));
                         map.put("enrollRate", hMap.get("enrollRate"));
@@ -156,9 +156,15 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
                     }
                 }
             }
-            LOGGER.info("=======组装返回值 End========");
+            LOGGER.debug("=======组装返回值 End========");
 
-
+            /**
+             * sql中的排序不能完成
+             * 成绩分析结果录取院校排序功能没有实现——本地院校（录取率由高到低）－>目标院校（录取率由高到低）－>其他院校（录取率由高到低）
+             * 排序在这里进行
+             */
+            SortUtilForList sortUtilForList=new SortUtilForList();
+            Collections.sort(resultList, sortUtilForList);
             return resultList;
         }
         return new ArrayList<>();
@@ -180,7 +186,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         List<Long> no_univ_ids = getUnivIdList(univ_ids,condition);
         //获取排序方式
         String sortBy = getConfigValueString(province, majorType, ReportUtil.SCORE_SORT_BY);
-        LOGGER.info("排序方式:" + sortBy);
+        LOGGER.debug("排序方式:" + sortBy);
         univ_exist_map.putAll(condition);
         univ_exist_map.put("universitys",univ_ids);
         univ_maps.add(univ_exist_map);
@@ -373,7 +379,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
 
         //算法走向 0线差 1位次
         if (isPre(reportForecastView,ReportUtil.SCORE_ENROLLING_LOGIC)) {
-            LOGGER.info("这是位次法");
+            LOGGER.debug("这是位次法");
             //  位次法
             universityInfoEnrollings = universityInfoService.getUniversityEnrollingsByPrecedence(reportForecastView);
         }else {
@@ -395,7 +401,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
             mapList.add(map);
         }
 
-        LOGGER.info("推荐出院校个数:"+mapList.size());
+        LOGGER.debug("推荐出院校个数:"+mapList.size());
         return mapList;
     }
 
@@ -491,15 +497,15 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
      * @return
      */
     private Integer getLogic(String proCode,Integer cate) {
-        LOGGER.info("========算法逻辑走向 start=======");
-        LOGGER.info("province:" + proCode);
-        LOGGER.info("cate:" + cate);
+        LOGGER.debug("========算法逻辑走向 start=======");
+        LOGGER.debug("province:" + proCode);
+        LOGGER.debug("cate:" + cate);
         SystemParmas systemParmas = iSystemParmasService.getThresoldModel(proCode, ReportUtil.SCORE_ENROLLING_LOGIC, cate);
         if (systemParmas == null)
             return 0;
         Integer logic = Integer.valueOf(systemParmas.getConfigValue());
-        LOGGER.info("logic:" + logic);
-        LOGGER.info("========算法逻辑走向 start=======");
+        LOGGER.debug("logic:" + logic);
+        LOGGER.debug("========算法逻辑走向 start=======");
         return logic;
     }
 
