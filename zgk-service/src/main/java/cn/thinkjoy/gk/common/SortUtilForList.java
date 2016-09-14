@@ -32,7 +32,7 @@ public class SortUtilForList implements Comparator<Map<String,Object>> {
         if(result==0)
             result=isFavorite_o2.compareTo(isFavorite_o1);
         if(result==0)
-            result=enrollRate_o1.compareTo(enrollRate_o2);
+            result=enrollRate_o2.compareTo(enrollRate_o1);
         return  result;
     }
 
