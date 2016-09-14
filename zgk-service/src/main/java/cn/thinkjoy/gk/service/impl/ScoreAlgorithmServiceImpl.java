@@ -115,7 +115,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         }
         reportForecastView.setScoreDiff(universityInfoService.converScoreDiffByScore(reportForecastView));
         reportForecastView.setJoin(false);
-        reportForecastView.setOrderBy("enrollRate desc");
+        reportForecastView.setOrderBy("enrollRate desc,preScoreDiff asc");
         reportForecastView.setLimit(getConfigValueInt(province,majorType,ReportUtil.SCORE_ENROLLING_LIMIT));
 
         List<Map<String,Object>> universityInfoEnrollings = getEnrollingByScore(reportForecastView);
