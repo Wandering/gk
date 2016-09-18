@@ -185,6 +185,10 @@ public class ReportUtil {
      */
     public static final int SCORE_VO_LIMIT=10;
 
+    /**
+     * 成绩分析分数低于高职所取得院校数量
+     */
+    public static final int SCORE_VO_TAG=1;
 
     /****************************************************难易预测****************************************************/
 
