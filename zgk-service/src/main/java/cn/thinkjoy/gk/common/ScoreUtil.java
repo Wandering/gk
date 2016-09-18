@@ -332,6 +332,9 @@ public class ScoreUtil {
         Float temp = null;
         String tempBatch = null;
 
+        //判断当前批次是否低于高职最低分
+        int isLowestVo=0;
+
         //规划计算当前分数最接近的上层分数
 
         int t = 3;
@@ -367,6 +370,8 @@ public class ScoreUtil {
         Map<String,Object> map = new HashedMap();
         map.put("type",BATCHTYPE2);
         //当出现这种情况的时候同步顶部和底部的分数
+
+        //顶部分数为空 分数超越1本线
         if("0".equals(tempBatchTop)){
             tempBatchTop=tempBatchBottom;
             tempTop=tempBottom;
@@ -376,7 +381,11 @@ public class ScoreUtil {
         rtnMap.put("scoreTop",floatToStr(tempTop));
         rtnMap.put("batchTop",tempBatchTop);
         rtnMap.put("nameTop",dict.get("name"));
+
+
+        //底部为空  低于高职批次线
         if("0".equals(tempBatchBottom)){
+            isLowestVo=1;
             rtnMap.put("batchBottom",tempBatchTop);
             rtnMap.put("nameBottom",dict.get("name"));
         }else {
@@ -386,6 +395,7 @@ public class ScoreUtil {
             rtnMap.put("batchBottom",tempBatchBottom);
             rtnMap.put("nameBottom",dict.get("name"));
         }
+        rtnMap.put("isLowestVo",isLowestVo);
         rtnMap.put("year",scoreLinesMap.get("year"));
         return rtnMap;
     }

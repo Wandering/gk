@@ -180,6 +180,11 @@ public class ReportUtil {
      */
     public static final String SCORE_ENROLLING_YEAR="SCORE_ENROLLING_YEAR";
 
+    /**
+     * 成绩分析分数低于高职所取得院校数量
+     */
+    public static final int SCORE_VO_LIMIT=10;
+
 
     /****************************************************难易预测****************************************************/
 

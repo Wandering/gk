@@ -82,18 +82,21 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         LOGGER.debug("成绩: " + score);
         LOGGER.debug("科类:" + majorType);
         LOGGER.debug("省份:" + province);
+
+
+
+        LOGGER.debug("=======获取推荐学校 Start=======");
+        List<Map<String,Object>> resultMaps = getResultListByScore(score,province,majorType,userId,areaId);
+        return resultMaps;
+    }
+
+    public List<Map<String,Object>> getResultListByScore(Integer score,String province,Integer majorType,long userId,long areaId){
+
         String[] batchs = getBatchByScore(province,majorType,score,areaId);
         LOGGER.debug("该学生被定为在(只能填报):"+batchs[1]+"批次");
         LOGGER.debug("该学生被定为在:"+batchs[0]+"批次");
         LOGGER.debug("=======批次及批次控制线信息 End========");
 
-
-        LOGGER.debug("=======获取推荐学校 Start=======");
-        List<Map<String,Object>> resultMaps = getResultListByScore(batchs,score,province,majorType,userId,areaId);
-        return resultMaps;
-    }
-
-    public List<Map<String,Object>> getResultListByScore(String[] batchs,Integer score,String province,Integer majorType,long userId,long areaId){
         Map<String,Object> condition = new HashedMap();
         condition.put("userId",userId);
         //这里批次用统一批次
@@ -116,7 +119,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         reportForecastView.setScoreDiff(universityInfoService.converScoreDiffByScore(reportForecastView));
         reportForecastView.setJoin(false);
         reportForecastView.setOrderBy("enrollRate desc,preScoreDiff asc");
-        reportForecastView.setLimit(getConfigValueInt(province,majorType,ReportUtil.SCORE_ENROLLING_LIMIT));
+        reportForecastView.setLimit(Integer.valueOf(batchs[2]) == ReportUtil.SCORE_VO_LIMIT ? ReportUtil.SCORE_VO_LIMIT : getConfigValueInt(province, majorType, ReportUtil.SCORE_ENROLLING_LIMIT));
 
         List<Map<String,Object>> universityInfoEnrollings = getEnrollingByScore(reportForecastView);
         LOGGER.debug("=======放置参数 End========");
@@ -540,9 +543,10 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
 
         Map<String,Object> map = scoreUtil.getTopBatchLine(areaId,categorie,Float.valueOf(score));
         String batch = map.get("batchBottom").toString();
+        String isLowestVo = map.get("isLowestVo").toString();
         String newBatch = scoreUtil.ConverNewBatch(batch);
 
-        return new String[]{batch,newBatch};
+        return new String[]{batch,newBatch,isLowestVo};
     }
 
     /**
