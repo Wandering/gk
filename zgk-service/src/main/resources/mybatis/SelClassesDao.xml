@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.selcourse.ISelClassesDao">
+
+    <select id="selectSchoolAndMajorNumberBySubjects" resultType="cn.thinkjoy.gk.pojo.NumberPojo" parameterType="java.util.Map">
+        select count(DISTINCT universityName),count(*) from zgk_zj_3in7 zz
+        where zz.selectSubject like CONCAT('%', #{subject1} , '%')
+        or zz.selectSubject like CONCAT('%', #{subject2} , '%')
+        or zz.selectSubject like CONCAT('%', #{subject3} , '%')
+        or zz.selectCount=0
+    </select>
+
+</mapper>
+
