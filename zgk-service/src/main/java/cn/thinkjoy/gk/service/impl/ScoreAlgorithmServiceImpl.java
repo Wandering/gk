@@ -114,7 +114,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         reportForecastView.setProvince(province);
         reportForecastView.setCategorie(majorType);
         if(isPre(reportForecastView,ReportUtil.SCORE_ENROLLING_LOGIC)) {
-            reportForecastView.setPrecedence(universityInfoService.converPreByScore(reportForecastView, ReportUtil.SCORE_ENROLLING_LOGIC));
+            reportForecastView.setPrecedence(universityInfoService.converPreByScoreV2(reportForecastView, ReportUtil.SCORE_ENROLLING_LOGIC));
         }
         reportForecastView.setScoreDiff(universityInfoService.converScoreDiffByScore(reportForecastView));
         reportForecastView.setJoin(false);
