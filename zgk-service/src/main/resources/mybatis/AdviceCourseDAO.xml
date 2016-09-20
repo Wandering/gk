@@ -5,7 +5,8 @@
 
 
     <select id="getMajorBatchByCourse" resultType="cn.thinkjoy.gk.domain.MajorBatchCompareRtn">
-        SELECT count(*) as num,plan.batch as batch
+        SELECT count(*) as num,plan.batch as batch,
+        (SELECT name from zgk_data_dict where type = 'BATCHTYPE2' and dictId =plan.batch) as batchName
         FROM
         (select universityId,majorCode,batch FROM zgk_university_major_enrolling_plan where areaId =#{currAreaId} AND
         `year` =#{year}) plan
@@ -14,14 +15,16 @@
         plan.universityId = 3in7.universityId
         AND plan.majorCode = 3in7.majorCode
         <where>
-            <foreach collection="subjects" separator="OR" item="obj">
+            <!-- 查询专业对应  -->
+            <foreach collection="subjects" separator="OR" item="obj" open="(" close=") OR">
                 3in7.selectSubject like CONCAT('%',#{obj},'%')
             </foreach>
+                3in7.selectCount = 0
         </where>
         GROUP BY plan.batch
     </select>
-
-    <select id="getUniversityDiffByCourse" resultType="java.util.LinkedHashMap">
+    <!-- 查询院校差异(相同的不显示 但是在这里不去重,代码中去重,提高sql执行速度)  -->
+    <select id="getUniversityDiffByCourse" resultType="java.util.Map">
         SELECT
         university.id as universityId,
         university.name as universityName,
@@ -29,7 +32,9 @@
         plan.batch as batch,
         (SELECT name from zgk_data_dict where type = 'BATCHTYPE2' and dictId =plan.batch) as batchName,
         plan.majorName as majorName,
-        3in7.majorCode as majorCode
+        3in7.majorCode as majorCode,
+        (university.areaid=#{currAreaId}) as isCurrArea,
+        university.rank as rank
         from zgk_zj_3in7 3in7
         INNER JOIN zgk_university university
         ON 3in7.universityId = university.id
@@ -57,9 +62,8 @@
             AND plan.batch = #{batch}
         </if>
 
-
     </select>
-
+    <!-- 查询选择课程组合对应的批次 -->
     <select id="queryBatch" resultType="java.util.Map">
         SELECT
         plan.batch AS batch,
@@ -90,12 +94,13 @@
         </where>
         GROUP BY plan.batch
     </select>
-
+    <!-- 查询选择课程组合对应的省份 -->
     <select id="queryArea" resultType="java.util.Map">
         SELECT
         university.areaid as areaid,
         (SELECT name from zgk_province where id =university.areaid) as areaName
         from zgk_zj_3in7 3in7
+        <!-- 查询院校信息,以universityID和educationLevel关联 -->
         INNER JOIN zgk_university university
         ON 3in7.universityId = university.id
         and 3in7.eduLevel = university.educationLevel
@@ -112,11 +117,13 @@
     </select>
 
 
+
     <select id="queryUnivType" resultType="java.util.Map">
         SELECT
         university.type as typeId,
-        (SELECT name from zgk_data_dict where type = 'PROPERTY' AND dictId =university.type) as areaName
+        (SELECT name from zgk_data_dict where type = 'PROPERTY' AND dictId =university.type) as typeName
         from zgk_zj_3in7 3in7
+        <!-- 查询院校信息,以universityID和educationLevel关联 -->
         INNER JOIN zgk_university university
         ON 3in7.universityId = university.id
         and 3in7.eduLevel = university.educationLevel

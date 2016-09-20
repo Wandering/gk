@@ -6,6 +6,8 @@ package cn.thinkjoy.gk.domain;
 public class MajorBatchCompareRtn {
     //批次
     private Integer batch;
+    //批次名称
+    private String batchName;
     //人数
     private Integer num;
 
@@ -23,5 +25,13 @@ public class MajorBatchCompareRtn {
 
     public void setNum(Integer num) {
         this.num = num;
+    }
+
+    public String getBatchName() {
+        return batchName;
+    }
+
+    public void setBatchName(String batchName) {
+        this.batchName = batchName;
     }
 }

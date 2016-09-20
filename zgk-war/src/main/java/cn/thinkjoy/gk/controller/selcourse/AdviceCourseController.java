@@ -30,7 +30,7 @@ public class AdviceCourseController {
     private IAdviceCourseService adviceCourseService;
 
     /**
-     * 所选课程和所选专业
+     * 通过所选课程统计可选专业各批次分布(柱状图)
      *
      * @param subjects1
      * @param subjects2
@@ -47,7 +47,7 @@ public class AdviceCourseController {
     }
 
     /**
-     * 所选课程和所选专业
+     * 通过所选课程组合比较两种组合院校差异(表格)
      *
      * @return
      */
@@ -55,9 +55,9 @@ public class AdviceCourseController {
     @ResponseBody
     public Object majorDiffCompare(@RequestParam String[] subjects1,
                                    @RequestParam String[] subjects2,
-                                   @RequestParam Integer batch,
-                                   @RequestParam Long areaId,
-                                   @RequestParam Integer universityType) {
+                                   @RequestParam(required = false) Integer batch,
+                                   @RequestParam(required = false) Long areaId,
+                                   @RequestParam(required = false) Integer universityType) {
         sort(subjects1, subjects2);
         //取出数据
         List<MajorDiffCompareRtn> majorDiffCompareRtns = adviceCourseService.getMajorDiffCompare(
@@ -71,7 +71,7 @@ public class AdviceCourseController {
     }
 
     /**
-     * 所选课程和所选专业
+     * 查询所选课程院校锁包含的省份(筛选条件)
      *
      * @param subjects1
      * @param subjects2
@@ -91,7 +91,7 @@ public class AdviceCourseController {
 
 
     /**
-     * 所选课程和所选专业
+     * 查询所选课程院校锁包含的批次(筛选器筛选条件)
      *
      * @param subjects1
      * @param subjects2
@@ -109,7 +109,7 @@ public class AdviceCourseController {
     }
 
     /**
-     * 所选课程和所选专业
+     * 查询所选课程院校锁包含的院校类型(筛选器筛选条件)
      *
      * @param subjects1
      * @param subjects2

@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.service.impl;
 
+import cn.thinkjoy.gk.common.SortMajorDiffForList;
 import cn.thinkjoy.gk.dao.IAdviceCourseDAO;
 import cn.thinkjoy.gk.domain.MajorBatchCompareRtn;
 import cn.thinkjoy.gk.domain.MajorDiffCompareRtn;
@@ -11,10 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by yangyongping on 16/9/19.
@@ -140,40 +138,46 @@ public class AdviceCourseServiceImpl implements IAdviceCourseService {
 
         for (int i = 0; i < universityInfo1.size(); i++) {
             Map<String, Object> map1 = universityInfo1.get(i);
+            //这里获取列表1的universityId
             Long universityId1 = map1.get("universityId") == null ? null : Long.valueOf(map1.get("universityId").toString());
+            //判断是否存在majorDiffCompareRtn对象 存在的话在列表中返回,不存在的话创建一个返回
             majorDiffCompareRtn = getMajorDiffCompareRtn(universityId1, majorDiffCompareRtns);
+            //判断是不是新对象如果是新对象给对象赋值,如果不是新对象跳过赋值阶段
+            if (majorDiffCompareRtn.getUniversityId() == null) {
+                setUnivInfo(majorDiffCompareRtn, universityId1, map1);
+            }
             LOGGER.info("当前拼装学校:" + map1.get("universityName"));
+            //这个对象用来保存院校的专业信息LIST
             List<UniversityMajorInfo> universityMajorInfos;
             for (int j = 0; j < universityInfo2.size(); j++) {
                 Map<String, Object> map2 = universityInfo2.get(j);
+                //这里获取列表2的universityId
                 Long universityId2 = map2.get("universityId") == null ? null : Long.valueOf(map2.get("universityId").toString());
-
-                /*
-                判断  如果院校id相等  那么 将所有院校信息放入院校domain 专业信息放入专业domain
-                */
-
+                //如果跟上层循环的院校ID一致,认定当前对象是和上层院校同一个院校,将专业信息存入universityMajorInfos中并将对象放入majorDiffCompareRtn对象中
                 if (universityId1.compareTo(universityId2) == 0) {
-                    //先做判断  如果专业相等 跳过当前轮
+                    //判断在对象majorDiffCompareRtn中是否有universityMajorInfos列表,如果存在就讲原来的取出来,如果不存在,就NEW一个
                     if (majorDiffCompareRtn.getUniversityMajorInfos2() == null) {
                         universityMajorInfos = new ArrayList<>();
                     } else {
                         universityMajorInfos = majorDiffCompareRtn.getUniversityMajorInfos2();
                     }
-                    setMajorDiffCompareRtn(universityMajorInfos, majorDiffCompareRtn, map2, universityId1);
+                    //设置专业信息到universityMajorInfos中
+                    setMajorDiffCompareRtn(universityMajorInfos, map2);
                     majorDiffCompareRtn.setUniversityMajorInfos2(universityMajorInfos);
                     //删除右边list中的数据
                     universityInfo2.remove(map2);
                 }
             }
-            //无论如何该该数据都会被置入UniversityMajorInfos1中
+            //判断在对象majorDiffCompareRtn中是否有universityMajorInfos列表,如果存在就讲原来的取出来,如果不存在,就NEW一个
             if (majorDiffCompareRtn.getUniversityMajorInfos1() == null) {
                 universityMajorInfos = new ArrayList<>();
             } else {
                 universityMajorInfos = majorDiffCompareRtn.getUniversityMajorInfos1();
             }
-            setMajorDiffCompareRtn(universityMajorInfos, majorDiffCompareRtn, map1, universityId1);
+
+            setMajorDiffCompareRtn(universityMajorInfos, map1);
             majorDiffCompareRtn.setUniversityMajorInfos1(universityMajorInfos);
-            majorDiffCompareRtns.add(majorDiffCompareRtn);
+            addMajorDiffCompareRtn(majorDiffCompareRtn, majorDiffCompareRtns);
         }
         //将右边未放入的项放入domain
         for (Map<String, Object> map : universityInfo2) {
@@ -185,32 +189,49 @@ public class AdviceCourseServiceImpl implements IAdviceCourseService {
                 universityMajorInfos = majorDiffCompareRtn.getUniversityMajorInfos1();
             }
             Long universityId1 = map.get("universityId") == null ? null : Long.valueOf(map.get("universityId").toString());
-            setMajorDiffCompareRtn(universityMajorInfos, majorDiffCompareRtn, map, universityId1);
+            setUnivInfo(majorDiffCompareRtn, universityId1, map);
+            setMajorDiffCompareRtn(universityMajorInfos, map);
             majorDiffCompareRtn.setUniversityMajorInfos2(universityMajorInfos);
-            majorDiffCompareRtns.add(majorDiffCompareRtn);
+            addMajorDiffCompareRtn(majorDiffCompareRtn, majorDiffCompareRtns);
         }
+
+        SortMajorDiffForList sortMajorDiffForList = new SortMajorDiffForList();
+        Collections.sort(majorDiffCompareRtns, sortMajorDiffForList);
         return majorDiffCompareRtns;
     }
 
-    private void setMajorDiffCompareRtn(List<UniversityMajorInfo> universityMajorInfos,
-                                        MajorDiffCompareRtn majorDiffCompareRtn,
-                                        Map<String, Object> map,
-                                        Long universityId) {
-        String majorCode = map.get("majorCode") == null ? null : map.get("majorCode").toString();
+
+    private void setUnivInfo(MajorDiffCompareRtn majorDiffCompareRtn, Long universityId, Map<String, Object> map) {
         majorDiffCompareRtn.setUniversityId(universityId);
         majorDiffCompareRtn.setUniversityName(map.get("universityName") == null ? null : map.get("universityName").toString());
         majorDiffCompareRtn.setAreaId(map.get("areaId") == null ? null : map.get("areaId").toString());
         majorDiffCompareRtn.setAreaName(map.get("areaName") == null ? null : map.get("areaName").toString());
+        majorDiffCompareRtn.setIsCurrArea(Integer.valueOf(map.get("isCurrArea").toString()));
+        majorDiffCompareRtn.setRank(map.get("rank") == null ? null : Integer.valueOf(map.get("rank").toString()));
+    }
 
+    /**
+     * 给MajorDiffCompareRtn设值
+     * @param universityMajorInfos
+     * @param map
+     */
+    private void setMajorDiffCompareRtn(List<UniversityMajorInfo> universityMajorInfos,
+                                        Map<String, Object> map) {
+        String majorCode = map.get("majorCode") == null ? null : map.get("majorCode").toString();
         UniversityMajorInfo universityMajorInfo = new UniversityMajorInfo();
         universityMajorInfo.setBacth(map.get("batch") == null ? null : Integer.valueOf(map.get("batch").toString()));
         universityMajorInfo.setBacthName(map.get("batchName") == null ? null : map.get("batchName").toString());
         universityMajorInfo.setMajorName(map.get("majorName") == null ? null : map.get("majorName").toString());
-
         universityMajorInfo.setMajorCode(majorCode);
         universityMajorInfos.add(universityMajorInfo);
     }
 
+    /**
+     * 获取MajorDiffCompareRtn对象
+     * @param universityId1
+     * @param majorDiffCompareRtns
+     * @return
+     */
     private MajorDiffCompareRtn getMajorDiffCompareRtn(Long universityId1, List<MajorDiffCompareRtn> majorDiffCompareRtns) {
         for (MajorDiffCompareRtn majorDiffCompareRtn : majorDiffCompareRtns) {
             if (universityId1.compareTo(majorDiffCompareRtn.getUniversityId()) == 0) {
@@ -219,6 +240,20 @@ public class AdviceCourseServiceImpl implements IAdviceCourseService {
         }
         return new MajorDiffCompareRtn();
 
+    }
+
+    /**
+     * 给majorDiffCompareRtns add值,防止重复add
+     * @param majorDiffCompareRtn
+     * @param majorDiffCompareRtns
+     */
+    private void addMajorDiffCompareRtn(MajorDiffCompareRtn majorDiffCompareRtn, List<MajorDiffCompareRtn> majorDiffCompareRtns) {
+        for (MajorDiffCompareRtn mm : majorDiffCompareRtns) {
+            if (mm.getUniversityId().compareTo(majorDiffCompareRtn.getUniversityId()) == 0) {
+                return;
+            }
+        }
+        majorDiffCompareRtns.add(majorDiffCompareRtn);
     }
 
     /**
@@ -253,7 +288,7 @@ public class AdviceCourseServiceImpl implements IAdviceCourseService {
         map.put("year", CURR_YEAR);
         map.put("areaId", areaId);
         map.put("batch", batch);
-        map.put("universityType", universityType);
+        map.put("type", universityType);
         List<Map<String, Object>> list = adviceCourseDAO.getUniversityDiffByCourse(map);
         return list;
     }

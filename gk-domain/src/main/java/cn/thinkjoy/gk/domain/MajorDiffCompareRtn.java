@@ -10,6 +10,8 @@ public class MajorDiffCompareRtn {
     private Long  universityId;
     private String  areaId;
     private String  areaName;
+    private Integer  isCurrArea;
+    private Integer  rank;
     //院校类型(工,农..)
     private String  universityType;
     //专业信息
@@ -72,5 +74,21 @@ public class MajorDiffCompareRtn {
 
     public void setUniversityMajorInfos2(List<UniversityMajorInfo> universityMajorInfos2) {
         this.universityMajorInfos2 = universityMajorInfos2;
+    }
+
+    public Integer getIsCurrArea() {
+        return isCurrArea;
+    }
+
+    public void setIsCurrArea(Integer isCurrArea) {
+        this.isCurrArea = isCurrArea;
+    }
+
+    public Integer getRank() {
+        return rank;
+    }
+
+    public void setRank(Integer rank) {
+        this.rank = rank;
     }
 }
