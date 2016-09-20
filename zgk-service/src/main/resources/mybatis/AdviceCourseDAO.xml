@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IAdviceCourseDAO">
+
+
+    <select id="getMajorBatchByCourse" resultType="cn.thinkjoy.gk.domain.MajorBatchCompareRtn">
+        SELECT count(*) as num,plan.batch as batch
+        FROM
+        (select universityId,majorCode,batch FROM zgk_university_major_enrolling_plan where areaId =#{currAreaId} AND
+        `year` =#{year}) plan
+        INNER JOIN
+        zgk_zj_3in7 3in7 ON
+        plan.universityId = 3in7.universityId
+        AND plan.majorCode = 3in7.majorCode
+        <where>
+            <foreach collection="subjects" separator="OR" item="obj">
+                3in7.selectSubject like CONCAT('%',#{obj},'%')
+            </foreach>
+        </where>
+        GROUP BY plan.batch
+    </select>
+
+    <select id="getUniversityDiffByCourse" resultType="java.util.LinkedHashMap">
+        SELECT
+        university.id as universityId,
+        university.name as universityName,
+        university.areaid as areaId,
+        plan.batch as batch,
+        (SELECT name from zgk_data_dict where type = 'BATCHTYPE2' and dictId =plan.batch) as batchName,
+        plan.majorName as majorName,
+        3in7.majorCode as majorCode
+        from zgk_zj_3in7 3in7
+        INNER JOIN zgk_university university
+        ON 3in7.universityId = university.id
+        and 3in7.eduLevel = university.educationLevel
+        INNER JOIN
+        zgk_university_major_enrolling_plan plan
+        ON plan.areaId=#{currAreaId} AND plan.`year`=#{year}
+        AND plan.universityId = 3in7.universityId
+        AND plan.majorCode = 3in7.majorCode
+        where 3in7.selectCount>0
+        AND 3in7.universityId is not null
+        <if test="subjects">
+            AND
+            <foreach collection="subjects" open="(" close=")" separator="OR" item="obj">
+                3in7.selectSubject like CONCAT('%',#{obj},'%')
+            </foreach>
+        </if>
+        <if test="areaId!=null">
+            AND university.areaid =#{areaId}
+        </if>
+        <if test="type!=null">
+            AND university.type = #{type}
+        </if>
+        <if test="batch!=null">
+            AND plan.batch = #{batch}
+        </if>
+
+
+    </select>
+
+    <select id="queryBatch" resultType="java.util.Map">
+        SELECT
+        plan.batch AS batch,
+        (
+        SELECT
+        NAME
+        FROM
+        zgk_data_dict
+        WHERE
+        type = 'BATCHTYPE2'
+        AND dictId = plan.batch
+        ) AS batchName
+        FROM
+        (select universityId,majorCode,batch FROM zgk_university_major_enrolling_plan where areaId =#{currAreaId} AND
+        `year` =#{year}) plan
+        INNER JOIN
+        zgk_zj_3in7 3in7 ON
+        plan.universityId = 3in7.universityId
+        AND plan.majorCode = 3in7.majorCode
+        <where>
+            <foreach collection="subjects1" separator="OR" item="obj">
+                3in7.selectSubject like CONCAT('%',#{obj},'%')
+            </foreach>
+            <if test="subjects2!=null">OR</if>
+            <foreach collection="subjects2" separator="OR" item="obj">
+                3in7.selectSubject like CONCAT('%',#{obj},'%')
+            </foreach>
+        </where>
+        GROUP BY plan.batch
+    </select>
+
+    <select id="queryArea" resultType="java.util.Map">
+        SELECT
+        university.areaid as areaid,
+        (SELECT name from zgk_province where id =university.areaid) as areaName
+        from zgk_zj_3in7 3in7
+        INNER JOIN zgk_university university
+        ON 3in7.universityId = university.id
+        and 3in7.eduLevel = university.educationLevel
+        <where>
+            <foreach collection="subjects1" separator="OR" item="obj">
+                3in7.selectSubject like CONCAT('%',#{obj},'%')
+            </foreach>
+            <if test="subjects2!=null">OR</if>
+            <foreach collection="subjects2" separator="OR" item="obj">
+                3in7.selectSubject like CONCAT('%',#{obj},'%')
+            </foreach>
+        </where>
+        GROUP BY university.areaid
+    </select>
+
+
+    <select id="queryUnivType" resultType="java.util.Map">
+        SELECT
+        university.type as typeId,
+        (SELECT name from zgk_data_dict where type = 'PROPERTY' AND dictId =university.type) as areaName
+        from zgk_zj_3in7 3in7
+        INNER JOIN zgk_university university
+        ON 3in7.universityId = university.id
+        and 3in7.eduLevel = university.educationLevel
+        <where>
+            <foreach collection="subjects1" separator="OR" item="obj">
+                3in7.selectSubject like CONCAT('%',#{obj},'%')
+            </foreach>
+            <if test="subjects2!=null">OR</if>
+            <foreach collection="subjects2" separator="OR" item="obj">
+                3in7.selectSubject like CONCAT('%',#{obj},'%')
+            </foreach>
+        </where>
+        GROUP BY university.type
+    </select>
+</mapper>
