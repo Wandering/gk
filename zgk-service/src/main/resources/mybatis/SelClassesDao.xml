@@ -4,11 +4,84 @@
 <mapper namespace="cn.thinkjoy.gk.dao.selcourse.ISelClassesDao">
 
     <select id="selectSchoolAndMajorNumberBySubjects" resultType="cn.thinkjoy.gk.pojo.NumberPojo" parameterType="java.util.Map">
-        select count(DISTINCT universityName),count(*) from zgk_zj_3in7 zz
+        select count(DISTINCT universityName) as schoolNumber,count(*) as majorNumber
+        from (select batch,universityId,majorCode from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
         where zz.selectSubject like CONCAT('%', #{subject1} , '%')
         or zz.selectSubject like CONCAT('%', #{subject2} , '%')
         or zz.selectSubject like CONCAT('%', #{subject3} , '%')
         or zz.selectCount=0
+    </select>
+
+    <select id="selectMajorNumberByBatch" resultType="cn.thinkjoy.gk.pojo.MajorBatchNumberPojo" parameterType="java.util.Map">
+        select tmp.batch as batch,count(DISTINCT zz.id) as majorNumber,
+            count(DISTINCT zz.id)/(
+                select count(*) as majorNumber
+                from (select batch,universityId,majorCode from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+                INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+                where zz.selectSubject like CONCAT('%', #{subject1} , '%')
+                or zz.selectSubject like CONCAT('%', #{subject2} , '%')
+                or zz.selectSubject like CONCAT('%', #{subject3} , '%')
+                or zz.selectCount=0
+            ) as percent
+        from (select batch,universityId,majorCode from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+        where zz.selectSubject like CONCAT('%', #{subject1} , '%')
+        or zz.selectSubject like CONCAT('%', #{subject2} , '%')
+        or zz.selectSubject like CONCAT('%', #{subject3} , '%')
+        or zz.selectCount=0
+        group by tmp.batch
+    </select>
+
+    <select id="selectMajorList" resultType="cn.thinkjoy.gk.pojo.MajorPojo" parameterType="java.util.Map">
+        select uu.id as universityId,zz.majorCode as majorCode,uu.provinceCode,tmp.batch as batch,zz.universityName as universityName,zz.major as majorName,tmp.batch,tmp.planEnrolling as planNumber,zz.selectSubject as selectSubject
+        from (select batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+        INNER join zgk_university uu on uu.id=tmp.universityId
+        where (zz.selectSubject like CONCAT('%', #{subject1} , '%')
+            or zz.selectSubject like CONCAT('%', #{subject2} , '%')
+            or zz.selectSubject like CONCAT('%', #{subject3} , '%')
+            or zz.selectCount=0)
+        <if test="queryValue != null">
+            and (zz.universityName like CONCAT('%', #{queryValue} , '%')
+                or zz.major like CONCAT('%', #{queryValue} , '%'))
+        </if>
+        <if test="provinceCode != null">
+          and uu.provinceCode = #{provinceCode}
+        </if>
+        <if test="batch != null">
+          and tmp.batch = #{batch}
+        </if>
+        <if test="type != null">
+          and uu.type = #{type}
+        </if>
+        order by tmp.universityId asc
+        limit ${offset},${rows}
+    </select>
+
+    <select id="selectMajorListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*)
+        from (select batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+        INNER join zgk_university uu on uu.id=tmp.universityId
+        where (zz.selectSubject like CONCAT('%', #{subject1} , '%')
+            or zz.selectSubject like CONCAT('%', #{subject2} , '%')
+            or zz.selectSubject like CONCAT('%', #{subject3} , '%')
+            or zz.selectCount=0)
+        <if test="queryValue != null">
+            and (zz.universityName like CONCAT('%', #{queryValue} , '%')
+                or zz.major like CONCAT('%', #{queryValue} , '%'))
+        </if>
+        <if test="provinceCode != null">
+          and uu.provinceCode = #{provinceCode}
+        </if>
+        <if test="batch != null">
+          and tmp.batch = #{batch}
+        </if>
+        <if test="type != null">
+          and uu.type = #{type}
+        </if>
+        order by tmp.universityId asc
     </select>
 
 </mapper>

@@ -1,9 +1,11 @@
 package cn.thinkjoy.gk.pojo;
 
+import java.io.Serializable;
+
 /**
  * Created by zuohao on 16/9/19.
  */
-public class NumberPojo {
+public class NumberPojo implements Serializable {
 
     private int schoolNumber;
 

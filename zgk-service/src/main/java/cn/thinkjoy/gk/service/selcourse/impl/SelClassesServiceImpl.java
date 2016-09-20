@@ -1,11 +1,14 @@
 package cn.thinkjoy.gk.service.selcourse.impl;
 
 import cn.thinkjoy.gk.dao.selcourse.ISelClassesDao;
+import cn.thinkjoy.gk.pojo.MajorBatchNumberPojo;
+import cn.thinkjoy.gk.pojo.MajorPojo;
 import cn.thinkjoy.gk.pojo.NumberPojo;
 import cn.thinkjoy.gk.service.selcourse.ISelClassesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,5 +23,20 @@ public class SelClassesServiceImpl implements ISelClassesService {
     @Override
     public NumberPojo selectSchoolAndMajorNumberBySubjects(Map<String, Object> map) {
         return iSelClassesDao.selectSchoolAndMajorNumberBySubjects(map);
+    }
+
+    @Override
+    public List<MajorBatchNumberPojo> selectMajorNumberByBatch(Map<String, Object> map) {
+        return iSelClassesDao.selectMajorNumberByBatch(map);
+    }
+
+    @Override
+    public List<MajorPojo> selectMajorList(Map<String, Object> map) {
+        return iSelClassesDao.selectMajorList(map);
+    }
+
+    @Override
+    public int selectMajorListCount(Map<String, Object> map) {
+        return iSelClassesDao.selectMajorListCount(map);
     }
 }
