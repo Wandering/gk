@@ -46,7 +46,7 @@
         user_id as userId,
         cdate,details
         from zgk_3in7_evaluation
-        WHERE user_id = #{userId} GROUP BY cdate DESC
+        WHERE user_id = #{userId} GROUP BY cdate DESC LIMIT 1
     </select>
 
     <select id="queryEvaluationCount" resultType="java.lang.Integer">

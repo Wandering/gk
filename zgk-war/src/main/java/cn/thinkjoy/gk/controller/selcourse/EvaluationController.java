@@ -39,8 +39,7 @@ public class EvaluationController extends ZGKBaseController {
     public Object insertEvaluation(@RequestParam String evaluation) {
         Evaluation evaluationObj= JSON.parseObject(evaluation,Evaluation.class);
         if (evaluation==null)throw new BizException(ERRORCODE.EVALUATION_IS_NULL.getCode(),ERRORCODE.EVALUATION_IS_NULL.getMessage());
-//        evaluation.setUserId(Long.valueOf(getAccoutId()));
-        evaluationObj.setUserId(Long.valueOf(219));
+        evaluationObj.setUserId(Long.valueOf(getAccoutId()));
         evaluationObj.setCdate(System.currentTimeMillis());
         //取出数据
         return evaluationService.insertEvaluation(evaluationObj);
@@ -55,8 +54,7 @@ public class EvaluationController extends ZGKBaseController {
     public Object queryEvaluation() {
 
         //取出数据
-        return evaluationService.queryLastEvaluation(Long.valueOf(219));
-//        return evaluationService.queryLastEvaluation(Long.valueOf(getAccoutId()));
+        return evaluationService.queryLastEvaluation(Long.valueOf(getAccoutId()));
     }
 
     /**
@@ -69,7 +67,6 @@ public class EvaluationController extends ZGKBaseController {
     public Object queryEvaluationCount() {
 
         //取出数据
-//        return evaluationService.queryEvaluationCount(Long.valueOf(getAccoutId()));
-        return evaluationService.queryEvaluationCount(Long.valueOf(219));
+        return evaluationService.queryEvaluationCount(Long.valueOf(getAccoutId()));
     }
 }
