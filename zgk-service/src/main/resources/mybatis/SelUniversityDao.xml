@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.selcourse.ISelUniversityDao">
+
+    <select id="selectUniversityById" resultType="cn.thinkjoy.gk.pojo.SelUniversityPojo" parameterType="java.util.Map">
+        select uu.id as universityId,uu.name as universityName,uu.photo_url as photoUrl,uu.property,uu.rank,uu.educationLevel,dd.name as educationLevelName
+        from zgk_university uu
+        LEFT JOIN zgk_data_dict dd on dd.type='EDULEVEL' AND dd.dictId=uu.educationLevel
+        where uu.id=#{universityId}
+    </select>
+
+    <select id="selectEduLevelByUniversityId" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.EduLevelNumberPojo">
+        select eduLevel,count(eduLevel) as number,dd.name as eduLevelName
+        from zgk_zj_3in7 zz
+        LEFT JOIN zgk_data_dict dd on dd.type='EDULEVEL' AND dd.dictId=zz.eduLevel
+        where zz.universityId=#{universityId}
+        GROUP BY zz.eduLevel
+    </select>
+
+    <select id="selectMajorList" resultType="cn.thinkjoy.gk.pojo.MajorPojo" parameterType="java.util.Map">
+        select uu.id as universityId,zz.majorCode as majorCode,uu.provinceCode,tmp.batch as batch,zz.universityName as universityName,zz.major as majorName,tmp.batch,tmp.planEnrolling as planNumber,zz.selectSubject as selectSubject
+        from (select batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        INNER join zgk_zj_3in7 zz on tmp.universityId=zz.universityId and tmp.majorCode=zz.majorCode
+        INNER join zgk_university uu on uu.id=tmp.universityId
+        WHERE uu.id=#{universityId}
+        limit ${offset},${rows}
+    </select>
+
+</mapper>
+
