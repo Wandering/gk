@@ -23,6 +23,16 @@ public class MajorPojo implements Serializable {
 
     private String selectSubject;
 
+    private String universityRank;
+
+    public String getUniversityRank() {
+        return universityRank;
+    }
+
+    public void setUniversityRank(String universityRank) {
+        this.universityRank = universityRank;
+    }
+
     public String getUniversityId() {
         return universityId;
     }
