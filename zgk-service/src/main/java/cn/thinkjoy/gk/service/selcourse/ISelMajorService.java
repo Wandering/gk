@@ -27,7 +27,9 @@ public interface ISelMajorService {
     /**
      * 查询各专业薪资排名
      *
+     * @param pageNo
+     * @param pageSize
      * @return
      */
-    List<MajoredDto> getMajorSalary();
+    List<MajoredDto> getMajorSalary(int pageNo,int pageSize);
 }

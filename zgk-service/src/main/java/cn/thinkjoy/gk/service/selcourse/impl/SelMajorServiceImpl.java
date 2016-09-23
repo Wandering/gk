@@ -57,7 +57,7 @@ public class SelMajorServiceImpl implements ISelMajorService {
     }
 
     @Override
-    public List<MajoredDto> getMajorSalary() {
-        return iSelMajorDao.getMajorSalary(Constants.salary_size);
+    public List<MajoredDto> getMajorSalary(int pageNo,int pageSize) {
+        return iSelMajorDao.getMajorSalary((pageNo-1)*pageSize,pageSize);
     }
 }

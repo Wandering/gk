@@ -27,8 +27,9 @@ public interface ISelMajorDao {
     /**
      * 查询各专业薪资排名
      *
+     * @param index
      * @param pageSize
      * @return
      */
-    List<MajoredDto> getMajorSalary(@Param("pageSize") int pageSize);
+    List<MajoredDto> getMajorSalary(@Param("index") int index,@Param("pageSize") int pageSize);
 }

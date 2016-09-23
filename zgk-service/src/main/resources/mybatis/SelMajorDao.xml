@@ -85,7 +85,7 @@
             zgk_major_base
         ORDER BY
             salary DESC
-        LIMIT #{pageSize}
+        LIMIT #{index},#{pageSize}
     </select>
 
 </mapper>

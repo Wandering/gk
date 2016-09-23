@@ -77,9 +77,10 @@ public class SelMajorController {
     @ResponseBody
     @ApiDesc(owner = "杨国荣",returnDesc = "查询各专业薪资排名")
     @RequestMapping(value = "/getMajorSalary",method = RequestMethod.GET)
-    public List<MajoredDto> getMajorSalary(){
+    public List<MajoredDto> getMajorSalary(@RequestParam("pageNo") int pageNo,
+                                           @RequestParam("pageSize") int pageSize){
 
-        return iSelMajorService.getMajorSalary();
+        return iSelMajorService.getMajorSalary(pageNo,pageSize);
     }
 
 }
