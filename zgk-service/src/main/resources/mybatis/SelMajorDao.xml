@@ -29,19 +29,20 @@
 
     <select id="selectUniversityBatchNumber" resultType="cn.thinkjoy.gk.pojo.UniversityBatchNumberPojo" parameterType="java.util.Map">
         select dd.name as batchName,count(uu.id) as univeristyNumber,
-          count(uu.id)/
-            (select count(uu.id)
-            from (select batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
-            INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
-            INNER join zgk_university uu on uu.id=tmp.universityId
-            left join zgk_data_dict dd on dd.type='EDULEVEL' and dd.dictId=uu.educationLevel
-            where zz.majorCode=#{majorCode}) as percent
+        count(uu.id)/(
+            select count(uu.id)
+                from (select batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+                INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+                INNER join zgk_university uu on uu.id=tmp.universityId
+                left join zgk_data_dict dd on dd.type='BATCHTYPE' and dd.dictId=tmp.batch
+                where zz.majorCode=#{majorCode}
+            )
         from (select batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
         INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
         INNER join zgk_university uu on uu.id=tmp.universityId
-        left join zgk_data_dict dd on dd.type='EDULEVEL' and dd.dictId=uu.educationLevel
+		left join zgk_data_dict dd on dd.type='BATCHTYPE' and dd.dictId=tmp.batch
         where zz.majorCode=#{majorCode}
-        group by dd.name
+        group by dd.name;
     </select>
 
     <select id="selectMajorList" resultType="cn.thinkjoy.gk.pojo.MajorPojo" parameterType="java.util.Map">

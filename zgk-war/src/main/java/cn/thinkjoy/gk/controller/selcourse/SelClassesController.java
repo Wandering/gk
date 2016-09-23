@@ -51,7 +51,8 @@ public class SelClassesController {
     public Map<String,Object> getMajorList(@RequestParam(value="subject1")String subject1,
                                            @RequestParam(value="subject2")String subject2,
                                            @RequestParam(value="subject3")String subject3,
-                                           @RequestParam(value="queryValue",required = false)String queryValue,
+                                           @RequestParam(value="queryId",required = false)String queryId,
+                                           @RequestParam(value="queryType",required = false)String queryType,
                                            @RequestParam(value="provinceCode",required = false)String provinceCode,
                                            @RequestParam(value="batch",required = false)String batch,
                                            @RequestParam(value="type",required = false)String type,
@@ -64,8 +65,13 @@ public class SelClassesController {
         map.put("subject3",subject3);
         map.put("offset",offset);
         map.put("rows",rows);
-        if(StringUtils.isNotBlank(queryValue)) {
-            map.put("queryValue", queryValue);
+        if(StringUtils.isNotBlank(queryType)) {
+            if(queryType.equals("1")) {
+                map.put("universityId", queryId);
+            }
+            if(queryType.equals("2")) {
+                map.put("majorId", queryId);
+            }
         }
         if(StringUtils.isNotBlank(provinceCode)) {
             map.put("provinceCode", provinceCode);
@@ -78,6 +84,14 @@ public class SelClassesController {
         }
         returnMap.put("majorList", iSelClassesService.selectMajorList(map));
         returnMap.put("count",iSelClassesService.selectMajorListCount(map));
+        return returnMap;
+    }
+
+    @RequestMapping("getUniversityOrMajorByWords")
+    @ResponseBody
+    public Map<String,Object> getUniversityOrMajorByWords(@RequestParam(value="queryValue")String queryValue){
+        Map<String,Object> returnMap=new HashMap<>();
+        returnMap.put("universityOrMajorList", iSelClassesService.selectUniversityOrMajorByWords(queryValue));
         return returnMap;
     }
 

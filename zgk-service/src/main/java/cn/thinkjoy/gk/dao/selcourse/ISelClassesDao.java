@@ -3,6 +3,7 @@ package cn.thinkjoy.gk.dao.selcourse;
 import cn.thinkjoy.gk.pojo.MajorBatchNumberPojo;
 import cn.thinkjoy.gk.pojo.MajorPojo;
 import cn.thinkjoy.gk.pojo.NumberPojo;
+import cn.thinkjoy.gk.pojo.UniversityOrMajorPojo;
 
 import java.util.List;
 import java.util.Map;
@@ -18,5 +19,7 @@ public interface ISelClassesDao {
     List<MajorPojo> selectMajorList(Map<String,Object> map);
 
     int selectMajorListCount(Map<String,Object> map);
+
+    List<UniversityOrMajorPojo> selectUniversityOrMajorByWords(String queryValue);
 
 }
