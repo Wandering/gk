@@ -61,5 +61,31 @@
         where zz.majorCode=#{majorCode}
     </select>
 
+    <!-- 根据课程名查询专业总数 -->
+    <select id="getMajorCountBySub" resultType="SelSubjectNumberPojo" parameterType="map">
+        select count(*) as number from zgk_zj_3in7 where selectSubject like CONCAT('%',#{subName},'%')
+    </select>
+
+    <!-- 查询专业薪资排名 -->
+    <select id="getMajorSalary" resultType="MajoredDto" parameterType="map">
+        SELECT
+            major_name AS NAME,
+            discipline_name AS subjectType,
+            salary AS salary,
+            (
+                CASE
+                WHEN major_type = 1 THEN
+                    "本科"
+                WHEN major_type = 2 THEN
+                    "专科"
+                END
+            ) AS degree
+        FROM
+            zgk_major_base
+        ORDER BY
+            salary DESC
+        LIMIT #{pageSize}
+    </select>
+
 </mapper>
 
