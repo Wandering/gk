@@ -190,9 +190,11 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         //获取排序方式
         String sortBy = getConfigValueString(province, majorType, ReportUtil.SCORE_SORT_BY);
         LOGGER.debug("排序方式:" + sortBy);
-        univ_exist_map.putAll(condition);
-        univ_exist_map.put("universitys",univ_ids);
-        univ_maps.add(univ_exist_map);
+        if(univ_exist_map.size()>0) {
+            univ_exist_map.putAll(condition);
+            univ_exist_map.put("universitys", univ_ids);
+            univ_maps.add(univ_exist_map);
+        }
         if(no_univ_ids.size()>0) {
             univ_no_exist_map.putAll(condition);
             univ_no_exist_map.put("universitys", no_univ_ids);
