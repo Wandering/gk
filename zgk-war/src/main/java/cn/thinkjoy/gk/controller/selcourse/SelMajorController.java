@@ -1,7 +1,10 @@
 package cn.thinkjoy.gk.controller.selcourse;
 
+import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.gk.dao.selcourse.ISelMajorDao;
 import cn.thinkjoy.gk.pojo.EduLevelNumberPojo;
+import cn.thinkjoy.gk.pojo.MajoredDto;
+import cn.thinkjoy.gk.pojo.SelSubjectNumberPojo;
 import cn.thinkjoy.gk.pojo.SelUniversityPojo;
 import cn.thinkjoy.gk.service.IDataDictService;
 import cn.thinkjoy.gk.service.selcourse.ISelMajorService;
@@ -10,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -62,5 +66,21 @@ public class SelMajorController {
         return returnMap;
     }
 
+    @ResponseBody
+    @ApiDesc(owner = "杨国荣",returnDesc = "统计各院校专业课程情况")
+    @RequestMapping(value = "/getMajorSubStatistics",method = RequestMethod.GET)
+    public List<SelSubjectNumberPojo> getMajorSubStatistics(){
+
+        return iSelMajorService.getMajorSubStatistics();
+    }
+
+    @ResponseBody
+    @ApiDesc(owner = "杨国荣",returnDesc = "查询各专业薪资排名")
+    @RequestMapping(value = "/getMajorSalary",method = RequestMethod.GET)
+    public List<MajoredDto> getMajorSalary(@RequestParam("pageNo") int pageNo,
+                                           @RequestParam("pageSize") int pageSize){
+
+        return iSelMajorService.getMajorSalary(pageNo,pageSize);
+    }
 
 }

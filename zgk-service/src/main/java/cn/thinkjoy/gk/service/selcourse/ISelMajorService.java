@@ -16,4 +16,20 @@ public interface ISelMajorService {
 
     List<MajorPojo> selectMajorList(Map<String, Object> map);
     Integer selectMajorListCount(Map<String, Object> map);
+
+    /**
+     * 统计各院校专业课程情况
+     *
+     * @return
+     */
+    List<SelSubjectNumberPojo> getMajorSubStatistics();
+
+    /**
+     * 查询各专业薪资排名
+     *
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    List<MajoredDto> getMajorSalary(int pageNo,int pageSize);
 }
