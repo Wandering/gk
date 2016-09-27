@@ -222,7 +222,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
 
                     resultMap.put("stuNum", stuNum);
                     String[] nums = String.valueOf(100 - ((Float.valueOf(proviceRank) / Float.valueOf(allStuNum)) * 100)).split("\\.");
-                    String proviceRankPro = Math.abs(Float.valueOf(nums[0] + "." + nums[1].substring(0, 2))) + "%";
+                    String proviceRankPro = Math.abs(Float.valueOf(nums[0] + "." + nums[1].substring(0, nums[1].length()>1?2:nums[1].length()))) + "%";
                     resultMap.put("proviceRankPro", proviceRankPro);
                     resultMap.put("proviceRank", proviceRank);
 
