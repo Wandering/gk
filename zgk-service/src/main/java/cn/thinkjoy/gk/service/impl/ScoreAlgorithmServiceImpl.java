@@ -391,7 +391,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         }
         Map<String,Object> map=null;
         List<Map<String,Object>> mapList=new ArrayList<>();
-        String[] enrollRandomStr =  getEnrollRandom(reportForecastView.getProvince(),ReportUtil.FORECAST_ENROLLING_RANDOM,reportForecastView.getCategorie());
+        String[] enrollRandomStr =  getEnrollRandom(reportForecastView.getProvince(),ReportUtil.SCORE_ENROLLING_RANDOM,reportForecastView.getCategorie());
         for(int i=0;i<universityInfoEnrollings.size();i++){
             map = new HashedMap();
             Integer enrollRate = getResultEnroll(
