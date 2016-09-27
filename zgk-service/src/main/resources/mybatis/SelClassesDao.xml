@@ -70,20 +70,21 @@
             or zz.selectSubject like CONCAT('%', #{subject2} , '%')
             or zz.selectSubject like CONCAT('%', #{subject3} , '%')
             or zz.selectCount=0)
-        <if test="queryValue != null">
-            and (zz.universityName like CONCAT('%', #{queryValue} , '%')
-                or zz.major like CONCAT('%', #{queryValue} , '%'))
+        <if test="universityId != null">
+            and zz.universityId = #{universityId}
+        </if>
+        <if test="majorId != null">
+            and zz.majorCode = #{majorId}
         </if>
         <if test="provinceCode != null">
-          and uu.provinceCode = #{provinceCode}
+            and uu.provinceCode = #{provinceCode}
         </if>
         <if test="batch != null">
-          and tmp.batch = #{batch}
+            and tmp.batch = #{batch}
         </if>
         <if test="type != null">
-          and uu.type = #{type}
+            and uu.type = #{type}
         </if>
-        order by tmp.universityId asc
     </select>
 
     <select id="selectUniversityOrMajorByWords" resultType="cn.thinkjoy.gk.pojo.UniversityOrMajorPojo" parameterType="java.lang.String">
