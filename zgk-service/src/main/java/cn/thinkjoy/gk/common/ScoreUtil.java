@@ -23,6 +23,10 @@ import java.util.*;
 public class ScoreUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ScoreUtil.class);
+    //录取率为1的类型
+    public static final Integer ENROLLRATE_TAG_1 = 1;
+    //录取率为2的类型
+    public static final Integer ENROLLRATE_TAG_2 = 2;
 
     private static int RANDOM_NUM = 10;
 

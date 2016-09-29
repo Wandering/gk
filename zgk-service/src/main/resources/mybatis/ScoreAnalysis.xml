@@ -455,9 +455,9 @@ deleteBySubjects
     <!--统计浙江院校数量-->
     <select id="countZJUniversity" resultType="java.lang.Integer">
         SELECT
-        count(*)
+        count(DISTINCT enrolling.id)
         FROM
-        (SELECT majorCode,universityId FROM zgk_university_major_enrolling WHERE areaId = #{areaId}
+        (SELECT id,majorCode,universityId FROM zgk_university_major_enrolling WHERE areaId = #{areaId}
         AND YEAR = #{year}
         AND averageScore - #{totalScore} &lt;= #{bc}
         AND #{totalScore} - averageScore &lt;= #{bc})
@@ -466,11 +466,13 @@ deleteBySubjects
         zgk_zj_3in7 3in7 ON 3in7.majorCode = enrolling.majorCode
         AND 3in7.universityId = enrolling.universityId
         <if test="subjectItem!=null">
-            AND INSTR(#{subjectItem},3in7.selectSubject)
-            <if test="subjectItem2!=null">
-            OR
-            3in7.selectSubject=#{subjectItem2}
-            </if>
+            AND (
+        <foreach collection="subjectItem" item="obj" separator="or">
+            3in7.selectSubject like CONCAT('%',#{obj},'%')
+        </foreach>
+            OR 3in7.selectCount = 0
+            )
+
         </if>
     </select>
     <!--推荐院校浙江-->
@@ -509,11 +511,13 @@ deleteBySubjects
         AND 3in7.universityId=enrolling.universityId
         AND 3in7.majorCode is not NULL
         <if test="subjectItem!=null">
-            AND INSTR(#{subjectItem},3in7.selectSubject)
-            <if test="subjectItem2!=null">
-                OR
-                3in7.selectSubject=#{subjectItem2}
-            </if>
+            AND (
+            <foreach collection="subjectItem" item="obj" separator="or">
+                3in7.selectSubject like CONCAT('%',#{obj},'%')
+            </foreach>
+            OR 3in7.selectCount = 0
+            )
+
         </if>
         LEFT JOIN zgk_university university ON university.id = enrolling.universityId
         where
@@ -523,7 +527,6 @@ deleteBySubjects
         and enrolling.majorCode is not NULL
         ORDER BY ABS(gapSchool) ASC
         limit 20) tb ORDER BY universityAreaId !=${areaId},isFavorite is null,rank is null,rank  ASC
-
     </select>
 
     <!--获取当前用户标签-->
@@ -659,16 +662,18 @@ deleteBySubjects
     <!--统计当前分数区间段中文理,批次是否有重复-->
     <select id="countMajorRepeat" resultType="java.lang.Integer">
         SELECT count(*) from(
-        SELECT enrolling.majorCode,enrolling.universityId from zgk_university_major_enrolling enrolling
+        SELECT enrolling.majorCode,enrolling.universityId
+        from zgk_university_major_enrolling enrolling
         INNER JOIN zgk_zj_3in7 as 3in7 ON 3in7.majorCode=enrolling.majorCode
         AND 3in7.universityId=enrolling.universityId
         AND 3in7.majorCode is not NULL
         <if test="subjectItem!=null">
-            AND INSTR(#{subjectItem},3in7.selectSubject)
-            <if test="subjectItem2!=null">
-                OR
-                3in7.selectSubject=#{subjectItem2}
-            </if>
+            AND (
+            <foreach collection="subjectItem" item="obj" separator="or">
+                3in7.selectSubject like CONCAT('%',#{obj},'%')
+            </foreach>
+            OR 3in7.selectCount = 0
+            )
         </if>
         WHERE
         1=1 and enrolling.year = #{year}
