@@ -388,6 +388,16 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         parmasMap.put("universityId", reportParm.getUid());
         parmasMap.put("precedence", reportParm.getPrecedence());
         parmasMap.put("isJoin", reportParm.isJoin());
+        parmasMap.put("year", reportParm.isJoin());
+        //如果是江苏省 加入选测等级
+        if (reportParm.isJoin()){
+            parmasMap.put("isJoin", reportParm.isJoin());
+            //选测等级
+            parmasMap.put("xcRanks", reportParm.getXcRanks());
+            //去关联哪一年的招生计划
+            parmasMap.put("year", reportParm.getYear());
+
+        }
         parmasMap.put("orderBy", reportParm.getOrderBy());
         parmasMap.put("rows", (reportParm.getLimit()==null?1:reportParm.getLimit()));
         List<UniversityInfoEnrolling> universityInfoEnrollings = iUniversityInfoDao.selectUniversityEnrolling(parmasMap);
