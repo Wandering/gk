@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.selcourse.ISelMajorDao">
+
+    <select id="selectSubjectNumber" resultType="cn.thinkjoy.gk.pojo.SelSubjectNumberPojo" parameterType="java.util.Map">
+        select subject,sum(number) as number from
+        (
+            select a.number,substring_index(substring_index(a.mSize,' ',b.AutoIncreID),' ',-1) subject
+            from
+            (
+                select selectSubject as mSize ,count(selectSubject) as number
+                from (select batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+                INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+                INNER join zgk_university uu on uu.id=tmp.universityId
+                where zz.majorCode=#{majorCode}
+                and zz.selectCount!=0
+                group by selectSubject
+            ) a
+            join
+            incre_table b
+            on b.AutoIncreID <![CDATA[<=]]> (length(a.mSize) - length(replace(a.mSize,' ',''))+1)
+            order by a.number
+        ) c
+        group by subject
+        order by number desc
+        limit 3
+    </select>
+
+    <select id="selectUniversityBatchNumber" resultType="cn.thinkjoy.gk.pojo.UniversityBatchNumberPojo" parameterType="java.util.Map">
+        select dd.name as batchName,count(uu.id) as univeristyNumber,
+        count(uu.id)/(
+            select count(uu.id)
+                from (select batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+                INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+                INNER join zgk_university uu on uu.id=tmp.universityId
+                left join zgk_data_dict dd on dd.type='BATCHTYPE' and dd.dictId=tmp.batch
+                where zz.majorCode=#{majorCode}
+            )
+        from (select batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+        INNER join zgk_university uu on uu.id=tmp.universityId
+		left join zgk_data_dict dd on dd.type='BATCHTYPE' and dd.dictId=tmp.batch
+        where zz.majorCode=#{majorCode}
+        group by dd.name;
+    </select>
+
+    <select id="selectMajorList" resultType="cn.thinkjoy.gk.pojo.MajorPojo" parameterType="java.util.Map">
+        select uu.rank as universityRank,uu.id as universityId,zz.majorCode as majorCode,uu.provinceCode,zz.universityName as universityName,zz.major as majorName,tmp.batch,tmp.planEnrolling as planNumber,zz.selectSubject as selectSubject
+        from (select batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+        INNER join zgk_university uu on uu.id=tmp.universityId
+        where zz.majorCode=#{majorCode}
+        ORDER BY IF (ISNULL(uu.rank),10000,uu.rank) asc
+        limit ${offset},${rows}
+    </select>
+    <select id="selectMajorListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(uu.id)
+        from (select batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+        INNER join zgk_university uu on uu.id=tmp.universityId
+        where zz.majorCode=#{majorCode}
+    </select>
+
+    <!-- 根据课程名查询专业总数 -->
+    <select id="getMajorCountBySub" resultType="SelSubjectNumberPojo" parameterType="map">
+        select count(*) as number from zgk_zj_3in7 where selectSubject like CONCAT('%',#{subName},'%')
+    </select>
+
+    <!-- 查询专业薪资排名 -->
+    <select id="getMajorSalary" resultType="MajoredDto" parameterType="map">
+        SELECT
+            major_name AS NAME,
+            discipline_name AS subjectType,
+            salary AS salary,
+            (
+                CASE
+                WHEN major_type = 1 THEN
+                    "本科"
+                WHEN major_type = 2 THEN
+                    "专科"
+                END
+            ) AS degree
+        FROM
+            zgk_major_base
+        ORDER BY
+            salary DESC
+        LIMIT #{index},#{pageSize}
+    </select>
+
+    <select id="selectMajorByWords" resultType="cn.thinkjoy.gk.pojo.UniversityOrMajorPojo" parameterType="java.lang.String">
+        select major_code as id,major_name as name from zgk_major_base bb where bb.major_name like CONCAT('%', #{queryValue} , '%')
+    </select>
+
+    <select id="selectMajorById" resultType="cn.thinkjoy.gk.pojo.SelMajorPojo" parameterType="java.lang.String">
+        select * from zgk_major_base bb where bb.major_code=#{majorId}
+    </select>
+
+</mapper>
+
