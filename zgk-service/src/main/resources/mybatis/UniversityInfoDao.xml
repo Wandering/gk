@@ -65,7 +65,7 @@
         <foreach collection="xcRanks" separator="," item="xcRank" open="xcRank in (" close=")             AND">
             #{xcRank}
         </foreach>
-        year = #{year}) jsplan
+        year = #{year} AND majorType = #{majorType}) jsplan
         ON bData.universityId=jsplan.puid
     </sql>
     <sql id="Search_Column_List">
@@ -181,6 +181,12 @@
             </if>
             <if test="scoreDiff!=null">
                 and scoreDiff=#{scoreDiff}
+            </if>
+            <if test="enrollRateStart!=null">
+                and enrollRate >=#{enrollRateStart}
+            </if>
+            <if test="enrollRateEnd!=null">
+                and enrollRate &lt;=#{enrollRateEnd}
             </if>
         </where>
         <if test="orderBy!=null">

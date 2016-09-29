@@ -109,7 +109,17 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService {
         condition.put("majorType", majorType);
         condition.put("areaId", areaId);
 
-        List<Map<String, Object>> universityInfoEnrollings = getEnrollingByScore(getReportView(batchs, score, province, majorType, userId, areaId));
+        Float enrollRateStart = 0.4F;
+        Float enrollRateEnd = 0.99F;
+        //取录取率=1的院校
+        List<Map<String, Object>> universityInfoEnrollings =
+                getEnrollingByScore(getReportView(batchs, score, province,
+                majorType, userId, areaId,enrollRateStart,enrollRateEnd));
+        //取录取率0.4~0.99的院校
+        List<Map<String, Object>> universityInfoEnrollings2 =
+                getEnrollingByScore(getReportView(batchs, score, province,
+                majorType, userId, areaId,enrollRateStart,enrollRateEnd));
+
         LOGGER.debug("=======放置参数 End========");
         if (universityInfoEnrollings != null && universityInfoEnrollings.size() > 0) {
             condition.put("universitys", universityInfoEnrollings);
@@ -702,7 +712,14 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService {
      * @param majorType
      * @return
      */
-    private ReportForecastView getReportView(String[] batchs, Integer score, String province, Integer majorType, long userId, long areaId) {
+    private ReportForecastView getReportView(String[] batchs,
+                                             Integer score,
+                                             String province,
+                                             Integer majorType,
+                                             long userId,
+                                             long areaId,
+                                             Float enrollRateStart,
+                                             Float enrollRateEnd) {
         LOGGER.debug("=======放置参数 Start========");
         ReportForecastView reportForecastView = new ReportForecastView();
         //这里批次用智能填报批次
@@ -718,8 +735,10 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService {
             reportForecastView.setXcRanks(getUserRank(userId, majorType));
             reportForecastView.setYear(Integer.valueOf(scoreUtil.getYear()));
             reportForecastView.setJoin(true);
-
         }
+        reportForecastView.setEnrollRateStart(enrollRateStart);
+        reportForecastView.setEnrollRateEnd(enrollRateEnd);
+
 
         //判断逻辑走向是不是位次法,如果是位次法,做分数转换位次
         if (isPre(reportForecastView, ReportUtil.SCORE_ENROLLING_LOGIC)) {

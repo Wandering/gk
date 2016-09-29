@@ -332,9 +332,11 @@ public class ScoreUtil {
     public Map<String, Object> getBatchLine2(long areaId, int majorType) {
         Map<String, Object> rtnMap = new HashedMap();
         Integer[][] batchs = getBatchByArea(areaId,majorType);
-        for (int i = 1;i<batchs.length;i++){
-            for (int j = 1;j<batchs.length;j++){
-                rtnMap.put(ConverNewBatch(i+""+j),batchs[i][j]);
+        for (int i = 0;i<batchs.length;i++){
+            for (int j = 0;j<batchs.length;j++){
+                if (batchs[i][j] != null) {
+                    rtnMap.put((i == 0 ? 1 : (((i == 1 || i == 2) ? i : i + 1) * 2)) + "" + (j == 0 ? "" : (j + 1)), batchs[i][j]);
+                }
             }
         }
         return rtnMap;
