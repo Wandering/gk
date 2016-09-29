@@ -38,11 +38,14 @@ public class AdviceCourseController {
      */
     @RequestMapping(value = "/majorBatchCompare", method = RequestMethod.GET)
     @ResponseBody
-    public Object majorBatchCompare(@RequestParam String[] subjects1, @RequestParam String[] subjects2) {
+    public Object majorBatchCompare(@RequestParam String subjects1, @RequestParam String subjects2) {
+
+        String[] s1 = subjects1.split(",");
+        String[] s2 = subjects2.split(",");
         MajorBatchCompareRtnPojo majorBatchCompareRtnPojo;
-        sort(subjects1, subjects2);
+        sort(s1, s2);
         //取出数据
-        majorBatchCompareRtnPojo = adviceCourseService.getMajorBatchCompare(subjects1, subjects2);
+        majorBatchCompareRtnPojo = adviceCourseService.getMajorBatchCompare(s1, s2);
         return majorBatchCompareRtnPojo;
     }
 
@@ -53,16 +56,17 @@ public class AdviceCourseController {
      */
     @RequestMapping(value = "/majorDiffCompare", method = RequestMethod.GET)
     @ResponseBody
-    public Object majorDiffCompare(@RequestParam String[] subjects1,
-                                   @RequestParam String[] subjects2,
+    public Object majorDiffCompare(@RequestParam String subjects1, @RequestParam String subjects2,
                                    @RequestParam(required = false) Integer batch,
                                    @RequestParam(required = false) Long areaId,
                                    @RequestParam(required = false) Integer universityType) {
-        sort(subjects1, subjects2);
+        String[] s1 = subjects1.split(",");
+        String[] s2 = subjects2.split(",");
+        sort(s1, s2);
         //取出数据
         List<MajorDiffCompareRtn> majorDiffCompareRtns = adviceCourseService.getMajorDiffCompare(
-                subjects1,
-                subjects2,
+                s1,
+                s2,
                 areaId,
                 batch,
                 universityType);
@@ -79,12 +83,13 @@ public class AdviceCourseController {
      */
     @RequestMapping(value = "/queryArea", method = RequestMethod.GET)
     @ResponseBody
-    public Object queryArea(@RequestParam String[] subjects1,
-                            @RequestParam String[] subjects2
+    public Object queryArea(@RequestParam String subjects1, @RequestParam String subjects2
     ) {
-        sort(subjects1, subjects2);
+        String[] s1 = subjects1.split(",");
+        String[] s2 = subjects2.split(",");
+        sort(s1, s2);
         //取出数据
-        List<Map<String, Object>> maps = adviceCourseService.queryArea(subjects1, subjects2);
+        List<Map<String, Object>> maps = adviceCourseService.queryArea(s1, s2);
 
         return maps;
     }
@@ -99,11 +104,12 @@ public class AdviceCourseController {
      */
     @RequestMapping(value = "/queryBatch", method = RequestMethod.GET)
     @ResponseBody
-    public Object queryBatch(@RequestParam String[] subjects1,
-                             @RequestParam String[] subjects2) {
-        sort(subjects1, subjects2);
+    public Object queryBatch(@RequestParam String subjects1, @RequestParam String subjects2) {
+        String[] s1 = subjects1.split(",");
+        String[] s2 = subjects2.split(",");
+        sort(s1, s2);
         //取出数据
-        List<Map<String, Object>> maps = adviceCourseService.queryBatch(subjects1, subjects2);
+        List<Map<String, Object>> maps = adviceCourseService.queryBatch(s1, s2);
 
         return maps;
     }
@@ -117,12 +123,12 @@ public class AdviceCourseController {
      */
     @RequestMapping(value = "/queryUnivType", method = RequestMethod.GET)
     @ResponseBody
-    public Object queryUnivType(@RequestParam String[] subjects1,
-                                @RequestParam String[] subjects2) {
-
-        sort(subjects1, subjects2);
+    public Object queryUnivType(@RequestParam String subjects1, @RequestParam String subjects2) {
+        String[] s1 = subjects1.split(",");
+        String[] s2 = subjects2.split(",");
+        sort(s1, s2);
         //取出数据
-        List<Map<String, Object>> maps = adviceCourseService.queryUnivType(subjects1, subjects2);
+        List<Map<String, Object>> maps = adviceCourseService.queryUnivType(s1, s2);
 
         return maps;
     }
