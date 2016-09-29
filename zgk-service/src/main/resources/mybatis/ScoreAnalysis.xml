@@ -619,11 +619,12 @@ deleteBySubjects
         3in7.majorCode=enrolling.majorCode AND 3in7.universityId=enrolling.universityId
         and 3in7.majorCode is not null
         <if test="subjectItem!=null">
-           AND INSTR(#{subjectItem},3in7.selectSubject)
-            <if test="subjectItem2!=null">
-                OR
-                3in7.selectSubject=#{subjectItem2}
-            </if>
+            AND (
+            <foreach collection="subjectItem" item="obj" separator="or">
+                3in7.selectSubject like CONCAT('%',#{obj},'%')
+            </foreach>
+            OR 3in7.selectCount = 0
+            )
         </if>
         where enrolling.universityId=#{universityId}
         and enrolling.areaId = #{areaId} and enrolling.year = #{year} and enrolling.majorCode is not null
