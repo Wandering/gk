@@ -452,6 +452,7 @@ deleteBySubjects
         and config IN (<foreach collection="configs" separator="," item="item">#{item}</foreach>)
     </select>
 
+
     <!--统计浙江院校数量-->
     <select id="countZJUniversity" resultType="java.lang.Integer">
         SELECT
