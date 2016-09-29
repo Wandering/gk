@@ -60,4 +60,14 @@ public class SelMajorServiceImpl implements ISelMajorService {
     public List<MajoredDto> getMajorSalary(int pageNo,int pageSize) {
         return iSelMajorDao.getMajorSalary((pageNo-1)*pageSize,pageSize);
     }
+
+    @Override
+    public List<UniversityOrMajorPojo> selectMajorByWords(String queryValue) {
+        return iSelMajorDao.selectMajorByWords(queryValue);
+    }
+
+    @Override
+    public SelMajorPojo selectMajorById(String majorId) {
+        return iSelMajorDao.selectMajorById(majorId);
+    }
 }

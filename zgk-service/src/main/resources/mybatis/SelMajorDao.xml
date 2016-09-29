@@ -88,5 +88,13 @@
         LIMIT #{index},#{pageSize}
     </select>
 
+    <select id="selectMajorByWords" resultType="cn.thinkjoy.gk.pojo.UniversityOrMajorPojo" parameterType="java.lang.String">
+        select major_code as id,major_name as name from zgk_major_base bb where bb.major_name like CONCAT('%', #{queryValue} , '%')
+    </select>
+
+    <select id="selectMajorById" resultType="cn.thinkjoy.gk.pojo.SelMajorPojo" parameterType="java.lang.String">
+        select * from zgk_major_base bb where bb.major_code=#{majorId}
+    </select>
+
 </mapper>
 

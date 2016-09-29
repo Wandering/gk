@@ -32,4 +32,8 @@ public interface ISelMajorService {
      * @return
      */
     List<MajoredDto> getMajorSalary(int pageNo,int pageSize);
+
+    List<UniversityOrMajorPojo> selectMajorByWords(String queryValue);
+
+    SelMajorPojo selectMajorById(String majorId);
 }

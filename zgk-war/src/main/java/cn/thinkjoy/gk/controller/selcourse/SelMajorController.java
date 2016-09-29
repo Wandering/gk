@@ -2,10 +2,7 @@ package cn.thinkjoy.gk.controller.selcourse;
 
 import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.gk.dao.selcourse.ISelMajorDao;
-import cn.thinkjoy.gk.pojo.EduLevelNumberPojo;
-import cn.thinkjoy.gk.pojo.MajoredDto;
-import cn.thinkjoy.gk.pojo.SelSubjectNumberPojo;
-import cn.thinkjoy.gk.pojo.SelUniversityPojo;
+import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.service.IDataDictService;
 import cn.thinkjoy.gk.service.selcourse.ISelMajorService;
 import cn.thinkjoy.gk.service.selcourse.ISelUniversityService;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,6 +61,41 @@ public class SelMajorController {
         map.put("rows",rows);
         returnMap.put("majorList", iSelMajorService.selectMajorList(map));
         returnMap.put("count",iSelMajorService.selectMajorListCount(map));
+        return returnMap;
+    }
+
+
+    @RequestMapping("getMajorByWords")
+    @ResponseBody
+    public Map<String,Object> getMajorByWords(@RequestParam(value="queryValue")String queryValue){
+        Map<String,Object> returnMap=new HashMap<>();
+        returnMap.put("majorList", iSelMajorService.selectMajorByWords(queryValue));
+        return returnMap;
+    }
+
+    // TODO 数据缺失，暂时使用静态数据
+    @RequestMapping("getMajorById")
+    @ResponseBody
+    public Map<String,Object> getMajorById(@RequestParam(value="majorId")String majorId){
+        Map<String,Object> returnMap=new HashMap<>();
+
+        SelMajorPojo selMajorPojo=new SelMajorPojo();
+        selMajorPojo.setMajorId(majorId);
+        selMajorPojo.setMajorName("车辆工程");
+        selMajorPojo.setFiveSalary("￥2343");
+        selMajorPojo.setJobRank("3");
+        List<SexPercentPojo> sexPercentList=new ArrayList<>();
+        SexPercentPojo sexPercentPojo=new SexPercentPojo();
+        sexPercentPojo.setSexName("男");
+        sexPercentPojo.setPercent("80%");
+        sexPercentList.add(sexPercentPojo);
+        SexPercentPojo sexPercentPojo2=new SexPercentPojo();
+        sexPercentPojo2.setSexName("女");
+        sexPercentPojo2.setPercent("20%");
+        sexPercentList.add(sexPercentPojo2);
+        selMajorPojo.setSexPercent(sexPercentList);
+        returnMap.put("major", selMajorPojo);
+//        returnMap.put("major", iSelMajorService.selectMajorById(majorId));
         return returnMap;
     }
 
