@@ -30,20 +30,21 @@
         university.name as universityName,
         university.areaid as areaId,
         plan.batch as batch,
-        (SELECT name from zgk_data_dict where type = 'BATCHTYPE2' and dictId =plan.batch) as batchName,
+        dict.name as batchName,
         plan.majorName as majorName,
         3in7.majorCode as majorCode,
         (university.areaid=#{currAreaId}) as isCurrArea,
         university.rank as rank
-        from zgk_zj_3in7 3in7
-        INNER JOIN zgk_university university
+        from
+        (SELECT majorName,areaId,year,universityId,majorCode,batch
+        FROM zgk_university_major_enrolling_plan WHERE areaId=#{currAreaId} AND year=#{year}) plan
+        INNER JOIN zgk_zj_3in7 3in7 ON plan.universityId = 3in7.universityId
+        AND plan.majorCode = 3in7.majorCode
+        INNER JOIN
+        zgk_university university
         ON 3in7.universityId = university.id
         and 3in7.eduLevel = university.educationLevel
-        INNER JOIN
-        zgk_university_major_enrolling_plan plan
-        ON plan.areaId=#{currAreaId} AND plan.`year`=#{year}
-        AND plan.universityId = 3in7.universityId
-        AND plan.majorCode = 3in7.majorCode
+        LEFT JOIN zgk_data_dict dict ON dict.type = 'BATCHTYPE2' and dict.dictId =plan.batch
         where 3in7.selectCount>0
         AND 3in7.universityId is not null
         <if test="subjects">
