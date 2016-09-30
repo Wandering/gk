@@ -183,7 +183,6 @@ public class AdviceCourseController {
 
             majorDiffCompareRtns = JSON.parseObject(redisRepository.get(key).toString(),List.class);
         }else {
-
             majorDiffCompareRtns = adviceCourseService.getMajorDiffCompare(
                     s1,
                     s2,
