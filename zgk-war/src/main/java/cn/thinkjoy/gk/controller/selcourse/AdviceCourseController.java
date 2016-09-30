@@ -178,7 +178,6 @@ public class AdviceCourseController {
 
         String key = getRedisKey(s1,s2,areaId,batch,universityType);
 
-
         if(redisRepository.exists(key)){
 
             majorDiffCompareRtns = JSON.parseObject(redisRepository.get(key).toString(),List.class);
