@@ -1,6 +1,5 @@
 package cn.thinkjoy.gk.service.impl;
 
-import cn.thinkjoy.gk.common.SortMajorDiffForList;
 import cn.thinkjoy.gk.dao.IAdviceCourseDAO;
 import cn.thinkjoy.gk.domain.MajorBatchCompareRtn;
 import cn.thinkjoy.gk.domain.MajorDiffCompareRtn;
@@ -244,10 +243,13 @@ public class AdviceCourseServiceImpl implements IAdviceCourseService {
      * @param universityInfos2
      */
     private void removeRepeat(List<Map<String, Object>> universityInfos1, List<Map<String, Object>> universityInfos2) {
-        List<Map<String, Object>> list1 = new ArrayList<>();
-        list1.addAll(universityInfos2);
+        List<Map<String, Object>> list1 = new ArrayList(Arrays.asList(new Object[universityInfos1.size()]));
+        Collections.copy(list1,universityInfos1);
+        //取12中相同的元素放入list1中
         list1.retainAll(universityInfos2);
+        //删除1中有的
         universityInfos1.removeAll(list1);
+        //删除2中有的
         universityInfos2.removeAll(list1);
     }
 
