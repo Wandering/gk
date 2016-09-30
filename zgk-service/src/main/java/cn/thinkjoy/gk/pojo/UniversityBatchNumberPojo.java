@@ -9,7 +9,7 @@ public class UniversityBatchNumberPojo implements Serializable {
 
     private String batchName;
 
-    private int univeristyNumber;
+    private int universityNumber;
 
     private String percent;
 
@@ -21,12 +21,12 @@ public class UniversityBatchNumberPojo implements Serializable {
         this.batchName = batchName;
     }
 
-    public int getUniveristyNumber() {
-        return univeristyNumber;
+    public int getUniversityNumber() {
+        return universityNumber;
     }
 
-    public void setUniveristyNumber(int univeristyNumber) {
-        this.univeristyNumber = univeristyNumber;
+    public void setUniversityNumber(int universityNumber) {
+        this.universityNumber = universityNumber;
     }
 
     public String getPercent() {
