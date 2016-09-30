@@ -216,7 +216,7 @@ public class AdviceCourseController {
 
         int pagesize=0;
         if(mainData!=null) {
-            pagesize = mainData.size();
+            pagesize = bizData4Page.getRows().size();
         }
 
         bizData4Page.setPagesize(pagesize);
