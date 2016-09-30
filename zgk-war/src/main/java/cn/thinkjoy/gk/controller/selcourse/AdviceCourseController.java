@@ -171,7 +171,7 @@ public class AdviceCourseController {
      * @return
      */
     private BizData4Page  getMajorDiffCompareRtns(String[] s1,String[] s2,
-                                     long areaId,Integer batch,
+                                     Long areaId,Integer batch,
                                      Integer universityType,Integer page,Integer rows){
 
         List<MajorDiffCompareRtn> majorDiffCompareRtns = null;
@@ -225,7 +225,7 @@ public class AdviceCourseController {
         return bizData4Page;
     }
 
-    private String getRedisKey(String[] s1,String[] s2,long areaId,Integer batch,Integer universityType){
+    private String getRedisKey(String[] s1,String[] s2,Long areaId,Integer batch,Integer universityType){
         String keyString = "";
         for (String s: s1){
             keyString+=s;
@@ -233,9 +233,9 @@ public class AdviceCourseController {
         for (String s: s2){
             keyString+=s;
         }
-        keyString+=batch;
-        keyString+=areaId;
-        keyString+=universityType;
+        if (batch!=null)keyString+=batch;
+        if (areaId!=null)keyString+=areaId;
+        if (universityType!=null)keyString+=universityType;
         return MD5Util.md5String(keyString);
 
     }

@@ -136,6 +136,11 @@ public class AdviceCourseServiceImpl implements IAdviceCourseService {
         //对院校列表进行去重
         removeRepeat(universityInfo1, universityInfo2);
 
+//        for (){
+//
+//        }
+
+
         for (int i = 0; i < universityInfo1.size(); i++) {
             Map<String, Object> map1 = universityInfo1.get(i);
             //这里获取列表1的universityId
@@ -265,8 +270,8 @@ public class AdviceCourseServiceImpl implements IAdviceCourseService {
     private void removeRepeat(List<Map<String, Object>> universityInfos1, List<Map<String, Object>> universityInfos2) {
         List<Map<String, Object>> list1 = new ArrayList<>();
         List<Map<String, Object>> list2 = new ArrayList<>();
-        list1.addAll(universityInfos1);
-        list2.addAll(universityInfos2);
+        Collections.copy(list1,universityInfos1);
+        Collections.copy(list2,universityInfos2);
         universityInfos1.removeAll(list2);
         universityInfos2.removeAll(list1);
     }
