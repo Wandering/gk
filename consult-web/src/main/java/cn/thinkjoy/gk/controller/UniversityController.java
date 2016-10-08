@@ -861,4 +861,37 @@ public class UniversityController extends ZGKBaseController {
     public Map<String,String> getUniversityInfoByKeywords(@RequestParam(value = "keywords") String keywords) {
         return universityExService.getUniversityInfoByKeywords(keywords);
     }
+
+    @ResponseBody
+    @ApiDesc(value = "根据用户省份初始化查询条件",owner = "杨国荣")
+    @RequestMapping(value = "/initSerachCondition", method = RequestMethod.GET)
+    public Map<String,List<String>> initSerachCondition(@RequestParam(value = "proviceId") long proviceId) {
+        return universityExService.initSerachCondition(proviceId);
+    }
+
+    @ResponseBody
+    @ApiDesc(value = "根据条件查询院校招生信息",owner = "杨国荣")
+    @RequestMapping(value = "searchSpecialMajorInfo", method = RequestMethod.GET)
+    public List<SpecialMajorDto> searchSpecialMajorInfo(@RequestParam(value = "schoolName") String schoolName,
+                                                    @RequestParam(value = "year") String year,
+                                                    @RequestParam(value = "batch") String batch,
+                                                    @RequestParam(value = "majorType") Integer majorType,
+                                                    @RequestParam(value = "userProviceId") Long userProviceId,
+                                                    @RequestParam(value = "schoolProviceId") Long schoolProviceId,
+                                                    @RequestParam(value = "pageNo") Integer pageNo,
+                                                    @RequestParam(value = "pageSize") Integer pageSize) {
+
+        List<SpecialMajorDto> dtos = universityExService.searchSpecialMajorInfo(
+                schoolName,
+                year,
+                batch,
+                majorType,
+                userProviceId,
+                schoolProviceId,
+                pageNo,
+                pageSize
+        );
+
+        return dtos;
+    }
 }
