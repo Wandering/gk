@@ -156,6 +156,9 @@ public class AdviceCourseServiceImpl implements IAdviceCourseService {
 
             Long universityId = map.get("universityId") == null ? null : Long.valueOf(map.get("universityId").toString());
 
+            //如果universityId是空,说明数据是错误数据
+            if (universityId==null) continue;
+
             boolean universityExistflag = false;
 
             //判断是否存在majorDiffCompareRtn对象 存在的话在列表中返回,不存在的话创建一个返回
@@ -169,14 +172,7 @@ public class AdviceCourseServiceImpl implements IAdviceCourseService {
             LOGGER.info("当前拼装学校:" + map.get("universityName"));
 
             //这个对象用来保存院校的专业信息LIST
-            List<UniversityMajorInfo> universityMajorInfos;
-
-            //判断在对象majorDiffCompareRtn中是否有universityMajorInfos列表,如果存在就讲原来的取出来,如果不存在,就NEW一个
-            if (majorDiffCompareRtn.getUniversityMajorInfos1() == null) {
-                universityMajorInfos = new ArrayList<>();
-            } else {
-                universityMajorInfos = majorDiffCompareRtn.getUniversityMajorInfos1();
-            }
+            List<UniversityMajorInfo> universityMajorInfos =getUniversityMajorInfos(majorDiffCompareRtn,type);
 
             //将专业设置委托给setMajorDiffCompareRtn方法
             setMajorDiffCompareRtn(universityMajorInfos, map);
@@ -273,6 +269,30 @@ public class AdviceCourseServiceImpl implements IAdviceCourseService {
         map.put("type", universityType);
         List<Map<String, Object>> list = adviceCourseDAO.getUniversityDiffByCourse(map);
         return list;
+    }
+
+
+    /**
+     * 获取UniversityMajorInfo对象信息
+     * @return
+     */
+    private List<UniversityMajorInfo> getUniversityMajorInfos(MajorDiffCompareRtn majorDiffCompareRtn,Integer type){
+        //这个对象用来保存院校的专业信息LIST
+        List<UniversityMajorInfo> universityMajorInfos;
+
+        if (type == LIST_1)
+            universityMajorInfos=majorDiffCompareRtn.getUniversityMajorInfos1();
+        if (type == LIST_2)
+            universityMajorInfos=majorDiffCompareRtn.getUniversityMajorInfos2();
+        else
+            universityMajorInfos=null;
+
+        //判断在对象majorDiffCompareRtn中是否有universityMajorInfos列表,如果存在就讲原来的取出来,如果不存在,就NEW一个
+        if (universityMajorInfos == null) {
+            universityMajorInfos = new ArrayList<>();
+        }
+        return universityMajorInfos;
+
     }
 
 }
