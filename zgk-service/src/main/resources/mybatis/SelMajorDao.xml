@@ -69,6 +69,15 @@
         INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
         INNER join zgk_university uu on uu.id=tmp.universityId
         where zz.majorCode=#{majorCode}
+        <if test="province!=null">
+            and uu.areaid=#{province}
+        </if>
+        <if test="batch!=null">
+            and tmp.batch=#{batch}
+        </if>
+        <if test="subName!=null">
+            and zz.selectSubject like CONCAT('%',#{subName},'%')
+        </if>
     </select>
 
     <!-- 根据课程名查询专业总数 -->
