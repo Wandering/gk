@@ -52,11 +52,23 @@ public class SelMajorController {
     @RequestMapping("getMajorList")
     @ResponseBody
     public Map<String,Object> getMajorList(@RequestParam("majorCode")String majorCode,
+                                           @RequestParam(value = "province",required = false)String province,
+                                           @RequestParam(value = "batch",required = false)String batch,
+                                           @RequestParam(value = "subName",required = false)String subName,
                                            @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
                                            @RequestParam(value="rows",required = false,defaultValue = "10")String rows){
         Map<String,Object> returnMap=new HashMap<>();
         Map<String,Object> map=new HashMap<>();
         map.put("majorCode",majorCode);
+        if(StringUtils.isNotBlank(province)) {
+            map.put("province",province);
+        }
+        if(StringUtils.isNotBlank(batch)) {
+            map.put("batch",batch);
+        }
+        if(StringUtils.isNotBlank(subName)) {
+            map.put("subName",subName);
+        }
         map.put("offset",offset);
         map.put("rows",rows);
         returnMap.put("majorList", iSelMajorService.selectMajorList(map));
