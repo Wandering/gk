@@ -58,18 +58,18 @@ public interface IUniversityExDAO{
     /**
      * 根据省份ID查询录取年份集合
      *
-     * @param proviceId
+     * @param provinceId
      * @return
      */
-    List<String> getYearsByProviceId(@Param("proviceId") long proviceId);
+    List<String> getYearsByProvinceId(@Param("provinceId") long provinceId);
 
     /**
      * 根据省份ID查询录取批次集合
      *
-     * @param proviceId
+     * @param provinceId
      * @return
      */
-    List<String> getBatchsByProviceId(@Param("proviceId") long proviceId);
+    List<String> getBatchsByProvinceId(@Param("provinceId") long provinceId);
 
     /**
      * 根据条件查询院校招生信息
@@ -78,8 +78,8 @@ public interface IUniversityExDAO{
      * @param year
      * @param batch
      * @param majorType
-     * @param userProviceId
-     * @param schoolProviceId
+     * @param userProvinceId
+     * @param schoolProvinceId
      * @param index
      * @param pageSize
      * @return
@@ -89,8 +89,8 @@ public interface IUniversityExDAO{
             @Param("year") String year,
             @Param("batch") String batch,
             @Param("majorType") Integer majorType,
-            @Param("userProviceId") Long userProviceId,
-            @Param("schoolProviceId") Long schoolProviceId,
+            @Param("userProvinceId") Long userProvinceId,
+            @Param("schoolProvinceId") Long schoolProvinceId,
             @Param("index") Integer index,
             @Param("pageSize") Integer pageSize
     );

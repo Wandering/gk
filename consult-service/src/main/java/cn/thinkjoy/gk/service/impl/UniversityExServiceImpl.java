@@ -136,23 +136,23 @@ public class UniversityExServiceImpl implements IUniversityExService{
     }
 
     @Override
-    public Map<String, List<String>> initSerachCondition(long proviceId) {
+    public Map<String, List<String>> initSerachCondition(long provinceId) {
 
         Map<String, List<String>> returnMap = Maps.newHashMap();
-        returnMap.put("years",universityExDAO.getYearsByProviceId(proviceId));
-        returnMap.put("batchs",universityExDAO.getBatchsByProviceId(proviceId));
+        returnMap.put("years",universityExDAO.getYearsByProvinceId(provinceId));
+        returnMap.put("batchs",universityExDAO.getBatchsByProvinceId(provinceId));
         return returnMap;
     }
 
     @Override
-    public List<SpecialMajorDto> searchSpecialMajorInfo(String schoolName, String year, String batch, Integer majorType, Long userProviceId, Long schoolProviceId, Integer pageNo, Integer pageSize) {
+    public List<SpecialMajorDto> searchSpecialMajorInfo(String schoolName, String year, String batch, Integer majorType, Long userProvinceId, Long schoolProvinceId, Integer pageNo, Integer pageSize) {
         List<SpecialMajorDto> dtos = universityExDAO.searchSpecialMajorInfo(
                 schoolName,
                 year,
                 batch,
                 majorType,
-                userProviceId,
-                schoolProviceId,
+                userProvinceId,
+                schoolProvinceId,
                 (pageNo-1)*pageSize,
                 pageSize
         );

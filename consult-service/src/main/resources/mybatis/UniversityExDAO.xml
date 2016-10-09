@@ -558,25 +558,25 @@
     </select>
 
     <!-- 根据省份ID查询录取年份集合 -->
-    <select id="getYearsByProviceId" parameterType="long" resultType="String">
+    <select id="getYearsByProvinceId" parameterType="long" resultType="String">
         SELECT
             `year`
         FROM
             zgk_university_special_enrolling
         WHERE
-            areaId = #{proviceId}
+            areaId = #{provinceId}
         GROUP BY
             `year`
     </select>
 
     <!-- 根据省份ID查询录取批次集合 -->
-    <select id="getBatchsByProviceId" parameterType="long" resultType="String">
+    <select id="getBatchsByProvinceId" parameterType="long" resultType="String">
         SELECT
             batch
         FROM
             zgk_university_special_enrolling
         WHERE
-            areaId = #{proviceId}
+            areaId = #{provinceId}
         GROUP BY
             batch
         ORDER BY batch desc
@@ -601,8 +601,8 @@
             zgk_university t1
         WHERE
             t0.universityId = t1.id
-            <if test="userProviceId != null">
-                AND t0.areaId = #{userProviceId}
+            <if test="userProvinceId != null">
+                AND t0.areaId = #{userProvinceId}
             </if>
             <if test="schoolName != null and schoolName != ''">
                 AND t0.universityName LIKE CONCAT('%',#{schoolName},'%')
@@ -616,8 +616,8 @@
             <if test="majorType != null">
                 AND t0.majorType = #{majorType}
             </if>
-            <if test="schoolProviceId != null">
-                AND t1.provinceCode = #{schoolProviceId}
+            <if test="schoolProvinceId != null">
+                AND t1.provinceCode = #{schoolProvinceId}
             </if>
         LIMIT #{index},#{pageSize}
     </select>
