@@ -588,7 +588,7 @@
             t0.universityId,
             t0.universityName,
             t0.majorType,
-            t0.majorCatagory,
+            t0.majorSpec as majorCatagory,
             t0.planEnrollingNumber,
             t0.realEnrollingNumber,
             t0.batch,
