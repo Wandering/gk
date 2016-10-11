@@ -25,6 +25,7 @@ public class Trine extends BaseDomain {
     private String property;
     private String lengthOfSchooling;
     private String universityIntro;
+    private String planEnrollingNumber;
     private String areaId;
     private String year;
     private String extInfo;
@@ -123,6 +124,14 @@ public class Trine extends BaseDomain {
 
 	public void setExtInfo(String extInfo) {
 		this.extInfo = extInfo;
+	}
+
+	public String getPlanEnrollingNumber() {
+		return planEnrollingNumber;
+	}
+
+	public void setPlanEnrollingNumber(String planEnrollingNumber) {
+		this.planEnrollingNumber = planEnrollingNumber;
 	}
 }
 
