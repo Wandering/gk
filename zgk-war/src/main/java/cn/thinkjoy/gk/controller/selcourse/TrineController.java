@@ -11,6 +11,7 @@ import cn.thinkjoy.gk.service.IAdviceCourseService;
 import cn.thinkjoy.gk.service.ITrineService;
 import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.zgk.common.MD5Util;
+import cn.thinkjoy.zgk.common.StringUtil;
 import cn.thinkjoy.zgk.domain.BizData4Page;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.collections.map.HashedMap;
@@ -52,6 +53,15 @@ public class TrineController extends BaseCommonController{
                                    @RequestParam(required = false) String universityName,
                                    @RequestParam(required = false) Integer year) {
 
+        if (StringUtil.isNulOrBlank(majorType)){
+            majorType=null;
+        }
+        if (StringUtil.isNulOrBlank(batch)){
+            batch=null;
+        }
+        if (StringUtil.isNulOrBlank(universityName)){
+            universityName=null;
+        }
 
         Map<String,Object> conditions = new HashedMap();
         conditions.put("areaId",areaId);
