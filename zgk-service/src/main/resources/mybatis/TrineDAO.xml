@@ -93,7 +93,7 @@
     </select>
 
     <!--三位一体批次类型-->
-    <select id="queryBatch" resultType="java.lang.String">
+    <select id="queryBatchName" resultType="java.lang.String">
         SELECT
         batchName
         from zgk_university_trine trine
