@@ -48,12 +48,16 @@ public class TrineController extends BaseCommonController{
                                    @RequestParam(defaultValue = "10") Integer rows,
                                    @RequestParam(required = false) Long areaId,
                                    @RequestParam(required = false) String majorType,
+                                   @RequestParam(required = false) String batch,
+                                   @RequestParam(required = false) String universityName,
                                    @RequestParam(required = false) Integer year) {
 
 
         Map<String,Object> conditions = new HashedMap();
         conditions.put("areaId",areaId);
         conditions.put("majorType",majorType);
+        conditions.put("batch",batch);
+        conditions.put("universityName",universityName);
         conditions.put("year",year);
         conditions.put("offset",(page-1)*rows);
         conditions.put("rows",rows);
@@ -100,4 +104,14 @@ public class TrineController extends BaseCommonController{
         return trineService.queryMajorType();
     }
 
+
+    /**
+     * 三位一体自主招生查询批次
+     * @return
+     */
+    @RequestMapping(value = "/getBatch", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getBatch(){
+        return trineService.queryBatchName();
+    }
 }

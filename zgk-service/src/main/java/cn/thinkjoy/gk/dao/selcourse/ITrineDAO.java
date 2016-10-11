@@ -22,8 +22,23 @@ public interface ITrineDAO {
     int count(Map<String,Object> conditions);
 
 
+    /**
+     * 查询年份
+     * @return
+     */
     List queryYear();
 
 
+    /**
+     * 查询专业类别
+     * @return
+     */
     List queryMajorType();
+
+
+    /**
+     * 查询批次名称
+     * @return
+     */
+    List queryBatchName();
 }

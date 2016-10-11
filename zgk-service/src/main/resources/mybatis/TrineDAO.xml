@@ -36,6 +36,12 @@
             <if test="year!=null">
                 and trine.year = #{year}
             </if>
+            <if test="batch!=null">
+                and trine.batchName = #{batch}
+            </if>
+            <if test="universityName!=null">
+                and trine.universityName LIKE concat('%',#{universityName},'%')
+            </if>
         </where>
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -60,6 +66,12 @@
             <if test="year!=null">
                 and trine.year = #{year}
             </if>
+            <if test="batch!=null">
+                and trine.batchName = #{batch}
+            </if>
+            <if test="universityName!=null">
+                and trine.universityName LIKE concat('%',#{universityName},'%')
+            </if>
         </where>
     </select>
 
@@ -78,5 +90,13 @@
         majorType
         from zgk_university_trine trine
         GROUP  BY  majorType
+    </select>
+
+    <!--三位一体批次类型-->
+    <select id="queryBatch" resultType="java.lang.String">
+        SELECT
+        batchName
+        from zgk_university_trine trine
+        GROUP  BY  batchName
     </select>
 </mapper>

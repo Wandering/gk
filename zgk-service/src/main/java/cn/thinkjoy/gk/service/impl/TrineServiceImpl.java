@@ -47,4 +47,9 @@ public class TrineServiceImpl implements ITrineService{
     public List queryMajorType() {
         return trineDAO.queryMajorType();
     }
+
+    @Override
+    public List queryBatchName() {
+        return trineDAO.queryBatchName();
+    }
 }

@@ -26,4 +26,6 @@ public interface ITrineService {
 
 
     List queryMajorType();
+
+    List queryBatchName();
 }
