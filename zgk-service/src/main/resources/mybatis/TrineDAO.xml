@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.selcourse.ITrineDAO">
+
+    <sql id="BASE_INFO">
+      trine.id,
+      trine.universityName,
+      trine.universityId,
+      trine.majorCode,
+      trine.majorName,
+      trine.majorType,
+      trine.batchName,
+      trine.property,
+      trine.planEnrollingNumber,
+      trine.schoolFee,
+      trine.lengthOfSchooling,
+      trine.universityIntro,
+      trine.areaId,
+      trine.year,
+      trine.extInfo
+    </sql>
+
+    <!-- 三位一体按分页查询接口 -->
+    <select id="queryPage" resultType="cn.thinkjoy.gk.domain.Trine">
+        SELECT
+        <include refid="BASE_INFO" />
+       from zgk_university_trine trine
+        <where>
+            <if test="areaId!=null">
+                and trine.areaId = #{areaId}
+            </if>
+            <if test="majorType!=null">
+                and trine.majorType = #{majorType}
+            </if>
+            <if test="year!=null">
+                and trine.year = #{year}
+            </if>
+        </where>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <!--三位一体统计数量-->
+    <select id="count" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        from zgk_university_trine trine
+        <where>
+            <if test="areaId!=null">
+                and trine.areaId = #{areaId}
+            </if>
+            <if test="majorType!=null">
+                and trine.majorType = #{majorType}
+            </if>
+            <if test="year!=null">
+                and trine.year = #{year}
+            </if>
+        </where>
+    </select>
+
+
+    <!--三位一体统计年份-->
+    <select id="queryYear" resultType="java.lang.Integer">
+        SELECT
+        year
+        from zgk_university_trine trine
+        GROUP  BY  year
+    </select>
+
+    <!--三位一体专业类别-->
+    <select id="queryMajorType" resultType="java.lang.String">
+        SELECT
+        majorType
+        from zgk_university_trine trine
+        GROUP  BY  majorType
+    </select>
+</mapper>
