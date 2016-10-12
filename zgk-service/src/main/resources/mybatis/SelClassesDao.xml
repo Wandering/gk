@@ -3,6 +3,25 @@
 
 <mapper namespace="cn.thinkjoy.gk.dao.selcourse.ISelClassesDao">
 
+    <!--加入收藏表,当isJoin=true的时候加入本段sql,左关联-->
+    <sql id="MAJOR_JOIN_LEFT">
+        LEFT JOIN zgk_user_collection_3in7 collection
+        on
+        collection.universityId = zz.universityId
+        and collection.majorCode = zz.majorCode
+        and tmp.batch=collection.batch
+        AND collection.userId = #{userId}
+    </sql>
+    <!--加入收藏表,当isJoin=true的时候加入本段sql,必然关联-->
+    <sql id="MAJOR_JOIN_INNER">
+        INNER JOIN zgk_user_collection_3in7 collection
+        on
+        collection.universityId = zz.universityId
+        and collection.majorCode = zz.majorCode
+        and tmp.batch=collection.batch
+        AND collection.userId = #{userId}
+    </sql>
+
     <select id="selectSchoolAndMajorNumberBySubjects" resultType="cn.thinkjoy.gk.pojo.NumberPojo" parameterType="java.util.Map">
         select count(DISTINCT universityName) as schoolNumber,count(*) as majorNumber
         from (select batch,universityId,majorCode from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
@@ -35,9 +54,23 @@
 
     <select id="selectMajorList" resultType="cn.thinkjoy.gk.pojo.MajorPojo" parameterType="java.util.Map">
         select uu.id as universityId,zz.majorCode as majorCode,uu.provinceCode,tmp.batch as batch,zz.universityName as universityName,zz.major as majorName,tmp.batch,tmp.planEnrolling as planNumber,zz.selectSubject as selectSubject
+        <if test="isLeftJoin==true">
+            <!--以时间作为评定标准,如果时间存在说明收藏,如果时间不存在说明没有收藏-->
+            ,IF(collection.createDate,1,0)  as isFavorite,collection.id as cid
+        </if>
+        <if test="isLeftJoin==false">
+            ,0 as isFavorite
+        </if>
         from (select majorType,batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
         INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId and tmp.majorType=zz.eduLevel
         INNER join zgk_university uu on uu.id=tmp.universityId
+        <!--判断是否加入收藏表-->
+        <if test="isLeftJoin==true">
+            <include refid="MAJOR_JOIN_LEFT"/>
+        </if>
+        <if test="isInnerJoin==true">
+            <include refid="MAJOR_JOIN_INNER"/>
+        </if>
         where (zz.selectSubject like CONCAT('%', #{subject1} , '%')
             or zz.selectSubject like CONCAT('%', #{subject2} , '%')
             or zz.selectSubject like CONCAT('%', #{subject3} , '%')

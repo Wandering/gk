@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.ICollectionDAO">
+
+    <!--添加收藏-->
+    <insert id="save" parameterType="java.util.Map">
+        INSERT INTO zgk_user_collection_3in7 (
+        universityId,
+        majorCode,
+        batch,
+        userId,
+        createDate
+        ) VALUES (
+        #{universityId},
+        #{majorCode},
+        #{batch},
+        #{userId},
+        #{createDate}
+        )
+    </insert>
+
+
+    <select id="queryPage" resultType="cn.thinkjoy.gk.pojo.MajorPojo" parameterType="java.util.Map">
+        select uu.id as universityId,zz.majorCode as majorCode,uu.provinceCode,tmp.batch as batch,zz.universityName as universityName,zz.major as majorName,tmp.batch,tmp.planEnrolling as planNumber,zz.selectSubject as selectSubject
+            ,1 as isFavorite,collection.id as cid
+        from zgk_user_collection_3in7 collection
+        INNER JOIN (select majorType,batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp ON  tmp.universityId = collection.universityId and collection.batch = tmp.batch
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId and tmp.majorType=zz.eduLevel AND  zz.universityId =  collection.universityId and collection.majorCode = zz.majorCode
+        INNER join zgk_university uu on uu.id=tmp.universityId
+        WHERE collection.userId = #{userId}
+        order by tmp.universityId asc
+        limit ${offset},${rows}
+    </select>
+
+    <select id="count" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*)
+        from zgk_user_collection_3in7 collection
+        WHERE collection.userId = #{userId}
+    </select>
+</mapper>
