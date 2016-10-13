@@ -35,7 +35,7 @@ public class CollectionController extends ZGKBaseController{
      * 用户收藏7选3专业信息
      * @return
      */
-    @RequestMapping(value = "/save",method = RequestMethod.GET)
+    @RequestMapping(value = "/save",method = RequestMethod.POST)
     @ResponseBody
     public Object save(@RequestParam Integer universityId,
                        @RequestParam String majorCode,
@@ -66,7 +66,7 @@ public class CollectionController extends ZGKBaseController{
      * 用户收藏7选3专业信息 取消收藏
      * @return
      */
-    @RequestMapping(value = "/delete",method = RequestMethod.GET)
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @ResponseBody
     public Object delete(@RequestParam Integer id){
         //获取当前用户的ID
