@@ -69,8 +69,10 @@ public class CollectionController extends ZGKBaseController{
     @RequestMapping(value = "/delete",method = RequestMethod.GET)
     @ResponseBody
     public Object delete(@RequestParam Integer id){
+        //获取当前用户的ID
+        String userId = this.getAccoutId();
         //删除
-        return collectionService.delete(id);
+        return collectionService.delete(id,userId);
     }
 
     /**

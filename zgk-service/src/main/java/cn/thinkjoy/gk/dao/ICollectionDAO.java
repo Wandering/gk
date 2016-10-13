@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.dao;
 
 import cn.thinkjoy.gk.pojo.MajorPojo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,7 @@ public interface ICollectionDAO {
 
     int check(Map<String,Object> map);
 
-    int delete(Object id);
+    int delete(@Param("id") Object id,@Param("userId") Object userId);
 
     List<MajorPojo> queryPage(Map<String,Object> map);
 

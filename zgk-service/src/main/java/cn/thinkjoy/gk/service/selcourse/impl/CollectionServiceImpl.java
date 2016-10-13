@@ -29,8 +29,8 @@ public class CollectionServiceImpl implements ICollectionService {
     }
 
     @Override
-    public boolean delete(Object id) {
-        return collectionDAO.delete(id)>0;
+    public boolean delete(Object id,Object userId) {
+        return collectionDAO.delete(id,userId)>0;
     }
 
     @Override
