@@ -19,7 +19,20 @@
         #{createDate}
         )
     </insert>
-
+    <!--检查是否在数据库已经收藏过了-->
+    <select id="check" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*)
+        from zgk_user_collection_3in7 collection
+        WHERE
+          collection.universityId = #{universityId}
+        and collection.majorCode = #{majorCode}
+        and collection.batch = #{batch}
+        and collection.userId = #{userId}
+    </select>
+    <!--取消收藏-->
+    <delete id="delete" parameterType="java.util.Map">
+        delete from zgk_user_collection_3in7 where id = #{id}
+    </delete>
 
     <select id="queryPage" resultType="cn.thinkjoy.gk.pojo.MajorPojo" parameterType="java.util.Map">
         select uu.id as universityId,zz.majorCode as majorCode,uu.provinceCode,tmp.batch as batch,zz.universityName as universityName,zz.major as majorName,tmp.batch,tmp.planEnrolling as planNumber,zz.selectSubject as selectSubject

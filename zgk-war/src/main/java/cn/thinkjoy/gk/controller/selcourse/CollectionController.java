@@ -3,6 +3,7 @@ package cn.thinkjoy.gk.controller.selcourse;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.selcourse.ICollectionService;
 import cn.thinkjoy.zgk.common.StringUtil;
 import cn.thinkjoy.zgk.domain.BizData4Page;
@@ -42,6 +43,7 @@ public class CollectionController extends ZGKBaseController{
         if (StringUtil.isNulOrBlank(majorCode)){
             throw new BizException("error","majorCode is not null or blank!");
         }
+
         //获取当前用户的ID
         String userId = this.getAccoutId();
         //组织保信息
@@ -51,8 +53,24 @@ public class CollectionController extends ZGKBaseController{
         map.put("batch",batch);
         map.put("userId",userId);
         map.put("createDate",System.currentTimeMillis());
+        //检查是否已经存过了
+        if (collectionService.check(map)){
+            throw new BizException(ERRORCODE.COLLECTION_EXIST.getCode(),ERRORCODE.COLLECTION_EXIST.getMessage());
+        }
         //保存
         return collectionService.save(map);
+    }
+
+
+    /**
+     * 用户收藏7选3专业信息 取消收藏
+     * @return
+     */
+    @RequestMapping(value = "/delete",method = RequestMethod.GET)
+    @ResponseBody
+    public Object delete(@RequestParam Integer id){
+        //删除
+        return collectionService.delete(id);
     }
 
     /**
@@ -68,7 +86,7 @@ public class CollectionController extends ZGKBaseController{
         conditions.put("offset",(page-1)*rows);
         conditions.put("rows",rows);
         List mainData = collectionService.queryPage(conditions);
-    int records = collectionService.count(conditions);
+        int records = collectionService.count(conditions);
         return this.doPage(mainData,records,page,rows);
 }
 

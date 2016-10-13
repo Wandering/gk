@@ -11,6 +11,10 @@ import java.util.Map;
 public interface ICollectionDAO {
     int save(Map<String,Object> map);
 
+    int check(Map<String,Object> map);
+
+    int delete(Object id);
+
     List<MajorPojo> queryPage(Map<String,Object> map);
 
     int count(Map<String,Object> map);

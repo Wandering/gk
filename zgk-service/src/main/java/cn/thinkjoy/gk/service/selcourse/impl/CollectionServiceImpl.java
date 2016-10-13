@@ -24,6 +24,16 @@ public class CollectionServiceImpl implements ICollectionService {
     }
 
     @Override
+    public boolean check(Map<String, Object> map) {
+        return collectionDAO.check(map)>0;
+    }
+
+    @Override
+    public boolean delete(Object id) {
+        return collectionDAO.delete(id)>0;
+    }
+
+    @Override
     public List<MajorPojo> queryPage(Map<String, Object> map) {
         return collectionDAO.queryPage(map);
     }

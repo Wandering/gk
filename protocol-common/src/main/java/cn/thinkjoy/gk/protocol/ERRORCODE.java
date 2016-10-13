@@ -98,6 +98,8 @@ public enum ERRORCODE {
 
 	EVALUATION_IS_NULL("0600014", "测评结果不能为空!"),
 
+	COLLECTION_EXIST("0600015", "该组合已经被收藏!"),
+
 	SELECT_SUBJECT_IDENTICAL("0600013", "只有不同的选课方案才能做对比哦!");
 
 	/** The code. */

@@ -12,6 +12,10 @@ public interface ICollectionService {
 
     boolean save(Map<String,Object> map);
 
+    boolean check(Map<String,Object> map);
+
+    boolean delete(Object id);
+
     List<MajorPojo> queryPage(Map<String,Object> map);
 
     int count(Map<String,Object> map);
