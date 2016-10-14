@@ -7,6 +7,7 @@
 
 package cn.thinkjoy.gk.service;
 
+import cn.thinkjoy.gk.pojo.SpecialMajorDto;
 import cn.thinkjoy.gk.pojo.UniversityDetailDto;
 
 import java.util.List;
@@ -37,4 +38,37 @@ public interface IUniversityExService{
     int getUniversityCount(Map<String, Object> condition);
 
     List getUniversityMajorEnrollingPlanList(Map<String, Object> condition);
+
+    /**
+     * 根据用户省份初始化查询条件
+     *
+     * @param provinceId
+     * @return
+     */
+    Map<String,List<String>> initSerachCondition(long provinceId);
+
+    /**
+     * 根据条件查询院校招生信息
+     *
+     * @param schoolName
+     * @param year
+     * @param batch
+     * @param majorType
+     * @param userProvinceId
+     * @param schoolProvinceId
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    List<SpecialMajorDto> searchSpecialMajorInfo(
+            String schoolName,
+            String year,
+            String batch,
+            Integer majorType,
+            Long userProvinceId,
+            Long schoolProvinceId,
+            Integer pageNo,
+            Integer pageSize
+    );
+
 }

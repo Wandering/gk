@@ -1,8 +1,10 @@
 package cn.thinkjoy.gk.controller.selcourse;
 
+import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.pojo.Bases;
 import cn.thinkjoy.gk.pojo.MajorTop3Pojo;
 import cn.thinkjoy.gk.service.selcourse.ISelClassesService;
+import cn.thinkjoy.gk.util.UserContext;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -84,6 +86,15 @@ public class SelClassesController {
         }
         if(StringUtils.isNotBlank(type)) {
             map.put("type", type);
+        }
+        UserAccountPojo userAccountPojo = UserContext.getCurrentUser();
+        //尝试获取用户信息
+        if(userAccountPojo==null){
+            map.put("isLeftJoin",false);
+        }else {
+            //加入用户登录,将用户ID和用户收藏信息加入
+            map.put("userId",userAccountPojo.getId());
+            map.put("isLeftJoin",true);
         }
         returnMap.put("majorList", iSelClassesService.selectMajorList(map));
         returnMap.put("count",iSelClassesService.selectMajorListCount(map));

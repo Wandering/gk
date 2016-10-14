@@ -25,6 +25,11 @@ public class MajorPojo implements Serializable {
 
     private String universityRank;
 
+    //是否收藏
+    private Integer isFavorite;
+    //是收藏对应id
+    private Integer cid;
+
     public String getUniversityRank() {
         return universityRank;
     }
@@ -95,5 +100,21 @@ public class MajorPojo implements Serializable {
 
     public void setBatch(String batch) {
         this.batch = batch;
+    }
+
+    public Integer getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(Integer isFavorite) {
+        this.isFavorite = isFavorite;
+    }
+
+    public Integer getCid() {
+        return cid;
+    }
+
+    public void setCid(Integer cid) {
+        this.cid = cid;
     }
 }
