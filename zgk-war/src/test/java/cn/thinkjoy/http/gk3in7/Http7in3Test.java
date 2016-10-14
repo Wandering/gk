@@ -22,6 +22,7 @@ public class Http7in3Test extends TestCase {
     String getMajorByUniversityId = "/subjectByMajor/getMajorByUniversityId.do";
     String getSubjectByMajor = "/subjectByMajor/getSubjectByMajor.do";
     String save = "/collection/save.do";
+    String delete = "/collection/delete.do";
 
     public void testGetUniversityByArea() {
         String url = host + getUniversityByArea + RequestUtils.genParam("page=2","rows=10","areaId=110000","universityName=北京");
@@ -125,7 +126,7 @@ public class Http7in3Test extends TestCase {
      * 删除通过专业组合
      */
     public void testSave() {
-        String url = host + save + RequestUtils.genParam("universityId=2","majorCode=030101K","batch=1","token=kFIBTXhxM58Z1lXO0QADtw%3D%3D&userKey=zj&req=ajax");
+        String url = host + delete + RequestUtils.genParam("token=5S83Yw9OMBo%2FjRvaivxl0g%3D%3D&userKey=zj&req=ajax&universityId=2&majorCode=120206&batch=1");
         System.out.println(url);
         String result = RequestUtils.requestPost(url);
     }
