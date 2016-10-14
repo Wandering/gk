@@ -1,5 +1,7 @@
 package cn.thinkjoy.gk.controller.selcourse;
 
+import cn.thinkjoy.gk.pojo.Bases;
+import cn.thinkjoy.gk.pojo.MajorTop3Pojo;
 import cn.thinkjoy.gk.service.selcourse.ISelClassesService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -94,6 +97,16 @@ public class SelClassesController {
         returnMap.put("universityOrMajorList", iSelClassesService.selectUniversityOrMajorByWords(queryValue));
         return returnMap;
     }
+
+    @RequestMapping("getMajorTop3")
+    @ResponseBody
+    public Map<String,Object> getMajorTop3(){
+        Map<String,Object> returnMap=new HashMap<>();
+        Bases[] bases=iSelClassesService.selectMajorTop3();
+        returnMap.put("majorTop3",bases);
+        return returnMap;
+    }
+
 
 
 }
