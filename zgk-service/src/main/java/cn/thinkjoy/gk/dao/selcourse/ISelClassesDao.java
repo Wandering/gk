@@ -1,9 +1,6 @@
 package cn.thinkjoy.gk.dao.selcourse;
 
-import cn.thinkjoy.gk.pojo.MajorBatchNumberPojo;
-import cn.thinkjoy.gk.pojo.MajorPojo;
-import cn.thinkjoy.gk.pojo.NumberPojo;
-import cn.thinkjoy.gk.pojo.UniversityOrMajorPojo;
+import cn.thinkjoy.gk.pojo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -21,5 +18,7 @@ public interface ISelClassesDao {
     int selectMajorListCount(Map<String,Object> map);
 
     List<UniversityOrMajorPojo> selectUniversityOrMajorByWords(String queryValue);
+
+    List<MajorTop3Pojo> selectMajorTop3();
 
 }
