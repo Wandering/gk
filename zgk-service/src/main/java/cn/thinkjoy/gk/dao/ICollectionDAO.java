@@ -14,7 +14,7 @@ public interface ICollectionDAO {
 
     int check(Map<String,Object> map);
 
-    int delete(@Param("id") Object id,@Param("userId") Object userId);
+    int delete(Map<String,Object> map);
 
     List<MajorPojo> queryPage(Map<String,Object> map);
 

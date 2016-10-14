@@ -68,11 +68,22 @@ public class CollectionController extends ZGKBaseController{
      */
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @ResponseBody
-    public Object delete(@RequestParam Integer id){
+    public Object delete(@RequestParam Integer universityId,
+                         @RequestParam String majorCode,
+                         @RequestParam Integer batch){
+        if (StringUtil.isNulOrBlank(majorCode)){
+            throw new BizException("error","majorCode is not null or blank!");
+        }
+
         //获取当前用户的ID
         String userId = this.getAccoutId();
-        //删除
-        return collectionService.delete(id,userId);
+        //组织保信息
+        Map<String,Object> map = new HashedMap();
+        map.put("universityId",universityId);
+        map.put("majorCode",majorCode);
+        map.put("batch",batch);
+        map.put("userId",userId);
+        return collectionService.delete(map);
     }
 
     /**

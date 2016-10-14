@@ -14,7 +14,7 @@ public interface ICollectionService {
 
     boolean check(Map<String,Object> map);
 
-    boolean delete(Object id,Object userId);
+    boolean delete(Map<String,Object> map);
 
     List<MajorPojo> queryPage(Map<String,Object> map);
 
