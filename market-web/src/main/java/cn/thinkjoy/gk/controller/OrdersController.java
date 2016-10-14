@@ -87,14 +87,22 @@ public class OrdersController extends ZGKBaseController {
             throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
         }
         Long userId = userAccountPojo.getId();
+        //返回的地址
         String returnUrl = ordersQuery.getReturnUrl();
+        //redis缓存返回url
         RedisUtil.getInstance().set("pay_return_url_" + userId, returnUrl, 24l, TimeUnit.HOURS);
+        //生成订单序号
         String orderNo = String.valueOf(System.currentTimeMillis()) + userId;
+        //获取产品(状元及第/金榜题名)
         String products = ordersQuery.getProducts();
+        //获取商品信息
         Order order = getOrder(userId, products);
+        //保存手机号码
+        order.setPhone(ordersQuery.getPhone());
         Map<String, String> resultMap = new HashMap<>();
         try {
             resultMap.put("orderNo", order.getOrderNo());
+            //保存订单信息
             orderService.insert(order);
             LOGGER.info("create orders :" + orderNo);
             return resultMap;

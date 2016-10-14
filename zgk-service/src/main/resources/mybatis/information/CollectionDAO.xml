@@ -31,7 +31,7 @@
     </select>
     <!--取消收藏-->
     <delete id="delete" parameterType="java.util.Map">
-        delete from zgk_user_collection_3in7 where
+        delete from zgk_user_collection_3in7 collection where
         collection.universityId = #{universityId}
         and collection.majorCode = #{majorCode}
         and collection.batch = #{batch}
