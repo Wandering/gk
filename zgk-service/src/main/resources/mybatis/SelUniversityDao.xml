@@ -47,8 +47,8 @@
         <if test="isLeftJoin==false">
             ,0 as isFavorite
         </if>
-        from (select batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
-        INNER join zgk_zj_3in7 zz on tmp.universityId=zz.universityId and tmp.majorCode=zz.majorCode
+        from (select majorType,batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId and tmp.majorType=zz.eduLevel
         INNER join zgk_university uu on uu.id=tmp.universityId
         <!--判断是否加入收藏表-->
         <if test="isLeftJoin==true">
@@ -65,8 +65,8 @@
 
     <select id="selectMajorListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
         select count(uu.id)
-        from (select batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
-        INNER join zgk_zj_3in7 zz on tmp.universityId=zz.universityId and tmp.majorCode=zz.majorCode
+        from (select majorType,batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId and tmp.majorType=zz.eduLevel
         INNER join zgk_university uu on uu.id=tmp.universityId
         <!--判断是否加入收藏表-->
         <if test="isLeftJoin==true">
