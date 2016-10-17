@@ -35,8 +35,7 @@
         userId,
         payStatus,
         description,
-        channel,
-        phone
+        channel
     </sql>
     <insert id="insert" parameterType="Orders">
         INSERT INTO zgk_orders (
@@ -49,8 +48,7 @@
         userId,
         payStatus,
         description,
-        channel,
-        phone
+        channel
         ) VALUES (
         #{createDate},
         #{lastModDate},
@@ -61,8 +59,7 @@
         #{userId},
         #{payStatus},
         #{description},
-        #{channel},
-        #{phone}
+        #{channel}
         )
         <selectKey resultType="java.lang.Long" keyProperty="id">
             SELECT LAST_INSERT_ID() AS ID
@@ -106,9 +103,6 @@
             <if test="channel!=null">
                 channel = #{channel},
             </if>
-            <if test="phone!=null">
-                channel = #{phone}
-            </if>
         </trim>
         WHERE
         id = #{id}
@@ -149,9 +143,6 @@
             </if>
             <if test="map.channel!=null">
                 channel = #{map.channel},
-            </if>
-            <if test="map.phone!=null">
-                channel = #{map.phone}
             </if>
         </trim>
         WHERE
@@ -194,9 +185,6 @@
             <if test="update.channel!=null">
                 channel = #{update.channel},
             </if>
-            <if test="update.phone!=null">
-                channel = #{update.phone}
-            </if>
         </trim>
 
         <trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -236,9 +224,6 @@
             <if test="condition.channel!=null">
                 AND channel = #{condition.channel}
             </if>
-            <if test="condition.phone!=null">
-                AND channel = #{condition.phone}
-            </if>
         </trim>
     </update>
 
@@ -254,8 +239,7 @@
         userId,
         payStatus,
         description,
-        channel,
-        phone
+        channel
         ) VALUES (
         #{map.status},
         #{map.createDate},
@@ -267,8 +251,7 @@
         #{map.userId},
         #{map.payStatus},
         #{map.description},
-        #{map.channel},
-        #{map.phone}
+        #{map.channel}
         )
     </insert>
 
@@ -287,7 +270,6 @@
             payStatus = #{payStatus},
             description = #{description},
             channel = #{channel},
-            phone = #{phone}
         </trim>
         WHERE
         id = #{id}
@@ -340,9 +322,6 @@
             </if>
             <if test="channel!=null">
                 AND channel = #{channel}
-            </if>
-            <if test="phone!=null">
-                AND phone = #{phone}
             </if>
         </trim>
     </delete>
@@ -437,9 +416,7 @@
             <if test="condition.channel!=null">
                 ${condition.groupOp}   channel  ${condition.channel.op}  #{condition.channel.data}
             </if>
-            <if test="condition.phone!=null">
-                ${condition.groupOp}   channel  ${condition.phone.op}  #{condition.phone.data}
-            </if>
+
 
         </where>
 
@@ -492,9 +469,6 @@
             <if test="channel!=null">
                 AND channel like CONCAT('%', #{channel} , '%')
             </if>
-            <if test="phone!=null">
-                AND phone like CONCAT('%', #{phone} , '%')
-            </if>
         </trim>
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -543,9 +517,6 @@
             <if test="condition.channel!=null">
                 AND channel = #{condition.channel}
             </if>
-            <if test="condition.phone!=null">
-                AND channel = #{condition.phone}
-            </if>
         </trim>
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -593,9 +564,6 @@
             <if test="channel!=null">
                 AND channel = #{channel}
             </if>
-            <if test="phone!=null">
-                AND phone = #{phone}
-            </if>
         </trim>
         limit 0,1
     </select>
@@ -638,9 +606,6 @@
             </if>
             <if test="channel!=null">
                 ${groupOp} channel ${channel.op}  #{channel.data}
-            </if>
-            <if test="phone!=null">
-                ${groupOp} phone ${phone.op}  #{phone.data}
             </if>
 
         </where>

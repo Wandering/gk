@@ -41,7 +41,8 @@
         goods_count as goodsCount,
         handle_state as handleState,
         channel as channel,
-        unit_price as unitPrice
+        unit_price as unitPrice,
+        phone
     </sql>
     <insert id="insert" parameterType="Order">
         INSERT INTO zgk_order (
@@ -61,7 +62,8 @@
         goods_count,
         handle_state,
         channel,
-        unit_price
+        unit_price,
+        phone
         ) VALUES (
         #{userId},
         #{status},
@@ -79,7 +81,8 @@
         #{goodsCount},
         #{handleState},
         #{channel},
-        #{unitPrice}
+        #{unitPrice},
+        #{phone}
         )
         <selectKey resultType="java.lang.Long" keyProperty="id">
             SELECT LAST_INSERT_ID() AS ID
@@ -138,6 +141,9 @@
             <if test="channel!=null">
                 channel = #{channel},
             </if>
+            <if test="phone!=null">
+                phone = #{phone},
+            </if>
         </trim>
         WHERE
         id = #{id}
@@ -193,6 +199,9 @@
             </if>
             <if test="map.channel!=null">
                 channel = #{map.channel},
+            </if>
+            <if test="map.phone!=null">
+                phone = #{map.channel},
             </if>
         </trim>
         WHERE
@@ -324,7 +333,8 @@
             department_phone,
             goods_count,
             handle_state,
-            channel
+            channel,
+            phone
         ) VALUES (
             #{map.userId},
             #{map.status},
@@ -341,7 +351,8 @@
             #{map.departmentPhone},
             #{map.goodsCount},
             #{map.handleState},
-            #{map.channel}
+            #{map.channel},
+            #{map.phone}
         )
     </insert>
 
@@ -497,6 +508,9 @@
             </if>
             <if test="condition.productPrice!=null">
                 ${condition.groupOp}   product_price  ${condition.product_price.op}  #{condition.product_price.data}
+            </if>
+            <if test="condition.phone!=null">
+                ${condition.groupOp}   phone  ${condition.phone.op}  #{condition.phone.data}
             </if>
         </where>
         <if test="orderBy!=null">
