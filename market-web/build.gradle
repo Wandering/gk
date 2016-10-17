@@ -3,7 +3,6 @@ dependencies {
 
     compile "org.jsoup:jsoup:1.8.1"
 
-    compile project(':gk-service')
 
     compile project(':web-common')
 
