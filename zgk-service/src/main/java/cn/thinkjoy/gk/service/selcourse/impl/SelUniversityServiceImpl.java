@@ -34,4 +34,9 @@ public class SelUniversityServiceImpl implements ISelUniversityService {
     public List<MajorPojo> selectMajorList(Map<String, Object> map) {
         return iSelUniversityDao.selectMajorList(map);
     }
+
+    @Override
+    public Integer selectMajorListCount(Map<String, Object> map) {
+        return iSelUniversityDao.selectMajorListCount(map);
+    }
 }

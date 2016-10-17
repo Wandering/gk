@@ -86,6 +86,7 @@ public class SelUniversityController {
             map.put("isLeftJoin",true);
         }
         returnMap.put("majorList",iSelUniversityService.selectMajorList(map));
+        returnMap.put("majorListCount",iSelUniversityService.selectMajorListCount(map));
         return returnMap;
     }
 
