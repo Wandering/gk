@@ -4,6 +4,7 @@ import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.common.domain.BaseDomain;
 import cn.thinkjoy.common.service.IBaseService;
 import cn.thinkjoy.common.service.IPageService;
+import cn.thinkjoy.gk.domain.Card;
 import cn.thinkjoy.gk.domain.Order;
 
 import java.util.List;
@@ -16,4 +17,11 @@ public interface IOrderService<D extends IBaseDAO<T>, T extends BaseDomain> exte
     Map<String,Object> queryOrderByNo(String orderNo);
 
     void updateByOrderNo(Order order);
+
+    Card singleCreateCard(Integer productType);
+
+    Object batchCreateCard(Integer count,
+                           Integer productType);
+
+
 }

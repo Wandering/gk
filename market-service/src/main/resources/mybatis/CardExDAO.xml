@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.ICardExDAO">
+
+    <!-- 批量插入卡片 -->
+    <select id="batchCreateCard" parameterType="map">
+        INSERT INTO zgk_card (
+        cardNumber,
+        password,
+        status,
+        cardType,
+        creator,
+        createDate,
+        lastModifier,
+        lastModDate,
+        productType
+        ) VALUES
+        <foreach collection="cards" item="item" index="index" separator=",">
+            (
+            #{item.cardNumber},
+            #{item.password},
+            #{item.status},
+            #{item.cardType},
+            #{item.creator},
+            #{item.createDate},
+            #{item.lastModifier},
+            #{item.lastModDate},
+            #{item.productType}
+            )
+        </foreach>
+
+    </select>
+
+    <!-- 批量插入卡片 -->
+    <insert id="singleCreateCard" parameterType="map">
+        INSERT INTO zgk_card (
+        cardNumber,
+        password,
+        status,
+        cardType,
+        creator,
+        createDate,
+        lastModifier,
+        lastModDate,
+        productType
+        ) VALUES
+            (
+            #{card.cardNumber},
+            #{card.password},
+            #{card.status},
+            #{card.cardType},
+            #{card.creator},
+            #{card.createDate},
+            #{card.lastModifier},
+            #{card.lastModDate},
+            #{card.productType}
+            )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+</mapper>
+

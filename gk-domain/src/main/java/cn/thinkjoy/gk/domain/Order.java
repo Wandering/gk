@@ -22,6 +22,8 @@ public class Order extends BaseDomain {
     private Integer goodsCount;
     private String handleState = "0";
     private String channel;
+    //手机号 2.0需求新加参数
+    private String phone;
 
     public String getUnitPrice() {
         return unitPrice;
@@ -163,6 +165,14 @@ public class Order extends BaseDomain {
 
     public void setChannel(String channel) {
         this.channel = channel;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public boolean equals(Object obj) {

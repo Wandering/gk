@@ -8,11 +8,21 @@ package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
+import cn.thinkjoy.common.utils.ObjectFactory;
+import cn.thinkjoy.common.utils.SqlOrderEnum;
+import cn.thinkjoy.gk.common.ModelUtil;
+import cn.thinkjoy.gk.common.RandomCodeUtil;
+import cn.thinkjoy.gk.dao.ICardDAO;
+import cn.thinkjoy.gk.dao.ICardExDAO;
 import cn.thinkjoy.gk.dao.IOrdersDAO;
+import cn.thinkjoy.gk.domain.Card;
 import cn.thinkjoy.gk.domain.Orders;
 import cn.thinkjoy.gk.service.IOrdersService;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -22,6 +32,8 @@ import java.util.Map;
 public class OrdersServiceImpl extends AbstractPageService<IBaseDAO<Orders>, Orders> implements IOrdersService<IBaseDAO<Orders>,Orders>{
     @Autowired
     private IOrdersDAO ordersDAO;
+
+
 
     @Override
     public IBaseDAO<Orders> getDao() {
@@ -152,4 +164,8 @@ public class OrdersServiceImpl extends AbstractPageService<IBaseDAO<Orders>, Ord
     {
         return ordersDAO.selectOrderStatisticsData(paramMap);
     }
+
+
+
+
 }
