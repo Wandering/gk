@@ -138,7 +138,7 @@ public class OrdersController extends ZGKBaseController {
         Card card = null;
         order.setUpdateDate(System.currentTimeMillis());
         try {
-            if (PayEnum.SUCCESS.equals(order.getStatus())) {
+            if (PayEnum.SUCCESS.getCode().equals(order.getStatus())) {
                 //支付成功
                 //判断用户发货状态
                 if (CardHandleStateEnum.N.getCode().toString().equals(order.getHandleState())) {
