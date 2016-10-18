@@ -33,7 +33,7 @@
     </select>
 
     <!-- 批量插入卡片 -->
-    <insert id="singleCreateCard" parameterType="map">
+    <insert id="singleCreateCard" parameterType="Card" keyProperty="id">
         INSERT INTO zgk_card (
         cardNumber,
         password,
@@ -46,20 +46,26 @@
         productType
         ) VALUES
             (
-            #{card.cardNumber},
-            #{card.password},
-            #{card.status},
-            #{card.cardType},
-            #{card.creator},
-            #{card.createDate},
-            #{card.lastModifier},
-            #{card.lastModDate},
-            #{card.productType}
+            #{cardNumber},
+            #{password},
+            #{status},
+            #{cardType},
+            #{creator},
+            #{createDate},
+            #{lastModifier},
+            #{lastModDate},
+            #{productType}
             )
         <selectKey resultType="java.lang.Long" keyProperty="id">
             SELECT LAST_INSERT_ID() AS ID
         </selectKey>
     </insert>
 
+
+    <!-- 批量插入卡片 -->
+    <select id="getCardByUidAndNo" parameterType="map" resultType="java.util.Map">
+            SELECT card.cardNumber as cardNumber,card.password as password from zgk2.zgk_order ord LEFT join zgk2.zgk_card card ON ord.cardId = card.id
+            where ord.user_id = #{userId} and ord.order_no = #{orderNo}
+    </select>
 </mapper>
 

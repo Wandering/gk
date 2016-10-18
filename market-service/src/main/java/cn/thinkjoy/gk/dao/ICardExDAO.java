@@ -12,6 +12,7 @@ import cn.thinkjoy.gk.domain.Orders;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ICardExDAO extends IBaseDAO<Orders>{
     /**
@@ -21,5 +22,7 @@ public interface ICardExDAO extends IBaseDAO<Orders>{
      */
     void batchCreateCard(@Param("cards") List<Card> cards);
 
-    int singleCreateCard(@Param("card") Card card);
+    long singleCreateCard(Card card);
+
+    Map<String,Object> getCardByUidAndNo(@Param("userId")Long id, @Param("orderNo")String orderNo);
 }

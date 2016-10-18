@@ -23,5 +23,5 @@ public interface IOrderService<D extends IBaseDAO<T>, T extends BaseDomain> exte
     Object batchCreateCard(Integer count,
                            Integer productType);
 
-
+    Map<String,Object> getCardByUidAndNo(Long id, String orderNo);
 }

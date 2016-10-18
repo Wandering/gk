@@ -4,22 +4,25 @@ package cn.thinkjoy.gk.common;
  * Created by yangyongping on 2016/10/17.
  */
 public enum PayEnum {
-    Y("支付成功","Y"),
-    N("支付失败","N");
-    private final String name;
-    private final String code;
+    //订单状态 0:未支付  1：已支付  2：支付失败 3：订单过期
+    NO_PAY("未支付",0),
+    SUCCESS("已支付",1),
+    PAY_FAIL("支付失败",2),
+    PAY_TIME_OUT("订单过期",3);
 
+    private final String status;
+    private final Integer code;
 
-    PayEnum(String name, String code) {
-        this.name = name;
+    PayEnum(String status, Integer code) {
+        this.status = status;
         this.code = code;
     }
 
-    public String getName() {
-        return name;
+    public String getStatus() {
+        return status;
     }
 
-    public String getCode() {
+    public Integer getCode() {
         return code;
     }
 }

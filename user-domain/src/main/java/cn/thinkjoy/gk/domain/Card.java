@@ -26,7 +26,7 @@ public class Card extends CreateBaseDomain<Long>{
     private String password;
     /**  */
     private Long userId;
-    /** 卡号类型，1为正式，2为演示（贾静静用），3为测试（杨甜用）,4为体验（薛延松用） */
+    /** 卡号类型，1为正式，2为演示（贾静静用），3为测试（杨甜用）,4为体验（薛延松用） 6线上发货*/
     private String cardType;
     /** 有效结束日期 */
     private Long endDate;

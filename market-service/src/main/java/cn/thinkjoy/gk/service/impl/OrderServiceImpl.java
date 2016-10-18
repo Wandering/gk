@@ -208,6 +208,12 @@ public class OrderServiceImpl extends AbstractPageService<IBaseDAO<Order>, Order
         return ObjectFactory.getSingle();
     }
 
+    @Override
+    public Map<String, Object> getCardByUidAndNo(Long id, String orderNo) {
+
+        return cardExDAO.getCardByUidAndNo(id,orderNo);
+    }
+
     /**
      * 生成单张VIP卡号
      * @param productType
@@ -232,7 +238,7 @@ public class OrderServiceImpl extends AbstractPageService<IBaseDAO<Order>, Order
         ModelUtil.initBuild(card);
         card.setCardNumber(prefix+(Long.valueOf(number)+1));
         card.setPassword(RandomCodeUtil.generateCharCode(10).toLowerCase());
-        card.setCardType("5");
+        card.setCardType("6");
         card.setProductType(productType);
         //生成单张卡
         cardExDAO.singleCreateCard(card);

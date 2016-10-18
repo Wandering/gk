@@ -136,7 +136,7 @@ public class OrdersController extends ZGKBaseController {
         Card card = null;
         order.setUpdateDate(System.currentTimeMillis());
         try {
-            if (PayEnum.Y.getCode().equals(state)) {
+            if (PayEnum.SUCCESS.equals(order.getStatus())) {
                 //支付成功
                 //判断用户发货状态
                 if (CardHandleStateEnum.N.getCode().toString().equals(order.getHandleState())) {
@@ -147,9 +147,19 @@ public class OrdersController extends ZGKBaseController {
                     card = orderService.singleCreateCard(Integer.valueOf(order.getProductType()));
                     //HandleState 0:未发货 1:已发货
                     order.setHandleState(CardHandleStateEnum.Y.getCode().toString());
+                    //从insert回调中取得cardId做关联
+                    order.setCardId(card.getId());
+                    resultMap.put("cardNumber",card.getCardNumber());
+                    resultMap.put("password",card.getPassword());
+                    resultMap.put("phone",order.getPhone());
                     //TODO 发送短信
                 }else {
-
+                    //已经发货状态
+                    //取得当前用户该订单的卡号
+                    Map<String,Object> orderMap = orderService.getCardByUidAndNo(userAccountPojo.getId(),orderNo);
+                    resultMap.put("cardNumber",orderMap.get("cardNumber"));
+                    resultMap.put("password",orderMap.get("password"));
+                    resultMap.put("phone",order.getPhone());
                 }
             }else {
                 throw new BizException(ERRORCODE.ORDER_PAY_FAIL.getCode(),ERRORCODE.ORDER_PAY_FAIL.getMessage());
@@ -158,9 +168,7 @@ public class OrdersController extends ZGKBaseController {
             //更新订单状态
             orderService.update(order);
         }
-        resultMap.put("cardNumber",card.getCardNumber());
-        resultMap.put("password",card.getPassword());
-        resultMap.put("phone",order.getPhone());
+
         //返回vip卡号和密码
         return resultMap;
     }
@@ -489,9 +497,9 @@ public class OrdersController extends ZGKBaseController {
     public Map<String, Object> getOrderDetail(@RequestParam(value = "orderNo", required = true)String orderNo,
                                               @RequestParam(value = "token", required = true)String token)
     {
-        long userId = getUserAccountPojo().getId();
+        String userId = getAccoutId();
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("userId", userId+"");
+        paramMap.put("userId", userId);
         paramMap.put("orderNo", orderNo+"");
         List<Map<String, Object>> orderList = userAccountExService.getOrderList(paramMap);
         if (null == orderList || orderList.size()==0) {
@@ -501,6 +509,7 @@ public class OrdersController extends ZGKBaseController {
         return orderList.get(0);
     }
 
+
     /**
      * 获取订单列表
      * @param token
@@ -508,15 +517,19 @@ public class OrdersController extends ZGKBaseController {
      */
     @ResponseBody
     @RequestMapping(value="getOrderList")
+    @Deprecated
     public List<Map<String, Object>> getOrderList(@RequestParam(value = "token", required = true)String token)
     {
-        long userId = getUserAccountPojo().getId();
+        String userId = getAccoutId();
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("userId", userId+"");
+        paramMap.put("userId", userId);
         List<Map<String, Object>> orderList = userAccountExService.getOrderList(paramMap);
         fixOrderList(orderList);
         return orderList;
     }
+
+
+
 
     private void fixOrderList(List<Map<String, Object>> orderList) {
         if(null != orderList && orderList.size()>0)
