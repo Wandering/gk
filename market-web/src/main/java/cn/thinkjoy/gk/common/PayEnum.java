@@ -8,7 +8,8 @@ public enum PayEnum {
     NO_PAY("未支付",0),
     SUCCESS("已支付",1),
     PAY_FAIL("支付失败",2),
-    PAY_TIME_OUT("订单过期",3);
+    PAY_TIME_OUT("订单过期",4),
+    PAY_SUCCESS("已发货",3);
 
     private final String status;
     private final Integer code;

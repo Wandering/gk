@@ -568,7 +568,7 @@ public class OrdersController extends ZGKBaseController {
         if("0".equals(order.getStatus()+"") && System.currentTimeMillis() -  createDate > expireDuration)
         {
             //订单过期
-            order.setStatus(2);
+            order.setStatus(PayEnum.PAY_TIME_OUT.getCode());
             orderService.update(order);
         }
     }
