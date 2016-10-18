@@ -13,6 +13,7 @@ import cn.thinkjoy.gk.util.IPUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.zgk.zgksystem.DeparmentApiService;
 import cn.thinkjoy.zgk.zgksystem.domain.DepartmentProductRelation;
+import cn.thinkjoy.zgk.zgksystem.pojo.DepartmentProductRelationPojo;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -33,6 +34,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -284,8 +286,15 @@ public class OrdersController extends ZGKBaseController {
 
     private BigDecimal getSalePrice(String productId) {
         BigDecimal salePrice = BigDecimal.ZERO;
-        List<DepartmentProductRelation > relations = deparmentApiService.queryProductPriceByAreaId(getAreaId().toString());
-        for (DepartmentProductRelation relation: relations) {
+        List<DepartmentProductRelationPojo > relations = null;
+        try {
+            relations = deparmentApiService.queryProductPriceByAreaId(getAreaId().toString());
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        for (DepartmentProductRelationPojo relation: relations) {
             if(productId.equals(relation.getProductId().toString()))
             {
                 salePrice = new BigDecimal(relation.getSalePrice()).setScale(2, BigDecimal.ROUND_HALF_UP);

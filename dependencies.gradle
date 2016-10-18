@@ -32,6 +32,6 @@ allprojects {
 
     zgkSmsVersion = "0.0.3-SNAPSHOT"
 
-    zgkSystemVersion = "0.0.22-SNAPSHOT"
+    zgkSystemVersion = "0.0.26-SNAPSHOT"
 
 }
