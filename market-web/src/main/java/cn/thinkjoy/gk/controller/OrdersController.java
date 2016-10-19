@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.controller;
 
+import cn.thinkjoy.cloudstack.context.CloudContextFactory;
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.*;
@@ -11,6 +12,8 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.*;
 import cn.thinkjoy.gk.util.IPUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
+import cn.thinkjoy.sms.api.SMSService;
+import cn.thinkjoy.sms.domain.SMSSendVipCard;
 import cn.thinkjoy.zgk.zgksystem.DeparmentApiService;
 import cn.thinkjoy.zgk.zgksystem.domain.DepartmentProductRelation;
 import cn.thinkjoy.zgk.zgksystem.pojo.DepartmentProductRelationPojo;
@@ -54,6 +57,10 @@ public class OrdersController extends ZGKBaseController {
 
     @Autowired
     private IOrderService orderService;
+
+    @Autowired
+    private SMSService smsService;
+
     @Autowired
     private IOrderStatementsService orderStatementService;
     @Autowired
@@ -155,6 +162,12 @@ public class OrdersController extends ZGKBaseController {
                     resultMap.put("password",card.getPassword());
                     resultMap.put("phone",order.getPhone());
                     //TODO 发送短信
+                    try {
+                        smsService.sendVipCard(new SMSSendVipCard(order.getPhone(),card.getCardNumber(),card.getPassword(), CloudContextFactory.getCloudContext().getApplicationName()));
+
+                    }catch (Exception e){
+                        LOGGER.info("发送短信失败:"+"phone:"+order.getPhone()+" card:"+card.getCardNumber()+" password:"+card.getPassword());
+                    }
                 }else {
                     //已经发货状态
                     //取得当前用户该订单的卡号
