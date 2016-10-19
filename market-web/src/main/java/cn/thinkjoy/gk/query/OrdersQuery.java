@@ -6,10 +6,12 @@ import java.io.Serializable;
  * Created by clei on 15/7/2.
  */
 public class OrdersQuery implements Serializable{
-   
+
     private String channel;
     private String products;
     private String extra;
+    //手机号 2.0需求新加参数
+    private String phone;
     private String returnUrl;
     public String getChannel() {
         return channel;
@@ -41,5 +43,13 @@ public class OrdersQuery implements Serializable{
 
     public void setReturnUrl(String returnUrl) {
         this.returnUrl = returnUrl;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

@@ -30,8 +30,8 @@ allprojects {
 
     gaokao360Version = "0.0.38-SNAPSHOT"
 
-    zgkSmsVersion = "0.0.3-SNAPSHOT"
+    zgkSmsVersion = "0.0.4-SNAPSHOT"
 
-    zgkSystemVersion = "0.0.22-SNAPSHOT"
+    zgkSystemVersion = "0.0.26-SNAPSHOT"
 
 }

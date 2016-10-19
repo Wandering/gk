@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IEvaluationDAO">
+
+
+    <insert id="insertEvaluation" parameterType="cn.thinkjoy.gk.domain.Evaluation">
+        INSERT INTO zgk_3in7_evaluation (
+        wl,
+        hx,
+        sw,
+        zz,
+        ls,
+        dl,
+        ty,
+        user_id,
+        cdate,
+        details
+        ) VALUES (
+        #{wl},
+        #{hx},
+        #{sw},
+        #{zz},
+        #{ls},
+        #{dl},
+        #{ty},
+        #{userId},
+        #{cdate},
+        #{details}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <select id="queryLastEvaluation" resultType="cn.thinkjoy.gk.domain.Evaluation">
+        SELECT
+        id,
+        wl,
+        hx,
+        sw,
+        zz,
+        ls,
+        dl,
+        ty,
+        user_id as userId,
+        cdate,details
+        from zgk_3in7_evaluation
+        WHERE user_id = #{userId} GROUP BY cdate DESC LIMIT 1
+    </select>
+
+    <select id="queryEvaluationCount" resultType="java.lang.Integer">
+        SELECT count(*) from zgk_3in7_evaluation
+        WHERE user_id = #{userId}
+    </select>
+
+</mapper>

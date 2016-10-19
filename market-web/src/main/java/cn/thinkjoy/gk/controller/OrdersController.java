@@ -1,10 +1,9 @@
 package cn.thinkjoy.gk.controller;
 
+import cn.thinkjoy.cloudstack.context.CloudContextFactory;
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.MatrixToImageWriter;
-import cn.thinkjoy.gk.common.NumberGenUtil;
-import cn.thinkjoy.gk.common.ZGKBaseController;
+import cn.thinkjoy.gk.common.*;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.*;
 import cn.thinkjoy.gk.query.OrdersQuery;
@@ -13,8 +12,11 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.*;
 import cn.thinkjoy.gk.util.IPUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
+import cn.thinkjoy.sms.api.SMSService;
+import cn.thinkjoy.sms.domain.SMSSendVipCard;
 import cn.thinkjoy.zgk.zgksystem.DeparmentApiService;
 import cn.thinkjoy.zgk.zgksystem.domain.DepartmentProductRelation;
+import cn.thinkjoy.zgk.zgksystem.pojo.DepartmentProductRelationPojo;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -25,6 +27,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.pingplusplus.Pingpp;
 import com.pingplusplus.model.Charge;
+import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +57,10 @@ public class OrdersController extends ZGKBaseController {
 
     @Autowired
     private IOrderService orderService;
+
+    @Autowired
+    private SMSService smsService;
+
     @Autowired
     private IOrderStatementsService orderStatementService;
     @Autowired
@@ -87,14 +95,22 @@ public class OrdersController extends ZGKBaseController {
             throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
         }
         Long userId = userAccountPojo.getId();
+        //返回的地址
         String returnUrl = ordersQuery.getReturnUrl();
+        //redis缓存返回url
         RedisUtil.getInstance().set("pay_return_url_" + userId, returnUrl, 24l, TimeUnit.HOURS);
+        //生成订单序号
         String orderNo = String.valueOf(System.currentTimeMillis()) + userId;
+        //获取产品(状元及第/金榜题名)
         String products = ordersQuery.getProducts();
+        //获取商品信息
         Order order = getOrder(userId, products);
+        //保存手机号码
+        order.setPhone(ordersQuery.getPhone());
         Map<String, String> resultMap = new HashMap<>();
         try {
             resultMap.put("orderNo", order.getOrderNo());
+            //保存订单信息
             orderService.insert(order);
             LOGGER.info("create orders :" + orderNo);
             return resultMap;
@@ -102,6 +118,74 @@ public class OrdersController extends ZGKBaseController {
             LOGGER.error("====pay /orders/createOrder catch: " + e.getMessage());
             throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
         }
+    }
+
+    /**
+     * 支付宝支付
+     *
+     * @return
+     */
+    @RequestMapping(value = "paySuccess")
+    @ResponseBody
+    public Map<String,Object> paySuccess(@RequestParam(value = "orderNo", required = true) String orderNo,
+                           @RequestParam(value = "token", required = true) String token){
+        Map<String,Object> resultMap = new HashedMap();
+        //获取用户信息
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+        if (userAccountPojo == null) {
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
+        }
+        //根据订单号获取订单信息
+        Order order = getOrder(orderNo);
+        //校验订单状态
+        String state = order.getState();
+        /*判断交易状态(交易未支付等其他状态直接return,交易已支付判断交易是否已经生成过账号密码,
+        * 初次支付成功,一定未生成卡号)
+        */
+        Card card = null;
+        order.setUpdateDate(System.currentTimeMillis());
+        try {
+            if (PayEnum.SUCCESS.getCode().equals(order.getStatus())) {
+                //支付成功
+                //判断用户发货状态
+                if (CardHandleStateEnum.N.getCode().toString().equals(order.getHandleState())) {
+                    //没有发货状态
+                    /**
+                     * 生成vip卡号
+                     */
+                    card = orderService.singleCreateCard(Integer.valueOf(order.getProductType()));
+                    //HandleState 0:未发货 1:已发货
+                    order.setHandleState(CardHandleStateEnum.Y.getCode().toString());
+                    //从insert回调中取得cardId做关联
+                    order.setCardId(card.getId());
+                    resultMap.put("cardNumber",card.getCardNumber());
+                    resultMap.put("password",card.getPassword());
+                    resultMap.put("phone",order.getPhone());
+                    //TODO 发送短信
+                    try {
+                        smsService.sendVipCard(new SMSSendVipCard(order.getPhone(),card.getCardNumber(),card.getPassword(), CloudContextFactory.getCloudContext().getApplicationName()));
+
+                    }catch (Exception e){
+                        LOGGER.info("发送短信失败:"+"phone:"+order.getPhone()+" card:"+card.getCardNumber()+" password:"+card.getPassword());
+                    }
+                }else {
+                    //已经发货状态
+                    //取得当前用户该订单的卡号
+                    Map<String,Object> orderMap = orderService.getCardByUidAndNo(userAccountPojo.getId(),orderNo);
+                    resultMap.put("cardNumber",orderMap.get("cardNumber"));
+                    resultMap.put("password",orderMap.get("password"));
+                    resultMap.put("phone",order.getPhone());
+                }
+            }else {
+                throw new BizException(ERRORCODE.ORDER_PAY_FAIL.getCode(),ERRORCODE.ORDER_PAY_FAIL.getMessage());
+            }
+        }finally {
+            //更新订单状态
+            orderService.update(order);
+        }
+
+        //返回vip卡号和密码
+        return resultMap;
     }
 
     /**
@@ -215,8 +299,15 @@ public class OrdersController extends ZGKBaseController {
 
     private BigDecimal getSalePrice(String productId) {
         BigDecimal salePrice = BigDecimal.ZERO;
-        List<DepartmentProductRelation > relations = deparmentApiService.queryProductPriceByAreaId(getAreaId().toString());
-        for (DepartmentProductRelation relation: relations) {
+        List<DepartmentProductRelationPojo > relations = null;
+        try {
+            relations = deparmentApiService.queryProductPriceByAreaId(getAreaId().toString());
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        for (DepartmentProductRelationPojo relation: relations) {
             if(productId.equals(relation.getProductId().toString()))
             {
                 salePrice = new BigDecimal(relation.getSalePrice()).setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -428,9 +519,9 @@ public class OrdersController extends ZGKBaseController {
     public Map<String, Object> getOrderDetail(@RequestParam(value = "orderNo", required = true)String orderNo,
                                               @RequestParam(value = "token", required = true)String token)
     {
-        long userId = getUserAccountPojo().getId();
+        String userId = getAccoutId();
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("userId", userId+"");
+        paramMap.put("userId", userId);
         paramMap.put("orderNo", orderNo+"");
         List<Map<String, Object>> orderList = userAccountExService.getOrderList(paramMap);
         if (null == orderList || orderList.size()==0) {
@@ -440,6 +531,7 @@ public class OrdersController extends ZGKBaseController {
         return orderList.get(0);
     }
 
+
     /**
      * 获取订单列表
      * @param token
@@ -447,15 +539,19 @@ public class OrdersController extends ZGKBaseController {
      */
     @ResponseBody
     @RequestMapping(value="getOrderList")
+    @Deprecated
     public List<Map<String, Object>> getOrderList(@RequestParam(value = "token", required = true)String token)
     {
-        long userId = getUserAccountPojo().getId();
+        String userId = getAccoutId();
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("userId", userId+"");
+        paramMap.put("userId", userId);
         List<Map<String, Object>> orderList = userAccountExService.getOrderList(paramMap);
         fixOrderList(orderList);
         return orderList;
     }
+
+
+
 
     private void fixOrderList(List<Map<String, Object>> orderList) {
         if(null != orderList && orderList.size()>0)
@@ -485,7 +581,7 @@ public class OrdersController extends ZGKBaseController {
         if("0".equals(order.getStatus()+"") && System.currentTimeMillis() -  createDate > expireDuration)
         {
             //订单过期
-            order.setStatus(2);
+            order.setStatus(PayEnum.PAY_TIME_OUT.getCode());
             orderService.update(order);
         }
     }

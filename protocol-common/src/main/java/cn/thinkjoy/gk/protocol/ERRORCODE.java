@@ -66,6 +66,7 @@ public enum ERRORCODE {
 	VERIFY_CODE_ERROR("0100005", "验证码错误!"),
 	NOT_IS_VIP_ERROR("0100006", "升级成VIP用户才可使用该功能，快点升级VIP用户去吧！"),
 	CARD_HAS_ACTIVATE("0100007", "该卡已被激活!"),
+	ORDER_PAY_FAIL("0100008", "支付失败!"),
 
 	PARAM_NOTEXIST("0600001", "查询参数不存在"),
 	IDISNOTNULL("0600002", "id不能为空"),
@@ -94,7 +95,13 @@ public enum ERRORCODE {
 
 	IMAGE_CAPTCHA_NOT_EXIST_ERROR("0600011", "图形验证码已失效,或者不存在!"),
 
-	IMAGE_CAPTCHA_INVALID_ERROR("0600012", "图形验证码错误!");
+	IMAGE_CAPTCHA_INVALID_ERROR("0600012", "图形验证码错误!"),
+
+	EVALUATION_IS_NULL("0600014", "测评结果不能为空!"),
+
+	COLLECTION_EXIST("0600015", "该组合已经被收藏!"),
+
+	SELECT_SUBJECT_IDENTICAL("0600013", "只有不同的选课方案才能做对比哦!");
 
 	/** The code. */
 	private final String code;
@@ -104,7 +111,7 @@ public enum ERRORCODE {
 
 	/**
 	 * Instantiates a new error type.
-	 * 
+	 *
 	 * @param code
 	 *            the code
 	 * @param message
@@ -117,7 +124,7 @@ public enum ERRORCODE {
 
 	/**
 	 * Gets the code.
-	 * 
+	 *
 	 * @return the code
 	 */
 	public String getCode() {
@@ -126,7 +133,7 @@ public enum ERRORCODE {
 
 	/**
 	 * Gets the message.
-	 * 
+	 *
 	 * @return the message
 	 */
 	public String getMessage() {

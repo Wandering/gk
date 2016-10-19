@@ -13,6 +13,15 @@ public class MajoredDto {
     private String similarMajored;
     private String mainCourse;
     private String workGuide;
+    private String salary;
+
+    public String getSalary() {
+        return salary;
+    }
+
+    public void setSalary(String salary) {
+        this.salary = salary;
+    }
 
     public String getWorkGuide() {
         return workGuide;

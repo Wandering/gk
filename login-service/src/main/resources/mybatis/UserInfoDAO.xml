@@ -37,7 +37,8 @@
         sex as sex ,
         subjectType as subjectType ,
         mail as mail ,
-        qq as qq
+        qq as qq,
+        grade as grade
     </sql>
     <insert id="insert" parameterType="UserInfo">
         INSERT INTO zgk_user_info (
@@ -52,7 +53,8 @@
         sex,
         subjectType,
         mail,
-        qq
+        qq,
+        grade
         ) VALUES (
         #{token},
         #{name},
@@ -65,7 +67,8 @@
         #{sex},
         #{subjectType},
         #{mail},
-        #{qq}
+        #{qq},
+        #{grade}
         )
         <selectKey resultType="java.lang.Long" keyProperty="id">
             SELECT LAST_INSERT_ID() AS ID
@@ -111,6 +114,9 @@
             </if>
             <if test="qq!=null">
                 qq = #{qq},
+            </if>
+            <if test="grade!=null">
+                grade = #{grade},
             </if>
         </trim>
         WHERE
