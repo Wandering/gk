@@ -8,4 +8,8 @@ import cn.thinkjoy.gk.query.ExpertOrder;
 public interface IExpertDAO
 {
     void insertOrder(ExpertOrder order);
+
+    ExpertOrder findOrderByOrderNo(String orderNo);
+
+    void updateOrder(ExpertOrder order);
 }

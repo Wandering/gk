@@ -1,12 +1,12 @@
-package cn.thinkjoy.gk.controller;
+package cn.thinkjoy.gk.controller.expert;
 
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
-import cn.thinkjoy.gk.domain.Order;
 import cn.thinkjoy.gk.domain.OrderStatements;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.service.IOrderService;
+import cn.thinkjoy.gk.query.ExpertOrder;
+import cn.thinkjoy.gk.service.IExpertService;
 import cn.thinkjoy.gk.service.IOrderStatementsService;
 import cn.thinkjoy.gk.util.RedisUtil;
 import com.alibaba.fastjson.JSONObject;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.util.Enumeration;
 import java.util.Map;
@@ -31,15 +30,16 @@ import java.util.Map;
  */
 @Controller
 @Scope(SpringMVCConst.SCOPE)
-@RequestMapping("")
+@RequestMapping("expert")
 public class PayCallbackController extends ZGKBaseController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(PayCallbackController.class);
 
     @Autowired
-    private IOrderService orderService;
+    private IExpertService expertService;
     @Autowired
-    private IOrderStatementsService orderStatementService;
+    private IOrderStatementsService<cn.thinkjoy.common.dao.IBaseDAO<OrderStatements>, OrderStatements>
+        orderStatementService;
     /**
      * 微信支付回调
      * @param request
@@ -53,7 +53,7 @@ public class PayCallbackController extends ZGKBaseController {
         }
         byte buffer[] = new byte[contentLength];
         for (int i = 0; i < contentLength;) {
-            int readlen = 0;
+            int readlen;
             try {
                 readlen = request.getInputStream().read(buffer, i,
                         contentLength - i);
@@ -62,34 +62,28 @@ public class PayCallbackController extends ZGKBaseController {
                 }
                 i += readlen;
                 String requestJson=new String(buffer,"UTF-8");
-                LOGGER.debug(requestJson);
-                int status = 0;
+                String status;
                 JSONObject object=   JSONObject.parseObject(requestJson);
                 String result = object.getString("type");
-                Map<String,Object> callBackMap= (Map) ((Map)object.get("data")).get("object");
+                Map<String,Object> callBackMap= (Map<String, Object>) ((Map)object.get("data")).get("object");
                 String statementNo = callBackMap.get("order_no").toString();
                 String channel = callBackMap.get("channel").toString();
-                String amount = callBackMap.get("amount").toString();
-                BigDecimal price = new BigDecimal(amount).divide(new BigDecimal(100),2,BigDecimal.ROUND_HALF_DOWN);
                 if("charge.succeeded".equals(result))
                 {
-                    status=1;
-                    LOGGER.debug("流水号:"+statementNo+"支付成功!支付金额为"+price.toString());
-                    OrderStatements orderStatement =(OrderStatements) orderStatementService.findOne("statement_no", statementNo);
+                    status="1";
+                    OrderStatements orderStatement = orderStatementService.findOne("statement_no", statementNo);
                     if(!"1".equals(orderStatement.getStatus() + ""))
                     {
                         orderStatement.setStatus(1);
                         orderStatement.setCallBackJson(requestJson);
                         orderStatementService.update(orderStatement);
-                        LOGGER.debug("流水号:"+statementNo+"状态跟新成功!");
                     }
                     String orderNo = orderStatement.getOrderNo();
-                    Order order = (Order) orderService.findOne("order_no", orderNo);
-                    if(order !=null&&order.getStatus()==0){
-                        order.setStatus(status);
+                    ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
+                    if(order !=null&&"0".equals(order.getOrderStatus())){
+                        order.setOrderStatus(status);
                         order.setChannel(channel);
-                        orderService.update(order);
-                        LOGGER.debug("订单号:"+orderNo+"状态跟新成功!");
+                        expertService.updateOrder(order);
                     }
                     response.setStatus(200);
                 }else if ("refund.succeeded".equals(result)) {
@@ -112,8 +106,8 @@ public class PayCallbackController extends ZGKBaseController {
     public String aLiPayCallback(HttpServletRequest request) {
         String returnUrl = "www.zhigaokao.cn";
         Map<String, String> paramMap = Maps.newHashMap();
-        String prop;
         Enumeration<String> names = request.getParameterNames();
+        String prop;
         while (names.hasMoreElements()) {
             prop = names.nextElement();
             paramMap.put(prop, request.getParameter(prop));
@@ -122,22 +116,27 @@ public class PayCallbackController extends ZGKBaseController {
             request.setCharacterEncoding("UTF-8");
             if(!paramMap.isEmpty()) {
                 String statementNo = paramMap.get("out_trade_no");
-                OrderStatements orderStatement =(OrderStatements) orderStatementService.findOne("statement_no", statementNo);
-                String orderNo = orderStatement.getOrderNo();
-                Order order = (Order) orderService.findOne("order_no", orderNo);
-                if(order !=null&&order.getStatus()==0){
-                    order.setStatus(1);
-                    order.setChannel("alipay_pc_direct");
-                    orderService.update(order);
-                }
-                long userId = order.getUserId();
-                String urlKey = "pay_return_url_"+userId;
-                //获取回调url
-                if(RedisUtil.getInstance().exists(urlKey))
+                OrderStatements orderStatement = orderStatementService.findOne("statement_no", statementNo);
+                if(!"1".equals(orderStatement.getStatus() + ""))
                 {
-                    returnUrl = String.valueOf(RedisUtil.getInstance().get(urlKey));
-                    returnUrl = URLDecoder.decode(returnUrl, "UTF-8");
-                    RedisUtil.getInstance().del(urlKey);
+                    orderStatement.setStatus(1);
+                    orderStatementService.update(orderStatement);
+                }
+                String orderNo = orderStatement.getOrderNo();
+                ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
+                if(order !=null&&"0".equals(order.getOrderStatus())){
+                    order.setOrderStatus("1");
+                    order.setChannel("alipay_pc_direct");
+                    expertService.updateOrder(order);
+                    String userId = order.getUserId();
+                    String urlKey = "pay_return_url_"+userId;
+                    //获取回调url
+                    if(RedisUtil.getInstance().exists(urlKey))
+                    {
+                        returnUrl = String.valueOf(RedisUtil.getInstance().get(urlKey));
+                        returnUrl = URLDecoder.decode(returnUrl, "UTF-8");
+                        RedisUtil.getInstance().del(urlKey);
+                    }
                 }
             }
         } catch (Exception e) {

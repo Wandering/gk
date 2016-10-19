@@ -22,9 +22,15 @@ public class ExpertServiceImpl implements IExpertService
     }
 
     @Override
-    public void findOrderByOrderNo(String orderNo, String orderNo1)
+    public ExpertOrder findOrderByOrderNo(String orderNo)
     {
+        return dao.findOrderByOrderNo(orderNo);
+    }
 
+    @Override
+    public void updateOrder(ExpertOrder order)
+    {
+        dao.updateOrder(order);
     }
 
 }

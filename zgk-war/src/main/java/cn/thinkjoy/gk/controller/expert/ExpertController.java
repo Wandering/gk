@@ -57,9 +57,6 @@ public class ExpertController  extends ZGKBaseController
     @Autowired
     private IOrderStatementsService orderStatementService;
 
-    @Autowired
-    private IUserAccountExService userAccountExService;
-
     /**
      * 下订单
      *
@@ -124,7 +121,7 @@ public class ExpertController  extends ZGKBaseController
     }
 
     private ExpertOrder getOrder(String orderNo) {
-        ExpertOrder order = (ExpertOrder) expertService.findOrderByOrderNo("orderNo", orderNo);
+        ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
         if (null == order) {
             throw new BizException("0000010", "订单号无效!");
         }
@@ -183,7 +180,7 @@ public class ExpertController  extends ZGKBaseController
         chargeParams.put("channel", channel);
         chargeParams.put("client_ip", IPUtil.getRemortIP(request));
         chargeParams.put("subject", "智高考");
-        chargeParams.put("body", "专家一对一");
+        chargeParams.put("body", "问专家");
         chargeParams.put("currency", "cny");
         if ("alipay_pc_direct".equals(channel)) {
             Map<String, Object> extraMap = new HashMap<>();

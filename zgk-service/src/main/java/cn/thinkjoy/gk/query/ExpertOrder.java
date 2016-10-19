@@ -12,6 +12,7 @@ public class ExpertOrder implements Serializable
     private String orderStatus;
     private String userId;
     private String expertId;
+    private String channel;
     private String serverType;
     private String serverPrice;
     private String contactPerson;
@@ -160,5 +161,15 @@ public class ExpertOrder implements Serializable
     public void setCreateDate(Long createDate)
     {
         this.createDate = createDate;
+    }
+
+    public String getChannel()
+    {
+        return channel;
+    }
+
+    public void setChannel(String channel)
+    {
+        this.channel = channel;
     }
 }
