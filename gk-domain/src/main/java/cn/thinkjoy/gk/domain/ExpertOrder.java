@@ -1,4 +1,4 @@
-package cn.thinkjoy.gk.query;
+package cn.thinkjoy.gk.domain;
 
 import java.io.Serializable;
 

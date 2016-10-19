@@ -6,13 +6,12 @@ import cn.thinkjoy.gk.common.MatrixToImageWriter;
 import cn.thinkjoy.gk.common.NumberGenUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.domain.ExpertOrder;
 import cn.thinkjoy.gk.domain.OrderStatements;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.query.ExpertOrder;
 import cn.thinkjoy.gk.service.IExpertService;
 import cn.thinkjoy.gk.service.IOrderStatementsService;
-import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.IPUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import com.alibaba.fastjson.JSON;
@@ -37,7 +36,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -47,7 +45,7 @@ import java.util.concurrent.TimeUnit;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/expert")
-public class ExpertController  extends ZGKBaseController
+public class ExpertController extends ZGKBaseController
 {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(ExpertController.class);
@@ -64,8 +62,8 @@ public class ExpertController  extends ZGKBaseController
      */
     @RequestMapping(value = "createOrders")
     @ResponseBody
-    public Map<String, String> createOrder(ExpertOrder expertOrder) throws Exception {
-
+    public Map<String, String> createOrder(@RequestParam(value = "token", required = true) String token
+        ,ExpertOrder expertOrder) throws Exception {
         if (expertOrder == null) {
             LOGGER.error("====pay /orders/createOrders PARAM_ERROR ");
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());

@@ -3,9 +3,9 @@ package cn.thinkjoy.gk.controller.expert;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.domain.ExpertOrder;
 import cn.thinkjoy.gk.domain.OrderStatements;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.query.ExpertOrder;
 import cn.thinkjoy.gk.service.IExpertService;
 import cn.thinkjoy.gk.service.IOrderStatementsService;
 import cn.thinkjoy.gk.util.RedisUtil;
@@ -30,10 +30,10 @@ import java.util.Map;
  */
 @Controller
 @Scope(SpringMVCConst.SCOPE)
-@RequestMapping("expert")
-public class PayCallbackController extends ZGKBaseController {
+@RequestMapping("/expertCallBack")
+public class ExpertPayCallbackController extends ZGKBaseController {
 
-    private static final Logger LOGGER= LoggerFactory.getLogger(PayCallbackController.class);
+    private static final Logger LOGGER= LoggerFactory.getLogger(ExpertPayCallbackController.class);
 
     @Autowired
     private IExpertService expertService;
@@ -63,7 +63,7 @@ public class PayCallbackController extends ZGKBaseController {
                 i += readlen;
                 String requestJson=new String(buffer,"UTF-8");
                 String status;
-                JSONObject object=   JSONObject.parseObject(requestJson);
+                JSONObject object= JSONObject.parseObject(requestJson);
                 String result = object.getString("type");
                 Map<String,Object> callBackMap= (Map<String, Object>) ((Map)object.get("data")).get("object");
                 String statementNo = callBackMap.get("order_no").toString();

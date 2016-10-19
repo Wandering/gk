@@ -1,6 +1,6 @@
 package cn.thinkjoy.gk.service;
 
-import cn.thinkjoy.gk.query.ExpertOrder;
+import cn.thinkjoy.gk.domain.ExpertOrder;
 
 /**
  * Created by liusven on 2016/10/19.
