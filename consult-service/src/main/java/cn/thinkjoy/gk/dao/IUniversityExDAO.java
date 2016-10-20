@@ -94,4 +94,11 @@ public interface IUniversityExDAO{
             @Param("index") Integer index,
             @Param("pageSize") Integer pageSize
     );
+
+    /**
+     * 查询特类招生
+     * @param areaId
+     * @return
+     */
+    List<String> searchSpecialMajorSpec(Long areaId);
 }
