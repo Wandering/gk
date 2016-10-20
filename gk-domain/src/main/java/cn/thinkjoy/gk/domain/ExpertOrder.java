@@ -8,20 +8,40 @@ import java.io.Serializable;
 public class ExpertOrder implements Serializable
 {
     private Long id;
+
     private String orderNo;
+
     private String orderStatus;
+
     private String userId;
+
     private String expertId;
+
     private String channel;
+
     private String serverType;
+
     private String serverPrice;
+
     private String contactPerson;
+
     private String contactPhone;
+
     private String contactQq;
+
     private Long expectBeginDate;
+
     private Long expectEndDate;
+
     private Long createDate;
+
     private String returnUrl;
+
+    private String serverAddress;
+
+    private String serverContent;
+
+    private String questionDesc;
 
     public String getReturnUrl()
     {
@@ -171,5 +191,35 @@ public class ExpertOrder implements Serializable
     public void setChannel(String channel)
     {
         this.channel = channel;
+    }
+
+    public String getServerAddress()
+    {
+        return serverAddress;
+    }
+
+    public void setServerAddress(String serverAddress)
+    {
+        this.serverAddress = serverAddress;
+    }
+
+    public String getServerContent()
+    {
+        return serverContent;
+    }
+
+    public void setServerContent(String serverContent)
+    {
+        this.serverContent = serverContent;
+    }
+
+    public String getQuestionDesc()
+    {
+        return questionDesc;
+    }
+
+    public void setQuestionDesc(String questionDesc)
+    {
+        this.questionDesc = questionDesc;
     }
 }

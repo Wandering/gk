@@ -36,4 +36,6 @@ public interface IExpertDAO
     List<ExpertInfoPojo> selectExpertListBySpecialty(@Param("map")Map<String,Object> map);
 
     void insertUserCommonQuestion(@Param("map")Map<String,Object> map);
+
+    List<Map<String,Object>> getExpertOrderList(String userId);
 }

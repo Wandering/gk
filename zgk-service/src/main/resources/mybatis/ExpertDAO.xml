@@ -105,6 +105,9 @@
             expertId,
             channel,
             serverType,
+            serverAddress,
+            serverContent,
+            questionDesc,
             serverPrice,
             contactPerson,
             contactPhone,
@@ -119,6 +122,9 @@
             #{expertId},
             #{channel},
             #{serverType},
+            #{serverAddress},
+            #{serverContent},
+            #{questionDesc},
             #{serverPrice},
             #{contactPerson},
             #{contactPhone},
@@ -152,6 +158,15 @@
             </if>
             <if test="serverType!=null">
                 serverType = #{serverType},
+            </if>
+            <if test="serverAddress!=null">
+                serverAddress = #{serverAddress},
+            </if>
+            <if test="serverContent!=null">
+                serverContent = #{serverContent},
+            </if>
+            <if test="questionDesc!=null">
+                questionDesc = #{questionDesc},
             </if>
             <if test="serverPrice!=null">
                 serverPrice = #{serverPrice},
@@ -188,6 +203,9 @@
         expertId,
         channel,
         serverType,
+        serverAddress,
+        serverContent,
+		questionDesc,
         serverPrice,
         contactPerson,
         contactPhone,
@@ -198,6 +216,31 @@
         FROM zgk_expert_reservation_order WHERE
         orderNo = #{orderNo}
         LIMIT 0,1
+    </select>
+
+    <select id="getExpertOrderList" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT
+        t.orderNo,
+        case when t.orderStatus='0' then '未支付'
+            when t.orderStatus='1' then '已支付'
+            else '未支付' end as orderStatus,
+        s.expert_name as expertName,
+        t.channel,
+        t.serverType,
+		t.serverAddress,
+        t.serverContent,
+		t.questionDesc,
+        t.serverPrice,
+        t.contactPerson,
+        t.contactPhone,
+        t.contactQq,
+        t.expectBeginDate,
+        t.expectEndDate,
+        t.createDate
+        FROM zgk_expert_reservation_order t
+        left join zgk_expert_info s on t.expertId = s.id
+        WHERE
+        userId = #{userId}
     </select>
     
     <select id="selectExpertListBySpecialty" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ExpertInfoPojo">

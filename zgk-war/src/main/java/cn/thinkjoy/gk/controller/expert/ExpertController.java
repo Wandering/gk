@@ -169,14 +169,14 @@ public class ExpertController extends ZGKBaseController
         String orderNo= NumberGenUtil.genOrderNo();
         expertOrder.setOrderNo(orderNo);
         expertOrder.setCreateDate(System.currentTimeMillis());
-        expertOrder.setOrderStatus("1");
+        expertOrder.setOrderStatus("0");
         return expertOrder;
     }
 
     private Charge getCharge(Map<String,String> paramMap) throws Exception {
         Pingpp.apiKey = DynConfigClientFactory.getClient().getConfig("common", "apiKey");
         String appid = DynConfigClientFactory.getClient().getConfig("common", "appId");
-        String aliReturnUrl = DynConfigClientFactory.getClient().getConfig("common", "aliReturnUrl");
+        String aliReturnUrl = DynConfigClientFactory.getClient().getConfig("common", "expertAliReturnUrl");
         Map<String, Object> chargeParams = new HashMap<>();
         Map<String, String> app = new HashMap<>();
         app.put("id", appid);
@@ -195,7 +195,9 @@ public class ExpertController extends ZGKBaseController
             extraMap.put("success_url", aliReturnUrl+"?token="+paramMap.get("token"));
             chargeParams.put("extra", extraMap);
         } else if ("wx_pub_qr".equals(channel)) {
-            chargeParams.put("extra", new HashMap<>());
+            Map<String, Object> extraMap = new HashMap<>();
+            extraMap.put("product_id", "1");
+            chargeParams.put("extra", extraMap);
         }
         createOrderStatement(paramMap, chargeParams, statemenstNo);
         return Charge.create(chargeParams);
@@ -388,6 +390,20 @@ public class ExpertController extends ZGKBaseController
         Map<String,Object> resultMap=new HashMap<>();
         resultMap.put("expertAppraiseList",expertAppraiseList);
         return resultMap;
+    }
+
+    /**
+     * 专家订单列表
+     * @param token
+     * @return
+     */
+    @RequestMapping(value = "getExpertOrderList")
+    @ResponseBody
+    public List<Map<String,Object>> getExpertOrderList(@RequestParam(value = "token", required = true) String token)
+    {
+        String userId = getUserAccountPojo().getId()+"";
+        List<Map<String,Object>> list = expertService.getExpertOrderList(userId);
+        return list;
     }
 
     @RequestMapping("checkExpert")
