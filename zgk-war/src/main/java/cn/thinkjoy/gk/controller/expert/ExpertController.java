@@ -7,6 +7,8 @@ import cn.thinkjoy.gk.common.NumberGenUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.OrderStatements;
+import cn.thinkjoy.gk.entity.*;
+import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.ExpertOrder;
@@ -251,4 +253,102 @@ public class ExpertController  extends ZGKBaseController
         }
     }
 
+    @RequestMapping(value = "getCommonQuestion")
+    @ResponseBody
+    public Map<String,Object> getCommonQuestion(@RequestParam(value="offset",required = false,defaultValue = "0")String offset,
+                                                @RequestParam(value="rows",required = false,defaultValue = "10")String rows){
+        Map<String,Object> map=new HashMap<>();
+        map.put("offset",offset);
+        map.put("rows",rows);
+        List<CommonQuestion> commonQuestionList=expertService.selectCommonQuestion(map);
+        Map<String,Object> resultMap=new HashMap<>();
+        resultMap.put("commonQuestionList",commonQuestionList);
+        return resultMap;
+    }
+
+    @RequestMapping(value = "getExpertList")
+    @ResponseBody
+    public Map<String,Object> getExpertList(@RequestParam(value = "areaId")String areaId,
+                                            @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
+                                            @RequestParam(value="rows",required = false,defaultValue = "10")String rows){
+        Map<String,Object> map=new HashMap<>();
+        map.put("areaId",areaId);
+        map.put("offset",offset);
+        map.put("rows",rows);
+        List<ExpertInfoPojo> expertInfoPojoList=expertService.selectExpertList(map);
+        Map<String,Object> resultMap=new HashMap<>();
+        resultMap.put("expertInfoPojoList",expertInfoPojoList);
+        return resultMap;
+    }
+
+    @RequestMapping(value = "getExpertInfo")
+    @ResponseBody
+    public Map<String,Object> getExpertInfo(@RequestParam(value = "expertId")String expertId){
+        Map<String,Object> map=new HashMap<>();
+        map.put("expertId",expertId);
+        ExpertInfoPojo expertInfoPojo=expertService.selectExpertInfo(map);
+        Map<String,Object> resultMap=new HashMap<>();
+        resultMap.put("expertInfoPojo",expertInfoPojo);
+        return resultMap;
+    }
+
+    @RequestMapping(value = "getVedioList")
+    @ResponseBody
+    public Map<String,Object> getVedioList(@RequestParam(value = "expertId")String expertId,
+                                           @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
+                                           @RequestParam(value="rows",required = false,defaultValue = "10")String rows){
+        Map<String,Object> map=new HashMap<>();
+        map.put("expertId",expertId);
+        map.put("offset",offset);
+        map.put("rows",rows);
+        List<ExpertVedio> expertVedioList=expertService.selectVedioList(map);
+        Map<String,Object> resultMap=new HashMap<>();
+        resultMap.put("expertVedioList",expertVedioList);
+        return resultMap;
+    }
+
+    @RequestMapping(value = "getQuestionList")
+    @ResponseBody
+    public Map<String,Object> getQuestionList(@RequestParam(value = "expertId")String expertId,
+                                              @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
+                                              @RequestParam(value="rows",required = false,defaultValue = "10")String rows){
+        Map<String,Object> map=new HashMap<>();
+        map.put("expertId",expertId);
+        map.put("offset",offset);
+        map.put("rows",rows);
+        List<UserQuestion> userQuestionList=expertService.selectQuestionList(map);
+        Map<String,Object> resultMap=new HashMap<>();
+        resultMap.put("userQuestionList",userQuestionList);
+        return resultMap;
+    }
+
+    @RequestMapping(value = "getCasesList")
+    @ResponseBody
+    public Map<String,Object> getCasesList(@RequestParam(value = "expertId")String expertId,
+                                           @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
+                                           @RequestParam(value="rows",required = false,defaultValue = "10")String rows){
+        Map<String,Object> map=new HashMap<>();
+        map.put("expertId",expertId);
+        map.put("offset",offset);
+        map.put("rows",rows);
+        List<ExpertCases> expertCasesList=expertService.selectCasesList(map);
+        Map<String,Object> resultMap=new HashMap<>();
+        resultMap.put("expertCasesList",expertCasesList);
+        return resultMap;
+    }
+
+    @RequestMapping(value = "getAppraiseList")
+    @ResponseBody
+    public Map<String,Object> getAppraiseList(@RequestParam(value = "expertId")String expertId,
+                                              @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
+                                              @RequestParam(value="rows",required = false,defaultValue = "10")String rows){
+        Map<String,Object> map=new HashMap<>();
+        map.put("expertId",expertId);
+        map.put("offset",offset);
+        map.put("rows",rows);
+        List<ExpertAppraise> expertAppraiseList=expertService.selectAppraiseList(map);
+        Map<String,Object> resultMap=new HashMap<>();
+        resultMap.put("expertAppraiseList",expertAppraiseList);
+        return resultMap;
+    }
 }

@@ -3,5 +3,86 @@
 
 <mapper namespace="cn.thinkjoy.gk.dao.IExpertDAO">
 
+    <!-- 预约专家常规问题 -->
+    <select id="selectCommonQuestion" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.CommonQuestion">
+        select id,question_desc as questionDesc,question_order as questionOrder,create_date as createDate,specialitys from zgk_expert_common_question ecq order by ecq.question_order asc limit ${offset}, ${rows}
+    </select>
+
+    <!-- 预约专家列表 -->
+    <select id="selectExpertList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ExpertInfoPojo">
+        select ei.id as expertId,ei.expert_name as expertName,GROUP_CONCAT(DISTINCT ec1.config_value) as speciality ,
+            count(DISTINCT ec2.id) as casesNumber,GROUP_CONCAT(DISTINCT ec3.config_value) service,ei.qualification as qualification,expert_photo_url as photoUrl
+        from zgk_expert_info ei
+        left join zgk_expert_speciality_relation esr on ei.id=esr.expert_id
+        left join zgk_expert_config ec1 on ec1.config_domain='speciality' and ec1.config_key=esr.speciality_id
+        left join zgk_expert_cases ec2 on ei.id=ec2.expert_id
+        left join zgk_expert_service_relation esr2 on esr2.expert_id=ei.id
+        left join zgk_expert_config ec3 on ec3.config_domain='serviceStyle' and ec3.config_key=esr2.service_style_id
+        where is_checked=1
+        group by ei.id
+        limit ${offset}, ${rows}
+    </select>
+
+    <!-- 预约专家详情 -->
+    <select id="selectExpertInfo" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ExpertInfoPojo">
+        select ei.id as expertId,ei.expert_name as expertName,GROUP_CONCAT(DISTINCT ec1.config_value) as speciality ,
+            count(DISTINCT ec2.id) as casesNumber,GROUP_CONCAT(DISTINCT ec3.config_value) service,ei.qualification as qualification,expert_photo_url as photoUrl,
+            ei.expert_intro as info
+        from zgk_expert_info ei
+        left join zgk_expert_speciality_relation esr on ei.id=esr.expert_id
+        left join zgk_expert_config ec1 on ec1.config_domain='speciality' and ec1.config_key=esr.speciality_id
+        left join zgk_expert_cases ec2 on ei.id=ec2.expert_id
+        left join zgk_expert_service_relation esr2 on esr2.expert_id=ei.id
+        left join zgk_expert_config ec3 on ec3.config_domain='serviceStyle' and ec3.config_key=esr2.service_style_id
+        where is_checked=1
+        and ei.id=#{expertId}
+        group by ei.id
+    </select>
+
+    <!-- 专家视频 -->
+    <select id="selectVedioList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.ExpertVedio">
+        select expert_id as expertId,
+               vedio_url as vedioUrl,
+               create_date as createDate
+        from zgk_expert_vedio ev where ev.expert_id=#{expertId}
+        limit ${offset}, ${rows}
+    </select>
+
+    <!-- 问答 -->
+    <select id="selectQuestionList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.UserQuestion">
+        select expert_id as expertId,
+               user_id as userId,
+               user_name as userName,
+               user_question as userQuestion,
+               user_anwser as userAnwser,
+               create_date as createDate
+        from zgk_expert_user_question euq where euq.expert_id=#{expertId}
+        limit ${offset}, ${rows}
+    </select>
+
+    <!-- 服务案例 -->
+    <select id="selectCasesList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.ExpertCases">
+        select expert_id as expertId,
+               user_name as userName,
+               school as school,
+               service_id as serviceId,
+               user_comments as userComments,
+               create_date as createDate
+        from zgk_expert_cases ec where ec.expert_id=#{expertId}
+        limit ${offset}, ${rows}
+    </select>
+
+    <!-- 服务评价 -->
+    <select id="selectAppraiseList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.ExpertAppraise">
+        select expert_id as expertId,
+               user_idas userId,
+               user_name as userName,
+               server_type as serverType,
+               user_comments as userComments,
+               is_checked as isChecked,
+               create_date as createDate
+         from zgk_expert_appraise ea where ea.expert_id=#{expertId}
+         limit ${offset}, ${rows}
+    </select>
 </mapper>
 
