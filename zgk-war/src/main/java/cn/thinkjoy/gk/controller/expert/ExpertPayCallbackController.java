@@ -72,18 +72,18 @@ public class ExpertPayCallbackController extends ZGKBaseController {
                     status="1";
                     OrderStatements orderStatement =
                         (OrderStatements)orderStatementService.findOne("statement_no", statementNo);
-                    if(!"1".equals(orderStatement.getStatus() + ""))
+                    if(null !=orderStatement && !"1".equals(orderStatement.getStatus() + ""))
                     {
                         orderStatement.setStatus(1);
                         orderStatement.setCallBackJson(requestJson);
                         orderStatementService.update(orderStatement);
-                    }
-                    String orderNo = orderStatement.getOrderNo();
-                    ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
-                    if(order !=null&&"0".equals(order.getOrderStatus())){
-                        order.setOrderStatus(status);
-                        order.setChannel(channel);
-                        expertService.updateOrder(order);
+                        String orderNo = orderStatement.getOrderNo();
+                        ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
+                        if(order !=null&&"0".equals(order.getOrderStatus())){
+                            order.setOrderStatus(status);
+                            order.setChannel(channel);
+                            expertService.updateOrder(order);
+                        }
                     }
                     response.setStatus(200);
                 }else if ("refund.succeeded".equals(result)) {
