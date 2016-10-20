@@ -391,4 +391,14 @@ public class ExpertController extends ZGKBaseController
         resultMap.put("expertAppraiseList",expertAppraiseList);
         return resultMap;
     }
+
+
+    @RequestMapping(value = "getExpertOrderList")
+    @ResponseBody
+    public List<Map<String,Object>> getExpertOrderList(@RequestParam(value = "token", required = true) String token)
+    {
+        String userId = getUserAccountPojo().getId()+"";
+        List<Map<String,Object>> list = expertService.getExpertOrderList(userId);
+        return list;
+    }
 }

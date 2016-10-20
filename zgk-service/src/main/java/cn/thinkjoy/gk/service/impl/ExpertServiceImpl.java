@@ -73,4 +73,10 @@ public class ExpertServiceImpl implements IExpertService
         return dao.selectAppraiseList(map);
     }
 
+    @Override
+    public List<Map<String, Object>> getExpertOrderList(String userId)
+    {
+        return dao.getExpertOrderList(userId);
+    }
+
 }

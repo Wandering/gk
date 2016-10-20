@@ -37,6 +37,12 @@ public class ExpertOrder implements Serializable
 
     private String returnUrl;
 
+    private String serverAddress;
+
+    private String serverContent;
+
+    private String questionDesc;
+
     public String getReturnUrl()
     {
         return returnUrl;
@@ -185,5 +191,35 @@ public class ExpertOrder implements Serializable
     public void setChannel(String channel)
     {
         this.channel = channel;
+    }
+
+    public String getServerAddress()
+    {
+        return serverAddress;
+    }
+
+    public void setServerAddress(String serverAddress)
+    {
+        this.serverAddress = serverAddress;
+    }
+
+    public String getServerContent()
+    {
+        return serverContent;
+    }
+
+    public void setServerContent(String serverContent)
+    {
+        this.serverContent = serverContent;
+    }
+
+    public String getQuestionDesc()
+    {
+        return questionDesc;
+    }
+
+    public void setQuestionDesc(String questionDesc)
+    {
+        this.questionDesc = questionDesc;
     }
 }

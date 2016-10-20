@@ -30,4 +30,6 @@ public interface IExpertDAO
     ExpertOrder findOrderByOrderNo(String orderNo);
 
     void updateOrder(ExpertOrder order);
+
+    List<Map<String,Object>> getExpertOrderList(String userId);
 }

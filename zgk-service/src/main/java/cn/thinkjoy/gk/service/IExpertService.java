@@ -31,4 +31,6 @@ public interface IExpertService
     List<ExpertCases> selectCasesList(Map<String,Object> map);
 
     List<ExpertAppraise> selectAppraiseList(Map<String,Object> map);
+
+    List<Map<String,Object>> getExpertOrderList(String userId);
 }
