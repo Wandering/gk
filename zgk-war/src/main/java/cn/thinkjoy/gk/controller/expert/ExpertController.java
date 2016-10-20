@@ -8,14 +8,13 @@ import cn.thinkjoy.gk.common.NumberGenUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.ExpertInfo;
+import cn.thinkjoy.gk.domain.ExpertOrder;
 import cn.thinkjoy.gk.domain.OrderStatements;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.query.ExpertOrder;
 import cn.thinkjoy.gk.service.IExpertApplyService;
 import cn.thinkjoy.gk.service.IExpertService;
 import cn.thinkjoy.gk.service.IOrderStatementsService;
-import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.IPUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.zgk.common.StringUtil;
@@ -28,7 +27,6 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.pingplusplus.Pingpp;
 import com.pingplusplus.model.Charge;
-import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +40,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -52,7 +49,7 @@ import java.util.concurrent.TimeUnit;
 @Controller
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/expert")
-public class ExpertController  extends ZGKBaseController
+public class ExpertController extends ZGKBaseController
 {
     //专家申请service
     @Autowired
@@ -65,9 +62,6 @@ public class ExpertController  extends ZGKBaseController
     @Autowired
     private IOrderStatementsService orderStatementService;
 
-    @Autowired
-    private IUserAccountExService userAccountExService;
-
     /**
      * 下订单
      *
@@ -75,8 +69,8 @@ public class ExpertController  extends ZGKBaseController
      */
     @RequestMapping(value = "createOrders")
     @ResponseBody
-    public Map<String, String> createOrder(ExpertOrder expertOrder) throws Exception {
-
+    public Map<String, String> createOrder(@RequestParam(value = "token", required = true) String token
+        ,ExpertOrder expertOrder) throws Exception {
         if (expertOrder == null) {
             LOGGER.error("====pay /orders/createOrders PARAM_ERROR ");
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
@@ -132,7 +126,7 @@ public class ExpertController  extends ZGKBaseController
     }
 
     private ExpertOrder getOrder(String orderNo) {
-        ExpertOrder order = (ExpertOrder) expertService.findOrderByOrderNo("orderNo", orderNo);
+        ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
         if (null == order) {
             throw new BizException("0000010", "订单号无效!");
         }
@@ -191,7 +185,7 @@ public class ExpertController  extends ZGKBaseController
         chargeParams.put("channel", channel);
         chargeParams.put("client_ip", IPUtil.getRemortIP(request));
         chargeParams.put("subject", "智高考");
-        chargeParams.put("body", "专家一对一");
+        chargeParams.put("body", "问专家");
         chargeParams.put("currency", "cny");
         if ("alipay_pc_direct".equals(channel)) {
             Map<String, Object> extraMap = new HashMap<>();

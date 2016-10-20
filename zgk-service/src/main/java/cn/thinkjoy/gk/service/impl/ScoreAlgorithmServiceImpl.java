@@ -309,12 +309,12 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService{
         } catch (Exception e) {
             throw new BizException("error", "当前省份" + scoreUtil.getYear() + "年分数线为空!");
         }
-        if (line1s[2] == 5) {
-            // 假如不足高职专科批次(分数超低)
-
-            //推荐10所高职院校
-            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
-        }
+//        if (line1s[2] == 5) {
+//            // 假如不足高职专科批次(分数超低)
+//
+//            //推荐10所高职院校
+//            return scoreAnalysisDAO.queryLowstUniversity(areaId, majorType, totalScore, lastYear.toString(),userId);
+//        }
         int batch = (int) line1s[2];
         //获得分差1  考生分-16年分数线
         float difference = totalScore - (Float) line1s[0];
