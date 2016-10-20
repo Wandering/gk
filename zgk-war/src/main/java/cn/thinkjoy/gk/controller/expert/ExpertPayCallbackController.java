@@ -38,8 +38,7 @@ public class ExpertPayCallbackController extends ZGKBaseController {
     @Autowired
     private IExpertService expertService;
     @Autowired
-    private IOrderStatementsService<cn.thinkjoy.common.dao.IBaseDAO<OrderStatements>, OrderStatements>
-        orderStatementService;
+    private IOrderStatementsService orderStatementService;
     /**
      * 微信支付回调
      * @param request
@@ -71,7 +70,8 @@ public class ExpertPayCallbackController extends ZGKBaseController {
                 if("charge.succeeded".equals(result))
                 {
                     status="1";
-                    OrderStatements orderStatement = orderStatementService.findOne("statement_no", statementNo);
+                    OrderStatements orderStatement =
+                        (OrderStatements)orderStatementService.findOne("statement_no", statementNo);
                     if(!"1".equals(orderStatement.getStatus() + ""))
                     {
                         orderStatement.setStatus(1);
@@ -116,7 +116,8 @@ public class ExpertPayCallbackController extends ZGKBaseController {
             request.setCharacterEncoding("UTF-8");
             if(!paramMap.isEmpty()) {
                 String statementNo = paramMap.get("out_trade_no");
-                OrderStatements orderStatement = orderStatementService.findOne("statement_no", statementNo);
+                OrderStatements orderStatement =
+                    (OrderStatements)orderStatementService.findOne("statement_no", statementNo);
                 if(!"1".equals(orderStatement.getStatus() + ""))
                 {
                     orderStatement.setStatus(1);

@@ -8,19 +8,33 @@ import java.io.Serializable;
 public class ExpertOrder implements Serializable
 {
     private Long id;
+
     private String orderNo;
+
     private String orderStatus;
+
     private String userId;
+
     private String expertId;
+
     private String channel;
+
     private String serverType;
+
     private String serverPrice;
+
     private String contactPerson;
+
     private String contactPhone;
+
     private String contactQq;
+
     private Long expectBeginDate;
+
     private Long expectEndDate;
+
     private Long createDate;
+
     private String returnUrl;
 
     public String getReturnUrl()
