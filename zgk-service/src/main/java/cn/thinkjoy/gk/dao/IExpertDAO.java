@@ -3,6 +3,8 @@ package cn.thinkjoy.gk.dao;
 import cn.thinkjoy.gk.domain.ExpertOrder;
 import cn.thinkjoy.gk.entity.*;
 import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
 
@@ -30,4 +32,8 @@ public interface IExpertDAO
     ExpertOrder findOrderByOrderNo(String orderNo);
 
     void updateOrder(ExpertOrder order);
+
+    List<ExpertInfoPojo> selectExpertListBySpecialty(@Param("map")Map<String,Object> map);
+
+    void insertUserCommonQuestion(@Param("map")Map<String,Object> map);
 }

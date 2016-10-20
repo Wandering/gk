@@ -389,4 +389,16 @@ public class ExpertController extends ZGKBaseController
         resultMap.put("expertAppraiseList",expertAppraiseList);
         return resultMap;
     }
+
+    @RequestMapping("checkExpert")
+    @ResponseBody
+    public Map<String,Object> checkExpert(@RequestParam(value = "commonQuestionIdList")String commonQuestionIdList,
+                                          @RequestParam(value="userId")String userId,
+                                          @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
+                                          @RequestParam(value="rows",required = false,defaultValue = "3")String rows){
+        List<ExpertInfoPojo> expertInfoPojoList=expertService.checkExpert(commonQuestionIdList,offset,rows,userId);
+        Map<String,Object> resultMap=new HashMap<>();
+        resultMap.put("expertInfoPojoList",expertInfoPojoList);
+        return resultMap;
+    }
 }

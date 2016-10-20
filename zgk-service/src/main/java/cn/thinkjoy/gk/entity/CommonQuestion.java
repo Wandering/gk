@@ -13,7 +13,7 @@ public class CommonQuestion extends BaseDomain {
 
     private String createDate;
 
-    private String specialtys;
+    private String specialitys;
 
     public String getQuestionDesc() {
         return questionDesc;
@@ -39,11 +39,11 @@ public class CommonQuestion extends BaseDomain {
         this.createDate = createDate;
     }
 
-    public String getSpecialtys() {
-        return specialtys;
+    public String getSpecialitys() {
+        return specialitys;
     }
 
-    public void setSpecialtys(String specialtys) {
-        this.specialtys = specialtys;
+    public void setSpecialitys(String specialitys) {
+        this.specialitys = specialitys;
     }
 }
