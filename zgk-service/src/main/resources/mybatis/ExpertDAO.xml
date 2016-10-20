@@ -86,5 +86,107 @@
          and ee.is_checked=1
          limit ${offset}, ${rows}
     </select>
+    <insert id="insertOrder" parameterType="ExpertOrder">
+        INSERT INTO zgk_expert_reservation_order (
+            orderNo,
+            orderStatus,
+            userId,
+            expertId,
+            channel,
+            serverType,
+            serverPrice,
+            contactPerson,
+            contactPhone,
+            contactQq,
+            expectBeginDate,
+            expectEndDate,
+            createDate
+        ) VALUES (
+            #{orderNo},
+            #{orderStatus},
+            #{userId},
+            #{expertId},
+            #{channel},
+            #{serverType},
+            #{serverPrice},
+            #{contactPerson},
+            #{contactPhone},
+            #{contactQq},
+            #{expectBeginDate},
+            #{expectEndDate},
+            #{createDate}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <update id="updateOrder" parameterType="ExpertOrder">
+        UPDATE zgk_expert_reservation_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderNo!=null">
+                orderNo = #{orderNo},
+            </if>
+            <if test="orderStatus!=null">
+                orderStatus = #{orderStatus},
+            </if>
+            <if test="userId!=null">
+                userId = #{userId},
+            </if>
+            <if test="expertId!=null">
+                expertId = #{expertId},
+            </if>
+            <if test="channel!=null">
+                channel = #{channel},
+            </if>
+            <if test="serverType!=null">
+                serverType = #{serverType},
+            </if>
+            <if test="serverPrice!=null">
+                serverPrice = #{serverPrice},
+            </if>
+            <if test="contactPerson!=null">
+                contactPerson = #{contactPerson},
+            </if>
+            <if test="contactPhone!=null">
+                contactPhone = #{contactPhone},
+            </if>
+            <if test="contactQq!=null">
+                contactQq = #{contactQq},
+            </if>
+            <if test="expectBeginDate!=null">
+                expectBeginDate = #{expectBeginDate},
+            </if>
+            <if test="expectEndDate!=null">
+                expectEndDate = #{expectEndDate},
+            </if>
+            <if test="createDate!=null">
+                createDate = #{createDate},
+            </if>
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="findOrderByOrderNo" parameterType="java.lang.String" resultType="ExpertOrder">
+        SELECT
+        id,
+        orderNo,
+        orderStatus,
+        userId,
+        expertId,
+        channel,
+        serverType,
+        serverPrice,
+        contactPerson,
+        contactPhone,
+        contactQq,
+        expectBeginDate,
+        expectEndDate,
+        createDate
+        FROM zgk_expert_reservation_order WHERE
+        orderNo = #{orderNo}
+        LIMIT 0,1
+    </select>
 </mapper>
 

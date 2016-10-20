@@ -1,9 +1,8 @@
 package cn.thinkjoy.gk.dao;
 
+import cn.thinkjoy.gk.domain.ExpertOrder;
 import cn.thinkjoy.gk.entity.*;
 import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
-import cn.thinkjoy.gk.query.ExpertOrder;
-
 import java.util.List;
 import java.util.Map;
 
@@ -28,5 +27,7 @@ public interface IExpertDAO
 
     List<ExpertAppraise> selectAppraiseList(Map<String,Object> map);
 
+    ExpertOrder findOrderByOrderNo(String orderNo);
 
+    void updateOrder(ExpertOrder order);
 }

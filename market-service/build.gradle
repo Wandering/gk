@@ -3,4 +3,5 @@ dependencies {
 
     compile project(':market-domain')
     compile project(':gk-service')
+    compile project(':user-domain')
 }
