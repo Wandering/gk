@@ -392,7 +392,11 @@ public class ExpertController extends ZGKBaseController
         return resultMap;
     }
 
-
+    /**
+     * 专家订单列表
+     * @param token
+     * @return
+     */
     @RequestMapping(value = "getExpertOrderList")
     @ResponseBody
     public List<Map<String,Object>> getExpertOrderList(@RequestParam(value = "token", required = true) String token)
