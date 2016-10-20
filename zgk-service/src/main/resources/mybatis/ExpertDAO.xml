@@ -75,13 +75,15 @@
     <!-- 服务评价 -->
     <select id="selectAppraiseList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.ExpertAppraise">
         select expert_id as expertId,
-               user_idas userId,
+               user_id as userId,
                user_name as userName,
                server_type as serverType,
                user_comments as userComments,
                is_checked as isChecked,
                create_date as createDate
-         from zgk_expert_appraise ea where ea.expert_id=#{expertId}
+         from zgk_expert_appraise ea
+         where ea.expert_id=#{expertId}
+         and ee.is_checked=1
          limit ${offset}, ${rows}
     </select>
 </mapper>
