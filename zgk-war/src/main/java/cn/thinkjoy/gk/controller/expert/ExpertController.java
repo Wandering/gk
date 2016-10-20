@@ -2,19 +2,23 @@ package cn.thinkjoy.gk.controller.expert;
 
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.common.Constants;
 import cn.thinkjoy.gk.common.MatrixToImageWriter;
 import cn.thinkjoy.gk.common.NumberGenUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.domain.ExpertInfo;
 import cn.thinkjoy.gk.domain.OrderStatements;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.ExpertOrder;
+import cn.thinkjoy.gk.service.IExpertApplyService;
 import cn.thinkjoy.gk.service.IExpertService;
 import cn.thinkjoy.gk.service.IOrderStatementsService;
 import cn.thinkjoy.gk.service.IUserAccountExService;
 import cn.thinkjoy.gk.util.IPUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
+import cn.thinkjoy.zgk.common.StringUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.zxing.BarcodeFormat;
@@ -24,6 +28,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.pingplusplus.Pingpp;
 import com.pingplusplus.model.Charge;
+import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +54,9 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/expert")
 public class ExpertController  extends ZGKBaseController
 {
+    //专家申请service
+    @Autowired
+    private IExpertApplyService expertApplyService;
 
     private static final Logger LOGGER= LoggerFactory.getLogger(ExpertController.class);
     @Autowired
@@ -251,4 +259,39 @@ public class ExpertController  extends ZGKBaseController
         }
     }
 
+
+
+    /**
+     *申请做专家
+     *
+     * @return
+     */
+    @RequestMapping(value = "apply")
+    @ResponseBody
+    public boolean apply(@RequestParam String name,@RequestParam String phone,@RequestParam Long areaId,@RequestParam String url){
+        /**
+         * 参数校验
+         */
+        if (StringUtil.isNulOrBlank(name)){
+            throw new BizException("error","name参数不能为空");
+        }
+        if (StringUtil.isNulOrBlank(phone)){
+            throw new BizException("error","phone参数不能为空");
+        }
+        if (StringUtil.isNulOrBlank(url)){
+            throw new BizException("error","url参数不能为空");
+        }
+        /**
+         * 整理传入参数
+         */
+        ExpertInfo expertInfo = new ExpertInfo();
+        expertInfo.setExpertName(name);
+        expertInfo.setExpertPhone(phone);
+        expertInfo.setExpertProfile(url);
+        expertInfo.setAreaId(areaId);
+        expertInfo.setIsChecked(String.valueOf(Constants.EXPERT_APPLY_STATUS_N));
+        expertInfo.setCreateDate(System.currentTimeMillis());
+
+        return expertApplyService.apply(expertInfo);
+    }
 }
