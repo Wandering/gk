@@ -17,4 +17,12 @@ public class Constants {
      */
     public static final int salary_size = 8;
 
+    /**
+     *申请专家审核通过
+     */
+    public static final int EXPERT_APPLY_STATUS_Y = 1;
+    /**
+     *申请专家审核不通过
+     */
+    public static final int EXPERT_APPLY_STATUS_N = 2;
 }
