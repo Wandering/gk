@@ -15,6 +15,7 @@ import cn.thinkjoy.gk.service.IProductExService;
 import cn.thinkjoy.gk.service.IProductService;
 import cn.thinkjoy.zgk.zgksystem.DeparmentApiService;
 import cn.thinkjoy.zgk.zgksystem.domain.DepartmentProductRelation;
+import cn.thinkjoy.zgk.zgksystem.pojo.DepartmentProductRelationPojo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -90,8 +92,15 @@ public class ProductController extends ZGKBaseController {
      */
     @RequestMapping(value = "findAllProduct", method = RequestMethod.GET)
     @ResponseBody
-    public List<DepartmentProductRelation> findAllProduct() {
-        List<DepartmentProductRelation> relations = deparmentApiService.queryProductPriceByAreaId(getAreaId().toString());
+    public List<DepartmentProductRelationPojo> findAllProduct() {
+        List<DepartmentProductRelationPojo> relations = null;
+        try {
+            relations = deparmentApiService.queryProductPriceByAreaId(getAreaId().toString());
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         return relations;
     }
 }

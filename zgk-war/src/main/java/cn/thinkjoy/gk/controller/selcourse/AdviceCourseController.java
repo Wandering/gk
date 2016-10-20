@@ -71,8 +71,8 @@ public class AdviceCourseController {
                                    @RequestParam(required = false) Integer batch,
                                    @RequestParam(required = false) Long areaId,
                                    @RequestParam(required = false) Integer universityType,
-                                   @RequestParam Integer page,
-                                   @RequestParam Integer rows) {
+                                   @RequestParam(required = false,defaultValue = "1") Integer page,
+                                   @RequestParam(required = false,defaultValue = "10") Integer rows) {
         //取redis
         String[] s1 = subjects1.split(",");
         String[] s2 = subjects2.split(",");

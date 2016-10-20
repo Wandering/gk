@@ -15,4 +15,6 @@ public interface ISelUniversityDao {
     List<EduLevelNumberPojo> selectEduLevelByUniversityId(Map<String, Object> map);
 
     List<MajorPojo> selectMajorList(Map<String,Object> map);
+
+    Integer selectMajorListCount(Map<String, Object> map);
 }

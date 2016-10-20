@@ -170,8 +170,12 @@
 		od.handle_state as handleState,
 		address.receivingAddress as receivingAddress,
 		address.contactName as contactName,
-		address.contactPhone as contactPhone
+		address.contactPhone as contactPhone,
+        card.cardNumber as cardNumber,
+        card.password as password,
+        od.phone as phone
         from zgk_order od
+        LEFT JOIN zgk_card card on od.cardId=card.id
         LEFT JOIN zgk_system.zgk_sale_product pro on od.product_type=pro.type
         LEFT JOIN zgk_user_goodsadress address on od.user_id=address.userId
         where od.user_id=#{userId} and od.state!='Y'

@@ -41,7 +41,9 @@
         goods_count as goodsCount,
         handle_state as handleState,
         channel as channel,
-        unit_price as unitPrice
+        unit_price as unitPrice,
+        phone,
+        cardId
     </sql>
     <insert id="insert" parameterType="Order">
         INSERT INTO zgk_order (
@@ -61,7 +63,9 @@
         goods_count,
         handle_state,
         channel,
-        unit_price
+        unit_price,
+        phone,
+        cardId
         ) VALUES (
         #{userId},
         #{status},
@@ -79,7 +83,9 @@
         #{goodsCount},
         #{handleState},
         #{channel},
-        #{unitPrice}
+        #{unitPrice},
+        #{phone},
+        #{cardId}
         )
         <selectKey resultType="java.lang.Long" keyProperty="id">
             SELECT LAST_INSERT_ID() AS ID
@@ -138,6 +144,12 @@
             <if test="channel!=null">
                 channel = #{channel},
             </if>
+            <if test="phone!=null">
+                phone = #{phone},
+            </if>
+            <if test="cardId!=null">
+                cardId = #{cardId},
+            </if>
         </trim>
         WHERE
         id = #{id}
@@ -193,6 +205,12 @@
             </if>
             <if test="map.channel!=null">
                 channel = #{map.channel},
+            </if>
+            <if test="map.phone!=null">
+                phone = #{map.channel},
+            </if>
+            <if test="map.cardId!=null">
+                phone = #{map.cardId}
             </if>
         </trim>
         WHERE
@@ -324,7 +342,9 @@
             department_phone,
             goods_count,
             handle_state,
-            channel
+            channel,
+            phone,
+            cardId
         ) VALUES (
             #{map.userId},
             #{map.status},
@@ -341,7 +361,9 @@
             #{map.departmentPhone},
             #{map.goodsCount},
             #{map.handleState},
-            #{map.channel}
+            #{map.channel},
+            #{map.phone},
+            #{map.cardId}
         )
     </insert>
 
@@ -497,6 +519,9 @@
             </if>
             <if test="condition.productPrice!=null">
                 ${condition.groupOp}   product_price  ${condition.product_price.op}  #{condition.product_price.data}
+            </if>
+            <if test="condition.phone!=null">
+                ${condition.groupOp}   phone  ${condition.phone.op}  #{condition.phone.data}
             </if>
         </where>
         <if test="orderBy!=null">
@@ -673,11 +698,14 @@
     </select>
 
     <select id="queryOrderListByUserId" resultType="java.util.Map">
-        select user_id, status,order_no, channle,create_date, update_date,state,goods_address,product_price,
-        department_name,department_phone, goods_count as goodsCount
-        from zgk_order
-        where user_id=#{userId}
-        order by create_date desc
+        select ord.user_id, ord.status,ord.order_no, ord.channle,ord.create_date,
+        ord.update_date,ord.state,ord.goods_address,ord.product_price,
+        ord.department_name,ord.department_phone, ord.goods_count as goodsCount,
+        card.cardNumber as cardNumber,card.password as password
+        from zgk_order ord
+        LEFT JOIN zgk_card card ON card.id = ord.cardId
+        where ord.user_id=#{userId}
+        order by ord.create_date desc
         limit ${pageNo},${pageSize}
     </select>
 
