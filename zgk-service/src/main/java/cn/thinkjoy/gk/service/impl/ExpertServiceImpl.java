@@ -1,7 +1,9 @@
 package cn.thinkjoy.gk.service.impl;
 
-import cn.thinkjoy.gk.query.ExpertOrder;
 import cn.thinkjoy.gk.dao.IExpertDAO;
+import cn.thinkjoy.gk.domain.ExpertOrder;
+import cn.thinkjoy.gk.entity.*;
+import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
 import cn.thinkjoy.gk.service.IExpertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,8 +36,6 @@ public class ExpertServiceImpl implements IExpertService
     public void updateOrder(ExpertOrder order)
     {
         dao.updateOrder(order);
-        return null;
-        return null;
     }
 
     @Override
