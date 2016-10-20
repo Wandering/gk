@@ -20,6 +20,7 @@ public enum ERRORCODE {
 	USER_EXPIRED("0100013", "用户信息已过期"),
 
 	AUTHENTICATION_FAIL("0100020", "鉴权失败"),
+	ACCOUNT_BIND_ERROR("0100021", "账户绑定失败"),
 
 	/**
 	 * 登录
