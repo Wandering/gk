@@ -169,7 +169,7 @@ public class ExpertController extends ZGKBaseController
         String orderNo= NumberGenUtil.genOrderNo();
         expertOrder.setOrderNo(orderNo);
         expertOrder.setCreateDate(System.currentTimeMillis());
-        expertOrder.setOrderStatus("1");
+        expertOrder.setOrderStatus("0");
         return expertOrder;
     }
 
