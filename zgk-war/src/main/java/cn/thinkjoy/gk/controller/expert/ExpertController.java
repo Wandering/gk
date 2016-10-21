@@ -519,18 +519,26 @@ public class ExpertController extends ZGKBaseController
     public OrderRevaluation createExpertOrderRevaluation(@RequestParam(value = "token", required = true) String token,
         OrderRevaluation orderRevaluation)
     {
-        if (null == orderRevaluation || null == orderRevaluation.getOrderNo())
+        String orderNo = orderRevaluation.getOrderNo();
+        if (null == orderRevaluation || null == orderNo)
         {
             throw new BizException("1000111", "少传参数！");
         }
-        ExpertOrder order = expertService.findOrderByOrderNo(orderRevaluation.getOrderNo());
+        ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
 
         if (null == order || !order.getUserId().equals(getAccoutId()))
         {
             throw new BizException("1000111", "orderNo参数错误！");
         }
-        orderRevaluation.setCreateDate(System.currentTimeMillis()+"");
-        expertService.createExpertOrderRevaluation(orderRevaluation);
+        OrderRevaluation revaluation = expertService.findExpertOrderRevaluationByOrderNo(orderNo);
+        if(null == revaluation)
+        {
+            orderRevaluation.setCreateDate(System.currentTimeMillis()+"");
+            expertService.createExpertOrderRevaluation(orderRevaluation);
+        }else
+        {
+            expertService.updateExpertOrderRevaluation(orderRevaluation);
+        }
         return orderRevaluation;
     }
 }

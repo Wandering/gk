@@ -40,5 +40,9 @@ public interface IExpertService
 
     void createExpertOrderRevaluation(OrderRevaluation orderRevaluation);
 
+    void updateExpertOrderRevaluation(OrderRevaluation orderRevaluation);
+
+    OrderRevaluation findExpertOrderRevaluationByOrderNo(String orderNo);
+
     void insertUserQuestion(Map<String,Object> map);
 }
