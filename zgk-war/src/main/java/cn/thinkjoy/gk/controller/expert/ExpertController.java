@@ -11,6 +11,7 @@ import cn.thinkjoy.gk.domain.ExpertInfo;
 import cn.thinkjoy.gk.domain.ExpertOrder;
 import cn.thinkjoy.gk.domain.OrderStatements;
 import cn.thinkjoy.gk.entity.*;
+import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
 import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
@@ -393,7 +394,7 @@ public class ExpertController extends ZGKBaseController
         }
         map.put("offset",offset);
         map.put("rows",rows);
-        List<ExpertAppraise> expertAppraiseList=expertService.selectAppraiseList(map);
+        List<ExpertAppraisePojo> expertAppraiseList=expertService.selectAppraiseList(map);
         Map<String,Object> resultMap=new HashMap<>();
         resultMap.put("expertAppraiseList",expertAppraiseList);
         return resultMap;
