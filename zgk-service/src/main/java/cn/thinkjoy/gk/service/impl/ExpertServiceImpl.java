@@ -141,7 +141,11 @@ public class ExpertServiceImpl implements IExpertService
     @Override
     public OrderRevaluation findExpertOrderRevaluationByOrderNo(String orderNo)
     {
-       return dao.findExpertOrderRevaluationByOrderNo(orderNo);
+        return dao.findExpertOrderRevaluationByOrderNo(orderNo);
+    }
+
+    public void insertUserQuestion(Map<String, Object> map) {
+        dao.insertUserQuestion(map);
     }
 
     @Override

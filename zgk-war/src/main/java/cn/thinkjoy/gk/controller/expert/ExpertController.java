@@ -44,6 +44,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -487,6 +488,33 @@ public class ExpertController extends ZGKBaseController
             expertService.checkExpert(commonQuestionIdList, offset, rows, userId, note);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("expertInfoPojoList", expertInfoPojoList);
+    public Map<String,Object> checkExpert(@RequestParam(value = "commonQuestionIdList")String commonQuestionIdList,
+                                          @RequestParam(value="userId")String userId,
+                                          @RequestParam(value="note",required = false)String note,
+                                          @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
+                                          @RequestParam(value="rows",required = false,defaultValue = "2")String rows){
+        List<ExpertInfoPojo> expertInfoPojoList=expertService.checkExpert(commonQuestionIdList,offset,rows,userId,note);
+        Map<String,Object> resultMap=new HashMap<>();
+        resultMap.put("expertInfoPojoList",expertInfoPojoList);
+        return resultMap;
+    }
+
+
+    @RequestMapping("addUserQuestion")
+    @ResponseBody
+    public Map<String,Object> addUserQuestion(@RequestParam(value = "expertId")String expertId,
+                                              @RequestParam(value = "userId")String userId,
+                                              @RequestParam(value = "userName")String userName,
+                                              @RequestParam(value = "userQuestion")String userQuestion){
+        Map<String,Object> map=new HashMap<>();
+        map.put("expertId",expertId);
+        map.put("userId",userId);
+        map.put("userName",userName);
+        map.put("userQuestion",userQuestion);
+        map.put("createDate",new Date());
+        expertService.insertUserQuestion(map);
+        Map<String,Object> resultMap=new HashMap<>();
+        resultMap.put("result","ok");
         return resultMap;
     }
 

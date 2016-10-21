@@ -61,16 +61,18 @@
     <!-- 问答 -->
     <select id="selectQuestionList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.UserQuestion">
         select expert_id as expertId,
-               user_id as userId,
-               user_name as userName,
-               user_question as userQuestion,
-               user_anwser as userAnwser,
-               create_date as createDate
+        user_id as userId,
+        user_name as userName,
+        user_question as userQuestion,
+        user_anwser as userAnwser,
+        create_date as createDate
         from zgk_expert_user_question euq
         where euq.expert_id=#{expertId}
         <if test="userId!=null">
             and euq.user_id=#{userId}
         </if>
+        and euq.user_anwser != ''
+        and euq.user_anwser is not null
         limit ${offset}, ${rows}
     </select>
 
@@ -99,47 +101,47 @@
         from zgk_expert_appraise ea
         left join zgk_expert_info ei on ei.id=ea.expert_id
         left join zgk_expert_config ec on ec.config_domain='serviceType' and ec.config_key=ea.server_type
-         where ea.is_checked=1
-         <if test="expertId!=null">
+        where ea.is_checked=1
+        <if test="expertId!=null">
             and ea.expert_id=#{expertId}
-         </if>
-         limit ${offset}, ${rows}
+        </if>
+        limit ${offset}, ${rows}
     </select>
     <insert id="insertOrder" parameterType="ExpertOrder">
         INSERT INTO zgk_expert_reservation_order (
-            orderNo,
-            orderStatus,
-            userId,
-            expertId,
-            channel,
-            serverType,
-            serverAddress,
-            serverContent,
-            questionDesc,
-            serverPrice,
-            contactPerson,
-            contactPhone,
-            contactQq,
-            expectBeginDate,
-            expectEndDate,
-            createDate
+        orderNo,
+        orderStatus,
+        userId,
+        expertId,
+        channel,
+        serverType,
+        serverAddress,
+        serverContent,
+        questionDesc,
+        serverPrice,
+        contactPerson,
+        contactPhone,
+        contactQq,
+        expectBeginDate,
+        expectEndDate,
+        createDate
         ) VALUES (
-            #{orderNo},
-            #{orderStatus},
-            #{userId},
-            #{expertId},
-            #{channel},
-            #{serverType},
-            #{serverAddress},
-            #{serverContent},
-            #{questionDesc},
-            #{serverPrice},
-            #{contactPerson},
-            #{contactPhone},
-            #{contactQq},
-            #{expectBeginDate},
-            #{expectEndDate},
-            #{createDate}
+        #{orderNo},
+        #{orderStatus},
+        #{userId},
+        #{expertId},
+        #{channel},
+        #{serverType},
+        #{serverAddress},
+        #{serverContent},
+        #{questionDesc},
+        #{serverPrice},
+        #{contactPerson},
+        #{contactPhone},
+        #{contactQq},
+        #{expectBeginDate},
+        #{expectEndDate},
+        #{createDate}
         )
         <selectKey resultType="java.lang.Long" keyProperty="id">
             SELECT LAST_INSERT_ID() AS ID
@@ -233,9 +235,9 @@
         s.expert_name as expertName,
         t.channel,
         t.serverType,
-		t.serverAddress,
+        t.serverAddress,
         t.serverContent,
-		t.questionDesc,
+        t.questionDesc,
         t.serverPrice,
         t.contactPerson,
         t.contactPhone,
@@ -252,10 +254,12 @@
             LIMIT 0,5
         </if>
     </select>
-    
-    <select id="selectExpertListBySpecialty" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ExpertInfoPojo">
+
+    <select id="selectExpertListBySpecialty" parameterType="java.util.Map"
+            resultType="cn.thinkjoy.gk.pojo.ExpertInfoPojo">
         select ei.id as expertId,ei.expert_name as expertName,GROUP_CONCAT(DISTINCT ec1.config_value) as speciality ,
-        count(DISTINCT ec2.id) as casesNumber,GROUP_CONCAT(DISTINCT ec3.config_value) service,ei.qualification as qualification,expert_photo_url as photoUrl,
+        count(DISTINCT ec2.id) as casesNumber,GROUP_CONCAT(DISTINCT ec3.config_value) service,ei.qualification as
+        qualification,expert_photo_url as photoUrl,
         ei.expert_intro as info
         from zgk_expert_info ei
         left join zgk_expert_speciality_relation esr on ei.id=esr.expert_id
@@ -349,5 +353,11 @@
         orderNo = #{orderNo}
         LIMIT 0,1
     </select>
+    <insert id="insertUserQuestion" parameterType="java.util.Map">
+        insert into zgk_expert_user_question
+        (expert_id,user_id,user_name,user_question,create_date)
+        values
+        (#{expertId},#{userId},#{userName},#{userQuestion},#{createDate})
+    </insert>
 </mapper>
 

@@ -43,4 +43,6 @@ public interface IExpertService
     void updateExpertOrderRevaluation(OrderRevaluation orderRevaluation);
 
     OrderRevaluation findExpertOrderRevaluationByOrderNo(String orderNo);
+
+    void insertUserQuestion(Map<String,Object> map);
 }
