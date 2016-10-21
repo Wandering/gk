@@ -71,6 +71,8 @@
         <if test="userId!=null">
             and euq.user_id=#{userId}
         </if>
+        and euq.user_anwser != ''
+        and euq.user_anwser is not null
         limit ${offset}, ${rows}
     </select>
 
@@ -312,5 +314,12 @@
         group by ei.id
 		limit 2
     </select>
+
+    <insert id="insertUserQuestion" parameterType="java.util.Map">
+        insert into zgk_expert_user_question
+        (expert_id,user_id,user_name,user_question,create_date)
+        values
+        (#{expertId},#{userId},#{userName},#{userQuestion},#{createDate})
+    </insert>
 </mapper>
 

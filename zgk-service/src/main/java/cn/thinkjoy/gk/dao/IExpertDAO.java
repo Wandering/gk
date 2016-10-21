@@ -45,4 +45,6 @@ public interface IExpertDAO
     List<ExpertInfoPojo> selectExpertBySpecialityMore();
 
     List<String> selectExpertId(Map<String,Object> map);
+
+    void insertUserQuestion(Map<String,Object> map);
 }
