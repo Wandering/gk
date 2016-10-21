@@ -312,5 +312,20 @@
         group by ei.id
 		limit 2
     </select>
+
+    <insert id="insertOrderRevaluation" parameterType="ExpertOrder">
+        INSERT INTO zgk_expert_service_evaluation (
+        orderNo,
+        evaluation,
+        createDate
+        ) VALUES (
+        #{orderNo},
+        #{evaluation},
+        #{createDate}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
 </mapper>
 
