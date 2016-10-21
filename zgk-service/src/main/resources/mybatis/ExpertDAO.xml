@@ -68,10 +68,7 @@
                user_anwser as userAnwser,
                create_date as createDate
         from zgk_expert_user_question euq
-        where 1=1
-        <if test="expertId!=null">
-            and euq.expert_id=#{expertId}
-        </if>
+        where euq.expert_id=#{expertId}
         limit ${offset}, ${rows}
     </select>
 
@@ -97,8 +94,10 @@
                is_checked as isChecked,
                create_date as createDate
          from zgk_expert_appraise ea
-         where ea.expert_id=#{expertId}
-         and ea.is_checked=1
+         where ea.is_checked=1
+         <if test="expertId!=null">
+            and ea.expert_id=#{expertId}
+         </if>
          limit ${offset}, ${rows}
     </select>
     <insert id="insertOrder" parameterType="ExpertOrder">

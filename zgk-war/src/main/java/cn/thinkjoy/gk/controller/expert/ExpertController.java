@@ -350,13 +350,11 @@ public class ExpertController extends ZGKBaseController
 
     @RequestMapping(value = "getQuestionList")
     @ResponseBody
-    public Map<String,Object> getQuestionList(@RequestParam(value = "expertId",required = false)String expertId,
+    public Map<String,Object> getQuestionList(@RequestParam(value = "expertId")String expertId,
                                               @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
                                               @RequestParam(value="rows",required = false,defaultValue = "10")String rows){
         Map<String,Object> map=new HashMap<>();
-        if(StringUtils.isNotBlank(expertId)) {
-            map.put("expertId", expertId);
-        }
+        map.put("expertId", expertId);
         map.put("offset",offset);
         map.put("rows",rows);
         List<UserQuestion> userQuestionList=expertService.selectQuestionList(map);
@@ -382,11 +380,13 @@ public class ExpertController extends ZGKBaseController
 
     @RequestMapping(value = "getAppraiseList")
     @ResponseBody
-    public Map<String,Object> getAppraiseList(@RequestParam(value = "expertId")String expertId,
+    public Map<String,Object> getAppraiseList(@RequestParam(value = "expertId",required = false)String expertId,
                                               @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
                                               @RequestParam(value="rows",required = false,defaultValue = "10")String rows){
         Map<String,Object> map=new HashMap<>();
-        map.put("expertId",expertId);
+        if(StringUtils.isNotBlank(expertId)) {
+            map.put("expertId", expertId);
+        }
         map.put("offset",offset);
         map.put("rows",rows);
         List<ExpertAppraise> expertAppraiseList=expertService.selectAppraiseList(map);
