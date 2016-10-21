@@ -67,7 +67,11 @@
                user_question as userQuestion,
                user_anwser as userAnwser,
                create_date as createDate
-        from zgk_expert_user_question euq where euq.expert_id=#{expertId}
+        from zgk_expert_user_question euq
+        where 1=1
+        <if test="expertId!=null">
+            and euq.expert_id=#{expertId}
+        </if>
         limit ${offset}, ${rows}
     </select>
 

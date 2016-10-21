@@ -29,6 +29,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.pingplusplus.Pingpp;
 import com.pingplusplus.model.Charge;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -308,7 +309,7 @@ public class ExpertController extends ZGKBaseController
 
     @RequestMapping(value = "getExpertList")
     @ResponseBody
-    public Map<String,Object> getExpertList(@RequestParam(value = "areaId")String areaId,
+    public Map<String,Object> getExpertList(@RequestParam(value = "areaId",required = false)String areaId,
                                             @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
                                             @RequestParam(value="rows",required = false,defaultValue = "10")String rows){
         Map<String,Object> map=new HashMap<>();
@@ -349,11 +350,13 @@ public class ExpertController extends ZGKBaseController
 
     @RequestMapping(value = "getQuestionList")
     @ResponseBody
-    public Map<String,Object> getQuestionList(@RequestParam(value = "expertId")String expertId,
+    public Map<String,Object> getQuestionList(@RequestParam(value = "expertId",required = false)String expertId,
                                               @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
                                               @RequestParam(value="rows",required = false,defaultValue = "10")String rows){
         Map<String,Object> map=new HashMap<>();
-        map.put("expertId",expertId);
+        if(StringUtils.isNotBlank(expertId)) {
+            map.put("expertId", expertId);
+        }
         map.put("offset",offset);
         map.put("rows",rows);
         List<UserQuestion> userQuestionList=expertService.selectQuestionList(map);
