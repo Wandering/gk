@@ -511,6 +511,7 @@ public class ExpertController extends ZGKBaseController
         {
             throw new BizException("1000111", "orderNo参数错误！");
         }
+        orderRevaluation.setCreateDate(System.currentTimeMillis()+"");
         expertService.createExpertOrderRevaluation(orderRevaluation);
         return orderRevaluation;
     }

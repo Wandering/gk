@@ -1,24 +1,15 @@
 package cn.thinkjoy.gk.domain;
 
+import cn.thinkjoy.common.domain.BaseDomain;
+
 /**
  * Created by liusven on 2016/10/21.
  */
-public class OrderRevaluation
+public class OrderRevaluation extends BaseDomain
 {
-    private String id;
     private String orderNo;
     private String evaluation;
     private String createDate;
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String id)
-    {
-        this.id = id;
-    }
 
     public String getOrderNo()
     {

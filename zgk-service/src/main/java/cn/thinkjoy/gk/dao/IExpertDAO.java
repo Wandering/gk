@@ -47,5 +47,5 @@ public interface IExpertDAO
 
     List<String> selectExpertId(Map<String,Object> map);
 
-    List<Map<String,Object>> insertOrderRevaluation(OrderRevaluation orderRevaluation);
+    void insertOrderRevaluation(OrderRevaluation orderRevaluation);
 }
