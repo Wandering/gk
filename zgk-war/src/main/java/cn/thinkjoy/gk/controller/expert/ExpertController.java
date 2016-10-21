@@ -9,6 +9,7 @@ import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.ExpertInfo;
 import cn.thinkjoy.gk.domain.ExpertOrder;
+import cn.thinkjoy.gk.domain.OrderRevaluation;
 import cn.thinkjoy.gk.domain.OrderStatements;
 import cn.thinkjoy.gk.entity.*;
 import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
@@ -61,7 +62,8 @@ public class ExpertController extends ZGKBaseController
     @Autowired
     private IExpertApplyService expertApplyService;
 
-    private static final Logger LOGGER= LoggerFactory.getLogger(ExpertController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExpertController.class);
+
     @Autowired
     private IExpertService expertService;
 
@@ -76,26 +78,33 @@ public class ExpertController extends ZGKBaseController
     @RequestMapping(value = "createOrders")
     @ResponseBody
     public Map<String, String> createOrder(@RequestParam(value = "token", required = true) String token
-        ,ExpertOrder expertOrder) throws Exception {
-        if (expertOrder == null) {
+        , ExpertOrder expertOrder)
+        throws Exception
+    {
+        if (expertOrder == null)
+        {
             LOGGER.error("====pay /orders/createOrders PARAM_ERROR ");
             throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
         }
         UserAccountPojo userAccountPojo = getUserAccountPojo();
-        if (userAccountPojo == null) {
+        if (userAccountPojo == null)
+        {
             throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
         }
         String returnUrl = expertOrder.getReturnUrl();
         Long userId = userAccountPojo.getId();
         RedisUtil.getInstance().set("pay_return_url_" + userId, returnUrl, 24l, TimeUnit.HOURS);
-        expertOrder.setUserId(userId+"");
+        expertOrder.setUserId(userId + "");
         ExpertOrder order = getOrder(expertOrder);
         Map<String, String> resultMap = new HashMap<>();
-        try {
+        try
+        {
             resultMap.put("orderNo", order.getOrderNo());
             expertService.insertOrder(order);
             return resultMap;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
         }
     }
@@ -108,32 +117,39 @@ public class ExpertController extends ZGKBaseController
     @RequestMapping(value = "aliOrderPay")
     @ResponseBody
     public Charge aliOrder(@RequestParam(value = "orderNo", required = true) String orderNo,
-        @RequestParam(value = "token", required = true) String token){
+        @RequestParam(value = "token", required = true) String token)
+    {
         UserAccountPojo userAccountPojo = getUserAccountPojo();
-        if (userAccountPojo == null) {
+        if (userAccountPojo == null)
+        {
             throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
         }
         ExpertOrder order = getOrder(orderNo);
         String price = new BigDecimal(order.getServerPrice()).
-            multiply(new BigDecimal(100)).setScale(0 , BigDecimal.ROUND_HALF_EVEN).toString();
-        Map<String,String> paramMap = new HashMap<>();
+            multiply(new BigDecimal(100)).setScale(0, BigDecimal.ROUND_HALF_EVEN).toString();
+        Map<String, String> paramMap = new HashMap<>();
         paramMap.put("channel", "alipay_pc_direct");
         paramMap.put("orderNo", orderNo);
         paramMap.put("token", token);
         paramMap.put("amount", price);
         paramMap.put("productType", order.getServerType());
         Charge charge;
-        try {
+        try
+        {
             charge = getCharge(paramMap);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             throw new BizException(ERRORCODE.FAIL.getCode(), e.getMessage());
         }
         return charge;
     }
 
-    private ExpertOrder getOrder(String orderNo) {
+    private ExpertOrder getOrder(String orderNo)
+    {
         ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
-        if (null == order) {
+        if (null == order)
+        {
             throw new BizException("0000010", "订单号无效!");
         }
         return order;
@@ -147,36 +163,46 @@ public class ExpertController extends ZGKBaseController
     @RequestMapping(value = "wxOrderPay")
     public void wxOrder(@RequestParam(value = "orderNo", required = true) String orderNo,
         @RequestParam(value = "token", required = true) String token,
-        @RequestParam(value = "qrSize", required = false) String size, HttpServletResponse response) {
+        @RequestParam(value = "qrSize", required = false) String size, HttpServletResponse response)
+    {
         int width = 200;
         int height = 200;
-        if (null != size) {
+        if (null != size)
+        {
             int qrSize;
-            try {
+            try
+            {
                 qrSize = Integer.parseInt(size);
                 height = qrSize;
                 width = qrSize;
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e)
+            {
                 throw new BizException("0000010", "二维码大小错误!");
             }
         }
-        try {
+        try
+        {
             getQrCode(orderNo, token, response, width, height);
-        } catch (BizException e) {
+        }
+        catch (BizException e)
+        {
             throw new BizException(e.getErrorCode(), e.getMsg());
         }
     }
 
     private ExpertOrder getOrder(ExpertOrder expertOrder)
     {
-        String orderNo= NumberGenUtil.genOrderNo();
+        String orderNo = NumberGenUtil.genOrderNo();
         expertOrder.setOrderNo(orderNo);
         expertOrder.setCreateDate(System.currentTimeMillis());
         expertOrder.setOrderStatus("0");
         return expertOrder;
     }
 
-    private Charge getCharge(Map<String,String> paramMap) throws Exception {
+    private Charge getCharge(Map<String, String> paramMap)
+        throws Exception
+    {
         Pingpp.apiKey = DynConfigClientFactory.getClient().getConfig("common", "apiKey");
         String appid = DynConfigClientFactory.getClient().getConfig("common", "appId");
         String aliReturnUrl = DynConfigClientFactory.getClient().getConfig("common", "expertAliReturnUrl");
@@ -193,11 +219,14 @@ public class ExpertController extends ZGKBaseController
         chargeParams.put("subject", "智高考");
         chargeParams.put("body", "问专家");
         chargeParams.put("currency", "cny");
-        if ("alipay_pc_direct".equals(channel)) {
+        if ("alipay_pc_direct".equals(channel))
+        {
             Map<String, Object> extraMap = new HashMap<>();
-            extraMap.put("success_url", aliReturnUrl+"?token="+paramMap.get("token"));
+            extraMap.put("success_url", aliReturnUrl + "?token=" + paramMap.get("token"));
             chargeParams.put("extra", extraMap);
-        } else if ("wx_pub_qr".equals(channel)) {
+        }
+        else if ("wx_pub_qr".equals(channel))
+        {
             Map<String, Object> extraMap = new HashMap<>();
             extraMap.put("product_id", "1");
             chargeParams.put("extra", extraMap);
@@ -208,11 +237,14 @@ public class ExpertController extends ZGKBaseController
 
     /**
      * 创建交易流水
+     *
      * @param paramMap
      * @param chargeParams
      */
-    private void createOrderStatement(Map<String, String> paramMap, Map<String, Object> chargeParams, String statemenstNo ) {
-        OrderStatements orderstatement=new OrderStatements();
+    private void createOrderStatement(Map<String, String> paramMap, Map<String, Object> chargeParams,
+        String statemenstNo)
+    {
+        OrderStatements orderstatement = new OrderStatements();
         orderstatement.setCreateDate(System.currentTimeMillis());
         orderstatement.setOrderNo(paramMap.get("orderNo"));
         orderstatement.setAmount(Double.parseDouble(paramMap.get("amount")));
@@ -224,64 +256,77 @@ public class ExpertController extends ZGKBaseController
         orderStatementService.insert(orderstatement);
     }
 
-    private void getQrCode(String orderNo, String token, HttpServletResponse response, int width, int height) {
+    private void getQrCode(String orderNo, String token, HttpServletResponse response, int width, int height)
+    {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         Map params = new HashMap();
         params.put(EncodeHintType.CHARACTER_SET, "UTF-8");
         ExpertOrder order = getOrder(orderNo);
         String price = new BigDecimal(order.getServerPrice()).
-            multiply(new BigDecimal(100)).setScale(0 , BigDecimal.ROUND_HALF_EVEN).toString();
-        Map<String,String> paramMap = new HashMap<>();
+            multiply(new BigDecimal(100)).setScale(0, BigDecimal.ROUND_HALF_EVEN).toString();
+        Map<String, String> paramMap = new HashMap<>();
         paramMap.put("channel", "wx_pub_qr");
         paramMap.put("orderNo", orderNo);
         paramMap.put("token", token);
         paramMap.put("amount", price);
         paramMap.put("productType", order.getServerType());
         Charge charge;
-        try {
+        try
+        {
             charge = getCharge(paramMap);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             throw new BizException(ERRORCODE.FAIL.getCode(), e.getMessage());
         }
         String strCharge = JSON.toJSONString(charge);
         JSONObject obj = JSON.parseObject(strCharge);
-        String credential = (String) obj.get("credential");
+        String credential = (String)obj.get("credential");
         JSONObject credentialObj = JSON.parseObject(credential);
-        String url = (String) credentialObj.get("wx_pub_qr");
+        String url = (String)credentialObj.get("wx_pub_qr");
         BitMatrix bitMatrix;
-        try {
+        try
+        {
             bitMatrix = multiFormatWriter.encode(url, BarcodeFormat.QR_CODE, width, height, params);
-        } catch (WriterException e) {
+        }
+        catch (WriterException e)
+        {
             throw new BizException(ERRORCODE.FAIL.getCode(), "生成二维码错误!");
         }
-        try {
+        try
+        {
             MatrixToImageWriter.writeToStream(bitMatrix, MatrixToImageWriter.FORMAT, response.getOutputStream());
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             throw new BizException(ERRORCODE.FAIL.getCode(), "传输二维码错误!");
         }
     }
 
-
-
     /**
-     *申请做专家
+     * 申请做专家
      *
      * @return
      */
     @RequestMapping(value = "apply")
     @ResponseBody
-    public boolean apply(@RequestParam String name,@RequestParam String phone,@RequestParam Long areaId,@RequestParam String url){
+    public boolean apply(@RequestParam String name, @RequestParam String phone, @RequestParam Long areaId,
+        @RequestParam String url)
+    {
         /**
          * 参数校验
          */
-        if (StringUtil.isNulOrBlank(name)){
-            throw new BizException("error","name参数不能为空");
+        if (StringUtil.isNulOrBlank(name))
+        {
+            throw new BizException("error", "name参数不能为空");
         }
-        if (StringUtil.isNulOrBlank(phone)){
-            throw new BizException("error","phone参数不能为空");
+        if (StringUtil.isNulOrBlank(phone))
+        {
+            throw new BizException("error", "phone参数不能为空");
         }
-        if (StringUtil.isNulOrBlank(url)){
-            throw new BizException("error","url参数不能为空");
+        if (StringUtil.isNulOrBlank(url))
+        {
+            throw new BizException("error", "url参数不能为空");
         }
         /**
          * 整理传入参数
@@ -296,131 +341,153 @@ public class ExpertController extends ZGKBaseController
 
         return expertApplyService.apply(expertInfo);
     }
+
     @RequestMapping(value = "getCommonQuestion")
     @ResponseBody
-    public Map<String,Object> getCommonQuestion(@RequestParam(value="offset",required = false,defaultValue = "0")String offset,
-                                                @RequestParam(value="rows",required = false,defaultValue = "10")String rows){
-        Map<String,Object> map=new HashMap<>();
-        map.put("offset",offset);
-        map.put("rows",rows);
-        List<CommonQuestion> commonQuestionList=expertService.selectCommonQuestion(map);
-        Map<String,Object> resultMap=new HashMap<>();
-        resultMap.put("commonQuestionList",commonQuestionList);
+    public Map<String, Object> getCommonQuestion(
+        @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
+        @RequestParam(value = "rows", required = false, defaultValue = "10") String rows)
+    {
+        Map<String, Object> map = new HashMap<>();
+        map.put("offset", offset);
+        map.put("rows", rows);
+        List<CommonQuestion> commonQuestionList = expertService.selectCommonQuestion(map);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("commonQuestionList", commonQuestionList);
         return resultMap;
     }
 
     @RequestMapping(value = "getExpertList")
     @ResponseBody
-    public Map<String,Object> getExpertList(@RequestParam(value = "areaId",required = false)String areaId,
-                                            @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
-                                            @RequestParam(value="rows",required = false,defaultValue = "10")String rows){
-        Map<String,Object> map=new HashMap<>();
-        map.put("areaId",areaId);
-        map.put("offset",offset);
-        map.put("rows",rows);
-        List<ExpertInfoPojo> expertInfoPojoList=expertService.selectExpertList(map);
-        Map<String,Object> resultMap=new HashMap<>();
-        resultMap.put("expertInfoPojoList",expertInfoPojoList);
+    public Map<String, Object> getExpertList(@RequestParam(value = "areaId", required = false) String areaId,
+        @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
+        @RequestParam(value = "rows", required = false, defaultValue = "10") String rows)
+    {
+        Map<String, Object> map = new HashMap<>();
+        map.put("areaId", areaId);
+        map.put("offset", offset);
+        map.put("rows", rows);
+        List<ExpertInfoPojo> expertInfoPojoList = expertService.selectExpertList(map);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("expertInfoPojoList", expertInfoPojoList);
         return resultMap;
     }
 
     @RequestMapping(value = "getExpertInfo")
     @ResponseBody
-    public Map<String,Object> getExpertInfo(@RequestParam(value = "expertId")String expertId){
-        Map<String,Object> map=new HashMap<>();
-        map.put("expertId",expertId);
-        ExpertInfoPojo expertInfoPojo=expertService.selectExpertInfo(map);
-        Map<String,Object> resultMap=new HashMap<>();
-        resultMap.put("expertInfoPojo",expertInfoPojo);
+    public Map<String, Object> getExpertInfo(@RequestParam(value = "expertId") String expertId)
+    {
+        Map<String, Object> map = new HashMap<>();
+        map.put("expertId", expertId);
+        ExpertInfoPojo expertInfoPojo = expertService.selectExpertInfo(map);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("expertInfoPojo", expertInfoPojo);
         return resultMap;
     }
 
     @RequestMapping(value = "getVedioList")
     @ResponseBody
-    public Map<String,Object> getVedioList(@RequestParam(value = "expertId")String expertId,
-                                           @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
-                                           @RequestParam(value="rows",required = false,defaultValue = "10")String rows){
-        Map<String,Object> map=new HashMap<>();
-        map.put("expertId",expertId);
-        map.put("offset",offset);
-        map.put("rows",rows);
-        List<ExpertVedio> expertVedioList=expertService.selectVedioList(map);
-        Map<String,Object> resultMap=new HashMap<>();
-        resultMap.put("expertVedioList",expertVedioList);
+    public Map<String, Object> getVedioList(@RequestParam(value = "expertId") String expertId,
+        @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
+        @RequestParam(value = "rows", required = false, defaultValue = "10") String rows)
+    {
+        Map<String, Object> map = new HashMap<>();
+        map.put("expertId", expertId);
+        map.put("offset", offset);
+        map.put("rows", rows);
+        List<ExpertVedio> expertVedioList = expertService.selectVedioList(map);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("expertVedioList", expertVedioList);
         return resultMap;
     }
 
     @RequestMapping(value = "getQuestionList")
     @ResponseBody
-    public Map<String,Object> getQuestionList(@RequestParam(value = "expertId")String expertId,
-                                              @RequestParam(value = "userId",required = false)String userId,
-                                              @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
-                                              @RequestParam(value="rows",required = false,defaultValue = "10")String rows){
-        Map<String,Object> map=new HashMap<>();
+    public Map<String, Object> getQuestionList(@RequestParam(value = "expertId") String expertId,
+        @RequestParam(value = "userId", required = false) String userId,
+        @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
+        @RequestParam(value = "rows", required = false, defaultValue = "10") String rows)
+    {
+        Map<String, Object> map = new HashMap<>();
         map.put("expertId", expertId);
-        if(StringUtils.isNotBlank(userId)) {
+        if (StringUtils.isNotBlank(userId))
+        {
             map.put("userId", userId);
         }
-        map.put("offset",offset);
-        map.put("rows",rows);
-        List<UserQuestion> userQuestionList=expertService.selectQuestionList(map);
-        Map<String,Object> resultMap=new HashMap<>();
-        resultMap.put("userQuestionList",userQuestionList);
+        map.put("offset", offset);
+        map.put("rows", rows);
+        List<UserQuestion> userQuestionList = expertService.selectQuestionList(map);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("userQuestionList", userQuestionList);
         return resultMap;
     }
 
     @RequestMapping(value = "getCasesList")
     @ResponseBody
-    public Map<String,Object> getCasesList(@RequestParam(value = "expertId")String expertId,
-                                           @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
-                                           @RequestParam(value="rows",required = false,defaultValue = "10")String rows){
-        Map<String,Object> map=new HashMap<>();
-        map.put("expertId",expertId);
-        map.put("offset",offset);
-        map.put("rows",rows);
-        List<ExpertCases> expertCasesList=expertService.selectCasesList(map);
-        Map<String,Object> resultMap=new HashMap<>();
-        resultMap.put("expertCasesList",expertCasesList);
+    public Map<String, Object> getCasesList(@RequestParam(value = "expertId") String expertId,
+        @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
+        @RequestParam(value = "rows", required = false, defaultValue = "10") String rows)
+    {
+        Map<String, Object> map = new HashMap<>();
+        map.put("expertId", expertId);
+        map.put("offset", offset);
+        map.put("rows", rows);
+        List<ExpertCases> expertCasesList = expertService.selectCasesList(map);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("expertCasesList", expertCasesList);
         return resultMap;
     }
 
     @RequestMapping(value = "getAppraiseList")
     @ResponseBody
-    public Map<String,Object> getAppraiseList(@RequestParam(value = "expertId",required = false)String expertId,
-                                              @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
-                                              @RequestParam(value="rows",required = false,defaultValue = "10")String rows){
-        Map<String,Object> map=new HashMap<>();
-        if(StringUtils.isNotBlank(expertId)) {
+    public Map<String, Object> getAppraiseList(@RequestParam(value = "expertId", required = false) String expertId,
+        @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
+        @RequestParam(value = "rows", required = false, defaultValue = "10") String rows)
+    {
+        Map<String, Object> map = new HashMap<>();
+        if (StringUtils.isNotBlank(expertId))
+        {
             map.put("expertId", expertId);
         }
-        map.put("offset",offset);
-        map.put("rows",rows);
-        List<ExpertAppraisePojo> expertAppraiseList=expertService.selectAppraiseList(map);
-        Map<String,Object> resultMap=new HashMap<>();
-        resultMap.put("expertAppraiseList",expertAppraiseList);
+        map.put("offset", offset);
+        map.put("rows", rows);
+        List<ExpertAppraisePojo> expertAppraiseList = expertService.selectAppraiseList(map);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("expertAppraiseList", expertAppraiseList);
         return resultMap;
     }
 
     /**
      * 专家订单列表
+     *
      * @param token
      * @return
      */
     @RequestMapping(value = "getExpertOrderList")
     @ResponseBody
-    public List<Map<String,Object>> getExpertOrderList(@RequestParam(value = "token", required = true) String token,
+    public List<Map<String, Object>> getExpertOrderList(@RequestParam(value = "token", required = true) String token,
         @RequestParam(value = "more", required = false) String more)
     {
-        Map<String ,Object> paramMap = new HashMap<>();
-        String userId = getUserAccountPojo().getId()+"";
+        Map<String, Object> paramMap = new HashMap<>();
+        String userId = getUserAccountPojo().getId() + "";
         paramMap.put("userId", userId);
         paramMap.put("more", more);
-        List<Map<String,Object>> list = expertService.getExpertOrderList(paramMap);
+        List<Map<String, Object>> list = expertService.getExpertOrderList(paramMap);
         return list;
     }
 
     @RequestMapping("checkExpert")
     @ResponseBody
+    public Map<String, Object> checkExpert(@RequestParam(value = "commonQuestionIdList") String commonQuestionIdList,
+        @RequestParam(value = "userId") String userId,
+        @RequestParam(value = "note", required = false) String note,
+        @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
+        @RequestParam(value = "rows", required = false, defaultValue = "2") String rows)
+    {
+        List<ExpertInfoPojo> expertInfoPojoList =
+            expertService.checkExpert(commonQuestionIdList, offset, rows, userId, note);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("expertInfoPojoList", expertInfoPojoList);
     public Map<String,Object> checkExpert(@RequestParam(value = "commonQuestionIdList")String commonQuestionIdList,
                                           @RequestParam(value="userId")String userId,
                                           @RequestParam(value="note",required = false)String note,
@@ -449,5 +516,31 @@ public class ExpertController extends ZGKBaseController
         Map<String,Object> resultMap=new HashMap<>();
         resultMap.put("result","ok");
         return resultMap;
+    }
+
+    /**
+     * 专家订单评价
+     *
+     * @param token
+     * @return
+     */
+    @RequestMapping(value = "createExpertOrderRevaluation")
+    @ResponseBody
+    public OrderRevaluation createExpertOrderRevaluation(@RequestParam(value = "token", required = true) String token,
+        OrderRevaluation orderRevaluation)
+    {
+        if (null == orderRevaluation || null == orderRevaluation.getOrderNo())
+        {
+            throw new BizException("1000111", "少传参数！");
+        }
+        ExpertOrder order = expertService.findOrderByOrderNo(orderRevaluation.getOrderNo());
+
+        if (null == order || !order.getUserId().equals(getAccoutId()))
+        {
+            throw new BizException("1000111", "orderNo参数错误！");
+        }
+        orderRevaluation.setCreateDate(System.currentTimeMillis()+"");
+        expertService.createExpertOrderRevaluation(orderRevaluation);
+        return orderRevaluation;
     }
 }

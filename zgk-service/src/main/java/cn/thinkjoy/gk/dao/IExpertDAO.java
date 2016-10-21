@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.dao;
 
 import cn.thinkjoy.gk.domain.ExpertOrder;
+import cn.thinkjoy.gk.domain.OrderRevaluation;
 import cn.thinkjoy.gk.entity.*;
 import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
 import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
@@ -45,6 +46,8 @@ public interface IExpertDAO
     List<ExpertInfoPojo> selectExpertBySpecialityMore();
 
     List<String> selectExpertId(Map<String,Object> map);
+
+    void insertOrderRevaluation(OrderRevaluation orderRevaluation);
 
     void insertUserQuestion(Map<String,Object> map);
 }

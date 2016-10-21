@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.gk.dao.IExpertDAO;
 import cn.thinkjoy.gk.domain.ExpertOrder;
+import cn.thinkjoy.gk.domain.OrderRevaluation;
 import cn.thinkjoy.gk.entity.*;
 import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
 import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
@@ -123,6 +124,12 @@ public class ExpertServiceImpl implements IExpertService
 
         }
         return null;
+    }
+
+    @Override
+    public void createExpertOrderRevaluation(OrderRevaluation orderRevaluation)
+    {
+        dao.insertOrderRevaluation(orderRevaluation);
     }
 
     @Override
