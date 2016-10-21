@@ -48,4 +48,8 @@ public interface IExpertDAO
     List<String> selectExpertId(Map<String,Object> map);
 
     void insertOrderRevaluation(OrderRevaluation orderRevaluation);
+
+    OrderRevaluation findExpertOrderRevaluationByOrderNo(String orderNo);
+
+    void updateExpertOrderRevaluation(OrderRevaluation orderRevaluation);
 }

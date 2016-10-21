@@ -39,4 +39,8 @@ public interface IExpertService
     List<ExpertInfoPojo> checkExpert(String commonQuestionIdList,String offset,String rows,String userId,String note);
 
     void createExpertOrderRevaluation(OrderRevaluation orderRevaluation);
+
+    void updateExpertOrderRevaluation(OrderRevaluation orderRevaluation);
+
+    OrderRevaluation findExpertOrderRevaluationByOrderNo(String orderNo);
 }

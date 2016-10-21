@@ -133,6 +133,18 @@ public class ExpertServiceImpl implements IExpertService
     }
 
     @Override
+    public void updateExpertOrderRevaluation(OrderRevaluation orderRevaluation)
+    {
+        dao.updateExpertOrderRevaluation(orderRevaluation);
+    }
+
+    @Override
+    public OrderRevaluation findExpertOrderRevaluationByOrderNo(String orderNo)
+    {
+       return dao.findExpertOrderRevaluationByOrderNo(orderNo);
+    }
+
+    @Override
     public List<Map<String, Object>> getExpertOrderList(Map<String, Object> map)
     {
         return dao.getExpertOrderList(map);

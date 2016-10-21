@@ -327,5 +327,27 @@
             SELECT LAST_INSERT_ID() AS ID
         </selectKey>
     </insert>
+
+    <update id="updateExpertOrderRevaluation" parameterType="OrderRevaluation">
+        UPDATE zgk_expert_service_evaluation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="evaluation!=null">
+                evaluation = #{evaluation},
+            </if>
+        </trim>
+        WHERE
+        orderNo = #{orderNo}
+    </update>
+
+    <select id="findExpertOrderRevaluationByOrderNo" parameterType="java.lang.String" resultType="OrderRevaluation">
+        SELECT
+        id,
+        orderNo,
+        evaluation,
+        createDate
+        FROM zgk_expert_service_evaluation WHERE
+        orderNo = #{orderNo}
+        LIMIT 0,1
+    </select>
 </mapper>
 
