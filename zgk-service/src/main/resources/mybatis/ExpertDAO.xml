@@ -7,11 +7,9 @@
     <select id="selectCommonQuestion" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.CommonQuestion">
         select id,question_desc as questionDesc,question_order as questionOrder,create_date as createDate,specialitys
         from zgk_expert_common_question ecq
-        <if test="commonQuestionIdList!=null">
+        <if test="commonQuestionIdString!=null">
             where ecq.id in
-            <foreach collection="commonQuestionIdList" item="item" index="index" open="(" separator="," close=")">
-                    #{item}
-            </foreach>
+            (${commonQuestionIdString})
         </if>
         order by ecq.question_order
         <if test="offset!=null">
@@ -53,6 +51,7 @@
     <!-- 专家视频 -->
     <select id="selectVedioList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.ExpertVedio">
         select expert_id as expertId,
+               vedio_name as vedioName,
                vedio_url as vedioUrl,
                create_date as createDate
         from zgk_expert_vedio ev where ev.expert_id=#{expertId}
@@ -259,23 +258,53 @@
         left join zgk_expert_service_relation esr2 on esr2.expert_id=ei.id
         left join zgk_expert_config ec3 on ec3.config_domain='serviceStyle' and ec3.config_key=esr2.service_style_id
         where ei.is_checked=1
-        and ei.id in(
-        select expert_id from zgk_expert_speciality_relation esr where esr.speciality_id in
-        (${map.specialitys})
-        )
+        and ei.id in
+        <foreach collection="map.expertIdList" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
         group by ei.id
         <if test="map.offset!=null">
             asc limit ${map.offset}, ${map.rows}
         </if>
     </select>
 
+    <select id="selectExpertId" parameterType="java.util.Map" resultType="java.lang.String">
+        select expert_id from zgk_expert_speciality_relation esr where esr.speciality_id in
+        (${specialitys})
+    </select>
+
     <insert id="insertUserCommonQuestion" parameterType="java.util.Map">
         INSERT INTO zgk_expert_user_common_question
-        (userId,commonQuestionId,createDate)
-        VALUES
-        <foreach collection="map.commonQuestionIdList" item="item" index="index" separator="," >
-            (#{map.userId},#{item},#{map.createDate})
-        </foreach>
+        (userId,commonQuestionId,createDate,note)
+        VALUES (#{map.userId},#{map.commonQuestionIdString},#{map.createDate},#{map.note})
     </insert>
+
+    <select id="selectExpertConfigList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.ExpertConfig">
+        select
+            id,config_key as configKey,config_value as configValue,config_domain as configDomain
+        from zgk_expert_config ec
+        where ec.config_domain=#{configDomain}
+    </select>
+
+    <!-- 查询涉及邻域最多的专家 -->
+    <select id="selectExpertBySpecialityMore" resultType="cn.thinkjoy.gk.pojo.ExpertInfoPojo">
+        select ei.id as expertId,ei.expert_name as expertName,GROUP_CONCAT(DISTINCT ec1.config_value) as speciality ,
+            count(DISTINCT ec2.id) as casesNumber,GROUP_CONCAT(DISTINCT ec3.config_value) service,ei.qualification as qualification,expert_photo_url as photoUrl,
+            ei.expert_intro as info
+        from zgk_expert_info ei
+        left join zgk_expert_speciality_relation esr on ei.id=esr.expert_id
+        left join zgk_expert_config ec1 on ec1.config_domain='speciality' and ec1.config_key=esr.speciality_id
+        left join zgk_expert_cases ec2 on ei.id=ec2.expert_id
+        left join zgk_expert_service_relation esr2 on esr2.expert_id=ei.id
+        left join zgk_expert_config ec3 on ec3.config_domain='serviceStyle' and ec3.config_key=esr2.service_style_id
+        where ei.is_checked=1
+            and ei.id in(
+            select expert_id as num from zgk_expert_speciality_relation esr
+            group by esr.expert_id
+            order by num desc
+            )
+        group by ei.id
+		limit 2
+    </select>
 </mapper>
 
