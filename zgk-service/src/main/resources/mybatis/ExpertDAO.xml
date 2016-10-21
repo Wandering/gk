@@ -224,9 +224,7 @@
     <select id="getExpertOrderList" parameterType="java.lang.String" resultType="java.util.HashMap">
         SELECT
         t.orderNo,
-        case when t.orderStatus='0' then '未支付'
-            when t.orderStatus='1' then '已支付'
-            else '未支付' end as orderStatus,
+        t.orderStatus,
         s.expert_name as expertName,
         t.channel,
         t.serverType,
