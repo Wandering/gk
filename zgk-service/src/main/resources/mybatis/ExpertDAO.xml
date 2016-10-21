@@ -221,7 +221,7 @@
         LIMIT 0,1
     </select>
 
-    <select id="getExpertOrderList" parameterType="java.lang.String" resultType="java.util.HashMap">
+    <select id="getExpertOrderList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
         SELECT
         t.orderNo,
         t.orderStatus,
@@ -237,11 +237,15 @@
         t.contactQq,
         t.expectBeginDate,
         t.expectEndDate,
-        t.createDate
+        t.createDate,
+        t.meetingAddress
         FROM zgk_expert_reservation_order t
         left join zgk_expert_info s on t.expertId = s.id
         WHERE
         userId = #{userId}
+        <if test="more==null">
+            LIMIT 0,5
+        </if>
     </select>
     
     <select id="selectExpertListBySpecialty" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ExpertInfoPojo">

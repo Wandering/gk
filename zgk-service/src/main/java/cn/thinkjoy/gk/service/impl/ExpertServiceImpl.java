@@ -5,7 +5,6 @@ import cn.thinkjoy.gk.domain.ExpertOrder;
 import cn.thinkjoy.gk.entity.*;
 import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
 import cn.thinkjoy.gk.service.IExpertService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -102,9 +101,9 @@ public class ExpertServiceImpl implements IExpertService
     }
 
     @Override
-    public List<Map<String, Object>> getExpertOrderList(String userId)
+    public List<Map<String, Object>> getExpertOrderList(Map<String, Object> map)
     {
-        return dao.getExpertOrderList(userId);
+        return dao.getExpertOrderList(map);
     }
 
 }

@@ -37,5 +37,5 @@ public interface IExpertDAO
 
     void insertUserCommonQuestion(@Param("map")Map<String,Object> map);
 
-    List<Map<String,Object>> getExpertOrderList(String userId);
+    List<Map<String,Object>> getExpertOrderList(Map<String, Object> userId);
 }
