@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.service;
 
 import cn.thinkjoy.gk.domain.ExpertOrder;
 import cn.thinkjoy.gk.entity.*;
+import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
 import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public interface IExpertService
 
     List<ExpertCases> selectCasesList(Map<String,Object> map);
 
-    List<ExpertAppraise> selectAppraiseList(Map<String,Object> map);
+    List<ExpertAppraisePojo> selectAppraiseList(Map<String,Object> map);
 
     List<Map<String,Object>> getExpertOrderList(String userId);
 

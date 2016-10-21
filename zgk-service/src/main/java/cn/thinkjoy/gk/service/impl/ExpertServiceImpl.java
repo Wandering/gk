@@ -3,6 +3,7 @@ package cn.thinkjoy.gk.service.impl;
 import cn.thinkjoy.gk.dao.IExpertDAO;
 import cn.thinkjoy.gk.domain.ExpertOrder;
 import cn.thinkjoy.gk.entity.*;
+import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
 import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
 import cn.thinkjoy.gk.service.IExpertService;
 import org.apache.commons.lang3.StringUtils;
@@ -69,7 +70,7 @@ public class ExpertServiceImpl implements IExpertService
     }
 
     @Override
-    public List<ExpertAppraise> selectAppraiseList(Map<String, Object> map) {
+    public List<ExpertAppraisePojo> selectAppraiseList(Map<String, Object> map) {
         return dao.selectAppraiseList(map);
     }
 

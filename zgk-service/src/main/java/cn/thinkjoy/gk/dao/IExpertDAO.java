@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.dao;
 
 import cn.thinkjoy.gk.domain.ExpertOrder;
 import cn.thinkjoy.gk.entity.*;
+import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
 import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,7 +28,7 @@ public interface IExpertDAO
 
     List<ExpertCases> selectCasesList(Map<String,Object> map);
 
-    List<ExpertAppraise> selectAppraiseList(Map<String,Object> map);
+    List<ExpertAppraisePojo> selectAppraiseList(Map<String,Object> map);
 
     ExpertOrder findOrderByOrderNo(String orderNo);
 

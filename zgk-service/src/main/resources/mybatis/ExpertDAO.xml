@@ -68,6 +68,9 @@
                create_date as createDate
         from zgk_expert_user_question euq
         where euq.expert_id=#{expertId}
+        <if test="userId!=null">
+            and euq.user_id=#{userId}
+        </if>
         limit ${offset}, ${rows}
     </select>
 
@@ -84,15 +87,18 @@
     </select>
 
     <!-- 服务评价 -->
-    <select id="selectAppraiseList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.ExpertAppraise">
-        select expert_id as expertId,
-               user_id as userId,
-               user_name as userName,
-               server_type as serverType,
-               user_comments as userComments,
-               is_checked as isChecked,
-               create_date as createDate
-         from zgk_expert_appraise ea
+    <select id="selectAppraiseList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ExpertAppraisePojo">
+        select ea.expert_id as expertId,
+        ea.user_id as userId,
+        ea.user_name as userName,
+        ea.user_comments as userComments,
+        ea.is_checked as isChecked,
+        ea.create_date as createDate,
+        ei.expert_name as expertName,
+        ec.config_value as serverTypeName
+        from zgk_expert_appraise ea
+        left join zgk_expert_info ei on ei.id=ea.expert_id
+        left join zgk_expert_config ec on ec.config_domain='serviceType' and ec.config_key=ea.server_type
          where ea.is_checked=1
          <if test="expertId!=null">
             and ea.expert_id=#{expertId}

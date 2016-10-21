@@ -351,10 +351,14 @@ public class ExpertController extends ZGKBaseController
     @RequestMapping(value = "getQuestionList")
     @ResponseBody
     public Map<String,Object> getQuestionList(@RequestParam(value = "expertId")String expertId,
+                                              @RequestParam(value = "userId",required = false)String userId,
                                               @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
                                               @RequestParam(value="rows",required = false,defaultValue = "10")String rows){
         Map<String,Object> map=new HashMap<>();
         map.put("expertId", expertId);
+        if(StringUtils.isNotBlank(userId)) {
+            map.put("userId", userId);
+        }
         map.put("offset",offset);
         map.put("rows",rows);
         List<UserQuestion> userQuestionList=expertService.selectQuestionList(map);
