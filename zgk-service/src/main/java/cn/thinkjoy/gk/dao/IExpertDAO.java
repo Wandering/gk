@@ -21,7 +21,7 @@ public interface IExpertDAO
 
     ExpertInfoPojo selectExpertInfo(Map<String,Object> map);
 
-    List<ExpertVideo> selectVedioList(Map<String,Object> map);
+    List<ExpertVedio> selectVedioList(Map<String,Object> map);
 
     List<UserQuestion> selectQuestionList(Map<String,Object> map);
 

@@ -54,7 +54,7 @@ public class ExpertServiceImpl implements IExpertService
     }
 
     @Override
-    public List<ExpertVideo> selectVedioList(Map<String, Object> map) {
+    public List<ExpertVedio> selectVedioList(Map<String, Object> map) {
         return dao.selectVedioList(map);
     }
 
