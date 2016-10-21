@@ -406,10 +406,14 @@ public class ExpertController extends ZGKBaseController
      */
     @RequestMapping(value = "getExpertOrderList")
     @ResponseBody
-    public List<Map<String,Object>> getExpertOrderList(@RequestParam(value = "token", required = true) String token)
+    public List<Map<String,Object>> getExpertOrderList(@RequestParam(value = "token", required = true) String token,
+        @RequestParam(value = "more", required = false) String more)
     {
+        Map<String ,Object> paramMap = new HashMap<>();
         String userId = getUserAccountPojo().getId()+"";
-        List<Map<String,Object>> list = expertService.getExpertOrderList(userId);
+        paramMap.put("userId", userId);
+        paramMap.put("more", more);
+        List<Map<String,Object>> list = expertService.getExpertOrderList(paramMap);
         return list;
     }
 
