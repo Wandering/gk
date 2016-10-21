@@ -21,7 +21,7 @@ public interface IExpertDAO
 
     ExpertInfoPojo selectExpertInfo(Map<String,Object> map);
 
-    List<ExpertVedio> selectVedioList(Map<String,Object> map);
+    List<ExpertVideo> selectVedioList(Map<String,Object> map);
 
     List<UserQuestion> selectQuestionList(Map<String,Object> map);
 
@@ -38,4 +38,10 @@ public interface IExpertDAO
     void insertUserCommonQuestion(@Param("map")Map<String,Object> map);
 
     List<Map<String,Object>> getExpertOrderList(String userId);
+
+    List<ExpertConfig> selectExpertConfigList(Map<String,Object> map);
+
+    List<ExpertInfoPojo> selectExpertBySpecialityMore();
+
+    List<String> selectExpertId(Map<String,Object> map);
 }

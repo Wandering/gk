@@ -35,5 +35,5 @@ public interface IExpertService
     List<Map<String,Object>> getExpertOrderList(String userId);
 
 //    ExpertInfoPojo selectExpertListBySpecialty(List specialtys);
-    List<ExpertInfoPojo> checkExpert(String commonQuestionIdList,String offset,String rows,String userId);
+    List<ExpertInfoPojo> checkExpert(String commonQuestionIdList,String offset,String rows,String userId,String note);
 }
