@@ -448,10 +448,10 @@
         left join zgk_expert_info info on s.expertId=info.id
         <where>
             <if test="orderNo!=null">
-                t.orderNo=#{orderNo}
+                and t.orderNo=#{orderNo}
             </if>
             <if test="expertId!=null">
-                s.expertId=#{expertId}
+                and s.expertId=#{expertId}
             </if>
         </where>
     </select>

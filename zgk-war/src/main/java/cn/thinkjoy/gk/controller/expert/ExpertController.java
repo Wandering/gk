@@ -552,11 +552,11 @@ public class ExpertController extends ZGKBaseController
      *
      * @return
      */
-    @RequestMapping(value = "createExpertOrderRevaluation")
+    @RequestMapping(value = "getExpertOrderRevaluation")
     @ResponseBody
     public List<Map<String,Object>> getExpertOrderRevaluation(
-        @RequestParam(value = "orderNo", required = true) String orderNo,
-        @RequestParam(value = "expertId", required = true) String expertId)
+        @RequestParam(value = "orderNo", required = false) String orderNo,
+        @RequestParam(value = "expertId", required = false) String expertId)
     {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("orderNo", orderNo);
