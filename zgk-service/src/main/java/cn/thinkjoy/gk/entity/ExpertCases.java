@@ -9,8 +9,10 @@ public class ExpertCases extends BaseDomain {
 
     private String expertId;
     private String userName;
+    private String imgUrl;
     private String school;
     private String serviceId;
+    private String serviceName;
     private String userComments;
     private String createDate;
 
@@ -60,5 +62,21 @@ public class ExpertCases extends BaseDomain {
 
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 }
