@@ -70,4 +70,6 @@ public interface IExpertDAO
     void updateExpertOrderRevaluation(OrderRevaluation orderRevaluation);
 
     void insertUserQuestion(Map<String, Object> map);
+
+    List<Map<String,Object>> getExpertOrderRevaluation(Map<String, String> paramMap);
 }

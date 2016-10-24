@@ -440,5 +440,20 @@
         values
         (#{expertId},#{userId},#{userName},#{userQuestion},#{createDate})
     </insert>
+
+    <select id="getExpertOrderRevaluation" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        select t.evaluation,t.createDate,info.expert_name
+        from zgk_expert_service_evaluation t
+        left join zgk_expert_reservation_order s on t.orderNo=s.orderNo
+        left join zgk_expert_info info on s.expertId=info.id
+        <where>
+            <if test="orderNo!=null">
+                t.orderNo=#{orderNo}
+            </if>
+            <if test="expertId!=null">
+                s.expertId=#{expertId}
+            </if>
+        </where>
+    </select>
 </mapper>
 

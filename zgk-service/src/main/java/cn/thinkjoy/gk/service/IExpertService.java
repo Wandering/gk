@@ -57,4 +57,6 @@ public interface IExpertService
     OrderRevaluation findExpertOrderRevaluationByOrderNo(String orderNo);
 
     void insertUserQuestion(Map<String,Object> map);
+
+    List<Map<String,Object>> getExpertOrderRevaluation(Map<String, String> paramMap);
 }
