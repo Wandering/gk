@@ -6,7 +6,7 @@ import cn.thinkjoy.gk.domain.OrderRevaluation;
 import cn.thinkjoy.gk.entity.*;
 import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
 import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
-import cn.thinkjoy.gk.pojo.ServicePojo;
+import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.service.IExpertService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -180,12 +180,40 @@ public class ExpertServiceImpl implements IExpertService
     }
 
     @Override
-    public Map<String,Object> selectServiceByExpertId(Map<String, Object> map) {
+    public List<ServicePojo1> selectServiceByExpertId(Map<String, Object> map) {
         List<ServicePojo> servicePojoList=dao.selectServiceByExpertId(map);
+        List<ServicePojo1> servicePojo1list=new ArrayList<>();
         for(ServicePojo servicePojo:servicePojoList){
+            boolean flag=false;
 
+            for(ServicePojo1 servicePojo1:servicePojo1list){
+                //style已有
+                if(servicePojo1.getServiceStyleId().equals(servicePojo.getServiceStyleId())){
+                    ServicePojo2 servicePojo2=new ServicePojo2();
+                    servicePojo2.setServiceTypeId(servicePojo.getServiceTypeId());
+                    servicePojo2.setServiceTypeName(servicePojo.getServiceTypeName());
+                    servicePojo2.setPrice(servicePojo.getServicePrice());
+                    servicePojo1.getServiceTypeList().add(servicePojo2);
+                    flag=true;
+                    break;
+                }
+            }
+            if(!flag) {
+                //style没有，添加
+                ServicePojo2 servicePojo2=new ServicePojo2();
+                servicePojo2.setServiceTypeId(servicePojo.getServiceTypeId());
+                servicePojo2.setServiceTypeName(servicePojo.getServiceTypeName());
+                servicePojo2.setPrice(servicePojo.getServicePrice());
+
+                ServicePojo1 servicePojo1 = new ServicePojo1();
+                servicePojo1.setServiceStyleId(servicePojo.getServiceStyleId());
+                servicePojo1.setServiceStyleName(servicePojo.getServiceStyleName());
+                servicePojo1.setServiceTypeList(new ArrayList<ServicePojo2>());
+                servicePojo1.getServiceTypeList().add(servicePojo2);
+                servicePojo1list.add(servicePojo1);
+            }
         }
-        return null;
+        return servicePojo1list;
     }
 
     @Override

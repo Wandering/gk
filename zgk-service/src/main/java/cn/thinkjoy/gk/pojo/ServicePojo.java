@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.pojo;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by zuohao on 16/10/20.

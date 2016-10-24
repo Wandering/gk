@@ -6,6 +6,7 @@ import cn.thinkjoy.gk.entity.*;
 import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
 import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
 import cn.thinkjoy.gk.pojo.ServicePojo;
+import cn.thinkjoy.gk.pojo.ServicePojo1;
 
 import java.util.List;
 import java.util.Map;
@@ -61,5 +62,5 @@ public interface IExpertService
 
     List<Map<String,Object>> getExpertOrderRevaluation(Map<String, String> paramMap);
 
-    Map<String,Object> selectServiceByExpertId(Map<String,Object> map);
+    List<ServicePojo1> selectServiceByExpertId(Map<String,Object> map);
 }
