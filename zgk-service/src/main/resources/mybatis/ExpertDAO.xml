@@ -51,7 +51,6 @@
         left join zgk_expert_service_relation esr2 on esr2.expert_id=ei.id
         left join zgk_expert_config ec3 on ec3.config_domain='serviceStyle' and ec3.config_key=esr2.service_style_id
         where is_checked=1
-        group by ei.id
     </select>
 
     <!-- 预约专家详情 -->
