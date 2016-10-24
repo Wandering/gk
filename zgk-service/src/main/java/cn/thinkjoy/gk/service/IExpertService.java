@@ -59,5 +59,7 @@ public interface IExpertService
 
     void insertUserQuestion(Map<String,Object> map);
 
+    List<Map<String,Object>> getExpertOrderRevaluation(Map<String, String> paramMap);
+
     Map<String,Object> selectServiceByExpertId(Map<String,Object> map);
 }

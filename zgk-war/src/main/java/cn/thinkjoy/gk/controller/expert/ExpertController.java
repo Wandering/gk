@@ -514,7 +514,7 @@ public class ExpertController extends ZGKBaseController
     }
 
     /**
-     * 专家订单评价
+     * 专家服务评价
      *
      * @param token
      * @return
@@ -545,5 +545,22 @@ public class ExpertController extends ZGKBaseController
             expertService.updateExpertOrderRevaluation(orderRevaluation);
         }
         return orderRevaluation;
+    }
+
+    /**
+     * 专家服务评价列表
+     *
+     * @return
+     */
+    @RequestMapping(value = "getExpertOrderRevaluation")
+    @ResponseBody
+    public List<Map<String,Object>> getExpertOrderRevaluation(
+        @RequestParam(value = "orderNo", required = false) String orderNo,
+        @RequestParam(value = "expertId", required = false) String expertId)
+    {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("orderNo", orderNo);
+        paramMap.put("expertId", expertId);
+        return expertService.getExpertOrderRevaluation(paramMap);
     }
 }

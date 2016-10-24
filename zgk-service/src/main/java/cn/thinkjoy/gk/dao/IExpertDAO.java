@@ -73,4 +73,6 @@ public interface IExpertDAO
     void insertUserQuestion(Map<String, Object> map);
 
     List<ServicePojo> selectServiceByExpertId(Map<String,Object> map);
+
+    List<Map<String,Object>> getExpertOrderRevaluation(Map<String, String> paramMap);
 }
