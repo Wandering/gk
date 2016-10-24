@@ -458,7 +458,7 @@ public class ExpertController extends ZGKBaseController
         List<ExpertAppraisePojo> expertAppraiseList = expertService.selectAppraiseList(map);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("expertAppraiseList", expertAppraiseList);
-        resultMap.put("count", expertService.selectExpertListCount(map));
+        resultMap.put("count", expertService.selectAppraiseListCount(map));
         return resultMap;
     }
 

@@ -43,7 +43,7 @@
     </select>
     <!-- 预约专家列表总数 -->
     <select id="selectExpertListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
-        select count(ei.id) as count
+        select count(DISTINCT ei.id) as count
         from zgk_expert_info ei
         left join zgk_expert_speciality_relation esr on ei.id=esr.expert_id
         left join zgk_expert_config ec1 on ec1.config_domain='speciality' and ec1.config_key=esr.speciality_id
@@ -51,6 +51,7 @@
         left join zgk_expert_service_relation esr2 on esr2.expert_id=ei.id
         left join zgk_expert_config ec3 on ec3.config_domain='serviceStyle' and ec3.config_key=esr2.service_style_id
         where is_checked=1
+        group by ei.id
     </select>
 
     <!-- 预约专家详情 -->
