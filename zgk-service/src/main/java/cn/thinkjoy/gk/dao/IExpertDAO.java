@@ -5,6 +5,7 @@ import cn.thinkjoy.gk.domain.OrderRevaluation;
 import cn.thinkjoy.gk.entity.*;
 import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
 import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
+import cn.thinkjoy.gk.pojo.ServicePojo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -70,4 +71,6 @@ public interface IExpertDAO
     void updateExpertOrderRevaluation(OrderRevaluation orderRevaluation);
 
     void insertUserQuestion(Map<String, Object> map);
+
+    List<ServicePojo> selectServiceByExpertId(Map<String,Object> map);
 }

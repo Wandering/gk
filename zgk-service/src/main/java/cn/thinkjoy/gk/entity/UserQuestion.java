@@ -11,7 +11,7 @@ public class UserQuestion extends BaseDomain {
     private String userId;
     private String userName;
     private String userQuestion;
-    private String userAnwser;
+    private String userAnswer;
     private String createDate;
 
     public String getExpertId() {
@@ -46,19 +46,19 @@ public class UserQuestion extends BaseDomain {
         this.userQuestion = userQuestion;
     }
 
-    public String getUserAnwser() {
-        return userAnwser;
-    }
-
-    public void setUserAnwser(String userAnwser) {
-        this.userAnwser = userAnwser;
-    }
-
     public String getCreateDate() {
         return createDate;
     }
 
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
+    }
+
+    public String getUserAnswer() {
+        return userAnswer;
+    }
+
+    public void setUserAnswer(String userAnswer) {
+        this.userAnswer = userAnswer;
     }
 }

@@ -6,6 +6,7 @@ import cn.thinkjoy.gk.domain.OrderRevaluation;
 import cn.thinkjoy.gk.entity.*;
 import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
 import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
+import cn.thinkjoy.gk.pojo.ServicePojo;
 import cn.thinkjoy.gk.service.IExpertService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,6 +177,15 @@ public class ExpertServiceImpl implements IExpertService
 
     public void insertUserQuestion(Map<String, Object> map) {
         dao.insertUserQuestion(map);
+    }
+
+    @Override
+    public Map<String,Object> selectServiceByExpertId(Map<String, Object> map) {
+        List<ServicePojo> servicePojoList=dao.selectServiceByExpertId(map);
+        for(ServicePojo servicePojo:servicePojoList){
+
+        }
+        return null;
     }
 
     @Override
