@@ -7,10 +7,7 @@ import cn.thinkjoy.gk.common.MatrixToImageWriter;
 import cn.thinkjoy.gk.common.NumberGenUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
-import cn.thinkjoy.gk.domain.ExpertInfo;
-import cn.thinkjoy.gk.domain.ExpertOrder;
-import cn.thinkjoy.gk.domain.OrderRevaluation;
-import cn.thinkjoy.gk.domain.OrderStatements;
+import cn.thinkjoy.gk.domain.*;
 import cn.thinkjoy.gk.entity.*;
 import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
 import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
@@ -19,6 +16,7 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IExpertApplyService;
 import cn.thinkjoy.gk.service.IExpertService;
 import cn.thinkjoy.gk.service.IOrderStatementsService;
+import cn.thinkjoy.gk.service.impl.ProvinceServiceImpl;
 import cn.thinkjoy.gk.util.IPUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.zgk.common.StringUtil;
@@ -71,6 +69,8 @@ public class ExpertController extends ZGKBaseController
     @Autowired
     private IOrderStatementsService orderStatementService;
 
+    @Autowired
+    private ProvinceServiceImpl provinceServiceImp;
     //订单过期时间间隔2小时
     private final long expireDuration = 2 * 60 * 60 * 1000;
     /**
@@ -636,9 +636,20 @@ public class ExpertController extends ZGKBaseController
 
     @RequestMapping(value = "getExpertServiceInfo")
     @ResponseBody
-    public List<Map<String,Object>> getExpertServiceInfo(HttpServletRequest request)
+    public List<Map<String,Object>> getExpertServiceInfo(
+        @RequestParam(value = "provinceCode", required = true) String provinceCode,
+        @RequestParam(value = "expertId", required = true) String expertId)
     {
-        request.getPathInfo();
-        return null;
+        Province province = provinceServiceImp.findOne("code", provinceCode);
+        if(null == province)
+        {
+            throw new BizException("1100110","请输入正确的provinceCode!");
+        }
+        String areaId = province.getId() + "";
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("areaId", areaId);
+        paramMap.put("expertId", expertId);
+
+        return expertService.getExpertServiceInfo(paramMap);
     }
 }

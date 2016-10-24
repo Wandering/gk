@@ -470,5 +470,16 @@
             </if>
         </where>
     </select>
+
+    <select id="getExpertServiceInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        select s.expert_name,max(t.service_price) maxPrice, min(t.service_price) minPrice,
+        (select config.config_value from zgk_expert_config config
+        where config.config_key=t.service_type_id
+        and config.config_domain='serviceType') as serviceContent
+        from zgk_expert_service_relation t
+        left join zgk_expert_info s on t.expert_id=s.id
+        where expert_id=#{expertId}
+        group by s.expert_name,serviceContent
+    </select>
 </mapper>
 
