@@ -629,6 +629,7 @@ public class ExpertController extends ZGKBaseController
     public Map<String,Object> getServiceByExpertId(@RequestParam("expertId")String expertId){
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("expertId", expertId);
+        paramMap.put("areaId", getAreaId());
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("service", expertService.selectServiceByExpertId(paramMap));
         return resultMap;
