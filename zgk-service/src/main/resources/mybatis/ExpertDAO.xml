@@ -304,11 +304,13 @@
         t.expectBeginDate,
         t.expectEndDate,
         t.createDate,
-        t.meetingAddress
+        t.meetingAddress,
+        case when service.evaluation is not null then 1 else 0 end as isComment
         FROM zgk_expert_reservation_order t
         left join zgk_expert_info s on t.expertId = s.id
+        left join zgk_expert_service_evaluation service on service.orderNo=t.orderNo
         WHERE
-        userId = #{userId}
+        userId = #{userId} AND orderStatus>=0
         <if test="more==null">
             LIMIT 0,5
         </if>

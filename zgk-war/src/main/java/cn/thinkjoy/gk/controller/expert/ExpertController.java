@@ -70,6 +70,8 @@ public class ExpertController extends ZGKBaseController
     @Autowired
     private IOrderStatementsService orderStatementService;
 
+    //订单过期时间间隔2小时
+    private final long expireDuration = 2 * 60 * 60 * 1000;
     /**
      * 下订单
      *
@@ -478,6 +480,13 @@ public class ExpertController extends ZGKBaseController
         paramMap.put("userId", userId);
         paramMap.put("more", more);
         List<Map<String, Object>> list = expertService.getExpertOrderList(paramMap);
+        for (Map<String, Object> map: list)
+        {
+            String orderNo = map.get("orderNo") + "";
+            ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
+            checkExpire(order);
+            map.put("orderStatus", order.getOrderStatus());
+        }
         return list;
     }
 
@@ -562,6 +571,56 @@ public class ExpertController extends ZGKBaseController
         paramMap.put("orderNo", orderNo);
         paramMap.put("expertId", expertId);
         return expertService.getExpertOrderRevaluation(paramMap);
+    }
+
+    /**
+     * 专家服务评价列表
+     *
+     * @return
+     */
+    @RequestMapping(value = "deleteExpertOrder")
+    @ResponseBody
+    public String deleteExpertOrder(@RequestParam(value = "token", required = true) String token,
+        @RequestParam(value = "orderNo", required = true) String orderNo)
+    {
+        ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
+        if(!order.getUserId().equals(getAccoutId()))
+        {
+            throw new BizException("1000111", "token或orderNo参数错误！");
+        }
+        order.setOrderStatus("-1");
+        expertService.updateOrder(order);
+        return "true";
+    }
+
+    @RequestMapping(value = "getExpertOrder")
+    @ResponseBody
+    public ExpertOrder getExpertOrder(@RequestParam(value = "token", required = true) String token,
+        @RequestParam(value = "orderNo", required = true) String orderNo)
+    {
+        ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
+
+        if(null == order)
+        {
+            throw new BizException("1000111", "orderNo错误，未找到订单信息！");
+        }
+
+        if(!order.getUserId().equals(getAccoutId()))
+        {
+            throw new BizException("1000111", "token或orderNo错误参数错误！");
+        }
+        checkExpire(order);
+        return order;
+    }
+
+    private void checkExpire(ExpertOrder order) {
+        long createDate = order.getCreateDate();
+        if("0".equals(order.getOrderStatus()+"") && System.currentTimeMillis() -  createDate > expireDuration)
+        {
+            //订单过期
+            order.setOrderStatus("10");
+            expertService.updateOrder(order);
+        }
     }
 
     @RequestMapping(value = "getServiceByExpertId")
