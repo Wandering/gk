@@ -46,8 +46,18 @@ public class ExpertServiceImpl implements IExpertService
     }
 
     @Override
+    public int selectCommonQuestionCount(Map<String, Object> map) {
+        return dao.selectCommonQuestionCount(map);
+    }
+
+    @Override
     public List<ExpertInfoPojo> selectExpertList(Map<String, Object> map) {
         return dao.selectExpertList(map);
+    }
+
+    @Override
+    public int selectExpertListCount(Map<String, Object> map) {
+        return dao.selectExpertListCount(map);
     }
 
     @Override
@@ -61,8 +71,18 @@ public class ExpertServiceImpl implements IExpertService
     }
 
     @Override
+    public int selectVedioListCount(Map<String, Object> map) {
+        return dao.selectVedioListCount(map);
+    }
+
+    @Override
     public List<UserQuestion> selectQuestionList(Map<String, Object> map) {
         return dao.selectQuestionList(map);
+    }
+
+    @Override
+    public int selectQuestionListCount(Map<String, Object> map) {
+        return dao.selectQuestionListCount(map);
     }
 
     @Override
@@ -71,8 +91,18 @@ public class ExpertServiceImpl implements IExpertService
     }
 
     @Override
+    public int selectCasesListCount(Map<String, Object> map) {
+        return dao.selectCasesListCount(map);
+    }
+
+    @Override
     public List<ExpertAppraisePojo> selectAppraiseList(Map<String, Object> map) {
         return dao.selectAppraiseList(map);
+    }
+
+    @Override
+    public int selectAppraiseListCount(Map<String, Object> map) {
+        return dao.selectAppraiseListCount(map);
     }
 
 

@@ -354,22 +354,23 @@ public class ExpertController extends ZGKBaseController
         List<CommonQuestion> commonQuestionList = expertService.selectCommonQuestion(map);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("commonQuestionList", commonQuestionList);
+        resultMap.put("count", expertService.selectCommonQuestionCount(map));
         return resultMap;
     }
 
     @RequestMapping(value = "getExpertList")
     @ResponseBody
-    public Map<String, Object> getExpertList(@RequestParam(value = "areaId", required = false) String areaId,
-        @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
-        @RequestParam(value = "rows", required = false, defaultValue = "10") String rows)
+    public Map<String, Object> getExpertList(@RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
+                                             @RequestParam(value = "rows", required = false, defaultValue = "10") String rows)
     {
         Map<String, Object> map = new HashMap<>();
-        map.put("areaId", areaId);
+        map.put("areaId", getAreaId());
         map.put("offset", offset);
         map.put("rows", rows);
         List<ExpertInfoPojo> expertInfoPojoList = expertService.selectExpertList(map);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("expertInfoPojoList", expertInfoPojoList);
+        resultMap.put("count", expertService.selectExpertListCount(map));
         return resultMap;
     }
 
@@ -398,6 +399,7 @@ public class ExpertController extends ZGKBaseController
         List<ExpertVedio> expertVedioList = expertService.selectVedioList(map);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("expertVedioList", expertVedioList);
+        resultMap.put("count", expertService.selectVedioListCount(map));
         return resultMap;
     }
 
@@ -419,6 +421,7 @@ public class ExpertController extends ZGKBaseController
         List<UserQuestion> userQuestionList = expertService.selectQuestionList(map);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("userQuestionList", userQuestionList);
+        resultMap.put("count", expertService.selectQuestionListCount(map));
         return resultMap;
     }
 
@@ -435,6 +438,7 @@ public class ExpertController extends ZGKBaseController
         List<ExpertCases> expertCasesList = expertService.selectCasesList(map);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("expertCasesList", expertCasesList);
+        resultMap.put("count", expertService.selectExpertListCount(map));
         return resultMap;
     }
 
@@ -454,6 +458,7 @@ public class ExpertController extends ZGKBaseController
         List<ExpertAppraisePojo> expertAppraiseList = expertService.selectAppraiseList(map);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("expertAppraiseList", expertAppraiseList);
+        resultMap.put("count", expertService.selectExpertListCount(map));
         return resultMap;
     }
 
