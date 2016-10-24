@@ -90,7 +90,7 @@
         user_id as userId,
         user_name as userName,
         user_question as userQuestion,
-        user_anwser as userAnwser,
+        user_answer as userAnswer,
         create_date as createDate
         from zgk_expert_user_question euq
         where euq.expert_id=#{expertId}
@@ -98,8 +98,8 @@
             and euq.user_id=#{userId}
         </if>
         <if test="userId==null or userId==''">
-            and euq.user_anwser != ''
-            and euq.user_anwser is not null
+            and euq.user_answer != ''
+            and euq.user_answer is not null
         </if>
         limit ${offset}, ${rows}
     </select>
@@ -440,6 +440,13 @@
         values
         (#{expertId},#{userId},#{userName},#{userQuestion},#{createDate})
     </insert>
+
+    <select id="selectServiceByExpertId" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ServicePojo">
+        select expert_id,service_style_id,ec1.config_value,service_type_id,ec2.config_value,service_price from zgk_expert_service_relation esr
+        left join zgk_expert_config ec1 on ec1.config_domain='serviceStyle' and ec1.config_key=esr.service_style_id
+        left join zgk_expert_config ec2 on ec2.config_domain='serviceType' and ec2.config_key=esr.service_type_id
+        where esr.expert_id=#{expertId}
+    </select>
 
     <select id="getExpertOrderRevaluation" parameterType="java.util.HashMap" resultType="java.util.HashMap">
         select t.evaluation,t.createDate,info.expert_name
