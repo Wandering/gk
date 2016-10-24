@@ -22,17 +22,29 @@ public interface IExpertService
 
     List<CommonQuestion> selectCommonQuestion(Map<String,Object> map);
 
+    int selectCommonQuestionCount(Map<String,Object> map);
+
     List<ExpertInfoPojo> selectExpertList(Map<String,Object> map);
+
+    int selectExpertListCount(Map<String,Object> map);
 
     ExpertInfoPojo selectExpertInfo(Map<String,Object> map);
 
     List<ExpertVedio> selectVedioList(Map<String,Object> map);
 
+    int selectVedioListCount(Map<String,Object> map);
+
     List<UserQuestion> selectQuestionList(Map<String,Object> map);
+
+    int selectQuestionListCount(Map<String,Object> map);
 
     List<ExpertCases> selectCasesList(Map<String,Object> map);
 
+    int selectCasesListCount(Map<String,Object> map);
+
     List<ExpertAppraisePojo> selectAppraiseList(Map<String,Object> map);
+
+    int selectAppraiseListCount(Map<String,Object> map);
 
     List<Map<String,Object>> getExpertOrderList(Map<String, Object> map);
 

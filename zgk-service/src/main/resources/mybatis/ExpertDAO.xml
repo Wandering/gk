@@ -29,7 +29,20 @@
         left join zgk_expert_config ec3 on ec3.config_domain='serviceStyle' and ec3.config_key=esr2.service_style_id
         where is_checked=1
         group by ei.id
+        order by if(esr2.area_id=#{areaId},0,1)
         limit ${offset}, ${rows}
+    </select>
+    <!-- 预约专家列表总数 -->
+    <select id="selectExpertListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(ei.id) as count
+        from zgk_expert_info ei
+        left join zgk_expert_speciality_relation esr on ei.id=esr.expert_id
+        left join zgk_expert_config ec1 on ec1.config_domain='speciality' and ec1.config_key=esr.speciality_id
+        left join zgk_expert_cases ec2 on ei.id=ec2.expert_id
+        left join zgk_expert_service_relation esr2 on esr2.expert_id=ei.id
+        left join zgk_expert_config ec3 on ec3.config_domain='serviceStyle' and ec3.config_key=esr2.service_style_id
+        where is_checked=1
+        group by ei.id
     </select>
 
     <!-- 预约专家详情 -->
@@ -57,6 +70,11 @@
         from zgk_expert_vedio ev where ev.expert_id=#{expertId}
         limit ${offset}, ${rows}
     </select>
+    <!-- 专家视频总数 -->
+    <select id="selectVedioListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(expert_id) as count
+        from zgk_expert_vedio ev where ev.expert_id=#{expertId}
+    </select>
 
     <!-- 问答 -->
     <select id="selectQuestionList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.UserQuestion">
@@ -71,9 +89,25 @@
         <if test="userId!=null">
             and euq.user_id=#{userId}
         </if>
-        and euq.user_anwser != ''
-        and euq.user_anwser is not null
+        <if test="userId==null or userId==''">
+            and euq.user_anwser != ''
+            and euq.user_anwser is not null
+        </if>
         limit ${offset}, ${rows}
+    </select>
+
+    <!-- 问答总数 -->
+    <select id="selectQuestionListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(expert_id) as count
+        from zgk_expert_user_question euq
+        where euq.expert_id=#{expertId}
+        <if test="userId!=null">
+            and euq.user_id=#{userId}
+        </if>
+        <if test="userId==null or userId==''">
+            and euq.user_anwser != ''
+            and euq.user_anwser is not null
+        </if>
     </select>
 
     <!-- 服务案例 -->
@@ -86,6 +120,12 @@
                create_date as createDate
         from zgk_expert_cases ec where ec.expert_id=#{expertId}
         limit ${offset}, ${rows}
+    </select>
+
+    <!-- 服务案例总数 -->
+    <select id="selectCasesListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(expert_id) as count
+        from zgk_expert_cases ec where ec.expert_id=#{expertId}
     </select>
 
     <!-- 服务评价 -->
@@ -106,6 +146,17 @@
             and ea.expert_id=#{expertId}
         </if>
         limit ${offset}, ${rows}
+    </select>
+    <!-- 服务评价总数 -->
+    <select id="selectAppraiseListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(ea.expert_id) as count
+        from zgk_expert_appraise ea
+        left join zgk_expert_info ei on ei.id=ea.expert_id
+        left join zgk_expert_config ec on ec.config_domain='serviceType' and ec.config_key=ea.server_type
+        where ea.is_checked=1
+        <if test="expertId!=null">
+            and ea.expert_id=#{expertId}
+        </if>
     </select>
     <insert id="insertOrder" parameterType="ExpertOrder">
         INSERT INTO zgk_expert_reservation_order (
@@ -278,6 +329,23 @@
         </if>
     </select>
 
+    <select id="selectExpertListCountBySpecialty" parameterType="java.util.Map"
+            resultType="java.lang.Integer">
+        select count(ei.id) as count
+        from zgk_expert_info ei
+        left join zgk_expert_speciality_relation esr on ei.id=esr.expert_id
+        left join zgk_expert_config ec1 on ec1.config_domain='speciality' and ec1.config_key=esr.speciality_id
+        left join zgk_expert_cases ec2 on ei.id=ec2.expert_id
+        left join zgk_expert_service_relation esr2 on esr2.expert_id=ei.id
+        left join zgk_expert_config ec3 on ec3.config_domain='serviceStyle' and ec3.config_key=esr2.service_style_id
+        where ei.is_checked=1
+        and ei.id in
+        <foreach collection="map.expertIdList" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by ei.id asc
+    </select>
+
     <select id="selectExpertId" parameterType="java.util.Map" resultType="java.lang.String">
         select expert_id from zgk_expert_speciality_relation esr where esr.speciality_id in
         (${specialitys})
@@ -292,6 +360,11 @@
     <select id="selectExpertConfigList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.ExpertConfig">
         select
             id,config_key as configKey,config_value as configValue,config_domain as configDomain
+        from zgk_expert_config ec
+        where ec.config_domain=#{configDomain}
+    </select>
+    <select id="selectExpertConfigListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(id) as count
         from zgk_expert_config ec
         where ec.config_domain=#{configDomain}
     </select>
