@@ -182,6 +182,9 @@
             and od.order_no = #{orderNo}
         </if>
         order by od.create_date desc
+        <if test="limit!=null">
+          limit 0,${limit}
+        </if>
     </select>
 
     <update id="updateUserAccountRegistXueTang" parameterType="java.util.HashMap">

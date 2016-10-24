@@ -540,11 +540,15 @@ public class OrdersController extends ZGKBaseController {
     @ResponseBody
     @RequestMapping(value="getOrderList")
     @Deprecated
-    public List<Map<String, Object>> getOrderList(@RequestParam(value = "token", required = true)String token)
+    public List<Map<String, Object>> getOrderList(@RequestParam(value = "token", required = true)String token,@RequestParam(required = false)String more)
     {
+
         String userId = getAccoutId();
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("userId", userId);
+        if(more==null){
+            paramMap.put("limit", String.valueOf(MarketConstants.ORDER_LIMIT));
+        }
         List<Map<String, Object>> orderList = userAccountExService.getOrderList(paramMap);
         fixOrderList(orderList);
         return orderList;
