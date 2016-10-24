@@ -70,6 +70,8 @@ public class ExpertController extends ZGKBaseController
     @Autowired
     private IOrderStatementsService orderStatementService;
 
+    //订单过期时间间隔2小时
+    private final long expireDuration = 2 * 60 * 60 * 1000;
     /**
      * 下订单
      *
@@ -478,6 +480,13 @@ public class ExpertController extends ZGKBaseController
         paramMap.put("userId", userId);
         paramMap.put("more", more);
         List<Map<String, Object>> list = expertService.getExpertOrderList(paramMap);
+        for (Map<String, Object> map: list)
+        {
+            String orderNo = map.get("orderNo") + "";
+            ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
+            checkExpire(order);
+            map.put("orderStatus", order.getOrderStatus());
+        }
         return list;
     }
 
@@ -600,7 +609,17 @@ public class ExpertController extends ZGKBaseController
         {
             throw new BizException("1000111", "token或orderNo错误参数错误！");
         }
-
+        checkExpire(order);
         return order;
+    }
+
+    private void checkExpire(ExpertOrder order) {
+        long createDate = order.getCreateDate();
+        if("0".equals(order.getOrderStatus()+"") && System.currentTimeMillis() -  createDate > expireDuration)
+        {
+            //订单过期
+            order.setOrderStatus("10");
+            expertService.updateOrder(order);
+        }
     }
 }
