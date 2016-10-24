@@ -441,7 +441,7 @@ public class ExpertController extends ZGKBaseController
         List<ExpertCases> expertCasesList = expertService.selectCasesList(map);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("expertCasesList", expertCasesList);
-        resultMap.put("count", expertService.selectCasesList(map));
+        resultMap.put("count", expertService.selectCasesListCount(map));
         return resultMap;
     }
 
