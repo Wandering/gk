@@ -308,7 +308,7 @@
         FROM zgk_expert_reservation_order t
         left join zgk_expert_info s on t.expertId = s.id
         WHERE
-        userId = #{userId}
+        userId = #{userId} AND orderStatus>=0
         <if test="more==null">
             LIMIT 0,5
         </if>

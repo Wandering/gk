@@ -563,4 +563,44 @@ public class ExpertController extends ZGKBaseController
         paramMap.put("expertId", expertId);
         return expertService.getExpertOrderRevaluation(paramMap);
     }
+
+    /**
+     * 专家服务评价列表
+     *
+     * @return
+     */
+    @RequestMapping(value = "deleteExpertOrder")
+    @ResponseBody
+    public String deleteExpertOrder(@RequestParam(value = "token", required = true) String token,
+        @RequestParam(value = "orderNo", required = true) String orderNo)
+    {
+        ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
+        if(!order.getUserId().equals(getAccoutId()))
+        {
+            throw new BizException("1000111", "token或orderNo参数错误！");
+        }
+        order.setOrderStatus("-1");
+        expertService.updateOrder(order);
+        return "true";
+    }
+
+    @RequestMapping(value = "getExpertOrder")
+    @ResponseBody
+    public ExpertOrder getExpertOrder(@RequestParam(value = "token", required = true) String token,
+        @RequestParam(value = "orderNo", required = true) String orderNo)
+    {
+        ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
+
+        if(null == order)
+        {
+            throw new BizException("1000111", "orderNo错误，未找到订单信息！");
+        }
+
+        if(!order.getUserId().equals(getAccoutId()))
+        {
+            throw new BizException("1000111", "token或orderNo错误参数错误！");
+        }
+
+        return order;
+    }
 }
