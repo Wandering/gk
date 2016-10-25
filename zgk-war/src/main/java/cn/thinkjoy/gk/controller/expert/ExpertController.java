@@ -7,10 +7,7 @@ import cn.thinkjoy.gk.common.MatrixToImageWriter;
 import cn.thinkjoy.gk.common.NumberGenUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
-import cn.thinkjoy.gk.domain.ExpertInfo;
-import cn.thinkjoy.gk.domain.ExpertOrder;
-import cn.thinkjoy.gk.domain.OrderRevaluation;
-import cn.thinkjoy.gk.domain.OrderStatements;
+import cn.thinkjoy.gk.domain.*;
 import cn.thinkjoy.gk.entity.*;
 import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
 import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
@@ -19,6 +16,7 @@ import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.IExpertApplyService;
 import cn.thinkjoy.gk.service.IExpertService;
 import cn.thinkjoy.gk.service.IOrderStatementsService;
+import cn.thinkjoy.gk.service.impl.ProvinceServiceImpl;
 import cn.thinkjoy.gk.util.IPUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.zgk.common.StringUtil;
@@ -41,6 +39,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -70,6 +69,8 @@ public class ExpertController extends ZGKBaseController
     @Autowired
     private IOrderStatementsService orderStatementService;
 
+    @Autowired
+    private ProvinceServiceImpl provinceServiceImp;
     //订单过期时间间隔2小时
     private final long expireDuration = 2 * 60 * 60 * 1000;
     /**
@@ -440,7 +441,7 @@ public class ExpertController extends ZGKBaseController
         List<ExpertCases> expertCasesList = expertService.selectCasesList(map);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("expertCasesList", expertCasesList);
-        resultMap.put("count", expertService.selectExpertListCount(map));
+        resultMap.put("count", expertService.selectCasesListCount(map));
         return resultMap;
     }
 
@@ -628,8 +629,28 @@ public class ExpertController extends ZGKBaseController
     public Map<String,Object> getServiceByExpertId(@RequestParam("expertId")String expertId){
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("expertId", expertId);
+        paramMap.put("areaId", getAreaId());
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("service", expertService.selectServiceByExpertId(paramMap));
         return resultMap;
+    }
+
+    @RequestMapping(value = "getExpertServiceInfo")
+    @ResponseBody
+    public List<Map<String,Object>> getExpertServiceInfo(
+        @RequestParam(value = "provinceCode", required = true) String provinceCode,
+        @RequestParam(value = "expertId", required = true) String expertId)
+    {
+        Province province = provinceServiceImp.findOne("code", provinceCode);
+        if(null == province)
+        {
+            throw new BizException("1100110","请输入正确的provinceCode!");
+        }
+        String areaId = province.getId() + "";
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("areaId", areaId);
+        paramMap.put("expertId", expertId);
+
+        return expertService.getExpertServiceInfo(paramMap);
     }
 }

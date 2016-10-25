@@ -122,18 +122,24 @@
     <select id="selectCasesList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.ExpertCases">
         select expert_id as expertId,
                user_name as userName,
+               user_img_url as imgUrl,
                school as school,
                service_id as serviceId,
+               ecc.config_value as serviceName,
                user_comments as userComments,
                create_date as createDate
-        from zgk_expert_cases ec where ec.expert_id=#{expertId}
+        from zgk_expert_cases ec
+        left join zgk_expert_config ecc on ecc.config_domain='serviceType' and ecc.config_key=ec.service_id
+        where ec.expert_id=#{expertId}
         limit ${offset}, ${rows}
     </select>
 
     <!-- 服务案例总数 -->
     <select id="selectCasesListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         select count(expert_id) as count
-        from zgk_expert_cases ec where ec.expert_id=#{expertId}
+        from zgk_expert_cases ec
+        left join zgk_expert_config ecc on ecc.config_domain='serviceType' and ecc.config_key=ec.service_id
+        where ec.expert_id=#{expertId}
     </select>
 
     <!-- 服务评价 -->
@@ -444,10 +450,12 @@
     </insert>
 
     <select id="selectServiceByExpertId" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ServicePojo">
-        select expert_id as expertId,service_style_id as serviceStyleId,ec1.config_value as serviceStyleName,service_type_id as serviceTypeId,ec2.config_value as serviceTypeName,service_price as servicePrice from zgk_expert_service_relation esr
+        select expert_id as expertId,service_style_id as serviceStyleId,ec1.config_value as serviceStyleName,service_type_id as serviceTypeId,ec2.config_value as serviceTypeName,service_price as servicePrice
+        from zgk_expert_service_relation esr
         left join zgk_expert_config ec1 on ec1.config_domain='serviceStyle' and ec1.config_key=esr.service_style_id
         left join zgk_expert_config ec2 on ec2.config_domain='serviceType' and ec2.config_key=esr.service_type_id
         where esr.expert_id=#{expertId}
+        and (service_style_id!=3 or (service_style_id = 3 and esr.area_id=#{areaId}))
     </select>
 
     <select id="getExpertOrderRevaluation" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -463,6 +471,29 @@
                 and s.expertId=#{expertId}
             </if>
         </where>
+    </select>
+
+    <select id="getExpertServiceInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        select expert_name,max(service_price) maxPrice,min(service_price) minPrice,serviceContent
+        from
+        (
+        select s.expert_name,t.service_price,
+        (select config.config_value from zgk_expert_config config
+        where config.config_key=t.service_type_id
+        and config.config_domain='serviceType') as serviceContent
+        from zgk_expert_service_relation t
+        left join zgk_expert_info s on t.expert_id=s.id
+        where expert_id=#{expertId} and t.service_style_id!=3
+        UNION ALL
+        select s.expert_name,t.service_price,
+        (select config.config_value from zgk_expert_config config
+        where config.config_key=t.service_type_id
+        and config.config_domain='serviceType') as serviceContent
+        from zgk_expert_service_relation t
+        left join zgk_expert_info s on t.expert_id=s.id
+        where expert_id=#{expertId} and t.service_style_id=3 and t.area_id=#{areaId}
+        ) tb
+        group by expert_name,serviceContent
     </select>
 </mapper>
 

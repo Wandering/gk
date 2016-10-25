@@ -388,6 +388,13 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         parmasMap.put("universityId", reportParm.getUid());
         parmasMap.put("precedence", reportParm.getPrecedence());
         parmasMap.put("isJoin", reportParm.isJoin());
+        //如果是江苏省 加入选测等级
+        putValueJs(parmasMap,reportParm);
+        //只有当需要的时候才去放置参数(因为难以预测不需要这些参数)
+        if (reportParm.getEnrollRateStart()!=null) {
+            parmasMap.put("enrollRateStart", reportParm.getEnrollRateStart());
+            parmasMap.put("enrollRateEnd", reportParm.getEnrollRateEnd());
+        }
         parmasMap.put("orderBy", reportParm.getOrderBy());
         parmasMap.put("rows", (reportParm.getLimit()==null?1:reportParm.getLimit()));
         List<UniversityInfoEnrolling> universityInfoEnrollings = iUniversityInfoDao.selectUniversityEnrolling(parmasMap);
@@ -406,6 +413,9 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         parmasMap.put("universityId", reportParm.getUid());
         parmasMap.put("scoreDiff", reportParm.getScoreDiff());
         parmasMap.put("isJoin", reportParm.isJoin());
+        //如果是江苏省 加入选测等级
+        putValueJs(parmasMap,reportParm);
+
         parmasMap.put("orderBy", reportParm.getOrderBy());
         parmasMap.put("rows", (reportParm.getLimit()==null?1:reportParm.getLimit()));
 
@@ -465,5 +475,24 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     @Override
     public List<Long> selectUnivInfoIdInBatch(Map<String, Object> condition) {
         return iUniversityInfoDao.selectUnivInfoIdInBatch(condition);
+    }
+
+
+    /**
+     * 如果是江苏省 加入选测等级
+     * @param parmasMap
+     * @param reportParm
+     */
+    private void putValueJs(Map parmasMap,ReportForecastView reportParm){
+        if (reportParm.isJoin()){
+            parmasMap.put("isJoin", reportParm.isJoin());
+            //选测等级
+            parmasMap.put("xcRanks", reportParm.getXcRanks());
+            //去关联哪一年的招生计划
+            parmasMap.put("year", reportParm.getYear());
+            //文理科
+            parmasMap.put("majorType", reportParm.getCategorie());
+
+        }
     }
 }

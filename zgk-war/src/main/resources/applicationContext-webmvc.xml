@@ -84,7 +84,7 @@
                         <prop key="kaptcha.textproducer.font.color">black</prop>
                         <prop key="kaptcha.textproducer.font.size">36</prop>
                         <prop key="kaptcha.textproducer.font.names">courier new</prop>
-                        <prop key="kaptcha.textproducer.char.string">cdfhknrstuvwxy34678</prop>
+                        <prop key="kaptcha.textproducer.char.string">cdfhkrstuvwxy34678</prop>
                         <prop key="kaptcha.textproducer.char.length">4</prop>
                         <prop key="kaptcha.image.width">123</prop>
                         <prop key="kaptcha.image.height">44</prop>
