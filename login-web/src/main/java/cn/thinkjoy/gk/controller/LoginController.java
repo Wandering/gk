@@ -11,12 +11,12 @@ import cn.thinkjoy.gk.pojo.UserInfoPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.protocol.ModelUtil;
 import cn.thinkjoy.gk.service.IUserAccountExService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,17 +46,12 @@ public class LoginController extends ZGKBaseController {
 					  @RequestParam(value="password",required=false) String password,
 					  @RequestParam(value="basePassword",required = false) String basePassword,
 		              @RequestParam(value = "userId", required = false) String userId,
-		              @RequestParam(value = "aliUserId", required = false) String aliUserId) throws Exception {
+		              @RequestParam(value = "aliUserId", required = false) String aliUserId,
+					  @RequestParam(value = "qqUserId", required = false) String qqUserId) throws Exception {
 		long id = 0L;
 		UserInfoPojo userInfoPojo=null;
 		Map<String, Object> resultMap = new HashMap<>();
 		try {
-			if (StringUtils.isEmpty(account)) {
-				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
-			}
-			if (StringUtils.isEmpty(password)) {
-				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入密码!");
-			}
 
 			UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
 			if(userAccountBean==null){
@@ -74,7 +69,8 @@ public class LoginController extends ZGKBaseController {
 
 			if(null != userInfoPojo)
 			{
-				if(org.apache.commons.lang3.StringUtils.isNotBlank(userId) && org.apache.commons.lang3.StringUtils.isNotBlank(aliUserId))
+				// 支付宝登陆
+				if(StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(aliUserId))
 				{
 					long userIdLong = Long.parseLong(userId);
 					UserAccountPojo userInfo = userAccountExService.findUserAccountPojoById(userIdLong);
@@ -93,6 +89,14 @@ public class LoginController extends ZGKBaseController {
 					catch (Exception e)
 					{
 						throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "账户绑定失败");
+					}
+				}
+				// qq登陆
+				else if(StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(qqUserId)){
+					long userIdLong = Long.parseLong(userId);
+					UserAccountPojo userInfo = userAccountExService.findUserAccountPojoById(userIdLong);
+					if(!userInfo.getQqUserId().equals(qqUserId)){
+						ModelUtil.throwException(ERRORCODE.PARAM_ERROR);
 					}
 				}
 				/**
