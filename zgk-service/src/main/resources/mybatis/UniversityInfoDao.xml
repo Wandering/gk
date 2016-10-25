@@ -65,7 +65,13 @@
         <foreach collection="xcRanks" separator="," item="xcRank" open="xcRank in (" close=")             AND">
             #{xcRank}
         </foreach>
-        year = #{year} AND majorType = #{majorType}) jsplan
+        year = #{year} AND majorType = #{majorType}
+        <if test="batchs!=null">
+            <foreach collection="batchs" separator="," item="batch" open="and batch in (" close=")">
+                #{batch}
+            </foreach>
+        </if>
+        ) jsplan
         ON bData.universityId=jsplan.puid
     </sql>
     <sql id="Search_Column_List">

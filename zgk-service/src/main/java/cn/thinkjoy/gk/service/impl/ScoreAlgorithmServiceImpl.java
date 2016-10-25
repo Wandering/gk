@@ -123,7 +123,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService {
         //取录取率0.4~0.99的院校
         List<Map<String, Object>> universityInfoEnrollings2 =
                 getEnrollingByScore(getReportView(batchs, score, province,
-                        majorType, userId, areaId, enrollRateStart, enrollRateEnd, (Integer.valueOf(batchs[2]) == ReportUtil.SCORE_VO_TAG ? ReportUtil.SCORE_VO_LIMIT : getConfigValueInt(province, majorType, ReportUtil.SCORE_ENROLLING_LIMIT)) - limit));
+                        majorType, userId, areaId, enrollRateStart, enrollRateEnd, ( getConfigValueInt(province, majorType, ReportUtil.SCORE_ENROLLING_LIMIT)) - limit));
         //考虑到可能为空的情况
         if (universityInfoEnrollings == null) {
             universityInfoEnrollings = new ArrayList<>();
@@ -758,10 +758,12 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService {
         }
         reportForecastView.setScoreDiff(universityInfoService.converScoreDiffByScore(reportForecastView));
 
-        //这里按照录取率从小到大排序,线差从小到大排序
+        //这里按照录取率从小到大排序,线差从大到小排序
         reportForecastView.setOrderBy(ScoreUtil.SCORE_SORT);
 //        reportForecastView.setLimit(Integer.valueOf(batchs[2]) == ReportUtil.SCORE_VO_TAG ? ReportUtil.SCORE_VO_LIMIT : getConfigValueInt(province, majorType, ReportUtil.SCORE_ENROLLING_LIMIT));
         reportForecastView.setLimit(limit);
+
+        reportForecastView.setBatchs(getBatchs(getBatchMerge(batchs[0])));
         return reportForecastView;
     }
 
@@ -778,7 +780,8 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService {
         LOGGER.debug("=======组装返回值 Start========");
         List<Map<String, Object>> resultList = new ArrayList<>();
         //获取批次对应分数
-        Map<String, Object> batchScores = scoreUtil.getBatchLine2(areaId, majorType);
+        Integer year = 2015;
+        Map<String, Object> batchScores = scoreUtil.getBatchLine2(areaId, majorType,year);
         Map<String, String> batchNames = getBatchNames(areaId, majorType, batchScores);
 
 

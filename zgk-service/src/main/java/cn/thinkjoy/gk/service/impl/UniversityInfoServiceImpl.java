@@ -490,6 +490,8 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
             parmasMap.put("xcRanks", reportParm.getXcRanks());
             //去关联哪一年的招生计划
             parmasMap.put("year", reportParm.getYear());
+
+            parmasMap.put("batchs", reportParm.getBatchs());
             //文理科
             parmasMap.put("majorType", reportParm.getCategorie());
 
