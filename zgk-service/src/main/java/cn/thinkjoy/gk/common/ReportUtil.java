@@ -190,6 +190,16 @@ public class ReportUtil {
      */
     public static final int SCORE_VO_TAG=1;
 
+
+    /**
+     * 成绩分析-录取率低的院校参数
+     */
+    public static final String ENROLLRATE_RANGE_LOW_TAG="ENROLLRATE_RANGE_LOW_TAG";
+
+    /**
+     * 成绩分析-录取率高的院校参数
+     */
+    public static final String ENROLLRATE_RANGE_HIGH_TAG="ENROLLRATE_RANGE_HIGH_TAG";
     /****************************************************难易预测****************************************************/
 
 

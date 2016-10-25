@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.pojo;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by douzy on 16/8/30.
@@ -51,6 +52,22 @@ public class ReportForecastView implements Serializable {
      * 是否存在表关联
      */
     private boolean isJoin;
+
+    //关联哪一年的招生计划
+    private Integer year;
+
+    //选测等级
+    private List<String> xcRanks;
+
+    /**
+     * 录取率起始值,小于结束值
+     */
+    private Float enrollRateStart;
+
+    /**
+     * 录取率结束值,大于起始值
+     */
+    private Float enrollRateEnd;
 
     public String getBatch() {
         return batch;
@@ -130,5 +147,37 @@ public class ReportForecastView implements Serializable {
 
     public void setJoin(boolean isJoin) {
         this.isJoin = isJoin;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public List<String> getXcRanks() {
+        return xcRanks;
+    }
+
+    public void setXcRanks(List<String> xcRanks) {
+        this.xcRanks = xcRanks;
+    }
+
+    public Float getEnrollRateStart() {
+        return enrollRateStart;
+    }
+
+    public void setEnrollRateStart(Float enrollRateStart) {
+        this.enrollRateStart = enrollRateStart;
+    }
+
+    public Float getEnrollRateEnd() {
+        return enrollRateEnd;
+    }
+
+    public void setEnrollRateEnd(Float enrollRateEnd) {
+        this.enrollRateEnd = enrollRateEnd;
     }
 }

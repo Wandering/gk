@@ -75,4 +75,6 @@ public interface IExpertDAO
     List<ServicePojo> selectServiceByExpertId(Map<String,Object> map);
 
     List<Map<String,Object>> getExpertOrderRevaluation(Map<String, String> paramMap);
+
+    List<Map<String,Object>> getExpertServiceInfo(Map<String, String> paramMap);
 }
