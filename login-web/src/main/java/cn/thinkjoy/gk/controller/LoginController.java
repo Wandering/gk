@@ -46,12 +46,17 @@ public class LoginController extends ZGKBaseController {
 					  @RequestParam(value="password",required=false) String password,
 					  @RequestParam(value="basePassword",required = false) String basePassword,
 		              @RequestParam(value = "userId", required = false) String userId,
-		              @RequestParam(value = "aliUserId", required = false) String aliUserId,
-					  @RequestParam(value = "qqUserId", required = false) String qqUserId) throws Exception {
+		              @RequestParam(value = "aliUserId", required = false) String aliUserId) throws Exception {
 		long id = 0L;
 		UserInfoPojo userInfoPojo=null;
 		Map<String, Object> resultMap = new HashMap<>();
 		try {
+			if (StringUtils.isEmpty(account)) {
+				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
+			}
+			if (StringUtils.isEmpty(password)) {
+				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入密码!");
+			}
 
 			UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
 			if(userAccountBean==null){
@@ -89,14 +94,6 @@ public class LoginController extends ZGKBaseController {
 					catch (Exception e)
 					{
 						throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "账户绑定失败");
-					}
-				}
-				// qq登陆
-				else if(StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(qqUserId)){
-					long userIdLong = Long.parseLong(userId);
-					UserAccountPojo userInfo = userAccountExService.findUserAccountPojoById(userIdLong);
-					if(!userInfo.getQqUserId().equals(qqUserId)){
-						ModelUtil.throwException(ERRORCODE.PARAM_ERROR);
 					}
 				}
 				/**
@@ -161,6 +158,43 @@ public class LoginController extends ZGKBaseController {
 		}finally{
 
 		}
+		return resultMap;
+	}
+
+	@RequestMapping(value = "/qqLogin")
+	@ResponseBody
+	public Map<String,Object> qqLogin(@RequestParam(value = "userId", required = false) String userId,
+									  @RequestParam(value = "qqUserId", required = false) String qqUserId) throws Exception {
+
+
+		if (StringUtils.isBlank(userId) || StringUtils.isBlank(qqUserId)) {
+			ModelUtil.throwException(ERRORCODE.PARAM_ERROR);
+		}
+
+		long userIdLong = Long.parseLong(userId);
+		UserAccountPojo userInfo = userAccountExService.findUserAccountPojoById(userIdLong);
+		if (!userInfo.getQqUserId().equals(qqUserId)) {
+			ModelUtil.throwException(ERRORCODE.PARAM_ERROR);
+		}
+
+		UserInfoPojo userInfoPojo = userAccountExService.getUserInfoPojoById(userIdLong);
+
+		UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoById(userIdLong);
+
+		String token = DESUtil.getEightByteMultypleStr(userId, userInfoPojo.getAccount());
+		String encryptToken = DESUtil.encrypt(token, DESUtil.key);
+		setUserAccountPojo(userAccountBean, encryptToken);
+		Map<String, Object> resultMap = new HashMap<>();
+
+		resultMap.put("token", encryptToken);
+		String gkxtToken = GkxtUtil.getLoginToken(userInfoPojo.getAccount(), userInfoPojo.getName());
+		userInfoPojo.setGkxtToken(gkxtToken);
+		userInfoPojo.setPassword(null);
+		userInfoPojo.setId(null);
+		userInfoPojo.setStatus(null);
+		resultMap.put("userInfo", userInfoPojo);
+		resultMap.put("gkxtToken", gkxtToken);
+
 		return resultMap;
 	}
 
