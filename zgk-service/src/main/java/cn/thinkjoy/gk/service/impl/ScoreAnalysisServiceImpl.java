@@ -753,7 +753,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         //一定是三门成绩 否则异常
         String[] subjects =scoreUtil.getZJUserScore(userId);
         //计算专业提取范围
-        scoreUtil.setSubjectItem(subjects,map);
+        map.put("subjectItem",subjects);
         return scoreAnalysisDAO.queryMajorBySchoolIdAndAreaId(map);
     }
 
