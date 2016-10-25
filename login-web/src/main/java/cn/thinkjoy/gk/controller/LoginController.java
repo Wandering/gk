@@ -52,12 +52,6 @@ public class LoginController extends ZGKBaseController {
 		UserInfoPojo userInfoPojo=null;
 		Map<String, Object> resultMap = new HashMap<>();
 		try {
-			if (StringUtils.isEmpty(account)) {
-				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入账号!");
-			}
-			if (StringUtils.isEmpty(password)) {
-				throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "请输入密码!");
-			}
 
 			UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoByPhone(account);
 			if(userAccountBean==null){
