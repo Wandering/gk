@@ -48,6 +48,7 @@ public class ScoreUtil {
     @Autowired
     private IDataDictService dataDictService;
 
+
     public String getYear() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
