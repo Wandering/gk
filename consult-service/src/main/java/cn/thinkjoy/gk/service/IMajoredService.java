@@ -36,9 +36,9 @@ public interface IMajoredService {
      */
     Map<String,String> getMajoredInfoByKeywords(String keywords);
 
-    List<Map<String,Object>> getMajorOpenUniversityList(int majorId,int majorType,int offset,int rows);
+    List<Map<String,Object>> getMajorOpenUniversityList(String majorId,int majorType,int offset,int rows);
 
-    int getMajorOpenUniversityCount(int majorId,int majorType);
+    int getMajorOpenUniversityCount(String majorId,int majorType);
 
     Map<String,Object> getJobOrientation(int majorId);
 
