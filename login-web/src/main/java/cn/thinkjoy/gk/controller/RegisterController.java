@@ -148,6 +148,7 @@ public class RegisterController extends ZGKBaseController
                 try
                 {
                     userAccount.setId(userIdLong);
+                    userAccount.setUserId(userIdLong);
                     boolean flag = userAccountExService.bindUserAccount(userAccount);
                     if (!flag)
                     {
@@ -168,6 +169,7 @@ public class RegisterController extends ZGKBaseController
                 }
                 try{
                     userAccount.setId(userIdLong);
+                    userAccount.setUserId(userIdLong);
                     boolean flag = userAccountExService.bindUserAccount(userAccount);
                     if (!flag){
                         ModelUtil.throwException(ERRORCODE.ACCOUNT_BIND_ERROR);
