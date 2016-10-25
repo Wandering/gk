@@ -363,7 +363,7 @@ public class ExpertController extends ZGKBaseController
 
     @RequestMapping(value = "getExpertList")
     @ResponseBody
-    public Map<String, Object> getExpertList(@RequestParam(value = "areaId")String areaId,
+    public Map<String, Object> getExpertList(@RequestParam(value = "areaId",required = false)String areaId,
                                              @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
                                              @RequestParam(value = "rows", required = false, defaultValue = "10") String rows)
     {
@@ -627,7 +627,7 @@ public class ExpertController extends ZGKBaseController
 
     @RequestMapping(value = "getServiceByExpertId")
     @ResponseBody
-    public Map<String,Object> getServiceByExpertId(@RequestParam("expertId")String expertId,@RequestParam("areaId")String areaId){
+    public Map<String,Object> getServiceByExpertId(@RequestParam("expertId")String expertId,@RequestParam(value = "areaId",required = false)String areaId){
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("expertId", expertId);
         paramMap.put("areaId", areaId);
