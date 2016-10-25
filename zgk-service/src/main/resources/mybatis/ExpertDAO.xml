@@ -73,6 +73,7 @@
     <select id="selectVedioList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.ExpertVedio">
         select expert_id as expertId,
                vedio_name as vedioName,
+               img_url as imgUrl,
                vedio_url as vedioUrl,
                create_date as createDate
         from zgk_expert_vedio ev where ev.expert_id=#{expertId}

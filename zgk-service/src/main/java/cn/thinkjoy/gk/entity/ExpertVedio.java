@@ -9,6 +9,7 @@ public class ExpertVedio extends BaseDomain {
 
     private String expertId;
     private String vedioName;
+    private String imgUrl;
     private String vedioUrl;
     private String createDate;
 
@@ -42,5 +43,13 @@ public class ExpertVedio extends BaseDomain {
 
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }
