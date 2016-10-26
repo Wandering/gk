@@ -189,6 +189,7 @@
                 and scoreDiff=#{scoreDiff}
             </if>
             <if test="enrollRateStart!=null">
+                AND universityId is not null
                 and enrollRate >=#{enrollRateStart}
             </if>
             <if test="enrollRateEnd!=null">
