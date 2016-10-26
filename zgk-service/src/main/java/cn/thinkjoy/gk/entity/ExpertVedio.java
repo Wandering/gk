@@ -7,11 +7,20 @@ import cn.thinkjoy.zgk.domain.BaseDomain;
  */
 public class ExpertVedio extends BaseDomain {
 
+    private String vedioId;
     private String expertId;
     private String vedioName;
     private String imgUrl;
     private String vedioUrl;
     private String createDate;
+
+    public String getVedioId() {
+        return vedioId;
+    }
+
+    public void setVedioId(String vedioId) {
+        this.vedioId = vedioId;
+    }
 
     public String getVedioName() {
         return vedioName;

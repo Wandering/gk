@@ -407,6 +407,18 @@ public class ExpertController extends ZGKBaseController
         return resultMap;
     }
 
+    @RequestMapping(value = "getVedioById")
+    @ResponseBody
+    public Map<String, Object> getVedioById(@RequestParam(value = "vedioId") String vedioId)
+    {
+        Map<String, Object> map = new HashMap<>();
+        map.put("vedioId", vedioId);
+        ExpertVedio vedio = expertService.selectVedioById(map);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("vedio", vedio);
+        return resultMap;
+    }
+
     @RequestMapping(value = "getQuestionList")
     @ResponseBody
     public Map<String, Object> getQuestionList(@RequestParam(value = "expertId") String expertId,
