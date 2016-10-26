@@ -60,6 +60,7 @@
           acc.id,
           info.name,
           info.icon,
+          info.qqUserId,
           acc.account,
           acc.password,
           acc.status,
