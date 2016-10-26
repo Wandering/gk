@@ -415,8 +415,6 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         parmasMap.put("isJoin", reportParm.isJoin());
         //如果是江苏省 加入选测等级
         putValueJs(parmasMap,reportParm);
-        //如果是江苏省 加入选测等级
-        putValueJs(parmasMap,reportParm);
         //只有当需要的时候才去放置参数(因为难以预测不需要这些参数)
         if (reportParm.getEnrollRateStart()!=null) {
             parmasMap.put("enrollRateStart", reportParm.getEnrollRateStart());
