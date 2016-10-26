@@ -102,7 +102,7 @@ public class MajoredController extends ZGKBaseController {
 
     @RequestMapping(value = "/getMajorOpenUniversityList",method = RequestMethod.GET)
     @ResponseBody
-    public Object getMajorOpenUniversityList(@RequestParam(value = "majoredId",required = true)int majoredId,
+    public Object getMajorOpenUniversityList(@RequestParam(value = "majoredId",required = true)String majoredId,
                                              @RequestParam(value = "majorType",required = true,defaultValue = "1")Integer majorType,
                                              @RequestParam(value = "offset",required = false,defaultValue = "0")Integer offset,
                                              @RequestParam(value = "rows",required = false,defaultValue = "10")Integer rows){
