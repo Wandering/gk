@@ -666,4 +666,21 @@ public class ExpertController extends ZGKBaseController
 
         return expertService.getExpertServiceInfo(paramMap);
     }
+
+    @RequestMapping(value = "getFamousTeacher")
+    @ResponseBody
+    public Map<String,Object> getFamousTeacher(@RequestParam(value = "paramName") String paramName,
+                                               @RequestParam(value = "paramValue") String paramValue,
+                                               @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
+                                               @RequestParam(value = "rows", required = false, defaultValue = "4") String rows){
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("paramName", paramName);
+        paramMap.put("paramValue", paramValue);
+        paramMap.put("offset", offset);
+        paramMap.put("rows", rows);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("famousTeacherList", expertService.selectFamousTeacher(paramMap));
+        return resultMap;
+    }
+
 }
