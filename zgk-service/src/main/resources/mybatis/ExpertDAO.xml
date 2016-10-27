@@ -507,5 +507,17 @@
         ) tb
         group by expert_name,serviceContent
     </select>
+
+    <select id="selectFamousTeacher" parameterType="java.util.HashMap" resultType="cn.thinkjoy.gk.pojo.ExpertInfoPojo">
+        select id as expertId,expert_name as expertName,expert_photo_url as photoUrl,expert_intro as info
+        from zgk_expert_info ei
+        where 1=1
+        <if test="paramName!=null">
+            and ${paramName}=#{paramValue}
+        </if>
+        <if test="offset!=null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
 </mapper>
 

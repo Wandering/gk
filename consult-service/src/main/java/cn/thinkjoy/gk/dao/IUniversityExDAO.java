@@ -56,7 +56,7 @@ public interface IUniversityExDAO{
     List<UniversityMajorEnrollingPlanDTO> getUniversityMajorEnrollingPlanList(Map<String,Object> params);
 
     /**
-     * 根据省份ID查询录取年份集合
+     * 根据省份ID查询特殊批次录取年份集合
      *
      * @param provinceId
      * @return

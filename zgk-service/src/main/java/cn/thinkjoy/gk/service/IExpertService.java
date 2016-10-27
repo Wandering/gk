@@ -67,4 +67,6 @@ public interface IExpertService
     List<ServicePojo1> selectServiceByExpertId(Map<String,Object> map);
 
     List<Map<String,Object>> getExpertServiceInfo(Map<String, String> paramMap);
+
+    List<ExpertInfoPojo> selectFamousTeacher(Map<String,Object> map);
 }
