@@ -363,11 +363,12 @@ public class ExpertController extends ZGKBaseController
 
     @RequestMapping(value = "getExpertList")
     @ResponseBody
-    public Map<String, Object> getExpertList(@RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
+    public Map<String, Object> getExpertList(@RequestParam(value = "areaId",required = false)String areaId,
+                                             @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
                                              @RequestParam(value = "rows", required = false, defaultValue = "10") String rows)
     {
         Map<String, Object> map = new HashMap<>();
-        map.put("areaId", getAreaId());
+        map.put("areaId", areaId);
         map.put("offset", offset);
         map.put("rows", rows);
         List<ExpertInfoPojo> expertInfoPojoList = expertService.selectExpertList(map);
@@ -403,6 +404,18 @@ public class ExpertController extends ZGKBaseController
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("expertVedioList", expertVedioList);
         resultMap.put("count", expertService.selectVedioListCount(map));
+        return resultMap;
+    }
+
+    @RequestMapping(value = "getVedioById")
+    @ResponseBody
+    public Map<String, Object> getVedioById(@RequestParam(value = "vedioId") String vedioId)
+    {
+        Map<String, Object> map = new HashMap<>();
+        map.put("vedioId", vedioId);
+        ExpertVedio vedio = expertService.selectVedioById(map);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("vedio", vedio);
         return resultMap;
     }
 
@@ -626,10 +639,10 @@ public class ExpertController extends ZGKBaseController
 
     @RequestMapping(value = "getServiceByExpertId")
     @ResponseBody
-    public Map<String,Object> getServiceByExpertId(@RequestParam("expertId")String expertId){
+    public Map<String,Object> getServiceByExpertId(@RequestParam("expertId")String expertId,@RequestParam(value = "areaId",required = false)String areaId){
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("expertId", expertId);
-        paramMap.put("areaId", getAreaId());
+        paramMap.put("areaId", areaId);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("service", expertService.selectServiceByExpertId(paramMap));
         return resultMap;

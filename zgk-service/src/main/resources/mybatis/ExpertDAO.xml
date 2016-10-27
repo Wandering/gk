@@ -71,8 +71,10 @@
 
     <!-- 专家视频 -->
     <select id="selectVedioList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.ExpertVedio">
-        select expert_id as expertId,
+        select ev.id as vedioId,
+               expert_id as expertId,
                vedio_name as vedioName,
+               img_url as imgUrl,
                vedio_url as vedioUrl,
                create_date as createDate
         from zgk_expert_vedio ev where ev.expert_id=#{expertId}
@@ -82,6 +84,16 @@
     <select id="selectVedioListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         select count(expert_id) as count
         from zgk_expert_vedio ev where ev.expert_id=#{expertId}
+    </select>
+    <select id="selectVedioById" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.ExpertVedio">
+        select
+        id as vedioId,
+        expert_id as expertId,
+        vedio_name as vedioName,
+        img_url as imgUrl,
+        vedio_url as vedioUrl,
+        create_date as createDate
+        from zgk_expert_vedio ev where ev.id=#{vedioId}
     </select>
 
     <!-- 问答 -->

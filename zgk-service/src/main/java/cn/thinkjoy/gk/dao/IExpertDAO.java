@@ -32,6 +32,8 @@ public interface IExpertDAO
 
     int selectVedioListCount(Map<String, Object> map);
 
+    ExpertVedio selectVedioById(Map<String,Object> map);
+
     List<UserQuestion> selectQuestionList(Map<String, Object> map);
 
     int selectQuestionListCount(Map<String, Object> map);

@@ -89,7 +89,7 @@ public class MajoredServiceImpl implements IMajoredService {
     }
 
     @Override
-    public List<Map<String, Object>> getMajorOpenUniversityList(int majorId, int majorType, int offset, int rows) {
+    public List<Map<String, Object>> getMajorOpenUniversityList(String majorId, int majorType, int offset, int rows) {
         Map<String,Object> params = new HashMap<>();
         params.put("majorId",majorId);
         params.put("educationLevel",majorType);
@@ -99,7 +99,7 @@ public class MajoredServiceImpl implements IMajoredService {
     }
 
     @Override
-    public int getMajorOpenUniversityCount(int majorId, int majorType) {
+    public int getMajorOpenUniversityCount(String majorId, int majorType) {
         Map<String,Object> params = new HashMap<>();
         params.put("majorId",majorId);
         params.put("educationLevel",majorType);
