@@ -71,4 +71,10 @@ public interface IUniversityExService{
             Integer pageSize
     );
 
+    /**
+     * 根据省份获取特定类别
+     * @param areaId
+     * @return
+     */
+    List<String> searchSpecialMajorSpec(Long areaId);
 }

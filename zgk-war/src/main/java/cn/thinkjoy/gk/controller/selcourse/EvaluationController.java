@@ -65,8 +65,8 @@ public class EvaluationController extends ZGKBaseController {
     @RequestMapping(value = "/queryEvaluationCount", method = RequestMethod.GET)
     @ResponseBody
     public Object queryEvaluationCount() {
-
+        int count=evaluationService.queryEvaluationCount(Long.valueOf(getAccoutId()));
         //取出数据
-        return evaluationService.queryEvaluationCount(Long.valueOf(getAccoutId()));
+        return count<0?0:count;
     }
 }

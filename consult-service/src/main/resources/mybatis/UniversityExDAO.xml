@@ -621,4 +621,11 @@
             </if>
         LIMIT #{index},#{pageSize}
     </select>
+
+    <select id="searchSpecialMajorSpec" resultType="java.lang.String">
+          SELECT aa.majorSpec
+          from zgk_university_special_enrolling aa
+          WHERE aa.areaId = #{areaId}
+          GROUP BY majorSpec
+    </select>
 </mapper>

@@ -163,9 +163,6 @@ selectList
             <if test="activeDate!=null">
                 activeDate = #{activeDate},
             </if>
-            <if test="errorStatus!=null">
-                errorStatus = #{errorStatus},
-            </if>
             <if test="productType!=null">
                 productType = #{productType},
             </if>
@@ -224,9 +221,6 @@ selectList
             </if>
             <if test="map.activeDate!=null">
                 activeDate = #{map.activeDate},
-            </if>
-            <if test="map.errorStatus!=null">
-                errorStatus = #{map.errorStatus},
             </if>
             <if test="map.productType!=null">
                 productType = #{map.productType},
@@ -488,9 +482,6 @@ selectList
             <if test="activeDate!=null">
                 AND activeDate = #{activeDate}
             </if>
-            <if test="errorStatus!=null">
-                AND errorStatus = #{errorStatus}
-            </if>
             <if test="productType!=null">
                 AND productType = #{productType}
             </if>
@@ -675,9 +666,6 @@ selectList
             </if>
             <if test="activeDate!=null">
                 AND activeDate like CONCAT('%', #{activeDate} , '%')
-            </if>
-            <if test="errorStatus!=null">
-                AND errorStatus like CONCAT('%', #{errorStatus} , '%')
             </if>
             <if test="productType!=null">
                 AND productType like CONCAT('%', #{productType} , '%')
@@ -879,9 +867,6 @@ selectList
             </if>
             <if test="activeDate!=null">
                 ${groupOp} activeDate ${activeDate.op}  #{activeDate.data}
-            </if>
-            <if test="errorStatus!=null">
-                ${groupOp} errorStatus ${errorStatus.op}  #{errorStatus.data}
             </if>
             <if test="productType!=null">
                 ${groupOp} productType ${productType.op}  #{productType.data}

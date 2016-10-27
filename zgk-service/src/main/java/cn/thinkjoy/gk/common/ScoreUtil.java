@@ -34,7 +34,7 @@ public class ScoreUtil {
 
     public static final long ZJ_AREA_CODE = 330000;
     //成绩分析排序
-    public static final String SCORE_SORT = "enrollRate asc,preScoreDiff asc";
+    public static final String SCORE_SORT = "enrollRate asc,preScoreDiff desc";
 
     public static final String BATCHTYPE2 = "BATCHTYPE2";
 
@@ -47,6 +47,7 @@ public class ScoreUtil {
 
     @Autowired
     private IDataDictService dataDictService;
+
 
     public String getYear() {
         Calendar calendar = Calendar.getInstance();
@@ -284,9 +285,13 @@ public class ScoreUtil {
         return null;
     }
 
-
     private Integer[][] getBatchByArea(long areaId, int majorType){
         Integer year = Integer.valueOf(getYear());
+        return getBatchByAreaAndYear(areaId,majorType,year);
+    }
+
+    private Integer[][] getBatchByAreaAndYear(long areaId, int majorType,Integer year){
+
 
         /**
          * 获取最新批次线 当年没有获取次年
@@ -325,6 +330,25 @@ public class ScoreUtil {
     }
 
 
+    /**
+     * 获取批次线
+     *
+     * @param areaId
+     * @param majorType
+     * @return
+     */
+    public Map<String, Object> getBatchLine2(long areaId, int majorType,Integer year) {
+        Map<String, Object> rtnMap = new HashedMap();
+        Integer[][] batchs = getBatchByAreaAndYear(areaId,majorType,year);
+        for (int i = 0;i<batchs.length;i++){
+            for (int j = 0;j<batchs.length;j++){
+                if (batchs[i][j] != null) {
+                    rtnMap.put((i == 0 ? 1 : (((i == 1 || i == 2) ? i : i + 1) * 2)) + "" + (j == 0 ? "" : (j + 1)), batchs[i][j]);
+                }
+            }
+        }
+        return rtnMap;
+    }
 
     /**
      * 获取批次线
@@ -334,16 +358,7 @@ public class ScoreUtil {
      * @return
      */
     public Map<String, Object> getBatchLine2(long areaId, int majorType) {
-        Map<String, Object> rtnMap = new HashedMap();
-        Integer[][] batchs = getBatchByArea(areaId,majorType);
-        for (int i = 0;i<batchs.length;i++){
-            for (int j = 0;j<batchs.length;j++){
-                if (batchs[i][j] != null) {
-                    rtnMap.put((i == 0 ? 1 : (((i == 1 || i == 2) ? i : i + 1) * 2)) + "" + (j == 0 ? "" : (j + 1)), batchs[i][j]);
-                }
-            }
-        }
-        return rtnMap;
+        return getBatchLine2(areaId,majorType,Integer.valueOf(getYear()));
     }
 
     /**

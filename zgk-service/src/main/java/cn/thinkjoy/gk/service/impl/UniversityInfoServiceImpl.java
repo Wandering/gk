@@ -415,7 +415,11 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         parmasMap.put("isJoin", reportParm.isJoin());
         //如果是江苏省 加入选测等级
         putValueJs(parmasMap,reportParm);
-
+        //只有当需要的时候才去放置参数(因为难以预测不需要这些参数)
+        if (reportParm.getEnrollRateStart()!=null) {
+            parmasMap.put("enrollRateStart", reportParm.getEnrollRateStart());
+            parmasMap.put("enrollRateEnd", reportParm.getEnrollRateEnd());
+        }
         parmasMap.put("orderBy", reportParm.getOrderBy());
         parmasMap.put("rows", (reportParm.getLimit()==null?1:reportParm.getLimit()));
 
@@ -490,6 +494,8 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
             parmasMap.put("xcRanks", reportParm.getXcRanks());
             //去关联哪一年的招生计划
             parmasMap.put("year", reportParm.getYear());
+
+            parmasMap.put("batchs", reportParm.getBatchs());
             //文理科
             parmasMap.put("majorType", reportParm.getCategorie());
 

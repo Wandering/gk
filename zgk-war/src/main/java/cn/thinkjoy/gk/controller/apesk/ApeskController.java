@@ -61,6 +61,7 @@ public class ApeskController extends BaseCommonController {
 
 		Map map = new HashMap();
 		map.put("userId", userAccountPojo.getId());
+		map.put("userArea",this.getAreaId());
 		List<ZgkApeskDTO> zgkApeskDTOList = zgkApeskService.selectUserApeskResult(map);
 		Map resultMap = new HashMap();
 		resultMap.put("apeskObj", zgkApeskDTOList);
@@ -89,7 +90,8 @@ public class ApeskController extends BaseCommonController {
 //	@ResponseBody
 	@RequestMapping(value = "/returnurl.do", method = RequestMethod.GET)
 	public ModelAndView returnurl(@RequestParam(value = "report_id") String report_id,
-								  @RequestParam(value = "liangbiao")String liangbiao, @RequestParam(value = "test_email")String test_email){
+								  @RequestParam(value = "liangbiao")String liangbiao,
+								  @RequestParam(value = "test_email")String test_email){
 		HashMap<String, Object>map=new HashMap<String, Object>();
 		map.put("report_id", report_id);
 		map.put("liangbiao", liangbiao);
@@ -126,7 +128,7 @@ public class ApeskController extends BaseCommonController {
 		}
 		return null;
 	}
-	
+
 
 	/**获取报告地址
 	 * @return
@@ -150,8 +152,8 @@ public class ApeskController extends BaseCommonController {
 		}
 		return returnJsonData;
 	}
-	
-	
+
+
 	/**获取才储测试地址
 	 * @return
 	 */
@@ -223,7 +225,7 @@ public class ApeskController extends BaseCommonController {
 		HashMap<String, Object>map=new HashMap<String, Object>();
 		try {
 			testName=URLEncoder.encode(testName, "gb2312");
-			
+
 			String url=String.format(apeskUrl, APESK_CHECKCODE, APESK_HRUSERID,"",testName,"apesk_123");
 
 			map.put("url", url);
