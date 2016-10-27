@@ -3,6 +3,7 @@ package cn.thinkjoy.gk.service.impl;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ReportEnum;
 import cn.thinkjoy.gk.common.ReportUtil;
+import cn.thinkjoy.gk.dao.IUniversityInfoDao;
 import cn.thinkjoy.gk.entity.SystemParmas;
 import cn.thinkjoy.gk.entity.UniversityEnrollView;
 import cn.thinkjoy.gk.entity.UniversityInfoEnrolling;
@@ -37,6 +38,9 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     IReportResultService iReportResultService;
     @Resource
     IScoreConverPrecedenceService iScoreConverPrecedenceService;
+
+    @Autowired
+    private IUniversityInfoDao iUniversityInfoDao;
 
     @Autowired
     private IUniversityService universityService;
