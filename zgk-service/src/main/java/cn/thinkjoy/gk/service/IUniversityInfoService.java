@@ -110,6 +110,14 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
     List<Map<String, Object>> getBatchByYearAndArea(Map<String, Object> map);
 
     /**
+     * 根据type获取字典表信息
+     *
+     * @param type
+     * @return
+     */
+    List getDataDictList(String type);
+
+    /**
      * 难易预测
      * @param reportForecastView
      * @return
@@ -150,5 +158,7 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
      */
 
     List<Long> selectUnivInfoIdInBatch(Map<String, Object> condition);
+
+    List<String> getEnrollingYearsByProvinceId(long provinceId);
 
 }

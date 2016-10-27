@@ -12,8 +12,10 @@ import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 import cn.thinkjoy.gk.service.IReportResultService;
 import cn.thinkjoy.gk.service.IScoreConverPrecedenceService;
 import cn.thinkjoy.gk.service.IUniversityInfoService;
+import cn.thinkjoy.zgk.remote.IUniversityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -35,6 +37,9 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     IReportResultService iReportResultService;
     @Resource
     IScoreConverPrecedenceService iScoreConverPrecedenceService;
+
+    @Autowired
+    private IUniversityService universityService;
 
     @Override
     public Integer selectPlanEnrolling(Map map) {
@@ -451,7 +456,13 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     public List<Map<String, Object>> getBatchByYearAndArea(Map<String, Object> map) {
         return iUniversityInfoDao.getBatchByYearAndArea(map);
     }
-    public  List<UniversityEnrollView> selectUnivEnrollInfo(List<Map<String, Object>> maps,boolean isJoin,
+
+    @Override
+    public List getDataDictList(String type) {
+        return universityService.getDataDictListByType(type);
+    }
+
+    public  List<UniversityEnrollView> selectUnivEnrollInfo(List<Map<String, Object>> maps, boolean isJoin,
                                                             String sortBy){
         return iUniversityInfoDao.selectUnivEnrollInfo(maps,isJoin,sortBy);
     }
@@ -465,5 +476,10 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     @Override
     public List<Long> selectUnivInfoIdInBatch(Map<String, Object> condition) {
         return iUniversityInfoDao.selectUnivInfoIdInBatch(condition);
+    }
+
+    @Override
+    public List<String> getEnrollingYearsByProvinceId(long provinceId) {
+        return iUniversityInfoDao.getEnrollingYearsByProvinceId(provinceId);
     }
 }
