@@ -609,4 +609,16 @@ GROUP BY
              ${sortBy}
           </if>
     </select>
+
+    <!-- 根据省份ID查询录取年份集合 -->
+    <select id="getEnrollingYearsByProvinceId" parameterType="long" resultType="String">
+        SELECT
+            `year`
+        FROM
+            zgk_university_enrolling
+        WHERE
+            areaId = #{provinceId}
+        GROUP BY
+            `year`
+    </select>
 </mapper>
