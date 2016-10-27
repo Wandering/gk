@@ -120,10 +120,11 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService {
         objects = getEnrollRateRange(province, majorType, ScoreUtil.ENROLLRATE_TAG_1);
         enrollRateStart = (Float) objects[0];
         enrollRateEnd = (Float) objects[1];
+        limit = (Integer) objects[2];
         //取录取率0.4~0.99的院校
         List<Map<String, Object>> universityInfoEnrollings2 =
                 getEnrollingByScore(getReportView(batchs, score, province,
-                        majorType, userId, areaId, enrollRateStart, enrollRateEnd, ( getConfigValueInt(province, majorType, ReportUtil.SCORE_ENROLLING_LIMIT)) - limit));
+                        majorType, userId, areaId, enrollRateStart, enrollRateEnd, limit));
         //考虑到可能为空的情况
         if (universityInfoEnrollings == null) {
             universityInfoEnrollings = new ArrayList<>();
@@ -286,7 +287,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService {
         String[] strings = new String[5];
         for (int i = 1; i <= 4; i++) {
             strings[i - 1] = batch + "" + i;
-            System.out.println(batch + "" + i);
+//            System.out.println(batch + "" + i);
         }
         strings[4] = batch;
         return strings;

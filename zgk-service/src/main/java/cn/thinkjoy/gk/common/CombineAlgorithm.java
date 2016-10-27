@@ -31,7 +31,7 @@ public class CombineAlgorithm {
             }
             lists.add(mapList);
         }
-        System.out.println(lists);
+//        System.out.println(lists);
     }
 
 
