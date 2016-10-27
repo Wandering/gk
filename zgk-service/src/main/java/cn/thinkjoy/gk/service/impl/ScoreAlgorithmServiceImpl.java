@@ -113,7 +113,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService {
         Float enrollRateStart = (Float) objects[0];
         Float enrollRateEnd = (Float) objects[1];
         Integer limit = (Integer) objects[2];
-        //取录取率=1的院校
+        //取录取率0.4~0.99的院校
         List<Map<String, Object>> universityInfoEnrollings =
                 getEnrollingByScore(getReportView(batchs, score, province,
                         majorType, userId, areaId, enrollRateStart, enrollRateEnd, limit));
@@ -121,7 +121,8 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService {
         enrollRateStart = (Float) objects[0];
         enrollRateEnd = (Float) objects[1];
         limit = (Integer) objects[2];
-        //取录取率0.4~0.99的院校
+
+        //取录取率=1的院校
         List<Map<String, Object>> universityInfoEnrollings2 =
                 getEnrollingByScore(getReportView(batchs, score, province,
                         majorType, userId, areaId, enrollRateStart, enrollRateEnd, limit));
@@ -139,6 +140,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService {
             String sortBy = getConfigValueString(province, majorType, ReportUtil.SCORE_SORT_BY);
             LOGGER.debug("排序方式:" + sortBy);
             List<UniversityEnrollView> universityEnrollViews = getUniversityEnrollViews(condition, batchs, province, majorType);
+
             //整理返回值并返回
             return assembleResult(batchs, universityInfoEnrollings, universityEnrollViews, areaId, majorType);
         }
@@ -798,7 +800,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService {
                     map.put("universityName", hMap.get("universityName"));
                     map.put("universityId", hMap.get("universityId"));
                     map.put("enrollRate", hMap.get("enrollRate"));
-                    map.put("batch", universityEnrollView.getBatchName() != null ? batchNames.get(batchs[0]) + "(" + batchScores.get(batchs[0]) + ")" : universityEnrollView.getBatchName() + "(" + batchScores.get(batchs[0]) + ")");
+                    map.put("batch", universityEnrollView.getBatchName() == null ? batchNames.get(batchs[0]) + "(" + batchScores.get(batchs[0]) + ")" : universityEnrollView.getBatchName() + "(" + batchScores.get(batchs[0]) + ")");
                     map.put("highestScore", universityEnrollView.getHighestScore());
                     map.put("lowestScore", universityEnrollView.getLowestScore());
                     map.put("averageScore", universityEnrollView.getAverageScore());
@@ -820,6 +822,11 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService {
          */
         SortUtilForList sortUtilForList = new SortUtilForList();
         Collections.sort(resultList, sortUtilForList);
+
+//        for(Map<String,Object> map:resultList){
+//            System.out.println("当前院校名称:"+map.get("schoolName"));
+//        }
+
         return resultList;
     }
 
