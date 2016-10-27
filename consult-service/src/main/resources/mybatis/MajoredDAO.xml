@@ -111,7 +111,7 @@
     </select>
 
     <select id="getMajorEmploymentRate" parameterType="java.util.Map" resultType="java.lang.String">
-        select employmentRate from zgk_major mm where mm.id=#{condition.majorId}
+        select employmentRate from zgk_major_base mm where mm.major_code=#{condition.majorId}
     </select>
 
     <select id="getMajorIntroduce" parameterType="java.util.Map" resultType="java.lang.String">
