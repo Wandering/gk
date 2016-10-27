@@ -477,7 +477,7 @@ public class UniversityController extends ZGKBaseController {
         String key = "zgk_university:" + userKey + "_type:" + type + ":getRemoteDataDictList";
         Object object = RedisIsSaveUtil.existsKey(key);
         if (object == null) {
-            List list=iremoteUniversityService.getDataDictListByType(type);
+            List list=universityInfoService.getDataDictList(type);
             RedisUtil.getInstance().set(key, JSONArray.toJSON(list));
             return list;
         }

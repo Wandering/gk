@@ -11,12 +11,12 @@ import cn.thinkjoy.gk.pojo.UserInfoPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.protocol.ModelUtil;
 import cn.thinkjoy.gk.service.IUserAccountExService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -74,7 +74,8 @@ public class LoginController extends ZGKBaseController {
 
 			if(null != userInfoPojo)
 			{
-				if(org.apache.commons.lang3.StringUtils.isNotBlank(userId) && org.apache.commons.lang3.StringUtils.isNotBlank(aliUserId))
+				// 支付宝登陆
+				if(StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(aliUserId))
 				{
 					long userIdLong = Long.parseLong(userId);
 					UserAccountPojo userInfo = userAccountExService.findUserAccountPojoById(userIdLong);
@@ -157,6 +158,43 @@ public class LoginController extends ZGKBaseController {
 		}finally{
 
 		}
+		return resultMap;
+	}
+
+	@RequestMapping(value = "/qqLogin")
+	@ResponseBody
+	public Map<String,Object> qqLogin(@RequestParam(value = "userId", required = false) String userId,
+									  @RequestParam(value = "qqUserId", required = false) String qqUserId) throws Exception {
+
+
+		if (StringUtils.isBlank(userId) || StringUtils.isBlank(qqUserId)) {
+			ModelUtil.throwException(ERRORCODE.PARAM_ERROR);
+		}
+
+		long userIdLong = Long.parseLong(userId);
+		UserAccountPojo userInfo = userAccountExService.findUserAccountPojoById(userIdLong);
+		if (!userInfo.getQqUserId().equals(qqUserId)) {
+			ModelUtil.throwException(ERRORCODE.PARAM_ERROR);
+		}
+
+		UserInfoPojo userInfoPojo = userAccountExService.getUserInfoPojoById(userIdLong);
+
+		UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoById(userIdLong);
+
+		String token = DESUtil.getEightByteMultypleStr(userId, userInfoPojo.getAccount());
+		String encryptToken = DESUtil.encrypt(token, DESUtil.key);
+		setUserAccountPojo(userAccountBean, encryptToken);
+		Map<String, Object> resultMap = new HashMap<>();
+
+		resultMap.put("token", encryptToken);
+		String gkxtToken = GkxtUtil.getLoginToken(userInfoPojo.getAccount(), userInfoPojo.getName());
+		userInfoPojo.setGkxtToken(gkxtToken);
+		userInfoPojo.setPassword(null);
+		userInfoPojo.setId(null);
+		userInfoPojo.setStatus(null);
+		resultMap.put("userInfo", userInfoPojo);
+		resultMap.put("gkxtToken", gkxtToken);
+
 		return resultMap;
 	}
 
