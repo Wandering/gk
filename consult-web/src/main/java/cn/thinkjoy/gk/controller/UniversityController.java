@@ -456,7 +456,8 @@ public class UniversityController extends ZGKBaseController {
         String key = "zgk_university:" + userKey + ":getRemoteProvinceList";
         Object object = RedisIsSaveUtil.existsKey(key);
         if (object == null) {
-            List list=iremoteUniversityService.getProvinceName();
+//            List list=iremoteUniversityService.getProvinceName();
+            List list=provinceService.findList("status","0");
             RedisUtil.getInstance().set(key, JSONArray.toJSON(list));
             return list;
         }
