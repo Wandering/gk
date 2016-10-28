@@ -449,6 +449,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
             parmasMap.put("enrollRateStart", reportParm.getEnrollRateStart());
             parmasMap.put("enrollRateEnd", reportParm.getEnrollRateEnd());
         }
+
         parmasMap.put("orderBy", reportParm.getOrderBy());
         parmasMap.put("rows", (reportParm.getLimit() == null ? 1 : reportParm.getLimit()));
 
@@ -516,8 +517,6 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     public List<Long> selectUnivInfoIdInBatch(Map<String, Object> condition) {
         return iUniversityInfoDao.selectUnivInfoIdInBatch(condition);
     }
-
-
     /**
      * 如果是江苏省 加入选测等级
      *
