@@ -244,4 +244,13 @@ public class ExpertServiceImpl implements IExpertService
         return dao.getExpertOrderList(map);
     }
 
+    @Override
+    public void test1(Map<String,Object> map){
+        dao.test1(map);
+    }
+    @Override
+    public void test2(Map<String,Object> map){
+        dao.test2(map);
+    }
+
 }

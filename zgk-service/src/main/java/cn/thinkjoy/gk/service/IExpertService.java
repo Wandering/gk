@@ -69,4 +69,7 @@ public interface IExpertService
     List<Map<String,Object>> getExpertServiceInfo(Map<String, String> paramMap);
 
     List<ExpertInfoPojo> selectFamousTeacher(Map<String,Object> map);
+
+    void test1(Map<String,Object> map);
+    void test2(Map<String,Object> map);
 }
