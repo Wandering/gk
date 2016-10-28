@@ -477,7 +477,7 @@ public class UniversityController extends ZGKBaseController {
         String key = "zgk_university:" + userKey + "_type:" + type + ":getRemoteDataDictList";
         Object object = RedisIsSaveUtil.existsKey(key);
         if (object == null) {
-            List list=iremoteUniversityService.getDataDictListByType(type);
+            List list=universityInfoService.getDataDictList(type);
             RedisUtil.getInstance().set(key, JSONArray.toJSON(list));
             return list;
         }
@@ -867,8 +867,13 @@ public class UniversityController extends ZGKBaseController {
     @ResponseBody
     @ApiDesc(value = "根据用户省份初始化查询条件",owner = "杨国荣")
     @RequestMapping(value = "/initSerachCondition", method = RequestMethod.GET)
-    public Map<String,List<String>> initSerachCondition(@RequestParam(value = "provinceId") long provinceId) {
-        return universityExService.initSerachCondition(provinceId);
+    public Map<String,List<String>> initSerachCondition(@RequestParam(value = "provinceId",required = false) Long provinceId,
+                                                        @RequestParam(value = "provinceId") String category,
+                                                        @RequestParam String userKey) {
+        if (provinceId == null){
+            provinceId=getAreaId();
+        }
+        return universityExService.initSerachCondition(provinceId,category);
     }
 
     @ResponseBody
@@ -880,6 +885,7 @@ public class UniversityController extends ZGKBaseController {
                                                     @RequestParam(value = "majorType") Integer majorType,
                                                     @RequestParam(value = "userProvinceId") Long userProvinceId,
                                                     @RequestParam(value = "schoolProvinceId") Long schoolProvinceId,
+                                                    @RequestParam(value = "category") String category,
                                                     @RequestParam(value = "pageNo") Integer pageNo,
                                                     @RequestParam(value = "pageSize") Integer pageSize) {
 
@@ -890,6 +896,7 @@ public class UniversityController extends ZGKBaseController {
                 majorType,
                 userProvinceId,
                 schoolProvinceId,
+                category,
                 pageNo,
                 pageSize
         );
@@ -900,9 +907,10 @@ public class UniversityController extends ZGKBaseController {
     @ResponseBody
     @ApiDesc(value = "根据省份code查询所属省份信息",owner = "杨永平")
     @RequestMapping(value = "searchSpecialMajorSpec", method = RequestMethod.GET)
-    public List<String> searchSpecialMajorSpec(@RequestParam String userKey) {
-        Long areaId = this.getAreaId();
-
-        return universityExService.searchSpecialMajorSpec(areaId);
+    public List<String> searchSpecialMajorSpec(@RequestParam(value = "provinceId",required = false) Long provinceId,@RequestParam String userKey) {
+        if (provinceId == null){
+            provinceId=getAreaId();
+        }
+        return universityExService.searchSpecialMajorSpec(provinceId);
     }
 }

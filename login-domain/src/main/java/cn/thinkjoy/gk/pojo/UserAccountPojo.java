@@ -25,6 +25,7 @@ public class UserAccountPojo extends BaseDomain<Long> {
     private String sharerType;
     private String agentLevel;
     private String gkxtToken;
+    private String qqUserId;
 
     public String getGkxtToken() {
         return gkxtToken;
@@ -179,5 +180,13 @@ public class UserAccountPojo extends BaseDomain<Long> {
 
     public void setAgentLevel(String agentLevel) {
         this.agentLevel = agentLevel;
+    }
+
+    public String getQqUserId() {
+        return qqUserId;
+    }
+
+    public void setQqUserId(String qqUserId) {
+        this.qqUserId = qqUserId;
     }
 }
