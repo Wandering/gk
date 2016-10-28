@@ -43,9 +43,10 @@ public interface IUniversityExService{
      * 根据用户省份初始化查询条件
      *
      * @param provinceId
+     * @param category
      * @return
      */
-    Map<String,List<String>> initSerachCondition(long provinceId);
+    Map<String,List<String>> initSerachCondition(long provinceId,String category);
 
     /**
      * 根据条件查询院校招生信息
@@ -67,6 +68,7 @@ public interface IUniversityExService{
             Integer majorType,
             Long userProvinceId,
             Long schoolProvinceId,
+            String category,
             Integer pageNo,
             Integer pageSize
     );

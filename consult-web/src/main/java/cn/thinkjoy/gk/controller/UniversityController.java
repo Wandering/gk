@@ -867,8 +867,9 @@ public class UniversityController extends ZGKBaseController {
     @ResponseBody
     @ApiDesc(value = "根据用户省份初始化查询条件",owner = "杨国荣")
     @RequestMapping(value = "/initSerachCondition", method = RequestMethod.GET)
-    public Map<String,List<String>> initSerachCondition(@RequestParam(value = "provinceId") long provinceId) {
-        return universityExService.initSerachCondition(provinceId);
+    public Map<String,List<String>> initSerachCondition(@RequestParam(value = "provinceId") long provinceId,
+                                                        @RequestParam(value = "provinceId") String category) {
+        return universityExService.initSerachCondition(provinceId,category);
     }
 
     @ResponseBody
@@ -880,6 +881,7 @@ public class UniversityController extends ZGKBaseController {
                                                     @RequestParam(value = "majorType") Integer majorType,
                                                     @RequestParam(value = "userProvinceId") Long userProvinceId,
                                                     @RequestParam(value = "schoolProvinceId") Long schoolProvinceId,
+                                                    @RequestParam(value = "category") String category,
                                                     @RequestParam(value = "pageNo") Integer pageNo,
                                                     @RequestParam(value = "pageSize") Integer pageSize) {
 
@@ -890,6 +892,7 @@ public class UniversityController extends ZGKBaseController {
                 majorType,
                 userProvinceId,
                 schoolProvinceId,
+                category,
                 pageNo,
                 pageSize
         );
