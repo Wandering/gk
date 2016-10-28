@@ -30,7 +30,7 @@ import java.util.Map;
  * 院校清单 --位次规则
  * Created by douzy on 16/3/14.
  */
-@Service
+@Service("universityInfoService")
 public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl implements IUniversityInfoService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UniversityInfoServiceImpl.class);
