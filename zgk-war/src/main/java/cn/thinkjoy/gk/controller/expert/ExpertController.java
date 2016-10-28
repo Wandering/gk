@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller.expert;
 
 import cn.thinkjoy.cloudstack.dynconfig.DynConfigClientFactory;
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.gk.common.Constants;
 import cn.thinkjoy.gk.common.MatrixToImageWriter;
 import cn.thinkjoy.gk.common.NumberGenUtil;
@@ -43,10 +44,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -681,6 +679,46 @@ public class ExpertController extends ZGKBaseController
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("famousTeacherList", expertService.selectFamousTeacher(paramMap));
         return resultMap;
+    }
+
+    @RequestMapping(value = "test1")
+    @ApiDesc(owner = "hzuo",value = "导入数据临时使用")
+    @ResponseBody
+    public void test1(@RequestParam("expertName")String expertName,@RequestParam("specialityList")String specialityList){
+        String[] specialityString=specialityList.split("、");
+        List<Map<String,Object>> list=new ArrayList<>();
+        for(String speciality:specialityString){
+            Map<String,Object> specialityMap=new HashMap<>();
+            specialityMap.put("speciality",speciality);
+            list.add(specialityMap);
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("expertName", expertName);
+        map.put("list", list);
+        expertService.test1(map);
+    }
+
+    @RequestMapping(value = "test2")
+    @ApiDesc(owner = "hzuo",value = "导入数据临时使用")
+    @ResponseBody
+    public void test2(@RequestParam("expertName")String expertName,@RequestParam("provinceNameList")String provinceNameList,@RequestParam("serviceStyle")String serviceStyle,@RequestParam("serviceTypeList")String serviceTypeList){
+        String[] provinceNameString=provinceNameList.split("、");
+        for(String provinceName:provinceNameString) {
+            String[] specialityString = serviceTypeList.split("、");
+            List<Map<String, Object>> list = new ArrayList<>();
+            for (String speciality : specialityString) {
+                Map<String, Object> specialityMap = new HashMap<>();
+                specialityMap.put("serviceType", speciality.split(":")[0]);
+                specialityMap.put("servicePrice", speciality.split(":")[1]);
+                list.add(specialityMap);
+            }
+            Map<String, Object> map = new HashMap<>();
+            map.put("expertName", expertName);
+            map.put("provinceName", provinceName);
+            map.put("serviceStyle", serviceStyle);
+            map.put("list", list);
+            expertService.test2(map);
+        }
     }
 
 }

@@ -512,6 +512,7 @@
         select id as expertId,expert_name as expertName,expert_photo_url as photoUrl,expert_intro as info
         from zgk_expert_info ei
         where 1=1
+        and ei.is_checked=1
         <if test="paramName!=null">
             and ${paramName}=#{paramValue}
         </if>
@@ -519,5 +520,31 @@
             limit ${offset}, ${rows}
         </if>
     </select>
+
+    <insert id="test1" parameterType="java.util.Map">
+        insert into zgk_expert_speciality_relation
+        (expert_id,speciality_id)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            ((select ei.id from zgk_expert_info ei where ei.expert_name=#{expertName})
+            ,(select ec.config_key from zgk_expert_config ec where ec.config_domain='speciality' and
+            ec.config_value=#{item.speciality})
+            )
+        </foreach>
+    </insert>
+    <insert id="test2" parameterType="java.util.Map">
+        insert into zgk_expert_service_relation
+        (expert_id,area_id,service_style_id,service_type_id,service_price)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            (select ei.id from zgk_expert_info ei where ei.expert_name = #{expertName}),
+            (select id from zgk_province p where p.name like CONCAT(#{provinceName} , '%')),
+            (select ec.config_key from zgk_expert_config ec where ec.config_domain='serviceStyle' and ec.config_value=#{serviceStyle}),
+            (select ec.config_key from zgk_expert_config ec where ec.config_domain='serviceType' and ec.config_value=#{item.serviceType}),
+            #{item.servicePrice}
+            )
+        </foreach>
+    </insert>
 </mapper>
 
