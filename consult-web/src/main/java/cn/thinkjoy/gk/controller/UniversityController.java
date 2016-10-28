@@ -868,7 +868,7 @@ public class UniversityController extends ZGKBaseController {
     @ApiDesc(value = "根据用户省份初始化查询条件",owner = "杨国荣")
     @RequestMapping(value = "/initSerachCondition", method = RequestMethod.GET)
     public Map<String,List<String>> initSerachCondition(@RequestParam(value = "provinceId",required = false) Long provinceId,
-                                                        @RequestParam(value = "provinceId") String category,
+                                                        @RequestParam(value = "category") String category,
                                                         @RequestParam String userKey) {
         if (provinceId == null){
             provinceId=getAreaId();
