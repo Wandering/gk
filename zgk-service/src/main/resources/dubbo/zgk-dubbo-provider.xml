@@ -12,6 +12,6 @@
 
     <dubbo:protocol name="dubbo" port="-1" />
 
-    <dubbo:service id="universityInfoService" interface="cn.thinkjoy.gk.service.IUniversityInfoService" ref="universityInfoService" timeout="60000" retries="0"/>
+    <dubbo:service id="iuniversityInfoService" interface="cn.thinkjoy.gk.service.IUniversityInfoService" ref="universityInfoService" timeout="60000" retries="0"/>
 
 </beans>
