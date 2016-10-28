@@ -40,9 +40,6 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     IScoreConverPrecedenceService iScoreConverPrecedenceService;
 
     @Autowired
-    private IUniversityInfoDao iUniversityInfoDao;
-
-    @Autowired
     private IUniversityService universityService;
 
     @Override
@@ -540,7 +537,6 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
             parmasMap.put("majorType", reportParm.getCategorie());
 
         }
-
 
     }
 
