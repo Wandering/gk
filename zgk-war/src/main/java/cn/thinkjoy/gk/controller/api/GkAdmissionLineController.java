@@ -5,6 +5,8 @@ import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
+import cn.thinkjoy.gk.pojo.UniversityEnrollingDTO;
+import cn.thinkjoy.gk.service.information.service.ex.IUniversityEnrollingExService;
 import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.zgk.common.QueryUtil;
 import cn.thinkjoy.zgk.domain.BizData4Page;
@@ -38,6 +40,9 @@ public class GkAdmissionLineController extends BaseApiController {
     private IGkAdmissionLineService gkAdmissionLineService;
     @Autowired
     private cn.thinkjoy.zgk.remote.IUniversityService iremoteUniversityService;
+
+    @Autowired
+    private IUniversityEnrollingExService universityEnrollingExService;
     /**
      * 获取批次线分页方法
      * @return
@@ -79,13 +84,21 @@ public class GkAdmissionLineController extends BaseApiController {
         if(batch!=null) {
             QueryUtil.setMapOp(map, "enrollingbatch", "=", batch);
         }
+
+        Long area=this.getAreaId();
+        if(area!=null) {
+            QueryUtil.setMapOp(map,"enrollingareaid","=",area);
+        }
 //        文史/理工
          QueryUtil.setMapOp(map, "entype", "=", type);
         map.put("orderBy","rank IS NULL,rank,year");
         map.put("sortBy","asc");
 
 
-        BizData4Page<GkAdmissionLine> bizData4Page=gkAdmissionLineService.getGkAdmissionLineList(map,page,rows);
+
+//        BizData4Page<GkAdmissionLine> bizData4Page=gkAdmissionLineService.getGkAdmissionLineList(map,page,rows);
+        BizData4Page<GkAdmissionLine> bizData4Page= doPage(map,universityEnrollingExService,page,rows);
+
         for(GkAdmissionLine gkAdmissionLine:bizData4Page.getRows()){
             String[] propertys2= null;
             Map<String,Object> propertyMap=new HashMap();
@@ -118,15 +131,7 @@ public class GkAdmissionLineController extends BaseApiController {
     @RequestMapping(value = "/getYears.do",method = RequestMethod.GET)
     @ResponseBody
     public List getYears(){
-        List list = new ArrayList();
-        Calendar a=Calendar.getInstance();
-        int year=a.get(Calendar.YEAR);
-//        list.add(year);
-        list.add(year-1);
-        list.add(year-2);
-        list.add(year-3);
-        list.add(year-4);
-        return list;
+        return universityEnrollingExService.getYear();
     }
 
     private Map<String,Object> getPropertys(){
@@ -146,5 +151,50 @@ public class GkAdmissionLineController extends BaseApiController {
             redisRepository.set(key,JSON.toJSON(propertysMap),TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
         }
         return propertysMap;
+    }
+
+    /**
+     * 将父级domain转换重写实现
+     * @param conditions
+     * @return
+     */
+    @Override
+    protected Object enhanceStateTransition(List conditions) {
+        return domain2GkAdmissionLine(conditions);
+    }
+
+
+    /**
+     * api需要domainList和admindomainList转换
+     * @param universityEnrollingDTOs
+     * @return
+     */
+    private List<GkAdmissionLine> domain2GkAdmissionLine(List<UniversityEnrollingDTO> universityEnrollingDTOs){
+        if(universityEnrollingDTOs==null)return null;
+        List<GkAdmissionLine> gkAdmissionLines = new ArrayList<>();
+        for(UniversityEnrollingDTO universityEnrollingDTO:universityEnrollingDTOs){
+            gkAdmissionLines.add(domain2GkAdmissionLine(universityEnrollingDTO));
+        }
+        return gkAdmissionLines;
+    }
+
+    /**
+     * api需要domain和admindomain转换
+     * @param universityEnrollingDTO
+     * @return
+     */
+    private GkAdmissionLine domain2GkAdmissionLine(UniversityEnrollingDTO universityEnrollingDTO){
+        GkAdmissionLine gkAdmissionLine=new GkAdmissionLine();
+        gkAdmissionLine.setId(universityEnrollingDTO.getUniversityId());
+        gkAdmissionLine.setName(universityEnrollingDTO.getName());
+        gkAdmissionLine.setAverageScore(universityEnrollingDTO.getAverageScore());
+        gkAdmissionLine.setBatchname(universityEnrollingDTO.getBatchname());
+        gkAdmissionLine.setHighestScore(universityEnrollingDTO.getHighestScore());
+        gkAdmissionLine.setLowestScore(universityEnrollingDTO.getLowestScore());
+        gkAdmissionLine.setProperty(universityEnrollingDTO.getProperty());
+        gkAdmissionLine.setTypename(universityEnrollingDTO.getTypename());
+        gkAdmissionLine.setYear(universityEnrollingDTO.getYear());
+        gkAdmissionLine.setSubjection(universityEnrollingDTO.getSubjection());
+        return gkAdmissionLine;
     }
 }

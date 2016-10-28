@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.information.ex.IUniversityEnrollingExDAO">
+<!--
+insert
+update
+updateNull
+deleteById
+deleteByCondition
+deleteByProperty
+fetch
+findOne
+findList
+findAll
+queryPage
+like
+queryList
+queryOne
+count
+selectMaxId
+updateOrSave
+selectOne
+selectList
+-->
+
+    <sql id="Base_Column_List">
+        enrolling.id as id ,
+        enrolling.universityId as universityId ,
+        enrolling.areaId as areaId ,
+        enrolling.year as year ,
+        enrolling.batch as batch ,
+        enrolling.majorType as majorType ,
+        enrolling.realEnrollingNumber as realEnrollingNumber ,
+        enrolling.highestScore as highestScore ,
+        enrolling.lowestScore as lowestScore ,
+        enrolling.averageScore as averageScore ,
+        enrolling.highestPrecedence as highestPrecedence ,
+        enrolling.lowestPrecedence as lowestPrecedence ,
+        enrolling.averagePrecedence as averagePrecedence ,
+        enrolling.planEnrollingNumber as planEnrollingNumber ,
+        university.subjection as subjection,
+        university.property as property,
+        university.name as name ,
+        university.rank as rank ,
+        (select name from zgk_data_dict where dictId=enrolling.batch AND type='BATCHTYPE2') as typename,
+        (select name from zgk_data_dict where dictId=enrolling.majorType AND type='UNIVERSITY_MAJOR_TYPE') as typename,
+        (SELECT name from zgk_province where id=enrolling.areaId) as province
+
+
+    </sql>
+
+    <select id="queryPage" resultType="cn.thinkjoy.gk.pojo.UniversityEnrollingDTO" >
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , enrolling.id as id
+                </if>
+                <if test="selector.universityId!=null">
+                    , enrolling.universityId as universityId
+                </if>
+                <if test="selector.areaId!=null">
+                    , enrolling.areaId as areaId
+                </if>
+                <if test="selector.year!=null">
+                    , enrolling.year as year
+                </if>
+                <if test="selector.batch!=null">
+                    , enrolling.batch as batch
+                </if>
+                <if test="selector.majorType!=null">
+                    , enrolling.majorType as majorType
+                    , typedict.name as typename
+                </if>
+                <if test="selector.realEnrollingNumber!=null">
+                    , enrolling.realEnrollingNumber as realEnrollingNumber
+                </if>
+                <if test="selector.highestScore!=null">
+                    , enrolling.highestScore as highestScore
+                </if>
+                <if test="selector.lowestScore!=null">
+                    , enrolling.lowestScore as lowestScore
+                </if>
+                <if test="selector.averageScore!=null">
+                    , enrolling.averageScore as averageScore
+                </if>
+                <if test="selector.proScore!=null">
+                    , enrolling.proScore as proScore
+                </if>
+                <if test="selector.schoolFee!=null">
+                    , enrolling.schoolFee as schoolFee
+                </if>
+                <if test="selector.lengthOfSchooling!=null">
+                    , enrolling.lengthOfSchooling as lengthOfSchooling
+                </if>
+                <if test="selector.highestPrecedence!=null">
+                    , enrolling.highestPrecedence as highestPrecedence
+                </if>
+                <if test="selector.lowestPrecedence!=null">
+                    , enrolling.lowestPrecedence as lowestPrecedence
+                </if>
+                <if test="selector.averagePrecedence!=null">
+                    , enrolling.averagePrecedence as averagePrecedence
+                </if>
+                <if test="selector.planEnrollingNumber!=null">
+                    , enrolling.planEnrollingNumber as planEnrollingNumber
+                </if>
+                <if test="selector.createDate!=null">
+                    , enrolling.createDate as createDate
+                </if>
+                <if test="selector.creator!=null">
+                    , enrolling.creator as creator
+                </if>
+                <if test="selector.lastModDate!=null">
+                    , enrolling.lastModDate as lastModDate
+                </if>
+                <if test="selector.lastModifier!=null">
+                    , enrolling.lastModifier as lastModifier
+                </if>
+                <if test="selector.isDelete!=null">
+                    , enrolling.is_delete as isDelete
+                </if>
+                <if test="selector.subjection!=null">
+                    , university.subjection as subjection
+                </if>
+                <if test="selector.property!=null">
+                    , university.property as property,
+                </if>
+                <if test="selector.rank!=null">
+                    ,university.rank as rank
+                </if>
+                <if test="selector.batchname!=null">
+                    , batchdict.name as batchname,
+                </if>
+                <if test="selector.typename!=null">
+                    , typedict.name as typename
+                </if>
+                <if test="selector.province!=null">
+                    , province.name as province
+                </if>
+            </trim>
+        </if>
+        <if test="selector==null">
+            <include refid="Base_Column_List"/>
+        </if>
+        FROM zgk_university_enrolling enrolling
+        INNER JOIN zgk_university university ON enrolling.universityId=university.id
+        <where>
+            <if test="condition.enrollingyear!=null">
+                ${condition.groupOp} enrolling.year ${condition.enrollingyear.op} #{condition.enrollingyear.data}
+            </if>
+            <if test="condition.enrollingbatch!=null">
+                ${condition.groupOp} enrolling.batch ${condition.enrollingbatch.op} #{condition.enrollingbatch.data}
+            </if>
+            <if test="condition.entype!=null">
+                ${condition.groupOp} enrolling.majorType ${condition.entype.op} #{condition.entype.data}
+            </if>
+            <if test="condition.enrollingareaid!=null">
+                ${condition.groupOp} enrolling.areaId = #{condition.enrollingareaid.data}
+            </if>
+            <if test="condition.universityname!=null">
+                ${condition.groupOp} university.name ${condition.universityname.op} #{condition.universityname.data}
+            </if>
+            <if test="condition.universityareaid!=null">
+                ${condition.groupOp} university.areaid = #{condition.universityareaid.data}
+            </if>
+            <if test="condition.universityproperty!=null">
+                ${condition.groupOp} university.property ${condition.universityproperty.op} #{condition.universityproperty.data}
+            </if>
+        </where>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT
+        COUNT(enrolling.id)
+        FROM zgk_university_enrolling enrolling
+        INNER JOIN zgk_university university ON enrolling.universityId=university.id
+        <where>
+            <if test="enrollingyear!=null">
+                ${groupOp} enrolling.year ${enrollingyear.op} #{enrollingyear.data}
+            </if>
+            <if test="enrollingbatch!=null">
+                ${groupOp} enrolling.batch ${enrollingbatch.op} #{enrollingbatch.data}
+            </if>
+            <if test="entype!=null">
+                ${groupOp} enrolling.majorType ${entype.op} #{entype.data}
+            </if>
+            <if test="enrollingareaid!=null">
+                ${groupOp} enrolling.areaId ${enrollingareaid.op} #{enrollingareaid.data}
+            </if>
+            <if test="universityname!=null">
+                ${groupOp} university.name ${universityname.op} #{universityname.data}
+            </if>
+            <if test="universityareaid!=null">
+                ${groupOp} university.areaid=#{universityareaid.data}
+            </if>
+            <if test="universityproperty!=null">
+                ${groupOp} university.property ${universityproperty.op} #{universityproperty.data}
+            </if>
+        </where>
+    </select>
+    <select id="fetch" parameterType="java.lang.Long" resultType="cn.thinkjoy.gk.pojo.UniversityEnrollingDTO">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        zgk_university_enrolling enrolling
+        LEFT OUTER JOIN zgk_university university ON university.id=enrolling.university_id
+        <where>
+            enrolling.id = #{id}
+        </where>
+    </select>
+    <update id="updateMap">
+        UPDATE zgk_university_enrolling
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.areaId!=null">
+                areaId = #{map.areaId},
+            </if>
+            <if test="map.universityId!=null">
+                university_id = #{map.universityId},
+            </if>
+            <if test="map.year!=null">
+                year = #{map.year},
+            </if>
+            <if test="map.batch!=null">
+                batch = #{map.batch},
+            </if>
+            <if test="map.universityMajorType!=null">
+                university_major_type = #{map.universityMajorType},
+            </if>
+            <if test="map.planEnrollingNumber!=null">
+                plan_enrolling_number = #{map.planEnrollingNumber},
+            </if>
+            <if test="map.realEnrollingNumber!=null">
+                real_enrolling_number = #{map.realEnrollingNumber},
+            </if>
+            <if test="map.lengthOfSchooling!=null">
+                length_of_schooling = #{map.lengthOfSchooling},
+            </if>
+            <if test="map.schoolFee!=null">
+                school_fee = #{map.schoolFee},
+            </if>
+            <if test="map.highestScore!=null">
+                highest_score = #{map.highestScore},
+            </if>
+            <if test="map.highestPrecedence!=null">
+                highest_precedence = #{map.highestPrecedence},
+            </if>
+            <if test="map.lowestScore!=null">
+                lowest_score = #{map.lowestScore},
+            </if>
+            <if test="map.lowestPrecedence!=null">
+                lowest_precedence = #{map.lowestPrecedence},
+            </if>
+            <if test="map.averageScore!=null">
+                average_score = #{map.averageScore},
+            </if>
+            <if test="map.averagePrecedence!=null">
+                average_precedence = #{map.averagePrecedence},
+            </if>
+            <if test="map.createDate!=null">
+                createDate = #{map.createDate},
+            </if>
+            <if test="map.creator!=null">
+                creator = #{map.creator},
+            </if>
+            <if test="map.lastModDate!=null">
+                lastModDate = #{map.lastModDate},
+            </if>
+            <if test="map.lastModifier!=null">
+                lastModifier = #{map.lastModifier},
+            </if>
+            <if test="map.isDelete!=null">
+                is_delete = #{map.isDelete},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <select id="getYear" resultType="java.lang.String">
+        SELECT year from zgk_university_enrolling group by year
+    </select>
+</mapper>
+
