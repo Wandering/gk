@@ -313,6 +313,7 @@
         t.channel,
         t.serverType,
         t.serverAddress,
+        '服务平台' serverPlantform,
         t.serverContent,
         t.questionDesc,
         t.serverPrice,
