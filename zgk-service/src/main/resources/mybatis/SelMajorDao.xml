@@ -121,6 +121,7 @@
     <!-- 查询专业薪资排名 -->
     <select id="getMajorSalary" resultType="MajoredDto" parameterType="map">
         SELECT
+            major_code as majorId,
             major_name AS NAME,
             discipline_name AS subjectType,
             salary AS salary,
