@@ -167,7 +167,9 @@ public class UniversityController extends ZGKBaseController {
             Map<String, Object> returnMap = Maps.newHashMap();
             returnMap.put("universityList", getUniversityList);
             returnMap.put("count", count);
-            RedisUtil.getInstance().set(redisKey, JSON.toJSONString(returnMap));
+            if(null==userAccountPojo) {
+                RedisUtil.getInstance().set(redisKey, JSON.toJSONString(returnMap));
+            }
             return returnMap;
         }
         return JSON.parseObject(object.toString(), Object.class);
