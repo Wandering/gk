@@ -90,9 +90,10 @@ public class UniversityController extends ZGKBaseController {
         if (rows>50){
             throw new BizException(ERRORCODE.ROWS_TOO_LONG.getCode(), ERRORCODE.ROWS_TOO_LONG.getMessage());
         }
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
         String redisKey = "zgk_pe:"+"universityName:" + universityName + "_areaid:" + areaid + "_type:" + type + "_educationLevel:" + educationLevel + "_property:" + property + "_offset:" + offset + "_rows"+rows+":getUniversityList";
         Object object = RedisIsSaveUtil.existsKey(redisKey);
-        if (object==null) {
+        if (object==null||null != userAccountPojo) {
             Map<String, Object> condition = Maps.newHashMap();
             condition.put("groupOp", "and");
             if (StringUtils.isNotBlank(universityName))
@@ -127,7 +128,6 @@ public class UniversityController extends ZGKBaseController {
             long dubbo = end - start;
             LOGGER.info("dubbo time:" + dubbo);
             //如果用户已登录
-            UserAccountPojo userAccountPojo = getUserAccountPojo();
             for (UniversityDTO university : getUniversityList) {
                 String[] propertys = new String[1];
                 if (university.getProperty() != null) {
