@@ -37,6 +37,7 @@ public class CardExServiceImpl implements ICardExService {
         userVip.setEndDate(endDate);
         userVip.setActiveDate(System.currentTimeMillis());
         userVip.setActiveGkxt(gkxtActiveStatus);
+        userVip.setUserId(userId);
         userVipDAO.update(userVip);
         Card card = new Card();
         card.setId(cardId);

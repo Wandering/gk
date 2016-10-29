@@ -43,7 +43,7 @@ selectList
         university.property as property,
         university.name as name ,
         university.rank as rank ,
-        (select name from zgk_data_dict where dictId=enrolling.batch AND type='BATCHTYPE2') as typename,
+        (select name from zgk_data_dict where dictId=enrolling.batch AND type='BATCHTYPE2') as batchname,
         (select name from zgk_data_dict where dictId=enrolling.majorType AND type='UNIVERSITY_MAJOR_TYPE') as typename,
         (SELECT name from zgk_province where id=enrolling.areaId) as province
 
