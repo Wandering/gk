@@ -77,6 +77,9 @@ public class ExpertPayCallbackController extends ZGKBaseController {
                         orderStatement.setStatus(1);
                         orderStatement.setCallBackJson(requestJson);
                         orderStatementService.update(orderStatement);
+                    }
+                    if(null != orderStatement)
+                    {
                         String orderNo = orderStatement.getOrderNo();
                         ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
                         if(order !=null&&"0".equals(order.getOrderStatus())){
@@ -118,25 +121,28 @@ public class ExpertPayCallbackController extends ZGKBaseController {
                 String statementNo = paramMap.get("out_trade_no");
                 OrderStatements orderStatement =
                     (OrderStatements)orderStatementService.findOne("statement_no", statementNo);
-                if(!"1".equals(orderStatement.getStatus() + ""))
+                if(null != orderStatement && !"1".equals(orderStatement.getStatus() + ""))
                 {
                     orderStatement.setStatus(1);
                     orderStatementService.update(orderStatement);
                 }
-                String orderNo = orderStatement.getOrderNo();
-                ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
-                if(order !=null&&"0".equals(order.getOrderStatus())){
-                    order.setOrderStatus("1");
-                    order.setChannel("alipay_pc_direct");
-                    expertService.updateOrder(order);
-                    String userId = order.getUserId();
-                    String urlKey = "pay_return_url_"+userId;
-                    //获取回调url
-                    if(RedisUtil.getInstance().exists(urlKey))
-                    {
-                        returnUrl = String.valueOf(RedisUtil.getInstance().get(urlKey));
-                        returnUrl = URLDecoder.decode(returnUrl, "UTF-8");
-                        RedisUtil.getInstance().del(urlKey);
+                if(null != orderStatement)
+                {
+                    String orderNo = orderStatement.getOrderNo();
+                    ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
+                    if(order !=null&&"0".equals(order.getOrderStatus())){
+                        order.setOrderStatus("1");
+                        order.setChannel("alipay_pc_direct");
+                        expertService.updateOrder(order);
+                        String userId = order.getUserId();
+                        String urlKey = "pay_return_url_"+userId;
+                        //获取回调url
+                        if(RedisUtil.getInstance().exists(urlKey))
+                        {
+                            returnUrl = String.valueOf(RedisUtil.getInstance().get(urlKey));
+                            returnUrl = URLDecoder.decode(returnUrl, "UTF-8");
+                            RedisUtil.getInstance().del(urlKey);
+                        }
                     }
                 }
             }
