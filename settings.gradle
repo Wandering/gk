@@ -37,4 +37,5 @@ include 'gk-domain'
 include 'zgk-war'
 
 include 'zgk-service'
+include 'zgk-api'
 
