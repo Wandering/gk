@@ -12,6 +12,7 @@
 
     <dubbo:protocol name="dubbo" port="-1" />
 
-    <dubbo:service id="iuniversityInfoService" interface="cn.thinkjoy.gk.service.IUniversityInfoService" ref="universityInfoService" timeout="60000" retries="0"/>
+    <dubbo:service id="iuniversityApi" interface="cn.thinkjoy.gk.api.IUniversityApi" ref="universityApi" timeout="60000" retries="0"/>
+    <dubbo:service id="imajoredApi" interface="cn.thinkjoy.gk.api.IMajoredApi" ref="majoredApi" timeout="60000" retries="0"/>
 
 </beans>

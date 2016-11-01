@@ -499,6 +499,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
 
     @Override
     public List getDataDictList(String type) {
+
         return universityService.getDataDictListByType(type);
     }
 
