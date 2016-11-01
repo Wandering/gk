@@ -137,8 +137,6 @@ public class OrdersController extends ZGKBaseController {
         }
         //根据订单号获取订单信息
         Order order = getOrder(orderNo);
-        //校验订单状态
-        String state = order.getState();
         /*判断交易状态(交易未支付等其他状态直接return,交易已支付判断交易是否已经生成过账号密码,
         * 初次支付成功,一定未生成卡号)
         */
@@ -153,7 +151,12 @@ public class OrdersController extends ZGKBaseController {
                     /**
                      * 生成vip卡号
                      */
-                    card = orderService.singleCreateCard(Integer.valueOf(order.getProductType()));
+                    try {
+                        card = orderService.singleCreateCard(Integer.valueOf(order.getProductType()));
+                    }catch (Exception e){
+                        //判定异常,唯一性约束冲突,尝试重新生成卡号
+                        card = orderService.singleCreateCard(Integer.valueOf(order.getProductType()));
+                    }
                     //HandleState 0:未发货 1:已发货
                     order.setHandleState(CardHandleStateEnum.Y.getCode().toString());
                     //从insert回调中取得cardId做关联
