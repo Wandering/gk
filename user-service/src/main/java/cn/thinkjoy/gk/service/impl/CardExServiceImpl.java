@@ -55,4 +55,8 @@ public class CardExServiceImpl implements ICardExService {
     }
 
 
+    @Override
+    public boolean bindUserExportService(Long userId, Card card) {
+        return false;
+    }
 }

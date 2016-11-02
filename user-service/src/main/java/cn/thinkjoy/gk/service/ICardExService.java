@@ -16,4 +16,7 @@ public interface ICardExService{
     boolean updateUserVip(Long cardId,Long userId,Long endDate, boolean gkxtActiveStatus);
 
     Card getVipCardInfo(Map<String, String> params);
+
+    boolean bindUserExportService(Long userId, Card card);
+
 }

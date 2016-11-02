@@ -27,6 +27,22 @@ public class Constants {
     public static final int EXPERT_APPLY_STATUS_N = 2;
 
 
+    /**
+     *订单未预约
+     */
+    public static final int EXPERT_ORDER_STATUS_N = 0;
 
+    /**
+     *预约成功
+     */
+    public static final int EXPERT_ORDER_STATUS_Y1 = 1;
 
+    /**
+     *服务中
+     */
+    public static final int EXPERT_ORDER_STATUS_Y2 = 1;
+    /**
+     *服务结束
+     */
+    public static final int EXPERT_ORDER_STATUS_Y3 = 1;
 }
