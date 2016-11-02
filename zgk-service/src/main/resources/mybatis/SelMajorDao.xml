@@ -145,7 +145,7 @@
     </select>
 
     <select id="selectMajorById" resultType="cn.thinkjoy.gk.pojo.SelMajorPojo" parameterType="java.lang.String">
-        select * from zgk_major_base bb where bb.major_code=#{majorId}
+        select bb.major_code as majorId,major_name as majorName,bb.salary_rank as jobRank,bb.salary as fiveSalary,bb.fm_ratio as fmRatio from zgk_major_base bb where bb.major_code=#{majorId}
     </select>
 
 </mapper>
