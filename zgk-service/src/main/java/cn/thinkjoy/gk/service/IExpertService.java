@@ -3,10 +3,7 @@ package cn.thinkjoy.gk.service;
 import cn.thinkjoy.gk.domain.ExpertOrder;
 import cn.thinkjoy.gk.domain.OrderRevaluation;
 import cn.thinkjoy.gk.entity.*;
-import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
-import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
-import cn.thinkjoy.gk.pojo.ServicePojo;
-import cn.thinkjoy.gk.pojo.ServicePojo1;
+import cn.thinkjoy.gk.pojo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -72,4 +69,20 @@ public interface IExpertService
 
     void test1(Map<String,Object> map);
     void test2(Map<String,Object> map);
+
+    /**
+     * 根据专家ID获取专家可服务日期列表
+     *
+     * @param expertId
+     * @return
+     */
+    List<ExpertServiceDay> getExpertServiceDays(int expertId);
+
+    /**
+     * 根据日期ID获取专家可服务时间段
+     *
+     * @param dayId
+     * @return
+     */
+    List<ExpertServiceTime> getExpertServiceTimes(int dayId);
 }

@@ -3,9 +3,7 @@ package cn.thinkjoy.gk.dao;
 import cn.thinkjoy.gk.domain.ExpertOrder;
 import cn.thinkjoy.gk.domain.OrderRevaluation;
 import cn.thinkjoy.gk.entity.*;
-import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
-import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
-import cn.thinkjoy.gk.pojo.ServicePojo;
+import cn.thinkjoy.gk.pojo.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -84,4 +82,36 @@ public interface IExpertDAO
 
     void test1(Map<String,Object> map);
     void test2(Map<String,Object> map);
+
+    /**
+     * 根据专家ID查询提前预约天数
+     *
+     * @param expertId
+     * @return
+     */
+    Integer getPreDay(
+            @Param("expertId") int expertId
+    );
+
+    /**
+     * 根据专家ID获取专家可服务日期列表
+     *
+     * @param expertId
+     * @param preDay 提前天数
+     * @return
+     */
+    List<ExpertServiceDay> getExpertServiceDays(
+            @Param("expertId") int expertId,
+            @Param("preDay") int preDay
+    );
+
+    /**
+     * 根据日期ID获取专家可服务时间段
+     *
+     * @param dayId
+     * @return
+     */
+    List<ExpertServiceTime> getExpertServiceTimes(
+            @Param("dayId") int dayId
+    );
 }
