@@ -22,6 +22,8 @@ import cn.thinkjoy.gk.service.information.service.ex.IExpertOrderExService;
 import cn.thinkjoy.gk.util.IPUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.zgk.common.StringUtil;
+import cn.thinkjoy.zgk.zgksystem.DeparmentApiService;
+import cn.thinkjoy.zgk.zgksystem.pojo.DepartmentProductRelationPojo;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.zxing.BarcodeFormat;
@@ -69,6 +71,8 @@ public class ExpertController extends ZGKBaseController
     private static final Logger LOGGER = LoggerFactory.getLogger(ExpertController.class);
 
 
+    @Autowired
+    private DeparmentApiService deparmentApiService;
     @Autowired
     private IExpertService expertService;
 
@@ -591,6 +595,7 @@ public class ExpertController extends ZGKBaseController
     public Object queryExpertOrder(){
         List<Map<String,Object>> resultList = new ArrayList<>();
         String userId = this.getAccoutId();
+        Long areaId = this.getAreaId();
 
 
         List<Long> cardIds = cardExService.getCard(Long.valueOf(userId));
@@ -601,7 +606,10 @@ public class ExpertController extends ZGKBaseController
                 map.put("cardId",ll);
 
                 //查询卡名称
-                String cardName = "卡名称";
+                String cardName = null;
+
+                DepartmentProductRelationPojo departmentProductRelationPojo =null;
+
                 List<ExpertReservationOrderDetailDTO> expertReservationOrderDetailDTOs = expertOrderExService.queryList(map,"id","asc");
                 /**
                  * 判定,如果是空的不进行后续操作直接返回,为空的原因可能是因为该用户未购买该卡
@@ -617,7 +625,14 @@ public class ExpertController extends ZGKBaseController
                 Map<String, Object> paramMap = new HashedMap();
                 paramMap.put("id",ll);
                 Card card = (Card) cardService.queryOne(paramMap);
-                //TODO 这里输出卡类型
+                try {
+                    departmentProductRelationPojo = deparmentApiService.queryProductPriceByAreaId(areaId.toString(),card.getProductType());
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                cardName = departmentProductRelationPojo.getProductName();
                 serviceMap.put("serviceName", cardName);
                 serviceMap.put("serviceList", expertReservationOrderDetailDTOs);
                 resultList.add(serviceMap);

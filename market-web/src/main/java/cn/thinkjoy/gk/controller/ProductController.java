@@ -11,11 +11,14 @@ import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.Product;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.ProductQuery;
+import cn.thinkjoy.gk.service.IExpertProductServiceService;
 import cn.thinkjoy.gk.service.IProductExService;
 import cn.thinkjoy.gk.service.IProductService;
+import cn.thinkjoy.gk.service.ex.IExpertProductServiceExService;
 import cn.thinkjoy.zgk.zgksystem.DeparmentApiService;
 import cn.thinkjoy.zgk.zgksystem.domain.DepartmentProductRelation;
 import cn.thinkjoy.zgk.zgksystem.pojo.DepartmentProductRelationPojo;
+import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 商品
@@ -48,6 +52,10 @@ public class ProductController extends ZGKBaseController {
     @Autowired
     private DeparmentApiService deparmentApiService;
 
+    @Autowired
+    private IExpertProductServiceService expertProductServiceService;
+    @Autowired
+    private IExpertProductServiceExService expertProductServiceExService;
     /**
      * 获取商品
      * @return
@@ -110,9 +118,33 @@ public class ProductController extends ZGKBaseController {
      */
     @RequestMapping(value = "queryCardInfoByProductId", method = RequestMethod.GET)
     @ResponseBody
-    public Object queryCardInfoByProductId(@RequestParam Integer productId,@RequestParam String userKey) {
+    public Object queryCardInfoByProductId(@RequestParam Integer productId,@RequestParam String userKey,@RequestParam(required = false) String more) {
+        Map<String,Object> resultMap = new HashedMap();
+        Long areaId = this.getAreaId();
+        Boolean isJoin = false;
+        if (more!=null){
+            isJoin=true;
+        }
+        DepartmentProductRelationPojo departmentProductRelationPojo =null;
+        try {
+            departmentProductRelationPojo = deparmentApiService.queryProductPriceByAreaId(areaId.toString(),productId);
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
 
-        return null;
+        Map<String,Object> map = new HashedMap();
+//        productId,areaId,isJoin
+        map.put("productId",productId);
+        map.put("areaId",areaId);
+        map.put("isJoin",isJoin);
+
+        List<Map<String,Object>> cardInfos = expertProductServiceExService.getCardServiceByProductId(map);
+        resultMap.put("cardServiceInfo",cardInfos);
+        if (more!=null) {
+            resultMap.put("cardInfo", departmentProductRelationPojo);
+        }
+        return resultMap;
     }
-
 }
