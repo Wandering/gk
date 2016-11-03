@@ -3,6 +3,7 @@ package cn.thinkjoy.gk.service.impl;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ReportEnum;
 import cn.thinkjoy.gk.common.ReportUtil;
+import cn.thinkjoy.gk.dao.IUniversityInfoDao;
 import cn.thinkjoy.gk.entity.SystemParmas;
 import cn.thinkjoy.gk.entity.UniversityEnrollView;
 import cn.thinkjoy.gk.entity.UniversityInfoEnrolling;
@@ -12,8 +13,10 @@ import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 import cn.thinkjoy.gk.service.IReportResultService;
 import cn.thinkjoy.gk.service.IScoreConverPrecedenceService;
 import cn.thinkjoy.gk.service.IUniversityInfoService;
+import cn.thinkjoy.zgk.remote.IUniversityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -35,6 +38,12 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     IReportResultService iReportResultService;
     @Resource
     IScoreConverPrecedenceService iScoreConverPrecedenceService;
+
+    @Autowired
+    private IUniversityInfoDao iUniversityInfoDao;
+
+    @Autowired
+    private IUniversityService universityService;
 
     @Override
     public Integer selectPlanEnrolling(Map map) {
@@ -451,7 +460,13 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     public List<Map<String, Object>> getBatchByYearAndArea(Map<String, Object> map) {
         return iUniversityInfoDao.getBatchByYearAndArea(map);
     }
-    public  List<UniversityEnrollView> selectUnivEnrollInfo(List<Map<String, Object>> maps,boolean isJoin,
+
+    @Override
+    public List getDataDictList(String type) {
+        return universityService.getDataDictListByType(type);
+    }
+
+    public  List<UniversityEnrollView> selectUnivEnrollInfo(List<Map<String, Object>> maps, boolean isJoin,
                                                             String sortBy){
         return iUniversityInfoDao.selectUnivEnrollInfo(maps,isJoin,sortBy);
     }
@@ -465,5 +480,29 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     @Override
     public List<Long> selectUnivInfoIdInBatch(Map<String, Object> condition) {
         return iUniversityInfoDao.selectUnivInfoIdInBatch(condition);
+    }
+
+    @Override
+    public List<String> getEnrollingYearsByProvinceId(long provinceId) {
+        return iUniversityInfoDao.getEnrollingYearsByProvinceId(provinceId);
+    }
+
+
+    /**
+     * 如果是江苏省 加入选测等级
+     * @param parmasMap
+     * @param reportParm
+     */
+    private void putValueJs(Map parmasMap,ReportForecastView reportParm){
+        if (reportParm.isJoin()){
+            parmasMap.put("isJoin", reportParm.isJoin());
+            //选测等级
+            parmasMap.put("xcRanks", reportParm.getXcRanks());
+            //去关联哪一年的招生计划
+            parmasMap.put("year", reportParm.getYear());
+            //文理科
+            parmasMap.put("majorType", reportParm.getCategorie());
+
+        }
     }
 }
