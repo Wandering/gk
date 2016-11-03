@@ -80,26 +80,39 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		boolean flag = RedisUtil.getInstance().exists(loginKey);
 		if(flag)
 		{
-			String loginTokenRedis = (String) RedisUtil.getInstance().hGet(value, "PC");
+			String loginTokenRedis = (String) RedisUtil.getInstance().hGet(loginKey, "PC");
 			if(!loginToken.equals(loginTokenRedis))
 			{
-				if (reqType != null && reqType.equals("ajax")) {
-
-					response.setCharacterEncoding("UTF-8");
-					try {
-						ServletOutputStream out = response.getOutputStream();
-						out.print("{\"rtnCode\":\"1000110\",\"msg\":\"PC登录人数超过限制,只能一个用户登录！\"}");
-						out.flush();
-						out.close();
-					} catch (IOException ex) {
-						throw new BizException("1000110", "PC登录人数超过限制,只能一个用户登录！");
-					}
-
-				} else
-					throw new BizException("1000110", "PC登录人数超过限制,只能一个用户登录！");
+				isValideLogin(response, reqType);
 			}
+		}else
+		{
+			isValideLogin(response, reqType);
 		}
 		return true;
+	}
+
+	private void isValideLogin(HttpServletResponse response, String reqType)
+	{
+		if (reqType != null && reqType.equals("ajax"))
+		{
+			response.setCharacterEncoding("UTF-8");
+			try
+			{
+				ServletOutputStream out = response.getOutputStream();
+				out.flush();
+				out.print("登录人数超过限制,只能一个用户登录！");
+				out.flush();
+				out.close();
+			}
+			catch (IOException ex)
+			{
+				throw new BizException("1000110", "登录人数超过限制,只能一个用户登录！");
+			}
+
+		}
+		else
+			throw new BizException("1000110", "登录人数超过限制,只能一个用户登录！");
 	}
 
 	@Override
