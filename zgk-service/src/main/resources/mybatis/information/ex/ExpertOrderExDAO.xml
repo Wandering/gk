@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.information.ex.IExpertOrderExDAO">
+<!--
+insert
+update
+updateNull
+deleteById
+deleteByCondition
+deleteByProperty
+fetch
+findOne
+findList
+findAll
+queryPage
+like
+queryList
+queryOne
+count
+selectMaxId
+updateOrSave
+selectOne
+selectList
+-->
+    <sql id="Base_Column_List">
+        ord.id as id,
+        ord.card_id as cardId,
+        ord.service_item as serviceItem,
+        ord.user_id as userId,
+        ord.expert_id as expertId,
+        ord.channel as channel,
+        ord.channel_num as channelNum,
+        ord.contact_person as contactPerson,
+        ord.contact_phone as contactPhone,
+        ord.expect_time as expectTime,
+        ord.end_time as endTime,
+        ord.question_desc as questionDesc,
+        ord.agree_mark as agreeMark,
+        ord.status as status,
+        ord.score as score,
+        ord.comments as comments,
+        ord.create_date as createDate,
+        ord.service_count as serviceCount,
+        config.config_value as serviceName,
+        info.expert_name as expertName
+    </sql>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="ExpertReservationOrderDetailDTO">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_reservation_order_detail ord WHERE
+        ${property} = #{value}
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="ExpertReservationOrderDetailDTO">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_reservation_order_detail ord
+        LEFT JOIN zgk_expert_info info on ord.expert_id =info.id
+        Left join zgk_expert_config config on config.config_domain = 'serviceType' and ord.service_item = config.config_key  WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="ExpertReservationOrderDetailDTO">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_reservation_order_detail ord
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="ExpertReservationOrderDetailDTO">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_reservation_order_detail ord
+        LEFT JOIN zgk_expert_info info on ord.expert_id =info.id
+        Left join zgk_expert_config config on config.config_domain = 'serviceType' and ord.service_item = config.config_key
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND ord.id = #{condition.id}
+            </if>
+            <if test="condition.cardId!=null">
+                AND ord.card_id = #{condition.cardId}
+            </if>
+            <if test="condition.serviceItem!=null">
+                AND ord.service_item = #{condition.serviceItem}
+            </if>
+            <if test="condition.userId!=null">
+                AND ord.user_id = #{condition.userId}
+            </if>
+            <if test="condition.expertId!=null">
+                AND ord.expert_id = #{condition.expertId}
+            </if>
+            <if test="condition.channel!=null">
+                AND ord.channel = #{condition.channel}
+            </if>
+            <if test="condition.channelNum!=null">
+                AND ord.channel_num = #{condition.channelNum}
+            </if>
+            <if test="condition.contactPerson!=null">
+                AND ord.contact_person = #{condition.contactPerson}
+            </if>
+            <if test="condition.contactPhone!=null">
+                AND ord.contact_phone = #{condition.contactPhone}
+            </if>
+            <if test="condition.expectTime!=null">
+                AND ord.expect_time = #{condition.expectTime}
+            </if>
+            <if test="condition.endTime!=null">
+                AND ord.end_time = #{condition.endTime}
+            </if>
+            <if test="condition.questionDesc!=null">
+                AND ord.question_desc = #{condition.questionDesc}
+            </if>
+            <if test="condition.agreeMark!=null">
+                AND ord.agree_mark = #{condition.agreeMark}
+            </if>
+            <if test="condition.status!=null">
+                AND ord.status = #{condition.status}
+            </if>
+            <if test="condition.score!=null">
+                AND ord.score = #{condition.score}
+            </if>
+            <if test="condition.comments!=null">
+                AND ord.comments = #{condition.comments}
+            </if>
+            <if test="condition.createDate!=null">
+                AND ord.create_date = #{condition.createDate}
+            </if>
+            <if test="condition.serviceCount!=null">
+                AND ord.service_count = #{condition.serviceCount}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="ExpertReservationOrderDetailDTO">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_reservation_order_detail ord
+        LEFT JOIN zgk_expert_info info on ord.expert_id =info.id
+        Left join zgk_expert_config config on config.config_domain = 'serviceType' and ord.service_item = config.config_key
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.cardId!=null">
+                AND card_id = #{condition.cardId}
+            </if>
+            <if test="condition.serviceItem!=null">
+                AND service_item = #{condition.serviceItem}
+            </if>
+            <if test="condition.userId!=null">
+                AND user_id = #{condition.userId}
+            </if>
+            <if test="condition.expertId!=null">
+                AND expert_id = #{condition.expertId}
+            </if>
+            <if test="condition.channel!=null">
+                AND channel = #{condition.channel}
+            </if>
+            <if test="condition.channelNum!=null">
+                AND channel_num = #{condition.channelNum}
+            </if>
+            <if test="condition.contactPerson!=null">
+                AND contact_person = #{condition.contactPerson}
+            </if>
+            <if test="condition.contactPhone!=null">
+                AND contact_phone = #{condition.contactPhone}
+            </if>
+            <if test="condition.expectTime!=null">
+                AND expect_time = #{condition.expectTime}
+            </if>
+            <if test="condition.endTime!=null">
+                AND end_time = #{condition.endTime}
+            </if>
+            <if test="condition.questionDesc!=null">
+                AND question_desc = #{condition.questionDesc}
+            </if>
+            <if test="condition.agreeMark!=null">
+                AND agree_mark = #{condition.agreeMark}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.score!=null">
+                AND score = #{condition.score}
+            </if>
+            <if test="condition.comments!=null">
+                AND comments = #{condition.comments}
+            </if>
+            <if test="condition.createDate!=null">
+                AND create_date = #{condition.createDate}
+            </if>
+            <if test="condition.serviceCount!=null">
+                AND service_count = #{condition.serviceCount}
+            </if>
+        </trim>
+        limit 0,1
+    </select>
+
+</mapper>
+

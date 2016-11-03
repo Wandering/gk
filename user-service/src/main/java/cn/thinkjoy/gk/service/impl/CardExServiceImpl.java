@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 
 
@@ -52,6 +53,17 @@ public class CardExServiceImpl implements ICardExService {
     @Override
     public Card getVipCardInfo(Map<String, String> params) {
         return cardDAO.queryCardInfo(params);
+    }
+
+
+    @Override
+    public boolean bindUserExportService(Long userId, Card card) {
+        return false;
+    }
+
+    @Override
+    public List<Long> getCard(Long userId) {
+        return cardDAO.getCard(userId);
     }
 
 

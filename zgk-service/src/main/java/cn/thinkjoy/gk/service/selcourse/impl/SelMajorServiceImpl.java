@@ -8,9 +8,11 @@ import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.service.selcourse.ISelMajorService;
 import cn.thinkjoy.gk.service.selcourse.ISelUniversityService;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +60,7 @@ public class SelMajorServiceImpl implements ISelMajorService {
 
     @Override
     public List<MajoredDto> getMajorSalary(int pageNo,int pageSize) {
-        return iSelMajorDao.getMajorSalary((pageNo-1)*pageSize,pageSize);
+        return iSelMajorDao.getMajorSalary((pageNo - 1) * pageSize, pageSize);
     }
 
     @Override
@@ -68,6 +70,25 @@ public class SelMajorServiceImpl implements ISelMajorService {
 
     @Override
     public SelMajorPojo selectMajorById(String majorId) {
-        return iSelMajorDao.selectMajorById(majorId);
+        SelMajorPojo selMajorPojo=iSelMajorDao.selectMajorById(majorId);
+        if(StringUtils.isNotBlank(selMajorPojo.getFmRatio())) {
+            String tt = selMajorPojo.getFmRatio();
+            String nan = tt.split(" ")[0];
+            String nan1 = tt.split(" ")[1];
+            String nv = tt.split(" ")[3];
+            String nv1 = tt.split(" ")[4];
+            List<SexPercentPojo> sexPercentList = new ArrayList<>();
+            SexPercentPojo sexPercentPojo = new SexPercentPojo();
+            sexPercentPojo.setSexName(nan);
+            sexPercentPojo.setPercent(nan1);
+            sexPercentList.add(sexPercentPojo);
+            SexPercentPojo sexPercentPojo2 = new SexPercentPojo();
+            sexPercentPojo2.setSexName(nv);
+            sexPercentPojo2.setPercent(nv1);
+            sexPercentList.add(sexPercentPojo2);
+            selMajorPojo.setSexPercent(sexPercentList);
+            selMajorPojo.setFmRatio(null);
+        }
+        return selMajorPojo;
     }
 }

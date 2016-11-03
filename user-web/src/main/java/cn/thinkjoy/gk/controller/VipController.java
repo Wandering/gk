@@ -96,7 +96,12 @@ public class VipController extends ZGKBaseController implements Watched {
         } catch(Exception e) {
             ModelUtil.throwException(ERRORCODE.VIP_UPGRADE_FAIL);
         }
-
+        try {
+            //该给用户绑定专家服务状态了
+            cardExService.bindUserExportService(userAccountPojo.getAccountId(),card);
+        }catch (Exception e){
+            ModelUtil.throwException(ERRORCODE.VIP_UPGRADE_FAIL);
+        }
         /**
          * 当所有操作执行完成之后通知该更新代理商后台了
          */

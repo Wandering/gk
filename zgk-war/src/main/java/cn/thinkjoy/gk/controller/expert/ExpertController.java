@@ -10,12 +10,15 @@ import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.*;
 import cn.thinkjoy.gk.entity.*;
+import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
+import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
+import cn.thinkjoy.gk.pojo.ExpertReservationOrderDetailDTO;
+import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.gk.service.IExpertApplyService;
-import cn.thinkjoy.gk.service.IExpertService;
-import cn.thinkjoy.gk.service.IOrderStatementsService;
+import cn.thinkjoy.gk.service.*;
 import cn.thinkjoy.gk.service.impl.ProvinceServiceImpl;
+import cn.thinkjoy.gk.service.information.service.ex.IExpertOrderExService;
 import cn.thinkjoy.gk.util.IPUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.zgk.common.StringUtil;
@@ -28,21 +31,25 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.pingplusplus.Pingpp;
 import com.pingplusplus.model.Charge;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -54,254 +61,33 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/expert")
 public class ExpertController extends ZGKBaseController
 {
+    private final static  String formatString="yyyy-MM-dd HH:mm";
     //专家申请service
     @Autowired
     private IExpertApplyService expertApplyService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExpertController.class);
 
+
     @Autowired
     private IExpertService expertService;
 
     @Autowired
+    private IExpertReservationOrderDetailService expertOrderDetailService;
+    @Autowired
+    private IExpertOrderExService expertOrderExService;
+    @Autowired
     private IOrderStatementsService orderStatementService;
+    @Autowired
+    private ICardService cardService;
+    @Autowired
+    private ICardExService cardExService;
 
     @Autowired
     private ProvinceServiceImpl provinceServiceImp;
     //订单过期时间间隔2小时
     private final long expireDuration = 2 * 60 * 60 * 1000;
-    /**
-     * 下订单
-     *
-     * @return
-     */
-    @RequestMapping(value = "createOrders")
-    @ResponseBody
-    public Map<String, String> createOrder(@RequestParam(value = "token", required = true) String token
-        , ExpertOrder expertOrder)
-        throws Exception
-    {
-        if (expertOrder == null)
-        {
-            LOGGER.error("====pay /orders/createOrders PARAM_ERROR ");
-            throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), ERRORCODE.PARAM_ERROR.getMessage());
-        }
-        UserAccountPojo userAccountPojo = getUserAccountPojo();
-        if (userAccountPojo == null)
-        {
-            throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
-        }
-        String returnUrl = expertOrder.getReturnUrl();
-        Long userId = userAccountPojo.getId();
-        RedisUtil.getInstance().set("pay_return_url_" + userId, returnUrl, 24l, TimeUnit.HOURS);
-        expertOrder.setUserId(userId + "");
-        ExpertOrder order = getOrder(expertOrder);
-        Map<String, String> resultMap = new HashMap<>();
-        try
-        {
-            resultMap.put("orderNo", order.getOrderNo());
-            expertService.insertOrder(order);
-            return resultMap;
-        }
-        catch (Exception e)
-        {
-            throw new BizException(ERRORCODE.FAIL.getCode(), ERRORCODE.FAIL.getMessage());
-        }
-    }
 
-    /**
-     * 支付宝支付
-     *
-     * @return
-     */
-    @RequestMapping(value = "aliOrderPay")
-    @ResponseBody
-    public Charge aliOrder(@RequestParam(value = "orderNo", required = true) String orderNo,
-        @RequestParam(value = "token", required = true) String token)
-    {
-        UserAccountPojo userAccountPojo = getUserAccountPojo();
-        if (userAccountPojo == null)
-        {
-            throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
-        }
-        ExpertOrder order = getOrder(orderNo);
-        String price = new BigDecimal(order.getServerPrice()).
-            multiply(new BigDecimal(100)).setScale(0, BigDecimal.ROUND_HALF_EVEN).toString();
-        Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("channel", "alipay_pc_direct");
-        paramMap.put("orderNo", orderNo);
-        paramMap.put("token", token);
-        paramMap.put("amount", price);
-        paramMap.put("productType", order.getServerType());
-        Charge charge;
-        try
-        {
-            charge = getCharge(paramMap);
-        }
-        catch (Exception e)
-        {
-            throw new BizException(ERRORCODE.FAIL.getCode(), e.getMessage());
-        }
-        return charge;
-    }
-
-    private ExpertOrder getOrder(String orderNo)
-    {
-        ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
-        if (null == order)
-        {
-            throw new BizException("0000010", "订单号无效!");
-        }
-        return order;
-    }
-
-    /**
-     * 微信支付
-     *
-     * @return
-     */
-    @RequestMapping(value = "wxOrderPay")
-    public void wxOrder(@RequestParam(value = "orderNo", required = true) String orderNo,
-        @RequestParam(value = "token", required = true) String token,
-        @RequestParam(value = "qrSize", required = false) String size, HttpServletResponse response)
-    {
-        int width = 200;
-        int height = 200;
-        if (null != size)
-        {
-            int qrSize;
-            try
-            {
-                qrSize = Integer.parseInt(size);
-                height = qrSize;
-                width = qrSize;
-            }
-            catch (NumberFormatException e)
-            {
-                throw new BizException("0000010", "二维码大小错误!");
-            }
-        }
-        try
-        {
-            getQrCode(orderNo, token, response, width, height);
-        }
-        catch (BizException e)
-        {
-            throw new BizException(e.getErrorCode(), e.getMsg());
-        }
-    }
-
-    private ExpertOrder getOrder(ExpertOrder expertOrder)
-    {
-        String orderNo = NumberGenUtil.genOrderNo();
-        expertOrder.setOrderNo(orderNo);
-        expertOrder.setCreateDate(System.currentTimeMillis());
-        expertOrder.setOrderStatus("0");
-        return expertOrder;
-    }
-
-    private Charge getCharge(Map<String, String> paramMap)
-        throws Exception
-    {
-        Pingpp.apiKey = DynConfigClientFactory.getClient().getConfig("common", "apiKey");
-        String appid = DynConfigClientFactory.getClient().getConfig("common", "appId");
-        String aliReturnUrl = DynConfigClientFactory.getClient().getConfig("common", "expertAliReturnUrl");
-        Map<String, Object> chargeParams = new HashMap<>();
-        Map<String, String> app = new HashMap<>();
-        app.put("id", appid);
-        String channel = paramMap.get("channel");
-        String statemenstNo = NumberGenUtil.genOrderNo();
-        chargeParams.put("order_no", statemenstNo);
-        chargeParams.put("amount", paramMap.get("amount"));
-        chargeParams.put("app", app);
-        chargeParams.put("channel", channel);
-        chargeParams.put("client_ip", IPUtil.getRemortIP(request));
-        chargeParams.put("subject", "智高考");
-        chargeParams.put("body", "问专家");
-        chargeParams.put("currency", "cny");
-        if ("alipay_pc_direct".equals(channel))
-        {
-            Map<String, Object> extraMap = new HashMap<>();
-            extraMap.put("success_url", aliReturnUrl + "?token=" + paramMap.get("token"));
-            chargeParams.put("extra", extraMap);
-        }
-        else if ("wx_pub_qr".equals(channel))
-        {
-            Map<String, Object> extraMap = new HashMap<>();
-            extraMap.put("product_id", "1");
-            chargeParams.put("extra", extraMap);
-        }
-        createOrderStatement(paramMap, chargeParams, statemenstNo);
-        return Charge.create(chargeParams);
-    }
-
-    /**
-     * 创建交易流水
-     *
-     * @param paramMap
-     * @param chargeParams
-     */
-    private void createOrderStatement(Map<String, String> paramMap, Map<String, Object> chargeParams,
-        String statemenstNo)
-    {
-        OrderStatements orderstatement = new OrderStatements();
-        orderstatement.setCreateDate(System.currentTimeMillis());
-        orderstatement.setOrderNo(paramMap.get("orderNo"));
-        orderstatement.setAmount(Double.parseDouble(paramMap.get("amount")));
-        //0:交易进行中  1：交易成功  2：交易失败
-        orderstatement.setStatementNo(statemenstNo);
-        orderstatement.setStatus(0);
-        orderstatement.setState("N");
-        orderstatement.setPayJson(JSONObject.toJSONString(chargeParams));
-        orderStatementService.insert(orderstatement);
-    }
-
-    private void getQrCode(String orderNo, String token, HttpServletResponse response, int width, int height)
-    {
-        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-        Map params = new HashMap();
-        params.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-        ExpertOrder order = getOrder(orderNo);
-        String price = new BigDecimal(order.getServerPrice()).
-            multiply(new BigDecimal(100)).setScale(0, BigDecimal.ROUND_HALF_EVEN).toString();
-        Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("channel", "wx_pub_qr");
-        paramMap.put("orderNo", orderNo);
-        paramMap.put("token", token);
-        paramMap.put("amount", price);
-        paramMap.put("productType", order.getServerType());
-        Charge charge;
-        try
-        {
-            charge = getCharge(paramMap);
-        }
-        catch (Exception e)
-        {
-            throw new BizException(ERRORCODE.FAIL.getCode(), e.getMessage());
-        }
-        String strCharge = JSON.toJSONString(charge);
-        JSONObject obj = JSON.parseObject(strCharge);
-        String credential = (String)obj.get("credential");
-        JSONObject credentialObj = JSON.parseObject(credential);
-        String url = (String)credentialObj.get("wx_pub_qr");
-        BitMatrix bitMatrix;
-        try
-        {
-            bitMatrix = multiFormatWriter.encode(url, BarcodeFormat.QR_CODE, width, height, params);
-        }
-        catch (WriterException e)
-        {
-            throw new BizException(ERRORCODE.FAIL.getCode(), "生成二维码错误!");
-        }
-        try
-        {
-            MatrixToImageWriter.writeToStream(bitMatrix, MatrixToImageWriter.FORMAT, response.getOutputStream());
-        }
-        catch (IOException e)
-        {
-            throw new BizException(ERRORCODE.FAIL.getCode(), "传输二维码错误!");
-        }
-    }
 
     /**
      * 申请做专家
@@ -634,6 +420,12 @@ public class ExpertController extends ZGKBaseController
         }
     }
 
+    /**
+     * 根据专家服务获取专家服务
+     * @param expertId
+     * @param areaId
+     * @return
+     */
     @RequestMapping(value = "getServiceByExpertId")
     @ResponseBody
     public Map<String,Object> getServiceByExpertId(@RequestParam("expertId")String expertId,@RequestParam(value = "areaId",required = false)String areaId){
@@ -734,4 +526,162 @@ public class ExpertController extends ZGKBaseController
         return expertService.getExpertServiceTimes(dayId);
     }
 
+    /**
+     * 保存专家订单
+     * @param order
+     */
+    @RequestMapping(value = "saveOrder")
+    @ApiDesc(owner = "杨永平",value = "保存专家订单")
+    @ResponseBody
+    public boolean saveOrder(ExpertPojo order){
+        ExpertReservationOrderDetail expertReservationOrderDetail;
+        String userId = this.getAccoutId();
+        Map<String,Object> map = new HashedMap();
+        map.put("userId",userId);
+        map.put("serviceItem",order.getServiceType());
+        //根据订单数据获取用户服务
+        expertReservationOrderDetail = (ExpertReservationOrderDetail)expertOrderDetailService.queryOne(map);
+        //判定该用户是否含有该服务
+        if (expertReservationOrderDetail==null){
+            //如果是null表示用户不具备该服务,服务在用户升级vip时候注入
+            throw new BizException("error","用户不具备该服务!");
+        }
+        Integer count = expertReservationOrderDetail.getServiceCount();
+
+        if (count==0){
+            //用户不具备该服务次数
+            throw new BizException("error","该服务次数为0");
+        }
+        try {
+            //复制order属性到专家订单bean中
+            BeanUtils.copyProperties(expertReservationOrderDetail,order);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        if (order.getServiceDay()==null || order.getServiceTime()==null){
+            throw new BizException("error","日期时间为必传项");
+        }
+        //设置预约时间
+        String time = order.getServiceDay()+Constants.EXPERT_ORDER_BLANK+order.getServiceTime();
+        String endTime = order.getServiceDay() +Constants.EXPERT_ORDER_BLANK+order.getServiceTime().split("-")[1];
+        expertReservationOrderDetail.setExpectTime(time);
+        expertReservationOrderDetail.setEndTime(endTime);
+
+        //设置服务-1  解决潜在的会小于0的情况
+        expertReservationOrderDetail.setServiceCount(count==0?0:count-1);
+        return expertOrderDetailService.update(expertReservationOrderDetail)>0;
+
+    }
+
+
+    /**
+     *
+     * @return
+     * 返回字段  服务内容 剩余服务次数 预约状态 服务专家 预约时间 视频方式
+     * 预约状态 0,未预约  1,预约成功  2,服务中  3,结束
+     * 预约时间 格式 2016-11-2 12:00-13:00
+     * 视频方式 微信/QQ
+     * 评价 1,已评价 2,未评价
+     */
+    @RequestMapping(value = "queryExpertOrder")
+    @ApiDesc(owner = "杨永平",value = "查询用户服列表")
+    @ResponseBody
+    public Object queryExpertOrder(){
+        List<Map<String,Object>> resultList = new ArrayList<>();
+        String userId = this.getAccoutId();
+
+
+        List<Long> cardIds = cardExService.getCard(Long.valueOf(userId));
+        if (cardIds!=null) {
+            for (Long ll : cardIds) {
+                Map<String,Object>  map = new HashedMap();
+                map.put("userId",userId);
+                map.put("cardId",ll);
+
+                //查询卡名称
+                String cardName = "卡名称";
+                List<ExpertReservationOrderDetailDTO> expertReservationOrderDetailDTOs = expertOrderExService.queryList(map,"id","asc");
+                /**
+                 * 判定,如果是空的不进行后续操作直接返回,为空的原因可能是因为该用户未购买该卡
+                 */
+                if (expertReservationOrderDetailDTOs==null || expertReservationOrderDetailDTOs.size()==0){
+                    return resultList;
+                }
+                //cardType
+
+                //后续操作
+                handlerOrder(expertReservationOrderDetailDTOs);
+                Map<String, Object> serviceMap = new HashedMap();
+                Map<String, Object> paramMap = new HashedMap();
+                paramMap.put("id",ll);
+                Card card = (Card) cardService.queryOne(paramMap);
+                //TODO 这里输出卡类型
+                serviceMap.put("serviceName", cardName);
+                serviceMap.put("serviceList", expertReservationOrderDetailDTOs);
+                resultList.add(serviceMap);
+            }
+        }
+        //判定订单状态
+        return resultList;
+    }
+
+
+    private void handlerOrder(List<ExpertReservationOrderDetailDTO> list){
+        for (ExpertReservationOrderDetailDTO expertReservationOrderDetailDTO:list){
+            handlerOrderStatus(expertReservationOrderDetailDTO);
+        }
+    }
+
+    /**
+     * 处理订单状态 0未预约  1:预约成功  2:服务中 3:结束
+     * @param expertReservationOrderDetailDTO
+     * @return
+     */
+    private void handlerOrderStatus(ExpertReservationOrderDetailDTO expertReservationOrderDetailDTO){
+        if (expertReservationOrderDetailDTO==null){
+            return;
+        }
+        if (expertReservationOrderDetailDTO.getEndTime()==null){
+            return;
+        }
+        String orderTime = expertReservationOrderDetailDTO.getExpectTime();
+        String endTime = expertReservationOrderDetailDTO.getEndTime();
+        orderTime = "2016-11-2 11:00-12:00";
+        String startTime = orderTime.substring(0,orderTime.lastIndexOf("-"));
+        DateFormat dateFormat = new SimpleDateFormat(formatString);
+        Long currTime = System.currentTimeMillis();
+        Long lStartTime = 0L;
+        try {
+            lStartTime=dateFormat.parse(startTime).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Long lEndTime = 0L;
+        try {
+            lEndTime=dateFormat.parse(endTime).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Integer status=null;
+        try {
+            if (lStartTime!=0L && currTime-lStartTime<0) {
+                //预约成功
+                status=Constants.EXPERT_ORDER_STATUS_Y1;
+            }
+            if (lStartTime!=0L && currTime-lStartTime>0) {
+                //服务中
+                status=Constants.EXPERT_ORDER_STATUS_Y2;
+            }
+            if (lEndTime!=0L && currTime-lEndTime>0) {
+                //结束
+                status=Constants.EXPERT_ORDER_STATUS_Y3;
+            }
+
+        }catch (Exception e){
+            return;
+        }
+        expertReservationOrderDetailDTO.setStatus(status);
+    }
 }
