@@ -9,8 +9,17 @@ import java.util.List;
 public class ServicePojo implements Serializable {
 
     private String expertId;
+    private String expertName;
     private String serviceTypeId;
     private String serviceTypeName;
+
+    public String getExpertName() {
+        return expertName;
+    }
+
+    public void setExpertName(String expertName) {
+        this.expertName = expertName;
+    }
 
     public String getExpertId() {
         return expertId;

@@ -466,7 +466,7 @@
     </insert>
 
     <select id="selectServiceByExpertId" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ServicePojo">
-        select ei.id as expertId,esr.service_type_id as serviceTypeId,ec.config_value as serviceTypeName
+        select ei.id as expertId,ei.expert_name as expertName ,esr.service_type_id as serviceTypeId,ec.config_value as serviceTypeName
         from zgk_expert_info ei
         left join zgk_expert_service_relation esr on ei.id=esr.expert_id
         left join zgk_expert_config ec on ec.config_domain = 'serviceType' and ec.config_key = esr.service_type_id
