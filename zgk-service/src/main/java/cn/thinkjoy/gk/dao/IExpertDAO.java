@@ -114,4 +114,6 @@ public interface IExpertDAO
     List<ExpertServiceTime> getExpertServiceTimes(
             @Param("dayId") int dayId
     );
+
+    void insertExpertAppraise(Map<String, Object> map);
 }

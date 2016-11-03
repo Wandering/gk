@@ -323,6 +323,29 @@ public class ExpertController extends ZGKBaseController
         return resultMap;
     }
 
+    @RequestMapping("addExpertAppraise")
+    @ResponseBody
+    public Map<String,Object> addExpertAppraise(@RequestParam(value = "expertId")String expertId,
+                                              @RequestParam(value = "userId")String userId,
+                                              @RequestParam(value = "serverType")String serverType,
+                                              @RequestParam(value = "userName")String userName,
+                                              @RequestParam(value = "rate")String rate,
+                                              @RequestParam(value = "userComments")String userComments){
+        Map<String,Object> map=new HashMap<>();
+        map.put("expertId",expertId);
+        map.put("userId",userId);
+        map.put("userName",userName);
+        map.put("serverType",serverType);
+        map.put("rate",rate);
+        map.put("userComments",userComments);
+        map.put("isChecked",2);
+        map.put("createDate",System.currentTimeMillis());
+        expertService.insertExpertAppraise(map);
+        Map<String,Object> resultMap=new HashMap<>();
+        resultMap.put("result","ok");
+        return resultMap;
+    }
+
     /**
      * 专家服务评价
      *
