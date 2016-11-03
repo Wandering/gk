@@ -185,40 +185,8 @@ public class ExpertServiceImpl implements IExpertService
     }
 
     @Override
-    public List<ServicePojo1> selectServiceByExpertId(Map<String, Object> map) {
-        List<ServicePojo> servicePojoList=dao.selectServiceByExpertId(map);
-        List<ServicePojo1> servicePojo1list=new ArrayList<>();
-        for(ServicePojo servicePojo:servicePojoList){
-            boolean flag=false;
-
-            for(ServicePojo1 servicePojo1:servicePojo1list){
-                //style已有
-                if(servicePojo1.getServiceStyleId().equals(servicePojo.getServiceStyleId())){
-                    ServicePojo2 servicePojo2=new ServicePojo2();
-                    servicePojo2.setServiceTypeId(servicePojo.getServiceTypeId());
-                    servicePojo2.setServiceTypeName(servicePojo.getServiceTypeName());
-                    servicePojo2.setPrice(servicePojo.getServicePrice());
-                    servicePojo1.getServiceTypeList().add(servicePojo2);
-                    flag=true;
-                    break;
-                }
-            }
-            if(!flag) {
-                //style没有，添加
-                ServicePojo2 servicePojo2=new ServicePojo2();
-                servicePojo2.setServiceTypeId(servicePojo.getServiceTypeId());
-                servicePojo2.setServiceTypeName(servicePojo.getServiceTypeName());
-                servicePojo2.setPrice(servicePojo.getServicePrice());
-
-                ServicePojo1 servicePojo1 = new ServicePojo1();
-                servicePojo1.setServiceStyleId(servicePojo.getServiceStyleId());
-                servicePojo1.setServiceStyleName(servicePojo.getServiceStyleName());
-                servicePojo1.setServiceTypeList(new ArrayList<ServicePojo2>());
-                servicePojo1.getServiceTypeList().add(servicePojo2);
-                servicePojo1list.add(servicePojo1);
-            }
-        }
-        return servicePojo1list;
+    public List<ServicePojo> selectServiceByExpertId(Map<String, Object> map) {
+        return dao.selectServiceByExpertId(map);
     }
 
     @Override
