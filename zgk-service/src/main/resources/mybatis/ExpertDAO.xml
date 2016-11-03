@@ -553,5 +553,42 @@
             )
         </foreach>
     </insert>
+
+    <!-- 根据专家ID查询提前预约天数 -->
+    <select id="getPreDay" parameterType="int" resultType="Integer">
+        SELECT
+            pre_appoint_days
+        FROM
+            zgk_expert_info
+        WHERE
+            id = #{expertId}
+    </select>
+
+    <!-- 根据专家ID查询提前预约天数 -->
+    <select id="getExpertServiceDays" parameterType="int" resultType="cn.thinkjoy.gk.pojo.ExpertServiceDay">
+        SELECT
+            id,
+            expert_id AS expertId,
+            service_day AS serviceDay,
+            is_available AS isAvailable
+        FROM
+            zgk_expert_service_days
+        WHERE
+            expert_id = #{expertId}
+        AND service_day > date_sub(curdate(), INTERVAL #{preDay} DAY);
+    </select>
+
+    <!-- 根据专家ID查询提前预约天数 -->
+    <select id="getExpertServiceTimes" parameterType="int" resultType="cn.thinkjoy.gk.pojo.ExpertServiceTime">
+        SELECT
+            id,
+            expert_day_id AS expertDayId,
+            time_segment AS timeSegment,
+            is_available AS isAvailable
+        FROM
+            zgk_expert_service_times
+        WHERE
+            expert_day_id = #{dayId}
+    </select>
 </mapper>
 

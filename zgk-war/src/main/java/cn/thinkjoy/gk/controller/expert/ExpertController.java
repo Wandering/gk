@@ -14,6 +14,7 @@ import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
 import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
 import cn.thinkjoy.gk.pojo.ExpertReservationOrderDetailDTO;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
+import cn.thinkjoy.gk.pojo.*;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.service.*;
 import cn.thinkjoy.gk.service.impl.ProvinceServiceImpl;
@@ -40,6 +41,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -509,6 +511,20 @@ public class ExpertController extends ZGKBaseController
             map.put("list", list);
             expertService.test2(map);
         }
+    }
+
+    @ApiDesc(value = "查询专家可服务日期列表",owner = "杨国荣")
+    @RequestMapping(value = "/getExpertServiceDays",method = RequestMethod.GET)
+    @ResponseBody
+    public List<ExpertServiceDay> getExpertServiceDays(@RequestParam("expertId") int expertId){
+        return expertService.getExpertServiceDays(expertId);
+    }
+
+    @ApiDesc(value = "查询专家某天可服务的时间段列表",owner = "杨国荣")
+    @RequestMapping(value = "/getExpertServiceTimes",method = RequestMethod.GET)
+    @ResponseBody
+    public List<ExpertServiceTime> getExpertServiceTimes(@RequestParam("dayId") int dayId){
+        return expertService.getExpertServiceTimes(dayId);
     }
 
     /**

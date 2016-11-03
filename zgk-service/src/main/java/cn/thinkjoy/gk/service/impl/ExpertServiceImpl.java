@@ -253,4 +253,17 @@ public class ExpertServiceImpl implements IExpertService
         dao.test2(map);
     }
 
+    @Override
+    public List<ExpertServiceDay> getExpertServiceDays(int expertId) {
+        Integer preDay = dao.getPreDay(expertId);
+        if (preDay == null){
+            preDay = 2;
+        }
+        return dao.getExpertServiceDays(expertId,preDay);
+    }
+
+    @Override
+    public List<ExpertServiceTime> getExpertServiceTimes(int dayId) {
+        return dao.getExpertServiceTimes(dayId);
+    }
 }
