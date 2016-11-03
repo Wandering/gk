@@ -9,11 +9,17 @@ import java.util.List;
 public class ServicePojo implements Serializable {
 
     private String expertId;
-    private String serviceStyleId;
-    private String serviceStyleName;
+    private String expertName;
     private String serviceTypeId;
     private String serviceTypeName;
-    private String servicePrice;
+
+    public String getExpertName() {
+        return expertName;
+    }
+
+    public void setExpertName(String expertName) {
+        this.expertName = expertName;
+    }
 
     public String getExpertId() {
         return expertId;
@@ -21,22 +27,6 @@ public class ServicePojo implements Serializable {
 
     public void setExpertId(String expertId) {
         this.expertId = expertId;
-    }
-
-    public String getServiceStyleId() {
-        return serviceStyleId;
-    }
-
-    public void setServiceStyleId(String serviceStyleId) {
-        this.serviceStyleId = serviceStyleId;
-    }
-
-    public String getServiceStyleName() {
-        return serviceStyleName;
-    }
-
-    public void setServiceStyleName(String serviceStyleName) {
-        this.serviceStyleName = serviceStyleName;
     }
 
     public String getServiceTypeId() {
@@ -55,11 +45,4 @@ public class ServicePojo implements Serializable {
         this.serviceTypeName = serviceTypeName;
     }
 
-    public String getServicePrice() {
-        return servicePrice;
-    }
-
-    public void setServicePrice(String servicePrice) {
-        this.servicePrice = servicePrice;
-    }
 }
