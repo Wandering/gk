@@ -87,7 +87,7 @@ public class ProductController extends ZGKBaseController {
     }
 
     /**
-     * 获取商品详情
+     * 获取商品列表
      * @return
      */
     @RequestMapping(value = "findAllProduct", method = RequestMethod.GET)
@@ -103,4 +103,16 @@ public class ProductController extends ZGKBaseController {
         }
         return relations;
     }
+
+    /**
+     * 获取商品列表
+     * @return
+     */
+    @RequestMapping(value = "queryCardInfoByProductId", method = RequestMethod.GET)
+    @ResponseBody
+    public Object queryCardInfoByProductId(@RequestParam Integer productId,@RequestParam String userKey) {
+
+        return null;
+    }
+
 }

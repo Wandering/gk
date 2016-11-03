@@ -9,6 +9,7 @@ package cn.thinkjoy.gk.service;
 
 import cn.thinkjoy.gk.domain.Card;
 
+import java.util.List;
 import java.util.Map;
 
 public interface ICardExService{
@@ -18,5 +19,8 @@ public interface ICardExService{
     Card getVipCardInfo(Map<String, String> params);
 
     boolean bindUserExportService(Long userId, Card card);
+
+
+    List<Long> getCard(Long userId);
 
 }

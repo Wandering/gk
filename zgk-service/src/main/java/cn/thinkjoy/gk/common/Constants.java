@@ -45,4 +45,9 @@ public class Constants {
      *服务结束
      */
     public static final int EXPERT_ORDER_STATUS_Y3 = 1;
+
+    /**
+     * blank
+     */
+    public static final String EXPERT_ORDER_BLANK = " ";
 }

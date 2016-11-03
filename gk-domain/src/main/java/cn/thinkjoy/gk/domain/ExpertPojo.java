@@ -128,4 +128,5 @@ public class ExpertPojo {
         this.score = score;
         this.expertId = expertId;
     }
+    public ExpertPojo(){}
 }

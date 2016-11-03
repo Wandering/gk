@@ -8,12 +8,9 @@ package cn.thinkjoy.gk.service.information.service.ex.impl;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
-import cn.thinkjoy.gk.dao.information.ex.IAgentExDAO;
 import cn.thinkjoy.gk.dao.information.ex.IExpertOrderExDAO;
-import cn.thinkjoy.gk.domain.ExpertReservationOrderDetail;
-import cn.thinkjoy.gk.entity.information.dto.AgentDTO;
 import cn.thinkjoy.gk.pojo.ExpertReservationOrderDetailDTO;
-import cn.thinkjoy.gk.service.information.service.ex.IAgentExService;
+import cn.thinkjoy.gk.service.information.service.ex.IExpertOrderExService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -21,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 @Service("ExpertOrderExServiceImpl")
 @Scope("prototype")
-public class ExpertOrderExServiceImpl extends AbstractPageService<IBaseDAO<ExpertReservationOrderDetailDTO>, ExpertReservationOrderDetailDTO> implements IAgentExService<IBaseDAO<ExpertReservationOrderDetailDTO>,ExpertReservationOrderDetailDTO> {
+public class ExpertOrderExServiceImpl extends AbstractPageService<IBaseDAO<ExpertReservationOrderDetailDTO>, ExpertReservationOrderDetailDTO> implements IExpertOrderExService<IBaseDAO<ExpertReservationOrderDetailDTO>,ExpertReservationOrderDetailDTO> {
     @Autowired
     private IExpertOrderExDAO expertOrderExDAO;
 

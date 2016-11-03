@@ -41,7 +41,9 @@ selectList
         ord.score as score,
         ord.comments as comments,
         ord.create_date as createDate,
-        ord.service_count as serviceCount
+        ord.service_count as serviceCount,
+        config.config_value as serviceName,
+        info.expert_name as expertName
     </sql>
 
     <select id="findOne" parameterType="java.util.Map" resultType="ExpertReservationOrderDetailDTO">

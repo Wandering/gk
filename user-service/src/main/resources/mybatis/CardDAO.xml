@@ -926,5 +926,9 @@ selectList
             </if>
         </where>
     </select>
+
+    <select id="getCard" resultType="java.lang.Long">
+        SELECT ord.card_id FROM zgk_expert_reservation_order_detail ord where ord.user_id = #{userId} group by ord.card_id
+    </select>
 </mapper>
 

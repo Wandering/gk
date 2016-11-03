@@ -40,10 +40,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -64,12 +61,13 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/expert")
 public class ExpertController extends ZGKBaseController
 {
-    private final static  String formatString="yyyt-MM-dd HH:mm";
+    private final static  String formatString="yyyy-MM-dd HH:mm";
     //专家申请service
     @Autowired
     private IExpertApplyService expertApplyService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExpertController.class);
+
 
     @Autowired
     private IExpertService expertService;
@@ -82,7 +80,8 @@ public class ExpertController extends ZGKBaseController
     private IOrderStatementsService orderStatementService;
     @Autowired
     private ICardService cardService;
-
+    @Autowired
+    private ICardExService cardExService;
 
     @Autowired
     private ProvinceServiceImpl provinceServiceImp;
@@ -561,6 +560,14 @@ public class ExpertController extends ZGKBaseController
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
+        if (order.getServiceDay()==null || order.getServiceTime()==null){
+            throw new BizException("error","日期时间为必传项");
+        }
+        //设置预约时间
+        String time = order.getServiceDay()+Constants.EXPERT_ORDER_BLANK+order.getServiceTime();
+        String endTime = order.getServiceDay() +Constants.EXPERT_ORDER_BLANK+order.getServiceTime().split("-")[1];
+        expertReservationOrderDetail.setExpectTime(time);
+        expertReservationOrderDetail.setEndTime(endTime);
 
         //设置服务-1  解决潜在的会小于0的情况
         expertReservationOrderDetail.setServiceCount(count==0?0:count-1);
@@ -576,7 +583,7 @@ public class ExpertController extends ZGKBaseController
      * 预约状态 0,未预约  1,预约成功  2,服务中  3,结束
      * 预约时间 格式 2016-11-2 12:00-13:00
      * 视频方式 微信/QQ
-     * 已评价 1,已评价 2,未评价
+     * 评价 1,已评价 2,未评价
      */
     @RequestMapping(value = "queryExpertOrder")
     @ApiDesc(owner = "杨永平",value = "查询用户服列表")
@@ -585,24 +592,42 @@ public class ExpertController extends ZGKBaseController
         List<Map<String,Object>> resultList = new ArrayList<>();
         String userId = this.getAccoutId();
 
-        List<ExpertReservationOrderDetailDTO> expertReservationOrderDetailDTOs = expertOrderExService.findList("user_id",userId);
-        /**
-         * 判定,如果是空的不进行后续操作直接返回,为空的原因可能是因为该用户未购买该卡
-         */
-        if (expertReservationOrderDetailDTOs==null || expertReservationOrderDetailDTOs.size()==0){
-            return resultList;
-        }
-        //后续操作
-        handlerOrder(expertReservationOrderDetailDTOs);
-        Map<String,Object> serviceMap = new HashedMap();
 
-//        serviceMap.put("serviceName","");
-        serviceMap.put("serviceList",expertReservationOrderDetailDTOs);
-        resultList.add(serviceMap);
+        List<Long> cardIds = cardExService.getCard(Long.valueOf(userId));
+        if (cardIds!=null) {
+            for (Long ll : cardIds) {
+                Map<String,Object>  map = new HashedMap();
+                map.put("userId",userId);
+                map.put("cardId",ll);
+
+                //查询卡名称
+                String cardName = "卡名称";
+                List<ExpertReservationOrderDetailDTO> expertReservationOrderDetailDTOs = expertOrderExService.queryList(map,"id","asc");
+                /**
+                 * 判定,如果是空的不进行后续操作直接返回,为空的原因可能是因为该用户未购买该卡
+                 */
+                if (expertReservationOrderDetailDTOs==null || expertReservationOrderDetailDTOs.size()==0){
+                    return resultList;
+                }
+                //cardType
+
+                //后续操作
+                handlerOrder(expertReservationOrderDetailDTOs);
+                Map<String, Object> serviceMap = new HashedMap();
+                Map<String, Object> paramMap = new HashedMap();
+                paramMap.put("id",ll);
+                Card card = (Card) cardService.queryOne(paramMap);
+                //TODO 这里输出卡类型
+                serviceMap.put("serviceName", cardName);
+                serviceMap.put("serviceList", expertReservationOrderDetailDTOs);
+                resultList.add(serviceMap);
+            }
+        }
         //判定订单状态
         return resultList;
-
     }
+
+
     private void handlerOrder(List<ExpertReservationOrderDetailDTO> list){
         for (ExpertReservationOrderDetailDTO expertReservationOrderDetailDTO:list){
             handlerOrderStatus(expertReservationOrderDetailDTO);
@@ -610,7 +635,7 @@ public class ExpertController extends ZGKBaseController
     }
 
     /**
-     * 处理订单状态
+     * 处理订单状态 0未预约  1:预约成功  2:服务中 3:结束
      * @param expertReservationOrderDetailDTO
      * @return
      */
@@ -618,11 +643,14 @@ public class ExpertController extends ZGKBaseController
         if (expertReservationOrderDetailDTO==null){
             return;
         }
+        if (expertReservationOrderDetailDTO.getEndTime()==null){
+            return;
+        }
         String orderTime = expertReservationOrderDetailDTO.getExpectTime();
         String endTime = expertReservationOrderDetailDTO.getEndTime();
         orderTime = "2016-11-2 11:00-12:00";
-        String startTime = orderTime.split("-")[0];
-        DateFormat dateFormat = new SimpleDateFormat();
+        String startTime = orderTime.substring(0,orderTime.lastIndexOf("-"));
+        DateFormat dateFormat = new SimpleDateFormat(formatString);
         Long currTime = System.currentTimeMillis();
         Long lStartTime = 0L;
         try {
