@@ -44,6 +44,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 		String value = request.getParameter("token");
 		String reqType = request.getParameter("req");
+		String loginToken = request.getParameter("loginToken");
 		LOGGER.info("cookie:" + value);
 		String key = UserRedisConst.USER_KEY + value;
 
@@ -56,7 +57,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 
-		if (StringUtils.isEmpty(value) || !redisFlag) {
+		if (StringUtils.isEmpty(value)|| StringUtils.isEmpty(loginToken) || !redisFlag) {
 			if (reqType != null && reqType.equals("ajax")) {
 
 				/**************后期优化**************/
@@ -74,6 +75,29 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			} else
 				throw new BizException("1000004", "请先登录后再进行操作");
 
+		}
+		String loginKey = UserRedisConst.USER_LOGIN_KEY + value;
+		boolean flag = RedisUtil.getInstance().exists(loginKey);
+		if(flag)
+		{
+			String loginTokenRedis = (String) RedisUtil.getInstance().hGet(value, "PC");
+			if(!loginToken.equals(loginTokenRedis))
+			{
+				if (reqType != null && reqType.equals("ajax")) {
+
+					response.setCharacterEncoding("UTF-8");
+					try {
+						ServletOutputStream out = response.getOutputStream();
+						out.print("{\"rtnCode\":\"1000110\",\"msg\":\"PC登录人数超过限制,只能一个用户登录！\"}");
+						out.flush();
+						out.close();
+					} catch (IOException ex) {
+						throw new BizException("1000110", "PC登录人数超过限制,只能一个用户登录！");
+					}
+
+				} else
+					throw new BizException("1000110", "PC登录人数超过限制,只能一个用户登录！");
+			}
 		}
 		return true;
 	}
