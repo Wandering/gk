@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IExpertProductServiceExDAO">
+
+    <!--根据productId和地区获取当前省份的卡套餐详情-->
+    <select id="getCardServiceByProductId" resultType="java.util.Map" parameterType="java.util.Map">
+          SELECT
+          ser.serviceType,
+          ser.serviceId,
+          ser.serviceCount
+          <if test="isJoin==true">
+          ,ser.serviceIcon,
+          ser.serviceIntroduce
+          </if>
+          from zgk_expert_product_service  ser
+          where ser.areaId = #{areaId} and ser.productId = #{productId}
+    </select>
+
+</mapper>
+

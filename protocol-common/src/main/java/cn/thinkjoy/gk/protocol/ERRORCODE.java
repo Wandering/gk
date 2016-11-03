@@ -18,6 +18,7 @@ public enum ERRORCODE {
 	SCHOOL_NO_EXIST("0100011", "学校不存在"),
 	USER_NO_EXIST("0100012", "用户不存在"),
 	USER_EXPIRED("0100013", "用户信息已过期"),
+	USER_UN_LOGIN("0100014", "用户未登录"),
 
 	AUTHENTICATION_FAIL("0100020", "鉴权失败"),
 	ACCOUNT_BIND_ERROR("0100021", "账户绑定失败"),

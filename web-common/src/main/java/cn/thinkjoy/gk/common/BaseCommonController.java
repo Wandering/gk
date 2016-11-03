@@ -18,87 +18,106 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-public class BaseCommonController {
+public class BaseCommonController
+{
 
-	protected HttpServletRequest request;
-	protected HttpServletResponse response;
-	protected HttpSession session;
+    protected HttpServletRequest request;
 
-	@Autowired
-	private IProvinceService provinceService;
-	private Map<String, Long> areaMap = new HashMap<>();
+    protected HttpServletResponse response;
 
-	private Map<String, Long> getAreaMap()
-	{
-		if(areaMap.isEmpty())
-		{
-			initAreaInfo();
-		}
-		return areaMap;
-	}
+    protected HttpSession session;
 
+    @Autowired
+    private IProvinceService provinceService;
 
-	private void initAreaInfo()
-	{
-		List<Province> list =  provinceService.findAll();
-		for (Province province:list) {
-			areaMap.put(province.getCode(), Long.parseLong(String.valueOf(province.getId())));
-		}
-	}
+    private Map<String, Long> areaMap = new HashMap<>();
 
-	@ModelAttribute
-	public void setReqAndRes(HttpServletRequest request,
-							 HttpServletResponse response) {
-		this.request = request;
-		this.response = response;
-		this.session = request.getSession();
-	}
+    private Map<String, Long> getAreaMap()
+    {
+        if (areaMap.isEmpty())
+        {
+            initAreaInfo();
+        }
+        return areaMap;
+    }
 
-	/**
-	 * 获取用户ID
-	 * @return
+    private void initAreaInfo()
+    {
+        List<Province> list = provinceService.findAll();
+        for (Province province : list)
+        {
+            areaMap.put(province.getCode(), Long.parseLong(String.valueOf(province.getId())));
+        }
+    }
+
+    @ModelAttribute
+    public void setReqAndRes(HttpServletRequest request,
+        HttpServletResponse response)
+    {
+        this.request = request;
+        this.response = response;
+        this.session = request.getSession();
+    }
+
+    /**
+     * 获取用户ID
+     *
+     * @return
      */
 	public String getAccoutId(){
 		UserAccountPojo pojo = UserContext.getCurrentUser();
 		if(pojo == null){
-			ModelUtil.throwException(ERRORCODE.USER_EXPIRED);
+			ModelUtil.throwException(ERRORCODE.USER_UN_LOGIN);
 		}
 		return pojo.getId().toString();
 	}
 
-	/**
-	 * 获取用户信息
-	 * @return
+    /**
+     * 获取用户信息
+     *
+     * @return
      */
-	protected UserAccountPojo getUserAccountPojo() {
-		return UserContext.getCurrentUser();
-	}
+    protected UserAccountPojo getUserAccountPojo()
+    {
+        return UserContext.getCurrentUser();
+    }
 
-	protected void setUserAccountPojo(UserAccountPojo userAccountBean,String token) throws Exception {
-		if(null!=userAccountBean){
-			String key = UserRedisConst.USER_KEY + token;
-			try{
-				RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 4l, TimeUnit.HOURS);
-			}catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
-	}
+    protected void setUserAccountPojo(UserAccountPojo userAccountBean, String token)
+        throws Exception
+    {
+        if (null != userAccountBean)
+        {
+            String key = UserRedisConst.USER_KEY + token;
+            try
+            {
+                RedisUtil.getInstance().set(key, JSON.toJSONString(userAccountBean), 4l, TimeUnit.HOURS);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
 
-	/**
-	 * 获取省份ID
-	 * @return
-	 */
-	protected Long getAreaId(){
-		//默认浙江省
-		try{
-			return Long.valueOf(String.valueOf(getAreaMap().get(UserAreaContext.getCurrentUserArea())).toString());
-		}catch (Exception e){
-			return Long.valueOf(String.valueOf(getAreaMap().get("zj")).toString());
-		}
-	}
+    /**
+     * 获取省份ID
+     *
+     * @return
+     */
+    protected Long getAreaId()
+    {
+        //默认浙江省
+        try
+        {
+            return Long.valueOf(String.valueOf(getAreaMap().get(UserAreaContext.getCurrentUserArea())).toString());
+        }
+        catch (Exception e)
+        {
+            return Long.valueOf(String.valueOf(getAreaMap().get("zj")).toString());
+        }
+    }
 
 }

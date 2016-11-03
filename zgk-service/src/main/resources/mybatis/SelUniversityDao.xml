@@ -31,7 +31,9 @@
 
     <select id="selectEduLevelByUniversityId" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.EduLevelNumberPojo">
         select eduLevel,count(eduLevel) as number,dd.name as eduLevelName
-        from zgk_zj_3in7 zz
+        from (select majorType,batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId and tmp.majorType=zz.eduLevel
+        INNER join zgk_university uu on uu.id=tmp.universityId
         LEFT JOIN zgk_data_dict dd on dd.type='EDULEVEL' AND dd.dictId=zz.eduLevel
         where zz.universityId=#{universityId}
         GROUP BY zz.eduLevel

@@ -6,11 +6,13 @@ import cn.thinkjoy.gk.common.HttpClientUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.common.DESUtil;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.pojo.UserInfoPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.protocol.ModelUtil;
 import cn.thinkjoy.gk.service.IUserAccountExService;
+import cn.thinkjoy.gk.util.RedisUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +24,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 @Scope(SpringMVCConst.SCOPE)
@@ -116,6 +120,9 @@ public class LoginController extends ZGKBaseController {
 				}
 				String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), userInfoPojo.getAccount());
 				String encryptToken = DESUtil.encrypt(token, DESUtil.key);
+				String loginToken = UUID.randomUUID().toString();
+				String loginKey = UserRedisConst.USER_LOGIN_KEY + token;
+				RedisUtil.getInstance().hSet(loginKey, "pc", loginToken);
 				setUserAccountPojo(userAccountBean, encryptToken);
 				resultMap.put("token", encryptToken);
 				String gkxtToken = GkxtUtil.getLoginToken(userInfoPojo.getAccount(), userInfoPojo.getName());
@@ -125,6 +132,10 @@ public class LoginController extends ZGKBaseController {
 				userInfoPojo.setStatus(null);
 				resultMap.put("userInfo", userInfoPojo);
 				resultMap.put("gkxtToken", gkxtToken);
+				resultMap.put("loginToken", loginToken);
+				Cookie ck = new Cookie("loginToken", loginToken);
+				ck.setMaxAge(4*60*60);
+				response.addCookie(ck);
 				gkxtRegistUrl = String.format(gkxtRegistUrl, account, basePassword);
 				/**
 				 * 注册高考学堂
@@ -158,6 +169,7 @@ public class LoginController extends ZGKBaseController {
 		}finally{
 
 		}
+		response.addCookie(new Cookie("loginToken", UUID.randomUUID().toString()));
 		return resultMap;
 	}
 

@@ -16,6 +16,15 @@ public class ExpertInfoPojo  implements Serializable {
     private String casesNumber;
     private String info;
     private String service;
+    private String rate;
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
 
     public String getExpertId() {
         return expertId;
