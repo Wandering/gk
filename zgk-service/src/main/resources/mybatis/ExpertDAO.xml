@@ -576,6 +576,9 @@
         WHERE
             expert_id = #{expertId}
         AND service_day > date_sub(curdate(), INTERVAL #{preDay} DAY);
+        and is_available = 1
+        order by service_day asc
+        limit 5
     </select>
 
     <!-- 根据专家ID查询提前预约天数 -->
