@@ -586,5 +586,27 @@
         WHERE
             expert_day_id = #{dayId}
     </select>
+
+    <insert id="insertExpertAppraise" parameterType="java.util.Map">
+        insert into zgk_expert_appraise (
+          expert_id,
+          user_id,
+          user_name,
+          server_type,
+          rate,
+          user_comments,
+          is_checked,
+          create_date
+        ) values (
+          #{expertId},
+          #{userId},
+          #{userName},
+          #{serverType},
+          #{rate},
+          #{userComments},
+          #{isChecked},
+          #{createDate}
+        )
+    </insert>
 </mapper>
 

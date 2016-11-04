@@ -235,4 +235,9 @@ public class ExpertServiceImpl implements IExpertService
     public List<ExpertServiceTime> getExpertServiceTimes(int dayId) {
         return dao.getExpertServiceTimes(dayId);
     }
+
+    @Override
+    public void insertExpertAppraise(Map<String, Object> map) {
+        dao.insertExpertAppraise(map);
+    }
 }

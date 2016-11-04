@@ -85,4 +85,6 @@ public interface IExpertService
      * @return
      */
     List<ExpertServiceTime> getExpertServiceTimes(int dayId);
+
+    void insertExpertAppraise(Map<String,Object> map);
 }
