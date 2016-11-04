@@ -930,5 +930,19 @@ selectList
     <select id="getCard" resultType="java.lang.Long">
         SELECT ord.card_id FROM zgk_expert_reservation_order_detail ord where ord.user_id = #{userId} group by ord.card_id
     </select>
+
+    <select id="getProductService" resultType="java.util.Map">
+        SELECT serviceId,serviceType,serviceCount from zgk_expert_product_service where productId=#{productId} and areaId=#{areaId}
+    </select>
+
+    <insert id="initUserExpertService">
+        INSERT INTO
+        zgk_expert_reservation_order_detail
+        (card_id,service_item,user_id,create_date,service_count)
+        VALUES
+        <foreach collection="list" item="map" separator=",">
+            (#{map.cardId},#{map.serviceId},#{map.userId},#{map.createDate},#{map.serviceCount})
+        </foreach>
+    </insert>
 </mapper>
 

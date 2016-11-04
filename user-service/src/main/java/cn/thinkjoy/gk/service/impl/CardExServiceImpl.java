@@ -28,7 +28,6 @@ public class CardExServiceImpl implements ICardExService {
     private IUserVipDAO userVipDAO;
     @Autowired
     private ICardDAO cardDAO;
-
     @Override
     public boolean updateUserVip(Long cardId, Long userId,Long endDate, boolean gkxtActiveStatus) {
         boolean flag;
@@ -57,7 +56,29 @@ public class CardExServiceImpl implements ICardExService {
 
 
     @Override
-    public boolean bindUserExportService(Long userId, Card card) {
+    public boolean bindUserExportService(Long userId, Card card,Long areaId) {
+        //查询
+        //// TODO: 2016/11/3  3是写死的卡类型
+        Integer productId=card.getProductType();
+        if (productId>3){
+            /**
+             * 初始化用户服务
+             */
+            //取得卡类型对应的服务信息
+            List<Map<String,Object>> services = cardDAO.getProductService(productId,areaId);
+            //绑定服务,卡和用户信息
+            for(Map<String,Object> service:services){
+                service.put("userId",userId);
+                service.put("cardId",card.getId());
+                //置状态默认状态为未预约
+                service.put("status",0);
+                //初始化时间
+                service.put("createDate",System.currentTimeMillis());
+            }
+            return cardDAO.initUserExpertService(services);
+
+        }
+        //卡号信息
         return false;
     }
 
