@@ -703,25 +703,46 @@ public class ExpertController extends ZGKBaseController
         }
         Integer status=null;
         try {
-            if (lStartTime!=0L && currTime-lStartTime<0) {
-                //预约成功
-                status=Constants.EXPERT_ORDER_STATUS_Y1;
+            if (Constants.EXPERT_ORDER_STATUS_Y4==expertReservationOrderDetailDTO.getStatus()) {
+                if (lStartTime != 0L && currTime - lStartTime < 0) {
+                    //预约成功
+                    status = Constants.EXPERT_ORDER_STATUS_Y1;
+                }
+                if (lStartTime != 0L && currTime - lStartTime > 0) {
+                    //服务中
+                    status = Constants.EXPERT_ORDER_STATUS_Y2;
+                }
+                if (lEndTime != 0L && currTime - lEndTime > 0) {
+                    //结束
+                    status = Constants.EXPERT_ORDER_STATUS_Y3;
+                }
+                Map<String, Object> map = new HashedMap();
+                map.put("id", expertReservationOrderDetailDTO.getId());
+                map.put("status", status);
+                expertOrderDetailService.updateMap(map);
             }
-            if (lStartTime!=0L && currTime-lStartTime>0) {
-                //服务中
-                status=Constants.EXPERT_ORDER_STATUS_Y2;
-            }
-            if (lEndTime!=0L && currTime-lEndTime>0) {
-                //结束
-                status=Constants.EXPERT_ORDER_STATUS_Y3;
-            }
-            Map<String,Object> map = new HashedMap();
-            map.put("id",expertReservationOrderDetailDTO.getId());
-            map.put("status",status);
-            expertOrderDetailService.updateMap(map);
         }catch (Exception e){
             return;
         }
         expertReservationOrderDetailDTO.setStatus(status);
+    }
+
+    /**
+     *
+     * @return
+     * 返回字段  服务内容 剩余服务次数 预约状态 服务专家 预约时间 视频方式
+     * 预约状态 0,未预约  1,预约成功  2,服务中  3,结束
+     * 预约时间 格式 2016-11-2 12:00-13:00
+     * 视频方式 微信/QQ
+     * 评价 1,已评价 2,未评价
+     */
+    @RequestMapping(value = "updateExpertEvaluate")
+    @ApiDesc(owner = "杨永平",value = "查询用户服列表")
+    @ResponseBody
+    public void updateExpertEvaluate(@RequestParam Integer orderId){
+        Map<String, Object> map = new HashedMap();
+        map.put("status", Constants.EXPERT_ORDER_STATUS_Y4);
+        map.put("id", orderId);
+        expertOrderDetailService.updateMap(map);
     }
 }

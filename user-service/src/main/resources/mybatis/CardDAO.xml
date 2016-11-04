@@ -938,10 +938,10 @@ selectList
     <insert id="initUserExpertService">
         INSERT INTO
         zgk_expert_reservation_order_detail
-        (card_id,service_item,user_id,create_date,service_count)
+        (card_id,service_item,user_id,create_date,service_count,status)
         VALUES
         <foreach collection="list" item="map" separator=",">
-            (#{map.cardId},#{map.serviceId},#{map.userId},#{map.createDate},#{map.serviceCount})
+            (#{map.cardId},#{map.serviceId},#{map.userId},#{map.createDate},#{map.serviceCount},#{map.status})
         </foreach>
     </insert>
 </mapper>

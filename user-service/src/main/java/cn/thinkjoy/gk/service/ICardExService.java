@@ -20,6 +20,7 @@ public interface ICardExService{
 
     boolean bindUserExportService(Long userId, Card card,Long areaId);
 
+    Integer countUserServiceByUserId(Long userId);
 
     List<Long> getCard(Long userId);
 

@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.PostConstruct;
@@ -153,6 +154,38 @@ public class VipController extends ZGKBaseController implements Watched {
             throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
         }
         return  userAccountPojo;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @RequestMapping(value = "/hasExpertVip",method = RequestMethod.GET)
+    @ResponseBody
+    public Object hasExpertVip(@RequestParam(required = false)Integer expert_id) {
+
+        UserAccountPojo userAccountPojo=super.getUserAccountPojo();
+        if(null==userAccountPojo ||  null==userAccountPojo.getId()){
+            throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
+        }
+        Long userId = userAccountPojo.getId();
+
+        if(1==userAccountPojo.getVipStatus()){
+            throw new BizException(ERRORCODE.NO_VIP.getCode(), ERRORCODE.NO_VIP.getMessage());
+        }
+        //在特权表中查找该用户所有的特权
+
+        Integer count = cardExService.countUserServiceByUserId(userId);
+
+        //当为null时候
+        if(null==count){
+            throw new BizException(ERRORCODE.EXPERT_VIP_UN_EXIST.getCode(), ERRORCODE.EXPERT_VIP_UN_EXIST.getMessage());
+        }
+        //当为0的时候
+        if(0==count){
+            throw new BizException(ERRORCODE.EXPERT_VIP_ZERO.getCode(), ERRORCODE.EXPERT_VIP_ZERO.getMessage());
+        }
+        return  "true";
     }
 
     // 存放观察者
