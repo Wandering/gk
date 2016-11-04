@@ -615,7 +615,7 @@ public class ExpertController extends ZGKBaseController
                  * 判定,如果是空的不进行后续操作直接返回,为空的原因可能是因为该用户未购买该卡
                  */
                 if (expertReservationOrderDetailDTOs==null || expertReservationOrderDetailDTOs.size()==0){
-                    return resultList;
+                    continue;
                 }
                 //cardType
 

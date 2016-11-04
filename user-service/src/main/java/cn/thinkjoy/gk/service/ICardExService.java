@@ -18,7 +18,7 @@ public interface ICardExService{
 
     Card getVipCardInfo(Map<String, String> params);
 
-    boolean bindUserExportService(Long userId, Card card);
+    boolean bindUserExportService(Long userId, Card card,Long areaId);
 
 
     List<Long> getCard(Long userId);

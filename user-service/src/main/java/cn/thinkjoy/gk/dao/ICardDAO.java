@@ -18,4 +18,8 @@ public interface ICardDAO extends IBaseDAO<Card>{
 
 
     List<Long> getCard(Long userId);
+
+    List<Map<String,Object>> getProductService(Integer productId,Long areaId);
+
+    boolean initUserExpertService(List<Map<String,Object>> list);
 }
