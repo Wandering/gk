@@ -720,6 +720,8 @@ public class ExpertController extends ZGKBaseController
                 map.put("id", expertReservationOrderDetailDTO.getId());
                 map.put("status", status);
                 expertOrderDetailService.updateMap(map);
+            }else {
+                status=Constants.EXPERT_ORDER_STATUS_Y4;
             }
         }catch (Exception e){
             return;
