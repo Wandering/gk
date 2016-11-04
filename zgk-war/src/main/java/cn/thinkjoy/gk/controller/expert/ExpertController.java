@@ -592,7 +592,7 @@ public class ExpertController extends ZGKBaseController
         }
         //设置预约时间
         String time = order.getServiceDay()+Constants.EXPERT_ORDER_BLANK+order.getServiceTime();
-        String endTime = order.getServiceDay() +Constants.EXPERT_ORDER_BLANK+order.getServiceTime().split("-")[1];
+        String endTime = order.getServiceDay() +Constants.EXPERT_ORDER_BLANK+order.getServiceTime().split("~")[1];
         expertReservationOrderDetail.setExpectTime(time);
         expertReservationOrderDetail.setEndTime(endTime);
 
@@ -686,8 +686,7 @@ public class ExpertController extends ZGKBaseController
         }
         String orderTime = expertReservationOrderDetailDTO.getExpectTime();
         String endTime = expertReservationOrderDetailDTO.getEndTime();
-        orderTime = "2016-11-2 11:00-12:00";
-        String startTime = orderTime.substring(0,orderTime.lastIndexOf("-"));
+        String startTime = orderTime.substring(0,orderTime.lastIndexOf("~"));
         DateFormat dateFormat = new SimpleDateFormat(formatString);
         Long currTime = System.currentTimeMillis();
         Long lStartTime = 0L;
@@ -716,7 +715,10 @@ public class ExpertController extends ZGKBaseController
                 //结束
                 status=Constants.EXPERT_ORDER_STATUS_Y3;
             }
-
+            Map<String,Object> map = new HashedMap();
+            map.put("id",expertReservationOrderDetailDTO.getId());
+            map.put("status",status);
+            expertOrderDetailService.updateMap(map);
         }catch (Exception e){
             return;
         }

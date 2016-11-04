@@ -8,6 +8,7 @@ package cn.thinkjoy.gk.dao;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.gk.domain.Card;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ public interface ICardDAO extends IBaseDAO<Card>{
 
     List<Long> getCard(Long userId);
 
-    List<Map<String,Object>> getProductService(Integer productId,Long areaId);
+    List<Map<String,Object>> getProductService(@Param("productId") Integer productId,@Param("areaId") Long areaId);
 
     boolean initUserExpertService(List<Map<String,Object>> list);
 }

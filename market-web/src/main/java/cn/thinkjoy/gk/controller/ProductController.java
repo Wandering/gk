@@ -142,7 +142,7 @@ public class ProductController extends ZGKBaseController {
 
         List<Map<String,Object>> cardInfos = expertProductServiceExService.getCardServiceByProductId(map);
         resultMap.put("cardServiceInfo",cardInfos);
-        if (more!=null) {
+        if (more==null) {
             resultMap.put("cardInfo", departmentProductRelationPojo);
         }
         return resultMap;

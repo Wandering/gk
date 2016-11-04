@@ -941,7 +941,7 @@ selectList
         (card_id,service_item,user_id,create_date,service_count)
         VALUES
         <foreach collection="list" item="map" separator=",">
-            (#{map.cardId},#{map.serviceId},#{map.userId},#{createDate},#{serviceCount})
+            (#{map.cardId},#{map.serviceId},#{map.userId},#{map.createDate},#{map.serviceCount})
         </foreach>
     </insert>
 </mapper>

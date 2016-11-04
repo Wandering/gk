@@ -60,7 +60,7 @@ public class CardExServiceImpl implements ICardExService {
         //查询
         //// TODO: 2016/11/3  3是写死的卡类型
         Integer productId=card.getProductType();
-        if (card.getProductType()>3){
+        if (productId>3){
             /**
              * 初始化用户服务
              */
