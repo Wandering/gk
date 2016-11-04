@@ -24,8 +24,8 @@
 
     <select id="selectSchoolAndMajorNumberBySubjects" resultType="cn.thinkjoy.gk.pojo.NumberPojo" parameterType="java.util.Map">
         select count(DISTINCT universityName) as schoolNumber,count(*) as majorNumber
-        from (select batch,universityId,majorCode from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
-        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+        from (select majorType,batch,universityId,majorCode from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId and tmp.majorType=zz.eduLevel
         where zz.selectSubject like CONCAT('%', #{subject1} , '%')
         or zz.selectSubject like CONCAT('%', #{subject2} , '%')
         or zz.selectSubject like CONCAT('%', #{subject3} , '%')
@@ -36,15 +36,15 @@
         select tmp.batch as batch,count(DISTINCT zz.id) as majorNumber,
             count(DISTINCT zz.id)/(
                 select count(*) as majorNumber
-                from (select batch,universityId,majorCode from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
-                INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+                from (select majorType,batch,universityId,majorCode from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+                INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId and tmp.majorType=zz.eduLevel
                 where zz.selectSubject like CONCAT('%', #{subject1} , '%')
                 or zz.selectSubject like CONCAT('%', #{subject2} , '%')
                 or zz.selectSubject like CONCAT('%', #{subject3} , '%')
                 or zz.selectCount=0
             ) as percent
-        from (select batch,universityId,majorCode from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
-        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+        from (select majorType,batch,universityId,majorCode from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId and tmp.majorType=zz.eduLevel
         where zz.selectSubject like CONCAT('%', #{subject1} , '%')
         or zz.selectSubject like CONCAT('%', #{subject2} , '%')
         or zz.selectSubject like CONCAT('%', #{subject3} , '%')
