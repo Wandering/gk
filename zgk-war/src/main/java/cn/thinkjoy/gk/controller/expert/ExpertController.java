@@ -703,7 +703,7 @@ public class ExpertController extends ZGKBaseController
         }
         Integer status=null;
         try {
-            if (Constants.EXPERT_ORDER_STATUS_Y4==expertReservationOrderDetailDTO.getStatus()) {
+            if (Constants.EXPERT_ORDER_STATUS_Y4!=expertReservationOrderDetailDTO.getStatus()) {
                 if (lStartTime != 0L && currTime - lStartTime < 0) {
                     //预约成功
                     status = Constants.EXPERT_ORDER_STATUS_Y1;

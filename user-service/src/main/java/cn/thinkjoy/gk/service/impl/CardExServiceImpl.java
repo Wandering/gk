@@ -99,5 +99,19 @@ public class CardExServiceImpl implements ICardExService {
         return cardDAO.getCard(userId);
     }
 
+    @Override
+    public List<Integer> getServiceByExpertId(Integer expertId) {
 
+        return cardDAO.getServiceByExpertId(expertId);
+    }
+
+    @Override
+    public List<Integer> getServiceByUserId(Long userId) {
+        return cardDAO.getServiceByUserId(userId);
+    }
+
+    @Override
+    public Integer getServiceByUserIdAndExpertId(Long userId, Integer expertId) {
+        return cardDAO.getServiceByUserIdAndExpertId(userId,expertId);
+    }
 }

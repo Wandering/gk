@@ -23,4 +23,10 @@ public interface ICardDAO extends IBaseDAO<Card>{
     List<Map<String,Object>> getProductService(@Param("productId") Integer productId,@Param("areaId") Long areaId);
 
     boolean initUserExpertService(List<Map<String,Object>> list);
+
+    List<Integer> getServiceByExpertId(Integer expertId);
+
+    List<Integer> getServiceByUserId(Long userId);
+
+    Integer getServiceByUserIdAndExpertId(@Param("userId") Long userId,@Param("expertId")Integer expertId);
 }

@@ -39,6 +39,8 @@ public class VipController extends ZGKBaseController implements Watched {
     @Autowired
     private ICardExService cardExService;
 
+
+
     //高考学堂注册接口
     private String gkxtActiveUrl = "http://xuetang.zhigaokao.cn/userapi/tovip?mobile=%s&duration=12&unit=month&levelId=2";
 
@@ -162,15 +164,49 @@ public class VipController extends ZGKBaseController implements Watched {
      */
     @RequestMapping(value = "/hasExpertVip",method = RequestMethod.GET)
     @ResponseBody
-    public Object hasExpertVip(@RequestParam(required = false)Integer expert_id) {
+    public Object hasExpertVip() {
+        return  hasExpertPrem();
+    }
 
+    /**
+     *
+     * @return
+     */
+    @RequestMapping(value = "/hasExpertVipByExpert",method = RequestMethod.GET)
+    @ResponseBody
+    public Object hasExpertVip(@RequestParam Integer expertId) {
+        hasExpertPrem();
+        //获取专家所有服务类型
+        List<Integer> expertService = cardExService.getServiceByExpertId(expertId);
+        //获取用户所拥有的服务类型
+        //判断该用户是否具有该专家的服务
+        Long userId = getUserAccountPojo().getId();
+        List<Integer> userService =  cardExService.getServiceByUserId(userId);
+        //判断该用户是否已经预定该专家的服务
+        if (userService==null){
+            throw new BizException(ERRORCODE.NO_EXPERT_SERVICE.getCode(), ERRORCODE.NO_EXPERT_SERVICE.getMessage());
+        }
+        userService.retainAll(expertService);
+        if (userService.size()==0){
+            throw new BizException(ERRORCODE.NO_EXPERT_SERVICE.getCode(), ERRORCODE.NO_EXPERT_SERVICE.getMessage());
+        }else {
+            Integer count = cardExService.getServiceByUserIdAndExpertId(userId,expertId);
+            if (count>0){
+                throw new BizException(ERRORCODE.YES_EXPERT_SERVICE.getCode(), ERRORCODE.YES_EXPERT_SERVICE.getMessage());
+            }
+        }
+        return "true";
+    }
+
+
+    private Object hasExpertPrem(){
         UserAccountPojo userAccountPojo=super.getUserAccountPojo();
         if(null==userAccountPojo ||  null==userAccountPojo.getId()){
             throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
         }
         Long userId = userAccountPojo.getId();
 
-        if(1==userAccountPojo.getVipStatus()){
+        if(1!=userAccountPojo.getVipStatus()){
             throw new BizException(ERRORCODE.NO_VIP.getCode(), ERRORCODE.NO_VIP.getMessage());
         }
         //在特权表中查找该用户所有的特权
@@ -185,7 +221,7 @@ public class VipController extends ZGKBaseController implements Watched {
         if(0==count){
             throw new BizException(ERRORCODE.EXPERT_VIP_ZERO.getCode(), ERRORCODE.EXPERT_VIP_ZERO.getMessage());
         }
-        return  "true";
+        return "true";
     }
 
     // 存放观察者

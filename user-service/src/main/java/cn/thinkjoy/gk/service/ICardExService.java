@@ -24,4 +24,9 @@ public interface ICardExService{
 
     List<Long> getCard(Long userId);
 
+    List<Integer> getServiceByExpertId(Integer expertId);
+
+    List<Integer> getServiceByUserId(Long userId);
+
+    Integer getServiceByUserIdAndExpertId(Long userId,Integer expertId);
 }
