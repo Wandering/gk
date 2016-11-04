@@ -23,4 +23,6 @@ public interface IUserInfoExDAO {
     UserInfo getUserInfoById(long id);
 
     void updateUserAliUserId(UserInfo userInfo);
+
+    void updateUserQQUserId(UserInfo userInfo);
 }

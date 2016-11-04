@@ -225,7 +225,8 @@ public class ExpertServiceImpl implements IExpertService
     public List<ExpertServiceDay> getExpertServiceDays(int expertId) {
         Integer preDay = dao.getPreDay(expertId);
         if (preDay == null){
-            preDay = 2;
+            // 默认推后30天
+            preDay = 30;
         }
         return dao.getExpertServiceDays(expertId,preDay);
     }

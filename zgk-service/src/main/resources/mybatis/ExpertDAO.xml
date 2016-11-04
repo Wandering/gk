@@ -568,7 +568,7 @@
             zgk_expert_service_days
         WHERE
             expert_id = #{expertId}
-        AND service_day > date_sub(curdate(), INTERVAL #{preDay} DAY);
+        AND service_day > date_sub(curdate(), INTERVAL -#{preDay} DAY)
         and is_available = 1
         order by service_day asc
         limit 5
