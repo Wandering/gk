@@ -121,8 +121,8 @@ public class LoginController extends ZGKBaseController {
 				String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), userInfoPojo.getAccount());
 				String encryptToken = DESUtil.encrypt(token, DESUtil.key);
 				String loginToken = UUID.randomUUID().toString();
-				String loginKey = UserRedisConst.USER_LOGIN_KEY + token;
-				RedisUtil.getInstance().hSet(loginKey, "pc", loginToken);
+				String loginKey = UserRedisConst.USER_LOGIN_KEY + encryptToken;
+				RedisUtil.getInstance().hSet(loginKey, "PC", loginToken);
 				setUserAccountPojo(userAccountBean, encryptToken);
 				resultMap.put("token", encryptToken);
 				String gkxtToken = GkxtUtil.getLoginToken(userInfoPojo.getAccount(), userInfoPojo.getName());
@@ -133,9 +133,6 @@ public class LoginController extends ZGKBaseController {
 				resultMap.put("userInfo", userInfoPojo);
 				resultMap.put("gkxtToken", gkxtToken);
 				resultMap.put("loginToken", loginToken);
-				Cookie ck = new Cookie("loginToken", loginToken);
-				ck.setMaxAge(4*60*60);
-				response.addCookie(ck);
 				gkxtRegistUrl = String.format(gkxtRegistUrl, account, basePassword);
 				/**
 				 * 注册高考学堂
@@ -169,7 +166,6 @@ public class LoginController extends ZGKBaseController {
 		}finally{
 
 		}
-		response.addCookie(new Cookie("loginToken", UUID.randomUUID().toString()));
 		return resultMap;
 	}
 
