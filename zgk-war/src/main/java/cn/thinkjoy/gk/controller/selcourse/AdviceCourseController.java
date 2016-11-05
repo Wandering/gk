@@ -204,7 +204,7 @@ public class AdviceCourseController {
         }
         BizData4Page bizData4Page = new BizData4Page();
         //如果当前页大于最大页取最大页数对应的值
-        int start = page<total?(page - 1) * rows:records-mod;
+        int start = page<total?((page - 1)<0?0:(page - 1)) * rows:records-mod;
         //判断结束值如果大于数组长度,取当前位置到数组最大长度
         int end = ((page - 1) * rows+rows)<records?((page - 1) * rows+rows):records;
         bizData4Page.setRows(mainData.subList(start,end));
