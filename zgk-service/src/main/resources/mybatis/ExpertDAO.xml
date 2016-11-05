@@ -32,10 +32,9 @@
         from zgk_expert_info ei
         left join zgk_expert_service_relation esr on ei.id=esr.expert_id
         left join zgk_expert_config ec on ec.config_key=esr.service_type_id and ec.config_domain='serviceType'
-        left join zgk_expert_appraise ea on ea.expert_id=ei.id
+        left join zgk_expert_appraise ea on ea.expert_id=ei.id and ea.is_checked=1
         left join zgk_expert_cases ec2 on ec2.expert_id=ei.id
         where ei.is_checked=1
-        and ea.is_checked=1
         group by ei.id
         order by rate desc
         limit ${offset}, ${rows}
@@ -53,7 +52,7 @@
 
     <!-- 预约专家详情 -->
     <select id="selectExpertInfo" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ExpertInfoPojo">
-        select ei.expert_info as info,ei.id as expertId,ei.expert_name as expertName,GROUP_CONCAT(DISTINCT ec.config_value) service,AVG(ea.rate) as rate ,count(DISTINCT ec2.id) as casesNumber,expert_photo_url as photoUrl,ei.qualification as qualification,ei.best_expert as bestExpert
+        select ei.expert_intro as info,ei.id as expertId,ei.expert_name as expertName,GROUP_CONCAT(DISTINCT ec.config_value) service,AVG(ea.rate) as rate ,count(DISTINCT ec2.id) as casesNumber,expert_photo_url as photoUrl,ei.qualification as qualification,ei.best_expert as bestExpert
         from zgk_expert_info ei
         left join zgk_expert_service_relation esr on ei.id=esr.expert_id
         left join zgk_expert_config ec on ec.config_key=esr.service_type_id and ec.config_domain='serviceType'
@@ -158,7 +157,8 @@
         ea.is_checked as isChecked,
         ea.create_date as createDate,
         ei.expert_name as expertName,
-        ec.config_value as serverTypeName
+        ec.config_value as serverTypeName,
+        ea.rate as rate
         from zgk_expert_appraise ea
         left join zgk_expert_info ei on ei.id=ea.expert_id
         left join zgk_expert_config ec on ec.config_domain='serviceType' and ec.config_key=ea.server_type
