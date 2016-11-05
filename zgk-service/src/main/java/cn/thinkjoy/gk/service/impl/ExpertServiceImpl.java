@@ -186,7 +186,21 @@ public class ExpertServiceImpl implements IExpertService
 
     @Override
     public List<ServicePojo> selectServiceByExpertId(Map<String, Object> map) {
-        return dao.selectServiceByExpertId(map);
+        List<ServicePojo> servicePojoList=dao.selectServiceByExpertId(map);
+        if(map.containsKey("userId")) {
+            List<ServiceNumberPojo> serviceNumberPojoList=dao.selectServiceByUserId(map);
+            for(ServicePojo servicePojo:servicePojoList){
+                for(ServiceNumberPojo serviceNumberPojo:serviceNumberPojoList) {
+                    if (servicePojo.getServiceTypeId().equals(serviceNumberPojo.getServiceId())){
+                        if(serviceNumberPojo.getServiceNumber()>0){
+                            servicePojo.setStatus(true);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return servicePojoList;
     }
 
     @Override
@@ -239,5 +253,10 @@ public class ExpertServiceImpl implements IExpertService
     @Override
     public void insertExpertAppraise(Map<String, Object> map) {
         dao.insertExpertAppraise(map);
+    }
+
+    @Override
+    public List<ServiceNumberPojo> selectServiceByUserId(Map<String, Object> map) {
+        return dao.selectServiceByUserId(map);
     }
 }

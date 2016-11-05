@@ -116,4 +116,6 @@ public interface IExpertDAO
     );
 
     void insertExpertAppraise(Map<String, Object> map);
+
+    List<ServiceNumberPojo> selectServiceByUserId(Map<String,Object> map);
 }

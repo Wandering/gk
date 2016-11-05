@@ -87,4 +87,6 @@ public interface IExpertService
     List<ExpertServiceTime> getExpertServiceTimes(int dayId);
 
     void insertExpertAppraise(Map<String,Object> map);
+
+    List<ServiceNumberPojo> selectServiceByUserId(Map<String,Object> map);
 }
