@@ -40,12 +40,15 @@ public class Constants {
     /**
      *服务中
      */
-    public static final int EXPERT_ORDER_STATUS_Y2 = 1;
+    public static final int EXPERT_ORDER_STATUS_Y2 = 2;
     /**
      *服务结束
      */
-    public static final int EXPERT_ORDER_STATUS_Y3 = 1;
-
+    public static final int EXPERT_ORDER_STATUS_Y3 = 3;
+    /**
+     *服务结束+已评价
+     */
+    public static final int EXPERT_ORDER_STATUS_Y4 = 4;
     /**
      * blank
      */

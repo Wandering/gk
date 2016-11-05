@@ -938,11 +938,22 @@ selectList
     <insert id="initUserExpertService">
         INSERT INTO
         zgk_expert_reservation_order_detail
-        (card_id,service_item,user_id,create_date,service_count)
+        (card_id,service_item,user_id,create_date,service_count,status)
         VALUES
         <foreach collection="list" item="map" separator=",">
-            (#{map.cardId},#{map.serviceId},#{map.userId},#{map.createDate},#{map.serviceCount})
+            (#{map.cardId},#{map.serviceId},#{map.userId},#{map.createDate},#{map.serviceCount},#{map.status})
         </foreach>
     </insert>
+
+    <select id="getServiceByExpertId" resultType="java.lang.Integer">
+        SELECT service_type_id from zgk_expert_service_relation where expert_id = #{expertId}
+    </select>
+    <select id="getServiceByUserId" resultType="java.lang.Integer">
+        SELECT service_item from zgk_expert_reservation_order_detail where user_id = #{userId} and service_count!=0 GROUP BY service_item
+    </select>
+    <!--根据专家和用户-->
+    <select id="getServiceByUserIdAndExpertId" resultType="java.lang.Integer">
+        SELECT COUNT(*) from zgk_expert_reservation_order_detail where user_id = #{userId} and expert_id = #{expertId} AND status in (1,2)
+    </select>
 </mapper>
 

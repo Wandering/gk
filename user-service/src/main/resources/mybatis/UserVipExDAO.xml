@@ -27,5 +27,13 @@
     <select id="getRegisteUserCount" resultType="Integer">
         select count(1) from zgk_user_info
     </select>
+
+
+    <!-- 获取用户注册总数 -->
+    <select id="countUserServiceByUserId" resultType="Integer">
+        select sum(service_count) from zgk_expert_reservation_order_detail where user_id = #{userId}
+    </select>
+
+
 </mapper>
 

@@ -8,6 +8,7 @@ package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.gk.dao.ICardDAO;
 import cn.thinkjoy.gk.dao.IUserVipDAO;
+import cn.thinkjoy.gk.dao.ex.IUserVipExDAO;
 import cn.thinkjoy.gk.domain.Card;
 import cn.thinkjoy.gk.domain.UserVip;
 import cn.thinkjoy.gk.service.ICardExService;
@@ -26,6 +27,8 @@ public class CardExServiceImpl implements ICardExService {
 
     @Autowired
     private IUserVipDAO userVipDAO;
+    @Autowired
+    private IUserVipExDAO userVipExDAO;
     @Autowired
     private ICardDAO cardDAO;
     @Override
@@ -82,10 +85,33 @@ public class CardExServiceImpl implements ICardExService {
         return false;
     }
 
+    /***
+     * 统计当前用户信息
+     * @return
+     */
+    @Override
+    public Integer countUserServiceByUserId(Long userId) {
+        return userVipExDAO.countUserServiceByUserId(userId);
+    }
+
     @Override
     public List<Long> getCard(Long userId) {
         return cardDAO.getCard(userId);
     }
 
+    @Override
+    public List<Integer> getServiceByExpertId(Integer expertId) {
 
+        return cardDAO.getServiceByExpertId(expertId);
+    }
+
+    @Override
+    public List<Integer> getServiceByUserId(Long userId) {
+        return cardDAO.getServiceByUserId(userId);
+    }
+
+    @Override
+    public Integer getServiceByUserIdAndExpertId(Long userId, Integer expertId) {
+        return cardDAO.getServiceByUserIdAndExpertId(userId,expertId);
+    }
 }

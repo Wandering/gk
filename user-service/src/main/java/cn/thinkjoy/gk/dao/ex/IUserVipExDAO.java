@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface IUserVipExDAO extends IBaseDAO<UserVip>{
-	
+
     List<Map<String, String>> findVipInfoListByArea(Map<String, String> paramMap);
 
     /**
@@ -22,4 +22,6 @@ public interface IUserVipExDAO extends IBaseDAO<UserVip>{
      * @return
      */
     Integer getRegisteUserCount();
+
+    Integer countUserServiceByUserId(Long userId);
 }

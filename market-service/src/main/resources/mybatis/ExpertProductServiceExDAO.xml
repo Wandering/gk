@@ -8,13 +8,21 @@
           SELECT
           ser.serviceType,
           ser.serviceId,
-          ser.serviceCount
+          ser.serviceCount,
+          ser.serviceTimes,
+          ser.serviceFrequency
           <if test="isJoin==true">
           ,ser.serviceIcon,
           ser.serviceIntroduce
           </if>
           from zgk_expert_product_service  ser
           where ser.areaId = #{areaId} and ser.productId = #{productId}
+        <if test="isJoin==true">
+            ser.status&lt;=2
+        </if>
+        <if test="isJoin==false">
+            ser.status>=2
+        </if>
     </select>
 
 </mapper>
