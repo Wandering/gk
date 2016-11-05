@@ -18,10 +18,10 @@
           from zgk_expert_product_service  ser
           where ser.areaId = #{areaId} and ser.productId = #{productId}
         <if test="isJoin==true">
-            ser.status&lt;=2
+            and ser.status&lt;=2
         </if>
         <if test="isJoin==false">
-            ser.status>=2
+            and ser.status>=2
         </if>
     </select>
 
