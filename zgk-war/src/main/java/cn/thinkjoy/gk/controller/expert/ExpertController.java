@@ -612,7 +612,7 @@ public class ExpertController extends ZGKBaseController
         }
         //获取预约时间
         String serviceDay = order.getServiceDay();
-        String serviceTime = order.getServiceDay();
+        String serviceTime = order.getServiceTime();
         //根据专家和专家时间获取这条数据信息
         Map<String,Object> serviceDayMap = new HashedMap();
         serviceDayMap.put("expertId",order.getExpertId());
