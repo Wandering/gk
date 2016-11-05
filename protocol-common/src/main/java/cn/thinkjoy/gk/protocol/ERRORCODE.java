@@ -63,6 +63,7 @@ public enum ERRORCODE {
 	EXPERT_VIP_ZERO("0100003","该用户具有该服务次数已经用完"),
 	NO_EXPERT_SERVICE("0100004","该用户不具备该专家服务的权限"),
 	YES_EXPERT_SERVICE("0100005","该用户已经预约该专家"),
+	EXPERT_SERVICE_TIME_N("0100006","专家服务时间不可用"),
 	VIP_CARD_NOT_INVALID("0900002","信息输入错误，请仔细核对信息!"),
 	VIP_CARD_USED("0900003", "该卡已激活，请输入新的卡号!"),
 	VIP_UPGRADE_FAIL("0900004", "升级失败，请联系客服查询详细信息!"),

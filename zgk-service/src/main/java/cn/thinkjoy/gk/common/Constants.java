@@ -53,4 +53,13 @@ public class Constants {
      * blank
      */
     public static final String EXPERT_ORDER_BLANK = " ";
+
+    /**
+     *时间不可用
+     */
+    public static final int EXPERT_TIME_N = 2;
+    /**
+     *时间可用
+     */
+    public static final int EXPERT_TIME_Y= 1;
 }

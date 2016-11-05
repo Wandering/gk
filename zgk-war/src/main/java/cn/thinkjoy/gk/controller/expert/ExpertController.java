@@ -86,7 +86,10 @@ public class ExpertController extends ZGKBaseController
     private ICardService cardService;
     @Autowired
     private ICardExService cardExService;
-
+    @Autowired
+    private IExpertServiceDaysService expertServiceDaysService;
+    @Autowired
+    private IExpertServiceTimesService expertServiceTimesService;
     @Autowired
     private ProvinceServiceImpl provinceServiceImp;
     //订单过期时间间隔2小时
@@ -590,14 +593,41 @@ public class ExpertController extends ZGKBaseController
         if (order.getServiceDay()==null || order.getServiceTime()==null){
             throw new BizException("error","日期时间为必传项");
         }
+        //获取预约时间
+        String serviceDay = order.getServiceDay();
+        String serviceTime = order.getServiceDay();
+        //根据专家和专家时间获取这条数据信息
+        Map<String,Object> serviceDayMap = new HashedMap();
+        serviceDayMap.put("expertId",order.getExpertId());
+        serviceDayMap.put("serviceDay",serviceDay);
+        ExpertServiceDays expertServiceDays = (ExpertServiceDays)expertServiceDaysService.queryOne(serviceDayMap);
+        Map<String,Object> serviceTimeMap = new HashedMap();
+        serviceTimeMap.put("expertDayId",expertServiceDays.getId());
+        serviceTimeMap.put("timeSegment",serviceTime);
+        serviceTimeMap.put("isAvailable",Constants.EXPERT_TIME_Y);
+        ExpertServiceTimes expertServiceTimes = (ExpertServiceTimes)expertServiceTimesService.queryOne(serviceTimeMap);
+        if (expertServiceTimes==null){
+            throw new BizException(ERRORCODE.EXPERT_SERVICE_TIME_N.getCode(),ERRORCODE.EXPERT_SERVICE_TIME_N.getMessage());
+        }
         //设置预约时间
-        String time = order.getServiceDay()+Constants.EXPERT_ORDER_BLANK+order.getServiceTime();
-        String endTime = order.getServiceDay() +Constants.EXPERT_ORDER_BLANK+order.getServiceTime().split("~")[1];
+        String time = serviceDay+Constants.EXPERT_ORDER_BLANK+serviceTime;
+        String endTime = serviceDay +Constants.EXPERT_ORDER_BLANK+serviceTime.split("~")[1];
         expertReservationOrderDetail.setExpectTime(time);
         expertReservationOrderDetail.setEndTime(endTime);
-
         //设置服务-1  解决潜在的会小于0的情况
         expertReservationOrderDetail.setServiceCount(count==0?0:count-1);
+        //更新专家时间状态
+        expertServiceTimes.setIsAvailable(Constants.EXPERT_TIME_N+"");
+        expertServiceTimesService.update(expertServiceTimes);
+        serviceTimeMap = new HashedMap();
+        serviceTimeMap.put("expertDayId",expertServiceDays.getId());
+        serviceTimeMap.put("isAvailable",Constants.EXPERT_TIME_Y);
+        List<ExpertServiceTime> timeList = expertServiceTimesService.queryList(serviceTimeMap,"id","asc");
+        if (timeList==null || timeList.size()!=0){
+            //如果当前结果为空 那么僵对应的日期置为不可用
+            expertServiceDays.setIsAvailable(Constants.EXPERT_TIME_N+"");
+            expertServiceDaysService.update(expertServiceDays);
+        }
         return expertOrderDetailService.update(expertReservationOrderDetail)>0;
 
     }
