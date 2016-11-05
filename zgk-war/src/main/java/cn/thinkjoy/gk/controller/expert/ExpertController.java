@@ -618,6 +618,9 @@ public class ExpertController extends ZGKBaseController
         serviceDayMap.put("expertId",order.getExpertId());
         serviceDayMap.put("serviceDay",serviceDay);
         ExpertServiceDays expertServiceDays = (ExpertServiceDays)expertServiceDaysService.queryOne(serviceDayMap);
+        if (expertServiceDays==null){
+            throw new BizException(ERRORCODE.EXPERT_SERVICE_TIME_N.getCode(),ERRORCODE.EXPERT_SERVICE_TIME_N.getMessage());
+        }
         Map<String,Object> serviceTimeMap = new HashedMap();
         serviceTimeMap.put("expertDayId",expertServiceDays.getId());
         serviceTimeMap.put("timeSegment",serviceTime);
