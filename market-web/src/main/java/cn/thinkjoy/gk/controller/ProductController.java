@@ -141,6 +141,10 @@ public class ProductController extends ZGKBaseController {
         map.put("isJoin",isJoin);
 
         List<Map<String,Object>> cardInfos = expertProductServiceExService.getCardServiceByProductId(map);
+        if (cardInfos==null||cardInfos.size()==0){
+            map.put("areaId",0);
+            cardInfos = expertProductServiceExService.getCardServiceByProductId(map);
+        }
         resultMap.put("cardServiceInfo",cardInfos);
         if (more==null) {
             resultMap.put("cardInfo", departmentProductRelationPojo);

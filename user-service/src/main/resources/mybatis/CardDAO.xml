@@ -932,7 +932,7 @@ selectList
     </select>
 
     <select id="getProductService" resultType="java.util.Map">
-        SELECT serviceId,serviceType,serviceCount from zgk_expert_product_service where productId=#{productId} and areaId=#{areaId}
+        SELECT serviceId,serviceType,serviceCount from zgk_expert_product_service where productId=#{productId} and areaId=#{areaId} and serviceId is not NULL
     </select>
 
     <insert id="initUserExpertService">

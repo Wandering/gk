@@ -6,6 +6,7 @@
  */
 package cn.thinkjoy.gk.service.impl;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.dao.ICardDAO;
 import cn.thinkjoy.gk.dao.IUserVipDAO;
 import cn.thinkjoy.gk.dao.ex.IUserVipExDAO;
@@ -69,6 +70,10 @@ public class CardExServiceImpl implements ICardExService {
              */
             //取得卡类型对应的服务信息
             List<Map<String,Object>> services = cardDAO.getProductService(productId,areaId);
+            if (services==null){
+                services = cardDAO.getProductService(productId,0L);
+            }
+
             //绑定服务,卡和用户信息
             for(Map<String,Object> service:services){
                 service.put("userId",userId);
