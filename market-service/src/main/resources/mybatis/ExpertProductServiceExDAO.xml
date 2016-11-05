@@ -23,6 +23,7 @@
         <if test="isJoin==false">
             and ser.status>=2
         </if>
+        ORDER BY ser.id DESC
     </select>
 
 </mapper>
