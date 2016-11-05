@@ -571,13 +571,13 @@ public class ExpertController extends ZGKBaseController
         //判定该用户是否含有该服务
         if (expertReservationOrderDetail==null){
             //如果是null表示用户不具备该服务,服务在用户升级vip时候注入
-            throw new BizException("error","用户不具备该服务!");
+            throw new BizException(ERRORCODE.EXPERT_VIP_UN_EXIST.getCode(),ERRORCODE.EXPERT_VIP_UN_EXIST.getMessage());
         }
         Integer count = expertReservationOrderDetail.getServiceCount();
 
         if (count==0){
             //用户不具备该服务次数
-            throw new BizException("error","该服务次数为0");
+            throw new BizException(ERRORCODE.EXPERT_VIP_ZERO.getCode(),ERRORCODE.EXPERT_VIP_ZERO.getMessage());
         }
         try {
             //复制order属性到专家订单bean中

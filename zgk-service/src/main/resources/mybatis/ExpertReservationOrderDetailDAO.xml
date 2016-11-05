@@ -710,6 +710,7 @@ selectList
         <include refid="Base_Column_List" />
         FROM zgk_expert_reservation_order_detail
         <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND service_count !=0
             <if test="condition.id!=null">
                 AND id = #{condition.id}
             </if>
