@@ -25,7 +25,7 @@
     <select id="selectSchoolAndMajorNumberBySubjects" resultType="cn.thinkjoy.gk.pojo.NumberPojo" parameterType="java.util.Map">
         select count(DISTINCT universityName) as schoolNumber,count(*) as majorNumber
         from (select majorType,batch,universityId,majorCode from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
-        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId and tmp.majorType=zz.eduLevel
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
         where zz.selectSubject like CONCAT('%', #{subject1} , '%')
         or zz.selectSubject like CONCAT('%', #{subject2} , '%')
         or zz.selectSubject like CONCAT('%', #{subject3} , '%')
@@ -37,14 +37,14 @@
             count(DISTINCT zz.id)/(
                 select count(*) as majorNumber
                 from (select majorType,batch,universityId,majorCode from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
-                INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId and tmp.majorType=zz.eduLevel
+                INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
                 where zz.selectSubject like CONCAT('%', #{subject1} , '%')
                 or zz.selectSubject like CONCAT('%', #{subject2} , '%')
                 or zz.selectSubject like CONCAT('%', #{subject3} , '%')
                 or zz.selectCount=0
             ) as percent
         from (select majorType,batch,universityId,majorCode from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
-        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId and tmp.majorType=zz.eduLevel
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
         where zz.selectSubject like CONCAT('%', #{subject1} , '%')
         or zz.selectSubject like CONCAT('%', #{subject2} , '%')
         or zz.selectSubject like CONCAT('%', #{subject3} , '%')
@@ -62,7 +62,7 @@
             ,0 as isFavorite
         </if>
         from (select majorType,batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
-        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId and tmp.majorType=zz.eduLevel
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
         INNER join zgk_university uu on uu.id=tmp.universityId
         <!--判断是否加入收藏表-->
         <if test="isLeftJoin==true">
@@ -97,7 +97,7 @@
     <select id="selectMajorListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
         select count(*)
         from (select majorType,batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
-        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId and tmp.majorType=zz.eduLevel
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
         INNER join zgk_university uu on uu.id=tmp.universityId
         where (zz.selectSubject like CONCAT('%', #{subject1} , '%')
             or zz.selectSubject like CONCAT('%', #{subject2} , '%')
