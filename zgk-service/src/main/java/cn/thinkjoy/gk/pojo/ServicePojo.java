@@ -12,6 +12,15 @@ public class ServicePojo implements Serializable {
     private String expertName;
     private String serviceTypeId;
     private String serviceTypeName;
+    private boolean status;
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
     public String getExpertName() {
         return expertName;

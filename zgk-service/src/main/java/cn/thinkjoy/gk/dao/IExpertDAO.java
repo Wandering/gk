@@ -82,6 +82,7 @@ public interface IExpertDAO
 
     void test1(Map<String,Object> map);
     void test2(Map<String,Object> map);
+    void test3(Map<String,Object> map);
 
     /**
      * 根据专家ID查询提前预约天数
@@ -116,4 +117,6 @@ public interface IExpertDAO
     );
 
     void insertExpertAppraise(Map<String, Object> map);
+
+    List<ServiceNumberPojo> selectServiceByUserId(Map<String,Object> map);
 }

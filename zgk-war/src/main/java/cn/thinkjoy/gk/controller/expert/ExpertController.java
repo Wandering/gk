@@ -458,10 +458,13 @@ public class ExpertController extends ZGKBaseController
      */
     @RequestMapping(value = "getServiceByExpertId")
     @ResponseBody
-    public Map<String,Object> getServiceByExpertId(@RequestParam("expertId")String expertId,@RequestParam(value = "areaId",required = false)String areaId){
+    public Map<String,Object> getServiceByExpertId(@RequestParam("expertId")String expertId,@RequestParam(value = "areaId",required = false)String areaId,@RequestParam(value = "userId",required = false)String userId){
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("expertId", expertId);
         paramMap.put("areaId", areaId);
+        if(StringUtils.isNotBlank(userId)) {
+            paramMap.put("userId", userId);
+        }
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("service", expertService.selectServiceByExpertId(paramMap));
         return resultMap;
@@ -505,41 +508,55 @@ public class ExpertController extends ZGKBaseController
     @RequestMapping(value = "test1")
     @ApiDesc(owner = "hzuo",value = "导入数据临时使用")
     @ResponseBody
-    public void test1(@RequestParam("expertName")String expertName,@RequestParam("specialityList")String specialityList){
-        String[] specialityString=specialityList.split("、");
-        List<Map<String,Object>> list=new ArrayList<>();
-        for(String speciality:specialityString){
-            Map<String,Object> specialityMap=new HashMap<>();
-            specialityMap.put("speciality",speciality);
-            list.add(specialityMap);
-        }
+    public void test1(@RequestParam("expertName")String expertName,
+                      @RequestParam("userName")String userName,
+                      @RequestParam("school")String school,
+                      @RequestParam("serviceType")String serviceType,
+                      @RequestParam("userComments")String userComments,
+                      @RequestParam(value = "userImgUrl",required = false)String userImgUrl){
         Map<String, Object> map = new HashMap<>();
         map.put("expertName", expertName);
-        map.put("list", list);
+        map.put("userName",userName);
+        map.put("school",school);
+        map.put("serviceType",serviceType);
+        map.put("userComments",userComments);
+        map.put("userImgUrl",userImgUrl);
         expertService.test1(map);
     }
 
     @RequestMapping(value = "test2")
     @ApiDesc(owner = "hzuo",value = "导入数据临时使用")
     @ResponseBody
-    public void test2(@RequestParam("expertName")String expertName,@RequestParam("provinceNameList")String provinceNameList,@RequestParam("serviceStyle")String serviceStyle,@RequestParam("serviceTypeList")String serviceTypeList){
-        String[] provinceNameString=provinceNameList.split("、");
-        for(String provinceName:provinceNameString) {
-            String[] specialityString = serviceTypeList.split("、");
-            List<Map<String, Object>> list = new ArrayList<>();
-            for (String speciality : specialityString) {
-                Map<String, Object> specialityMap = new HashMap<>();
-                specialityMap.put("serviceType", speciality.split(":")[0]);
-                specialityMap.put("servicePrice", speciality.split(":")[1]);
-                list.add(specialityMap);
-            }
+    public void test2(@RequestParam("expertName")String expertName,
+                      @RequestParam("userName")String userName,
+                      @RequestParam("serviceType")String serviceType,
+                      @RequestParam("rate")String rate,
+                      @RequestParam("userComments")String userComments){
             Map<String, Object> map = new HashMap<>();
             map.put("expertName", expertName);
-            map.put("provinceName", provinceName);
-            map.put("serviceStyle", serviceStyle);
-            map.put("list", list);
+            map.put("expertName",expertName);
+            map.put("userName",userName);
+            map.put("serviceType",serviceType);
+            map.put("rate",rate);
+            map.put("userComments",userComments);
             expertService.test2(map);
-        }
+    }
+
+    @RequestMapping(value = "test3")
+    @ApiDesc(owner = "hzuo",value = "导入数据临时使用")
+    @ResponseBody
+    public void test3(@RequestParam("expertName")String expertName,
+                                @RequestParam("userName")String userName,
+                                @RequestParam("userQuestion")String userQuestion,
+                                @RequestParam("userAnswer")String userAnswer
+                      ){
+            Map<String, Object> map = new HashMap<>();
+            map.put("expertName", expertName);
+        map.put("userName",userName);
+        map.put("userQuestion",userQuestion);
+        map.put("userAnswer",userAnswer);
+        map.put("create_date",System.currentTimeMillis());
+            expertService.test2(map);
     }
 
     @ApiDesc(value = "查询专家可服务日期列表",owner = "杨国荣")

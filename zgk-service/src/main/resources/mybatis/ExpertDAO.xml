@@ -35,6 +35,7 @@
         left join zgk_expert_appraise ea on ea.expert_id=ei.id
         left join zgk_expert_cases ec2 on ec2.expert_id=ei.id
         where ei.is_checked=1
+        and ea.is_checked=1
         group by ei.id
         order by rate desc
         limit ${offset}, ${rows}
@@ -52,7 +53,7 @@
 
     <!-- 预约专家详情 -->
     <select id="selectExpertInfo" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ExpertInfoPojo">
-        select ei.id as expertId,ei.expert_name as expertName,GROUP_CONCAT(DISTINCT ec.config_value) service,AVG(ea.rate) rate ,count(DISTINCT ec2.id) as casesNumber,expert_photo_url as photoUrl,ei.qualification as qualification,ei.best_expert as bestExpert
+        select ei.expert_info as info,ei.id as expertId,ei.expert_name as expertName,GROUP_CONCAT(DISTINCT ec.config_value) service,AVG(ea.rate) as rate ,count(DISTINCT ec2.id) as casesNumber,expert_photo_url as photoUrl,ei.qualification as qualification,ei.best_expert as bestExpert
         from zgk_expert_info ei
         left join zgk_expert_service_relation esr on ei.id=esr.expert_id
         left join zgk_expert_config ec on ec.config_key=esr.service_type_id and ec.config_domain='serviceType'
@@ -522,29 +523,41 @@
     </select>
 
     <insert id="test1" parameterType="java.util.Map">
-        insert into zgk_expert_speciality_relation
-        (expert_id,speciality_id)
+        insert into zgk_expert_cases
+        (expert_id,user_name,user_img_url,school,service_id,user_comments)
         VALUES
-        <foreach collection="list" item="item" index="index" separator=",">
-            ((select ei.id from zgk_expert_info ei where ei.expert_name=#{expertName})
-            ,(select ec.config_key from zgk_expert_config ec where ec.config_domain='speciality' and
-            ec.config_value=#{item.speciality})
-            )
-        </foreach>
+        (
+        (select ei.id from zgk_expert_info ei where ei.expert_name=#{expertName}),
+        #{userName},
+        #{userImgUrl},
+        #{school},
+        (select ec.config_key from zgk_expert_config ec where ec.config_value=#{serviceType}),
+        #{userComments}
+        )
     </insert>
     <insert id="test2" parameterType="java.util.Map">
-        insert into zgk_expert_service_relation
-        (expert_id,area_id,service_style_id,service_type_id,service_price)
-        values
-        <foreach collection="list" item="item" index="index" separator=",">
-            (
-            (select ei.id from zgk_expert_info ei where ei.expert_name = #{expertName}),
-            (select id from zgk_province p where p.name like CONCAT(#{provinceName} , '%')),
-            (select ec.config_key from zgk_expert_config ec where ec.config_domain='serviceStyle' and ec.config_value=#{serviceStyle}),
-            (select ec.config_key from zgk_expert_config ec where ec.config_domain='serviceType' and ec.config_value=#{item.serviceType}),
-            #{item.servicePrice}
-            )
-        </foreach>
+        insert into zgk_expert_appraise
+        (expert_id,user_name,server_type,rate,user_comments)
+        VALUES
+        (
+        (select ei.id from zgk_expert_info ei where ei.expert_name=#{expertName}),
+        #{userName},
+        (select ec.config_key from zgk_expert_config ec where evc.config_value=#{serviceType}),
+        #{rate},
+        #{userComments}
+        )
+    </insert>
+    <insert id="test3" parameterType="java.util.Map">
+        insert into zgk_expert_user_question
+        (expert_id,user_name,user_question,user_answer,create_date)
+        VALUES
+        (
+        (select ei.id from zgk_expert_info ei where ei.expert_name=#{expertName}),
+        #{userName},
+        #{userQuestion},
+        #{userAnswer},
+        #{create_date}
+        )
     </insert>
 
     <!-- 根据专家ID查询提前预约天数 -->
@@ -565,7 +578,7 @@
             service_day AS serviceDay,
             is_available AS isAvailable
         FROM
-            zgk_expert_service_days
+            zgk_expert_service_days?
         WHERE
             expert_id = #{expertId}
         AND service_day > date_sub(curdate(), INTERVAL -#{preDay} DAY)
@@ -608,5 +621,11 @@
           #{createDate}
         )
     </insert>
+
+    <select id="selectServiceByUserId" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ServiceNumberPojo">
+        select service_item as serviceId,sum(service_count) as serviceNumber from zgk_expert_reservation_order_detail
+        where user_id=#{userId}
+        GROUP BY service_item
+    </select>
 </mapper>
 
