@@ -63,38 +63,46 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/expert")
 public class ExpertController extends ZGKBaseController
 {
-    private final static  String formatString="yyyy-MM-dd HH:mm";
+    private final static String formatString = "yyyy-MM-dd HH:mm";
+
     //专家申请service
     @Autowired
     private IExpertApplyService expertApplyService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExpertController.class);
 
-
     @Autowired
     private DeparmentApiService deparmentApiService;
+
     @Autowired
     private IExpertService expertService;
 
     @Autowired
     private IExpertReservationOrderDetailService expertOrderDetailService;
+
     @Autowired
     private IExpertOrderExService expertOrderExService;
+
     @Autowired
     private IOrderStatementsService orderStatementService;
+
     @Autowired
     private ICardService cardService;
+
     @Autowired
     private ICardExService cardExService;
+
     @Autowired
     private IExpertServiceDaysService expertServiceDaysService;
+
     @Autowired
     private IExpertServiceTimesService expertServiceTimesService;
+
     @Autowired
     private ProvinceServiceImpl provinceServiceImp;
+
     //订单过期时间间隔2小时
     private final long expireDuration = 2 * 60 * 60 * 1000;
-
 
     /**
      * 申请做专家
@@ -153,9 +161,9 @@ public class ExpertController extends ZGKBaseController
 
     @RequestMapping(value = "getExpertList")
     @ResponseBody
-    public Map<String, Object> getExpertList(@RequestParam(value = "areaId",required = false)String areaId,
-                                             @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
-                                             @RequestParam(value = "rows", required = false, defaultValue = "10") String rows)
+    public Map<String, Object> getExpertList(@RequestParam(value = "areaId", required = false) String areaId,
+        @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
+        @RequestParam(value = "rows", required = false, defaultValue = "10") String rows)
     {
         Map<String, Object> map = new HashMap<>();
         map.put("areaId", areaId);
@@ -284,7 +292,7 @@ public class ExpertController extends ZGKBaseController
         paramMap.put("userId", userId);
         paramMap.put("more", more);
         List<Map<String, Object>> list = expertService.getExpertOrderList(paramMap);
-        for (Map<String, Object> map: list)
+        for (Map<String, Object> map : list)
         {
             String orderNo = map.get("orderNo") + "";
             ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
@@ -296,56 +304,59 @@ public class ExpertController extends ZGKBaseController
 
     @RequestMapping("checkExpert")
     @ResponseBody
-    public Map<String,Object> checkExpert(@RequestParam(value = "commonQuestionIdList")String commonQuestionIdList,
-                                          @RequestParam(value="userId")String userId,
-                                          @RequestParam(value="note",required = false)String note,
-                                          @RequestParam(value="offset",required = false,defaultValue = "0")String offset,
-                                          @RequestParam(value="rows",required = false,defaultValue = "2")String rows){
-        List<ExpertInfoPojo> expertInfoPojoList=expertService.checkExpert(commonQuestionIdList,offset,rows,userId,note);
-        Map<String,Object> resultMap=new HashMap<>();
-        resultMap.put("expertInfoPojoList",expertInfoPojoList);
+    public Map<String, Object> checkExpert(@RequestParam(value = "commonQuestionIdList") String commonQuestionIdList,
+        @RequestParam(value = "userId") String userId,
+        @RequestParam(value = "note", required = false) String note,
+        @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
+        @RequestParam(value = "rows", required = false, defaultValue = "2") String rows)
+    {
+        List<ExpertInfoPojo> expertInfoPojoList =
+            expertService.checkExpert(commonQuestionIdList, offset, rows, userId, note);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("expertInfoPojoList", expertInfoPojoList);
         return resultMap;
     }
 
-
     @RequestMapping("addUserQuestion")
     @ResponseBody
-    public Map<String,Object> addUserQuestion(@RequestParam(value = "expertId")String expertId,
-                                              @RequestParam(value = "userId")String userId,
-                                              @RequestParam(value = "userName")String userName,
-                                              @RequestParam(value = "userQuestion")String userQuestion){
-        Map<String,Object> map=new HashMap<>();
-        map.put("expertId",expertId);
-        map.put("userId",userId);
-        map.put("userName",userName);
-        map.put("userQuestion",userQuestion);
-        map.put("createDate",new Date());
+    public Map<String, Object> addUserQuestion(@RequestParam(value = "expertId") String expertId,
+        @RequestParam(value = "userId") String userId,
+        @RequestParam(value = "userName") String userName,
+        @RequestParam(value = "userQuestion") String userQuestion)
+    {
+        Map<String, Object> map = new HashMap<>();
+        map.put("expertId", expertId);
+        map.put("userId", userId);
+        map.put("userName", userName);
+        map.put("userQuestion", userQuestion);
+        map.put("createDate", new Date());
         expertService.insertUserQuestion(map);
-        Map<String,Object> resultMap=new HashMap<>();
-        resultMap.put("result","ok");
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("result", "ok");
         return resultMap;
     }
 
     @RequestMapping("addExpertAppraise")
     @ResponseBody
-    public Map<String,Object> addExpertAppraise(@RequestParam(value = "expertId")String expertId,
-                                              @RequestParam(value = "userId")String userId,
-                                              @RequestParam(value = "serverType")String serverType,
-                                              @RequestParam(value = "userName")String userName,
-                                              @RequestParam(value = "rate")String rate,
-                                              @RequestParam(value = "userComments")String userComments){
-        Map<String,Object> map=new HashMap<>();
-        map.put("expertId",expertId);
-        map.put("userId",userId);
-        map.put("userName",userName);
-        map.put("serverType",serverType);
-        map.put("rate",rate);
-        map.put("userComments",userComments);
-        map.put("isChecked",2);
-        map.put("createDate",System.currentTimeMillis());
+    public Map<String, Object> addExpertAppraise(@RequestParam(value = "expertId") String expertId,
+        @RequestParam(value = "userId") String userId,
+        @RequestParam(value = "serverType") String serverType,
+        @RequestParam(value = "userName") String userName,
+        @RequestParam(value = "rate") String rate,
+        @RequestParam(value = "userComments") String userComments)
+    {
+        Map<String, Object> map = new HashMap<>();
+        map.put("expertId", expertId);
+        map.put("userId", userId);
+        map.put("userName", userName);
+        map.put("serverType", serverType);
+        map.put("rate", rate);
+        map.put("userComments", userComments);
+        map.put("isChecked", 2);
+        map.put("createDate", System.currentTimeMillis());
         expertService.insertExpertAppraise(map);
-        Map<String,Object> resultMap=new HashMap<>();
-        resultMap.put("result","ok");
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("result", "ok");
         return resultMap;
     }
 
@@ -372,11 +383,12 @@ public class ExpertController extends ZGKBaseController
             throw new BizException("1000111", "orderNo参数错误！");
         }
         OrderRevaluation revaluation = expertService.findExpertOrderRevaluationByOrderNo(orderNo);
-        if(null == revaluation)
+        if (null == revaluation)
         {
-            orderRevaluation.setCreateDate(System.currentTimeMillis()+"");
+            orderRevaluation.setCreateDate(System.currentTimeMillis() + "");
             expertService.createExpertOrderRevaluation(orderRevaluation);
-        }else
+        }
+        else
         {
             expertService.updateExpertOrderRevaluation(orderRevaluation);
         }
@@ -390,7 +402,7 @@ public class ExpertController extends ZGKBaseController
      */
     @RequestMapping(value = "getExpertOrderRevaluation")
     @ResponseBody
-    public List<Map<String,Object>> getExpertOrderRevaluation(
+    public List<Map<String, Object>> getExpertOrderRevaluation(
         @RequestParam(value = "orderNo", required = false) String orderNo,
         @RequestParam(value = "expertId", required = false) String expertId)
     {
@@ -411,7 +423,7 @@ public class ExpertController extends ZGKBaseController
         @RequestParam(value = "orderNo", required = true) String orderNo)
     {
         ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
-        if(!order.getUserId().equals(getAccoutId()))
+        if (!order.getUserId().equals(getAccoutId()))
         {
             throw new BizException("1000111", "token或orderNo参数错误！");
         }
@@ -427,12 +439,12 @@ public class ExpertController extends ZGKBaseController
     {
         ExpertOrder order = expertService.findOrderByOrderNo(orderNo);
 
-        if(null == order)
+        if (null == order)
         {
             throw new BizException("1000111", "orderNo错误，未找到订单信息！");
         }
 
-        if(!order.getUserId().equals(getAccoutId()))
+        if (!order.getUserId().equals(getAccoutId()))
         {
             throw new BizException("1000111", "token或orderNo错误参数错误！");
         }
@@ -440,9 +452,10 @@ public class ExpertController extends ZGKBaseController
         return order;
     }
 
-    private void checkExpire(ExpertOrder order) {
+    private void checkExpire(ExpertOrder order)
+    {
         long createDate = order.getCreateDate();
-        if("0".equals(order.getOrderStatus()+"") && System.currentTimeMillis() -  createDate > expireDuration)
+        if ("0".equals(order.getOrderStatus() + "") && System.currentTimeMillis() - createDate > expireDuration)
         {
             //订单过期
             order.setOrderStatus("10");
@@ -452,17 +465,22 @@ public class ExpertController extends ZGKBaseController
 
     /**
      * 根据专家服务获取专家服务
+     *
      * @param expertId
      * @param areaId
      * @return
      */
     @RequestMapping(value = "getServiceByExpertId")
     @ResponseBody
-    public Map<String,Object> getServiceByExpertId(@RequestParam("expertId")String expertId,@RequestParam(value = "areaId",required = false)String areaId,@RequestParam(value = "userId",required = false)String userId){
+    public Map<String, Object> getServiceByExpertId(@RequestParam("expertId") String expertId,
+        @RequestParam(value = "areaId", required = false) String areaId,
+        @RequestParam(value = "userId", required = false) String userId)
+    {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("expertId", expertId);
         paramMap.put("areaId", areaId);
-        if(StringUtils.isNotBlank(userId)) {
+        if (StringUtils.isNotBlank(userId))
+        {
             paramMap.put("userId", userId);
         }
         Map<String, Object> resultMap = new HashMap<>();
@@ -472,14 +490,14 @@ public class ExpertController extends ZGKBaseController
 
     @RequestMapping(value = "getExpertServiceInfo")
     @ResponseBody
-    public List<Map<String,Object>> getExpertServiceInfo(
+    public List<Map<String, Object>> getExpertServiceInfo(
         @RequestParam(value = "provinceCode", required = true) String provinceCode,
         @RequestParam(value = "expertId", required = true) String expertId)
     {
         Province province = provinceServiceImp.findOne("code", provinceCode);
-        if(null == province)
+        if (null == province)
         {
-            throw new BizException("1100110","请输入正确的provinceCode!");
+            throw new BizException("1100110", "请输入正确的provinceCode!");
         }
         String areaId = province.getId() + "";
         Map<String, String> paramMap = new HashMap<>();
@@ -491,10 +509,11 @@ public class ExpertController extends ZGKBaseController
 
     @RequestMapping(value = "getFamousTeacher")
     @ResponseBody
-    public Map<String,Object> getFamousTeacher(@RequestParam(value = "paramName") String paramName,
-                                               @RequestParam(value = "paramValue") String paramValue,
-                                               @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
-                                               @RequestParam(value = "rows", required = false, defaultValue = "4") String rows){
+    public Map<String, Object> getFamousTeacher(@RequestParam(value = "paramName") String paramName,
+        @RequestParam(value = "paramValue") String paramValue,
+        @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
+        @RequestParam(value = "rows", required = false, defaultValue = "4") String rows)
+    {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("paramName", paramName);
         paramMap.put("paramValue", paramValue);
@@ -506,196 +525,220 @@ public class ExpertController extends ZGKBaseController
     }
 
     @RequestMapping(value = "test1")
-    @ApiDesc(owner = "hzuo",value = "导入数据临时使用")
+    @ApiDesc(owner = "hzuo", value = "导入数据临时使用")
     @ResponseBody
-    public void test1(@RequestParam("expertName")String expertName,
-                      @RequestParam("userName")String userName,
-                      @RequestParam("school")String school,
-                      @RequestParam("serviceType")String serviceType,
-                      @RequestParam("userComments")String userComments,
-                      @RequestParam(value = "userImgUrl",required = false)String userImgUrl){
+    public void test1(@RequestParam("expertName") String expertName,
+        @RequestParam("userName") String userName,
+        @RequestParam("school") String school,
+        @RequestParam("serviceType") String serviceType,
+        @RequestParam("userComments") String userComments,
+        @RequestParam(value = "userImgUrl", required = false) String userImgUrl)
+    {
         Map<String, Object> map = new HashMap<>();
         map.put("expertName", expertName);
-        map.put("userName",userName);
-        map.put("school",school);
-        map.put("serviceType",serviceType);
-        map.put("userComments",userComments);
-        map.put("userImgUrl",userImgUrl);
+        map.put("userName", userName);
+        map.put("school", school);
+        map.put("serviceType", serviceType);
+        map.put("userComments", userComments);
+        map.put("userImgUrl", userImgUrl);
         expertService.test1(map);
     }
 
     @RequestMapping(value = "test2")
-    @ApiDesc(owner = "hzuo",value = "导入数据临时使用")
+    @ApiDesc(owner = "hzuo", value = "导入数据临时使用")
     @ResponseBody
-    public void test2(@RequestParam("expertName")String expertName,
-                      @RequestParam("userName")String userName,
-                      @RequestParam("serviceType")String serviceType,
-                      @RequestParam("rate")String rate,
-                      @RequestParam("userComments")String userComments){
-            Map<String, Object> map = new HashMap<>();
-            map.put("expertName", expertName);
-            map.put("expertName",expertName);
-            map.put("userName",userName);
-            map.put("serviceType",serviceType);
-            map.put("rate",rate);
-            map.put("userComments",userComments);
-            expertService.test2(map);
+    public Map<String, Object> test2(@RequestParam("expertName") String expertName,
+        @RequestParam("userName") String userName,
+        @RequestParam("serviceType") String serviceType,
+        @RequestParam("rate") String rate,
+        @RequestParam("userComments") String userComments)
+    {
+        Map<String, Object> map = new HashMap<>();
+        map.put("expertName", expertName);
+        map.put("userName", userName);
+        map.put("serviceType", serviceType);
+        map.put("rate", rate);
+        map.put("userComments", userComments);
+        expertService.test2(map);
+        return map;
     }
 
     @RequestMapping(value = "test3")
-    @ApiDesc(owner = "hzuo",value = "导入数据临时使用")
+    @ApiDesc(owner = "hzuo", value = "导入数据临时使用")
     @ResponseBody
-    public void test3(@RequestParam("expertName")String expertName,
-                                @RequestParam("userName")String userName,
-                                @RequestParam("userQuestion")String userQuestion,
-                                @RequestParam("userAnswer")String userAnswer
-                      ){
-            Map<String, Object> map = new HashMap<>();
-            map.put("expertName", expertName);
-        map.put("userName",userName);
-        map.put("userQuestion",userQuestion);
-        map.put("userAnswer",userAnswer);
-        map.put("create_date",System.currentTimeMillis());
-            expertService.test2(map);
+    public Map<String, Object> test3(@RequestParam("expertName") String expertName,
+        @RequestParam("userName") String userName,
+        @RequestParam("userQuestion") String userQuestion,
+        @RequestParam("userAnswer") String userAnswer
+    )
+    {
+        Map<String, Object> map = new HashMap<>();
+        map.put("expertName", expertName);
+        map.put("userName", userName);
+        map.put("userQuestion", userQuestion);
+        map.put("userAnswer", userAnswer);
+        map.put("create_date", System.currentTimeMillis());
+        expertService.test2(map);
+        return map;
     }
 
-    @ApiDesc(value = "查询专家可服务日期列表",owner = "杨国荣")
-    @RequestMapping(value = "/getExpertServiceDays",method = RequestMethod.GET)
+    @ApiDesc(value = "查询专家可服务日期列表", owner = "杨国荣")
+    @RequestMapping(value = "/getExpertServiceDays", method = RequestMethod.GET)
     @ResponseBody
-    public List<ExpertServiceDay> getExpertServiceDays(@RequestParam("expertId") int expertId){
+    public List<ExpertServiceDay> getExpertServiceDays(@RequestParam("expertId") int expertId)
+    {
         return expertService.getExpertServiceDays(expertId);
     }
 
-    @ApiDesc(value = "查询专家某天可服务的时间段列表",owner = "杨国荣")
-    @RequestMapping(value = "/getExpertServiceTimes",method = RequestMethod.GET)
+    @ApiDesc(value = "查询专家某天可服务的时间段列表", owner = "杨国荣")
+    @RequestMapping(value = "/getExpertServiceTimes", method = RequestMethod.GET)
     @ResponseBody
-    public List<ExpertServiceTime> getExpertServiceTimes(@RequestParam("dayId") int dayId){
+    public List<ExpertServiceTime> getExpertServiceTimes(@RequestParam("dayId") int dayId)
+    {
         return expertService.getExpertServiceTimes(dayId);
     }
 
     /**
      * 保存专家订单
+     *
      * @param order
      */
     @RequestMapping(value = "saveOrder")
-    @ApiDesc(owner = "杨永平",value = "保存专家订单")
+    @ApiDesc(owner = "杨永平", value = "保存专家订单")
     @ResponseBody
-    public boolean saveOrder(ExpertPojo order){
+    public boolean saveOrder(ExpertPojo order)
+    {
         ExpertReservationOrderDetail expertReservationOrderDetail;
         String userId = this.getAccoutId();
-        Map<String,Object> map = new HashedMap();
-        map.put("userId",userId);
-        map.put("serviceItem",order.getServiceType());
+        Map<String, Object> map = new HashedMap();
+        map.put("userId", userId);
+        map.put("serviceItem", order.getServiceType());
         //根据订单数据获取用户服务
         expertReservationOrderDetail = (ExpertReservationOrderDetail)expertOrderDetailService.queryOne(map);
         //判定该用户是否含有该服务
-        if (expertReservationOrderDetail==null){
+        if (expertReservationOrderDetail == null)
+        {
             //如果是null表示用户不具备该服务,服务在用户升级vip时候注入
-            throw new BizException(ERRORCODE.EXPERT_VIP_UN_EXIST.getCode(),ERRORCODE.EXPERT_VIP_UN_EXIST.getMessage());
+            throw new BizException(ERRORCODE.EXPERT_VIP_UN_EXIST.getCode(), ERRORCODE.EXPERT_VIP_UN_EXIST.getMessage());
         }
         Integer count = expertReservationOrderDetail.getServiceCount();
 
-        if (count==0){
+        if (count == 0)
+        {
             //用户不具备该服务次数
-            throw new BizException(ERRORCODE.EXPERT_VIP_ZERO.getCode(),ERRORCODE.EXPERT_VIP_ZERO.getMessage());
+            throw new BizException(ERRORCODE.EXPERT_VIP_ZERO.getCode(), ERRORCODE.EXPERT_VIP_ZERO.getMessage());
         }
-        try {
+        try
+        {
             //复制order属性到专家订单bean中
-            BeanUtils.copyProperties(expertReservationOrderDetail,order);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+            BeanUtils.copyProperties(expertReservationOrderDetail, order);
+        }
+        catch (IllegalAccessException e)
+        {
             e.printStackTrace();
         }
-        if (order.getServiceDay()==null || order.getServiceTime()==null){
-            throw new BizException("error","日期时间为必传项");
+        catch (InvocationTargetException e)
+        {
+            e.printStackTrace();
+        }
+        if (order.getServiceDay() == null || order.getServiceTime() == null)
+        {
+            throw new BizException("error", "日期时间为必传项");
         }
         //获取预约时间
         String serviceDay = order.getServiceDay();
         String serviceTime = order.getServiceTime();
         //根据专家和专家时间获取这条数据信息
-        Map<String,Object> serviceDayMap = new HashedMap();
-        serviceDayMap.put("expertId",order.getExpertId());
-        serviceDayMap.put("serviceDay",serviceDay);
+        Map<String, Object> serviceDayMap = new HashedMap();
+        serviceDayMap.put("expertId", order.getExpertId());
+        serviceDayMap.put("serviceDay", serviceDay);
         ExpertServiceDays expertServiceDays = (ExpertServiceDays)expertServiceDaysService.queryOne(serviceDayMap);
-        if (expertServiceDays==null){
-            throw new BizException(ERRORCODE.EXPERT_SERVICE_TIME_N.getCode(),ERRORCODE.EXPERT_SERVICE_TIME_N.getMessage());
+        if (expertServiceDays == null)
+        {
+            throw new BizException(ERRORCODE.EXPERT_SERVICE_TIME_N.getCode(),
+                ERRORCODE.EXPERT_SERVICE_TIME_N.getMessage());
         }
-        Map<String,Object> serviceTimeMap = new HashedMap();
-        serviceTimeMap.put("expertDayId",expertServiceDays.getId());
-        serviceTimeMap.put("timeSegment",serviceTime);
-        serviceTimeMap.put("isAvailable",Constants.EXPERT_TIME_Y);
+        Map<String, Object> serviceTimeMap = new HashedMap();
+        serviceTimeMap.put("expertDayId", expertServiceDays.getId());
+        serviceTimeMap.put("timeSegment", serviceTime);
+        serviceTimeMap.put("isAvailable", Constants.EXPERT_TIME_Y);
         ExpertServiceTimes expertServiceTimes = (ExpertServiceTimes)expertServiceTimesService.queryOne(serviceTimeMap);
-        if (expertServiceTimes==null){
-            throw new BizException(ERRORCODE.EXPERT_SERVICE_TIME_N.getCode(),ERRORCODE.EXPERT_SERVICE_TIME_N.getMessage());
+        if (expertServiceTimes == null)
+        {
+            throw new BizException(ERRORCODE.EXPERT_SERVICE_TIME_N.getCode(),
+                ERRORCODE.EXPERT_SERVICE_TIME_N.getMessage());
         }
 
         //更新专家时间状态
-        expertServiceTimes.setIsAvailable(Constants.EXPERT_TIME_N+"");
+        expertServiceTimes.setIsAvailable(Constants.EXPERT_TIME_N + "");
         int updateCount = expertServiceTimesService.update(expertServiceTimes);
-        if (updateCount==0){
+        if (updateCount == 0)
+        {
             //更新状态鉴定
             //当更新结果为0说明该条记录已经被抢占不执行后续操作
-            throw new BizException(ERRORCODE.EXPERT_SERVICE_TIME_N.getCode(),ERRORCODE.EXPERT_SERVICE_TIME_N.getMessage());
+            throw new BizException(ERRORCODE.EXPERT_SERVICE_TIME_N.getCode(),
+                ERRORCODE.EXPERT_SERVICE_TIME_N.getMessage());
         }
         serviceTimeMap = new HashedMap();
-        serviceTimeMap.put("expertDayId",expertServiceDays.getId());
-        serviceTimeMap.put("isAvailable",Constants.EXPERT_TIME_Y);
-        List<ExpertServiceTime> timeList = expertServiceTimesService.queryList(serviceTimeMap,"id","asc");
-        if (timeList==null || timeList.size()!=0){
+        serviceTimeMap.put("expertDayId", expertServiceDays.getId());
+        serviceTimeMap.put("isAvailable", Constants.EXPERT_TIME_Y);
+        List<ExpertServiceTime> timeList = expertServiceTimesService.queryList(serviceTimeMap, "id", "asc");
+        if (timeList == null || timeList.size() != 0)
+        {
             //如果当前结果为空 那么僵对应的日期置为不可用
-            expertServiceDays.setIsAvailable(Constants.EXPERT_TIME_N+"");
+            expertServiceDays.setIsAvailable(Constants.EXPERT_TIME_N + "");
             expertServiceDaysService.update(expertServiceDays);
         }
         // 之所以先置时间状态是校验过后防止被抢占导致出错
         //设置预约时间
-        String time = serviceDay+Constants.EXPERT_ORDER_BLANK+serviceTime;
-        String endTime = serviceDay +Constants.EXPERT_ORDER_BLANK+serviceTime.split("~")[1];
+        String time = serviceDay + Constants.EXPERT_ORDER_BLANK + serviceTime;
+        String endTime = serviceDay + Constants.EXPERT_ORDER_BLANK + serviceTime.split("~")[1];
         expertReservationOrderDetail.setExpectTime(time);
         expertReservationOrderDetail.setEndTime(endTime);
         //设置服务-1  解决潜在的会小于0的情况
-        expertReservationOrderDetail.setServiceCount(count==0?0:count-1);
+        expertReservationOrderDetail.setServiceCount(count == 0 ? 0 : count - 1);
 
-        return expertOrderDetailService.update(expertReservationOrderDetail)>0;
+        return expertOrderDetailService.update(expertReservationOrderDetail) > 0;
 
     }
 
-
     /**
-     *
-     * @return
-     * 返回字段  服务内容 剩余服务次数 预约状态 服务专家 预约时间 视频方式
+     * @return 返回字段  服务内容 剩余服务次数 预约状态 服务专家 预约时间 视频方式
      * 预约状态 0,未预约  1,预约成功  2,服务中  3,结束
      * 预约时间 格式 2016-11-2 12:00-13:00
      * 视频方式 微信/QQ
      * 评价 1,已评价 2,未评价
      */
     @RequestMapping(value = "queryExpertOrder")
-    @ApiDesc(owner = "杨永平",value = "查询用户服列表")
+    @ApiDesc(owner = "杨永平", value = "查询用户服列表")
     @ResponseBody
-    public Object queryExpertOrder(){
-        List<Map<String,Object>> resultList = new ArrayList<>();
+    public Object queryExpertOrder()
+    {
+        List<Map<String, Object>> resultList = new ArrayList<>();
         String userId = this.getAccoutId();
         Long areaId = this.getAreaId();
 
-
         List<Long> cardIds = cardExService.getCard(Long.valueOf(userId));
-        if (cardIds!=null) {
-            for (Long ll : cardIds) {
-                Map<String,Object>  map = new HashedMap();
-                map.put("userId",userId);
-                map.put("cardId",ll);
+        if (cardIds != null)
+        {
+            for (Long ll : cardIds)
+            {
+                Map<String, Object> map = new HashedMap();
+                map.put("userId", userId);
+                map.put("cardId", ll);
 
                 //查询卡名称
                 String cardName = null;
 
-                DepartmentProductRelationPojo departmentProductRelationPojo =null;
+                DepartmentProductRelationPojo departmentProductRelationPojo = null;
 
-                List<ExpertReservationOrderDetailDTO> expertReservationOrderDetailDTOs = expertOrderExService.queryList(map,"id","asc");
+                List<ExpertReservationOrderDetailDTO> expertReservationOrderDetailDTOs =
+                    expertOrderExService.queryList(map, "id", "asc");
                 /**
                  * 判定,如果是空的不进行后续操作直接返回,为空的原因可能是因为该用户未购买该卡
                  */
-                if (expertReservationOrderDetailDTOs==null || expertReservationOrderDetailDTOs.size()==0){
+                if (expertReservationOrderDetailDTOs == null || expertReservationOrderDetailDTOs.size() == 0)
+                {
                     continue;
                 }
                 //cardType
@@ -704,13 +747,19 @@ public class ExpertController extends ZGKBaseController
                 handlerOrder(expertReservationOrderDetailDTOs);
                 Map<String, Object> serviceMap = new HashedMap();
                 Map<String, Object> paramMap = new HashedMap();
-                paramMap.put("id",ll);
-                Card card = (Card) cardService.queryOne(paramMap);
-                try {
-                    departmentProductRelationPojo = deparmentApiService.queryProductPriceByAreaId(areaId.toString(),card.getProductType());
-                } catch (InvocationTargetException e) {
+                paramMap.put("id", ll);
+                Card card = (Card)cardService.queryOne(paramMap);
+                try
+                {
+                    departmentProductRelationPojo =
+                        deparmentApiService.queryProductPriceByAreaId(areaId.toString(), card.getProductType());
+                }
+                catch (InvocationTargetException e)
+                {
                     e.printStackTrace();
-                } catch (IllegalAccessException e) {
+                }
+                catch (IllegalAccessException e)
+                {
                     e.printStackTrace();
                 }
                 cardName = departmentProductRelationPojo.getProductName();
@@ -723,54 +772,70 @@ public class ExpertController extends ZGKBaseController
         return resultList;
     }
 
-
-    private void handlerOrder(List<ExpertReservationOrderDetailDTO> list){
-        for (ExpertReservationOrderDetailDTO expertReservationOrderDetailDTO:list){
+    private void handlerOrder(List<ExpertReservationOrderDetailDTO> list)
+    {
+        for (ExpertReservationOrderDetailDTO expertReservationOrderDetailDTO : list)
+        {
             handlerOrderStatus(expertReservationOrderDetailDTO);
         }
     }
 
     /**
      * 处理订单状态 0未预约  1:预约成功  2:服务中 3:结束
+     *
      * @param expertReservationOrderDetailDTO
      * @return
      */
-    private void handlerOrderStatus(ExpertReservationOrderDetailDTO expertReservationOrderDetailDTO){
-        if (expertReservationOrderDetailDTO==null){
+    private void handlerOrderStatus(ExpertReservationOrderDetailDTO expertReservationOrderDetailDTO)
+    {
+        if (expertReservationOrderDetailDTO == null)
+        {
             return;
         }
-        if (expertReservationOrderDetailDTO.getEndTime()==null){
+        if (expertReservationOrderDetailDTO.getEndTime() == null)
+        {
             return;
         }
         String orderTime = expertReservationOrderDetailDTO.getExpectTime();
         String endTime = expertReservationOrderDetailDTO.getEndTime();
-        String startTime = orderTime.substring(0,orderTime.lastIndexOf("~"));
+        String startTime = orderTime.substring(0, orderTime.lastIndexOf("~"));
         DateFormat dateFormat = new SimpleDateFormat(formatString);
         Long currTime = System.currentTimeMillis();
         Long lStartTime = 0L;
-        try {
-            lStartTime=dateFormat.parse(startTime).getTime();
-        } catch (ParseException e) {
+        try
+        {
+            lStartTime = dateFormat.parse(startTime).getTime();
+        }
+        catch (ParseException e)
+        {
             e.printStackTrace();
         }
         Long lEndTime = 0L;
-        try {
-            lEndTime=dateFormat.parse(endTime).getTime();
-        } catch (ParseException e) {
+        try
+        {
+            lEndTime = dateFormat.parse(endTime).getTime();
+        }
+        catch (ParseException e)
+        {
             e.printStackTrace();
         }
-        Integer status=null;
-        try {
-            if (Constants.EXPERT_ORDER_STATUS_Y4!=expertReservationOrderDetailDTO.getStatus()) {
-                if (lStartTime != 0L && currTime - lStartTime < 0) {
+        Integer status = null;
+        try
+        {
+            if (Constants.EXPERT_ORDER_STATUS_Y4 != expertReservationOrderDetailDTO.getStatus())
+            {
+                if (lStartTime != 0L && currTime - lStartTime < 0)
+                {
                     //预约成功
                     status = Constants.EXPERT_ORDER_STATUS_Y1;
                 }
-                if (lStartTime != 0L && currTime - lStartTime > 0) {
+                if (lStartTime != 0L && currTime - lStartTime > 0)
+                {
                     //服务中
                     status = Constants.EXPERT_ORDER_STATUS_Y2;
                 }
-                if (lEndTime != 0L && currTime - lEndTime > 0) {
+                if (lEndTime != 0L && currTime - lEndTime > 0)
+                {
                     //结束
                     status = Constants.EXPERT_ORDER_STATUS_Y3;
                 }
@@ -778,28 +843,31 @@ public class ExpertController extends ZGKBaseController
                 map.put("id", expertReservationOrderDetailDTO.getId());
                 map.put("status", status);
                 expertOrderDetailService.updateMap(map);
-            }else {
-                status=Constants.EXPERT_ORDER_STATUS_Y4;
             }
-        }catch (Exception e){
+            else
+            {
+                status = Constants.EXPERT_ORDER_STATUS_Y4;
+            }
+        }
+        catch (Exception e)
+        {
             return;
         }
         expertReservationOrderDetailDTO.setStatus(status);
     }
 
     /**
-     *
-     * @return
-     * 返回字段  服务内容 剩余服务次数 预约状态 服务专家 预约时间 视频方式
+     * @return 返回字段  服务内容 剩余服务次数 预约状态 服务专家 预约时间 视频方式
      * 预约状态 0,未预约  1,预约成功  2,服务中  3,结束
      * 预约时间 格式 2016-11-2 12:00-13:00
      * 视频方式 微信/QQ
      * 评价 1,已评价 2,未评价
      */
     @RequestMapping(value = "updateExpertEvaluate")
-    @ApiDesc(owner = "杨永平",value = "查询用户服列表")
+    @ApiDesc(owner = "杨永平", value = "查询用户服列表")
     @ResponseBody
-    public void updateExpertEvaluate(@RequestParam Integer orderId){
+    public void updateExpertEvaluate(@RequestParam Integer orderId)
+    {
         Map<String, Object> map = new HashedMap();
         map.put("status", Constants.EXPERT_ORDER_STATUS_Y4);
         map.put("id", orderId);
