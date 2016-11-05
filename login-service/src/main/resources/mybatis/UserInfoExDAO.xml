@@ -106,7 +106,7 @@
     </update>
 
     <update id="updateUserQQUserId">
-        UPDATE zgk_user_info SET qqUserId=#{alipayUserId} WHERE id=#{id}
+        UPDATE zgk_user_info SET qqUserId=#{qqUserId} WHERE id=#{id}
     </update>
 </mapper>
 

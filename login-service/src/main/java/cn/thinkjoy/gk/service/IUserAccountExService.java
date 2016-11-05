@@ -52,4 +52,6 @@ public interface IUserAccountExService {
     boolean bindUserAccount(UserAccount userAccount);
 
     boolean bindUserAccountExist(UserAccountPojo userAccountPojo, String userId, String aliUserId);
+
+    void updateUserQQUserId(UserAccountPojo userAccountPojo, String userId, String aliUserId);
 }
