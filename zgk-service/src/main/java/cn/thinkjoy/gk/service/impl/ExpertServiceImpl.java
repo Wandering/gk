@@ -246,7 +246,7 @@ public class ExpertServiceImpl implements IExpertService
             // 默认推后30天
             preDay = 30;
         }
-        return dao.getExpertServiceDays(expertId,preDay);
+        return dao.getExpertServiceDays(expertId,-preDay);
     }
 
     @Override
