@@ -74,8 +74,7 @@ public class RegisterController extends ZGKBaseController
         @RequestParam(value = "sharerId", required = false) Long sharerId,
         @RequestParam(value = "sharerType", required = false) Integer sharerType,
         @RequestParam(value = "userId", required = false) String userId,
-        @RequestParam(value = "aliUserId", required = false) String aliUserId,
-        @RequestParam(value = "qqUserId", required = false) String qqUserId)
+        @RequestParam(value = "aliUserId", required = false) String aliUserId)
         throws Exception
     {
         Map<String, Object> resultMap = new HashMap<>();
@@ -158,25 +157,6 @@ public class RegisterController extends ZGKBaseController
                 catch (Exception e)
                 {
                     throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "账户绑定失败");
-                }
-            }
-            // 绑定qq账号
-            else if(StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(qqUserId)){
-                long userIdLong = Long.parseLong(userId);
-                UserAccountPojo userInfo = userAccountExService.findUserAccountPojoById(userIdLong);
-                if(!userInfo.getQqUserId().equals(qqUserId)){
-                    ModelUtil.throwException(ERRORCODE.PARAM_ERROR);
-                }
-                try{
-                    userAccount.setId(userIdLong);
-                    userAccount.setUserId(userIdLong);
-                    boolean flag = userAccountExService.bindUserAccount(userAccount);
-                    if (!flag){
-                        ModelUtil.throwException(ERRORCODE.ACCOUNT_BIND_ERROR);
-                    }
-                }
-                catch (Exception e){
-                    ModelUtil.throwException(ERRORCODE.ACCOUNT_BIND_ERROR);
                 }
             }
             //注册账号

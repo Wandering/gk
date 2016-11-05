@@ -50,7 +50,8 @@ public class LoginController extends ZGKBaseController {
 					  @RequestParam(value="password",required=false) String password,
 					  @RequestParam(value="basePassword",required = false) String basePassword,
 		              @RequestParam(value = "userId", required = false) String userId,
-		              @RequestParam(value = "aliUserId", required = false) String aliUserId) throws Exception {
+		              @RequestParam(value = "aliUserId", required = false) String aliUserId,
+		              @RequestParam(value = "qqUserId", required = false) String qqUserId) throws Exception {
 		long id = 0L;
 		UserInfoPojo userInfoPojo=null;
 		Map<String, Object> resultMap = new HashMap<>();
@@ -99,6 +100,26 @@ public class LoginController extends ZGKBaseController {
 					{
 						throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "账户绑定失败");
 					}
+				}
+				// 绑定qq账号
+				else if(StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(qqUserId)){
+
+					long userIdLong = Long.parseLong(userId);
+					UserAccountPojo userInfo = userAccountExService.findUserAccountPojoById(userIdLong);
+					if(!userInfo.getAccount().equals(qqUserId))
+					{
+						throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "参数错误");
+					}
+					try
+					{
+						userAccountExService.updateUserQQUserId(userAccountBean,userId,qqUserId);
+
+					}
+					catch (Exception e)
+					{
+						throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "账户绑定失败");
+					}
+
 				}
 				/**
 				 * 老用户生成二维码
