@@ -578,7 +578,7 @@
             service_day AS serviceDay,
             is_available AS isAvailable
         FROM
-            zgk_expert_service_days?
+            zgk_expert_service_days
         WHERE
             expert_id = #{expertId}
         AND service_day > date_sub(curdate(), INTERVAL #{preDay} DAY)
