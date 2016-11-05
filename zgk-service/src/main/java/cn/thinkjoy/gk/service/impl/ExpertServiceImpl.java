@@ -234,6 +234,10 @@ public class ExpertServiceImpl implements IExpertService
     public void test2(Map<String,Object> map){
         dao.test2(map);
     }
+    @Override
+    public void test3(Map<String,Object> map){
+        dao.test3(map);
+    }
 
     @Override
     public List<ExpertServiceDay> getExpertServiceDays(int expertId) {

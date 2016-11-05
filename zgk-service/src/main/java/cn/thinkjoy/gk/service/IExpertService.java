@@ -69,6 +69,7 @@ public interface IExpertService
 
     void test1(Map<String,Object> map);
     void test2(Map<String,Object> map);
+    void test3(Map<String,Object> map);
 
     /**
      * 根据专家ID获取专家可服务日期列表
