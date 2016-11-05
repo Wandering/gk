@@ -629,13 +629,7 @@ public class ExpertController extends ZGKBaseController
         if (expertServiceTimes==null){
             throw new BizException(ERRORCODE.EXPERT_SERVICE_TIME_N.getCode(),ERRORCODE.EXPERT_SERVICE_TIME_N.getMessage());
         }
-        //设置预约时间
-        String time = serviceDay+Constants.EXPERT_ORDER_BLANK+serviceTime;
-        String endTime = serviceDay +Constants.EXPERT_ORDER_BLANK+serviceTime.split("~")[1];
-        expertReservationOrderDetail.setExpectTime(time);
-        expertReservationOrderDetail.setEndTime(endTime);
-        //设置服务-1  解决潜在的会小于0的情况
-        expertReservationOrderDetail.setServiceCount(count==0?0:count-1);
+
         //更新专家时间状态
         expertServiceTimes.setIsAvailable(Constants.EXPERT_TIME_N+"");
         expertServiceTimesService.update(expertServiceTimes);
@@ -648,6 +642,15 @@ public class ExpertController extends ZGKBaseController
             expertServiceDays.setIsAvailable(Constants.EXPERT_TIME_N+"");
             expertServiceDaysService.update(expertServiceDays);
         }
+        // 之所以先置时间状态是校验过后防止被抢占导致出错
+        //设置预约时间
+        String time = serviceDay+Constants.EXPERT_ORDER_BLANK+serviceTime;
+        String endTime = serviceDay +Constants.EXPERT_ORDER_BLANK+serviceTime.split("~")[1];
+        expertReservationOrderDetail.setExpectTime(time);
+        expertReservationOrderDetail.setEndTime(endTime);
+        //设置服务-1  解决潜在的会小于0的情况
+        expertReservationOrderDetail.setServiceCount(count==0?0:count-1);
+
         return expertOrderDetailService.update(expertReservationOrderDetail)>0;
 
     }
