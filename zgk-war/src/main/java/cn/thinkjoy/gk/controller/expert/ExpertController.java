@@ -632,7 +632,12 @@ public class ExpertController extends ZGKBaseController
 
         //更新专家时间状态
         expertServiceTimes.setIsAvailable(Constants.EXPERT_TIME_N+"");
-        expertServiceTimesService.update(expertServiceTimes);
+        int updateCount = expertServiceTimesService.update(expertServiceTimes);
+        if (updateCount==0){
+            //更新状态鉴定
+            //当更新结果为0说明该条记录已经被抢占不执行后续操作
+            throw new BizException(ERRORCODE.EXPERT_SERVICE_TIME_N.getCode(),ERRORCODE.EXPERT_SERVICE_TIME_N.getMessage());
+        }
         serviceTimeMap = new HashedMap();
         serviceTimeMap.put("expertDayId",expertServiceDays.getId());
         serviceTimeMap.put("isAvailable",Constants.EXPERT_TIME_Y);
