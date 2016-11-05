@@ -70,7 +70,7 @@ public class CardExServiceImpl implements ICardExService {
              */
             //取得卡类型对应的服务信息
             List<Map<String,Object>> services = cardDAO.getProductService(productId,areaId);
-            if (services==null){
+            if (services==null||services.size()==0){
                 services = cardDAO.getProductService(productId,0L);
             }
 

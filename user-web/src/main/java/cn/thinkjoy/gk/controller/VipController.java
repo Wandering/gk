@@ -72,7 +72,9 @@ public class VipController extends ZGKBaseController implements Watched {
         }
         //状元及第会员卡激活高考学堂
         boolean gkxtActiveStatus = false;
-        if(card.getProductType().equals("2"))
+        Integer productType = card.getProductType();
+        //TODO 写死绑卡流程,金榜题名和金榜登科不绑定智学堂
+        if(productType!=1 && productType!=3)
         {
             String account = getUserAccountPojo().getAccount();
             gkxtActiveUrl = String.format(gkxtActiveUrl, account);
