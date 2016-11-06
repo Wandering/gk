@@ -98,24 +98,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 	private void isValideLogin(HttpServletResponse response, String reqType)
 	{
-		if (reqType != null && reqType.equals("ajax"))
-		{
-			response.setCharacterEncoding("UTF-8");
-			try
-			{
-				ServletOutputStream out = response.getOutputStream();
-				out.flush();
-				out.print("登录人数超过限制,只能一个用户登录！");
-				out.flush();
-				out.close();
-			}
-			catch (IOException ex)
-			{
-				throw new BizException("1000110", "登录人数超过限制,只能一个用户登录！");
-			}
-
-		}
-		else
 			throw new BizException("1000110", "登录人数超过限制,只能一个用户登录！");
 	}
 
