@@ -191,12 +191,13 @@ public class VipController extends ZGKBaseController implements Watched {
         userService.retainAll(expertService);
         if (userService.size()==0){
             throw new BizException(ERRORCODE.NO_EXPERT_SERVICE.getCode(), ERRORCODE.NO_EXPERT_SERVICE.getMessage());
-        }else {
-            Integer count = cardExService.getServiceByUserIdAndExpertId(userId,expertId);
-            if (count>0){
-                throw new BizException(ERRORCODE.YES_EXPERT_SERVICE.getCode(), ERRORCODE.YES_EXPERT_SERVICE.getMessage());
-            }
         }
+//        else {
+//            Integer count = cardExService.getServiceByUserIdAndExpertId(userId,expertId);
+//            if (count>0){
+//                throw new BizException(ERRORCODE.YES_EXPERT_SERVICE.getCode(), ERRORCODE.YES_EXPERT_SERVICE.getMessage());
+//            }
+//        }
         return "true";
     }
 

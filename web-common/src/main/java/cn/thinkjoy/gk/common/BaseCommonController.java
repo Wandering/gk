@@ -71,7 +71,7 @@ public class BaseCommonController
 	public String getAccoutId(){
 		UserAccountPojo pojo = UserContext.getCurrentUser();
 		if(pojo == null){
-			ModelUtil.throwException(ERRORCODE.USER_UN_LOGIN);
+			ModelUtil.throwException(ERRORCODE.USER_EXPIRED);
 		}
 		return pojo.getId().toString();
 	}
