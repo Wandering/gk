@@ -8,6 +8,7 @@ import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.common.DESUtil;
 import cn.thinkjoy.gk.constant.RedisConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 
 /**
@@ -199,6 +201,11 @@ public class RegisterController extends ZGKBaseController
             String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), account);
             setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));
             resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
+            String encryptToken = DESUtil.encrypt(token, DESUtil.key);
+            String loginToken = UUID.randomUUID().toString();
+            String loginKey = UserRedisConst.USER_LOGIN_KEY + encryptToken;
+            RedisUtil.getInstance().hSet(loginKey, "PC", loginToken);
+            resultMap.put("loginToken", loginToken);
             userAccountBean.setPassword(null);
             userAccountBean.setId(null);
             resultMap.put("userInfo", userAccountBean);
