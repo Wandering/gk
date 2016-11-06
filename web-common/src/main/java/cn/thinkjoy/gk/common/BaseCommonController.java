@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.common;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
@@ -120,4 +121,16 @@ public class BaseCommonController
         }
     }
 
+    /**
+     * 判断用户是不是vip
+     *
+     * @return
+     */
+    protected void isVip()
+    {
+        getAccoutId();
+        if (getUserAccountPojo().getVipStatus()!=1){
+            throw new BizException(ERRORCODE.VIP_EXIST.getCode(),ERRORCODE.VIP_EXIST.getMessage());
+        }
+    }
 }
