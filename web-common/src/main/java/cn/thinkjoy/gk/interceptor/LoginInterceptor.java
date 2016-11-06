@@ -105,7 +105,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			{
 				ServletOutputStream out = response.getOutputStream();
 				out.flush();
-				out.print("{\"rtnCode\":\"1000110\",\"msg\":\"登录人数超过限制,只能一个用户登录！\"}");
+				out.print("登录人数超过限制,只能一个用户登录！");
 				out.flush();
 				out.close();
 			}

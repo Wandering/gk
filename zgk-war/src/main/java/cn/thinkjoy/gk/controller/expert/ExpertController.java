@@ -683,7 +683,7 @@ public class ExpertController extends ZGKBaseController
         serviceTimeMap.put("expertDayId", expertServiceDays.getId());
         serviceTimeMap.put("isAvailable", Constants.EXPERT_TIME_Y);
         List<ExpertServiceTime> timeList = expertServiceTimesService.queryList(serviceTimeMap, "id", "asc");
-        if (timeList == null || timeList.size() != 0)
+        if (timeList == null || timeList.size() == 0)
         {
             //如果当前结果为空 那么僵对应的日期置为不可用
             expertServiceDays.setIsAvailable(Constants.EXPERT_TIME_N + "");
@@ -725,6 +725,8 @@ public class ExpertController extends ZGKBaseController
             {
                 Map<String, Object> map = new HashedMap();
                 map.put("userId", userId);
+                map.put("cardId", ll);
+                map.put("areaId", areaId);
                 map.put("cardId", ll);
 
                 //查询卡名称
