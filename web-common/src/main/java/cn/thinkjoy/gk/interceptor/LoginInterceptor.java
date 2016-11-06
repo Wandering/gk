@@ -57,7 +57,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 
-		if (StringUtils.isEmpty(value)|| StringUtils.isEmpty(loginToken) || !redisFlag) {
+		if (StringUtils.isEmpty(value) || !redisFlag) {
 			if (reqType != null && reqType.equals("ajax")) {
 
 				/**************后期优化**************/
@@ -75,6 +75,25 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			} else
 				throw new BizException("1000004", "请先登录后再进行操作");
 
+		}
+
+		if (StringUtils.isEmpty(loginToken)){
+			if (reqType != null && reqType.equals("ajax")) {
+
+				/**************后期优化**************/
+				response.setCharacterEncoding("UTF-8");
+				try {
+					ServletOutputStream out = response.getOutputStream();
+					out.print("{\"rtnCode\":\"1000110\",\"msg\":\"登录人数超过限制,只能一个用户登录！\"}");
+					out.flush();
+					out.close();
+				} catch (IOException ex) {
+					throw new BizException("1000110", "登录人数超过限制,只能一个用户登录！");
+				}
+				/**************后期优化**************/
+
+			} else
+				throw new BizException("1000110", "登录人数超过限制,只能一个用户登录！");
 		}
 		String loginKey = UserRedisConst.USER_LOGIN_KEY + value;
 		boolean flag = RedisUtil.getInstance().exists(loginKey);
