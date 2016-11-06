@@ -37,6 +37,7 @@ public class EvaluationController extends ZGKBaseController {
     @RequestMapping(value = "/insertEvaluation", method = RequestMethod.POST)
     @ResponseBody
     public Object insertEvaluation(@RequestParam String evaluation) {
+        isVip();
         Evaluation evaluationObj= JSON.parseObject(evaluation,Evaluation.class);
         if (evaluation==null)throw new BizException(ERRORCODE.EVALUATION_IS_NULL.getCode(),ERRORCODE.EVALUATION_IS_NULL.getMessage());
         evaluationObj.setUserId(Long.valueOf(getAccoutId()));
@@ -65,6 +66,7 @@ public class EvaluationController extends ZGKBaseController {
     @RequestMapping(value = "/queryEvaluationCount", method = RequestMethod.GET)
     @ResponseBody
     public Object queryEvaluationCount() {
+        isVip();
         int count=evaluationService.queryEvaluationCount(Long.valueOf(getAccoutId()));
         //取出数据
         return count<0?0:count;
