@@ -727,7 +727,6 @@ public class ExpertController extends ZGKBaseController
                 map.put("userId", userId);
                 map.put("cardId", ll);
                 map.put("areaId", areaId);
-                map.put("cardId", ll);
 
                 //查询卡名称
                 String cardName = null;
