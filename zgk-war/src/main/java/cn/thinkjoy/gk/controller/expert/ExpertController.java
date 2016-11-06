@@ -578,7 +578,7 @@ public class ExpertController extends ZGKBaseController
         map.put("userQuestion", userQuestion);
         map.put("userAnswer", userAnswer);
         map.put("create_date", System.currentTimeMillis());
-        expertService.test2(map);
+        expertService.test3(map);
         return map;
     }
 
