@@ -29,4 +29,6 @@ public interface ICardDAO extends IBaseDAO<Card>{
     List<Integer> getServiceByUserId(Long userId);
 
     Integer getServiceByUserIdAndExpertId(@Param("userId") Long userId,@Param("expertId")Integer expertId);
+
+    Integer getProductServiceCount(@Param("productId")Integer productId, @Param("areaId")Long areaId);
 }

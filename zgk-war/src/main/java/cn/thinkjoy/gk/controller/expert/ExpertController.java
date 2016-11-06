@@ -726,7 +726,13 @@ public class ExpertController extends ZGKBaseController
                 Map<String, Object> map = new HashedMap();
                 map.put("userId", userId);
                 map.put("cardId", ll);
-                map.put("areaId", areaId);
+                Card card = (Card) cardService.fetch(ll);
+                Integer count = cardExService.getVipServiceCount(card.getProductType(),areaId);
+                if (count>0) {
+                    map.put("areaId", areaId);
+                }else {
+                    map.put("areaId", 0);
+                }
 
                 //查询卡名称
                 String cardName = null;
@@ -742,14 +748,9 @@ public class ExpertController extends ZGKBaseController
                 {
                     continue;
                 }
-                //cardType
-
                 //后续操作
                 handlerOrder(expertReservationOrderDetailDTOs);
                 Map<String, Object> serviceMap = new HashedMap();
-                Map<String, Object> paramMap = new HashedMap();
-                paramMap.put("id", ll);
-                Card card = (Card)cardService.queryOne(paramMap);
                 try
                 {
                     departmentProductRelationPojo =
