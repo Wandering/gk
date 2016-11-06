@@ -224,6 +224,10 @@ public class LoginController extends ZGKBaseController {
 		resultMap.put("userInfo", userInfoPojo);
 		resultMap.put("gkxtToken", gkxtToken);
 
+		String loginToken = UUID.randomUUID().toString();
+		String loginKey = UserRedisConst.USER_LOGIN_KEY + encryptToken;
+		RedisUtil.getInstance().hSet(loginKey, "PC", loginToken);
+
 		return resultMap;
 	}
 
