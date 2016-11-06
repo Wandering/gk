@@ -185,13 +185,13 @@ public class VipController extends ZGKBaseController implements Watched {
         Long userId = getUserAccountPojo().getId();
         List<Integer> userService =  cardExService.getServiceByUserId(userId);
         //判断该用户是否已经预定该专家的服务
-        if (userService==null){
-            throw new BizException(ERRORCODE.NO_EXPERT_SERVICE.getCode(), ERRORCODE.NO_EXPERT_SERVICE.getMessage());
-        }
-        userService.retainAll(expertService);
-        if (userService.size()==0){
-            throw new BizException(ERRORCODE.NO_EXPERT_SERVICE.getCode(), ERRORCODE.NO_EXPERT_SERVICE.getMessage());
-        }
+//        if (userService==null){
+//            throw new BizException(ERRORCODE.NO_EXPERT_SERVICE.getCode(), ERRORCODE.NO_EXPERT_SERVICE.getMessage());
+//        }
+//        userService.retainAll(expertService);
+//        if (userService.size()==0){
+//            throw new BizException(ERRORCODE.NO_EXPERT_SERVICE.getCode(), ERRORCODE.NO_EXPERT_SERVICE.getMessage());
+//        }
 //        else {
 //            Integer count = cardExService.getServiceByUserIdAndExpertId(userId,expertId);
 //            if (count>0){
