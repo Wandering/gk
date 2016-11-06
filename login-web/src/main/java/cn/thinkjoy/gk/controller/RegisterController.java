@@ -293,10 +293,19 @@ public class RegisterController extends ZGKBaseController
             long id = userAccountBean.getId();
 
             String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), account);
+            String encryptToken = DESUtil.encrypt(token, DESUtil.key);
+            String loginToken = UUID.randomUUID().toString();
+            String loginKey = UserRedisConst.USER_LOGIN_KEY + encryptToken;
+            RedisUtil.getInstance().hSet(loginKey, "PC", loginToken);
             setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));
             resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
+            String gkxtToken = GkxtUtil.getLoginToken(userAccountBean.getAccount(), userAccountBean.getName());
+            userAccountBean.setGkxtToken(gkxtToken);
             userAccountBean.setPassword(null);
             userAccountBean.setId(null);
+            userAccountBean.setStatus(null);
+            resultMap.put("gkxtToken", gkxtToken);
+            resultMap.put("loginToken", loginToken);
             resultMap.put("userInfo", userAccountBean);
         }
         catch (Exception e)
