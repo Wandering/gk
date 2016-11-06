@@ -957,7 +957,7 @@ selectList
     </select>
 
     <!--getProductServiceCount-->
-    <select id="getProductService" resultType="java.lang.Integer">
+    <select id="getProductServiceCount" resultType="java.lang.Integer">
         SELECT count(*) from zgk_expert_product_service where productId=#{productId} and areaId=#{areaId} and serviceId is not NULL
     </select>
 </mapper>
