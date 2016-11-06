@@ -542,7 +542,7 @@
         (
         (select ei.id from zgk_expert_info ei where ei.expert_name=#{expertName}),
         #{userName},
-        (select ec.config_key from zgk_expert_config ec where evc.config_value=#{serviceType}),
+        (select ec.config_key from zgk_expert_config ec where ec.config_value=#{serviceType}),
         #{rate},
         #{userComments}
         )
