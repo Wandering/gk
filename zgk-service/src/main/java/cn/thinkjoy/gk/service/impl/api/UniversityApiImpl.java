@@ -1,11 +1,16 @@
 package cn.thinkjoy.gk.service.impl.api;
 
+import cn.thinkjoy.common.domain.view.BizData4Page;
 import cn.thinkjoy.gk.api.IUniversityApi;
 import cn.thinkjoy.gk.dao.IUniversityInfoDao;
+import cn.thinkjoy.gk.domain.GkAdmissionLine;
+import cn.thinkjoy.gk.pojo.UniversityEnrollingDTO;
+import cn.thinkjoy.gk.service.information.service.ex.IUniversityEnrollingExService;
 import cn.thinkjoy.zgk.remote.IUniversityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +24,8 @@ public class UniversityApiImpl implements IUniversityApi {
     private IUniversityInfoDao iUniversityInfoDao;
     @Autowired
     private IUniversityService universityService;
+    @Autowired
+    private IUniversityEnrollingExService universityEnrollingExService;
 
     @Override
     public List<Map<String, Object>> getBatchByYearAndArea(Map<String, Object> map) {
@@ -38,5 +45,50 @@ public class UniversityApiImpl implements IUniversityApi {
     @Override
     public List<Map<String, Object>> getMajorPlanConditions(Map<String, String> map) {
         return iUniversityInfoDao.getMajorPlanConditions(map);
+    }
+
+    @Override
+    public BizData4Page<GkAdmissionLine> getGkAdmissionLineList(Map<String, Object> map, Integer page, Integer rows) {
+        List<UniversityEnrollingDTO> list = universityEnrollingExService.queryPage(map,(page-1)*rows,rows);
+        Integer count = universityEnrollingExService.count(map);
+        BizData4Page<GkAdmissionLine> dataPage = new BizData4Page<>();
+        dataPage.setRows(domain2GkAdmissionLine(list));
+        dataPage.setRecords(count);
+        return dataPage;
+    }
+
+
+    /**
+     * api需要domainList和admindomainList转换
+     * @param universityEnrollingDTOs
+     * @return
+     */
+    private List<GkAdmissionLine> domain2GkAdmissionLine(List<UniversityEnrollingDTO> universityEnrollingDTOs){
+        if(universityEnrollingDTOs==null)return null;
+        List<GkAdmissionLine> gkAdmissionLines = new ArrayList<>();
+        for(UniversityEnrollingDTO universityEnrollingDTO:universityEnrollingDTOs){
+            gkAdmissionLines.add(domain2GkAdmissionLine(universityEnrollingDTO));
+        }
+        return gkAdmissionLines;
+    }
+
+    /**
+     * api需要domain和admindomain转换
+     * @param universityEnrollingDTO
+     * @return
+     */
+    private GkAdmissionLine domain2GkAdmissionLine(UniversityEnrollingDTO universityEnrollingDTO){
+        GkAdmissionLine gkAdmissionLine=new GkAdmissionLine();
+        gkAdmissionLine.setId(universityEnrollingDTO.getUniversityId());
+        gkAdmissionLine.setName(universityEnrollingDTO.getName());
+        gkAdmissionLine.setAverageScore(universityEnrollingDTO.getAverageScore());
+        gkAdmissionLine.setBatchname(universityEnrollingDTO.getBatchname());
+        gkAdmissionLine.setHighestScore(universityEnrollingDTO.getHighestScore());
+        gkAdmissionLine.setLowestScore(universityEnrollingDTO.getLowestScore());
+        gkAdmissionLine.setProperty(universityEnrollingDTO.getProperty());
+        gkAdmissionLine.setTypename(universityEnrollingDTO.getTypename());
+        gkAdmissionLine.setYear(universityEnrollingDTO.getYear());
+        gkAdmissionLine.setSubjection(universityEnrollingDTO.getSubjection());
+        return gkAdmissionLine;
     }
 }

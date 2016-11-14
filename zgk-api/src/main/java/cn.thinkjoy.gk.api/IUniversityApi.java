@@ -1,5 +1,8 @@
 package cn.thinkjoy.gk.api;
 
+import cn.thinkjoy.common.domain.view.BizData4Page;
+import cn.thinkjoy.gk.domain.GkAdmissionLine;
+
 import java.util.List;
 import java.util.Map;
 
@@ -35,4 +38,6 @@ public interface IUniversityApi {
      */
     List<Map<String, Object>> getMajorPlanConditions(Map<String, String> map);
 
+
+    BizData4Page<GkAdmissionLine> getGkAdmissionLineList(Map<String,Object> map, Integer page, Integer rows);
 }
