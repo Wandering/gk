@@ -516,7 +516,7 @@
                 id
             FROM
                 zgk_university
-            <if test="areaId != null and areaId != -1">
+            <if test="areaId != null and areaId != '-1'">
                 WHERE areaid = #{areaId}
             </if>
         ) university ON a.universityId = university.id,
