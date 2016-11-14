@@ -498,31 +498,41 @@
     </select>
 
     <select id="getBatchByYearAndArea" resultType="java.util.Map">
+        SELECT
+            b.*
+        FROM
+            (
+                SELECT
+                    universityId,
+                    batch
+                FROM
+                    zgk_university_enrolling enrolling
+                WHERE
+                    YEAR = #{year}
+                AND areaid = #{currAreaId}
+            ) a
+        INNER JOIN (
             SELECT
-	b.*
-FROM
-	(
-		SELECT
-			universityId,batch
-		FROM
-			zgk_university_enrolling enrolling WHERE year = #{year}
-		AND areaid = #{currAreaId}
-	) a
-INNER JOIN (SELECT id FROM zgk_university WHERE areaid=#{areaId}) university ON a.universityId=university.id
-		,
-	(
-		SELECT
-			name,
-			dictid
-		FROM
-			zgk_data_dict
-		WHERE
-			type = 'BATCHTYPE2'
-	) b
-WHERE
-a.batch = b.dictid
-GROUP BY
-	batch
+                id
+            FROM
+                zgk_university
+            <if test="areaId != null and areaId != -1">
+                WHERE areaid = #{areaId}
+            </if>
+        ) university ON a.universityId = university.id,
+         (
+            SELECT
+                NAME,
+                dictid
+            FROM
+                zgk_data_dict
+            WHERE
+                type = 'BATCHTYPE2'
+        ) b
+        WHERE
+            a.batch = b.dictid
+        GROUP BY
+            batch
     </select>
 
 
