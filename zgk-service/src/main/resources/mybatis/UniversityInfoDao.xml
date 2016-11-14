@@ -522,7 +522,7 @@
         ) university ON a.universityId = university.id,
          (
             SELECT
-                NAME,
+                name,
                 dictid
             FROM
                 zgk_data_dict
