@@ -39,5 +39,5 @@ public interface IUniversityApi {
     List<Map<String, Object>> getMajorPlanConditions(Map<String, String> map);
 
 
-    BizData4Page<GkAdmissionLine> getGkAdmissionLineList(Map<String,Object> map, Integer page, Integer rows);
+    BizData4Page<GkAdmissionLine> getAdmissionLineList(Map<String,Object> map, Integer page, Integer rows);
 }

@@ -48,7 +48,7 @@ public class UniversityApiImpl implements IUniversityApi {
     }
 
     @Override
-    public BizData4Page<GkAdmissionLine> getGkAdmissionLineList(Map<String, Object> map, Integer page, Integer rows) {
+    public BizData4Page<GkAdmissionLine> getAdmissionLineList(Map<String, Object> map, Integer page, Integer rows) {
         List<UniversityEnrollingDTO> list = universityEnrollingExService.queryPage(map,(page-1)*rows,rows);
         Integer count = universityEnrollingExService.count(map);
         BizData4Page<GkAdmissionLine> dataPage = new BizData4Page<>();
