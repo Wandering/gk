@@ -634,7 +634,17 @@
         FROM
             zgk_university_enrolling
         WHERE
-            areaId = #{provinceId}
+            areaId = #{currentProId}
+        <if test="schoolProId != -1">
+            AND universityId IN (
+                SELECT
+                    id
+                FROM
+                    zgk_university
+                WHERE
+                    areaId = #{schoolProId}
+            )
+        </if>
         GROUP BY
             `year`
     </select>

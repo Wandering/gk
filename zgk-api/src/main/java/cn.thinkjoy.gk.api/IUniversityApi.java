@@ -29,7 +29,7 @@ public interface IUniversityApi {
     List getDataDictList(String type);
 
 
-    List<String> getEnrollingYearsByProvinceId(long provinceId);
+    List<String> getEnrollingYearsByProvinceId(long currentProId,long schoolProId);
 
     /**
      * 专业招生信息查询条件
