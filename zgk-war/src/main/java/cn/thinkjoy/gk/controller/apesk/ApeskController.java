@@ -50,6 +50,7 @@ public class ApeskController extends BaseCommonController {
     private IZgkApeskCourseService zgkApeskCourseService;
 	private static final String  APESK_CHECKCODE = "O1I194H5LAHLJR2DIJ";
 	private static final String  APESK_HRUSERID = "13726081881";
+	private static final Integer STATE = 0;
 
 	@ResponseBody
 	@RequestMapping(value = "/queryApeskResult.do",method = RequestMethod.GET)
@@ -62,6 +63,7 @@ public class ApeskController extends BaseCommonController {
 		Map map = new HashMap();
 		map.put("userId", userAccountPojo.getId());
 		map.put("userArea",this.getAreaId());
+		map.put("state",STATE);
 		List<ZgkApeskDTO> zgkApeskDTOList = zgkApeskService.selectUserApeskResult(map);
 		Map resultMap = new HashMap();
 		resultMap.put("apeskObj", zgkApeskDTOList);
@@ -97,12 +99,23 @@ public class ApeskController extends BaseCommonController {
 		map.put("liangbiao", liangbiao);
 		map.put("test_email", test_email);
 		if(!StringUtil.isNulOrBlank(test_email)&&!StringUtil.isNulOrBlank(liangbiao)&&test_email.contains("_")){
-			int userId=Integer.parseInt(test_email.split("_")[2]);
+			String[] values =  test_email.split("_");
+			int userId=Integer.parseInt(values[2]);
 //			List<ZgkApesk> apList=zgkApeskService.query(Long.parseLong(userId+""),-1, liangbiao,test_email);
 			Map callMap=new HashMap();
 			callMap.put("liangBiao",liangbiao);
 			callMap.put("userId",userId);
 			callMap.put("testEmail",test_email);
+			//这里判断test_email有没有第四个值  如果有说明是sass调取的
+			Integer state = STATE;
+			try {
+				if (values.length>3){
+					state=Integer.parseInt(values[3]);
+				}
+			}catch (Exception e){
+				//吃掉这个异常
+			}
+			callMap.put("state",state);
 			List<ZgkApesk> apList=zgkApeskService.selectApeskCallBack(callMap);
 			if(apList!=null&&apList.size()>0){
 				ZgkApesk apesk=apList.get(0);
@@ -141,7 +154,7 @@ public class ApeskController extends BaseCommonController {
 		UserAccountPojo userAccountPojo = getUserAccountPojo();
 		if (userAccountPojo != null) {
 
-			List<ZgkApesk> apList=zgkApeskService.query(userAccountPojo.getId(),acId, liangbiao,"");
+			List<ZgkApesk> apList=zgkApeskService.query(userAccountPojo.getId(),acId, liangbiao,"",STATE);
 			if(apList!=null&&apList.size()>0){
 				ZgkApesk apesk=apList.get(0);
 				ZgkApeskCourse apeskCourse=zgkApeskCourseService.queryByLiangBiao(liangbiao);
@@ -185,7 +198,7 @@ public class ApeskController extends BaseCommonController {
 						apesk.setLiangBiao(liangbiao);
 						apesk.setTestEmail(testEmail);
 						apesk.setCreateDate(new Date());
-						apesk.setState(0);
+						apesk.setState(STATE);
 						apesk.setAcId(Long.parseLong(acId + ""));
 						zgkApeskService.insertSelective(apesk);
 						setData(testName, returnJsonData, liangbiao, testEmail);
