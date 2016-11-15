@@ -503,7 +503,7 @@
         FROM
             (
                 SELECT
-                    universityId,
+                    DISTINCT universityId,
                     batch
                 FROM
                     zgk_university_enrolling enrolling
