@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.service.impl.api;
 
 import cn.thinkjoy.common.domain.view.BizData4Page;
 import cn.thinkjoy.gk.api.IUniversityApi;
+import cn.thinkjoy.gk.dao.IUniversityExDAO;
 import cn.thinkjoy.gk.dao.IUniversityInfoDao;
 import cn.thinkjoy.gk.domain.GkAdmissionLine;
 import cn.thinkjoy.gk.pojo.UniversityEnrollingDTO;
@@ -26,6 +27,9 @@ public class UniversityApiImpl implements IUniversityApi {
     private IUniversityService universityService;
     @Autowired
     private IUniversityEnrollingExService universityEnrollingExService;
+    @Autowired
+    private IUniversityExDAO universityExDAO;
+
 
     @Override
     public List<Map<String, Object>> getBatchByYearAndArea(Map<String, Object> map) {
@@ -90,5 +94,10 @@ public class UniversityApiImpl implements IUniversityApi {
         gkAdmissionLine.setYear(universityEnrollingDTO.getYear());
         gkAdmissionLine.setSubjection(universityEnrollingDTO.getSubjection());
         return gkAdmissionLine;
+    }
+
+    @Override
+    public List getUniversityMajorEnrollingPlanList(Map<String, Object> condition) {
+        return universityExDAO.getUniversityMajorEnrollingPlanList(condition);
     }
 }

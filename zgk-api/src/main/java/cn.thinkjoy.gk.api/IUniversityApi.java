@@ -40,4 +40,6 @@ public interface IUniversityApi {
 
 
     BizData4Page<GkAdmissionLine> getAdmissionLineList(Map<String,Object> map, Integer page, Integer rows);
+
+    List getUniversityMajorEnrollingPlanList(Map<String, Object> condition);
 }
