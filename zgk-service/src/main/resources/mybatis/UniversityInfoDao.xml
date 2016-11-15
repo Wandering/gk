@@ -508,8 +508,10 @@
                 FROM
                     zgk_university_enrolling enrolling
                 WHERE
-                    YEAR = #{year}
-                AND areaid = #{currAreaId}
+                    areaid = #{currAreaId}
+                    <if test="year != null and year != ''">
+                      and  YEAR = #{year}
+                    </if>
             ) a
         INNER JOIN (
             SELECT
