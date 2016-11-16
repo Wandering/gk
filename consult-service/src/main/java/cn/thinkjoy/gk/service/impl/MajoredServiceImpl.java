@@ -241,6 +241,8 @@ public class MajoredServiceImpl implements IMajoredService {
             map.put("majorIntroduce", majorInfoDTO.getMajorIntroduce());
             map.put("employmentRate", majorInfoDTO.getEmploymentRate());
             map.put("salary", majorInfoDTO.getSalary());
+            map.put("salaryRank", majorInfoDTO.getSalaryRank());
+            map.put("fmRatio", majorInfoDTO.getFmRatio());
         }
         return map;
     }

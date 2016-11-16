@@ -149,19 +149,24 @@
     </select>
 
     <select id="getMajoredInfoById" resultType="cn.thinkjoy.gk.dto.MajorInfoDTO">
-        select zmb.major_code as id,
-            zmb.major_name as majorName,
-            zmb.employmentRate as employmentRate,
-            zmb.salary_rank as salaryRank,
-            zmb.major_code as majorCode,
-		    zmd.degree_offered as degreeOffered,
-		    zmd.schooling_duration as schoolingDuration,
-		    zmd.offer_courses as offerCourses,
-		    zmd.major_introduce as majorIntroduce
-        from zgk_major_base zmb
-        left join zgk_major_detail zmd on zmb.major_code=zmd.major_code
-        where zmb.major_code=#{majorCode}
-        limit 1
+        SELECT
+            zmb.major_code AS id,
+            zmb.major_name AS majorName,
+            zmb.employmentRate AS employmentRate,
+            zmb.salary_rank AS salaryRank,
+            zmb.major_code AS majorCode,
+            zmd.degree_offered AS degreeOffered,
+            zmd.schooling_duration AS schoolingDuration,
+            zmd.offer_courses AS offerCourses,
+            zmd.major_introduce AS majorIntroduce,
+            zmb.salary AS salary,
+            zmb.fm_ratio AS fmRatio
+        FROM
+            zgk_major_base zmb
+        LEFT JOIN zgk_major_detail zmd ON zmb.major_code = zmd.major_code
+        WHERE
+            zmb.major_code = #{majorCode}
+        LIMIT 1
     </select>
 
 </mapper>
