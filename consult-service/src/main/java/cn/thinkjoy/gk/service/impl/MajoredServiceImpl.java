@@ -243,8 +243,9 @@ public class MajoredServiceImpl implements IMajoredService {
             map.put("salary", majorInfoDTO.getSalary());
             map.put("salaryRank", majorInfoDTO.getSalaryRank());
             String fmRatio = majorInfoDTO.getFmRatio();
+
             if(fmRatio != null && !"".equals(fmRatio)){
-                fmRatio.replace("男","").replace("女","");
+                fmRatio = fmRatio.replace("男","").replace("女","").replace(" ","");
             }
             map.put("fmRatio",fmRatio);
         }
