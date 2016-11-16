@@ -93,6 +93,7 @@ public class UniversityApiImpl implements IUniversityApi {
         gkAdmissionLine.setTypename(universityEnrollingDTO.getTypename());
         gkAdmissionLine.setYear(universityEnrollingDTO.getYear());
         gkAdmissionLine.setSubjection(universityEnrollingDTO.getSubjection());
+        gkAdmissionLine.setEnrollingNumber(universityEnrollingDTO.getRealEnrollingNumber());
         return gkAdmissionLine;
     }
 
