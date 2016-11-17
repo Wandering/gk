@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IExpertOrderDAO">
+<!--
+insert
+update
+updateNull
+deleteById
+deleteByCondition
+deleteByProperty
+fetch
+findOne
+findList
+findAll
+queryPage
+like
+queryList
+queryOne
+count
+selectMaxId
+updateOrSave
+selectOne
+selectList
+-->
+    <update id="updateMap">
+        UPDATE zgk_expert_reservation_order_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.cardId!=null">
+                card_id = #{map.cardId},
+            </if>
+            <if test="map.serviceItem!=null">
+                service_item = #{map.serviceItem},
+            </if>
+            <if test="map.userId!=null">
+                user_id = #{map.userId},
+            </if>
+            <if test="map.expertId!=null">
+                expert_id = #{map.expertId},
+            </if>
+            <if test="map.channel!=null">
+                channel = #{map.channel},
+            </if>
+            <if test="map.channelNum!=null">
+                channel_num = #{map.channelNum},
+            </if>
+            <if test="map.contactPerson!=null">
+                contact_person = #{map.contactPerson},
+            </if>
+            <if test="map.contactPhone!=null">
+                contact_phone = #{map.contactPhone},
+            </if>
+            <if test="map.expectTime!=null">
+                expect_time = #{map.expectTime},
+            </if>
+            <if test="map.endTime!=null">
+                end_time = #{map.endTime},
+            </if>
+            <if test="map.questionDesc!=null">
+                question_desc = #{map.questionDesc},
+            </if>
+            <if test="map.agreeMark!=null">
+                agree_mark = #{map.agreeMark},
+            </if>
+            <if test="map.status!=null">
+                status = #{map.status},
+            </if>
+            <if test="map.score!=null">
+                score = #{map.score},
+            </if>
+            <if test="map.comments!=null">
+                comments = #{map.comments},
+            </if>
+            <if test="map.createDate!=null">
+                create_date = #{map.createDate},
+            </if>
+            <if test="map.serviceCount!=null">
+                service_count = #{map.serviceCount},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+</mapper>
+

@@ -35,7 +35,7 @@
         where
         expert_phone = #{account}
     </select>
-    <select id="queryUserInfoByAccount" parameterType="ExpertUser" resultType="ExpertUser">
+    <select id="queryBaseUserByAccount" parameterType="ExpertUser" resultType="ExpertUser">
         select id as id,expert_phone as account,password as password
         from zgk_expert_info
         where
