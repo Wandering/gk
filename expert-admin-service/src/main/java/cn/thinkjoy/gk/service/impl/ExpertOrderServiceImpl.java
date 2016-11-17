@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -37,13 +38,12 @@ public class ExpertOrderServiceImpl extends AbstractPageService<IBaseDAO<ExpertR
     @Override
     public BizData4Page<ExpertOrderDTO> queryOrder(Long expertId, Integer page, Integer rows) {
         Map<String,Object> map = Maps.newHashMap();
+        map.put("expertId",expertId);
         BizData4Page bizData4Page =new BizData4Page();
         bizData4Page.setConditions(map);
         bizData4Page.setPage(page);
-        this.queryPageByDataPerm(bizData4Page, "id", SqlOrderEnum.DESC);
-        /**
-         * 判定,如果是空的不进行后续操作直接返回,为空的原因可能是因为该用户未购买该卡
-         */
+        this.queryPageByDataPerm(bizData4Page, "ord.create_date", SqlOrderEnum.DESC);
+
         List<ExpertReservationOrderDetailDTO> expertReservationOrderDetailDTOs =bizData4Page.getRows();
 
         if (expertReservationOrderDetailDTOs != null && expertReservationOrderDetailDTOs.size() != 0)
@@ -51,15 +51,42 @@ public class ExpertOrderServiceImpl extends AbstractPageService<IBaseDAO<ExpertR
             //后续操作
             handlerOrder(expertReservationOrderDetailDTOs);
         }
-
+        if (expertReservationOrderDetailDTOs != null && expertReservationOrderDetailDTOs.size() != 0)
+        {
+            //后续操作
+            bizData4Page.setRows(detailsToDtos(expertReservationOrderDetailDTOs));
+        }
         bizData4Page.setConditions(null);
         return bizData4Page;
     }
+
+
 
     @Override
     public IBaseDAO getDao() {
         return expertOrderDAO;
     }
+
+    private List<ExpertOrderDTO> detailsToDtos(List<ExpertReservationOrderDetailDTO> detailDTOs){
+        List<ExpertOrderDTO> dtos = new ArrayList<>();
+        for (ExpertReservationOrderDetailDTO expertReservationOrderDetailDTO:detailDTOs){
+            dtos.add(detailToDto(expertReservationOrderDetailDTO));
+        }
+        return dtos;
+    }
+    private ExpertOrderDTO detailToDto(ExpertReservationOrderDetailDTO detailDTO){
+        ExpertOrderDTO expertOrderDTO = new ExpertOrderDTO();
+        expertOrderDTO.setServiceName(detailDTO.getServiceName());
+        expertOrderDTO.setServiceState(detailDTO.getStatus());
+        expertOrderDTO.setId(detailDTO.getId());
+        expertOrderDTO.setCustomer(detailDTO.getContactPerson());
+        expertOrderDTO.setCustomerId(detailDTO.getUserId());
+        expertOrderDTO.setServiceTime(detailDTO.getExpectTime());
+        expertOrderDTO.setServiceId(detailDTO.getServiceItem());
+        return expertOrderDTO;
+    }
+
+
     private void handlerOrder(List<ExpertReservationOrderDetailDTO> list)
     {
         for (ExpertReservationOrderDetailDTO expertReservationOrderDetailDTO : list)

@@ -20,7 +20,7 @@ public class ExpertAdminConst {
     /**
      * 不拦截的URL
      */
-    public static final String [] NoFilter_Pages = {"/expert/admin/login*.*","/expert/admin/index*.*"};
+    public static final String [] NoFilter_Pages = {"/expert/admin/login*.*"};
 
     public static final String LOGIN_PATH = "/expert/admin/login";
 

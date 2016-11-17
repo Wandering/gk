@@ -9,7 +9,7 @@ public class ExpertOrderDTO extends BaseDomain{
     /**服务名称**/
     private String serviceName;
     /**服务状态**/
-    private String serviceState;
+    private Integer serviceState;
     /**学生姓名**/
     private String customer;
     /**服务时间**/
@@ -17,7 +17,9 @@ public class ExpertOrderDTO extends BaseDomain{
     /**学生Id**/
     private String customerId;
     /**服务形式(QQ,微信,智高考网站)**/
-    private String serviceType;
+    private String channel;
+
+    private String serviceId;
 
 
     public String getServiceName() {
@@ -28,11 +30,11 @@ public class ExpertOrderDTO extends BaseDomain{
         this.serviceName = serviceName;
     }
 
-    public String getServiceState() {
+    public Integer getServiceState() {
         return serviceState;
     }
 
-    public void setServiceState(String serviceState) {
+    public void setServiceState(Integer serviceState) {
         this.serviceState = serviceState;
     }
 
@@ -60,11 +62,19 @@ public class ExpertOrderDTO extends BaseDomain{
         this.customerId = customerId;
     }
 
-    public String getServiceType() {
-        return serviceType;
+    public String getChannel() {
+        return channel;
     }
 
-    public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+
+    public String getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(String serviceId) {
+        this.serviceId = serviceId;
     }
 }

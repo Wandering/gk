@@ -57,7 +57,7 @@
     </filter>
     <filter-mapping>
         <filter-name>loginFilter</filter-name>
-        <url-pattern>/expert/admin/*</url-pattern>
+        <url-pattern>/expert/admin/**\.do</url-pattern>
     </filter-mapping>
 
     <listener>
@@ -118,12 +118,13 @@
         <param-value>zgk-war</param-value>
     </context-param>
 
-	<welcome-file-list>
-        <welcome-file>/index.jsp</welcome-file>
+    <welcome-file-list>
+        <welcome-file>/expert/admin/login.do</welcome-file>
     </welcome-file-list>
 
     <context-param>
         <param-name>log4jExposeWebAppRoot</param-name>
         <param-value>false</param-value>
     </context-param>
+
 </web-app>
