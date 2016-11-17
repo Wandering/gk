@@ -8,12 +8,8 @@ import cn.thinkjoy.gk.domain.ExpertInfo;
 import cn.thinkjoy.gk.domain.ExpertUser;
 import cn.thinkjoy.gk.pojo.ExpertUserDTO;
 import cn.thinkjoy.gk.service.IExpertLoginServcie;
-import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
-import java.util.Map;
 
 /**
  * Created by yangyongping on 2016/11/16.

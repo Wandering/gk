@@ -7,5 +7,5 @@ import cn.thinkjoy.gk.pojo.ExpertReservationOrderDetailDTO;
  * Created by yangyongping on 2016/11/17.
  */
 public interface IExpertOrderDAO  extends IBaseDAO<ExpertReservationOrderDetailDTO> {
-    
+
 }

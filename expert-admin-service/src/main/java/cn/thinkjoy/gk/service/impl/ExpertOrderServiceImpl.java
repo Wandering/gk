@@ -2,7 +2,6 @@ package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.common.domain.view.BizData4Page;
-import cn.thinkjoy.common.service.impl.AbstractBaseService;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
 import cn.thinkjoy.common.utils.SqlOrderEnum;
 import cn.thinkjoy.gk.constant.ExpertAdminConst;

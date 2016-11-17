@@ -6,7 +6,6 @@
  */
 package cn.thinkjoy.gk.service.impl;
 
-import cn.thinkjoy.common.domain.BaseDomain;
 import cn.thinkjoy.common.dao.IBaseDAO;
 import cn.thinkjoy.common.service.impl.AbstractPageService;
 import cn.thinkjoy.gk.dao.IExpertInfoDAO;
@@ -14,9 +13,6 @@ import cn.thinkjoy.gk.domain.ExpertInfo;
 import cn.thinkjoy.gk.service.IExpertInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Map;
 
 
 @Service("ExpertInfoServiceImpl")

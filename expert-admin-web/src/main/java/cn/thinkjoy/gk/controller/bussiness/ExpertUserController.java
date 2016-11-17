@@ -6,7 +6,6 @@ import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.ExpertInfo;
 import cn.thinkjoy.gk.pojo.ExpertUserDTO;
 import cn.thinkjoy.gk.service.IExpertInfoService;
-import cn.thinkjoy.gk.service.IExpertLoginServcie;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
