@@ -26,6 +26,8 @@ public class GkAdmissionLine extends BaseDomain {
     private Integer averageScore;
     /** 录取最低分 */
     private Integer lowestScore;
+    /** 招生人数 */
+    private Integer enrollingNumber;
 
     private Map<String,Object> propertys;
 
@@ -107,5 +109,13 @@ public class GkAdmissionLine extends BaseDomain {
 
     public void setPropertys(Map<String, Object> propertys) {
         this.propertys = propertys;
+    }
+
+    public Integer getEnrollingNumber() {
+        return enrollingNumber;
+    }
+
+    public void setEnrollingNumber(Integer enrollingNumber) {
+        this.enrollingNumber = enrollingNumber;
     }
 }
