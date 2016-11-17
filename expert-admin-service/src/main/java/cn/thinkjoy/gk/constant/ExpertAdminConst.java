@@ -1,0 +1,53 @@
+package cn.thinkjoy.gk.constant;
+
+public class ExpertAdminConst {
+    /**
+     * 用户cookieKey
+     */
+    public static final String USER_SESSION_KEY = "expert_user_info";
+
+    /**
+     * 用户cookie过期时间设置
+     */
+    public static final Integer USER_SESSION_TIMEOUT = 4*60*60;
+
+
+    public static final String CAPTCHA_AUTH_TIME_KEY = "gk_captcha_auth_time_";
+
+    public static final String USER_CAPTCHA_KEY = "gk_user_captcha_";
+
+    public static final String ZGK = "zgk";
+    /**
+     * 不拦截的URL
+     */
+    public static final String [] NoFilter_Pages = {"/expert/admin/login*.*","/expert/admin/index*.*"};
+
+    public static final String LOGIN_PATH = "/expert/admin/login";
+
+
+    /**
+     *订单未预约
+     */
+    public static final int EXPERT_ORDER_STATUS_N = 0;
+
+    /**
+     *预约成功
+     */
+    public static final int EXPERT_ORDER_STATUS_Y1 = 1;
+
+    /**
+     *服务中
+     */
+    public static final int EXPERT_ORDER_STATUS_Y2 = 2;
+    /**
+     *服务结束
+     */
+    public static final int EXPERT_ORDER_STATUS_Y3 = 3;
+    /**
+     *服务结束+已评价
+     */
+    public static final int EXPERT_ORDER_STATUS_Y4 = 4;
+
+    public final static String formatString = "yyyy-MM-dd HH:mm";
+
+}

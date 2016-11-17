@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IExpertUserDAO">
+    <sql id="Base_Column_List">
+        id as id,
+        expert_name as expertName,
+        expert_photo_url as expertPhotoUrl,
+        expert_intro as expertIntro,
+        expert_phone as expertPhone,
+        server_cases as serverCases,
+        area_id as areaId,
+        expert_domain as expertDomain,
+        expert_profile as expertProfile,
+        best_expert as bestExpert,
+        qualification as qualification,
+        famous_teacher as famousTeacher,
+        is_checked as isChecked,
+        create_date as createDate,
+        pre_appoint_days as preAppointDays,
+        password as password,
+        qq as qq,
+        weixin as weixin
+    </sql>
+    <sql id="Simple_Base_Column_List">
+        expert_name as expertName,
+        expert_photo_url as imageUrl,
+        expert_phone as account,
+        qq as qq,
+        weixin as weixin
+    </sql>
+    <select id="queryUserInfoByAccount" parameterType="ExpertUser" resultType="cn.thinkjoy.gk.pojo.ExpertUserDTO">
+        select <include refid="Simple_Base_Column_List" />
+        from zgk_expert_info
+        where
+        expert_phone = #{account}
+    </select>
+    <select id="queryUserInfoByAccount" parameterType="ExpertUser" resultType="ExpertUser">
+        select id as id,expert_phone as account,password as password
+        from zgk_expert_info
+        where
+        expert_phone = #{account}
+    </select>
+</mapper>
+

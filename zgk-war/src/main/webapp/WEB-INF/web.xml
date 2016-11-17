@@ -49,6 +49,17 @@
         <!--<url-pattern>/*</url-pattern>-->
     <!--</filter-mapping>-->
     <!-- Spring 刷新Introspector防止内存泄露 -->
+
+    <!-- 登陆过滤 -->
+    <filter>
+        <filter-name>loginFilter</filter-name>
+        <filter-class>cn.thinkjoy.gk.filter.ExpertAdminLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>loginFilter</filter-name>
+        <url-pattern>/expert/admin/*</url-pattern>
+    </filter-mapping>
+
     <listener>
         <listener-class>
             org.springframework.web.util.IntrospectorCleanupListener
@@ -69,17 +80,17 @@
 	<listener>
 	    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
+
 	<listener>
         <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
     </listener>
-    
-    <listener>    
-        <listener-class>    
-            org.springframework.web.context.request.RequestContextListener    
-        </listener-class>    
+
+    <listener>
+        <listener-class>
+            org.springframework.web.context.request.RequestContextListener
+        </listener-class>
 	</listener>
-    
+
 	<!-- 配置Spring核心控制器 -->
 	<servlet>
 		<servlet-name>springmvc</servlet-name>
@@ -97,16 +108,16 @@
 		<servlet-name>springmvc</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
-	
+
     <session-config>
 	      <session-timeout>15</session-timeout>
 	</session-config>
-	
+
 	<context-param>
         <param-name>webAppRootKey</param-name>
         <param-value>zgk-war</param-value>
     </context-param>
-    
+
 	<welcome-file-list>
         <welcome-file>/index.jsp</welcome-file>
     </welcome-file-list>

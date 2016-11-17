@@ -39,3 +39,7 @@ include 'zgk-war'
 include 'zgk-service'
 include 'zgk-api'
 
+include 'expert-admin-web'
+include 'expert-admin-domain'
+include 'expert-admin-service'
+
