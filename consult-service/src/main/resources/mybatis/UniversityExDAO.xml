@@ -621,7 +621,7 @@
             <if test="schoolProvinceId != null">
                 AND t1.provinceCode = #{schoolProvinceId}
             </if>
-            <if test="category != null">
+            <if test="category != null and category != ''">
                 AND t0.majorSpec = #{category}
             </if>
         LIMIT #{index},#{pageSize}
