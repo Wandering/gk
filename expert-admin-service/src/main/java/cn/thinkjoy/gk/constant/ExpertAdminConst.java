@@ -22,8 +22,9 @@ public class ExpertAdminConst {
      */
     public static final String [] NoFilter_Pages = {"/expert/admin/login*.*"};
 
-    public static final String LOGIN_PATH = "/expert/admin/login";
+    public static final String LOGIN_PATH = "/expert/admin/login.do";
 
+    public static final String USER_IMAGE_CAPTCHA_KEY = "gk_captcha_auth_time_";
 
     /**
      *订单未预约

@@ -1,19 +1,23 @@
 package cn.thinkjoy.gk.controller.bussiness;
 
 import cn.thinkjoy.cloudstack.cache.RedisRepository;
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.gk.common.ErrorCode;
 import cn.thinkjoy.gk.common.ExceptionUtil;
 import cn.thinkjoy.gk.common.RandomCodeUtil;
 import cn.thinkjoy.gk.constant.ExpertAdminConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.domain.ExpertInfo;
 import cn.thinkjoy.gk.domain.ExpertUser;
 import cn.thinkjoy.gk.pojo.ExpertUserDTO;
+import cn.thinkjoy.gk.service.IExpertInfoService;
 import cn.thinkjoy.gk.service.IExpertLoginServcie;
 import cn.thinkjoy.sms.api.SMSService;
 import cn.thinkjoy.sms.domain.SMSCheckCode;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -24,7 +28,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -39,7 +45,7 @@ public class ExpertLoginController {
     IExpertLoginServcie expertLoginServcie;
 
     @Autowired
-    private SMSService zgkSmsService;
+    private IExpertInfoService expertInfoService;
 
     @Autowired
     private RedisRepository<String, Object> redis;
@@ -88,77 +94,123 @@ public class ExpertLoginController {
      */
     @ResponseBody
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public void resetPassword(ExpertUser expertUser,String newPassword,HttpServletRequest request) {
+    public Boolean resetPassword(ExpertUser expertUser,String newPassword,HttpServletRequest request) {
         checkExpertUser(expertUser);
         if (StringUtils.isEmpty(newPassword)){}{
             ExceptionUtil.throwException(ErrorCode.NEW_PWD_NULL);
         }
         //修改密码
         Boolean flag = expertLoginServcie.resetPassword(expertUser,newPassword);
-        if (flag) {
-            expertUser.setPassword(newPassword);
-            ExpertUserDTO expertUserDTO = expertLoginServcie.login(expertUser);
-            // 登陆成功,将用户ID存入session
-            HttpSession session = request.getSession();
-            session.setAttribute(ExpertAdminConst.USER_SESSION_KEY, JSON.toJSON(expertUserDTO));
-            // session过期时间
-            session.setMaxInactiveInterval(ExpertAdminConst.USER_SESSION_TIMEOUT);
+        return flag;
+    }
+    /**
+     * 找回密码
+     *
+     * @param account
+     * @param captcha
+     * @param password
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/retrievePassword")
+    @ResponseBody
+    public Boolean retrievePassword(@RequestParam(value = "account", required = false) String account,
+                                                @RequestParam(value = "captcha", required = false) String captcha,
+                                                @RequestParam(value = "password", required = false) String password)
+    {
+        try
+        {
+            if (org.apache.commons.lang3.StringUtils.isEmpty(account))
+            {
+                throw new BizException(ErrorCode.PARAM_NULL.getCode(), "请输入账号!");
+            }
+            if (org.apache.commons.lang3.StringUtils.isEmpty(captcha))
+            {
+                throw new BizException(ErrorCode.PARAM_NULL.getCode(), "请输入验证码!");
+            }
+            if (org.apache.commons.lang3.StringUtils.isEmpty(password))
+            {
+                throw new BizException(ErrorCode.PARAM_NULL.getCode(), "请输入密码!");
+            }
+            ExpertInfo expertInfo = (ExpertInfo)expertInfoService.findOne("expert_phone",account);
+            if (expertInfo == null)
+            {
+                ExceptionUtil.throwException(ErrorCode.ACCOUNT_ERROR);
+            }
+            if (!checkCaptcha(account, captcha))
+            {
+                throw new BizException(ErrorCode.PARAM_NULL.getCode(), "验证码有误!");
+            }
+
+            //根据账号id查询账号
+            ExpertInfo updatePass = new ExpertInfo();
+            updatePass.setPassword(password);
+            try
+            {
+                //更新账号密码
+                Boolean flag = expertInfoService.update(updatePass)>0;
+                if (!flag)
+                {
+                    throw new BizException(ErrorCode.PARAM_NULL.getCode(), "密码重设失败");
+                }
+            }
+            catch (Exception e)
+            {
+                throw new BizException(ErrorCode.PARAM_NULL.getCode(), "密码重设失败");
+            }
         }
-        return;
+        catch (Exception e)
+        {
+            throw e;
+        }
+        finally
+        {
+
+        }
+        return true;
     }
 
+    /**
+     * 图形验证码太模糊的时候,查询图形验证码接口
+     *
+     * @param account
+     * @return
+     */
+    @RequestMapping(value = "/getRegisterImageCaptcha")
     @ResponseBody
-    @ApiDesc(value = "发送验证码",owner = "杨国荣")
-    @RequestMapping(value = "/sendSmsCode",method = RequestMethod.POST)
-    public Map<String,Object> sendSmsCode(@RequestParam String account){
-
-        Map<String,Object> paramMap = Maps.newHashMap();
-        ExpertUser expertUser = new ExpertUser();
-        if(!expertLoginServcie.userExist(account)){
-            ExceptionUtil.throwException(ErrorCode.ACCOUNT_NULL);
+    public String getRegisterImageCaptcha(String account)
+    {
+        String key = ExpertAdminConst.USER_IMAGE_CAPTCHA_KEY + account;
+        Object value = redis.get(key);
+        if (value == null)
+        {
+            ExceptionUtil.throwException(ErrorCode.CHECK_SMSCODE_NOT_EXIST);
         }
-        String timeKey = ExpertAdminConst.CAPTCHA_AUTH_TIME_KEY + account;
-        String smsCodeKey = ExpertAdminConst.USER_CAPTCHA_KEY + account;
-        // 发送验证码间隔时间未到(获取验证码太频繁)
-        if(redis.exists(timeKey)){
-            ExceptionUtil.throwException(ErrorCode.SMS_CODE_FREQUENCY);
+        return value.toString();
+    }
+
+    /**
+     * 判断验证码是否正确
+     *
+     * @param account
+     * @param captcha
+     * @return
+     */
+    private boolean checkCaptcha(String account, String captcha)
+    {
+        boolean equals = false;
+        String key = ExpertAdminConst.USER_CAPTCHA_KEY + account;
+        if (redis.get(key) == null)
+        {
+            ExceptionUtil.throwException(ErrorCode.CHECK_SMSCODE_NOT_EXIST);
         }
-
-        SMSCheckCode smsCode = new SMSCheckCode();
-        smsCode.setPhone(account);
-        smsCode.setCheckCode(RandomCodeUtil.generateNumCode(6));
-        smsCode.setBizTarget(ExpertAdminConst.ZGK);
-
-        boolean smsResult = zgkSmsService.sendSMS(smsCode,false);
-
-        if(!smsResult) {
-            // 发送失败切换短信通道
-            smsResult = zgkSmsService.sendSMS(smsCode,true);
+        String cap = redis.get(key).toString();
+        if (captcha.equals(cap))
+        {
+            redis.del(key);
+            equals = true;
         }
-
-        if(smsResult){
-            // 验证码有效时间10分钟
-            redis.set(
-                    smsCodeKey,
-                    smsCode.getCheckCode(),
-                    600,
-                    TimeUnit.SECONDS
-            );
-            // 发送验证码间隔时间1分钟
-            redis.set(
-                    timeKey,
-                    System.currentTimeMillis(),
-                    60,
-                    TimeUnit.SECONDS
-            );
-        }else {
-            // 再次发送失败,抛出异常
-            ExceptionUtil.throwException(ErrorCode.SMS_CODE_FAIL);
-        }
-
-        Map<String,Object> returnMap = Maps.newHashMap();
-        returnMap.put("time",60);
-        return returnMap;
+        return equals;
     }
 
     private void checkExpertUser(ExpertUser expertUser){

@@ -34,13 +34,13 @@
         select <include refid="Simple_Base_Column_List" />
         from zgk_expert_info
         where
-        expert_phone = #{account}
+        expert_phone = #{account} limit 1
     </select>
     <select id="queryBaseUserByAccount" parameterType="ExpertUser" resultType="ExpertUser">
         select id as id,expert_phone as account,password as password
         from zgk_expert_info
         where
-        expert_phone = #{account}
+        expert_phone = #{account} limit 1
     </select>
 </mapper>
 

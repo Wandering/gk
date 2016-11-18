@@ -2,9 +2,12 @@ package cn.thinkjoy.gk.controller.bussiness;
 
 import cn.thinkjoy.gk.common.ErrorCode;
 import cn.thinkjoy.gk.common.ExceptionUtil;
+import cn.thinkjoy.gk.common.ExpertUserContext;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.ExpertInfo;
+import cn.thinkjoy.gk.pojo.ExpertCustomerDTO;
 import cn.thinkjoy.gk.pojo.ExpertUserDTO;
+import cn.thinkjoy.gk.service.ICustomerService;
 import cn.thinkjoy.gk.service.IExpertInfoService;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +40,13 @@ public class ExpertUserController {
     @RequestMapping(value = "/updateInfo",method = RequestMethod.POST)
     public Boolean updateInfo(ExpertUserDTO expertUserDTO){
         Map<String,Object> map = Maps.newHashMap();
-        map.put("expertPhotoUrl",expertUserDTO.getAccount());
-        ExpertInfo expertInfo = (ExpertInfo)expertInfoService.queryOne(map);
+        Long id= ExpertUserContext.getCurrentUser().getId();
+        ExpertInfo expertInfo = (ExpertInfo)expertInfoService.fetch(id);
         if (expertInfo==null){
             ExceptionUtil.throwException(ErrorCode.ACCOUNT_ERROR);
         }
-        expertUserDTO.setId(expertInfo.getId());
+        expertUserDTO.setId(id);
+        expertUserDTO.setAccount(null);
         return expertInfoService.update(dtoToInfo(expertUserDTO))>0;
     }
 
@@ -51,19 +55,17 @@ public class ExpertUserController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/queryUserInfo",method = RequestMethod.POST)
-    public ExpertUserDTO queryExpertUserInfo(@RequestParam String account){
-        if (account==null){
-            ExceptionUtil.throwException(ErrorCode.ACCOUNT_NULL);
-        }
-        Map<String,Object> map = Maps.newHashMap();
-        map.put("expertPhone",account);
-        ExpertInfo expertInfo = (ExpertInfo)expertInfoService.queryOne(map);
+    @RequestMapping(value = "/queryUserInfo",method = RequestMethod.GET)
+    public ExpertUserDTO queryExpertUserInfo(){
+        Long id= ExpertUserContext.getCurrentUser().getId();
+        ExpertInfo expertInfo = (ExpertInfo)expertInfoService.fetch(id);
         if (expertInfo==null){
             ExceptionUtil.throwException(ErrorCode.ACCOUNT_ERROR);
         }
         return infoToDto(expertInfo);
     }
+
+
 
     /**
      * poToVo

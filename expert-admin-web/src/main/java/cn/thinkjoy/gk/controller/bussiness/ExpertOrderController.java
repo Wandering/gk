@@ -32,8 +32,7 @@ public class ExpertOrderController {
     @RequestMapping(value = "/queryExpertOrder",method = RequestMethod.GET)
     public Object queryExpertOrder(@RequestParam(required = false,defaultValue = "1")Integer page,@RequestParam(required = false,defaultValue = "100")Integer rows) {
         Long expertId = ExpertUserContext.getCurrentUser().getId();
-//        BizData4Page<ExpertOrderDTO> bizData4Page = expertOrderService.queryOrder(expertId);
-        BizData4Page<ExpertOrderDTO> bizData4Page = null;
+        BizData4Page<ExpertOrderDTO> bizData4Page = expertOrderService.queryOrder(expertId,page,rows);
         return bizData4Page;
     }
 }
