@@ -2,10 +2,8 @@ package cn.thinkjoy.gk.controller.bussiness;
 
 import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.gk.common.ErrorCode;
 import cn.thinkjoy.gk.common.ExceptionUtil;
-import cn.thinkjoy.gk.common.RandomCodeUtil;
 import cn.thinkjoy.gk.constant.ExpertAdminConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.ExpertInfo;
@@ -13,11 +11,7 @@ import cn.thinkjoy.gk.domain.ExpertUser;
 import cn.thinkjoy.gk.pojo.ExpertUserDTO;
 import cn.thinkjoy.gk.service.IExpertInfoService;
 import cn.thinkjoy.gk.service.IExpertLoginServcie;
-import cn.thinkjoy.sms.api.SMSService;
-import cn.thinkjoy.sms.domain.SMSCheckCode;
 import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Maps;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -28,10 +22,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by yangyongping on 2016/11/16.
