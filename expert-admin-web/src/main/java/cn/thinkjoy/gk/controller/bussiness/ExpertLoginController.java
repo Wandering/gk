@@ -144,6 +144,7 @@ public class ExpertLoginController {
 
             //根据账号id查询账号
             ExpertInfo updatePass = new ExpertInfo();
+            updatePass.setId(expertInfo.getId());
             updatePass.setPassword(password);
             try
             {
