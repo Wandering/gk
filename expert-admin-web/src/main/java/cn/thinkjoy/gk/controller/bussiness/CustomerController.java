@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.controller.bussiness;
 
 import cn.thinkjoy.gk.common.ErrorCode;
 import cn.thinkjoy.gk.common.ExceptionUtil;
+import cn.thinkjoy.gk.constant.ExpertAdminConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.pojo.ExpertCustomerApeskDTO;
 import cn.thinkjoy.gk.pojo.ExpertCustomerDTO;
@@ -53,8 +54,14 @@ public class CustomerController {
             ExceptionUtil.throwException(ErrorCode.PARAM_NULL);
         }
 
-        List<ExpertCustomerApeskDTO> expertCustomerDTO = customerService.queryCustomerApesk(orderId);
+        List<ExpertCustomerApeskDTO> expertCustomerApeskDTOs = customerService.queryCustomerApesk(orderId);
+        handlerReportUrl(expertCustomerApeskDTOs);
+        return expertCustomerApeskDTOs;
+    }
 
-        return expertCustomerDTO;
+    private void handlerReportUrl(List<ExpertCustomerApeskDTO> expertCustomerApeskDTOs){
+        for (ExpertCustomerApeskDTO dto:expertCustomerApeskDTOs){
+            dto.setReportUrl(ExpertAdminConst.REPORT_URL+dto.getReportId());
+        }
     }
 }

@@ -53,12 +53,14 @@ selectList
 	        LEFT JOIN zgk_city city ON city.id = info.cityId
 	        LEFT join zgk_county county ON county.id = info.id where detail.id = #{orderId}
     </select>
-    <select id="queryCustomerApesk" resultType="ExpertCustomerDTO">
+    <select id="queryCustomerApesk" resultType="ExpertCustomerApeskDTO">
         SELECT
+        apesk.id as id,
         course. NAME AS apeskName,
         course.ac_id AS acId,
         apesk.report_id AS reportId,
-        apesk.report_date AS reportDate
+        apesk.report_date AS reportDate,
+        detail.user_id AS uid
         FROM
         zgk_expert_reservation_order_detail detail
         INNER JOIN (
@@ -77,7 +79,7 @@ selectList
         INNER JOIN zgk_apesk apesk ON apesk.id = temp.id
         INNER JOIN zgk_apesk_course course ON apesk.ac_id = course.ac_id
         WHERE
-        detail.user_id =  #{orderId}
+        detail.id =  #{orderId}
     </select>
 </mapper>
 

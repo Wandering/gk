@@ -42,7 +42,7 @@ public class ExpertOrderServiceImpl extends AbstractPageService<IBaseDAO<ExpertR
         BizData4Page bizData4Page =new BizData4Page();
         bizData4Page.setConditions(map);
         bizData4Page.setPage(page);
-        this.queryPageByDataPerm(bizData4Page, "ord.create_date", SqlOrderEnum.DESC);
+        this.queryPageByDataPerm(bizData4Page, "ord.status asc,ord.create_date", SqlOrderEnum.ASC);
 
         List<ExpertReservationOrderDetailDTO> expertReservationOrderDetailDTOs =bizData4Page.getRows();
 

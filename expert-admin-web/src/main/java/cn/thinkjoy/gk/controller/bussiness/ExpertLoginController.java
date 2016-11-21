@@ -17,11 +17,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * Created by yangyongping on 2016/11/16.
@@ -63,8 +65,8 @@ public class ExpertLoginController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public Boolean logout(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/logout")
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
         if (null != cookies) {
             for (Cookie cookie : cookies) {
@@ -74,7 +76,11 @@ public class ExpertLoginController {
                 response.addCookie(cookie);
             }
         }
-        return true;
+        try {
+            response.sendRedirect(ExpertAdminConst.LOGIN_PATH);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -84,9 +90,13 @@ public class ExpertLoginController {
      */
     @ResponseBody
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public Boolean resetPassword(ExpertUser expertUser,String newPassword,HttpServletRequest request) {
+    public Boolean resetPassword(ExpertUser expertUser,String newPassword) {
         checkExpertUser(expertUser);
-        if (StringUtils.isEmpty(newPassword)){}{
+        ExpertInfo expertInfo = (ExpertInfo)expertInfoService.findOne("expert_phone",expertUser.getAccount());
+        if (!expertUser.equals(expertInfo.getPassword())){
+            ExceptionUtil.throwException(ErrorCode.PWD_ERROR);
+        }
+        if (StringUtils.isEmpty(newPassword)){
             ExceptionUtil.throwException(ErrorCode.NEW_PWD_NULL);
         }
         //修改密码

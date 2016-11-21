@@ -110,7 +110,7 @@ selectList
         id = #{map.id}
     </update>
 
-    <select id="queryPage" resultType="ExpertReservationOrderDetailDTO">
+    <select id="queryPage" resultType="ExpertReservationOrderDetailDTO" parameterType="java.util.Map">
         SELECT
         <include refid="Base_Column_List" />
         FROM zgk_expert_reservation_order_detail ord
@@ -118,9 +118,8 @@ selectList
         INNER JOIN zgk_card card on ord.card_id = card.id
         INNER JOIN zgk_user_info userinfo on userinfo.id = ord.user_id
         <where>
-
             <if test="condition.expertId != null">
-                and ord.expert_id = (#{condition.expertId})
+                and ord.expert_id = #{condition.expertId}
             </if>
         </where>
 
@@ -135,8 +134,8 @@ selectList
     <select id="count" resultType="java.lang.Integer">
         SELECT count(id) FROM zgk_expert_reservation_order_detail
         <where>
-            <if test="condition.expertId != null">
-                and expert_id = (#{condition.expertId})
+            <if test="expertId!=null">
+                and expert_id = #{condition.expertId}
             </if>
         </where>
         <if test="orderBy!=null">

@@ -8,6 +8,7 @@ $('#login-btn').on('click', function () {
     };
     Common.ajaxFun(url,"POST", data, function (res) {
         if (res.rtnCode == "0000000") {
+            console.log(res)
             var data = res.bizData;
             Common.cookie.setCookie('user_id', data.id);
             Common.cookie.setCookie('user_name', data.expertName);

@@ -15,6 +15,10 @@ public class ExpertCustomerApeskDTO extends BaseDomain<Long> {
     //测评时间
     private String reportDate;
 
+    private String reportUrl;
+
+    private String uid;
+
     public String getApeskName() {
         return apeskName;
     }
@@ -45,5 +49,21 @@ public class ExpertCustomerApeskDTO extends BaseDomain<Long> {
 
     public void setAcId(Integer acId) {
         this.acId = acId;
+    }
+
+    public String getReportUrl() {
+        return reportUrl;
+    }
+
+    public void setReportUrl(String reportUrl) {
+        this.reportUrl = reportUrl;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

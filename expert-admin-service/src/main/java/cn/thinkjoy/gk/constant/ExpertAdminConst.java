@@ -26,6 +26,8 @@ public class ExpertAdminConst {
 
     public static final String USER_IMAGE_CAPTCHA_KEY = "gk_captcha_auth_time_";
 
+    public static final String REPORT_URL = "http://www.apesk.com/mensa/common_report_getid/holland2_report_getid.asp?id=";
+
     /**
      *订单未预约
      */

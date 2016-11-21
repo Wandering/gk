@@ -59,6 +59,18 @@ public class EvaluationController extends ZGKBaseController {
     }
 
     /**
+     * 查询最后一次测评结果
+     * @return
+     */
+    @RequestMapping(value = "/queryEvaluationByUid", method = RequestMethod.GET)
+    @ResponseBody
+    public Object queryEvaluationByUid(@RequestParam Long uid) {
+
+        //取出数据
+        return evaluationService.queryLastEvaluation(uid);
+    }
+
+    /**
      * 判断用户用户当前测评次数 (分为0,1,2次测评机会)
      * 用户必须登录
      * @return

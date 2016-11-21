@@ -36,7 +36,7 @@
             </li>
             <li class="divider"></li>
             <li>
-              <a href="/account/loginOut.do" id="logout-btn">
+              <a href="/expert/admin/login/logout.do" id="logout-btn">
                 <i class="icon-off"></i>
                 退出
               </a>
