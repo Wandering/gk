@@ -24,7 +24,9 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <!-- PAGE CONTENT BEGINS -->
-                            预约信息
+                        <div class="main-title">
+                            <h3>我的预约</h3>
+                        </div>
                         <!-- PAGE CONTENT ENDS -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
