@@ -1,42 +1,6 @@
 var Common = {
     init: function () {
-        this.loginInfo();
-        this.logout();
-        this.checkAll();
         this.renderMenu();
-        $('body').on('click','.close-btn',function(){
-            layer.closeAll();
-        });
-    },
-    getLinkey: function(name) {
-        var reg = new RegExp("(^|\\?|&)" + name + "=([^&]*)(\\s|&|$)", "i");
-        if (reg.test(window.location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
-        return "";
-    },
-    provinceKey: function () {
-        var key;
-        var urlDomain = window.location.hostname + '';
-        var urlArr = urlDomain.split('.');
-        key = urlArr[0];
-        return key;
-    },
-    flowSteps:function(){
-        var pathName = window.location.pathname;
-        var pathNum = pathName.slice((pathName.length-1),pathName.length);
-        var tnId = this.cookie.getCookie('tnId');
-        Common.ajaxFun('/config/get/step/'+ tnId +'.do', 'GET', {}, function (res) {
-            if (res.rtnCode == "0000000") {
-                if(pathNum!=res.bizData.result){
-                    if(res.bizData.result =='0'){
-                        window.location.href='/index';
-                    }else{
-                        window.location.href='/seting-process'+res.bizData.result;
-                    }
-                }
-            }
-        }, function (res) {
-            layer.msg('出错了');
-        });
     },
     url: {},
     cookie: {
@@ -105,91 +69,11 @@ var Common = {
             headers:headers
         });
     },
-    loginInfo: function () {
-        $('#header-school-name').text(this.cookie.getCookie('tnName'));
-    },
-    logout: function () {
-        // 登出
-        $('#logout-btn').on('click', function () {
-            Common.cookie.delCookie('isInit');
-            Common.cookie.delCookie('meuns');
-            Common.cookie.delCookie('tnId');
-            Common.cookie.delCookie('tnName');
-            window.location.href = '/login';
-        });
-    },
-    checkAll:function(){
-        // 全选
-        $('#checkAll').on('click', function () {
-            if ($(this).is(':checked')) {
-                $('.check-template :checkbox').prop('checked', true);
-            } else {
-                $('.check-template :checkbox').prop('checked', false);
-            }
-        });
-        $(".check-template").on('click', ':checkbox', function () {
-            allchk();
-        });
-        function allchk() {
-            var chknum = $(".check-template :checkbox").size();//选项总个数
-            var chk = 0;
-            $(".check-template").find(':checkbox').each(function () {
-                if ($(this).prop("checked") == true) {
-                    chk++;
-                }
-            });
-            if (chknum == chk) {//全选
-                $("#checkAll").prop("checked", true);
-            } else {//不全选
-                $("#checkAll").prop("checked", false);
-            }
-        }
-    },
-    getClassRoom:function(){  // 获取教室
-        var classRoom = '';
-        Common.ajaxFun('/config/classRoom/get/'+ tnId +'.do', 'GET', {}, function (res) {
-            //console.log(res)
-            if (res.rtnCode == "0000000") {
-                classRoom = res
-            }
-        }, function (res) {
-            alert("出错了");
-        }, true);
-        return classRoom;
-    },
-    getGrade:function(){  // 获取年级
-        var gradeV = '';
-        Common.ajaxFun('/config/grade/get/' + tnId + '.do', 'GET', {}, function (res) {
-            if (res.rtnCode == "0000000") {
-                gradeV = res;
-            }
-        }, function (res) {
-            alert("出错了");
-        }, true);
-        return gradeV;
-    },
-    initClass:function(){  // 获取年级
-        var gradeV = '';
-        Common.ajaxFun('/config/getInit/'+ tnId +'.do', 'GET', {}, function (res) {
-            if (res.rtnCode == "0000000") {
-                gradeV = res;
-            }
-        }, function (res) {
-            alert("出错了");
-        }, true);
-        return gradeV;
-    },
     renderMenu:function(){
         var pathName = window.location.pathname;
         if(Common.cookie.getCookie('siderMenu')){
             var siderMenu = $.parseJSON(Common.cookie.getCookie('siderMenu'));
             var menus = [];
-            menus.push('<li class="nav-li" style="display: block;">');
-            menus.push('<a href="index.html">');
-            menus.push('<i class="icon-home"></i>');
-            menus.push('<span class="menu-text">首页</span>');
-            menus.push('</a>');
-            menus.push('</li>');
             $.each(siderMenu,function(i,v){
 
                 if(pathName==v.meunUrl){
@@ -226,34 +110,5 @@ var Common = {
             $('body').find('.submenu li.active').parents('li.nav-li').addClass('open active');
         }
     },
-    getFormatTime:function (timestamp,formatStr) {
-        var newDate = new Date();
-        newDate.setTime(timestamp);
-        return newDate.Format(formatStr || "yyyy-MM-dd hh:mm:ss");
-    },
-    getPageName:function(urls){
-        var strUrl = urls;
-        var arrUrl = strUrl.split("/");
-        var strPage = arrUrl[arrUrl.length - 1];
-        return strPage;
-    }
 };
 Common.init();
-
-Date.prototype.Format = function (fmt) {
-    var o = {
-        "M+": this.getMonth() + 1, //月份
-        "d+": this.getDate(), //日
-        "h+": this.getHours(), //小时
-        "m+": this.getMinutes(), //分
-        "s+": this.getSeconds(), //秒
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-        "S": this.getMilliseconds() //毫秒
-    };
-    if (/(y+)/.test(fmt))
-        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
-        if (new RegExp("(" + k + ")").test(fmt))
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-    return fmt;
-};

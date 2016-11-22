@@ -6,34 +6,18 @@
   <div class="navbar-container" id="navbar-container">
     <div class="navbar-header pull-left">
       <a href="javascript:;" class="navbar-brand">
-        <h1 id="logo"><img class="" src="<%=ctx%>/static/src/lib/assets/images/logo.png"/></h1> <span class="school-name" id="header-school-name"></span>
+        智高考专家后台
       </a><!-- /.brand -->
     </div><!-- /.navbar-header -->
 
     <div class="navbar-header pull-right" role="navigation">
       <ul class="nav ace-nav">
-
-
         <li class="light-blue">
           <a data-toggle="dropdown" href="#" class="dropdown-toggle">
             <i class="icon-user"></i>
             <i class="icon-caret-down"></i>
           </a>
-
           <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-            <li>
-              <a href="#">
-                <i class="icon-cog"></i>
-                设置
-              </a>
-            </li>
-
-            <li>
-              <a href="#">
-                <i class="icon-user"></i>
-                个人资料
-              </a>
-            </li>
             <li class="divider"></li>
             <li>
               <a href="/expert/admin/login/logout.do" id="logout-btn">

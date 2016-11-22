@@ -19,7 +19,7 @@ $('#login-btn').on('click', function () {
             }
             siderMenuJson = JSON.stringify(siderMenuJson);
             Common.cookie.setCookie('siderMenu', siderMenuJson);
-            window.location.href = '/expert/admin/index.do';
+            window.location.href = '/expert/admin/info-management.do';
         } else {
             layer.msg(res.msg);
         }
