@@ -16,6 +16,7 @@ public class ZGKBaseController extends BaseCommonController{
         int pagesize=0;
         if(mainData!=null) {
             pagesize = mainData.size();
+
         }
         if(mod > 0){
             total = total + 1;
