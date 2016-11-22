@@ -31,5 +31,21 @@ public class WebCotroller {
     public ModelAndView forgotPassword() {
         return new ModelAndView("/login/forgot-password");
     }
+    /**
+     * info-management
+     * 预约信息管理
+     */
+    @RequestMapping("/info-management")
+    public ModelAndView infoManagement() {
+        return new ModelAndView("/info-management/info-management");
+    }
+    /**
+     * user-center
+     * 个人中心
+     */
+    @RequestMapping("/user-center")
+    public ModelAndView userCenter() {
+        return new ModelAndView("/user-center/user-center");
+    }
 
 }

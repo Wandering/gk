@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8" />
     <title>智高考专家后台</title>
-    <%@ include file="./common/meta.jsp"%>
+    <%@ include file="../common/meta.jsp"%>
 </head>
 <body>
-<%@ include file="./common/header.jsp"%>
+<%@ include file="../common/header.jsp"%>
 
 <div class="main-container" id="main-container">
     <script type="text/javascript">
@@ -17,7 +17,7 @@
         <a class="menu-toggler" id="menu-toggler" href="#">
             <span class="menu-text"></span>
         </a>
-        <%@ include file="./common/sidebar.jsp"%>
+        <%@ include file="../common/sidebar.jsp"%>
         <div class="main-content">
 
             <div class="page-content">
@@ -32,6 +32,6 @@
         </div><!-- /.main-content -->
     </div><!-- /.main-container-inner -->
 </div><!-- /.main-container -->
-<%@ include file="./common/footer.jsp"%>
+<%@ include file="../common/footer.jsp"%>
 </body>
 </html>
