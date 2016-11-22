@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
 <div class="sidebar" id="sidebar">
   <ul class="nav nav-list" id="nav-list">
   </ul>

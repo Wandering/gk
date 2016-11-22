@@ -47,5 +47,13 @@ public class WebCotroller {
     public ModelAndView userCenter() {
         return new ModelAndView("/user-center/user-center");
     }
+    /**
+     * experts-play
+     * 专家播放
+     */
+    @RequestMapping("/experts-play")
+    public ModelAndView expertsPlay() {
+        return new ModelAndView("/info-management/experts-play");
+    }
 
 }
