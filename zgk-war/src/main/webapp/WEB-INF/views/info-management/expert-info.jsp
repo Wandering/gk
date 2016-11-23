@@ -24,7 +24,7 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="main-title">
-                                    <h3>我的预约</h3>
+                                    <h3>专家信息</h3>
                                 </div>
                                 <table class="booking-table" cellpadding="0" cellspacing="0">
                                     <thead>

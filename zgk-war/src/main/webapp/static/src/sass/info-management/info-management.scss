@@ -1,0 +1,55 @@
+.booking-table {
+    width: 100%;
+    border: 1px solid #e0e3e8;
+    margin-top: 25px;
+    thead {
+        line-height: 40px;
+        background: #f2f4f6;
+        tr {
+            th {
+                text-align: center;
+                vertical-align: middle;
+                border-right: 1px solid #e0e3e8;
+                border-bottom: 1px solid #e0e3e8;
+            }
+        }
+    }
+    tbody {
+        line-height: 40px;
+        tr {
+            td {
+                text-align: center;
+                vertical-align: middle;
+                border-right: 1px solid #e0e3e8;
+                border-bottom: 1px solid #e0e3e8;
+                span {
+                    margin: 0 5px;
+                }
+                .cur-book-status {
+                    color: #F6A623;
+                }
+                a.expert-btn:link,
+                a.expert-btn:visited,
+                a.expert-btn:hover {
+                    color: #4A4A4A;
+                    text-decoration: underline;
+                    outline: 0;
+                }
+                a.video-btn:link,
+                a.video-btn:visited,
+                a.video-btn:hover {
+                    color: #CB171D;
+                    text-decoration: underline;
+                    outline: 0;
+                }
+                a.evaluate-btn:link,
+                a.evaluate-btn:visited,
+                a.evaluate-btn:hover {
+                    color: #F6A623;
+                    text-decoration: underline;
+                    outline: 0;
+                }
+            }
+        }
+    }
+}
