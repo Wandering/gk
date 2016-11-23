@@ -627,5 +627,76 @@
         where user_id=#{userId}
         GROUP BY service_item
     </select>
+
+    <!-- 根据专家Id,学生Id,频道类型查询频道信息 -->
+    <select id="getChannelByexpertIdAndStuId" parameterType="map" resultType="cn.thinkjoy.gk.entity.ExpertChannel">
+        SELECT
+            *
+        FROM
+            zgk_expert_channel
+        WHERE
+            expertId = #{expertId}
+        AND stuId = #{stuId}
+        AND type = #{type}
+        ORDER by id desc
+        limit 1
+    </select>
+
+    <!-- 根据cid查询频道 -->
+    <select id="getChannelByCid" parameterType="string" resultType="cn.thinkjoy.gk.entity.ExpertChannel">
+        SELECT
+            *
+        FROM
+            zgk_expert_channel
+        WHERE
+            cid = #{cid}
+    </select>
+
+    <!-- 根据cid修改频道状态 -->
+    <update id="updateChannelByCid">
+        UPDATE zgk_expert_channel
+        SET `status` = 1,modifyDate = #{ctime}
+        WHERE
+            cid = #{cid}
+    </update>
+
+    <!-- 插入频道信息 -->
+    <insert id="insertChannel" parameterType="cn.thinkjoy.gk.entity.ExpertChannel">
+        INSERT INTO zgk_expert_channel(
+            STATUS,
+            createDate,
+            modifyDate,
+            expertId,
+            stuId,
+            type,
+            cid,
+            ctime,
+            NAME,
+            pushUrl,
+            httpPullUrl,
+            hlsPullUrl,
+            rtmpPullUrl,
+            CODE,
+            msg
+        )
+        VALUE
+            (
+                #{status},
+                #{createDate},
+                #{modifyDate},
+                #{expertId},
+                #{stuId},
+                #{type},
+                #{cid},
+                #{ctime},
+                #{name},
+                #{pushUrl},
+                #{httpPullUrl},
+                #{hlsPullUrl},
+                #{rtmpPullUrl},
+                #{code},
+                #{msg}
+            )
+    </insert>
 </mapper>
 

@@ -263,4 +263,24 @@ public class ExpertServiceImpl implements IExpertService
     public List<ServiceNumberPojo> selectServiceByUserId(Map<String, Object> map) {
         return dao.selectServiceByUserId(map);
     }
+
+    @Override
+    public ExpertChannel getChannelByexpertIdAndStuId(long expertId, long stuId, int type) {
+        return dao.getChannelByexpertIdAndStuId(expertId,stuId,type);
+    }
+
+    @Override
+    public ExpertChannel getChannelByCid(String cid) {
+        return dao.getChannelByCid(cid);
+    }
+
+    @Override
+    public void updateChannelByCid(String cid) {
+        dao.updateChannelByCid(cid,System.currentTimeMillis());
+    }
+
+    @Override
+    public void insertChannel(ExpertChannel channel) {
+        dao.insertChannel(channel);
+    }
 }

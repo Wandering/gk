@@ -16,6 +16,7 @@ public enum ErrorCode {
     PWD_NULL("0000006","密码为空"),
     NEW_PWD_NULL("0000007","新密码为空"),
     PARAM_NULL("0000008","参数为空"),
+    IMG_TOO_LONG("0000009","图片地址长度超过限制(255)"),
     CHECK_SMSCODE_NOT_EXIST("0400003", "验证码过期或不存在，请重新获取!"),
     ;
 

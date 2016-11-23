@@ -3,6 +3,7 @@ package cn.thinkjoy.gk.controller.bussiness;
 import cn.thinkjoy.gk.common.ErrorCode;
 import cn.thinkjoy.gk.common.ExceptionUtil;
 import cn.thinkjoy.gk.common.ExpertUserContext;
+import cn.thinkjoy.gk.constant.ExpertAdminConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.ExpertInfo;
 import cn.thinkjoy.gk.pojo.ExpertCustomerDTO;
@@ -13,11 +14,13 @@ import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 /**
@@ -32,6 +35,7 @@ public class ExpertUserController {
     @Autowired
     IExpertInfoService expertInfoService;
 
+
     /**
      * 修改用户信息
      * @return
@@ -39,12 +43,19 @@ public class ExpertUserController {
     @ResponseBody
     @RequestMapping(value = "/updateInfo",method = RequestMethod.POST)
     public Boolean updateInfo(ExpertUserDTO expertUserDTO){
-        Map<String,Object> map = Maps.newHashMap();
         Long id= ExpertUserContext.getCurrentUser().getId();
         ExpertInfo expertInfo = (ExpertInfo)expertInfoService.fetch(id);
         if (expertInfo==null){
             ExceptionUtil.throwException(ErrorCode.ACCOUNT_ERROR);
         }
+        try {
+            if (!StringUtils.isEmpty(expertUserDTO.getImageUrl())&&expertUserDTO.getImageUrl().getBytes(ExpertAdminConst.CHARSET).length>255){
+                ExceptionUtil.throwException(ErrorCode.IMG_TOO_LONG);
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         expertUserDTO.setId(id);
         expertUserDTO.setAccount(null);
         return expertInfoService.update(dtoToInfo(expertUserDTO))>0;
