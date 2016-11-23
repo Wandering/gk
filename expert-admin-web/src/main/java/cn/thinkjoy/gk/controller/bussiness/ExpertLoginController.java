@@ -93,28 +93,18 @@ public class ExpertLoginController {
      */
     @ResponseBody
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public Boolean resetPassword(String password,String newPassword) {
-        if (StringUtils.isEmpty(password)){
-            ExceptionUtil.throwException(ErrorCode.PWD_NULL);
-        }
-        if (StringUtils.isEmpty(newPassword)){
-            ExceptionUtil.throwException(ErrorCode.PWD_NULL);
-        }
-        ExpertUserDTO user = ExpertUserContext.getCurrentUser();
-        Map<String,Object> map = Maps.newHashMap();
-        map.put("expertPhone",user.getAccount());
-        map.put("id",user.getId());
+    public Boolean resetPassword(ExpertUser expertUser,String newPassword) {
+        checkExpertUser(expertUser);
+        Map<String,Object > map = Maps.newHashMap();
+        map.put("expertPhone",expertUser.getAccount());
         map.put("isChecked",ExpertAdminConst.CHECK_TRUE);
         ExpertInfo expertInfo = (ExpertInfo)expertInfoService.queryOne(map);
         if (expertInfo==null){
             ExceptionUtil.throwException(ErrorCode.ACCOUNT_ERROR);
         }
-        if (!password.equals(expertInfo.getPassword())){
+        if (!expertUser.getPassword().equals(expertInfo.getPassword())){
             ExceptionUtil.throwException(ErrorCode.PWD_ERROR);
         }
-        ExpertUser expertUser = new ExpertUser();
-        expertUser.setAccount(user.getAccount());
-        expertUser.setPassword(password);
         //修改密码
         Boolean flag = expertLoginServcie.resetPassword(expertUser,newPassword);
         return flag;
