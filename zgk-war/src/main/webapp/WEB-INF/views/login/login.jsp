@@ -12,7 +12,9 @@
     <div class="navbar-container" id="navbar-container">
         <div class="navbar-header pull-left">
             <a href="javascript:;" class="navbar-brand">
-                <h1 id="logo"><img class="" src="<%=ctx%>/static/src/lib/assets/images/logo.png"/></h1> <span
+                <h1 id="logo">智高考专家后台
+                    <%--<img class="" src="<%=ctx%>/static/src/lib/assets/images/logo.png"/>--%>
+                </h1> <span
                     class="school-name" id="header-school-name"></span>
             </a><!-- /.brand -->
         </div><!-- /.navbar-header -->
@@ -26,10 +28,11 @@
                     <div class="col-xs-12">
                         <!-- PAGE CONTENT BEGINS -->
                         <h1 class="logo"><img src="<%=ctx%>/static/src/img/logo.png" alt=""></h1>
+                        <div class="sub-title">专家管理后台</div>
                         <div class="login-main">
                             <div class="">
                                 <form class="form-horizontal" role="form">
-                                    <strong class="t">登录SaaS</strong>
+                                    <strong class="t">登录</strong>
                                     <div class="form-group">
                                         <div class="col-sm-12">
                                             <input type="text" id="user-name" placeholder="登录账号"
@@ -42,7 +45,7 @@
                                                    class="col-xs-10 col-sm-5"/>
                                         </div>
                                     </div>
-                                    <div class="forgot-password"><a href="/forgot-password">忘记密码?</a></div>
+                                    <div class="forgot-password"><a href="/expert/admin/forgot-password.do">忘记密码?</a></div>
                                     <div class="">
                                         <button type="button" id="login-btn" class="login-btn">登录</button>
                                     </div>
