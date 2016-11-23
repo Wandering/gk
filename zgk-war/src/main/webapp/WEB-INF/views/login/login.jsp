@@ -8,16 +8,6 @@
     <link rel="stylesheet" href="<%=ctx%>/static/src/css/login/login.css">
 </head>
 <body>
-<div class="navbar navbar-default" id="navbar">
-    <div class="navbar-container" id="navbar-container">
-        <div class="navbar-header pull-left">
-            <a href="javascript:;" class="navbar-brand">
-                <h1 id="logo"><img class="" src="<%=ctx%>/static/src/lib/assets/images/logo.png"/></h1> <span
-                    class="school-name" id="header-school-name"></span>
-            </a><!-- /.brand -->
-        </div><!-- /.navbar-header -->
-    </div><!-- /.container -->
-</div>
 <div class="main-container" id="main-container">
     <div class="main-container-inner">
         <div class="main-content flow-main-content">
@@ -29,7 +19,7 @@
                         <div class="login-main">
                             <div class="">
                                 <form class="form-horizontal" role="form">
-                                    <strong class="t">登录SaaS</strong>
+                                    <strong class="t">登录</strong>
                                     <div class="form-group">
                                         <div class="col-sm-12">
                                             <input type="text" id="user-name" placeholder="登录账号"
