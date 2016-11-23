@@ -14,6 +14,7 @@
 </head>
 <body>
 <%@ include file="../common/header.jsp" %>
+<%@ include file="../common/footer.jsp" %>
 <div class="main-container" id="main-container">
     <script type="text/javascript">
         try {
@@ -101,6 +102,51 @@
                                 </div>
                                 <div id="my-publisher"></div>
                                 <script type="text/javascript">
+
+
+                                    function expertChannel(expertId,stuId,type){
+                                        var pushUrl = '';
+                                        Common.ajaxFun('/expertChannel/createChannel.do', 'POST', {
+                                            'expertId':expertId,
+                                            'stuId':stuId,
+                                            'type':type
+                                        }, function (res) {
+                                            if (res.rtnCode === '0000000') {
+                                                pushUrl = res.bizData.pushUrl;
+                                            }
+                                        }, function (res) {
+
+                                        },true);
+                                        return pushUrl;
+                                    }
+
+
+
+                                    function playChannel(expertId,stuId,type){
+                                        var httpPullUrl = '';
+                                        Common.ajaxFun('/expertChannel/getChannel.do', 'get', {
+                                            'expertId':expertId,
+                                            'stuId':stuId,
+                                            'type':type
+                                        }, function (res) {
+                                            if (res.rtnCode === '0000000') {
+                                                httpPullUrl = res.bizData.httpPullUrl;
+                                            }
+                                        }, function (res) {
+
+                                        },true);
+                                        return httpPullUrl;
+                                    }
+
+
+
+                                    $('#publishUrl').val(expertChannel(1,2,0));
+
+
+
+
+
+
                                     var cameraList,
                                             microPhoneList,
                                             cameraOptions = '',
@@ -219,17 +265,17 @@
 
 
                             </div>
-                            <div class="play-main">
-                                <%-- 播放端开始 --%>
-                                <link href="http://nos.netease.com/vod163/nep.min.css" rel="stylesheet">
-                                <video id="my-video" class="video-js" x-webkit-airplay="allow" webkit-playsinline
-                                       controls poster="//nos.netease.com/vod163/poster.png" preload="auto" width="640"
-                                       height="360" data-setup="{}">
-                                    <source src="http://nos.netease.com/vod163/demo.mp4" type="video/mp4">
-                                </video>
-                                <script src="http://nos.netease.com/vod163/nep.min.js"></script>
-                                <%-- 播放端结束 --%>
-                            </div>
+                            <%--<div class="play-main">--%>
+                                <%--&lt;%&ndash; 播放端开始 &ndash;%&gt;--%>
+                                <%--<link href="http://nos.netease.com/vod163/nep.min.css" rel="stylesheet">--%>
+                                <%--<video id="my-video" class="video-js" x-webkit-airplay="allow" webkit-playsinline--%>
+                                       <%--controls poster="//nos.netease.com/vod163/poster.png" preload="auto" width="640"--%>
+                                       <%--height="360" data-setup="{}">--%>
+                                    <%--<source src="http://nos.netease.com/vod163/demo.mp4" type="video/mp4">--%>
+                                <%--</video>--%>
+                                <%--<script src="http://nos.netease.com/vod163/nep.min.js"></script>--%>
+                                <%--&lt;%&ndash; 播放端结束 &ndash;%&gt;--%>
+                            <%--</div>--%>
                         </div>
                         <!-- PAGE CONTENT ENDS -->
                     </div><!-- /.col -->
@@ -238,7 +284,7 @@
         </div><!-- /.main-content -->
     </div><!-- /.main-container-inner -->
 </div><!-- /.main-container -->
-<%@ include file="../common/footer.jsp" %>
+
 
 
 </body>
