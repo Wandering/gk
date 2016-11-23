@@ -93,7 +93,7 @@ public class ExpertLoginController {
     public Boolean resetPassword(ExpertUser expertUser,String newPassword) {
         checkExpertUser(expertUser);
         ExpertInfo expertInfo = (ExpertInfo)expertInfoService.findOne("expert_phone",expertUser.getAccount());
-        if (!expertUser.equals(expertInfo.getPassword())){
+        if (!expertUser.getPassword().equals(expertInfo.getPassword())){
             ExceptionUtil.throwException(ErrorCode.PWD_ERROR);
         }
         if (StringUtils.isEmpty(newPassword)){
