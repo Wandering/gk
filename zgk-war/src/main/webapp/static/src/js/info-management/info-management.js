@@ -5,10 +5,10 @@
 $(function () {
 
     var booking = new Booking();
+    booking.getOrderList();
     $(document).on('click', '.expert-btn', function () {
         booking.expertInfo('专家信息');
     });
-
 });
 
 function Booking () {
