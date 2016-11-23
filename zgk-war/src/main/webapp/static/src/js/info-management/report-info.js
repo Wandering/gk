@@ -34,7 +34,7 @@ ReportInfo.prototype = {
             wl: '物理',
             zz: '政治',
             ty: '通用技术'
-        }
+        };
         Common.ajaxFun('/evaluation/queryEvaluationByUid.do', 'GET', {
             'uid': that.uid
         }, function (res) {
