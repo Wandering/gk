@@ -30,46 +30,44 @@
                                     <thead>
                                         <tr>
                                             <th>服务内容</th>
-                                            <th width="100px">剩余服务次数</th>
-                                            <th width="200px">预约状态</th>
-                                            <th width="90px">服务专家</th>
-                                            <th width="160px">预约时间</th>
-                                            <th width="100px">视频方式</th>
-                                            <th width="90px"></th>
-                                            <th width="90px"></th>
+                                            <th width="250px">预约状态</th>
+                                            <th width="120px">用户信息</th>
+                                            <th width="180px">预约时间</th>
+                                            <th width="120px">视频方式</th>
+                                            <th width="100px"></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>选课指导服务</td>
-                                            <td>1次</td>
-                                            <td><span class="cur-book-status">预约成功</span>——<span>服务中</span>——<span>结束</span></td>
-                                            <td><a href="javascript: void(0);" class="expert-btn">莫英强</a></td>
-                                            <td>2016-04-15  12:00-13：00</td>
-                                            <td>QQ</td>
-                                            <td><a href="javascript: void(0);" class="video-btn">进入视频</a></td>
-                                            <td><a href="javascript: void(0);" class="evaluate-btn">评价</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>选课指导服务</td>
-                                            <td>0次</td>
-                                            <td><span>预约成功</span>——<span  class="cur-book-status">服务中</span>——<span>结束</span></td>
-                                            <td><a href="javascript: void(0);" class="expert-btn">莫英强</a></td>
-                                            <td>2016-04-15  12:00-13：00</td>
-                                            <td>微信</td>
-                                            <td><a href="javascript: void(0);" class="video-btn">进入视频</a></td>
-                                            <td><a href="javascript: void(0);" class="evaluate-btn">评价</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>选课指导服务</td>
-                                            <td>0次</td>
-                                            <td><span>预约成功</span>——<span>服务中</span>——<span  class="cur-book-status">结束</span></td>
-                                            <td><a href="javascript: void(0);" class="expert-btn">莫英强</a></td>
-                                            <td>2016-04-15  12:00-13：00</td>
-                                            <td>智高考</td>
-                                            <td><a href="javascript: void(0);" class="video-btn">进入视频</a></td>
-                                            <td><a href="javascript: void(0);" class="evaluate-btn">评价</a></td>
-                                        </tr>
+                                    <tbody id="booking-list">
+                                        <%--<tr>--%>
+                                            <%--<td>选课指导服务</td>--%>
+                                            <%--<td>1次</td>--%>
+                                            <%--<td><span class="cur-book-status">预约成功</span>——<span>服务中</span>——<span>结束</span></td>--%>
+                                            <%--<td><a href="javascript: void(0);" class="expert-btn">莫英强</a></td>--%>
+                                            <%--<td>2016-04-15  12:00-13：00</td>--%>
+                                            <%--<td>QQ</td>--%>
+                                            <%--<td><a href="javascript: void(0);" class="video-btn">进入视频</a></td>--%>
+                                            <%--<td><a href="javascript: void(0);" class="evaluate-btn">评价</a></td>--%>
+                                        <%--</tr>--%>
+                                        <%--<tr>--%>
+                                            <%--<td>选课指导服务</td>--%>
+                                            <%--<td>0次</td>--%>
+                                            <%--<td><span>预约成功</span>——<span  class="cur-book-status">服务中</span>——<span>结束</span></td>--%>
+                                            <%--<td><a href="javascript: void(0);" class="expert-btn">莫英强</a></td>--%>
+                                            <%--<td>2016-04-15  12:00-13：00</td>--%>
+                                            <%--<td>微信</td>--%>
+                                            <%--<td><a href="javascript: void(0);" class="video-btn">进入视频</a></td>--%>
+                                            <%--<td><a href="javascript: void(0);" class="evaluate-btn">评价</a></td>--%>
+                                        <%--</tr>--%>
+                                        <%--<tr>--%>
+                                            <%--<td>选课指导服务</td>--%>
+                                            <%--<td>0次</td>--%>
+                                            <%--<td><span>预约成功</span>——<span>服务中</span>——<span  class="cur-book-status">结束</span></td>--%>
+                                            <%--<td><a href="javascript: void(0);" class="expert-btn">莫英强</a></td>--%>
+                                            <%--<td>2016-04-15  12:00-13：00</td>--%>
+                                            <%--<td>智高考网站</td>--%>
+                                            <%--<td><a href="javascript: void(0);" class="video-btn">进入视频</a></td>--%>
+                                            <%--<td><a href="javascript: void(0);" class="evaluate-btn">评价</a></td>--%>
+                                        <%--</tr>--%>
                                     </tbody>
                                 </table>
                             </div>
