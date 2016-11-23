@@ -48,6 +48,14 @@ public class WebCotroller {
         return new ModelAndView("/info-management/user-info");
     }
     /**
+     * repot-info
+     * 测评报告
+     */
+    @RequestMapping("/report-info")
+    public ModelAndView reportInfo() {
+        return new ModelAndView("/info-management/report-info");
+    }
+    /**
      * user-center
      * 个人中心
      */
