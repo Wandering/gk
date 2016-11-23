@@ -45,7 +45,7 @@
                                                    class="col-xs-10 col-sm-5"/>
                                         </div>
                                     </div>
-                                    <div class="forgot-password"><a href="/expert/admin/forgot-password.do">忘记密码?</a></div>
+                                    <div class="forgot-password"><a href="/expert/admin/login/forgot-password.do">忘记密码?</a></div>
                                     <div class="">
                                         <button type="button" id="login-btn" class="login-btn">登录</button>
                                     </div>

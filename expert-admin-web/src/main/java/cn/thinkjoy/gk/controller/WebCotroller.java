@@ -27,7 +27,7 @@ public class WebCotroller {
      * forgot-password
      * 重设面貌
      */
-    @RequestMapping("/forgot-password")
+    @RequestMapping("/login/forgot-password")
     public ModelAndView forgotPassword() {
         return new ModelAndView("/login/forgot-password");
     }
