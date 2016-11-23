@@ -106,7 +106,10 @@ public class ExpertLoginController {
         map.put("id",user.getId());
         map.put("isChecked",ExpertAdminConst.CHECK_TRUE);
         ExpertInfo expertInfo = (ExpertInfo)expertInfoService.queryOne(map);
-        if (expertInfo==expertInfo)
+        if (expertInfo==null){
+            ExceptionUtil.throwException(ErrorCode.ACCOUNT_NULL);
+
+        }
         if (!password.equals(expertInfo.getPassword())){
             ExceptionUtil.throwException(ErrorCode.PWD_ERROR);
         }
