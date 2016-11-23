@@ -56,6 +56,16 @@ public class ExpertChannelController {
             logger.error("请求参数错误: expertId = "+expertId+" ,stuId = "+stuId);
         }
 
+        ExpertChannel tmpChannel = expertService.getChannelByexpertIdAndStuId(
+                Long.valueOf(expertId),
+                Long.valueOf(stuId),
+                type
+        );
+
+        if(tmpChannel != null){
+            return tmpChannel;
+        }
+
         // 构造频道名称
         String name = expertId + "_" + stuId;
         if(type == 0){ //
@@ -74,7 +84,7 @@ public class ExpertChannelController {
         String appKey = Constants.APP_KEY;
         String appSecret = Constants.APP_SERCERT;
         String nonce = RandomCodeUtil.generateCharCode(6);
-        String curTime = String.valueOf((new Date()).getTime() / 1000L);
+        String curTime = String.valueOf(new Date().getTime() / 1000);
         String checkSum = MessageDigestUtil.getCheckSum(appSecret, nonce ,curTime);//鉴权
 
         // 设置请求的header
@@ -153,7 +163,7 @@ public class ExpertChannelController {
         String appKey = Constants.APP_KEY;
         String appSecret = Constants.APP_SERCERT;
         String nonce = RandomCodeUtil.generateCharCode(6);
-        String curTime = String.valueOf((new Date()).getTime() / 1000L);
+        String curTime = String.valueOf(new Date().getTime() / 1000);
         String checkSum = MessageDigestUtil.getCheckSum(appSecret, nonce ,curTime);//鉴权
 
         // 设置请求的header

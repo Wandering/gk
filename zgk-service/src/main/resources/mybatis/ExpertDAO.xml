@@ -638,6 +638,7 @@
             expertId = #{expertId}
         AND stuId = #{stuId}
         AND type = #{type}
+        and status = 0
         ORDER by id desc
         limit 1
     </select>

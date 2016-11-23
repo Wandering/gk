@@ -40,12 +40,12 @@ public class WebCotroller {
         return new ModelAndView("/info-management/info-management");
     }
     /**
-     * expert-info
-     * 专家信息
+     * user-info
+     * 用户信息
      */
-    @RequestMapping("/expert-info")
-    public ModelAndView expertInfo() {
-        return new ModelAndView("/info-management/expert-info");
+    @RequestMapping("/user-info")
+    public ModelAndView UserInfo() {
+        return new ModelAndView("/info-management/user-info");
     }
     /**
      * user-center

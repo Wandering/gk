@@ -4,6 +4,7 @@ import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ErrorCode;
 import cn.thinkjoy.gk.common.ExceptionUtil;
+import cn.thinkjoy.gk.common.ExpertUserContext;
 import cn.thinkjoy.gk.constant.ExpertAdminConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.ExpertInfo;
@@ -12,6 +13,7 @@ import cn.thinkjoy.gk.pojo.ExpertUserDTO;
 import cn.thinkjoy.gk.service.IExpertInfoService;
 import cn.thinkjoy.gk.service.IExpertLoginServcie;
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * Created by yangyongping on 2016/11/16.
@@ -92,12 +95,15 @@ public class ExpertLoginController {
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
     public Boolean resetPassword(ExpertUser expertUser,String newPassword) {
         checkExpertUser(expertUser);
-        ExpertInfo expertInfo = (ExpertInfo)expertInfoService.findOne("expert_phone",expertUser.getAccount());
+        Map<String,Object > map = Maps.newHashMap();
+        map.put("expertPhone",expertUser.getAccount());
+        map.put("isChecked",ExpertAdminConst.CHECK_TRUE);
+        ExpertInfo expertInfo = (ExpertInfo)expertInfoService.queryOne(map);
+        if (expertInfo==null){
+            ExceptionUtil.throwException(ErrorCode.ACCOUNT_ERROR);
+        }
         if (!expertUser.getPassword().equals(expertInfo.getPassword())){
             ExceptionUtil.throwException(ErrorCode.PWD_ERROR);
-        }
-        if (StringUtils.isEmpty(newPassword)){
-            ExceptionUtil.throwException(ErrorCode.NEW_PWD_NULL);
         }
         //修改密码
         Boolean flag = expertLoginServcie.resetPassword(expertUser,newPassword);
@@ -132,7 +138,10 @@ public class ExpertLoginController {
             {
                 throw new BizException(ErrorCode.PARAM_NULL.getCode(), "请输入密码!");
             }
-            ExpertInfo expertInfo = (ExpertInfo)expertInfoService.findOne("expert_phone",account);
+            Map<String,Object> map = Maps.newHashMap();
+            map.put("expertPhone",account);
+            map.put("isChecked",ExpertAdminConst.CHECK_TRUE);
+            ExpertInfo expertInfo = (ExpertInfo)expertInfoService.queryOne(map);
             if (expertInfo == null)
             {
                 ExceptionUtil.throwException(ErrorCode.ACCOUNT_ERROR);
