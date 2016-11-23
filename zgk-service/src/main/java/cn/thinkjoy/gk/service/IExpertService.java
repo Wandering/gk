@@ -90,4 +90,29 @@ public interface IExpertService
     void insertExpertAppraise(Map<String,Object> map);
 
     List<ServiceNumberPojo> selectServiceByUserId(Map<String,Object> map);
+
+    /**
+     * 根据专家Id,学生Id,频道类型查询频道信息
+     *
+     * @param expertId 专家Id
+     * @param stuId 学生Id
+     * @param type 频道类型 0：专家频道 1：学生频道
+     * @return
+     */
+    ExpertChannel getChannelByexpertIdAndStuId(long expertId,long stuId,int type);
+
+    /**
+     * 根据cid查询频道
+     *
+     * @param cid
+     * @return
+     */
+    ExpertChannel getChannelByCid(String cid);
+
+    /**
+     * 根据cid修改频道状态
+     *
+     * @param cid
+     */
+    void updateChannelByCid(String cid);
 }

@@ -109,7 +109,9 @@ public enum ERRORCODE {
 
 	COLLECTION_EXIST("0600015", "该组合已经被收藏!"),
 
-	SELECT_SUBJECT_IDENTICAL("0600013", "只有不同的选课方案才能做对比哦!");
+	SELECT_SUBJECT_IDENTICAL("0600013", "只有不同的选课方案才能做对比哦!"),
+
+	DELETE_CHANNEL_FAIL("0600014", "没有权限删除频道");
 
 	/** The code. */
 	private final String code;

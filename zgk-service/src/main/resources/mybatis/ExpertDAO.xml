@@ -627,5 +627,35 @@
         where user_id=#{userId}
         GROUP BY service_item
     </select>
+
+    <!-- 根据专家Id,学生Id,频道类型查询频道信息 -->
+    <select id="getChannelByexpertIdAndStuId" parameterType="map" resultType="cn.thinkjoy.gk.entity.ExpertChannel">
+        SELECT
+            *
+        FROM
+            zgk_expert_channel
+        WHERE
+            expertId = #{expertId}
+        AND stuId = #{stuId}
+        AND type = #{type}
+    </select>
+
+    <!-- 根据cid查询频道 -->
+    <select id="getChannelByCid" parameterType="string" resultType="cn.thinkjoy.gk.entity.ExpertChannel">
+        SELECT
+            *
+        FROM
+            zgk_expert_channel
+        WHERE
+            cid = #{cid}
+    </select>
+
+    <!-- 根据cid修改频道状态 -->
+    <update id="updateChannelByCid">
+        UPDATE zgk_expert_channel
+        SET `status` = 1
+        WHERE
+            cid = #{cid}
+    </update>
 </mapper>
 
