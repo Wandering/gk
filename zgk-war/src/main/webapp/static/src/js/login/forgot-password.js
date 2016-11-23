@@ -1,8 +1,7 @@
-/*
+/**
  * saas找回密码
- * @wiki:http://wiki.qtonecloud.cn/pages/viewpage.action?pageId=44436391
- * @UI:http://wiki.qtonecloud.cn/pages/viewpage.action?pageId=42223952
- * */
+ * @type {{init: ForgotPassword.init, fetchSmsCode: ForgotPassword.fetchSmsCode, eventSendSms: ForgotPassword.eventSendSms, eventForgotPassword: ForgotPassword.eventForgotPassword, validateFormItem: ForgotPassword.validateFormItem}}
+ */
 var ForgotPassword = {
     init: function () {
         this.eventForgotPassword();
@@ -59,46 +58,39 @@ var ForgotPassword = {
         });
     },
     validateFormItem: function (type) {
-        var $account = $('#account').val();
         var $phone = $('#phone').val();
         var $smsCode = $('#verification-code').val();
         var $newPwd = $('#reset-pwd').val();
         var $pwd = $('#confirm').val();
-        if (!(/[\S]+/).test($account)) {
-            layer.msg('账号输入有误, 1~12位')
-            return false;
-        }
         if (!(/^1\d{10}$/).test($phone)) {
-            layer.msg('11位电话号码输入有误')
+            layer.msg('11位电话号码输入有误');
             return false;
         }
         if (type === 1) {
             if ($smsCode.length != 6) {
-                layer.msg('验证码输入有误')
+                layer.msg('验证码输入有误');
                 return false;
             }
             if ($newPwd.length < 6) {
-                layer.msg('重设密码输入有误, 最少6位')
+                layer.msg('重设密码输入有误, 最少6位');
                 return false;
             }
             if ($pwd.length < 6) {
-                layer.msg('确认密码输入有误, 最少6位')
+                layer.msg('确认密码输入有误, 最少6位');
                 return false;
             }
             if ($pwd != $newPwd) {
-                layer.msg('两次密码输入不一致')
+                layer.msg('两次密码输入不一致');
                 return false;
             }
             return {
-                account: $account,
                 phone: $phone,
                 smsCode: $smsCode,
-                newPwd: $newPwd,
+                newPwd: $newPwd
             }
         }
         return {
-            account: $account,
-            phone: $phone,
+            phone: $phone
         }
     }
 };
