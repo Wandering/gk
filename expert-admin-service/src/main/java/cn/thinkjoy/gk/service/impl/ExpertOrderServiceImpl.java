@@ -78,6 +78,7 @@ public class ExpertOrderServiceImpl extends AbstractPageService<IBaseDAO<ExpertR
         ExpertOrderDTO expertOrderDTO = new ExpertOrderDTO();
         expertOrderDTO.setServiceName(detailDTO.getServiceName());
         expertOrderDTO.setServiceState(detailDTO.getStatus());
+        expertOrderDTO.setChannel(detailDTO.getChannel());
         expertOrderDTO.setId(detailDTO.getId());
         expertOrderDTO.setCustomer(detailDTO.getContactPerson());
         expertOrderDTO.setCustomerId(detailDTO.getUserId());

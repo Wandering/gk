@@ -54,4 +54,6 @@ public class ExpertAdminConst {
 
     public final static String formatString = "yyyy-MM-dd HH:mm";
 
+    public final static Integer CHECK_TRUE = 1;
+
 }
