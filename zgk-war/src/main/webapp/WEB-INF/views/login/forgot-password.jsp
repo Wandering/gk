@@ -12,8 +12,11 @@
     <div class="navbar-container" id="navbar-container">
         <div class="navbar-header pull-left">
             <a href="javascript:;" class="navbar-brand">
-                <h1 id="logo"><img class="" src="<%=ctx%>/static/src/lib/assets/images/logo.png"/></h1> <span
-                    class="school-name" id="header-school-name"></span>
+                <h1 id="logo">智高考专家后台
+                    <%--<img class="" src="<%=ctx%>/static/src/lib/assets/images/logo.png"/>--%>
+                </h1>
+                <span
+                        class="school-name" id="header-school-name"></span>
             </a><!-- /.brand -->
         </div><!-- /.navbar-header -->
     </div><!-- /.container -->
@@ -31,37 +34,49 @@
                             <div class="">
                                 <form class="form-horizontal" role="form">
                                     <strong class="t">重设密码</strong>
+                                    <%--<div class="form-group">--%>
+                                    <%--<label class="col-sm-3 control-label no-padding-right" for="account">登录账号</label>--%>
+                                    <%--<div class="col-sm-9">--%>
+                                    <%--<input type="text" id="account"  placeholder="输入登录账号1~12位 "--%>
+                                    <%--class="col-xs-10 col-sm-5 input-txt"/>--%>
+                                    <%--</div>--%>
+                                    <%--</div>--%>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label no-padding-right" for="account">登录账号</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" id="account"  placeholder="输入登录账号1~12位 "
-                                                   class="col-xs-10 col-sm-5 input-txt"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label no-padding-right" for="phone">联系电话</label>
+                                        <label class="col-sm-3 control-label no-padding-right" for="phone">登录账号</label>
                                         <div class="col-sm-9">
                                             <input type="text" id="phone" placeholder="输入联系电话11位 "
                                                    class="col-xs-10 col-sm-5 input-txt"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label no-padding-right" for="verification-code">验证码</label>
+                                        <label class="col-sm-3 control-label no-padding-right"
+                                               for="account">图形验证码</label>
                                         <div class="col-sm-9">
-                                            <input type="text" id="verification-code" placeholder="输入验证码"
+                                            <input type="text" id="account" placeholder="输入登录账号1~12位 "
                                                    class="col-xs-10 col-sm-5 input-txt"/>
-                                            <button type="button" id="verification-btn" class="verification-btn">获取验证码</button>
+                                            <buttton>获取图形验证码</buttton>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label no-padding-right" for="reset-pwd">重设密码</label>
+                                        <label class="col-sm-3 control-label no-padding-right" for="verification-code">短信验证码</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" id="verification-code" placeholder="输入验证码"
+                                                   class="col-xs-10 col-sm-5 input-txt"/>
+                                            <button type="button" id="verification-btn" class="verification-btn">获取短信验证码
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right"
+                                               for="reset-pwd">重设密码</label>
                                         <div class="col-sm-9">
                                             <input type="password" id="reset-pwd" placeholder="重设密码至少6位"
                                                    class="col-xs-10 col-sm-5 input-txt"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label no-padding-right" for="confirm">确认密码</label>
+                                        <label class="col-sm-3 control-label no-padding-right"
+                                               for="confirm">确认密码</label>
                                         <div class="col-sm-9">
                                             <input type="password" id="confirm" placeholder="确认密码至少6位"
                                                    class="col-xs-10 col-sm-5 input-txt"/>
