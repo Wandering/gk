@@ -1,8 +1,12 @@
 body{
   background: #fcfcfc;
 }
+#logo{
+  font-size: 22px;
+  line-height: 24px!important;
+}
 .logo {
-  margin:91px 0 72px;
+  margin:91px 0 50px;
   img {
     width: 207px;
     height: 68px;
@@ -10,10 +14,34 @@ body{
     display: block;
   }
 }
+.sub-title{
+  text-align: center;
+  font-size: 22px;
+  width: 512px;
+  margin: 0 auto 40px;
+  line-height: 0;
+  color: #D70C18;
+  &:before{
+    content: '';
+    width: 160px;
+    height: 2px;
+    background-color: #D70C18;
+    display: block;
+    float: left;
+  }
+  &:after{
+    content: '';
+    width: 160px;
+    height: 2px;
+    background-color: #D70C18;
+    display: block;
+    float: right
+  }
+}
 .login-main{
   width:516px;
   height:312px;
-  margin:0 auto 220px;
+  margin:0 auto 20px;
   background: #FFFFFF;
   border: 1px solid #E7EAEE;
   box-shadow: 0px 6px 16px 0px #F0F0F0;
@@ -43,6 +71,9 @@ body{
     height:38px;
     margin-left:68px;
     text-align: right;
+    a{
+      color:#D70C18;
+    }
   }
   .login-btn{
     background: #D70C18;
