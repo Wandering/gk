@@ -42,7 +42,7 @@ public class WebCotroller {
      * expert-info
      * 专家信息
      */
-    @RequestMapping("/info-management")
+    @RequestMapping("/expert-info")
     public ModelAndView expertInfo() {
         return new ModelAndView("/info-management/expert-info");
     }
