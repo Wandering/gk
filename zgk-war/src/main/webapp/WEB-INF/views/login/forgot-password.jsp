@@ -26,6 +26,7 @@
                     <div class="col-xs-12">
                         <!-- PAGE CONTENT BEGINS -->
                         <h1 class="logo"><img src="<%=ctx%>/static/src/img/logo.png" alt=""></h1>
+                        <div class="sub-title">专家管理后台</div>
                         <div class="forgot-password-main">
                             <div class="">
                                 <form class="form-horizontal" role="form">
@@ -68,7 +69,7 @@
                                     </div>
                                     <div class="">
                                         <button type="button" id="back-btn" class="back-btn">提交</button>
-                                        <p class="txt">已有账号，请<a href="/login">登录账号</a></p>
+                                        <p class="txt">已有账号，请<a href="/">登录账号</a></p>
                                     </div>
                                 </form>
                             </div>
