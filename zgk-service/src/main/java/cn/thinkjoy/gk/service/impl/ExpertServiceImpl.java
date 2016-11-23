@@ -276,7 +276,7 @@ public class ExpertServiceImpl implements IExpertService
 
     @Override
     public void updateChannelByCid(String cid) {
-        dao.updateChannelByCid(cid);
+        dao.updateChannelByCid(cid,System.currentTimeMillis());
     }
 
     @Override

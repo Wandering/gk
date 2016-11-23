@@ -148,9 +148,11 @@ public interface IExpertDAO
      * 根据cid修改频道状态
      *
      * @param cid
+     * @param ctime
      */
     void updateChannelByCid(
-            @Param("cid") String cid
+            @Param("cid") String cid,
+            @Param("ctime") long ctime
     );
 
     /**

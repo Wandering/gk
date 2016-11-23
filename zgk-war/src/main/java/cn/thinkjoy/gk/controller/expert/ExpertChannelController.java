@@ -173,8 +173,11 @@ public class ExpertChannelController {
         // 执行请求
         HttpResponse response = httpClient.execute(httpPost);
 
-        // 打印执行结果
-        System.out.println(EntityUtils.toString(response.getEntity(), Consts.UTF_8));
+        Map<String,Object> retMap = JSONObject.parseObject(EntityUtils.toString(response.getEntity()),Map.class);
+        if(!"200".equals(retMap.get("code").toString())){
+            logger.error("删除频道失败,原因:"+retMap.get("msg"));
+            ModelUtil.throwException(ERRORCODE.DELETE_CHANNEL_ERROR);
+        }
 
         expertService.updateChannelByCid(cid);
 
