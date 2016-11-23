@@ -5,6 +5,7 @@ public class ExpertAdminConst {
      * 用户cookieKey
      */
     public static final String USER_SESSION_KEY = "expert_user_info";
+    public static final String CHARSET = "UTF-8";
 
     /**
      * 用户cookie过期时间设置
