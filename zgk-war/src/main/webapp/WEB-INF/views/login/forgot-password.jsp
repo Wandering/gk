@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>SAAS 找回密码</title>
+    <title>智高考专家后台 - 找回密码</title>
     <%@ include file="./../common/meta.jsp" %>
     <link rel="stylesheet" href="<%=ctx%>/static/src/css/login/forgot-password.css">
 </head>
@@ -48,21 +48,21 @@
                                                    class="col-xs-10 col-sm-5 input-txt"/>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group dh" id="security-box">
                                         <label class="col-sm-3 control-label no-padding-right"
-                                               for="account">图形验证码</label>
+                                               for="verification-code-img">图形验证码</label>
                                         <div class="col-sm-9">
-                                            <input type="text" id="account" placeholder="输入登录账号1~12位 "
+                                            <input type="text" id="verification-code-img" placeholder="输入图形验证码"
                                                    class="col-xs-10 col-sm-5 input-txt"/>
-                                            <buttton>获取图形验证码</buttton>
+                                            <img src="" id="verification-btn-img"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label no-padding-right" for="verification-code">短信验证码</label>
+                                        <label class="col-sm-3 control-label no-padding-right" for="verification-code-msg">短信验证码</label>
                                         <div class="col-sm-9">
-                                            <input type="text" id="verification-code" placeholder="输入验证码"
+                                            <input type="text" id="verification-code-msg" placeholder="输入短信验证码"
                                                    class="col-xs-10 col-sm-5 input-txt"/>
-                                            <button type="button" id="verification-btn" class="verification-btn">获取短信验证码
+                                            <button type="button" id="verification-btn-msg" class="verification-btn" disabled>获取验证码
                                             </button>
                                         </div>
                                     </div>
@@ -83,7 +83,7 @@
                                         </div>
                                     </div>
                                     <div class="">
-                                        <button type="button" id="back-btn" class="back-btn">提交</button>
+                                        <button type="button" id="submit-btn" class="back-btn">提交</button>
                                         <p class="txt">已有账号，请<a href="/">登录账号</a></p>
                                     </div>
                                 </form>
