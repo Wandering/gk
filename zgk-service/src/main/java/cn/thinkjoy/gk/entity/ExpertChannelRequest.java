@@ -32,4 +32,13 @@ public class ExpertChannelRequest {
     public void setType(int type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "ExpertChannelRequest{" +
+                "expertId='" + expertId + '\'' +
+                ", stuId='" + stuId + '\'' +
+                ", type=" + type +
+                '}';
+    }
 }

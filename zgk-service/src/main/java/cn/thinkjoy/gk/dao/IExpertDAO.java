@@ -152,4 +152,13 @@ public interface IExpertDAO
     void updateChannelByCid(
             @Param("cid") String cid
     );
+
+    /**
+     * 插入频道信息
+     *
+     * @param channel
+     */
+    void insertChannel(
+            ExpertChannel channel
+    );
 }

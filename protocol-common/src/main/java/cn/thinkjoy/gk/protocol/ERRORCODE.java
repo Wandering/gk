@@ -111,7 +111,9 @@ public enum ERRORCODE {
 
 	SELECT_SUBJECT_IDENTICAL("0600013", "只有不同的选课方案才能做对比哦!"),
 
-	DELETE_CHANNEL_FAIL("0600014", "没有权限删除频道");
+	DELETE_CHANNEL_FAIL("0600014", "没有权限删除频道"),
+
+	CREATE_CHANNEL_FAIL("0600015", "创建频道失败,请稍后再试");
 
 	/** The code. */
 	private final String code;

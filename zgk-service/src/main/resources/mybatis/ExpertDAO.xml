@@ -638,6 +638,8 @@
             expertId = #{expertId}
         AND stuId = #{stuId}
         AND type = #{type}
+        ORDER by id desc
+        limit 1
     </select>
 
     <!-- 根据cid查询频道 -->
@@ -657,5 +659,44 @@
         WHERE
             cid = #{cid}
     </update>
+
+    <!-- 插入频道信息 -->
+    <insert id="insertChannel" parameterType="cn.thinkjoy.gk.entity.ExpertChannel">
+        INSERT INTO zgk_expert_channel(
+            STATUS,
+            createDate,
+            modifyDate,
+            expertId,
+            stuId,
+            type,
+            cid,
+            ctime,
+            NAME,
+            pushUrl,
+            httpPullUrl,
+            hlsPullUrl,
+            rtmpPullUrl,
+            CODE,
+            msg
+        )
+        VALUE
+            (
+                #{status},
+                #{createDate},
+                #{modifyDate},
+                #{expertId},
+                #{stuId},
+                #{type},
+                #{cid},
+                #{ctime},
+                #{name},
+                #{pushUrl},
+                #{httpPullUrl},
+                #{hlsPullUrl},
+                #{rtmpPullUrl},
+                #{code},
+                #{msg}
+            )
+    </insert>
 </mapper>
 

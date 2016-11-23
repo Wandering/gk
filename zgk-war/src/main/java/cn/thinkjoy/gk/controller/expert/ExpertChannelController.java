@@ -1,6 +1,5 @@
 package cn.thinkjoy.gk.controller.expert;
 
-import cn.thinkjoy.common.protocol.Request;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.gk.common.Constants;
 import cn.thinkjoy.gk.common.RandomCodeUtil;
@@ -11,6 +10,7 @@ import cn.thinkjoy.gk.protocol.ModelUtil;
 import cn.thinkjoy.gk.service.IExpertService;
 import cn.thinkjoy.gk.util.MessageDigestUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.Consts;
@@ -20,6 +20,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,7 @@ public class ExpertChannelController {
 
     private static final Logger logger = Logger.getLogger(ExpertChannelController.class);
 
+    @Autowired
     private IExpertService expertService;
 
     @ResponseBody
@@ -57,9 +59,9 @@ public class ExpertChannelController {
         // 构造频道名称
         String name = expertId + "_" + stuId;
         if(type == 0){ //
-            name += "expert";
+            name += "_expert";
         }else if(type == 1){
-            name += "stu";
+            name += "_stu";
         }else {
             ModelUtil.throwException(ERRORCODE.PARAM_ERROR);
             logger.error("请求参数错误: type = "+type);
@@ -93,10 +95,25 @@ public class ExpertChannelController {
         // 执行请求
         HttpResponse response = httpClient.execute(httpPost);
 
-        // 打印执行结果
-        System.out.println(EntityUtils.toString(response.getEntity(), Consts.UTF_8));
+        Map<String,Object> retMap = JSONObject.parseObject(EntityUtils.toString(response.getEntity()),Map.class);
+        ExpertChannel channel = null;
+        if("200".equals(retMap.get("code").toString())){
+            channel = JSONObject.parseObject(retMap.get("ret").toString(),ExpertChannel.class);
+        }else {
+            logger.error("创建频道失败,原因:"+retMap.get("msg"));
+            ModelUtil.throwException(ERRORCODE.CREATE_CHANNEL_FAIL);
+        }
 
-        return new ExpertChannel();
+        channel.setCreateDate(System.currentTimeMillis());
+        channel.setModifyDate(System.currentTimeMillis());
+        channel.setStatus(0);
+        channel.setStuId(Long.valueOf(stuId));
+        channel.setExpertId(Long.valueOf(expertId));
+        channel.setType(type);
+
+        expertService.insertChannel(channel);
+
+        return channel;
     }
 
     @ResponseBody
@@ -112,7 +129,7 @@ public class ExpertChannelController {
     @ResponseBody
     @ApiDesc(value = "删除频道",owner = "杨国荣")
     @RequestMapping(value = "/deleteChannel",method = RequestMethod.GET)
-    public void deleteChannel(@RequestParam("creatorId") long creatorId,
+    public Map<String,String> deleteChannel(@RequestParam("creatorId") long creatorId,
                                     @RequestParam("cid") String cid) throws IOException {
 
         ExpertChannel channel = expertService.getChannelByCid(cid);
@@ -130,7 +147,7 @@ public class ExpertChannelController {
         }
 
         DefaultHttpClient httpClient = new DefaultHttpClient();
-        String url = Constants.CREATE_CHANNEL_URL;
+        String url = Constants.DELETE_CHANNEL_URL;
         HttpPost httpPost = new HttpPost(url);
 
         String appKey = Constants.APP_KEY;
@@ -160,5 +177,7 @@ public class ExpertChannelController {
         System.out.println(EntityUtils.toString(response.getEntity(), Consts.UTF_8));
 
         expertService.updateChannelByCid(cid);
+
+        return Maps.newHashMap();
     }
 }

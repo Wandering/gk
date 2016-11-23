@@ -278,4 +278,9 @@ public class ExpertServiceImpl implements IExpertService
     public void updateChannelByCid(String cid) {
         dao.updateChannelByCid(cid);
     }
+
+    @Override
+    public void insertChannel(ExpertChannel channel) {
+        dao.insertChannel(channel);
+    }
 }

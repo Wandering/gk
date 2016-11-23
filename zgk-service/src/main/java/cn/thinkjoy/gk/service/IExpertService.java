@@ -115,4 +115,11 @@ public interface IExpertService
      * @param cid
      */
     void updateChannelByCid(String cid);
+
+    /**
+     * 插入频道信息
+     *
+     * @param channel
+     */
+    void insertChannel(ExpertChannel channel);
 }
