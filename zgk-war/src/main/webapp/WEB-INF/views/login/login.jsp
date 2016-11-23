@@ -8,6 +8,18 @@
     <link rel="stylesheet" href="<%=ctx%>/static/src/css/login/login.css">
 </head>
 <body>
+<div class="navbar navbar-default" id="navbar">
+    <div class="navbar-container" id="navbar-container">
+        <div class="navbar-header pull-left">
+            <a href="javascript:;" class="navbar-brand">
+                <h1 id="logo">智高考专家后台
+                    <%--<img class="" src="<%=ctx%>/static/src/lib/assets/images/logo.png"/>--%>
+                </h1> <span
+                    class="school-name" id="header-school-name"></span>
+            </a><!-- /.brand -->
+        </div><!-- /.navbar-header -->
+    </div><!-- /.container -->
+</div>
 <div class="main-container" id="main-container">
     <div class="main-container-inner">
         <div class="main-content flow-main-content">
@@ -16,6 +28,7 @@
                     <div class="col-xs-12">
                         <!-- PAGE CONTENT BEGINS -->
                         <h1 class="logo"><img src="<%=ctx%>/static/src/img/logo.png" alt=""></h1>
+                        <div class="sub-title">专家管理后台</div>
                         <div class="login-main">
                             <div class="">
                                 <form class="form-horizontal" role="form">
@@ -32,7 +45,7 @@
                                                    class="col-xs-10 col-sm-5"/>
                                         </div>
                                     </div>
-                                    <div class="forgot-password"><a href="/forgot-password">忘记密码?</a></div>
+                                    <div class="forgot-password"><a href="/expert/admin/login/forgot-password.do">忘记密码?</a></div>
                                     <div class="">
                                         <button type="button" id="login-btn" class="login-btn">登录</button>
                                     </div>

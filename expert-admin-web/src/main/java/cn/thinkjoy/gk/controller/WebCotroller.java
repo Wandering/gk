@@ -27,7 +27,7 @@ public class WebCotroller {
      * forgot-password
      * 重设面貌
      */
-    @RequestMapping("/forgot-password")
+    @RequestMapping("/login/forgot-password")
     public ModelAndView forgotPassword() {
         return new ModelAndView("/login/forgot-password");
     }
@@ -38,6 +38,14 @@ public class WebCotroller {
     @RequestMapping("/info-management")
     public ModelAndView infoManagement() {
         return new ModelAndView("/info-management/info-management");
+    }
+    /**
+     * expert-info
+     * 专家信息
+     */
+    @RequestMapping("/expert-info")
+    public ModelAndView expertInfo() {
+        return new ModelAndView("/info-management/expert-info");
     }
     /**
      * user-center
