@@ -5,9 +5,12 @@ package cn.thinkjoy.gk.controller;
  */
 
 
+import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.constant.UserRedisConst;
+import cn.thinkjoy.gk.constant.VipConst;
 import cn.thinkjoy.gk.domain.Product;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.query.ProductQuery;
@@ -15,9 +18,11 @@ import cn.thinkjoy.gk.service.IExpertProductServiceService;
 import cn.thinkjoy.gk.service.IProductExService;
 import cn.thinkjoy.gk.service.IProductService;
 import cn.thinkjoy.gk.service.ex.IExpertProductServiceExService;
+import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.zgk.zgksystem.DeparmentApiService;
 import cn.thinkjoy.zgk.zgksystem.domain.DepartmentProductRelation;
 import cn.thinkjoy.zgk.zgksystem.pojo.DepartmentProductRelationPojo;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 商品
@@ -52,8 +58,9 @@ public class ProductController extends ZGKBaseController {
     @Autowired
     private DeparmentApiService deparmentApiService;
 
-    @Autowired
-    private IExpertProductServiceService expertProductServiceService;
+    private static RedisRepository instance = RedisUtil.getInstance();
+
+
     @Autowired
     private IExpertProductServiceExService expertProductServiceExService;
     /**
@@ -101,15 +108,23 @@ public class ProductController extends ZGKBaseController {
     @RequestMapping(value = "findAllProduct", method = RequestMethod.GET)
     @ResponseBody
     public List<DepartmentProductRelationPojo> findAllProduct() {
-        List<DepartmentProductRelationPojo> relations = null;
-        try {
-            relations = deparmentApiService.queryProductPriceByAreaId(getAreaId().toString());
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        String key = VipConst.VIP_CARD_INFO + getAreaId();
+        if (instance.exists(key)){
+            Object value = instance.get(key);
+            return JSON.parseObject(value.toString(),List.class);
+        }else {
+            List<DepartmentProductRelationPojo> relations = null;
+            try {
+                relations = deparmentApiService.queryProductPriceByAreaId(getAreaId().toString());
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            handlerRelations(relations);
+            instance.set(key,JSON.toJSON(relations),VipConst.TIME_OUT, TimeUnit.DAYS);
+            return relations;
         }
-        return relations;
     }
 
     /**
@@ -150,5 +165,35 @@ public class ProductController extends ZGKBaseController {
             resultMap.put("cardInfo", departmentProductRelationPojo);
         }
         return resultMap;
+    }
+
+    private void handlerRelations(List<DepartmentProductRelationPojo> relationPojos){
+        Long areaId = this.getAreaId();
+        Map<String,Object> map = new HashedMap();
+//        productId,areaId,isJoin
+        map.put("areaId",areaId);
+//        map.put("isJoin",isJoin);
+
+
+        for (DepartmentProductRelationPojo relationPojo:relationPojos){
+            List<Map<String,Object>> cardInfos = expertProductServiceExService.getCardServiceByProductId(map);
+            if (cardInfos==null||cardInfos.size()==0){
+                map.put("areaId",0);
+                map.put("productId",relationPojo.getProductId());
+                cardInfos = expertProductServiceExService.getCardServiceByProductId(map);
+            }
+            relationPojo.setIntro(genCardIntro(cardInfos));
+        }
+    }
+
+    private String genCardIntro(List<Map<String,Object>> cardInfos){
+        StringBuilder intro = new StringBuilder();
+        for(Map<String,Object> map : cardInfos){
+            intro.append(map.get("serviceType")).append("、");
+        }
+        if (intro.length()>0){
+            intro.delete(intro.length()-1,intro.length());
+        }
+        return intro.toString();
     }
 }
