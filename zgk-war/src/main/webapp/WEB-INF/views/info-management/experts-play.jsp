@@ -5,6 +5,7 @@
     <meta charset="utf-8"/>
     <title>智高考专家后台</title>
     <%@ include file="../common/meta.jsp" %>
+    <link rel="stylesheet" href="<%=ctx%>/static/src/css/info-management/experts-play.css">
     <link rel="stylesheet" type="text/css" href="http://www.bootcss.com/p/buttons/css/buttons.css">
     <style>
         .m-input {
@@ -37,7 +38,7 @@
 </head>
 <body>
 <%@ include file="../common/header.jsp" %>
-<%@ include file="../common/footer.jsp" %>
+
 <div class="main-container" id="main-container">
     <script type="text/javascript">
         try {
@@ -58,58 +59,78 @@
                         <div class="main-title">
                             <h3>一对一视频</h3>
                         </div>
+                        <div class="fun-set">
+                        <div class="m-input">
+                            <span class="u-input-name">摄像头：</span>
+                            <select class="u-input" id="cameraSelect">
+                            </select>
+                        </div>
+                        <div class="m-input">
+                            <span class="u-input-name">麦克风：</span>
+                            <select class="u-input" id="microPhoneSelect">
+                            </select>
+                        </div>
+                        <div class="m-input">
+                            <span class="u-input-name">清晰度：</span>
+                            <select class="u-input" id="qualitySelect">
+                                <option value="0">流畅（480*360@20）</option>
+                                <option value="1">标清（640*480@20）</option>
+                                <option value="2">高清（960*540@20）</option>
+                            </select>
+                        </div>
+                        <div class="m-input" style="display: none">
+                            <span class="u-input-name">推流地址：</span>
+                            <input class="u-input" type="text" id="publishUrl">
+                        </div>
+                        <div class="m-input">
+                            <button class="button button-primary button-rounded testBtn" id="previewBtn"
+                                    onclick="startPreview()">预览
+                            </button>
+                            <button class="button button-primary button-rounded testBtn" id="publishBtn"
+                                    onclick="startPublish()">开始直播
+                            </button>
+                            <span class="u-status"></span>
+                        </div>
+                        </div>
+                        <%-- 播放端开始 --%>
+                        <link href="//nos.netease.com/vod163/nep.min.css" rel="stylesheet">
+                        <style type="text/css">
+                            .g-container-video {
+                                margin: 30px auto;
+                                overflow: hidden;
+                                max-width: 640px;
+                            }
+                            .g-container-video h1 {
+                                margin-bottom: 30px;
+                                text-align: center;
+                            }
+                            .m-button-view {
+                                text-align: center;
+                            }
+                            .g-container-code {
+                                margin: 30px auto;
+                                max-width: 960px;
+                            }
+                            .u-button {
+                                width: 150px;
+                                height: 50px;
+                            }
+                            .s-code-html {
+                                height: 55px;
+                            }
+                            .s-code-js {
+                                height: 70px;
+                            }
+                        </style>
                         <div class="body-main">
                             <div class="record-main">
                                 <%-- 推流开始  --%>
-
-
-                                <style type="text/css">
-
-                                </style>
-                                <div class="m-input">
-                                    <span class="u-input-name">摄像头：</span>
-                                    <select class="u-input" id="cameraSelect">
-                                    </select>
-                                </div>
-                                <div class="m-input">
-                                    <span class="u-input-name">麦克风：</span>
-                                    <select class="u-input" id="microPhoneSelect">
-                                    </select>
-                                </div>
-                                <div class="m-input">
-                                    <span class="u-input-name">清晰度：</span>
-                                    <select class="u-input" id="qualitySelect">
-                                        <option value="0">流畅（480*360@20）</option>
-                                        <option value="1">标清（640*480@20）</option>
-                                        <option value="2">高清（960*540@20）</option>
-                                    </select>
-                                </div>
-                                <div class="m-input">
-                                    <span class="u-input-name">推流地址：</span>
-                                    <input class="u-input" type="text" id="publishUrl">
-                                </div>
-                                <div class="m-input">
-                                    <button class="button button-primary button-rounded testBtn" id="previewBtn"
-                                            onclick="startPreview()">预览
-                                    </button>
-                                    <button class="button button-primary button-rounded testBtn" id="publishBtn"
-                                            onclick="startPublish()">开始直播
-                                    </button>
-                                    <span class="u-status"></span>
-                                </div>
-                                <div id="my-publisher"></div>
-
+                                <div class="publish-box"><div id="my-publisher"></div></div>
                                 <%-- 推流结束  --%>
                             </div>
                             <div class="play-main">
-                                <%-- 播放端开始 --%>
-                                <link href="http://nos.netease.com/vod163/nep.min.css" rel="stylesheet">
-                                <video id="my-video" class="video-js" x-webkit-airplay="allow" webkit-playsinline
-                                       controls poster="//nos.netease.com/vod163/poster.png" preload="auto" width="640"
-                                       height="360" data-setup="{}">
-                                    <source src="" id="play-source" type="rtmp/flv">
-                                </video>
-
+                                <div id="neplayer"></div>
+                                    <script src="//nos.netease.com/vod163/nep.min.js"></script>
                                 <%-- 播放端结束 --%>
                             </div>
                         </div>
@@ -120,12 +141,9 @@
         </div><!-- /.main-content -->
     </div><!-- /.main-container-inner -->
 </div><!-- /.main-container -->
-
+<%@ include file="../common/footer.jsp" %>
 <script src="//nos.netease.com/vod163/nePublisher.min.js"></script>
-<script src="http://nos.netease.com/vod163/nep.min.js"></script>
 <script type="text/javascript">
-
-
     function expertChannel(expertId,stuId,type){
         var pushUrl = '';
         Common.ajaxFun('/expertChannel/createChannel.do', 'POST', {
@@ -145,24 +163,25 @@
 
 
     function playChannel(expertId,stuId,type){
-        var httpPullUrl = '';
+        var rtmpPullUrl = '';
         Common.ajaxFun('/expertChannel/getChannel.do', 'get', {
             'expertId':expertId,
             'stuId':stuId,
             'type':type
         }, function (res) {
             if (res.rtnCode === '0000000') {
-                httpPullUrl = res.bizData.httpPullUrl;
+                rtmpPullUrl = res.bizData.rtmpPullUrl;
             }
         }, function (res) {
 
         },true);
-        return httpPullUrl;
+        return rtmpPullUrl;
     }
 
 
 
     $('#publishUrl').val(expertChannel(1,2,0));
+    $('#play-source').prop('src',playChannel(1,2,1));
 
     var cameraList,
             microPhoneList,
@@ -179,7 +198,7 @@
         bitrate: 1500
     }, {
         //flashOptions
-        previewWindowWidth: 862,
+        previewWindowWidth: 1020,
         previewWindowHeight: 486,
         wmode: 'transparent',
         quality: 'high',
@@ -277,10 +296,19 @@
         }
         previewBtn.disabled = false;
     };
-    $('#play-source').attr('src',playChannel(1,2,1));
+    console.log(playChannel(1,2,1))
 
 
+    function showVideo(argument) {
+        var container = document.getElementById('neplayer');
+        container.innerHTML = '<video id="my-video" class="video-js" x-webkit-airplay="allow" webkit-playsinline controls poster="//nos.netease.com/vod163/poster.png" preload="auto" width="320" height="180" data-setup="{}"><source src="'+ playChannel(1, 2, 1) + '" type="rtmp/flv"></video>';
+        neplayer('my-video',{
+            "controls": false,
+            "autoplay": true
+        });
+    }
+    showVideo();
 </script>
-
+<script src="<%=ctx%>/static/src/js/info-management/experts-play.js"></script>
 </body>
 </html>
