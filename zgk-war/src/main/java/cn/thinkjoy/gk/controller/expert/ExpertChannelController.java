@@ -8,6 +8,7 @@ import cn.thinkjoy.gk.entity.ExpertChannelRequest;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.protocol.ModelUtil;
 import cn.thinkjoy.gk.service.IExpertService;
+import cn.thinkjoy.gk.util.DateUtil;
 import cn.thinkjoy.gk.util.MessageDigestUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -84,7 +85,7 @@ public class ExpertChannelController {
         String appKey = Constants.APP_KEY;
         String appSecret = Constants.APP_SERCERT;
         String nonce = RandomCodeUtil.generateCharCode(6);
-        String curTime = String.valueOf(new Date().getTime() / 1000);
+        String curTime = DateUtil.DateToString(new Date(),DateUtil.YYYYMMDDHHMMSS);
         String checkSum = MessageDigestUtil.getCheckSum(appSecret, nonce ,curTime);//鉴权
 
         // 设置请求的header
@@ -163,7 +164,7 @@ public class ExpertChannelController {
         String appKey = Constants.APP_KEY;
         String appSecret = Constants.APP_SERCERT;
         String nonce = RandomCodeUtil.generateCharCode(6);
-        String curTime = String.valueOf(new Date().getTime() / 1000);
+        String curTime = DateUtil.DateToString(new Date(),DateUtil.YYYYMMDDHHMMSS);
         String checkSum = MessageDigestUtil.getCheckSum(appSecret, nonce ,curTime);//鉴权
 
         // 设置请求的header

@@ -17,6 +17,8 @@ public class DateUtil {
 
 	private static final Object object = new Object();
 
+	public static final String YYYYMMDDHHMMSS = "yyyymmddhhmmss";
+
 	/**
 	 * 获取SimpleDateFormat
 	 * 
