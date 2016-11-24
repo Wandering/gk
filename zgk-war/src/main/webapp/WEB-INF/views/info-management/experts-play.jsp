@@ -158,12 +158,10 @@
     var stuId = Common.getLinkey('stuId');
     function Channel() {
         this.init();
-        this.cid = ''
-        this.pushUrl = ''
-        this.rtmpPullUrl = ''
+        this.cid = '';
+        this.pushUrl = '';
+        this.rtmpPullUrl = '';
     }
-    ;
-
     Channel.prototype = {
         constructor: Channel,
         init: function () {
@@ -184,7 +182,7 @@
                 }
             }, function (res) {
 
-            }, true);
+            });
         },
         playChannel: function (expertId, stuId, type) {
             var that = this;
@@ -198,7 +196,7 @@
                 }
             }, function (res) {
 
-            }, true);
+            },true);
         },
         outChannel: function (creatorId, cid) {
             Common.ajaxFun('/expertChannel/deleteChannel.do', 'get', {
@@ -210,7 +208,7 @@
                 }
             }, function (res) {
 
-            });
+            },true);
         },
         getChannelStatus: function (cid) {
             var that = this;
@@ -251,7 +249,12 @@
     var ChannelIns = new Channel();
 
 
-    $('#publishUrl').val(ChannelIns.pushUrl);
+    $(function(){
+        console.log(ChannelIns.pushUrl)
+        $('#publishUrl').val(ChannelIns.pushUrl);
+    })
+
+
 
     $('#outChannelBtn').on('click', function () {
         ChannelIns.outChannel(expertsId, ChannelIns.cid);
