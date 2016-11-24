@@ -156,7 +156,7 @@ public class ExpertChannelController {
     }
 
     @ResponseBody
-    @ApiDesc(value = "删除频道",owner = "杨国荣")
+    @ApiDesc(value = "获取频道状态",owner = "杨国荣")
     @RequestMapping(value = "/getChannelStatus",method = RequestMethod.GET)
     public Map<String,Object> getChannelStatus(@RequestParam("cid") String cid)
             throws IOException {

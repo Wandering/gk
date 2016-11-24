@@ -83,9 +83,9 @@
                                 <input class="u-input" type="text" id="publishUrl">
                             </div>
                             <div class="m-input">
-                                <%--<button class="button button-primary button-rounded testBtn" id="previewBtn"--%>
-                                <%--onclick="startPreview()">预览--%>
-                                <%--</button>--%>
+                                <button class="button button-primary button-rounded testBtn" id="previewBtn"
+                                onclick="startPreview()">预览
+                                </button>
                                 <button class="button button-primary button-rounded testBtn" id="publishBtn"
                                         onclick="startPublish()">开始直播
                                 </button>
