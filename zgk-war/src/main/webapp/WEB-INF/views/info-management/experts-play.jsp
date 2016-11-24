@@ -60,17 +60,17 @@
                             <h3>一对一视频</h3>
                         </div>
                         <div class="fun-set">
-                            <div class="m-input" style="display: none">
+                            <div class="m-input" >
                                 <span class="u-input-name">摄像头：</span>
                                 <select class="u-input" id="cameraSelect">
                                 </select>
                             </div>
-                            <div class="m-input" style="display: none">
+                            <div class="m-input" >
                                 <span class="u-input-name">麦克风：</span>
                                 <select class="u-input" id="microPhoneSelect">
                                 </select>
                             </div>
-                            <div class="m-input" style="display: none">
+                            <div class="m-input">
                                 <span class="u-input-name">清晰度：</span>
                                 <select class="u-input" id="qualitySelect">
                                     <option value="0">流畅（480*360@20）</option>
@@ -78,7 +78,7 @@
                                     <option value="2">高清（960*540@20）</option>
                                 </select>
                             </div>
-                            <div class="m-input" style="display: none">
+                            <div class="m-input">
                                 <span class="u-input-name">推流地址：</span>
                                 <input class="u-input" type="text" id="publishUrl">
                             </div>
@@ -167,6 +167,8 @@
     Channel.prototype = {
         constructor: Channel,
         init: function () {
+            this.expertChannel(expertsId,stuId,0);
+            this.playChannel(expertsId,stuId,1);
         },
         expertChannel: function (expertId, stuId, type) {
             var that = this;
@@ -221,7 +223,7 @@
                         case 0:
                             console.log('直播处于空闲');
                             $('.play-main').hide();
-                            that.items = setInterval(that.getChannelStatus(cid),2000);
+                            that.items = setInterval(that.getChannelStatus(cid),5000);
                             break;
                         case 1:
                             console.log('正在直播');
@@ -249,7 +251,7 @@
     var ChannelIns = new Channel();
 
 
-    $('#publishUrl').val(ChannelIns.expertChannel(expertsId, stuId, 0));
+    $('#publishUrl').val(ChannelIns.pushUrl);
 
     $('#outChannelBtn').on('click', function () {
         ChannelIns.outChannel(expertsId, ChannelIns.cid);
@@ -372,7 +374,7 @@
 
     function showVideo(argument) {
         var container = document.getElementById('neplayer');
-        container.innerHTML = '<video id="my-video" class="video-js" x-webkit-airplay="allow" webkit-playsinline controls poster="//nos.netease.com/vod163/poster.png" preload="auto" width="320" height="180" data-setup="{}"><source src="' + ChannelIns.playChannel(expertsId, stuId, 1) + '" type="rtmp/flv"></video>';
+        container.innerHTML = '<video id="my-video" class="video-js" x-webkit-airplay="allow" webkit-playsinline controls poster="//nos.netease.com/vod163/poster.png" preload="auto" width="320" height="180" data-setup="{}"><source src="' + ChannelIns.rtmpPullUrl + '" type="rtmp/flv"></video>';
         neplayer('my-video', {
             "controls": false,
             "autoplay": true
