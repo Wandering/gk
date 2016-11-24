@@ -250,16 +250,16 @@
 
 
     $(function(){
-        console.log(ChannelIns.pushUrl)
         $('#publishUrl').val(ChannelIns.pushUrl);
-    })
-
-
-
-    $('#outChannelBtn').on('click', function () {
-        ChannelIns.outChannel(expertsId, ChannelIns.cid);
-        clearInterval(ChannelIns.items);
+        $('#outChannelBtn').on('click', function () {
+            ChannelIns.outChannel(expertsId, ChannelIns.cid);
+            clearInterval(ChannelIns.items);
+        });
     });
+
+
+
+
 
     var cameraList,
             microPhoneList,
