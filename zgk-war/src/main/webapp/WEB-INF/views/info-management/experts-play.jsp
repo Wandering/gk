@@ -178,6 +178,7 @@
                 if (res.rtnCode === '0000000') {
                     that.pushUrl = res.bizData.pushUrl;
                     that.cid = res.bizData.cid;
+                    that.getChannelStatus(that.cid);
                 }
             }, function (res) {
 
