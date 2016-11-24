@@ -158,15 +158,14 @@
     var stuId = Common.getLinkey('stuId');
     function Channel() {
         this.init();
-        this.cid = '';
-        this.pushUrl = '';
         this.rtmpPullUrl = '';
     }
     Channel.prototype = {
         constructor: Channel,
         init: function () {
-            this.expertChannel(expertsId,stuId,0);
-            this.playChannel(expertsId,stuId,1);
+            var that = this;
+            that.expertChannel(expertsId,stuId,0);
+            that.playChannel(expertsId,stuId,1);
         },
         expertChannel: function (expertId, stuId, type) {
             var that = this;
@@ -176,9 +175,12 @@
                 'type': type
             }, function (res) {
                 if (res.rtnCode === '0000000') {
-                    that.pushUrl = res.bizData.pushUrl;
-                    that.cid = res.bizData.cid;
-                    that.getChannelStatus(that.cid);
+                    that.getChannelStatus(res.bizData.cid);
+                    $('#publishUrl').val(res.bizData.pushUrl);
+                    $('#outChannelBtn').on('click', function () {
+                        ChannelIns.outChannel(expertsId, res.bizData.cid);
+                        clearInterval(ChannelIns.items);
+                    });
                 }
             }, function (res) {
 
@@ -196,7 +198,7 @@
                 }
             }, function (res) {
 
-            },true);
+            });
         },
         outChannel: function (creatorId, cid) {
             Common.ajaxFun('/expertChannel/deleteChannel.do', 'get', {
@@ -208,7 +210,7 @@
                 }
             }, function (res) {
 
-            },true);
+            });
         },
         getChannelStatus: function (cid) {
             var that = this;
@@ -221,7 +223,7 @@
                         case 0:
                             console.log('直播处于空闲');
                             $('.play-main').hide();
-                            that.items = setInterval(that.getChannelStatus(cid),5000);
+//                            that.items = setInterval(that.getChannelStatus(cid),5000);
                             break;
                         case 1:
                             console.log('正在直播');
@@ -249,13 +251,7 @@
     var ChannelIns = new Channel();
 
 
-    $(function(){
-        $('#publishUrl').val(ChannelIns.pushUrl);
-        $('#outChannelBtn').on('click', function () {
-            ChannelIns.outChannel(expertsId, ChannelIns.cid);
-            clearInterval(ChannelIns.items);
-        });
-    });
+    console.log(ChannelIns.rtmpPullUrl)
 
 
 
