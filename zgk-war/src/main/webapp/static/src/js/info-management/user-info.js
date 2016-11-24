@@ -51,7 +51,11 @@ UserInfo.prototype = {
                     var reportHtml = [];
                     $.each(data, function (i, k) {
                         reportHtml.push('<tr>');
-                        reportHtml.push('<td><a href="' + k.reportUrl + '" class="report-btn">' + k.apeskName + '</a></td>');
+                        if (parseInt(k.acId) != 5) {
+                            reportHtml.push('<td><a href="' + k.reportUrl + '" class="report-btn">' + k.apeskName + '</a></td>');
+                        } else {
+                            reportHtml.push('<td><a href="/expert/admin/report-info.do?uid=216" class="report-btn new-report">' + k.apeskName + '</a></td>');
+                        }
                         reportHtml.push('<td>' + k.reportDate + '</td>');
                         reportHtml.push('</tr>');
                     });
