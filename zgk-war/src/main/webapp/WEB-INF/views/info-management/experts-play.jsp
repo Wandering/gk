@@ -60,37 +60,39 @@
                             <h3>一对一视频</h3>
                         </div>
                         <div class="fun-set">
-                        <div class="m-input">
-                            <span class="u-input-name">摄像头：</span>
-                            <select class="u-input" id="cameraSelect">
-                            </select>
-                        </div>
-                        <div class="m-input">
-                            <span class="u-input-name">麦克风：</span>
-                            <select class="u-input" id="microPhoneSelect">
-                            </select>
-                        </div>
-                        <div class="m-input">
-                            <span class="u-input-name">清晰度：</span>
-                            <select class="u-input" id="qualitySelect">
-                                <option value="0">流畅（480*360@20）</option>
-                                <option value="1">标清（640*480@20）</option>
-                                <option value="2">高清（960*540@20）</option>
-                            </select>
-                        </div>
-                        <div class="m-input" style="display: none">
-                            <span class="u-input-name">推流地址：</span>
-                            <input class="u-input" type="text" id="publishUrl">
-                        </div>
-                        <div class="m-input">
-                            <button class="button button-primary button-rounded testBtn" id="previewBtn"
-                                    onclick="startPreview()">预览
-                            </button>
-                            <button class="button button-primary button-rounded testBtn" id="publishBtn"
-                                    onclick="startPublish()">开始直播
-                            </button>
-                            <span class="u-status"></span>
-                        </div>
+                            <div class="m-input" style="display: none">
+                                <span class="u-input-name">摄像头：</span>
+                                <select class="u-input" id="cameraSelect">
+                                </select>
+                            </div>
+                            <div class="m-input" style="display: none">
+                                <span class="u-input-name">麦克风：</span>
+                                <select class="u-input" id="microPhoneSelect">
+                                </select>
+                            </div>
+                            <div class="m-input" style="display: none">
+                                <span class="u-input-name">清晰度：</span>
+                                <select class="u-input" id="qualitySelect">
+                                    <option value="0">流畅（480*360@20）</option>
+                                    <option value="1">标清（640*480@20）</option>
+                                    <option value="2">高清（960*540@20）</option>
+                                </select>
+                            </div>
+                            <div class="m-input" style="display: none">
+                                <span class="u-input-name">推流地址：</span>
+                                <input class="u-input" type="text" id="publishUrl">
+                            </div>
+                            <div class="m-input">
+                                <%--<button class="button button-primary button-rounded testBtn" id="previewBtn"--%>
+                                <%--onclick="startPreview()">预览--%>
+                                <%--</button>--%>
+                                <button class="button button-primary button-rounded testBtn" id="publishBtn"
+                                        onclick="startPublish()">开始直播
+                                </button>
+                                <button class="button button-primary button-rounded testBtn" id="outChannelBtn">退出直播
+                                </button>
+                                <span class="u-status"></span>
+                            </div>
                         </div>
                         <%-- 播放端开始 --%>
                         <link href="//nos.netease.com/vod163/nep.min.css" rel="stylesheet">
@@ -100,24 +102,30 @@
                                 overflow: hidden;
                                 max-width: 640px;
                             }
+
                             .g-container-video h1 {
                                 margin-bottom: 30px;
                                 text-align: center;
                             }
+
                             .m-button-view {
                                 text-align: center;
                             }
+
                             .g-container-code {
                                 margin: 30px auto;
                                 max-width: 960px;
                             }
+
                             .u-button {
                                 width: 150px;
                                 height: 50px;
                             }
+
                             .s-code-html {
                                 height: 55px;
                             }
+
                             .s-code-js {
                                 height: 70px;
                             }
@@ -125,12 +133,14 @@
                         <div class="body-main">
                             <div class="record-main">
                                 <%-- 推流开始  --%>
-                                <div class="publish-box"><div id="my-publisher"></div></div>
+                                <div class="publish-box">
+                                    <div id="my-publisher"></div>
+                                </div>
                                 <%-- 推流结束  --%>
                             </div>
                             <div class="play-main">
                                 <div id="neplayer"></div>
-                                    <script src="//nos.netease.com/vod163/nep.min.js"></script>
+                                <script src="//nos.netease.com/vod163/nep.min.js"></script>
                                 <%-- 播放端结束 --%>
                             </div>
                         </div>
@@ -144,64 +154,101 @@
 <%@ include file="../common/footer.jsp" %>
 <script src="//nos.netease.com/vod163/nePublisher.min.js"></script>
 <script type="text/javascript">
-    var cid = '';
-    function expertChannel(expertId,stuId,type){
-        var pushUrl = '';
-        Common.ajaxFun('/expertChannel/createChannel.do', 'POST', {
-            'expertId':expertId,
-            'stuId':stuId,
-            'type':type
-        }, function (res) {
-            if (res.rtnCode === '0000000') {
-                pushUrl = res.bizData.pushUrl;
-                cid = res.bizData.cid;
-            }
-        }, function (res) {
-
-        },true);
-        return pushUrl;
+    var expertsId = Common.cookie.getCookie('expertsId');
+    var stuId = Common.getLinkey('stuId');
+    function Channel() {
+        this.init();
+        this.cid = ''
+        this.pushUrl = ''
+        this.rtmpPullUrl = ''
     }
+    ;
+
+    Channel.prototype = {
+        constructor: Channel,
+        init: function () {
+            this.getChannelStatus();
+        },
+        expertChannel: function (expertId, stuId, type) {
+            var that = this;
+            Common.ajaxFun('/expertChannel/createChannel.do', 'POST', {
+                'expertId': expertId,
+                'stuId': stuId,
+                'type': type
+            }, function (res) {
+                if (res.rtnCode === '0000000') {
+                    that.pushUrl = res.bizData.pushUrl;
+                    that.cid = res.bizData.cid;
+                }
+            }, function (res) {
+
+            }, true);
+        },
+        playChannel: function (expertId, stuId, type) {
+            var that = this;
+            Common.ajaxFun('/expertChannel/getChannel.do', 'get', {
+                'expertId': expertId,
+                'stuId': stuId,
+                'type': type
+            }, function (res) {
+                if (res.rtnCode === '0000000') {
+                    that.rtmpPullUrl = res.bizData.rtmpPullUrl;
+                }
+            }, function (res) {
+
+            }, true);
+        },
+        outChannel: function (creatorId, cid) {
+            Common.ajaxFun('/expertChannel/deleteChannel.do', 'get', {
+                'creatorId': creatorId,
+                'cid': cid
+            }, function (res) {
+                if (res.rtnCode === '0000000') {
+                    window.location.href = window.location.pathname + '?stuId=' + stuId;
+                }
+            }, function (res) {
+
+            });
+        },
+        getChannelStatus: function () {
+            Common.ajaxFun('/expertChannel/getChannelStatus.do', 'get', {}, function (res) {
+                if (res.rtnCode === '0000000') {
+                    var status = res.bizData.status;
+                    switch (status) {
+                        case 0:
+                            console.log('直播处于空闲');
+                                $('.body-main').hide();
+                            break;
+                        case 1:
+                            console.log('正在直播');
+                            $('.body-main').show();
+                            break;
+                        case 2:
+                            console.log('禁用');
+                            $('.body-main').hide();
+                            break;
+                        case 3:
+                            console.log('直播录制');
+                            $('.body-main').hide();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }, function (res) {
+
+            });
+        }
+    };
+
+    var ChannelIns = new Channel();
 
 
-    console.log(cid)
+    $('#publishUrl').val(ChannelIns.expertChannel(expertsId, stuId, 0));
 
-
-    function playChannel(expertId,stuId,type){
-        var rtmpPullUrl = '';
-        Common.ajaxFun('/expertChannel/getChannel.do', 'get', {
-            'expertId':expertId,
-            'stuId':stuId,
-            'type':type
-        }, function (res) {
-            if (res.rtnCode === '0000000') {
-                rtmpPullUrl = res.bizData.rtmpPullUrl;
-            }
-        }, function (res) {
-
-        },true);
-        return rtmpPullUrl;
-    }
-
-    function outChannel(expertId,stuId,type){
-        var rtmpPullUrl = '';
-        Common.ajaxFun('/expertChannel/getChannel.do', 'get', {
-            'expertId':expertId,
-            'stuId':stuId,
-            'type':type
-        }, function (res) {
-            if (res.rtnCode === '0000000') {
-                rtmpPullUrl = res.bizData.rtmpPullUrl;
-            }
-        }, function (res) {
-
-        },true);
-        return rtmpPullUrl;
-    }
-
-
-
-    $('#publishUrl').val(expertChannel(1,2,0));
-    $('#play-source').prop('src',playChannel(1,2,1));
+    $('#outChannelBtn').on('click', function () {
+        ChannelIns.outChannel(expertsId, ChannelIns.cid);
+    });
 
     var cameraList,
             microPhoneList,
@@ -316,13 +363,11 @@
         }
         previewBtn.disabled = false;
     };
-    console.log(playChannel(1,2,1))
-
 
     function showVideo(argument) {
         var container = document.getElementById('neplayer');
-        container.innerHTML = '<video id="my-video" class="video-js" x-webkit-airplay="allow" webkit-playsinline controls poster="//nos.netease.com/vod163/poster.png" preload="auto" width="320" height="180" data-setup="{}"><source src="'+ playChannel(1, 2, 1) + '" type="rtmp/flv"></video>';
-        neplayer('my-video',{
+        container.innerHTML = '<video id="my-video" class="video-js" x-webkit-airplay="allow" webkit-playsinline controls poster="//nos.netease.com/vod163/poster.png" preload="auto" width="320" height="180" data-setup="{}"><source src="' + ChannelIns.playChannel(expertsId, stuId, 1) + '" type="rtmp/flv"></video>';
+        neplayer('my-video', {
             "controls": false,
             "autoplay": true
         });

@@ -10,8 +10,8 @@ $('#login-btn').on('click', function () {
         if (res.rtnCode == "0000000") {
             console.log(res)
             var data = res.bizData;
-            Common.cookie.setCookie('user_id', data.id);
-            Common.cookie.setCookie('user_name', data.expertName);
+            Common.cookie.setCookie('expertsId', data.id);
+            Common.cookie.setCookie('expertsName', data.expertName);
             var siderMenu = data.meuns;
             var siderMenuJson = {};
             for(var i=0;i<siderMenu.length;i++){
