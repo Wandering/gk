@@ -79,5 +79,10 @@ public class Constants {
      */
     public static final String DELETE_CHANNEL_URL = "https://vcloud.163.com/app/channel/delete";
 
+    /**
+     * 获取频道状态地址
+     */
+    public static final String GET_CHANNEL_STATE_URL = "https://vcloud.163.com/app/channelstats";
+
     /******************  专家视频一对一相关常量  end  *****************/
 }
