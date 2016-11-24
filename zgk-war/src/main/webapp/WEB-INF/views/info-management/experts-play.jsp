@@ -138,7 +138,7 @@
                                 </div>
                                 <%-- 推流结束  --%>
                             </div>
-                            <div class="play-main">
+                            <div class="play-main playhds">
                                 <div id="neplayer"></div>
                                 <script src="//nos.netease.com/vod163/nep.min.js"></script>
                                 <%-- 播放端结束 --%>
@@ -158,7 +158,6 @@
     var stuId = Common.getLinkey('stuId');
     function Channel() {
         this.init();
-        this.rtmpPullUrl = '';
     }
     Channel.prototype = {
         constructor: Channel,
@@ -175,12 +174,8 @@
                 'type': type
             }, function (res) {
                 if (res.rtnCode === '0000000') {
-                    that.getChannelStatus(res.bizData.cid);
                     $('#publishUrl').val(res.bizData.pushUrl);
-                    $('#outChannelBtn').on('click', function () {
-                        ChannelIns.outChannel(expertsId, res.bizData.cid);
-                        clearInterval(ChannelIns.items);
-                    });
+
                 }
             }, function (res) {
 
@@ -195,6 +190,11 @@
             }, function (res) {
                 if (res.rtnCode === '0000000') {
                     that.playVideo(res.bizData.rtmpPullUrl);
+                    that.getChannelStatus(res.bizData.cid);
+                    $('#outChannelBtn').on('click', function () {
+                        ChannelIns.outChannel(expertsId, res.bizData.cid);
+                        clearInterval(ChannelIns.items);
+                    });
                 }
             }, function (res) {
 
@@ -222,24 +222,24 @@
                     switch (status) {
                         case 0:
                             console.log('直播处于空闲');
-                            $('.play-main').hide();
+                            $('.play-main').addClass('playhds');
                             clearInterval(that.items);
                             that.items = setInterval(function(){
-                                that.getChannelStatus(cid);
+                                that.getChannelStatus(cid)
                             },5000);
                             break;
                         case 1:
                             console.log('正在直播');
-                            $('.play-main').show();
+                            $('.play-main').removeClass('playhds');
                             clearInterval(that.items);
                             break;
                         case 2:
                             console.log('禁用');
-                            $('.play-main').hide();
+                            $('.play-main').addClass('playhds');
                             break;
                         case 3:
                             console.log('直播录制');
-                            $('.play-main').hide();
+                            $('.play-main').addClass('playhds');
                             break;
                         default:
                             break;

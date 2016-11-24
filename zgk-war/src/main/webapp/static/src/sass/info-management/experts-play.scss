@@ -46,8 +46,15 @@
 .testBtn {
   width: 150px;
 }
-
 .u-status {
   margin-left: 10px;
   display: inline-block;
+}
+
+.play-main.playhds{
+  font-size:0;
+  height:0;
+  line-height:0;
+  text-indent: -1000px;
+  display: none;
 }
