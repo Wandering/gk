@@ -210,9 +210,11 @@
 
             });
         },
-        getChannelStatus: function () {
+        getChannelStatus: function (cid) {
             var that = this;
-            Common.ajaxFun('/expertChannel/getChannelStatus.do', 'get', {}, function (res) {
+            Common.ajaxFun('/expertChannel/getChannelStatus.do', 'get', {
+                'cid': cid
+            }, function (res) {
                 if (res.rtnCode === '0000000') {
                     var status = res.bizData.status;
                     switch (status) {
