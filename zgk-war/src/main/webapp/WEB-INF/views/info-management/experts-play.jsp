@@ -194,7 +194,7 @@
                 'type': type
             }, function (res) {
                 if (res.rtnCode === '0000000') {
-                    that.rtmpPullUrl = res.bizData.rtmpPullUrl;
+                    that.playVideo(res.bizData.rtmpPullUrl);
                 }
             }, function (res) {
 
@@ -206,7 +206,7 @@
                 'cid': cid
             }, function (res) {
                 if (res.rtnCode === '0000000') {
-                    window.location.href = window.location.pathname + '?stuId=' + stuId;
+                    window.location.href = '';
                 }
             }, function (res) {
 
@@ -223,7 +223,9 @@
                         case 0:
                             console.log('直播处于空闲');
                             $('.play-main').hide();
-//                            that.items = setInterval(that.getChannelStatus(cid),5000);
+                            that.items = setInterval(function(){
+                                that.getChannelStatus(cid);
+                            },5000);
                             break;
                         case 1:
                             console.log('正在直播');
@@ -244,6 +246,14 @@
                 }
             }, function (res) {
 
+            });
+        },
+        playVideo:function(rtmpPullUrl){
+            var container = document.getElementById('neplayer');
+            container.innerHTML = '<video id="my-video" class="video-js" x-webkit-airplay="allow" webkit-playsinline controls poster="//nos.netease.com/vod163/poster.png" preload="auto" width="320" height="180" data-setup="{}"><source src="' + rtmpPullUrl + '" type="rtmp/flv"></video>';
+            neplayer('my-video', {
+                "controls": false,
+                "autoplay": true
             });
         }
     };
@@ -371,15 +381,6 @@
         previewBtn.disabled = false;
     };
 
-    function showVideo(argument) {
-        var container = document.getElementById('neplayer');
-        container.innerHTML = '<video id="my-video" class="video-js" x-webkit-airplay="allow" webkit-playsinline controls poster="//nos.netease.com/vod163/poster.png" preload="auto" width="320" height="180" data-setup="{}"><source src="' + ChannelIns.rtmpPullUrl + '" type="rtmp/flv"></video>';
-        neplayer('my-video', {
-            "controls": false,
-            "autoplay": true
-        });
-    }
-    showVideo();
 </script>
 <script src="<%=ctx%>/static/src/js/info-management/experts-play.js"></script>
 </body>
