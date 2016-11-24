@@ -167,7 +167,6 @@
     Channel.prototype = {
         constructor: Channel,
         init: function () {
-            this.getChannelStatus();
         },
         expertChannel: function (expertId, stuId, type) {
             var that = this;
@@ -211,25 +210,28 @@
             });
         },
         getChannelStatus: function () {
+            var that = this;
             Common.ajaxFun('/expertChannel/getChannelStatus.do', 'get', {}, function (res) {
                 if (res.rtnCode === '0000000') {
                     var status = res.bizData.status;
                     switch (status) {
                         case 0:
                             console.log('直播处于空闲');
-                                $('.body-main').hide();
+                            $('.play-main').hide();
+                            that.items = setInterval(that.getChannelStatus(cid),2000);
                             break;
                         case 1:
                             console.log('正在直播');
-                            $('.body-main').show();
+                            $('.play-main').show();
+                            clearInterval(that.items);
                             break;
                         case 2:
                             console.log('禁用');
-                            $('.body-main').hide();
+                            $('.play-main').hide();
                             break;
                         case 3:
                             console.log('直播录制');
-                            $('.body-main').hide();
+                            $('.play-main').hide();
                             break;
                         default:
                             break;
@@ -248,6 +250,7 @@
 
     $('#outChannelBtn').on('click', function () {
         ChannelIns.outChannel(expertsId, ChannelIns.cid);
+        clearInterval(ChannelIns.items);
     });
 
     var cameraList,
