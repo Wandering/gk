@@ -206,7 +206,7 @@
                 'cid': cid
             }, function (res) {
                 if (res.rtnCode === '0000000') {
-                    window.location.href = '';
+                    window.location.href = '/expert/admin/info-management.do';
                 }
             }, function (res) {
 
@@ -223,6 +223,7 @@
                         case 0:
                             console.log('直播处于空闲');
                             $('.play-main').hide();
+                            clearInterval(that.items);
                             that.items = setInterval(function(){
                                 that.getChannelStatus(cid);
                             },5000);
