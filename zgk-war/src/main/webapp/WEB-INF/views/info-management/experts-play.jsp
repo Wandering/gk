@@ -144,6 +144,7 @@
 <%@ include file="../common/footer.jsp" %>
 <script src="//nos.netease.com/vod163/nePublisher.min.js"></script>
 <script type="text/javascript">
+    var cid = '';
     function expertChannel(expertId,stuId,type){
         var pushUrl = '';
         Common.ajaxFun('/expertChannel/createChannel.do', 'POST', {
@@ -153,6 +154,7 @@
         }, function (res) {
             if (res.rtnCode === '0000000') {
                 pushUrl = res.bizData.pushUrl;
+                cid = res.bizData.cid;
             }
         }, function (res) {
 
@@ -161,8 +163,26 @@
     }
 
 
+    console.log(cid)
+
 
     function playChannel(expertId,stuId,type){
+        var rtmpPullUrl = '';
+        Common.ajaxFun('/expertChannel/getChannel.do', 'get', {
+            'expertId':expertId,
+            'stuId':stuId,
+            'type':type
+        }, function (res) {
+            if (res.rtnCode === '0000000') {
+                rtmpPullUrl = res.bizData.rtmpPullUrl;
+            }
+        }, function (res) {
+
+        },true);
+        return rtmpPullUrl;
+    }
+
+    function outChannel(expertId,stuId,type){
         var rtmpPullUrl = '';
         Common.ajaxFun('/expertChannel/getChannel.do', 'get', {
             'expertId':expertId,
