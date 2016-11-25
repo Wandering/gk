@@ -21,6 +21,8 @@ public class ExpertOrderDTO extends BaseDomain{
 
     private String serviceId;
 
+    private Integer isInto;
+
 
     public String getServiceName() {
         return serviceName;
@@ -76,5 +78,13 @@ public class ExpertOrderDTO extends BaseDomain{
 
     public void setServiceId(String serviceId) {
         this.serviceId = serviceId;
+    }
+
+    public Integer getIsInto() {
+        return isInto;
+    }
+
+    public void setIsInto(Integer isInto) {
+        this.isInto = isInto;
     }
 }
