@@ -5,6 +5,7 @@
 $(function () {
 
     var booking = new Booking();
+    booking.setIntervalDate(2016,11,25);
     $(document).on('click', '.user-btn', function () {
         booking.userInfo('用户信息');
     });
@@ -112,5 +113,12 @@ Booking.prototype = {
 
             }
         });
+    },
+    setIntervalDate:function(year,month,day){
+
+
     }
 };
+
+
+
