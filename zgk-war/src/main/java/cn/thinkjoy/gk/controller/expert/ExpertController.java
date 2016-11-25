@@ -82,6 +82,8 @@ public class ExpertController extends ZGKBaseController
     //订单过期时间间隔2小时
     private final long expireDuration = 2 * 60 * 60 * 1000;
 
+    private final long tqTime = 30*60*1000;
+
     /**
      * 申请做专家
      *
@@ -818,6 +820,11 @@ public class ExpertController extends ZGKBaseController
                 {
                     //结束
                     status = Constants.EXPERT_ORDER_STATUS_Y3;
+                }
+                if (lStartTime-tqTime-currTime<0){
+                    expertReservationOrderDetailDTO.setIsInto(2);
+                }else {
+                    expertReservationOrderDetailDTO.setIsInto(1);
                 }
                 Map<String, Object> map = new HashedMap();
                 map.put("id", expertReservationOrderDetailDTO.getId());
