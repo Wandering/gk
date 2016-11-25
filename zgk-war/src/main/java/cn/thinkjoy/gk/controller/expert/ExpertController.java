@@ -821,7 +821,7 @@ public class ExpertController extends ZGKBaseController
                     //结束
                     status = Constants.EXPERT_ORDER_STATUS_Y3;
                 }
-                if (lStartTime-tqTime-currTime<0){
+                if (lStartTime-tqTime-currTime<0 && lEndTime - currTime >0){
                     expertReservationOrderDetailDTO.setIsInto(2);
                 }else {
                     expertReservationOrderDetailDTO.setIsInto(1);
