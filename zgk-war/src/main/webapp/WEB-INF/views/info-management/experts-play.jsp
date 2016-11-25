@@ -60,17 +60,17 @@
                             <h3>一对一视频</h3>
                         </div>
                         <div class="fun-set">
-                            <div class="m-input" >
+                            <div class="m-input"  style="display: none;">
                                 <span class="u-input-name">摄像头：</span>
                                 <select class="u-input" id="cameraSelect">
                                 </select>
                             </div>
-                            <div class="m-input" >
+                            <div class="m-input"  style="display: none;">
                                 <span class="u-input-name">麦克风：</span>
                                 <select class="u-input" id="microPhoneSelect">
                                 </select>
                             </div>
-                            <div class="m-input">
+                            <div class="m-input"  style="display: none;">
                                 <span class="u-input-name">清晰度：</span>
                                 <select class="u-input" id="qualitySelect">
                                     <option value="0">流畅（480*360@20）</option>
@@ -78,12 +78,12 @@
                                     <option value="2">高清（960*540@20）</option>
                                 </select>
                             </div>
-                            <div class="m-input">
+                            <div class="m-input"  style="display: none;">
                                 <span class="u-input-name">推流地址：</span>
                                 <input class="u-input" type="text" id="publishUrl">
                             </div>
                             <div class="m-input">
-                                <button class="button button-primary button-rounded testBtn" id="previewBtn"
+                                <button style="display: none;" class="button button-primary button-rounded testBtn" id="previewBtn"
                                 onclick="startPreview()">预览
                                 </button>
                                 <button class="button button-primary button-rounded testBtn" id="publishBtn"
@@ -175,6 +175,10 @@
             }, function (res) {
                 if (res.rtnCode === '0000000') {
                     $('#publishUrl').val(res.bizData.pushUrl);
+                    $('#outChannelBtn').on('click', function () {
+                        ChannelIns.outChannel(expertsId, res.bizData.cid);
+                        clearInterval(ChannelIns.items);
+                    });
 
                 }
             }, function (res) {
@@ -191,10 +195,7 @@
                 if (res.rtnCode === '0000000') {
                     that.playVideo(res.bizData.rtmpPullUrl);
                     that.getChannelStatus(res.bizData.cid);
-                    $('#outChannelBtn').on('click', function () {
-                        ChannelIns.outChannel(expertsId, res.bizData.cid);
-                        clearInterval(ChannelIns.items);
-                    });
+
                 }
             }, function (res) {
 

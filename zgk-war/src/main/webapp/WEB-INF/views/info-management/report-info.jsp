@@ -12,7 +12,7 @@
             <div class="page-content">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div id="reportChart" style="width: 100%;height: 400px;margin: 40px 0;"></div>
+                        <div id="reportChart" style="width: 100%;height: 400px;margin: 40px 20px 40px 0;"></div>
                     </div>
                 </div>
             </div>
