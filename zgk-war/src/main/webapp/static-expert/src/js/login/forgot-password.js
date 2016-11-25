@@ -119,7 +119,7 @@ var ForgotPassword = {
         return {
             account: $phone,
             captcha: $.trim($('#verification-code-msg').val()),
-            password: $.trim($resetPwd)
+            password: $.md5($.trim($resetPwd))
         }
     },
     findPwdSubmit: function (data) {

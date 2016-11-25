@@ -8,6 +8,7 @@ import cn.thinkjoy.gk.entity.ExpertChannelRequest;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.protocol.ModelUtil;
 import cn.thinkjoy.gk.service.IExpertService;
+import cn.thinkjoy.gk.util.DateUtil;
 import cn.thinkjoy.gk.util.MessageDigestUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -77,33 +78,13 @@ public class ExpertChannelController {
             logger.error("请求参数错误: type = "+type);
         }
 
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        String url = Constants.CREATE_CHANNEL_URL;
-        HttpPost httpPost = new HttpPost(url);
-
-        String appKey = Constants.APP_KEY;
-        String appSecret = Constants.APP_SERCERT;
-        String nonce = RandomCodeUtil.generateCharCode(6);
-        String curTime = String.valueOf(new Date().getTime() / 1000);
-        String checkSum = MessageDigestUtil.getCheckSum(appSecret, nonce ,curTime);//鉴权
-
-        // 设置请求的header
-        httpPost.addHeader("AppKey", appKey);
-        httpPost.addHeader("Nonce", nonce);
-        httpPost.addHeader("CurTime", curTime);
-        httpPost.addHeader("CheckSum", checkSum);
-        httpPost.addHeader("Content-Type", "application/json;charset=utf-8");
-
         // 设置请求的参数
         Map<String,Object> paramMap = Maps.newHashMap();
-        paramMap.put("name",name+"_"+curTime);
+        paramMap.put("name",name+"_"+DateUtil.DateToString(new Date(),DateUtil.YYYYMMDDHHMMSS));
         paramMap.put("type",0);
 
-        StringEntity params = new StringEntity(JSON.toJSONString(paramMap), Consts.UTF_8);
-        httpPost.setEntity(params);
-
-        // 执行请求
-        HttpResponse response = httpClient.execute(httpPost);
+        // http post请求
+        HttpResponse response = httpPost(Constants.CREATE_CHANNEL_URL,paramMap);
 
         Map<String,Object> retMap = JSONObject.parseObject(EntityUtils.toString(response.getEntity()),Map.class);
         ExpertChannel channel = null;
@@ -156,32 +137,12 @@ public class ExpertChannelController {
             ModelUtil.throwException(ERRORCODE.DELETE_CHANNEL_FAIL);
         }
 
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        String url = Constants.DELETE_CHANNEL_URL;
-        HttpPost httpPost = new HttpPost(url);
-
-        String appKey = Constants.APP_KEY;
-        String appSecret = Constants.APP_SERCERT;
-        String nonce = RandomCodeUtil.generateCharCode(6);
-        String curTime = String.valueOf(new Date().getTime() / 1000);
-        String checkSum = MessageDigestUtil.getCheckSum(appSecret, nonce ,curTime);//鉴权
-
-        // 设置请求的header
-        httpPost.addHeader("AppKey", appKey);
-        httpPost.addHeader("Nonce", nonce);
-        httpPost.addHeader("CurTime", curTime);
-        httpPost.addHeader("CheckSum", checkSum);
-        httpPost.addHeader("Content-Type", "application/json;charset=utf-8");
-
         // 设置请求的参数
         Map<String,Object> paramMap = Maps.newHashMap();
         paramMap.put("cid",channel.getCid());
 
-        StringEntity params = new StringEntity(JSON.toJSONString(paramMap), Consts.UTF_8);
-        httpPost.setEntity(params);
-
-        // 执行请求
-        HttpResponse response = httpClient.execute(httpPost);
+        // http post请求
+        HttpResponse response = httpPost(Constants.DELETE_CHANNEL_URL,paramMap);
 
         Map<String,Object> retMap = JSONObject.parseObject(EntityUtils.toString(response.getEntity()),Map.class);
         if(!"200".equals(retMap.get("code").toString())){
@@ -193,4 +154,63 @@ public class ExpertChannelController {
 
         return Maps.newHashMap();
     }
+
+    @ResponseBody
+    @ApiDesc(value = "获取频道状态",owner = "杨国荣")
+    @RequestMapping(value = "/getChannelStatus",method = RequestMethod.GET)
+    public Map<String,Object> getChannelStatus(@RequestParam("cid") String cid)
+            throws IOException {
+
+        // 设置请求的参数
+        Map<String,Object> paramMap = Maps.newHashMap();
+        paramMap.put("cid",cid);
+
+        // http post请求
+        HttpResponse response = httpPost(Constants.GET_CHANNEL_STATE_URL,paramMap);
+
+        Map<String,Object> retMap = JSONObject.parseObject(EntityUtils.toString(response.getEntity()),Map.class);
+        if(!"200".equals(retMap.get("code").toString())){
+            logger.error("获取频道状态失败,原因:"+retMap.get("msg"));
+            ModelUtil.throwException(ERRORCODE.GET_CHANNEL_STATE_FAIL);
+        }
+
+        Map<String,Object> tmpMap = (Map<String, Object>) retMap.get("ret");
+
+        Map<String,Object> returnMap = Maps.newHashMap();
+        returnMap.put("status",tmpMap.get("status"));
+        return returnMap;
+    }
+
+    /**
+     * http post 请求
+     *
+     * @param url
+     * @param paramMap
+     * @return
+     */
+    private HttpResponse httpPost(String url,Map<String,Object> paramMap) throws IOException {
+
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(url);
+
+        String appKey = Constants.APP_KEY;
+        String appSecret = Constants.APP_SERCERT;
+        String nonce = RandomCodeUtil.generateCharCode(6);
+        String curTime = DateUtil.DateToString(new Date(),DateUtil.YYYYMMDDHHMMSS);
+        String checkSum = MessageDigestUtil.getCheckSum(appSecret, nonce ,curTime);//鉴权
+
+        // 设置请求的header
+        httpPost.addHeader("AppKey", appKey);
+        httpPost.addHeader("Nonce", nonce);
+        httpPost.addHeader("CurTime", curTime);
+        httpPost.addHeader("CheckSum", checkSum);
+        httpPost.addHeader("Content-Type", "application/json;charset=utf-8");
+
+        StringEntity params = new StringEntity(JSON.toJSONString(paramMap), Consts.UTF_8);
+        httpPost.setEntity(params);
+
+        // 执行请求
+        return httpClient.execute(httpPost);
+    }
+
 }

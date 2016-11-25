@@ -216,8 +216,8 @@ var UserInfo = {
             }
             Common.ajaxFun('/expert/admin/login/resetPassword.do', 'POST', {
                 account: $.trim($('#user-phone').html()),
-                password: currentPsd.val(),//旧密码
-                newPassword: newPsd.val()//新密码
+                password: $.md5(currentPsd.val()),//旧密码
+                newPassword: $.md5(newPsd.val())//新密码
             }, function (res) {
                 if (res.rtnCode == '0000000') {
                     layer.closeAll();

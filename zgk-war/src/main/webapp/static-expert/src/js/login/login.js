@@ -4,14 +4,16 @@ $('#login-btn').on('click', function () {
     var url = '/expert/admin/login/login.do';
     var data = {
         account:account,
-        password:password
+        password:$.md5(password)
     };
+    // var md5ChildLogin = $.md5($childPwd);
+    // var baseChildPwd = $.base64.btoa($childPwd);
+    // $.base64.utf8encode = true;
     Common.ajaxFun(url,"POST", data, function (res) {
         if (res.rtnCode == "0000000") {
-            console.log(res)
             var data = res.bizData;
-            Common.cookie.setCookie('user_id', data.id);
-            Common.cookie.setCookie('user_name', data.expertName);
+            Common.cookie.setCookie('expertsId', data.id);
+            Common.cookie.setCookie('expertsName', data.expertName);
             var siderMenu = data.meuns;
             var siderMenuJson = {};
             for(var i=0;i<siderMenu.length;i++){
