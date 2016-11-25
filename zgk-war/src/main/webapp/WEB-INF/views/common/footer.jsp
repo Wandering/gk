@@ -34,3 +34,5 @@
 		<script src="<%=ctx%>/static/src/lib/handlebars/handlebars-v4.0.5.js"></script>
         <script src="<%=ctx%>/static/src/lib/echarts/echarts.js"></script>
     	<script src="<%=ctx%>/static/src/lib/jquery.page/jquery.page.js"></script>
+    	<script src="<%=ctx%>/static/src/lib/md5/jQuery.md5.js"></script>
+    	<%--<script src="<%=ctx%>/static/src/lib/jquery.base64/jquery.base64.js"></script>--%>
