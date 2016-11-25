@@ -47,4 +47,9 @@ public class MajoredApiImpl implements IMajoredApi {
     public Map getMajoredInfoByCode(String majorCode) {
         return majoredService.getMajoredInfoById(majorCode);
     }
+
+    @Override
+    public List getMajoredByName(String majoredName, String type) {
+        return majoredService.getMajoredByName(majoredName,type);
+    }
 }
