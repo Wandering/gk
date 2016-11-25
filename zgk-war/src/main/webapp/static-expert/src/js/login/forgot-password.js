@@ -125,6 +125,7 @@ var ForgotPassword = {
     findPwdSubmit: function (data) {
         Common.ajaxFun('/expert/admin/login/retrievePassword.do', 'POST', data, function (res) {
             if(res.rtnCode === '0000000'){
+                layer.msg('修改成功!');
                 window.location.href = '/';
             }else{
                 layer.msg(res.msg);
