@@ -60,17 +60,17 @@
                             <h3>一对一视频</h3>
                         </div>
                         <div class="fun-set">
-                            <div class="m-input" >
+                            <div class="m-input"  style="display: none;">
                                 <span class="u-input-name">摄像头：</span>
                                 <select class="u-input" id="cameraSelect">
                                 </select>
                             </div>
-                            <div class="m-input" >
+                            <div class="m-input"  style="display: none;">
                                 <span class="u-input-name">麦克风：</span>
                                 <select class="u-input" id="microPhoneSelect">
                                 </select>
                             </div>
-                            <div class="m-input">
+                            <div class="m-input"  style="display: none;">
                                 <span class="u-input-name">清晰度：</span>
                                 <select class="u-input" id="qualitySelect">
                                     <option value="0">流畅（480*360@20）</option>
@@ -78,13 +78,13 @@
                                     <option value="2">高清（960*540@20）</option>
                                 </select>
                             </div>
-                            <div class="m-input">
+                            <div class="m-input"  style="display: none;">
                                 <span class="u-input-name">推流地址：</span>
                                 <input class="u-input" type="text" id="publishUrl">
                             </div>
                             <div class="m-input">
-                                <button class="button button-primary button-rounded testBtn" id="previewBtn"
-                                onclick="startPreview()">预览
+                                <button style="display: none;" class="button button-primary button-rounded testBtn" id="previewBtn"
+                                        onclick="startPreview()">预览
                                 </button>
                                 <button class="button button-primary button-rounded testBtn" id="publishBtn"
                                         onclick="startPublish()">开始直播
@@ -131,18 +131,15 @@
                             }
                         </style>
                         <div class="body-main">
-                            <div class="record-main">
-                                <%-- 推流开始  --%>
-                                <div class="publish-box">
-                                    <div id="my-publisher"></div>
-                                </div>
-                                <%-- 推流结束  --%>
-                            </div>
-                            <div class="play-main playhds">
+                            <div class="play-main">
                                 <div id="neplayer"></div>
                                 <script src="//nos.netease.com/vod163/nep.min.js"></script>
-                                <%-- 播放端结束 --%>
                             </div>
+                            <%-- 推流开始  --%>
+                            <div class="publish-box playhds">
+                                <div id="my-publisher"></div>
+                            </div>
+                            <%-- 推流结束  --%>
                         </div>
                         <!-- PAGE CONTENT ENDS -->
                     </div><!-- /.col -->
@@ -157,6 +154,7 @@
     var expertsId = Common.cookie.getCookie('expertsId');
     var stuId = Common.getLinkey('stuId');
     function Channel() {
+        this.flg = false;
         this.init();
     }
     Channel.prototype = {
@@ -164,7 +162,15 @@
         init: function () {
             var that = this;
             that.expertChannel(expertsId,stuId,0);
-            that.playChannel(expertsId,stuId,1);
+            if(that.flg==false){
+                that.playChannelItems = setInterval(function(){
+                    that.playChannel(expertsId,stuId,1);
+                },5000);
+            }else{
+                that.playChannel(expertsId,stuId,1);
+            }
+
+
         },
         expertChannel: function (expertId, stuId, type) {
             var that = this;
@@ -175,6 +181,10 @@
             }, function (res) {
                 if (res.rtnCode === '0000000') {
                     $('#publishUrl').val(res.bizData.pushUrl);
+                    $('#outChannelBtn').on('click', function () {
+                        ChannelIns.outChannel(expertsId, res.bizData.cid);
+                        clearInterval(ChannelIns.items);
+                    });
 
                 }
             }, function (res) {
@@ -191,10 +201,8 @@
                 if (res.rtnCode === '0000000') {
                     that.playVideo(res.bizData.rtmpPullUrl);
                     that.getChannelStatus(res.bizData.cid);
-                    $('#outChannelBtn').on('click', function () {
-                        ChannelIns.outChannel(expertsId, res.bizData.cid);
-                        clearInterval(ChannelIns.items);
-                    });
+                    clearInterval(that.playChannelItems);
+                    that.flg=true;
                 }
             }, function (res) {
 
@@ -222,7 +230,7 @@
                     switch (status) {
                         case 0:
                             console.log('直播处于空闲');
-                            $('.play-main').addClass('playhds');
+                           $('.publish-box').addClass('playhds');
                             clearInterval(that.items);
                             that.items = setInterval(function(){
                                 that.getChannelStatus(cid)
@@ -230,16 +238,16 @@
                             break;
                         case 1:
                             console.log('正在直播');
-                            $('.play-main').removeClass('playhds');
+                            $('.publish-box').removeClass('playhds');
                             clearInterval(that.items);
                             break;
                         case 2:
                             console.log('禁用');
-                            $('.play-main').addClass('playhds');
+                            $('.publish-box').addClass('playhds');
                             break;
                         case 3:
                             console.log('直播录制');
-                            $('.play-main').addClass('playhds');
+                            $('.publish-box').addClass('playhds');
                             break;
                         default:
                             break;
@@ -251,7 +259,7 @@
         },
         playVideo:function(rtmpPullUrl){
             var container = document.getElementById('neplayer');
-            container.innerHTML = '<video id="my-video" class="video-js" x-webkit-airplay="allow" webkit-playsinline controls poster="//nos.netease.com/vod163/poster.png" preload="auto" width="320" height="180" data-setup="{}"><source src="' + rtmpPullUrl + '" type="rtmp/flv"></video>';
+            container.innerHTML = '<video id="my-video" class="video-js" x-webkit-airplay="allow" webkit-playsinline controls poster="//nos.netease.com/vod163/poster.png" preload="auto" width="1020" height="486" data-setup="{}"><source src="' + rtmpPullUrl + '" type="rtmp/flv"></video>';
             neplayer('my-video', {
                 "controls": false,
                 "autoplay": true
@@ -283,8 +291,8 @@
         bitrate: 1500
     }, {
         //flashOptions
-        previewWindowWidth: 1020,
-        previewWindowHeight: 486,
+        previewWindowWidth: 320,
+        previewWindowHeight: 180,
         wmode: 'transparent',
         quality: 'high',
         allowScriptAccess: 'always'
