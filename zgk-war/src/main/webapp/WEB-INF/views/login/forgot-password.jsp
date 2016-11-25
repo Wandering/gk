@@ -28,7 +28,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <!-- PAGE CONTENT BEGINS -->
-                        <h1 class="logo"><img src="<%=ctx%>/static-expert-expert/src/img/logo.png" alt=""></h1>
+                        <h1 class="logo"><img src="<%=ctx%>/static-expert/src/img/logo.png" alt=""></h1>
                         <div class="sub-title">专家管理后台</div>
                         <div class="forgot-password-main">
                             <div class="">
