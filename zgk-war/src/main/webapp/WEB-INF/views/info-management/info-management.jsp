@@ -5,7 +5,7 @@
         <meta charset="utf-8" />
         <title>智高考专家后台</title>
         <%@ include file="../common/meta.jsp"%>
-        <link rel="stylesheet" href="<%=ctx%>/static/src/css/info-management/info-management.css" />
+        <link rel="stylesheet" href="<%=ctx%>/static-expert/src/css/info-management/info-management.css" />
     </head>
     <body>
         <%@ include file="../common/header.jsp"%>
@@ -77,6 +77,6 @@
             </div>
         </div>
         <%@ include file="../common/footer.jsp"%>
-        <script src="<%=ctx%>/static/src/js/info-management/info-management.js"></script>
+        <script src="<%=ctx%>/static-expert/src/js/info-management/info-management.js"></script>
     </body>
 </html>
