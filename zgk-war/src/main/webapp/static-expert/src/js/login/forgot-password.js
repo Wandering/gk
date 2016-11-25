@@ -53,7 +53,7 @@ var ForgotPassword = {
         }
     },
     fetchMsgCode: function () {
-        Common.ajaxFun('/captcha/captcha.do', 'GET', {
+        Common.ajaxFun('/captcha/captcha2.do', 'GET', {
             type: 1,
             account: $.trim($('#phone').val()),
             capText: $.trim($('#verification-code-img').val())
