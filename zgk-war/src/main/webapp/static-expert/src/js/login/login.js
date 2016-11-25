@@ -14,6 +14,8 @@ $('#login-btn').on('click', function () {
             var data = res.bizData;
             Common.cookie.setCookie('expertsId', data.id);
             Common.cookie.setCookie('expertsName', data.expertName);
+            Common.cookie.setCookie2('expert_user_info', data.id+"|"+data.expertName);
+            console.log(data.id+"="+data.expertName);
             var siderMenu = data.meuns;
             var siderMenuJson = {};
             for(var i=0;i<siderMenu.length;i++){

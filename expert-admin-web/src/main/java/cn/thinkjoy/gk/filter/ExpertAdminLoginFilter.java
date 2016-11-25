@@ -2,15 +2,19 @@ package cn.thinkjoy.gk.filter;
 
 import cn.thinkjoy.gk.common.ExpertUserContext;
 import cn.thinkjoy.gk.constant.ExpertAdminConst;
+import cn.thinkjoy.gk.domain.ExpertUser;
 import cn.thinkjoy.gk.pojo.ExpertUserDTO;
 import com.alibaba.fastjson.JSON;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,7 +35,7 @@ public class ExpertAdminLoginFilter implements Filter {
         // 获得在下面代码中要用的request,response,session对象
         HttpServletRequest servletRequest = (HttpServletRequest) request;
         HttpServletResponse servletResponse = (HttpServletResponse) response;
-        HttpSession session = servletRequest.getSession();
+//        HttpSession session = servletRequest.getSession();
 
         // 获得用户请求的URI
         String path = servletRequest.getRequestURI();
@@ -48,7 +52,20 @@ public class ExpertAdminLoginFilter implements Filter {
          }
 
         // 从session里取用户ID
-        Object userInfoDto = session.getAttribute(ExpertAdminConst.USER_SESSION_KEY);
+//        Object userInfoDto = session.getAttribute(ExpertAdminConst.USER_SESSION_KEY);
+        ExpertUser userInfoDto = null;
+        Cookie[] cookies = ((HttpServletRequest) request).getCookies();
+        for (Cookie cookie:cookies){
+            //TODO 待优化
+            if (ExpertAdminConst.USER_SESSION_KEY.equals(cookie.getName())){
+                String userInfoDtoStr = cookie.getValue();
+                userInfoDtoStr = URLDecoder.decode(userInfoDtoStr,"UTF-8");
+                String[] strings = userInfoDtoStr.split("\\|");
+                userInfoDto = new ExpertUser();
+                userInfoDto.setId(Long.valueOf(strings[0]));
+                userInfoDto.setAccount(strings[1]);
+            }
+        }
 
 
         // 判断如果没有取到员工信息,就跳转到登陆页面
@@ -71,5 +88,15 @@ public class ExpertAdminLoginFilter implements Filter {
     @Override
     public void destroy() {
 
+    }
+
+    public static void main(String[] args) {
+        String s="12=%E9%99%88%E5%B0%8F%E4%B8%9C";
+
+        try {
+            System.out.print( URLDecoder.decode(s,"UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 }
