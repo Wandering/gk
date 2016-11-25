@@ -53,7 +53,7 @@ public class ExpertAdminLoginFilter implements Filter {
 
         // 从session里取用户ID
 //        Object userInfoDto = session.getAttribute(ExpertAdminConst.USER_SESSION_KEY);
-        ExpertUser userInfoDto = null;
+        ExpertUserDTO userInfoDto = null;
         Cookie[] cookies = ((HttpServletRequest) request).getCookies();
         for (Cookie cookie:cookies){
             //TODO 待优化
@@ -61,9 +61,10 @@ public class ExpertAdminLoginFilter implements Filter {
                 String userInfoDtoStr = cookie.getValue();
                 userInfoDtoStr = URLDecoder.decode(userInfoDtoStr,"UTF-8");
                 String[] strings = userInfoDtoStr.split("\\|");
-                userInfoDto = new ExpertUser();
+                userInfoDto = new ExpertUserDTO();
                 userInfoDto.setId(Long.valueOf(strings[0]));
                 userInfoDto.setAccount(strings[1]);
+                userInfoDto.setExpertName(strings[2]);
             }
         }
 
@@ -74,11 +75,12 @@ public class ExpertAdminLoginFilter implements Filter {
             servletResponse.sendRedirect(ExpertAdminConst.LOGIN_PATH);
         } else {
             //设置用户上下文
-            ExpertUserDTO dto = JSON.parseObject(
-                    userInfoDto.toString(),
-                    ExpertUserDTO.class
-            );
-            ExpertUserContext.setCurrentUser(dto);
+//            ExpertUserDTO dto = JSON.parseObject(
+//                    userInfoDto.toString(),
+//                    ExpertUserDTO.class
+//            );
+//            ExpertUserDTO dto =
+            ExpertUserContext.setCurrentUser(userInfoDto);
             chain.doFilter(request, response);
         }
 
