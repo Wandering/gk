@@ -5,7 +5,7 @@
     <meta charset="utf-8"/>
     <title>智高考专家后台</title>
     <%@ include file="../common/meta.jsp" %>
-    <link rel="stylesheet" href="<%=ctx%>/static/src/css/info-management/experts-play.css">
+    <link rel="stylesheet" href="<%=ctx%>/static-expert/src/css/info-management/experts-play.css">
     <link rel="stylesheet" type="text/css" href="http://www.bootcss.com/p/buttons/css/buttons.css">
     <style>
         .m-input {
@@ -384,6 +384,6 @@
     };
 
 </script>
-<script src="<%=ctx%>/static/src/js/info-management/experts-play.js"></script>
+<script src="<%=ctx%>/static-expert/src/js/info-management/experts-play.js"></script>
 </body>
 </html>

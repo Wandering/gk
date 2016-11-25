@@ -5,7 +5,7 @@
     <meta charset="utf-8"/>
     <title>智高考专家后台</title>
     <%@ include file="../common/meta.jsp" %>
-    <link rel="stylesheet" href="<%=ctx%>/static/src/css/user-info/user-center.css">
+    <link rel="stylesheet" href="<%=ctx%>/static-expert/src/css/user-info/user-center.css">
 </head>
 <body>
 <%@ include file="../common/header.jsp" %>
@@ -29,7 +29,7 @@
                         <!-- PAGE CONTENT BEGINS -->
                         <div class="main" id="user-center">
                             <div class="user-img-upload">
-                                <img src="<%=ctx%>/static/src/img/avatar-icon.png" class="avatar-img" id="avatar-img"/>
+                                <img src="<%=ctx%>/static-expert/src/img/avatar-icon.png" class="avatar-img" id="avatar-img"/>
                                 <div id="uploader1" class="wu-example">
                                     <div class="uploader-tips">(仅支持JPG、JPEG、PNG格式（3M以下）尺寸 100px * 100px)</div>
                                     <div class="queueList">
@@ -81,12 +81,12 @@
     </div><!-- /.main-container-inner -->
 </div><!-- /.main-container -->
 <%@ include file="../common/footer.jsp" %>
-<link rel="stylesheet" type="text/css" href="<%=ctx%>/static/src/lib/webuploader-0.1.5 2/webuploader.css">
-<script src="<%=ctx%>/static/src/lib/webuploader-0.1.5 2/webuploader.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=ctx%>/static-expert/src/lib/webuploader-0.1.5 2/webuploader.css">
+<script src="<%=ctx%>/static-expert/src/lib/webuploader-0.1.5 2/webuploader.js"></script>
 <script>
-    var BASE_URL = '<%=ctx%>/static/src/lib/';
+    var BASE_URL = '<%=ctx%>/static-expert/src/lib/';
     var rootPath = '<%=ctx%>';
 </script>
-<script src="<%=ctx%>/static/src/js/user-info/user-center.js"></script>
+<script src="<%=ctx%>/static-expert/src/js/user-info/user-center.js"></script>
 </body>
 </html>
