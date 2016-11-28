@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.filter;
 
+import cn.thinkjoy.gk.common.CookieUtil;
 import cn.thinkjoy.gk.common.ExpertUserContext;
 import cn.thinkjoy.gk.constant.ExpertAdminConst;
 import cn.thinkjoy.gk.domain.ExpertUser;
@@ -32,59 +33,39 @@ public class ExpertAdminLoginFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        // 获得在下面代码中要用的request,response,session对象
+        // 获得在下面代码中要用的request,response
         HttpServletRequest servletRequest = (HttpServletRequest) request;
         HttpServletResponse servletResponse = (HttpServletResponse) response;
-//        HttpSession session = servletRequest.getSession();
 
         // 获得用户请求的URI
         String path = servletRequest.getRequestURI();
 
         logger.info("user request path : " + path);
 
-         for(int i = 0; i< ExpertAdminConst.NoFilter_Pages.length; i++){
-             Pattern pattern = Pattern.compile(ExpertAdminConst.NoFilter_Pages[i]);
-             Matcher matcher = pattern.matcher(path);
-             if (matcher.matches()) {
-                 chain.doFilter(servletRequest, servletResponse);
-                 return;
-             }
-         }
-
-        // 从session里取用户ID
-//        Object userInfoDto = session.getAttribute(ExpertAdminConst.USER_SESSION_KEY);
-        ExpertUserDTO userInfoDto = null;
-        Cookie[] cookies = ((HttpServletRequest) request).getCookies();
-        for (Cookie cookie:cookies){
-            //TODO 待优化
-            if (ExpertAdminConst.USER_SESSION_KEY.equals(cookie.getName())){
-                String userInfoDtoStr = cookie.getValue();
-                userInfoDtoStr = URLDecoder.decode(userInfoDtoStr,"UTF-8");
-                String[] strings = userInfoDtoStr.split("\\|");
-                userInfoDto = new ExpertUserDTO();
-                userInfoDto.setId(Long.valueOf(strings[0]));
-                userInfoDto.setAccount(strings[1]);
-                userInfoDto.setExpertName(strings[2]);
+        for (int i = 0; i < ExpertAdminConst.NoFilter_Pages.length; i++) {
+            Pattern pattern = Pattern.compile(ExpertAdminConst.NoFilter_Pages[i]);
+            Matcher matcher = pattern.matcher(path);
+            if (matcher.matches()) {
+                chain.doFilter(servletRequest, servletResponse);
+                return;
             }
         }
 
+        ExpertUserDTO userInfoDto = null;
+        String userInfoDtoStr = CookieUtil.getCookieValueByName(servletRequest, ExpertAdminConst.USER_COOKIE_KEY);
+        try {
+            userInfoDto = JSON.parseObject(URLDecoder.decode(userInfoDtoStr,ExpertAdminConst.CHARSET), ExpertUserDTO.class);
+        }catch (Exception e){}
 
         // 判断如果没有取到员工信息,就跳转到登陆页面
-        if (userInfoDto == null || "".equals(userInfoDto)) {
+        if (userInfoDto == null) {
             // 须重定向至登陆页面
             servletResponse.sendRedirect(ExpertAdminConst.LOGIN_PATH);
         } else {
             //设置用户上下文
-//            ExpertUserDTO dto = JSON.parseObject(
-//                    userInfoDto.toString(),
-//                    ExpertUserDTO.class
-//            );
-//            ExpertUserDTO dto =
             ExpertUserContext.setCurrentUser(userInfoDto);
             chain.doFilter(request, response);
         }
-
-
     }
 
     @Override
@@ -92,13 +73,4 @@ public class ExpertAdminLoginFilter implements Filter {
 
     }
 
-    public static void main(String[] args) {
-        String s="12=%E9%99%88%E5%B0%8F%E4%B8%9C";
-
-        try {
-            System.out.print( URLDecoder.decode(s,"UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-    }
 }

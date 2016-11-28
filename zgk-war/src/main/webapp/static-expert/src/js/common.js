@@ -18,12 +18,6 @@ var Common = {
             var seconds = arguments[2] ? arguments[2] : (3600 * 5);
             expires.setTime(expires.getTime() + seconds * 1000);
             document.cookie = escape(cookieName) + '=' + escape(cookieValue) + (expires ? ';expires=' + expires.toGMTString() : '') + (path ? ';path=' + path : '/') + (domain ? ';domain=' + domain : '') + (secure ? ';secure' : '');
-        },//专家后台登录专用
-        setCookie2: function (cookieName, cookieValue, seconds, path, domain, secure) {
-            var expires = new Date();
-            var seconds = arguments[2] ? arguments[2] : (3600 * 5);
-            expires.setTime(expires.getTime() + seconds * 1000);
-            document.cookie = encodeURI(cookieName) + '=' + encodeURI(cookieValue) + (expires ? ';expires=' + expires.toGMTString() : '') + (path ? ';path=' + path : '/') + (domain ? ';domain=' + domain : '') + (secure ? ';secure' : '');
         }
         ,
         /*

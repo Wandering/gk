@@ -2,9 +2,9 @@ package cn.thinkjoy.gk.controller.bussiness;
 
 import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.common.CookieUtil;
 import cn.thinkjoy.gk.common.ErrorCode;
 import cn.thinkjoy.gk.common.ExceptionUtil;
-import cn.thinkjoy.gk.common.ExpertUserContext;
 import cn.thinkjoy.gk.constant.ExpertAdminConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.domain.ExpertInfo;
@@ -14,18 +14,21 @@ import cn.thinkjoy.gk.service.IExpertInfoService;
 import cn.thinkjoy.gk.service.IExpertLoginServcie;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
 
 /**
@@ -36,6 +39,7 @@ import java.util.Map;
 @Scope(SpringMVCConst.SCOPE)
 @RequestMapping("/expert/admin/login")
 public class ExpertLoginController {
+    private static final Logger logger = LoggerFactory.getLogger(ExpertLoginController.class);
     @Autowired
     IExpertLoginServcie expertLoginServcie;
 
@@ -44,6 +48,7 @@ public class ExpertLoginController {
 
     @Autowired
     private RedisRepository<String, Object> redis;
+
     /**
      * 用户登录
      *
@@ -51,14 +56,21 @@ public class ExpertLoginController {
      */
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ExpertUserDTO login(ExpertUser expertUser,HttpServletRequest request) {
+    public ExpertUserDTO login(ExpertUser expertUser,HttpServletRequest request,HttpServletResponse response) {
         checkExpertUser(expertUser);
         ExpertUserDTO expertUserDTO = expertLoginServcie.login(expertUser);
         // 登陆成功,将用户ID存入session
-        HttpSession session = request.getSession();
-        session.setAttribute(ExpertAdminConst.USER_SESSION_KEY, JSON.toJSON(expertUserDTO));
-        // session过期时间
-        session.setMaxInactiveInterval(ExpertAdminConst.USER_SESSION_TIMEOUT);
+        expertUser.setPassword(null);
+        try {
+            logger.debug("账户登录:"+expertUser.getAccount());
+            ExpertUserDTO cookieUserDTO = new ExpertUserDTO();
+            BeanUtils.copyProperties(expertUserDTO,cookieUserDTO);
+            cookieUserDTO.setPassword(null);
+            cookieUserDTO.setMeuns(null);
+            CookieUtil.addCookie(response,ExpertAdminConst.USER_COOKIE_KEY,URLEncoder.encode(JSON.toJSONString(cookieUserDTO),ExpertAdminConst.CHARSET),ExpertAdminConst.USER_COOKIE_TIMEOUT);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         return expertUserDTO;
     }
 
