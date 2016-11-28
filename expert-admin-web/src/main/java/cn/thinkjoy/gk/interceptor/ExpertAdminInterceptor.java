@@ -46,7 +46,7 @@ public class ExpertAdminInterceptor extends HandlerInterceptorAdapter {
         }
 
         // 从session里取用户ID
-        Object userInfoDto = session.getAttribute(ExpertAdminConst.USER_SESSION_KEY);
+        Object userInfoDto = session.getAttribute(ExpertAdminConst.USER_COOKIE_KEY);
 
 
         // 判断如果没有取到员工信息,就跳转到登陆页面

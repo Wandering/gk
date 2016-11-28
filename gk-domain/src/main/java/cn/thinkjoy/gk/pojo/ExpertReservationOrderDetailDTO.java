@@ -8,6 +8,7 @@ import cn.thinkjoy.gk.domain.ExpertReservationOrderDetail;
 public class ExpertReservationOrderDetailDTO extends ExpertReservationOrderDetail {
     private String expertName;
     private String serviceName;
+    private Integer isInto;
 
     public String getExpertName() {
         return expertName;
@@ -23,5 +24,13 @@ public class ExpertReservationOrderDetailDTO extends ExpertReservationOrderDetai
 
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
+    }
+
+    public Integer getIsInto() {
+        return isInto;
+    }
+
+    public void setIsInto(Integer isInto) {
+        this.isInto = isInto;
     }
 }

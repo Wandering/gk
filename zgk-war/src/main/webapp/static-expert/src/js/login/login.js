@@ -8,13 +8,12 @@ $('#login-btn').on('click', function () {
     };
     // var md5ChildLogin = $.md5($childPwd);
     // var baseChildPwd = $.base64.btoa($childPwd);
-    // $.base64.utf8encode = true;
     Common.ajaxFun(url,"POST", data, function (res) {
         if (res.rtnCode == "0000000") {
-            var data = res.bizData;
-            Common.cookie.setCookie('expertsId', data.id);
-            Common.cookie.setCookie('expertsName', data.expertName);
-            var siderMenu = data.meuns;
+            var dataObj = res.bizData;
+            Common.cookie.setCookie('expertsId', dataObj.id);
+            Common.cookie.setCookie('expertsName', dataObj.expertName);
+            var siderMenu = dataObj.meuns;
             var siderMenuJson = {};
             for(var i=0;i<siderMenu.length;i++){
                 siderMenuJson[i]=siderMenu[i];

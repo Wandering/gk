@@ -18,7 +18,8 @@ var Common = {
             var seconds = arguments[2] ? arguments[2] : (3600 * 5);
             expires.setTime(expires.getTime() + seconds * 1000);
             document.cookie = escape(cookieName) + '=' + escape(cookieValue) + (expires ? ';expires=' + expires.toGMTString() : '') + (path ? ';path=' + path : '/') + (domain ? ';domain=' + domain : '') + (secure ? ';secure' : '');
-        },
+        }
+        ,
         /*
          *功能：获取Cookie
          *name 必选项，cookie名称

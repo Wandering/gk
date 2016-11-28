@@ -28,6 +28,8 @@ public class ExpertOrderServiceImpl extends AbstractPageService<IBaseDAO<ExpertR
 
     @Autowired
     private IExpertOrderDAO expertOrderDAO;
+    private final long tqTime = 30*60*1000;
+
     /**
      * 查询专家订单
      *
@@ -84,6 +86,7 @@ public class ExpertOrderServiceImpl extends AbstractPageService<IBaseDAO<ExpertR
         expertOrderDTO.setCustomerId(detailDTO.getUserId());
         expertOrderDTO.setServiceTime(detailDTO.getExpectTime());
         expertOrderDTO.setServiceId(detailDTO.getServiceItem());
+        expertOrderDTO.setIsInto(detailDTO.getIsInto());
         return expertOrderDTO;
     }
 
@@ -155,6 +158,11 @@ public class ExpertOrderServiceImpl extends AbstractPageService<IBaseDAO<ExpertR
                     //结束
                     status = ExpertAdminConst.EXPERT_ORDER_STATUS_Y3;
                 }
+                if (lStartTime-tqTime-currTime<0 && lEndTime-currTime>0&& "智高考网站".equals(expertReservationOrderDetailDTO.getChannel())){
+                    expertReservationOrderDetailDTO.setIsInto(2);
+                }else {
+                    expertReservationOrderDetailDTO.setIsInto(1);
+                }
                 Map<String, Object> map = Maps.newHashMap();
                 map.put("id", expertReservationOrderDetailDTO.getId());
                 map.put("status", status);
@@ -171,4 +179,5 @@ public class ExpertOrderServiceImpl extends AbstractPageService<IBaseDAO<ExpertR
         }
         expertReservationOrderDetailDTO.setStatus(status);
     }
+
 }

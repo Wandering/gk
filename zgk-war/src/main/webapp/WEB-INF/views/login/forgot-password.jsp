@@ -84,7 +84,7 @@
                                     </div>
                                     <div class="">
                                         <button type="button" id="submit-btn" class="back-btn">提交</button>
-                                        <p class="txt">已有账号，请<a href="/">登录账号</a></p>
+                                        <p class="txt">已有账号，请<a href="/expert/admin/login.do">登录账号</a></p>
                                     </div>
                                 </form>
                             </div>

@@ -53,7 +53,7 @@ var ForgotPassword = {
         }
     },
     fetchMsgCode: function () {
-        Common.ajaxFun('/captcha/captcha.do', 'GET', {
+        Common.ajaxFun('/captcha/captcha2.do', 'GET', {
             type: 1,
             account: $.trim($('#phone').val()),
             capText: $.trim($('#verification-code-img').val())
@@ -125,7 +125,8 @@ var ForgotPassword = {
     findPwdSubmit: function (data) {
         Common.ajaxFun('/expert/admin/login/retrievePassword.do', 'POST', data, function (res) {
             if(res.rtnCode === '0000000'){
-                window.location.href = '/';
+                layer.msg('修改成功!');
+                window.location.href = '/expert/admin/login.do';
             }else{
                 layer.msg(res.msg);
             }
