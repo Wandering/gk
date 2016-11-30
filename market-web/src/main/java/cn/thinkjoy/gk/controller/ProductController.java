@@ -153,7 +153,7 @@ public class ProductController extends ZGKBaseController {
 //        productId,areaId,isJoin
         map.put("productId",productId);
         map.put("areaId",areaId);
-        map.put("isJoin",isJoin);
+//        map.put("isJoin",isJoin);
 
         List<Map<String,Object>> cardInfos = expertProductServiceExService.getCardServiceByProductId(map);
         if (cardInfos==null||cardInfos.size()==0){
@@ -176,10 +176,10 @@ public class ProductController extends ZGKBaseController {
 
 
         for (DepartmentProductRelationPojo relationPojo:relationPojos){
+            map.put("productId",relationPojo.getProductId());
             List<Map<String,Object>> cardInfos = expertProductServiceExService.getCardServiceByProductId(map);
             if (cardInfos==null||cardInfos.size()==0){
                 map.put("areaId",0);
-                map.put("productId",relationPojo.getProductId());
                 cardInfos = expertProductServiceExService.getCardServiceByProductId(map);
             }
             relationPojo.setIntro(genCardIntro(cardInfos));
