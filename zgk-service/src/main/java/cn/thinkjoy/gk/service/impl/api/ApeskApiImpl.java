@@ -53,6 +53,7 @@ public class ApeskApiImpl implements IApeskApi {
             map.put("testEmail", testEmail);
             map.put("state", STATE);
             List<ZgkApesk> apList = zgkApeskService.selectApeskLimit(map);
+            if (apList==null) {
                 ZgkApesk apesk = new ZgkApesk();
                 apesk.setUserId(userId);
                 apesk.setLiangBiao(liangbiao);
@@ -62,6 +63,15 @@ public class ApeskApiImpl implements IApeskApi {
                 apesk.setAcId(Long.parseLong(acId + ""));
                 zgkApeskService.insertSelective(apesk);
                 setData(testName, returnJsonData, liangbiao, testEmail);
+            }else {//有记录的删除记录同时返回报表
+                ZgkApesk apesk = apList.get(0);
+                if (apesk.getReportId() == null) {
+                    setData(testName, returnJsonData, liangbiao, testEmail);
+                } else {
+                    zgkApeskService.deleteByPrimaryKey(Integer.valueOf(apesk.getId()+""));
+                    returnJsonData.put("data", apeskCourse.getReportUrl() + apesk.getReportId());
+                }
+            }
         }
         return returnJsonData;
     }
