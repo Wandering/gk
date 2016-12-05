@@ -1,6 +1,8 @@
 package cn.thinkjoy.gk.service.impl.api;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.api.IApeskApi;
+import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.zgk.domain.ZgkApesk;
 import cn.thinkjoy.zgk.domain.ZgkApeskCourse;
 import cn.thinkjoy.zgk.dto.ZgkApeskDTO;
@@ -61,8 +63,9 @@ public class ApeskApiImpl implements IApeskApi {
                 apesk.setCreateDate(new Date());
                 apesk.setState(STATE);
                 apesk.setAcId(Long.parseLong(acId + ""));
-                zgkApeskService.insertSelective(apesk);
+                apesk = zgkApeskService.insertSelective(apesk);
                 setData(testName, returnJsonData, liangbiao, testEmail);
+                returnJsonData.put("id",apesk.getId());
             }else {//有记录的删除记录同时返回报表
                 ZgkApesk apesk = apList.get(0);
                 if (apesk.getReportId() == null) {
@@ -94,6 +97,25 @@ public class ApeskApiImpl implements IApeskApi {
             returnJsonData.put("data", apeskCourse.getReportUrl() + apesk.getReportId());
         }
         return returnJsonData;
+    }
+
+    /**
+     * 获取报告地址
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Map<String, Object> queryReportUrl(Integer id) {
+        Map<String, Object> returnJsonData=new HashMap<>();
+            ZgkApesk apesk = zgkApeskService.selectByPrimaryKey(id);
+            ZgkApeskCourse apeskCourse=zgkApeskCourseService.queryByLiangBiao(apesk.getLiangBiao());
+            if (apesk.getReportId()!=null) {
+                returnJsonData.put("data", apeskCourse.getReportUrl() + apesk.getReportId());
+            }else {
+                returnJsonData.put("data", false);
+            }
+            return returnJsonData;
     }
 
     /**
