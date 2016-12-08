@@ -1,10 +1,14 @@
 package cn.thinkjoy.gk.controller.selcourse;
 
+import cn.thinkjoy.gk.pojo.MajorBatchNumberPojo;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.pojo.Bases;
 import cn.thinkjoy.gk.pojo.MajorTop3Pojo;
 import cn.thinkjoy.gk.service.selcourse.ISelClassesService;
+import cn.thinkjoy.gk.util.RedisIsSaveUtil;
+import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.gk.util.UserContext;
+import com.alibaba.fastjson.JSONArray;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,12 +46,18 @@ public class SelClassesController {
     @RequestMapping("getMajorNumberByBatch")
     @ResponseBody
     public Map<String,Object> getMajorNumberByBatch(@RequestParam("subject1")String subject1,@RequestParam("subject2")String subject2,@RequestParam("subject3")String subject3){
-        Map<String,Object> returnMap=new HashMap<>();
-        Map<String,Object> map=new HashMap<>();
-        map.put("subject1",subject1);
-        map.put("subject2",subject2);
-        map.put("subject3",subject3);
-        returnMap.put("batchList", iSelClassesService.selectMajorNumberByBatch(map));
+        String key = "zgk_university:_subject1:" + subject1 + "_subject2:" + subject2 + "_subject3" + subject3 +":getMajorNumberByBatch";
+        Object object = RedisIsSaveUtil.existsKey(key);
+        Map<String, Object> returnMap = new HashMap<>();
+        if (object == null) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("subject1", subject1);
+            map.put("subject2", subject2);
+            map.put("subject3", subject3);
+            object=iSelClassesService.selectMajorNumberByBatch(map);
+            RedisUtil.getInstance().set(key, JSONArray.toJSON(object));
+        }
+        returnMap.put("batchList", object);
         return returnMap;
     }
 
