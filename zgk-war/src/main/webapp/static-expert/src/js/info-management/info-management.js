@@ -5,6 +5,7 @@
 $(function () {
 
     var booking = new Booking();
+    booking.setIntervalDate(2016,11,25);
     $(document).on('click', '.user-btn', function () {
         booking.userInfo('用户信息');
     });
@@ -84,7 +85,7 @@ Booking.prototype = {
                         } else {
                             parentItem.push('<td>-</td>');
                         }
-                        if (k.channel == '智高考网站') {
+                        if (k.isInto == 2) {
                             parentItem.push('<td><a href="/expert/admin/experts-play.do?stuId='+ k.customerId  +'" class="video-btn">进入视频</a></td>');
                         } else {
                             parentItem.push('<td><a href="javascript: void(0);" class="no-video-btn">进入视频</a></td>');
@@ -111,5 +112,12 @@ Booking.prototype = {
 
             }
         });
+    },
+    setIntervalDate:function(year,month,day){
+
+
     }
 };
+
+
+

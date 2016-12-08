@@ -4,13 +4,17 @@ public class ExpertAdminConst {
     /**
      * 用户cookieKey
      */
-    public static final String USER_SESSION_KEY = "expert_user_info";
+    public static final String USER_COOKIE_KEY = "expert_user_info";
+    /**
+     * 用户cookie过期时间设置 4小时
+     */
+    public static final Integer USER_COOKIE_TIMEOUT = 4*60*60;
+    /**
+     * 统一编码格式
+     */
     public static final String CHARSET = "UTF-8";
 
-    /**
-     * 用户cookie过期时间设置
-     */
-    public static final Integer USER_SESSION_TIMEOUT = 4*60*60;
+
 
 
     public static final String CAPTCHA_AUTH_TIME_KEY = "gk_captcha_auth_time_";

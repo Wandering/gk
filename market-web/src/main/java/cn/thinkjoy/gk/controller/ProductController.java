@@ -153,7 +153,7 @@ public class ProductController extends ZGKBaseController {
 //        productId,areaId,isJoin
         map.put("productId",productId);
         map.put("areaId",areaId);
-        map.put("isJoin",isJoin);
+//        map.put("isJoin",isJoin);
 
         List<Map<String,Object>> cardInfos = expertProductServiceExService.getCardServiceByProductId(map);
         if (cardInfos==null||cardInfos.size()==0){
@@ -169,17 +169,14 @@ public class ProductController extends ZGKBaseController {
 
     private void handlerRelations(List<DepartmentProductRelationPojo> relationPojos){
         Long areaId = this.getAreaId();
-        Map<String,Object> map = new HashedMap();
-//        productId,areaId,isJoin
-        map.put("areaId",areaId);
-//        map.put("isJoin",isJoin);
-
-
+        Map<String,Object> map;
         for (DepartmentProductRelationPojo relationPojo:relationPojos){
+            map = new HashedMap();
+            map.put("areaId",areaId);
+            map.put("productId",relationPojo.getProductId());
             List<Map<String,Object>> cardInfos = expertProductServiceExService.getCardServiceByProductId(map);
             if (cardInfos==null||cardInfos.size()==0){
                 map.put("areaId",0);
-                map.put("productId",relationPojo.getProductId());
                 cardInfos = expertProductServiceExService.getCardServiceByProductId(map);
             }
             relationPojo.setIntro(genCardIntro(cardInfos));

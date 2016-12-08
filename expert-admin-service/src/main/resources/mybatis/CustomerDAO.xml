@@ -71,7 +71,7 @@ selectList
         FROM
         zgk_apesk
         WHERE
-        state = 0
+        state = 0 and report_id is not null
         GROUP BY
         ac_id,
         user_id

@@ -1,22 +1,25 @@
-.publish-box{
-  width:100%;
+.play-main{
+  width:1020px;
   height:486px;
-  background-color: #ccc;
 }
+
 .fun-set{
   width:1020px;
   margin:20px auto 0;
 }
+
 .body-main{
   width:1020px;
   position: relative;
   left:0;
   top:0;
+  background-color: #ccc;
   margin:20px auto 50px;
-  .play-main{
+  height:486px;
+  .publish-box{
     position: absolute;
     right:0;
-    top:305px;
+    top:301px;
   }
 }
 
