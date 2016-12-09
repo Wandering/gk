@@ -22,6 +22,12 @@ public interface IApeskApi {
     Map<String, Object> queryReportUrl(String liangbiao, Integer acId, Long userId);
 
     /**
+     * 获取报告地址
+     * @return
+     */
+    Map<String, Object> queryReportUrl(Integer id);
+
+    /**
      * 获取测评列表
      * @param areaId
      * @return

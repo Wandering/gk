@@ -23,4 +23,6 @@ public interface IMajoredApi {
 
     Map getMajoredInfoByCode(String majorCode);
 
+    List getMajoredByName(String majoredName,String type);
+
 }

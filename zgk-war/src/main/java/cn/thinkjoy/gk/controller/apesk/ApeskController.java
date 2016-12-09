@@ -165,7 +165,27 @@ public class ApeskController extends BaseCommonController {
 		}
 		return returnJsonData;
 	}
-
+	/**获取报告地址
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/queryReportUrlById.do")
+	public Map<String, Object>  queryReportUrl(@RequestParam(value = "id")Integer id){
+		Map<String, Object> returnJsonData=new HashMap<>();
+		UserAccountPojo userAccountPojo = getUserAccountPojo();
+		if (userAccountPojo != null) {
+			ZgkApesk apesk = zgkApeskService.selectByPrimaryKey(id);
+			ZgkApeskCourse apeskCourse=zgkApeskCourseService.queryByLiangBiao(apesk.getLiangBiao());
+			if (apesk.getReportId()!=null) {
+				returnJsonData.put("data", apeskCourse.getReportUrl() + apesk.getReportId());
+			}else {
+				returnJsonData.put("data", false);
+			}
+		} else {
+			throw new BizException("error", "用户不存在!");
+		}
+		return returnJsonData;
+	}
 
 	/**获取才储测试地址
 	 * @return
@@ -200,8 +220,9 @@ public class ApeskController extends BaseCommonController {
 						apesk.setCreateDate(new Date());
 						apesk.setState(STATE);
 						apesk.setAcId(Long.parseLong(acId + ""));
-						zgkApeskService.insertSelective(apesk);
+						apesk = zgkApeskService.insertSelective(apesk);
 						setData(testName, returnJsonData, liangbiao, testEmail);
+						returnJsonData.put("id",apesk.getId());
 					}else {//有记录的查看报表
 						ZgkApesk apesk = apList.get(0);
 						if (apesk.getReportId() == null) {

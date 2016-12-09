@@ -1,6 +1,7 @@
 <%
     String path = request.getContextPath();
-    String ctx = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+//    String ctx = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+    String ctx = path;
 %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <meta name="keywords" content="" />
