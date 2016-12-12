@@ -109,10 +109,10 @@ public class ProductController extends ZGKBaseController {
     @ResponseBody
     public List<DepartmentProductRelationPojo> findAllProduct() {
         String key = VipConst.VIP_CARD_INFO + getAreaId();
-        if (instance.exists(key)){
-            Object value = instance.get(key);
-            return JSON.parseObject(value.toString(),List.class);
-        }else {
+//        if (instance.exists(key)){
+//            Object value = instance.get(key);
+//            return JSON.parseObject(value.toString(),List.class);
+//        }else {
             List<DepartmentProductRelationPojo> relations = null;
             try {
                 relations = deparmentApiService.queryProductPriceByAreaId(getAreaId().toString());
@@ -124,7 +124,7 @@ public class ProductController extends ZGKBaseController {
             handlerRelations(relations);
             instance.set(key,JSON.toJSON(relations),VipConst.TIME_OUT, TimeUnit.DAYS);
             return relations;
-        }
+//        }
     }
 
     /**
@@ -153,7 +153,7 @@ public class ProductController extends ZGKBaseController {
 //        productId,areaId,isJoin
         map.put("productId",productId);
         map.put("areaId",areaId);
-//        map.put("isJoin",isJoin);
+        map.put("isJoin",isJoin);
 
         List<Map<String,Object>> cardInfos = expertProductServiceExService.getCardServiceByProductId(map);
         if (cardInfos==null||cardInfos.size()==0){
@@ -174,6 +174,7 @@ public class ProductController extends ZGKBaseController {
             map = new HashedMap();
             map.put("areaId",areaId);
             map.put("productId",relationPojo.getProductId());
+            map.put("isJoin",false);
             List<Map<String,Object>> cardInfos = expertProductServiceExService.getCardServiceByProductId(map);
             if (cardInfos==null||cardInfos.size()==0){
                 map.put("areaId",0);
