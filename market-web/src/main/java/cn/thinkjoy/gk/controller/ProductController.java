@@ -109,10 +109,10 @@ public class ProductController extends ZGKBaseController {
     @ResponseBody
     public List<DepartmentProductRelationPojo> findAllProduct() {
         String key = VipConst.VIP_CARD_INFO + getAreaId();
-//        if (instance.exists(key)){
-//            Object value = instance.get(key);
-//            return JSON.parseObject(value.toString(),List.class);
-//        }else {
+        if (instance.exists(key)){
+            Object value = instance.get(key);
+            return JSON.parseObject(value.toString(),List.class);
+        }else {
             List<DepartmentProductRelationPojo> relations = null;
             try {
                 relations = deparmentApiService.queryProductPriceByAreaId(getAreaId().toString());
@@ -124,7 +124,7 @@ public class ProductController extends ZGKBaseController {
             handlerRelations(relations);
             instance.set(key,JSON.toJSON(relations),VipConst.TIME_OUT, TimeUnit.DAYS);
             return relations;
-//        }
+        }
     }
 
     /**
