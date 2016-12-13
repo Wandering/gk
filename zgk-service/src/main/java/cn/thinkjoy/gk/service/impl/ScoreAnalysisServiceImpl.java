@@ -788,6 +788,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
             scores = scoreUtil.getScores(map, majorType);
             resultMap.put("scores", scores);
         }
+
         return scores;
     }
 
