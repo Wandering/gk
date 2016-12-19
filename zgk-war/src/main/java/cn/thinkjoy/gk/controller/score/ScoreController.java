@@ -198,7 +198,7 @@ public class ScoreController {
     public Object queryBatchLineByAreaId(@RequestParam float totalScore,
                                          @RequestParam long areaId,
                                          @RequestParam int majorType){
-        if (totalScore>800F&&totalScore<0F){
+        if (totalScore>800F||totalScore<0F){
             throw new BizException("error","用户成绩不能高于800或小于0");
         }
         String scoreLine = scoreAnalysisService.queryScoreLine(areaId,majorType,scoreUtil.getYear());
@@ -263,7 +263,7 @@ public class ScoreController {
     @RequestMapping(value = "/recommendSchool",method = RequestMethod.GET)
     @ResponseBody
     public Object recommendSchool(@RequestParam float totalScore,@RequestParam long areaId,Integer majorType,@RequestParam long userId){
-        if (totalScore>800F&&totalScore<0F){
+        if (totalScore>800F||totalScore<0F){
             throw new BizException("error","用户成绩不能高于800或小于0");
         }
         Object rtnObj=null;

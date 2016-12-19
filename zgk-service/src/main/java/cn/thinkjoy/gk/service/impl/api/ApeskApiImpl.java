@@ -55,7 +55,7 @@ public class ApeskApiImpl implements IApeskApi {
             map.put("testEmail", testEmail);
             map.put("state", STATE);
             List<ZgkApesk> apList = zgkApeskService.selectApeskLimit(map);
-            if (apList==null) {
+            if (apList==null || apList.size()==0) {
                 ZgkApesk apesk = new ZgkApesk();
                 apesk.setUserId(userId);
                 apesk.setLiangBiao(liangbiao);
