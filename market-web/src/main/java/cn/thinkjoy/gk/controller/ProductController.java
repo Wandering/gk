@@ -146,6 +146,10 @@ public class ProductController extends ZGKBaseController {
         paramMap.put("areaId",areaId);
         paramMap.put("productType",productId);
         List<SaleProductService> list = saleProductService.queryList(paramMap,"id","asc");
+        if (list.size()==0){
+            paramMap.put("areaId",0);
+            list = saleProductService.queryList(paramMap,"id","asc");
+        }
         rtnMap.put("cardServiceInfo",list.size()==0?"":IntroUtil.getTreeIntro(list));
 
         DepartmentProductRelationPojo departmentProductRelationPojo = null;
