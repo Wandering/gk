@@ -24,4 +24,7 @@ public interface IUserVipExDAO extends IBaseDAO<UserVip>{
     Integer getRegisteUserCount();
 
     Integer countUserServiceByUserId(Long userId);
+
+    List<Map<String,Object>> getUserVipService(String userId);
+    List<Map<String,Object>> getUserVipServiceName(String userId);
 }

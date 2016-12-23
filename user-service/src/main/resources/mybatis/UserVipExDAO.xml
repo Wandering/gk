@@ -3,7 +3,7 @@
 
 <mapper namespace="cn.thinkjoy.gk.dao.ex.IUserVipExDAO">
 
-    <select id="findVipInfoListByArea"  resultType="java.util.HashMap">
+    <select id="findVipInfoListByArea" resultType="java.util.HashMap">
         select
         a.account as account,
         u.`name` as userName,
@@ -34,6 +34,29 @@
         select sum(service_count) from zgk_expert_reservation_order_detail where user_id = #{userId}
     </select>
 
+    <!-- 获取用户注册总数 -->
+    <select id="getUserVipService" resultType="map">
+        SELECT
+	      detail.service_item as serviceType,
+	      config.config_value as serviceName,
+	      sum(detail.service_count) as count
+        FROM
+	      zgk_expert_reservation_order_detail detail
+	      left join zgk_expert_config config on detail.service_item = config.config_key and config.config_domain = 'serviceType'
+        WHERE
+	      user_id = #{userId}
+        GROUP BY
+	      service_item
+    </select>
+    <!-- 获取用户注册总数 -->
+    <select id="getUserVipServiceName" resultType="map">
+        SELECT
+		  product.type,product.productName
+	    from
+		  zgk_system.zgk_sale_product product
+	    INNER JOIN zgk2.zgk_card card  on product.type = card.productType and card.userId = #{userId}
+	    GROUP BY product.type
+    </select>
 
 </mapper>
 
