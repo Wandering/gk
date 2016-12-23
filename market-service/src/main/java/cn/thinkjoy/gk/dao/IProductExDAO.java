@@ -17,4 +17,6 @@ import java.util.Map;
 public interface IProductExDAO extends IBaseDAO<Product> {
 	
     List<Product> findPage(Map<String, Object> params);
+
+    List<Product> selectProductByServiceIdAndAreaId(Map<String,Object> params);
 }

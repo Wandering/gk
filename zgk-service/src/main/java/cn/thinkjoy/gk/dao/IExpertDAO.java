@@ -22,6 +22,8 @@ public interface IExpertDAO
 
     List<ExpertInfoPojo> selectExpertList(Map<String, Object> map);
 
+    List<ExpertInfoPojo> checkExpertByProduct(Map<String, Object> map);
+
     int selectExpertListCount(Map<String, Object> map);
 
     ExpertInfoPojo selectExpertInfo(Map<String, Object> map);

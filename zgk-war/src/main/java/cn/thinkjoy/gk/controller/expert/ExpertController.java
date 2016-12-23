@@ -282,16 +282,75 @@ public class ExpertController extends ZGKBaseController
         return list;
     }
 
-    @RequestMapping("checkExpert")
+    /**
+     * 根据问题推介卡
+     * @param commonQuestionIdList
+     * @param userId
+     * @param note
+     * @param areaId
+     * @param offset
+     * @param rows
+     * @return
+     */
+    @RequestMapping("checkProduct")
     @ResponseBody
-    public Map<String, Object> checkExpert(@RequestParam(value = "commonQuestionIdList") String commonQuestionIdList,
+    public Map<String, Object> checkProduct(@RequestParam(value = "commonQuestionIdList") String commonQuestionIdList,
         @RequestParam(value = "userId") String userId,
         @RequestParam(value = "note", required = false) String note,
+        @RequestParam(value = "areaId", required = false) String areaId,
+        @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
+        @RequestParam(value = "rows", required = false, defaultValue = "1") String rows)
+    {
+        List<Product> productList =
+            expertService.checkProduct(commonQuestionIdList, offset, rows, userId, note, areaId);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("productList", productList);
+        return resultMap;
+    }
+
+    /**
+     * 根据服务推介专家
+     * @param serviceId
+     * @param offset
+     * @param rows
+     * @return
+     */
+    @RequestMapping("checkExpertByServiceId")
+    @ResponseBody
+    public Map<String, Object> checkExpertByServiceId(
+        @RequestParam(value = "serviceId") String serviceId,
         @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
         @RequestParam(value = "rows", required = false, defaultValue = "2") String rows)
     {
-        List<ExpertInfoPojo> expertInfoPojoList =
-            expertService.checkExpert(commonQuestionIdList, offset, rows, userId, note);
+        Map<String, Object> map = new HashMap<>();
+        map.put("serviceId",serviceId);
+        map.put("offset",offset);
+        map.put("rows",rows);
+        List<ExpertInfoPojo> expertInfoPojoList = expertService.selectExpertList(map);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("expertInfoPojoList", expertInfoPojoList);
+        return resultMap;
+    }
+
+    /**
+     * 根据卡推介专家
+     * @param userId
+     * @param offset
+     * @param rows
+     * @return
+     */
+    @RequestMapping("checkExpertByProduct")
+    @ResponseBody
+    public Map<String, Object> checkExpertByProduct(
+        @RequestParam(value = "userId") String userId,
+        @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
+        @RequestParam(value = "rows", required = false, defaultValue = "2") String rows)
+    {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId",userId);
+        map.put("offset",offset);
+        map.put("rows",rows);
+        List<ExpertInfoPojo> expertInfoPojoList = expertService.checkExpertByProduct(map);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("expertInfoPojoList", expertInfoPojoList);
         return resultMap;

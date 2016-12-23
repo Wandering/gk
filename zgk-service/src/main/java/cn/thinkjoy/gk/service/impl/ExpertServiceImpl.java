@@ -1,8 +1,10 @@
 package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.gk.dao.IExpertDAO;
+import cn.thinkjoy.gk.dao.IProductExDAO;
 import cn.thinkjoy.gk.domain.ExpertOrder;
 import cn.thinkjoy.gk.domain.OrderRevaluation;
+import cn.thinkjoy.gk.domain.Product;
 import cn.thinkjoy.gk.entity.*;
 import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
 import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
@@ -22,6 +24,9 @@ public class ExpertServiceImpl implements IExpertService
 {
     @Autowired
     private IExpertDAO dao;
+
+    @Autowired
+    private IProductExDAO iProductExDAO;
 
     @Override
     public void insertOrder(ExpertOrder order)
@@ -54,6 +59,11 @@ public class ExpertServiceImpl implements IExpertService
     @Override
     public List<ExpertInfoPojo> selectExpertList(Map<String, Object> map) {
         return dao.selectExpertList(map);
+    }
+
+    @Override
+    public List<ExpertInfoPojo> checkExpertByProduct(Map<String, Object> map) {
+        return dao.checkExpertByProduct(map);
     }
 
     @Override
@@ -113,52 +123,49 @@ public class ExpertServiceImpl implements IExpertService
 
 
     @Override
-    public List<ExpertInfoPojo> checkExpert(String commonQuestionIdString,String offset,String rows,String userId,String note){
+    public List<Product> checkProduct(String commonQuestionIdString,String offset,String rows,String userId,String note,String areaId){
         Map<String,Object> map=new HashMap<>();
         map.put("userId",userId);
         map.put("commonQuestionIdString",commonQuestionIdString);
         map.put("note",note);
         map.put("createDate",new Date());
         dao.insertUserCommonQuestion(map);
-//        List<CommonQuestion> commonQuestionList=dao.selectCommonQuestion(map);
-//        if(commonQuestionList.size()>0) {
-//            String specialitys="";
-//            for(CommonQuestion commonQuestion:commonQuestionList){
-//                specialitys=specialitys+","+commonQuestion.getSpecialitys();
-//            }
-//            if(StringUtils.isNotBlank(specialitys.substring(1))){
-//                Map<String,Object> map1=new HashMap<>();
-//                map1.put("specialitys",specialitys.substring(1));
-//                map1.put("offset",offset);
-//                map1.put("rows",rows);
-//                List<String> expertIdList=dao.selectExpertId(map1);
-//                map1.put("expertIdList",expertIdList);
-//                return dao.selectExpertListBySpecialty(map1);
-//            }else {
-//                //模糊匹配关键词
-//                Map<String,Object> map1=new HashMap<>();
-//                map1.put("configDomain","speciality");
-//                List<ExpertConfig> expertConfigList=dao.selectExpertConfigList(map1);
-//                specialitys="";
-//                for(ExpertConfig expertConfig:expertConfigList){
-//                    if(note.contains(expertConfig.getConfigValue())){
-//                        specialitys=specialitys+","+expertConfig.getConfigKey();
-//                    }
-//                }
-//                if(StringUtils.isNotBlank(specialitys)) {
-//                    map1.put("specialitys", specialitys.substring(1));
-//                    map1.put("offset", offset);
-//                    map1.put("rows", rows);
-//                    List<String> expertIdList=dao.selectExpertId(map1);
-//                    map1.put("expertIdList",expertIdList);
-//                    return dao.selectExpertListBySpecialty(map1);
-//                }else {
-//                    //无匹配，返回涉及邻域最多专家
-//                    return dao.selectExpertBySpecialityMore();
-//                }
-//            }
-//
-//        }
+        List<CommonQuestion> commonQuestionList=dao.selectCommonQuestion(map);
+        if(commonQuestionList.size()>0) {
+            String specialitys="";
+            Map<String,Object> map1=new HashMap<>();
+            map1.put("areaId",areaId);
+            for(CommonQuestion commonQuestion:commonQuestionList){
+                specialitys=specialitys+","+commonQuestion.getSpecialitys();
+            }
+            if(StringUtils.isNotBlank(specialitys.substring(1))){
+                map1.put("specialitys",specialitys.substring(1));
+                map1.put("offset",offset);
+                map1.put("rows",rows);
+                List<Product> productList=iProductExDAO.selectProductByServiceIdAndAreaId(map1);
+                return productList;
+            }
+            else {
+                //模糊匹配关键词
+                map1.put("configDomain","speciality");
+                List<ExpertConfig> expertConfigList=dao.selectExpertConfigList(map1);
+                specialitys="";
+                for(ExpertConfig expertConfig:expertConfigList){
+                    if(note.contains(expertConfig.getConfigValue())){
+                        specialitys=specialitys+","+expertConfig.getConfigKey();
+                    }
+                }
+                if(StringUtils.isNotBlank(specialitys)) {
+                    map1.put("specialitys", specialitys.substring(1));
+                    map1.put("offset", offset);
+                    map1.put("rows", rows);
+                    return iProductExDAO.selectProductByServiceIdAndAreaId(map1);
+                }else {
+                    //无匹配，返回涉及邻域最多专家
+                    return iProductExDAO.selectProductByServiceIdAndAreaId(map1);
+                }
+            }
+        }
         return null;
     }
 
