@@ -1,0 +1,49 @@
+package cn.thinkjoy.gk.pojo;
+
+import cn.thinkjoy.gk.domain.ExpertProductService;
+
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * Created by zuohao on 16/12/23.
+ */
+public class ProductPojo implements Serializable{
+
+    private String productId;
+    private String productName;
+    private String price;
+    private List<ExpertProductService> expertProductServiceList;
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public List<ExpertProductService> getExpertProductServiceList() {
+        return expertProductServiceList;
+    }
+
+    public void setExpertProductServiceList(List<ExpertProductService> expertProductServiceList) {
+        this.expertProductServiceList = expertProductServiceList;
+    }
+}

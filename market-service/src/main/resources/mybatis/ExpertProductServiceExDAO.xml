@@ -31,5 +31,11 @@
         </if>
     </select>
 
+    <select id="selectServiceByProductId" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.domain.ExpertProductService">
+        select serviceType,serviceCount from zgk_expert_product_service eps
+        where eps.productId=#{productId}
+        and areaId=#{areaId}
+        and serviceId is not null
+    </select>
 </mapper>
 

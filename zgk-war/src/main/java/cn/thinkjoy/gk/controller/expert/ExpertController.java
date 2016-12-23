@@ -301,10 +301,10 @@ public class ExpertController extends ZGKBaseController
         @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
         @RequestParam(value = "rows", required = false, defaultValue = "1") String rows)
     {
-        List<Product> productList =
+        ProductPojo product =
             expertService.checkProduct(commonQuestionIdList, offset, rows, userId, note, areaId);
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("productList", productList);
+        resultMap.put("product", product);
         return resultMap;
     }
 
