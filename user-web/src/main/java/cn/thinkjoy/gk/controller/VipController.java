@@ -291,6 +291,8 @@ public class VipController extends ZGKBaseController implements Watched {
         //获取卡的专家状态
         List<Map<String,Object>> vipServiceNames = cardExService.getUserVipServiceName(userId);
         Collections.sort(vipServiceNames,comparator);
+
+        rtnMap.put("diffServiceName","状元及第");
         //判断最大的是不是金榜登科 并且绑了多张卡
         Map<String,Object> lastCard = vipServiceNames.get(vipServiceNames.size()-1);
         if (Integer.valueOf(lastCard.get("type").toString()) == 1 && vipServiceNames.size()>1){
@@ -325,6 +327,7 @@ public class VipController extends ZGKBaseController implements Watched {
                     buffer.delete(buffer.length() - 1, buffer.length());
                 rtnMap.put("diffService",buffer.toString());
                 rtnMap.put("diffServiceTime",getLastActiveDate(Long.valueOf(serviceCard.get("activeDate").toString())));
+                rtnMap.put("diffServiceName","金榜登科、状元及第");
             }
         }
 
