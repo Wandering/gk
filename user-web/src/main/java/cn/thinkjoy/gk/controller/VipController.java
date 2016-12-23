@@ -1,10 +1,7 @@
 package cn.thinkjoy.gk.controller;
 
 import cn.thinkjoy.common.exception.BizException;
-import cn.thinkjoy.gk.common.DESUtil;
-import cn.thinkjoy.gk.common.HttpClientUtil;
-import cn.thinkjoy.gk.common.UserVipConstant;
-import cn.thinkjoy.gk.common.ZGKBaseController;
+import cn.thinkjoy.gk.common.*;
 import cn.thinkjoy.gk.common.observer.Watched;
 import cn.thinkjoy.gk.common.observer.Watcher;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
@@ -52,7 +49,6 @@ public class VipController extends ZGKBaseController implements Watched {
     @Autowired
     private IUserVipService userVipService;
 
-    private static  SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private static Comparator comparator = new Comparator() {
         @Override
@@ -64,7 +60,7 @@ public class VipController extends ZGKBaseController implements Watched {
             if (o == null) {
                 return "";
             }
-            return VipController.getLastActiveDate(Long.valueOf(((Map<String, Object>) o).get("activeDate").toString()));
+            return VipTimeUtil.getLastActiveDate(Long.valueOf(((Map<String, Object>) o).get("activeDate").toString()));
         }
     };
 
@@ -326,7 +322,7 @@ public class VipController extends ZGKBaseController implements Watched {
                 if (buffer.length() > 0)
                     buffer.delete(buffer.length() - 1, buffer.length());
                 rtnMap.put("diffService",buffer.toString());
-                rtnMap.put("diffServiceTime",getLastActiveDate(Long.valueOf(serviceCard.get("activeDate").toString())));
+                rtnMap.put("diffServiceTime",VipTimeUtil.getLastActiveDate(Long.valueOf(serviceCard.get("activeDate").toString())));
                 rtnMap.put("diffServiceName","金榜登科、状元及第");
             }
         }
@@ -343,7 +339,7 @@ public class VipController extends ZGKBaseController implements Watched {
             paramMap.put("userId",userId);
             UserVip userVip = (UserVip)userVipService.queryOne(paramMap);
 
-            rtnMap.put("cardTime",format.format(new Date(userVip.getEndDate())));
+            rtnMap.put("cardTime",VipTimeUtil.format.format(new Date(userVip.getEndDate())));
 
             List<Map<String,Object>> vipServices = cardExService.getUserVipService(userId);
             //判断所拥有的VIP卡类型(另一个维度)
@@ -364,18 +360,5 @@ public class VipController extends ZGKBaseController implements Watched {
         return rtnMap;
     }
 
-    public static String getLastActiveDate(Long time){
 
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(time);
-        c.add(Calendar.YEAR, 3);
-        c.set(Calendar.MONTH, 8);
-        c.set(Calendar.DAY_OF_MONTH, 1);
-        c.set(Calendar.HOUR_OF_DAY, 0);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND,0);
-
-        return format.format(c.getTime());
-    }
 }
