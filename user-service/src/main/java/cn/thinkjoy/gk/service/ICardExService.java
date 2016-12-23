@@ -47,5 +47,9 @@ public interface ICardExService{
     public Integer getVipServiceCount(Integer productId,Long areaId);
 
     public List<Map<String,Object>> getUserVipService(String userId);
+    
     List<Map<String,Object>> getUserVipServiceName(String userId);
+
+    List<Map<String,Object>> getCardService(Map<String,Object> map);
+
 }

@@ -8,6 +8,7 @@ import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.common.observer.Watched;
 import cn.thinkjoy.gk.common.observer.Watcher;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.constant.VipConst;
 import cn.thinkjoy.gk.domain.Card;
 import cn.thinkjoy.gk.domain.UserVip;
 import cn.thinkjoy.gk.pojo.CardPojo;
@@ -50,6 +51,22 @@ public class VipController extends ZGKBaseController implements Watched {
     private ICardService cardService;
     @Autowired
     private IUserVipService userVipService;
+
+    private static  SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    private static Comparator comparator = new Comparator() {
+        @Override
+        public int compare(Object o1, Object o2) {
+            return getLongNum(o1).compareTo(getLongNum(o2));
+        }
+
+        private String getLongNum(Object o) {
+            if (o == null) {
+                return "";
+            }
+            return VipController.getLastActiveDate(Long.valueOf(((Map<String, Object>) o).get("activeDate").toString()));
+        }
+    };
 
     //高考学堂注册接口
     private String gkxtActiveUrl = "http://xuetang.zhigaokao.cn/userapi/tovip?mobile=%s&duration=12&unit=month&levelId=2";
@@ -273,8 +290,46 @@ public class VipController extends ZGKBaseController implements Watched {
         Map<String,Object> rtnMap = new HashedMap();
         //获取卡的专家状态
         List<Map<String,Object>> vipServiceNames = cardExService.getUserVipServiceName(userId);
-        StringBuffer buffer = new StringBuffer();
+        Collections.sort(vipServiceNames,comparator);
+        //判断最大的是不是金榜登科 并且绑了多张卡
+        Map<String,Object> lastCard = vipServiceNames.get(vipServiceNames.size()-1);
+        if (Integer.valueOf(lastCard.get("type").toString()) == 1 && vipServiceNames.size()>1){
+            Map<String,Object> serviceCard = vipServiceNames.get(vipServiceNames.size()-2);
+            Map<String,Object> paramMap = new HashedMap();
+            paramMap.put("productId",lastCard.get("type"));
+            paramMap.put("areaId", getAreaId());
+            paramMap.put("status",UserVipConstant.DEFULT_STATUS);
+            //是金榜登科的话取得卡status为1的所有
+            List<Map<String,Object>> cardServices1 = cardExService.getCardService(paramMap);
+            if (cardServices1.size()==0){
+                paramMap.put("areaId",UserVipConstant.DEFULT_AREA_ID);
+                cardServices1 = cardExService.getCardService(paramMap);
+            }
+            paramMap = new HashedMap();
+            paramMap.put("productId",serviceCard.get("type"));
+            paramMap.put("areaId", getAreaId());
+            paramMap.put("status",UserVipConstant.DEFULT_STATUS);
+            //是金榜登科的话取得卡status为1的所有
+            List<Map<String,Object>> cardServices = cardExService.getCardService(paramMap);
+            if (cardServices.size()==0){
+                paramMap.put("areaId",UserVipConstant.DEFULT_AREA_ID);
+                cardServices = cardExService.getCardService(paramMap);
+            }
+            //取两张卡不重叠项
+            cardServices.removeAll(cardServices1);
+            StringBuffer buffer = new StringBuffer();
+            if (cardServices.size()>0) {
+                for (Map<String, Object> map : cardServices)
+                    buffer.append(map.get("serviceType")).append("、");
+                if (buffer.length() > 0)
+                    buffer.delete(buffer.length() - 1, buffer.length());
+                rtnMap.put("diffService",buffer.toString());
+                rtnMap.put("diffServiceTime",getLastActiveDate(Long.valueOf(serviceCard.get("activeDate").toString())));
+            }
+        }
+
         if (vipServiceNames.size()>0){
+            StringBuffer buffer = new StringBuffer();
             for (Map<String,Object> map : vipServiceNames)
                 buffer.append(map.get("productName")).append("、");
             if (buffer.length()>0)
@@ -284,7 +339,7 @@ public class VipController extends ZGKBaseController implements Watched {
             Map<String,Object> paramMap = Maps.newHashMap();
             paramMap.put("userId",userId);
             UserVip userVip = (UserVip)userVipService.queryOne(paramMap);
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
             rtnMap.put("cardTime",format.format(new Date(userVip.getEndDate())));
 
             List<Map<String,Object>> vipServices = cardExService.getUserVipService(userId);
@@ -304,5 +359,20 @@ public class VipController extends ZGKBaseController implements Watched {
             throw new BizException(ERRORCODE.NO_VIP.getCode(), ERRORCODE.NO_VIP.getMessage());
         }
         return rtnMap;
+    }
+
+    public static String getLastActiveDate(Long time){
+
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(time);
+        c.add(Calendar.YEAR, 3);
+        c.set(Calendar.MONTH, 8);
+        c.set(Calendar.DAY_OF_MONTH, 1);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND,0);
+
+        return format.format(c.getTime());
     }
 }

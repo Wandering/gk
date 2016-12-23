@@ -51,12 +51,16 @@
     <!-- 获取用户注册总数 -->
     <select id="getUserVipServiceName" resultType="map">
         SELECT
-		  product.type,product.productName
+		  product.type,product.productName,card.activeDate
 	    from
 		  zgk_system.zgk_sale_product product
 	    INNER JOIN zgk2.zgk_card card  on product.type = card.productType and card.userId = #{userId}
 	    GROUP BY product.type
     </select>
 
+    <select id="getCardService" resultType="map">
+       SELECT serviceType from zgk_expert_product_service
+            where productId = #{productId} and areaId = #{areaId} and `status` = #{status}
+    </select>
 </mapper>
 

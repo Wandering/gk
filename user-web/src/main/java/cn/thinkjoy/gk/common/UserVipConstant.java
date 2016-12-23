@@ -8,4 +8,7 @@ public interface UserVipConstant {
     int DEFULT_VIP_STATUS = 1;
     //专家卡类型
     int EXPERT_VIP_STATUS = 2;
+
+    int DEFULT_AREA_ID = 0;
+    int DEFULT_STATUS = 1;
 }

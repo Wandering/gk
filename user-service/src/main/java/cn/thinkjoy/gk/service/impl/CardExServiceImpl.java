@@ -146,4 +146,11 @@ public class CardExServiceImpl implements ICardExService {
     public List<Map<String, Object>> getUserVipServiceName(String userId) {
         return userVipExDAO.getUserVipServiceName(userId);
     }
+
+    @Override
+    public List<Map<String, Object>> getCardService(Map<String, Object> map) {
+        return userVipExDAO.getCardService(map);
+    }
 }
+
+
