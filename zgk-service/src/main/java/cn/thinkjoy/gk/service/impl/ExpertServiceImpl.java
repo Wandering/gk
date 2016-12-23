@@ -1,10 +1,9 @@
 package cn.thinkjoy.gk.service.impl;
 
 import cn.thinkjoy.gk.dao.IExpertDAO;
-import cn.thinkjoy.gk.dao.IProductExDAO;
+import cn.thinkjoy.gk.dao.IExpertProductServiceExDAO;
 import cn.thinkjoy.gk.domain.ExpertOrder;
 import cn.thinkjoy.gk.domain.OrderRevaluation;
-import cn.thinkjoy.gk.domain.Product;
 import cn.thinkjoy.gk.entity.*;
 import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
 import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
@@ -26,7 +25,7 @@ public class ExpertServiceImpl implements IExpertService
     private IExpertDAO dao;
 
     @Autowired
-    private IProductExDAO iProductExDAO;
+    private IExpertProductServiceExDAO iExpertProductServiceExDAO;
 
     @Override
     public void insertOrder(ExpertOrder order)
@@ -123,7 +122,7 @@ public class ExpertServiceImpl implements IExpertService
 
 
     @Override
-    public List<Product> checkProduct(String commonQuestionIdString,String offset,String rows,String userId,String note,String areaId){
+    public ProductPojo checkProduct(String commonQuestionIdString,String offset,String rows,String userId,String note,String areaId){
         Map<String,Object> map=new HashMap<>();
         map.put("userId",userId);
         map.put("commonQuestionIdString",commonQuestionIdString);
@@ -135,15 +134,17 @@ public class ExpertServiceImpl implements IExpertService
             String specialitys="";
             Map<String,Object> map1=new HashMap<>();
             map1.put("areaId",areaId);
+            map1.put("offset",offset);
+            map1.put("rows",rows);
             for(CommonQuestion commonQuestion:commonQuestionList){
-                specialitys=specialitys+","+commonQuestion.getSpecialitys();
+                    specialitys = specialitys + "," + commonQuestion.getSpecialitys();
             }
-            if(StringUtils.isNotBlank(specialitys.substring(1))){
+            if(StringUtils.isNotEmpty(specialitys.substring(1))){
                 map1.put("specialitys",specialitys.substring(1));
-                map1.put("offset",offset);
-                map1.put("rows",rows);
-                List<Product> productList=iProductExDAO.selectProductByServiceIdAndAreaId(map1);
-                return productList;
+                ProductPojo product=dao.selectProductByServiceIdAndAreaId(map1);
+                map1.put("productId",product.getProductId());
+                product.setExpertProductServiceList(iExpertProductServiceExDAO.selectServiceByProductId(map1));
+                return product;
             }
             else {
                 //模糊匹配关键词
@@ -157,12 +158,16 @@ public class ExpertServiceImpl implements IExpertService
                 }
                 if(StringUtils.isNotBlank(specialitys)) {
                     map1.put("specialitys", specialitys.substring(1));
-                    map1.put("offset", offset);
-                    map1.put("rows", rows);
-                    return iProductExDAO.selectProductByServiceIdAndAreaId(map1);
+                    ProductPojo product=dao.selectProductByServiceIdAndAreaId(map1);
+                    map1.put("productId",product.getProductId());
+                    product.setExpertProductServiceList(iExpertProductServiceExDAO.selectServiceByProductId(map1));
+                    return product;
                 }else {
                     //无匹配，返回涉及邻域最多专家
-                    return iProductExDAO.selectProductByServiceIdAndAreaId(map1);
+                    ProductPojo product=dao.selectProductByServiceIdAndAreaId(map1);
+                    map1.put("productId",product.getProductId());
+                    product.setExpertProductServiceList(iExpertProductServiceExDAO.selectServiceByProductId(map1));
+                    return product;
                 }
             }
         }

@@ -165,4 +165,6 @@ public interface IExpertDAO
     void insertChannel(
             ExpertChannel channel
     );
+
+    ProductPojo selectProductByServiceIdAndAreaId(Map<String,Object> map);
 }

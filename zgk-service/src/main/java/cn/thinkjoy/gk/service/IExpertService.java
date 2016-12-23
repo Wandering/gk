@@ -52,7 +52,7 @@ public interface IExpertService
 
     List<Map<String,Object>> getExpertOrderList(Map<String, Object> map);
 
-    List<Product> checkProduct(String commonQuestionIdList,String offset,String rows,String userId,String note,String areaId);
+    ProductPojo checkProduct(String commonQuestionIdList,String offset,String rows,String userId,String note,String areaId);
 
     void createExpertOrderRevaluation(OrderRevaluation orderRevaluation);
 
