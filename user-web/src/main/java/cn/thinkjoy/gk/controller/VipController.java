@@ -3,16 +3,25 @@ package cn.thinkjoy.gk.controller;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.DESUtil;
 import cn.thinkjoy.gk.common.HttpClientUtil;
+import cn.thinkjoy.gk.common.UserVipConstant;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.common.observer.Watched;
 import cn.thinkjoy.gk.common.observer.Watcher;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.constant.VipConst;
 import cn.thinkjoy.gk.domain.Card;
+import cn.thinkjoy.gk.domain.UserVip;
 import cn.thinkjoy.gk.pojo.CardPojo;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.protocol.ModelUtil;
 import cn.thinkjoy.gk.service.ICardExService;
+import cn.thinkjoy.gk.service.ICardService;
+import cn.thinkjoy.gk.service.IUserVipService;
+import com.google.common.collect.Maps;
+import org.apache.commons.collections.map.HashedMap;
+import org.apache.ibatis.exceptions.TooManyResultsException;
+import org.mybatis.spring.MyBatisSystemException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +47,26 @@ public class VipController extends ZGKBaseController implements Watched {
     private Watcher watcher;
     @Autowired
     private ICardExService cardExService;
+    @Autowired
+    private ICardService cardService;
+    @Autowired
+    private IUserVipService userVipService;
 
+    private static  SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+    private static Comparator comparator = new Comparator() {
+        @Override
+        public int compare(Object o1, Object o2) {
+            return getLongNum(o1).compareTo(getLongNum(o2));
+        }
+
+        private String getLongNum(Object o) {
+            if (o == null) {
+                return "";
+            }
+            return VipController.getLastActiveDate(Long.valueOf(((Map<String, Object>) o).get("activeDate").toString()));
+        }
+    };
 
     //高考学堂注册接口
     private String gkxtActiveUrl = "http://xuetang.zhigaokao.cn/userapi/tovip?mobile=%s&duration=12&unit=month&levelId=2";
@@ -51,14 +78,18 @@ public class VipController extends ZGKBaseController implements Watched {
         if(null==userAccountPojo){
             throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
         }
-        Integer vipStatus = userAccountPojo.getVipStatus();
-        if(null!=vipStatus&&vipStatus==1){
-            throw new BizException(ERRORCODE.VIP_EXIST.getCode(), ERRORCODE.VIP_EXIST.getMessage());
-        }
+//        Integer vipStatus = userAccountPojo.getVipStatus();
+//        if(null!=vipStatus&&vipStatus==1){
+//            throw new BizException(ERRORCODE.VIP_EXIST.getCode(), ERRORCODE.VIP_EXIST.getMessage());
+//        }
         Map<String,String> map=new HashMap<>();
         map.put("cardNumber",cardPojo.getCardNumber());
-
-        Card card=cardExService.getVipCardInfo(map);
+        Card card= null;
+        try {
+            card = cardExService.getVipCardInfo(map);
+        }catch (MyBatisSystemException e){
+            throw new BizException("error","卡号异常");
+        }
 
         if(null == card){
             ModelUtil.throwException(ERRORCODE.VIP_CARD_NOT_INVALID);
@@ -252,5 +283,96 @@ public class VipController extends ZGKBaseController implements Watched {
     public void init(){
         addWatcher(watcher);
     }
+    @RequestMapping(value = "/getUserVipInfo")
+    @ResponseBody
+    public Object getUserVipInfo(){
+        String userId = this.getAccoutId();
+        Map<String,Object> rtnMap = new HashedMap();
+        //获取卡的专家状态
+        List<Map<String,Object>> vipServiceNames = cardExService.getUserVipServiceName(userId);
+        Collections.sort(vipServiceNames,comparator);
+        //判断最大的是不是金榜登科 并且绑了多张卡
+        Map<String,Object> lastCard = vipServiceNames.get(vipServiceNames.size()-1);
+        if (Integer.valueOf(lastCard.get("type").toString()) == 1 && vipServiceNames.size()>1){
+            Map<String,Object> serviceCard = vipServiceNames.get(vipServiceNames.size()-2);
+            Map<String,Object> paramMap = new HashedMap();
+            paramMap.put("productId",lastCard.get("type"));
+            paramMap.put("areaId", getAreaId());
+            paramMap.put("status",UserVipConstant.DEFULT_STATUS);
+            //是金榜登科的话取得卡status为1的所有
+            List<Map<String,Object>> cardServices1 = cardExService.getCardService(paramMap);
+            if (cardServices1.size()==0){
+                paramMap.put("areaId",UserVipConstant.DEFULT_AREA_ID);
+                cardServices1 = cardExService.getCardService(paramMap);
+            }
+            paramMap = new HashedMap();
+            paramMap.put("productId",serviceCard.get("type"));
+            paramMap.put("areaId", getAreaId());
+            paramMap.put("status",UserVipConstant.DEFULT_STATUS);
+            //是金榜登科的话取得卡status为1的所有
+            List<Map<String,Object>> cardServices = cardExService.getCardService(paramMap);
+            if (cardServices.size()==0){
+                paramMap.put("areaId",UserVipConstant.DEFULT_AREA_ID);
+                cardServices = cardExService.getCardService(paramMap);
+            }
+            //取两张卡不重叠项
+            cardServices.removeAll(cardServices1);
+            StringBuffer buffer = new StringBuffer();
+            if (cardServices.size()>0) {
+                for (Map<String, Object> map : cardServices)
+                    buffer.append(map.get("serviceType")).append("、");
+                if (buffer.length() > 0)
+                    buffer.delete(buffer.length() - 1, buffer.length());
+                rtnMap.put("diffService",buffer.toString());
+                rtnMap.put("diffServiceTime",getLastActiveDate(Long.valueOf(serviceCard.get("activeDate").toString())));
+            }
+        }
 
+        if (vipServiceNames.size()>0){
+            StringBuffer buffer = new StringBuffer();
+            for (Map<String,Object> map : vipServiceNames)
+                buffer.append(map.get("productName")).append("、");
+            if (buffer.length()>0)
+                buffer.delete(buffer.length()-1,buffer.length());
+            rtnMap.put("cardNames",buffer.toString());
+            //卡到期时间
+            Map<String,Object> paramMap = Maps.newHashMap();
+            paramMap.put("userId",userId);
+            UserVip userVip = (UserVip)userVipService.queryOne(paramMap);
+
+            rtnMap.put("cardTime",format.format(new Date(userVip.getEndDate())));
+
+            List<Map<String,Object>> vipServices = cardExService.getUserVipService(userId);
+            //判断所拥有的VIP卡类型(另一个维度)
+            rtnMap.put("cardType",vipServices.size()>0?UserVipConstant.EXPERT_VIP_STATUS: UserVipConstant.DEFULT_VIP_STATUS);
+            rtnMap.put("expertService", new ArrayList<>());
+            //获取卡的专家状态
+            if (vipServices.size()>0) {
+                //是专家
+                //统计该用户专家卡所拥有的服务和次数
+                rtnMap.put("expertService", vipServices);
+                //end
+            }
+            //不是专家卡
+            //end
+        }else {
+            throw new BizException(ERRORCODE.NO_VIP.getCode(), ERRORCODE.NO_VIP.getMessage());
+        }
+        return rtnMap;
+    }
+
+    public static String getLastActiveDate(Long time){
+
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(time);
+        c.add(Calendar.YEAR, 3);
+        c.set(Calendar.MONTH, 8);
+        c.set(Calendar.DAY_OF_MONTH, 1);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND,0);
+
+        return format.format(c.getTime());
+    }
 }
