@@ -17,7 +17,14 @@ public class ProductPojo implements Serializable{
     private String cardOfficial;
     private String icon;
 
-    
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
     private List<ExpertProductService> expertProductServiceList;
 
     public String getCardBusinessType() {
