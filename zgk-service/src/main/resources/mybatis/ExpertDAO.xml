@@ -726,12 +726,12 @@
         inner join
         (select DISTINCT eps.productId from zgk_expert_product_service eps
         where areaId=#{areaId}
-        and pp.state=0
         <if test="specialitys!=null">
             and eps.serviceId in (${specialitys})
         </if>
         ) tmp on pp.id = tmp.productId
-        ORDER BY pp.price ASC
+        where pp.state=0
+        ORDER BY pp.defaultSalePrice ASC
         <if test="offset!=null">
             limit ${offset}, ${rows}
         </if>
