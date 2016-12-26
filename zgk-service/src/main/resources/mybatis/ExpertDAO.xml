@@ -721,11 +721,12 @@
     </insert>
 
     <select id="selectProductByServiceIdAndAreaId" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ProductPojo">
-        select pp.id as productId,pp.name as productName,pp.price as price
-        from zgk_product pp
+        select pp.id as productId,pp.productName as productName,pp.defaultSalePrice as price,cardBusinessType as cardBusinessType,cardOfficial as cardOfficial
+        from zgk2.zgk_sale_product pp
         inner join
         (select DISTINCT eps.productId from zgk_expert_product_service eps
         where areaId=#{areaId}
+        and pp.state=0
         <if test="specialitys!=null">
             and eps.serviceId in (${specialitys})
         </if>
