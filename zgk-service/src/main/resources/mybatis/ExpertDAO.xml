@@ -721,7 +721,7 @@
     </insert>
 
     <select id="selectProductByServiceIdAndAreaId" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ProductPojo">
-        select pp.id as productId,pp.productName as productName,pp.defaultSalePrice as price,cardBusinessType as cardBusinessType,cardOfficial as cardOfficial
+        select pp.id as productId,pp.productName as productName,pp.defaultSalePrice as price,cardBusinessType as cardBusinessType,cardOfficial as cardOfficial,icon as icon
         from zgk2.zgk_sale_product pp
         inner join
         (select DISTINCT eps.productId from zgk_expert_product_service eps

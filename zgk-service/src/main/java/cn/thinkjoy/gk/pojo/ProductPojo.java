@@ -15,6 +15,9 @@ public class ProductPojo implements Serializable{
     private String price;
     private String cardBusinessType;
     private String cardOfficial;
+    private String icon;
+
+    
     private List<ExpertProductService> expertProductServiceList;
 
     public String getCardBusinessType() {
