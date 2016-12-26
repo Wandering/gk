@@ -5,6 +5,7 @@ import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.gk.common.Constants;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.controller.ProductController;
 import cn.thinkjoy.gk.domain.*;
 import cn.thinkjoy.gk.entity.*;
 import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
@@ -46,6 +47,9 @@ public class ExpertController extends ZGKBaseController
     //专家申请service
     @Autowired
     private IExpertApplyService expertApplyService;
+
+    @Autowired
+    private ProductController productController;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExpertController.class);
 
@@ -294,18 +298,17 @@ public class ExpertController extends ZGKBaseController
      */
     @RequestMapping("checkProduct")
     @ResponseBody
-    public Map<String, Object> checkProduct(@RequestParam(value = "commonQuestionIdList") String commonQuestionIdList,
+    public Object checkProduct(@RequestParam(value = "commonQuestionIdList") String commonQuestionIdList,
         @RequestParam(value = "userId") String userId,
         @RequestParam(value = "note", required = false) String note,
         @RequestParam(value = "areaId", required = false) String areaId,
         @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
         @RequestParam(value = "rows", required = false, defaultValue = "1") String rows)
     {
-        ProductPojo product =
+        String productId =
             expertService.checkProduct(commonQuestionIdList, offset, rows, userId, note, areaId);
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("product", product);
-        return resultMap;
+        return productController.queryCardServiceByProductId(Integer.valueOf(productId));
     }
 
     /**

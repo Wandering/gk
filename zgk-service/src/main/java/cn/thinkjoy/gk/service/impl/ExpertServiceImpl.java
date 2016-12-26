@@ -122,7 +122,7 @@ public class ExpertServiceImpl implements IExpertService
 
 
     @Override
-    public ProductPojo checkProduct(String commonQuestionIdString,String offset,String rows,String userId,String note,String areaId){
+    public String checkProduct(String commonQuestionIdString,String offset,String rows,String userId,String note,String areaId){
         Map<String,Object> map=new HashMap<>();
         map.put("userId",userId);
         map.put("commonQuestionIdString",commonQuestionIdString);
@@ -142,9 +142,7 @@ public class ExpertServiceImpl implements IExpertService
             if(StringUtils.isNotEmpty(specialitys.substring(1))){
                 map1.put("specialitys",specialitys.substring(1));
                 ProductPojo product=dao.selectProductByServiceIdAndAreaId(map1);
-                map1.put("productId",product.getProductId());
-                product.setExpertProductServiceList(iExpertProductServiceExDAO.selectServiceByProductId(map1));
-                return product;
+                return product.getProductId();
             }
             else {
                 //模糊匹配关键词
@@ -159,15 +157,11 @@ public class ExpertServiceImpl implements IExpertService
                 if(StringUtils.isNotBlank(specialitys)) {
                     map1.put("specialitys", specialitys.substring(1));
                     ProductPojo product=dao.selectProductByServiceIdAndAreaId(map1);
-                    map1.put("productId",product.getProductId());
-                    product.setExpertProductServiceList(iExpertProductServiceExDAO.selectServiceByProductId(map1));
-                    return product;
+                    return product.getProductId();
                 }else {
                     //无匹配，返回涉及邻域最多专家
                     ProductPojo product=dao.selectProductByServiceIdAndAreaId(map1);
-                    map1.put("productId",product.getProductId());
-                    product.setExpertProductServiceList(iExpertProductServiceExDAO.selectServiceByProductId(map1));
-                    return product;
+                    return product.getProductId();
                 }
             }
         }
