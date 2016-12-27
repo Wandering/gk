@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IScoreUserRecordExDAO">
+<!--
+insert
+update
+updateNull
+deleteById
+deleteByCondition
+deleteByProperty
+fetch
+findOne
+findList
+findAll
+queryPage
+like
+queryList
+queryOne
+count
+selectMaxId
+updateOrSave
+selectOne
+selectList
+-->
+    <sql id="Base_Column_List">
+        id as id,
+        userId as userId,
+        type as type,
+        universityId as universityId,
+        areaId as areaId,
+        year as year,
+        total as total,
+        majorName as majorName,
+        majorType as majorType,
+        scoreRowId as scoreRowId
+    </sql>
+    <insert id="insertList">
+        INSERT INTO zgk_score_user_record (
+        userId,
+        type,
+        universityId,
+        areaId,
+        year,
+        total,
+        majorName,
+        majorType,
+        scoreRowId
+        ) VALUES
+        <foreach collection="list" item="item" separator=",">
+        (
+        #{item.userId},
+        #{item.type},
+        #{item.universityId},
+        #{item.areaId},
+        #{item.year},
+        #{item.total},
+        #{item.majorName},
+        #{item.majorType},
+        #{item.scoreRowId}
+        )
+        </foreach>
+    </insert>
+
+    <select id="count">
+        SELECT COUNT (DISTINCT ${map.columnName})
+        <where>
+            <foreach collection="map.queryList" item="queryDomain" separator=" and ">
+                <if test="queryDomain.queryKey != null">
+                    ${queryDomain.queryKey} = #{queryDomain.queryValue}
+                </if>
+            </foreach>
+        </where>
+    </select>
+</mapper>
+
