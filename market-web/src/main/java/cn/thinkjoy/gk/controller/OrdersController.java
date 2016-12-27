@@ -25,6 +25,7 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.common.StringUtils;
 import com.pingplusplus.Pingpp;
 import com.pingplusplus.model.Charge;
 import org.apache.commons.collections.map.HashedMap;
@@ -199,7 +200,13 @@ public class OrdersController extends ZGKBaseController {
     @RequestMapping(value = "aliOrderPay")
     @ResponseBody
     public Charge aliOrder(@RequestParam(value = "orderNo", required = true) String orderNo,
-                           @RequestParam(value = "token", required = true) String token){
+                           @RequestParam(value = "token", required = true) String token,
+                            @RequestParam(value = "channel", required = false) String channel){
+        String payChannel = "alipay_pc_direct";
+        if(org.apache.commons.lang3.StringUtils.isNoneEmpty(channel))
+        {
+            payChannel = channel;
+        }
         UserAccountPojo userAccountPojo = getUserAccountPojo();
         if (userAccountPojo == null) {
             throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
@@ -208,7 +215,7 @@ public class OrdersController extends ZGKBaseController {
         String price = new BigDecimal(order.getProductPrice()).
                 multiply(new BigDecimal(100)).setScale(0 , BigDecimal.ROUND_HALF_EVEN).toString();
         Map<String,String> paramMap = new HashMap<>();
-        paramMap.put("channel", "alipay_pc_direct");
+        paramMap.put("channel", payChannel);
         paramMap.put("orderNo", orderNo);
         paramMap.put("token", token);
         paramMap.put("amount", price);
@@ -319,7 +326,7 @@ public class OrdersController extends ZGKBaseController {
         return salePrice;
     }
 
-    private Charge getCharge(Map<String,String> paramMap) throws Exception {
+    private Charge getCharge(Map<String, String> paramMap) throws Exception {
         Pingpp.apiKey = DynConfigClientFactory.getClient().getConfig("common", "apiKey");
         String appid = DynConfigClientFactory.getClient().getConfig("common", "appId");
         String aliReturnUrl = DynConfigClientFactory.getClient().getConfig("common", "aliReturnUrl");
@@ -344,7 +351,7 @@ public class OrdersController extends ZGKBaseController {
         chargeParams.put("currency", "cny");
         if ("alipay_pc_direct".equals(channel)) {
             Map<String, Object> extraMap = new HashMap<>();
-            extraMap.put("success_url", aliReturnUrl+"?token="+paramMap.get("token"));
+            extraMap.put("success_url", aliReturnUrl+"?token=" + paramMap.get("token"));
             chargeParams.put("extra", extraMap);
         } else if ("wx_pub_qr".equals(channel)) {
             Map<String, Object> extraMap = new HashMap<>();

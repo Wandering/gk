@@ -40,7 +40,7 @@ startScripts {
 }
 
 buildscript{
-    repositories { maven { url 'http://repo.thinkjoy.cn/content/groups/public/' } }
+    repositories { maven { url 'http://repo.qtonecloud.cn/content/groups/public/' } }
 
     dependencies{
         classpath 'cn.thinkjoy.gradle.plugins:gradle-gitflow-plugin:1.0.1+'
@@ -67,7 +67,7 @@ allprojects {
     }
     repositories {
         mavenLocal()
-        repositories { maven { url 'http://repo.thinkjoy.cn/content/groups/public/' } }
+        repositories { maven { url 'http://repo.qtonecloud.cn/content/groups/public/' } }
         mavenCentral()
     }
 
@@ -79,7 +79,7 @@ allprojects {
         repositories {
             maven {
                 name = 'thinkjoy'
-                url "http://repo.thinkjoy.cn/content/repositories/${project.version.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases'}"
+                url "http://repo.qtonecloud.cn/content/repositories/${project.version.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases'}"
             }
         }
     }
