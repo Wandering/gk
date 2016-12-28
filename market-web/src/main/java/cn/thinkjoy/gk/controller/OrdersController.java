@@ -224,6 +224,7 @@ public class OrdersController extends ZGKBaseController {
         try {
             charge = getCharge(paramMap);
         } catch (Exception e) {
+            LOGGER.info(e.getMessage());
             throw new BizException(ERRORCODE.FAIL.getCode(), e.getMessage());
         }
         return charge;

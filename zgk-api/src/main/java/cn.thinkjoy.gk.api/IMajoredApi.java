@@ -21,4 +21,8 @@ public interface IMajoredApi {
 
     Map<String,Object> getJobOrientation(int majorId);
 
+    Map getMajoredInfoByCode(String majorCode);
+
+    List getMajoredByName(String majoredName,String type);
+
 }

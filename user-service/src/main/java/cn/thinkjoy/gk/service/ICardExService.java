@@ -29,4 +29,20 @@ public interface ICardExService{
     List<Integer> getServiceByUserId(Long userId);
 
     Integer getServiceByUserIdAndExpertId(Long userId,Integer expertId);
+
+    /**
+     * 获取用户服务
+     * @param productId
+     * @param areaId
+     * @return
+     */
+    public List<Map<String,Object>> getVipService(Integer productId,Long areaId);
+
+    /**
+     * 用户服务统计
+     * @param productId
+     * @param areaId
+     * @return
+     */
+    public Integer getVipServiceCount(Integer productId,Long areaId);
 }

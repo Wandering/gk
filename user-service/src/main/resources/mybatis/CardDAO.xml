@@ -500,9 +500,6 @@ selectList
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
-        <if test="orderBy!=null">
-            ORDER BY ${orderBy} ${sortBy}
-        </if>
     </select>
 
     <select id="findOne" parameterType="java.util.Map" resultType="Card">
@@ -954,6 +951,11 @@ selectList
     <!--根据专家和用户-->
     <select id="getServiceByUserIdAndExpertId" resultType="java.lang.Integer">
         SELECT COUNT(*) from zgk_expert_reservation_order_detail where user_id = #{userId} and expert_id = #{expertId} AND status in (1,2)
+    </select>
+
+    <!--getProductServiceCount-->
+    <select id="getProductServiceCount" resultType="java.lang.Integer">
+        SELECT count(*) from zgk_expert_product_service where productId=#{productId} and areaId=#{areaId} and serviceId is not NULL
     </select>
 </mapper>
 

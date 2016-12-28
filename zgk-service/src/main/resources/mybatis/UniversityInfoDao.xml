@@ -498,31 +498,43 @@
     </select>
 
     <select id="getBatchByYearAndArea" resultType="java.util.Map">
+        SELECT
+            b.*
+        FROM
+            (
+                SELECT
+                    DISTINCT universityId,
+                    batch
+                FROM
+                    zgk_university_enrolling enrolling
+                WHERE
+                    areaid = #{currAreaId}
+                    <if test="year != null and year != ''">
+                      and  YEAR = #{year}
+                    </if>
+            ) a
+        INNER JOIN (
             SELECT
-	b.*
-FROM
-	(
-		SELECT
-			universityId,batch
-		FROM
-			zgk_university_enrolling enrolling WHERE year = #{year}
-		AND areaid = #{currAreaId}
-	) a
-INNER JOIN (SELECT id FROM zgk_university WHERE areaid=#{areaId}) university ON a.universityId=university.id
-		,
-	(
-		SELECT
-			name,
-			dictid
-		FROM
-			zgk_data_dict
-		WHERE
-			type = 'BATCHTYPE2'
-	) b
-WHERE
-a.batch = b.dictid
-GROUP BY
-	batch
+                id
+            FROM
+                zgk_university
+            <if test="areaId != null and areaId != '-1'">
+                WHERE areaid = #{areaId}
+            </if>
+        ) university ON a.universityId = university.id,
+         (
+            SELECT
+                name,
+                dictid
+            FROM
+                zgk_data_dict
+            WHERE
+                type = 'BATCHTYPE2'
+        ) b
+        WHERE
+            a.batch = b.dictid
+        GROUP BY
+            batch
     </select>
 
 
@@ -624,7 +636,17 @@ GROUP BY
         FROM
             zgk_university_enrolling
         WHERE
-            areaId = #{provinceId}
+            areaId = #{currentProId}
+        <if test="schoolProId != -1">
+            AND universityId IN (
+                SELECT
+                    id
+                FROM
+                    zgk_university
+                WHERE
+                    areaId = #{schoolProId}
+            )
+        </if>
         GROUP BY
             `year`
     </select>

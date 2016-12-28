@@ -203,6 +203,7 @@ public class AdviceCourseController {
             total = total + 1;
         }
         BizData4Page bizData4Page = new BizData4Page();
+        page = page<=0?1:page;
         //如果当前页大于最大页取最大页数对应的值
         int start = page<total?(page - 1) * rows:records-mod;
         //判断结束值如果大于数组长度,取当前位置到数组最大长度

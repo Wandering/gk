@@ -159,6 +159,6 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
 
     List<Long> selectUnivInfoIdInBatch(Map<String, Object> condition);
 
-    List<String> getEnrollingYearsByProvinceId(long provinceId);
+    List<String> getEnrollingYearsByProvinceId(long currentProId,long schoolProId);
 
 }

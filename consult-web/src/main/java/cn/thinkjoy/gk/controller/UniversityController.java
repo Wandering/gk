@@ -873,7 +873,7 @@ public class UniversityController extends ZGKBaseController {
                                                         @RequestParam(value = "category") String category,
                                                         @RequestParam String userKey) {
         if (provinceId == null){
-            provinceId=getAreaId();
+            provinceId = getAreaId();
         }
         return universityExService.initSerachCondition(provinceId,category);
     }
@@ -890,6 +890,10 @@ public class UniversityController extends ZGKBaseController {
                                                     @RequestParam(value = "category") String category,
                                                     @RequestParam(value = "pageNo") Integer pageNo,
                                                     @RequestParam(value = "pageSize") Integer pageSize) {
+
+        if (userProvinceId == null){
+            userProvinceId = getAreaId();
+        }
 
         List<SpecialMajorDto> dtos = universityExService.searchSpecialMajorInfo(
                 schoolName,

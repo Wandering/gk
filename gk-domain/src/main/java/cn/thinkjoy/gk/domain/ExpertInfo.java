@@ -2,20 +2,22 @@
  * Copyright (c) 2013-2014, thinkjoy Inc. All Rights Reserved.
  *
  * Project Name: gaokao360
- * $Id:  ExpertInfo.java 2016-10-19 15:14:27 $
+ * $Id:  ExpertInfo.java 2016-11-16 15:50:20 $
  */
 
 
 
 package cn.thinkjoy.gk.domain;
 
-import cn.thinkjoy.common.domain.BaseDomain;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import cn.thinkjoy.common.domain.BaseDomain;
 
-public class ExpertInfo extends BaseDomain {
+import java.util.*;
+
+public class ExpertInfo extends BaseDomain<Long>{
     private String expertName;
     private String expertPhotoUrl;
     private String expertIntro;
@@ -25,11 +27,17 @@ public class ExpertInfo extends BaseDomain {
     private String expertDomain;
     private String expertProfile;
     private String bestExpert;
+    private String qualification;
+    private String famousTeacher;
     private String isChecked;
     private Long createDate;
+    private Integer preAppointDays;
+    private String password;
+    private String qq;
+    private String weixin;
 
-	public ExpertInfo(){
-	}
+    public ExpertInfo(){
+    }
     public void setExpertName(String value) {
         this.expertName = value;
     }
@@ -65,15 +73,13 @@ public class ExpertInfo extends BaseDomain {
     public Integer getServerCases() {
         return this.serverCases;
     }
+    public void setAreaId(Long value) {
+        this.areaId = value;
+    }
 
     public Long getAreaId() {
-        return areaId;
+        return this.areaId;
     }
-
-    public void setAreaId(Long areaId) {
-        this.areaId = areaId;
-    }
-
     public void setExpertDomain(String value) {
         this.expertDomain = value;
     }
@@ -95,6 +101,20 @@ public class ExpertInfo extends BaseDomain {
     public String getBestExpert() {
         return this.bestExpert;
     }
+    public void setQualification(String value) {
+        this.qualification = value;
+    }
+
+    public String getQualification() {
+        return this.qualification;
+    }
+    public void setFamousTeacher(String value) {
+        this.famousTeacher = value;
+    }
+
+    public String getFamousTeacher() {
+        return this.famousTeacher;
+    }
     public void setIsChecked(String value) {
         this.isChecked = value;
     }
@@ -109,37 +129,71 @@ public class ExpertInfo extends BaseDomain {
     public Long getCreateDate() {
         return this.createDate;
     }
+    public void setPreAppointDays(Integer value) {
+        this.preAppointDays = value;
+    }
 
-	public String toString() {
-		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-			.append("Id",getId())
-			.append("ExpertName",getExpertName())
-			.append("ExpertPhotoUrl",getExpertPhotoUrl())
-			.append("ExpertIntro",getExpertIntro())
-			.append("ExpertPhone",getExpertPhone())
-			.append("ServerCases",getServerCases())
-			.append("AreaId",getAreaId())
-			.append("ExpertDomain",getExpertDomain())
-			.append("ExpertProfile",getExpertProfile())
-			.append("BestExpert",getBestExpert())
-			.append("IsChecked",getIsChecked())
-			.append("CreateDate",getCreateDate())
-			.toString();
-	}
+    public Integer getPreAppointDays() {
+        return this.preAppointDays;
+    }
+    public void setPassword(String value) {
+        this.password = value;
+    }
 
-	public int hashCode() {
-		return new HashCodeBuilder()
-			.append(getId())
-			.toHashCode();
-	}
+    public String getPassword() {
+        return this.password;
+    }
+    public void setQq(String value) {
+        this.qq = value;
+    }
 
-	public boolean equals(Object obj) {
-		if(obj instanceof ExpertInfo == false) return false;
-		if(this == obj) return true;
-		ExpertInfo other = (ExpertInfo)obj;
-		return new EqualsBuilder()
-			.append(getId(),other.getId())
-			.isEquals();
-	}
+    public String getQq() {
+        return this.qq;
+    }
+    public void setWeixin(String value) {
+        this.weixin = value;
+    }
+
+    public String getWeixin() {
+        return this.weixin;
+    }
+
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+                .append("Id",getId())
+                .append("ExpertName",getExpertName())
+                .append("ExpertPhotoUrl",getExpertPhotoUrl())
+                .append("ExpertIntro",getExpertIntro())
+                .append("ExpertPhone",getExpertPhone())
+                .append("ServerCases",getServerCases())
+                .append("AreaId",getAreaId())
+                .append("ExpertDomain",getExpertDomain())
+                .append("ExpertProfile",getExpertProfile())
+                .append("BestExpert",getBestExpert())
+                .append("Qualification",getQualification())
+                .append("FamousTeacher",getFamousTeacher())
+                .append("IsChecked",getIsChecked())
+                .append("CreateDate",getCreateDate())
+                .append("PreAppointDays",getPreAppointDays())
+                .append("Password",getPassword())
+                .append("Qq",getQq())
+                .append("Weixin",getWeixin())
+                .toString();
+    }
+
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getId())
+                .toHashCode();
+    }
+
+    public boolean equals(Object obj) {
+        if(obj instanceof ExpertInfo == false) return false;
+        if(this == obj) return true;
+        ExpertInfo other = (ExpertInfo)obj;
+        return new EqualsBuilder()
+                .append(getId(),other.getId())
+                .isEquals();
+    }
 }
 

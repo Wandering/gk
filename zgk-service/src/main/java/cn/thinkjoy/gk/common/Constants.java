@@ -53,4 +53,36 @@ public class Constants {
      * blank
      */
     public static final String EXPERT_ORDER_BLANK = " ";
+
+    /**
+     *时间不可用
+     */
+    public static final int EXPERT_TIME_N = 2;
+    /**
+     *时间可用
+     */
+    public static final int EXPERT_TIME_Y= 1;
+
+
+    /******************  专家视频一对一相关常量  start  *****************/
+
+    public static final String APP_KEY = "7620d1e00a3d45d2866f66c1178d1641";
+    public static final String APP_SERCERT = "6e5c827dd8974b3babffe8bde0300de9";
+
+    /**
+     * 创建频道地址
+     */
+    public static final String CREATE_CHANNEL_URL = "https://vcloud.163.com/app/channel/create";
+
+    /**
+     * 删除频道地址
+     */
+    public static final String DELETE_CHANNEL_URL = "https://vcloud.163.com/app/channel/delete";
+
+    /**
+     * 获取频道状态地址
+     */
+    public static final String GET_CHANNEL_STATE_URL = "https://vcloud.163.com/app/channelstats";
+
+    /******************  专家视频一对一相关常量  end  *****************/
 }

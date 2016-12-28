@@ -1,12 +1,12 @@
 package cn.thinkjoy.gk.controller.api.base;
 
+import cn.thinkjoy.common.domain.view.BizData4Page;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.common.service.IBaseService;
 import cn.thinkjoy.common.utils.SqlOrderEnum;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
-import cn.thinkjoy.zgk.domain.BizData4Page;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 

@@ -42,4 +42,14 @@ public class MajoredApiImpl implements IMajoredApi {
     public Map<String, Object> getJobOrientation(int majorId) {
         return majoredService.getJobOrientation(majorId);
     }
+
+    @Override
+    public Map getMajoredInfoByCode(String majorCode) {
+        return majoredService.getMajoredInfoById(majorCode);
+    }
+
+    @Override
+    public List getMajoredByName(String majoredName, String type) {
+        return majoredService.getMajoredByName(majoredName,type);
+    }
 }

@@ -32,10 +32,9 @@
         from zgk_expert_info ei
         left join zgk_expert_service_relation esr on ei.id=esr.expert_id
         left join zgk_expert_config ec on ec.config_key=esr.service_type_id and ec.config_domain='serviceType'
-        left join zgk_expert_appraise ea on ea.expert_id=ei.id
+        left join zgk_expert_appraise ea on ea.expert_id=ei.id and ea.is_checked=1
         left join zgk_expert_cases ec2 on ec2.expert_id=ei.id
         where ei.is_checked=1
-        and ea.is_checked=1
         group by ei.id
         order by rate desc
         limit ${offset}, ${rows}
@@ -158,7 +157,8 @@
         ea.is_checked as isChecked,
         ea.create_date as createDate,
         ei.expert_name as expertName,
-        ec.config_value as serverTypeName
+        ec.config_value as serverTypeName,
+        ea.rate as rate
         from zgk_expert_appraise ea
         left join zgk_expert_info ei on ei.id=ea.expert_id
         left join zgk_expert_config ec on ec.config_domain='serviceType' and ec.config_key=ea.server_type
@@ -542,7 +542,7 @@
         (
         (select ei.id from zgk_expert_info ei where ei.expert_name=#{expertName}),
         #{userName},
-        (select ec.config_key from zgk_expert_config ec where evc.config_value=#{serviceType}),
+        (select ec.config_key from zgk_expert_config ec where ec.config_value=#{serviceType}),
         #{rate},
         #{userComments}
         )
@@ -578,13 +578,13 @@
             service_day AS serviceDay,
             is_available AS isAvailable
         FROM
-            zgk_expert_service_days?
+            zgk_expert_service_days
         WHERE
             expert_id = #{expertId}
-        AND service_day > date_sub(curdate(), INTERVAL -#{preDay} DAY)
+        AND service_day > date_sub(curdate(), INTERVAL #{preDay} DAY)
         and is_available = 1
         order by service_day asc
-        limit 5
+        limit 7
     </select>
 
     <!-- 根据专家ID查询提前预约天数 -->
@@ -627,5 +627,77 @@
         where user_id=#{userId}
         GROUP BY service_item
     </select>
+
+    <!-- 根据专家Id,学生Id,频道类型查询频道信息 -->
+    <select id="getChannelByexpertIdAndStuId" parameterType="map" resultType="cn.thinkjoy.gk.entity.ExpertChannel">
+        SELECT
+            *
+        FROM
+            zgk_expert_channel
+        WHERE
+            expertId = #{expertId}
+        AND stuId = #{stuId}
+        AND type = #{type}
+        and status = 0
+        ORDER by id desc
+        limit 1
+    </select>
+
+    <!-- 根据cid查询频道 -->
+    <select id="getChannelByCid" parameterType="string" resultType="cn.thinkjoy.gk.entity.ExpertChannel">
+        SELECT
+            *
+        FROM
+            zgk_expert_channel
+        WHERE
+            cid = #{cid}
+    </select>
+
+    <!-- 根据cid修改频道状态 -->
+    <update id="updateChannelByCid">
+        UPDATE zgk_expert_channel
+        SET `status` = 1,modifyDate = #{ctime}
+        WHERE
+            cid = #{cid}
+    </update>
+
+    <!-- 插入频道信息 -->
+    <insert id="insertChannel" parameterType="cn.thinkjoy.gk.entity.ExpertChannel">
+        INSERT INTO zgk_expert_channel(
+            STATUS,
+            createDate,
+            modifyDate,
+            expertId,
+            stuId,
+            type,
+            cid,
+            ctime,
+            NAME,
+            pushUrl,
+            httpPullUrl,
+            hlsPullUrl,
+            rtmpPullUrl,
+            CODE,
+            msg
+        )
+        VALUE
+            (
+                #{status},
+                #{createDate},
+                #{modifyDate},
+                #{expertId},
+                #{stuId},
+                #{type},
+                #{cid},
+                #{ctime},
+                #{name},
+                #{pushUrl},
+                #{httpPullUrl},
+                #{hlsPullUrl},
+                #{rtmpPullUrl},
+                #{code},
+                #{msg}
+            )
+    </insert>
 </mapper>
 

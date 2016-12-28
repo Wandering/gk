@@ -31,11 +31,12 @@
 
     <select id="selectEduLevelByUniversityId" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.EduLevelNumberPojo">
         select eduLevel,count(eduLevel) as number,dd.name as eduLevelName
-        from (select majorType,batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        from zgk_university_major_enrolling_plan_zj tmp
         INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
         INNER join zgk_university uu on uu.id=tmp.universityId
         LEFT JOIN zgk_data_dict dd on dd.type='EDULEVEL' AND dd.dictId=zz.eduLevel
-        where zz.universityId=#{universityId}
+        where tmp.areaId=330000 and tmp.year=2016
+          and zz.universityId=#{universityId}
         GROUP BY zz.eduLevel
     </select>
 
@@ -49,7 +50,7 @@
         <if test="isLeftJoin==false">
             ,0 as isFavorite
         </if>
-        from (select majorType,batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        from zgk_university_major_enrolling_plan_zj tmp
         INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
         INNER join zgk_university uu on uu.id=tmp.universityId
         <!--判断是否加入收藏表-->
@@ -59,7 +60,8 @@
         <if test="isInnerJoin==true">
             <include refid="MAJOR_JOIN_INNER"/>
         </if>
-        WHERE uu.id=#{universityId}
+        WHERE tmp.areaId=330000 and tmp.year=2016
+          and uu.id=#{universityId}
         <if test="offset">
         limit ${offset},${rows}
         </if>
@@ -67,7 +69,7 @@
 
     <select id="selectMajorListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
         select count(uu.id)
-        from (select majorType,batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        from zgk_university_major_enrolling_plan_zj tmp
         INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
         INNER join zgk_university uu on uu.id=tmp.universityId
         <!--判断是否加入收藏表-->
@@ -77,7 +79,8 @@
         <if test="isInnerJoin==true">
             <include refid="MAJOR_JOIN_INNER"/>
         </if>
-        WHERE uu.id=#{universityId}
+        WHERE tmp.areaId=330000 and tmp.year=2016
+        and uu.id=#{universityId}
     </select>
 </mapper>
 

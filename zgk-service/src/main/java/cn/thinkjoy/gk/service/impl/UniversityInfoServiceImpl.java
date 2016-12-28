@@ -541,7 +541,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     }
 
     @Override
-    public List<String> getEnrollingYearsByProvinceId(long provinceId) {
-        return iUniversityInfoDao.getEnrollingYearsByProvinceId(provinceId);
+    public List<String> getEnrollingYearsByProvinceId(long currentProId,long schoolProId) {
+        return iUniversityInfoDao.getEnrollingYearsByProvinceId(currentProId,schoolProId);
     }
 }

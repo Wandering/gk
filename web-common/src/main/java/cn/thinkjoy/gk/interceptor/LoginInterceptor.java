@@ -56,25 +56,29 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		if (!ServletPathConst.MAPPING_URLS.contains(url)) {
 			return true;
 		}
-
-		if (StringUtils.isEmpty(value)|| StringUtils.isEmpty(loginToken) || !redisFlag) {
-			if (reqType != null && reqType.equals("ajax")) {
-
-				/**************后期优化**************/
-				response.setCharacterEncoding("UTF-8");
-				try {
-					ServletOutputStream out = response.getOutputStream();
-					out.print("{\"rtnCode\":\"1000004\",\"msg\":\"请先登录后再进行操作\"}");
-					out.flush();
-					out.close();
-				} catch (IOException ex) {
-					throw new BizException("1000004", "请先登录后再进行操作");
-				}
-				/**************后期优化**************/
-
-			} else
+		//这里把用户登录和重复登录分开处理 将跨域处理提到loginInterceptor之前处理,解决无返回的问题
+		if (StringUtils.isEmpty(value) || !redisFlag) {
+//			if (reqType != null && reqType.equals("ajax")) {
+//
+//				/**************后期优化**************/
+//				response.setCharacterEncoding("UTF-8");
+//				try {
+//					ServletOutputStream out = response.getOutputStream();
+//					out.print("{\"rtnCode\":\"1000004\",\"msg\":\"请先登录后再进行操作\"}");
+//					out.flush();
+//					out.close();
+//				} catch (IOException ex) {
+//					throw new BizException("1000004", "请先登录后再进行操作");
+//				}
+//				/**************后期优化**************/
+//
+//			} else
 				throw new BizException("1000004", "请先登录后再进行操作");
 
+		}
+
+		if (StringUtils.isEmpty(loginToken)){
+			isValideLogin(response,reqType);
 		}
 		String loginKey = UserRedisConst.USER_LOGIN_KEY + value;
 		boolean flag = RedisUtil.getInstance().exists(loginKey);
@@ -94,24 +98,24 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 	private void isValideLogin(HttpServletResponse response, String reqType)
 	{
-		if (reqType != null && reqType.equals("ajax"))
-		{
-			response.setCharacterEncoding("UTF-8");
-			try
-			{
-				ServletOutputStream out = response.getOutputStream();
-				out.flush();
-				out.print("登录人数超过限制,只能一个用户登录！");
-				out.flush();
-				out.close();
-			}
-			catch (IOException ex)
-			{
-				throw new BizException("1000110", "登录人数超过限制,只能一个用户登录！");
-			}
+//		if (reqType != null && reqType.equals("ajax"))
+//		{
+//			response.setCharacterEncoding("UTF-8");
+//			try
+//			{
+//				ServletOutputStream out = response.getOutputStream();
+//				out.flush();
+//				out.print("登录人数超过限制,只能一个用户登录！");
+//				out.flush();
+//				out.close();
+//			}
+//			catch (IOException ex)
+//			{
+//				throw new BizException("1000110", "登录人数超过限制,只能一个用户登录！");
+//			}
 
-		}
-		else
+//		}
+//		else
 			throw new BizException("1000110", "登录人数超过限制,只能一个用户登录！");
 	}
 

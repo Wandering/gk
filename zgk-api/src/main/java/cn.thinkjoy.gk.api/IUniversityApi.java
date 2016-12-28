@@ -1,5 +1,8 @@
 package cn.thinkjoy.gk.api;
 
+import cn.thinkjoy.common.domain.view.BizData4Page;
+import cn.thinkjoy.gk.domain.GkAdmissionLine;
+
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +29,7 @@ public interface IUniversityApi {
     List getDataDictList(String type);
 
 
-    List<String> getEnrollingYearsByProvinceId(long provinceId);
+    List<String> getEnrollingYearsByProvinceId(long currentProId,long schoolProId);
 
     /**
      * 专业招生信息查询条件
@@ -35,4 +38,8 @@ public interface IUniversityApi {
      */
     List<Map<String, Object>> getMajorPlanConditions(Map<String, String> map);
 
+
+    BizData4Page<GkAdmissionLine> getAdmissionLineList(Map<String,Object> map, Integer page, Integer rows);
+
+    List getUniversityMajorEnrollingPlanList(Map<String, Object> condition);
 }

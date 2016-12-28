@@ -65,15 +65,9 @@ public class CardExServiceImpl implements ICardExService {
         //// TODO: 2016/11/3  3是写死的卡类型
         Integer productId=card.getProductType();
         if (productId>3){
-            /**
-             * 初始化用户服务
-             */
-            //取得卡类型对应的服务信息
-            List<Map<String,Object>> services = cardDAO.getProductService(productId,areaId);
-            if (services==null){
-                services = cardDAO.getProductService(productId,0L);
-            }
 
+            //取得卡类型对应的服务信息
+            List<Map<String,Object>> services = getVipService(productId,areaId);
             //绑定服务,卡和用户信息
             for(Map<String,Object> service:services){
                 service.put("userId",userId);
@@ -88,6 +82,29 @@ public class CardExServiceImpl implements ICardExService {
         }
         //卡号信息
         return false;
+    }
+    /**
+     * 初始化用户服务
+     */
+    @Override
+    public List<Map<String,Object>> getVipService(Integer productId,Long areaId){
+
+        //取得卡类型对应的服务信息
+        List<Map<String,Object>> services = cardDAO.getProductService(productId,areaId);
+        if (services==null||services.size()==0){
+            services = cardDAO.getProductService(productId,0L);
+        }
+        return services;
+    }
+
+    /**
+     * 初始化用户服务
+     */
+    @Override
+    public Integer getVipServiceCount(Integer productId,Long areaId){
+        //取得卡类型对应的服务信息
+        Integer count = cardDAO.getProductServiceCount(productId,areaId);
+        return count;
     }
 
     /***

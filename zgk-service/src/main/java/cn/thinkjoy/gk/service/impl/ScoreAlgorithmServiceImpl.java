@@ -7,15 +7,12 @@ import cn.thinkjoy.gk.common.ScoreUtil;
 import cn.thinkjoy.gk.common.SortUtilForList;
 import cn.thinkjoy.gk.dao.IScoreAnalysisDAO;
 import cn.thinkjoy.gk.dao.ISystemParmasDao;
-import cn.thinkjoy.gk.entity.CheckBatchMsg;
 import cn.thinkjoy.gk.entity.SystemParmas;
 import cn.thinkjoy.gk.entity.UniversityEnrollView;
 import cn.thinkjoy.gk.entity.UniversityInfoEnrolling;
 import cn.thinkjoy.gk.pojo.ReportForecastView;
-import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 import cn.thinkjoy.gk.service.*;
 import org.apache.commons.collections.map.HashedMap;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -316,7 +313,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService {
         } catch (Exception e) {
             throw new BizException("error", "当前省份" + scoreUtil.getYear() + "年分数线为空!");
         }
-        if (line1s[2] == 5) {
+        if (Integer.valueOf(line1s[2].toString()) == 5) {
             // 假如不足高职专科批次(分数超低)
 
             //推荐10所高职院校

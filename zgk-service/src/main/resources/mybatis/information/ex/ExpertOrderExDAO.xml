@@ -42,7 +42,7 @@ selectList
         ord.comments as comments,
         ord.create_date as createDate,
         ord.service_count as serviceCount,
-        config.config_value as serviceName,
+        config.serviceType as serviceName,
         info.expert_name as expertName
     </sql>
 
@@ -59,7 +59,11 @@ selectList
         <include refid="Base_Column_List" />
         FROM zgk_expert_reservation_order_detail ord
         LEFT JOIN zgk_expert_info info on ord.expert_id =info.id
-        Left join zgk_expert_config config on config.config_domain = 'serviceType' and ord.service_item = config.config_key  WHERE
+        INNER JOIN zgk_card card on ord.card_id = card.id
+        Left join zgk_expert_product_service config on config.serviceId =  ord.service_item
+        and config.productId = card.productType
+        AND config.areaId = #{areaId}
+        WHERE
         ${property} = #{value}
         <if test="orderBy!=null">
             ORDER BY ${orderBy} ${sortBy}
@@ -82,8 +86,10 @@ selectList
         <include refid="Base_Column_List" />
         FROM zgk_expert_reservation_order_detail ord
         LEFT JOIN zgk_expert_info info on ord.expert_id =info.id
-        Left join zgk_expert_config config on config.config_domain = 'serviceType' and ord.service_item = config.config_key
-
+        INNER JOIN zgk_card card on ord.card_id = card.id
+        Left join zgk_expert_product_service config on config.serviceId =  ord.service_item
+        and config.productId = card.productType
+        AND config.areaId = #{condition.areaId}
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="condition.id!=null">
                 AND ord.id = #{condition.id}
@@ -150,7 +156,10 @@ selectList
         <include refid="Base_Column_List" />
         FROM zgk_expert_reservation_order_detail ord
         LEFT JOIN zgk_expert_info info on ord.expert_id =info.id
-        Left join zgk_expert_config config on config.config_domain = 'serviceType' and ord.service_item = config.config_key
+        INNER JOIN zgk_card card on ord.card_id = card.id
+        Left join zgk_expert_product_service config on config.serviceId =  ord.service_item
+        and config.productId = card.productType
+        AND config.areaId = #{areaId}
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="condition.id!=null">
                 AND id = #{condition.id}
@@ -209,6 +218,7 @@ selectList
         </trim>
         limit 0,1
     </select>
+
 
 </mapper>
 

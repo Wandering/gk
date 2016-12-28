@@ -29,10 +29,11 @@
             from
             (
                 select selectSubject as mSize ,count(selectSubject) as number
-                from (select majorType,batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+                from zgk_university_major_enrolling_plan_zj tmp
                 INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
                 INNER join zgk_university uu on uu.id=tmp.universityId
-                where zz.majorCode=#{majorCode}
+                where tmp.areaId=330000 and tmp.year=2016 and
+                zz.majorCode=#{majorCode}
                 and zz.selectCount!=0
                 group by selectSubject
             ) a
@@ -50,17 +51,17 @@
         select dd.name as batchName,count(uu.id) as universityNumber,
         count(uu.id)/(
             select count(uu.id)
-                from (select majorType,batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+                from zgk_university_major_enrolling_plan_zj tmp
                 INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
                 INNER join zgk_university uu on uu.id=tmp.universityId
                 left join zgk_data_dict dd on dd.type='BATCHTYPE' and dd.dictId=tmp.batch
-                where zz.majorCode=#{majorCode}
+                where tmp.areaId=330000 and tmp.year=2016 and zz.majorCode=#{majorCode}
             ) as percent
-        from (select majorType,batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        from zgk_university_major_enrolling_plan_zj tmp
         INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
         INNER join zgk_university uu on uu.id=tmp.universityId
 		left join zgk_data_dict dd on dd.type='BATCHTYPE' and dd.dictId=tmp.batch
-        where zz.majorCode=#{majorCode}
+        where tmp.areaId=330000 and tmp.year=2016 and zz.majorCode=#{majorCode}
         group by dd.name;
     </select>
 
@@ -73,7 +74,7 @@
         <if test="isLeftJoin==false">
             ,0 as isFavorite
         </if>
-        from (select majorType,batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        from zgk_university_major_enrolling_plan_zj tmp
         INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
         INNER join zgk_university uu on uu.id=tmp.universityId
         <!--判断是否加入收藏表-->
@@ -83,7 +84,8 @@
         <if test="isInnerJoin==true">
             <include refid="MAJOR_JOIN_INNER"/>
         </if>
-        where zz.majorCode=#{majorCode}
+        where tmp.areaId=330000 and tmp.year=2016
+          and zz.majorCode=#{majorCode}
         <if test="province!=null">
           and uu.areaid=#{province}
         </if>
@@ -98,10 +100,11 @@
     </select>
     <select id="selectMajorListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
         select count(uu.id)
-        from (select majorType,batch,universityId,majorCode,pp.planEnrolling from zgk_university_major_enrolling_plan pp where pp.areaId=330000 and pp.year=2016 ) tmp
+        from zgk_university_major_enrolling_plan_zj tmp
         INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
         INNER join zgk_university uu on uu.id=tmp.universityId
-        where zz.majorCode=#{majorCode}
+        where tmp.areaId=330000 and tmp.year=2016
+          and zz.majorCode=#{majorCode}
         <if test="province!=null">
             and uu.areaid=#{province}
         </if>

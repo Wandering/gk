@@ -246,7 +246,7 @@ public class ExpertServiceImpl implements IExpertService
             // 默认推后30天
             preDay = 30;
         }
-        return dao.getExpertServiceDays(expertId,preDay);
+        return dao.getExpertServiceDays(expertId,-preDay);
     }
 
     @Override
@@ -262,5 +262,25 @@ public class ExpertServiceImpl implements IExpertService
     @Override
     public List<ServiceNumberPojo> selectServiceByUserId(Map<String, Object> map) {
         return dao.selectServiceByUserId(map);
+    }
+
+    @Override
+    public ExpertChannel getChannelByexpertIdAndStuId(long expertId, long stuId, int type) {
+        return dao.getChannelByexpertIdAndStuId(expertId,stuId,type);
+    }
+
+    @Override
+    public ExpertChannel getChannelByCid(String cid) {
+        return dao.getChannelByCid(cid);
+    }
+
+    @Override
+    public void updateChannelByCid(String cid) {
+        dao.updateChannelByCid(cid,System.currentTimeMillis());
+    }
+
+    @Override
+    public void insertChannel(ExpertChannel channel) {
+        dao.insertChannel(channel);
     }
 }

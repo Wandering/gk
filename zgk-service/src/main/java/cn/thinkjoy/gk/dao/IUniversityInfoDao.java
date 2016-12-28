@@ -101,10 +101,15 @@ public interface IUniversityInfoDao extends IBaseDAO<UniversityInfoView> {
     List<Long> selectUnivInfoIdInBatch(@Param("condition") Map<String, Object> condition);
 
     /**
-     * 根据省份ID查询录取年份集合
+     * 根据省份ID和学校所在省份ID查询录取年份集合
      *
-     * @param provinceId
+     * @param currentProId
+     * @param schoolProId
      * @return
      */
-    List<String> getEnrollingYearsByProvinceId(@Param("provinceId") long provinceId);
+    List<String> getEnrollingYearsByProvinceId(
+            @Param("currentProId") long currentProId,
+            @Param("schoolProId") long schoolProId
+    );
+
 }

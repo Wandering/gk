@@ -274,7 +274,7 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         Long existUserId = userAccountPojo.getId();
         UserInfo userInfo = new UserInfo();
         userInfo.setId(existUserId);
-        userInfo.setAlipayUserId(qqUserId);
+        userInfo.setQqUserId(qqUserId);
         userInfoExDAO.updateUserQQUserId(userInfo);
     }
 }

@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IExpertResourcesDAO">
+<!--
+insert
+update
+updateNull
+deleteById
+deleteByCondition
+deleteByProperty
+fetch
+findOne
+findList
+findAll
+queryPage
+like
+queryList
+queryOne
+count
+selectMaxId
+updateOrSave
+selectOne
+selectList
+-->
+    <sql id="Base_Column_List">
+        id as id,
+        res_name as resName,
+        parent_id as parentId,
+        res_url as resUrl,
+        create_date as createDate,
+        icon_url as iconUrl
+    </sql>
+    <insert id="insert" parameterType="ExpertResources">
+        INSERT INTO zgk_expert_resources (
+        res_name,
+        parent_id,
+        res_url,
+        create_date,
+        icon_url
+        ) VALUES (
+        #{resName},
+        #{parentId},
+        #{resUrl},
+        #{createDate},
+        #{iconUrl}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+        SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="ExpertResources">
+        UPDATE zgk_expert_resources
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="resName!=null">
+                res_name = #{resName},
+            </if>
+            <if test="parentId!=null">
+                parent_id = #{parentId},
+            </if>
+            <if test="resUrl!=null">
+                res_url = #{resUrl},
+            </if>
+            <if test="createDate!=null">
+                create_date = #{createDate},
+            </if>
+            <if test="iconUrl!=null">
+                icon_url = #{iconUrl},
+            </if>
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateMap">
+        UPDATE zgk_expert_resources
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.resName!=null">
+                res_name = #{map.resName},
+            </if>
+            <if test="map.parentId!=null">
+                parent_id = #{map.parentId},
+            </if>
+            <if test="map.resUrl!=null">
+                res_url = #{map.resUrl},
+            </if>
+            <if test="map.createDate!=null">
+                create_date = #{map.createDate},
+            </if>
+            <if test="map.iconUrl!=null">
+                icon_url = #{map.iconUrl},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE zgk_expert_resources
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.resName!=null">
+                res_name = #{update.resName},
+            </if>
+            <if test="update.parentId!=null">
+                parent_id = #{update.parentId},
+            </if>
+            <if test="update.resUrl!=null">
+                res_url = #{update.resUrl},
+            </if>
+            <if test="update.createDate!=null">
+                create_date = #{update.createDate},
+            </if>
+            <if test="update.iconUrl!=null">
+                icon_url = #{update.iconUrl},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.resName!=null">
+                AND res_name = #{condition.resName}
+            </if>
+            <if test="condition.parentId!=null">
+                AND parent_id = #{condition.parentId}
+            </if>
+            <if test="condition.resUrl!=null">
+                AND res_url = #{condition.resUrl}
+            </if>
+            <if test="condition.createDate!=null">
+                AND create_date = #{condition.createDate}
+            </if>
+            <if test="condition.iconUrl!=null">
+                AND icon_url = #{condition.iconUrl}
+            </if>
+        </trim>
+    </update>
+
+    <insert id="insertMap" >
+        INSERT INTO zgk_expert_resources (
+                res_name,
+                parent_id,
+                res_url,
+                create_date,
+                icon_url
+        ) VALUES (
+                    #{map.resName},
+                    #{map.parentId},
+                    #{map.resUrl},
+                    #{map.createDate},
+                    #{map.iconUrl}
+        )
+    </insert>
+
+
+    <update id="updateNull" parameterType="ExpertResources">
+        UPDATE zgk_expert_resources
+        <trim prefix="SET" suffixOverrides=",">
+            res_name = #{resName},
+            parent_id = #{parentId},
+            res_url = #{resUrl},
+            create_date = #{createDate},
+            icon_url = #{iconUrl},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        DELETE FROM zgk_expert_resources
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </delete>
+
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM zgk_expert_resources
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="resName!=null">
+                AND res_name = #{resName}
+            </if>
+            <if test="parentId!=null">
+                AND parent_id = #{parentId}
+            </if>
+            <if test="resUrl!=null">
+                AND res_url = #{resUrl}
+            </if>
+            <if test="createDate!=null">
+                AND create_date = #{createDate}
+            </if>
+            <if test="iconUrl!=null">
+                AND icon_url = #{iconUrl}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM zgk_expert_resources WHERE
+        ${property} = #{value}
+    </delete>
+
+    <select id="fetch" parameterType="java.lang.Integer" resultType="ExpertResources">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_resources
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="ExpertResources">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_resources WHERE
+        ${property} = #{value}
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="ExpertResources">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_resources WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="ExpertResources">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_resources
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="ExpertResources">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_resources
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.id!=null">
+                ${condition.groupOp}   id  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.resName!=null">
+                ${condition.groupOp}   res_name  ${condition.resName.op}  #{condition.resName.data}
+            </if>
+            <if test="condition.parentId!=null">
+                ${condition.groupOp}   parent_id  ${condition.parentId.op}  #{condition.parentId.data}
+            </if>
+            <if test="condition.resUrl!=null">
+                ${condition.groupOp}   res_url  ${condition.resUrl.op}  #{condition.resUrl.data}
+            </if>
+            <if test="condition.createDate!=null">
+                ${condition.groupOp}   create_date  ${condition.createDate.op}  #{condition.createDate.data}
+            </if>
+            <if test="condition.iconUrl!=null">
+                ${condition.groupOp}   icon_url  ${condition.iconUrl.op}  #{condition.iconUrl.data}
+            </if>
+
+
+    </where>
+
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="ExpertResources">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_resources
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id like CONCAT('%', #{id} , '%')
+            </if>
+            <if test="resName!=null">
+                AND res_name like CONCAT('%', #{resName} , '%')
+            </if>
+            <if test="parentId!=null">
+                AND parent_id like CONCAT('%', #{parentId} , '%')
+            </if>
+            <if test="resUrl!=null">
+                AND res_url like CONCAT('%', #{resUrl} , '%')
+            </if>
+            <if test="createDate!=null">
+                AND create_date like CONCAT('%', #{createDate} , '%')
+            </if>
+            <if test="iconUrl!=null">
+                AND icon_url like CONCAT('%', #{iconUrl} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="ExpertResources">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_resources
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.resName!=null">
+                AND res_name = #{condition.resName}
+            </if>
+            <if test="condition.parentId!=null">
+                AND parent_id = #{condition.parentId}
+            </if>
+            <if test="condition.resUrl!=null">
+                AND res_url = #{condition.resUrl}
+            </if>
+            <if test="condition.createDate!=null">
+                AND create_date = #{condition.createDate}
+            </if>
+            <if test="condition.iconUrl!=null">
+                AND icon_url = #{condition.iconUrl}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="ExpertResources">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_resources
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.resName!=null">
+                AND res_name = #{condition.resName}
+            </if>
+            <if test="condition.parentId!=null">
+                AND parent_id = #{condition.parentId}
+            </if>
+            <if test="condition.resUrl!=null">
+                AND res_url = #{condition.resUrl}
+            </if>
+            <if test="condition.createDate!=null">
+                AND create_date = #{condition.createDate}
+            </if>
+            <if test="condition.iconUrl!=null">
+                AND icon_url = #{condition.iconUrl}
+            </if>
+        </trim>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(id) FROM zgk_expert_resources
+       <where>
+           <if test="id!=null">
+               ${groupOp} id ${id.op}  #{id.data}
+           </if>
+           <if test="resName!=null">
+               ${groupOp} res_name ${resName.op}  #{resName.data}
+           </if>
+           <if test="parentId!=null">
+               ${groupOp} parent_id ${parentId.op}  #{parentId.data}
+           </if>
+           <if test="resUrl!=null">
+               ${groupOp} res_url ${resUrl.op}  #{resUrl.data}
+           </if>
+           <if test="createDate!=null">
+               ${groupOp} create_date ${createDate.op}  #{createDate.data}
+           </if>
+           <if test="iconUrl!=null">
+               ${groupOp} icon_url ${iconUrl.op}  #{iconUrl.data}
+           </if>
+
+       </where>
+    <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+    </if>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Integer">
+        SELECT
+        MAX(id)
+        FROM zgk_expert_resources
+    </select>
+
+</mapper>
+

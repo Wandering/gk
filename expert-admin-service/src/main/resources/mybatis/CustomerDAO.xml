@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.ICustomerDAO">
+<!--
+insert
+update
+updateNull
+deleteById
+deleteByCondition
+deleteByProperty
+fetch
+findOne
+findList
+findAll
+queryPage
+like
+queryList
+queryOne
+count
+selectMaxId
+updateOrSave
+selectOne
+selectList
+-->
+    <sql id="Base_Info_Column_List">
+            (CASE info.grade
+        	WHEN 1 THEN '高一'
+        	WHEN 2 THEN '高二'
+        	WHEN 3 THEN '高三'
+        	end) as grade,
+        	info.icon as imageUrl,
+        	detail.contact_person as customerName,
+        	detail.question_desc as questionDesc,
+        	CONCAT(province.`name`,IFNULL(city.`name`,''),IFNULL(county.`name`,'')) as 地址,
+        	(CASE if(info.provinceId=610000,null,info.subjectType)
+        	WHEN 0 THEN '文史'
+        	WHEN 1 THEN '理工'
+        	END) as majorTypeName,
+        	info.schoolName as schoolName,
+        	(CASE info.sex
+        	WHEN 1 THEN '男'
+        	WHEN 0 THEN '女'
+        	end) as sex
+    </sql>
+    <select id="queryBaseInfo" resultType="ExpertCustomerDTO">
+            SELECT
+            <include refid="Base_Info_Column_List"/>
+            FROM
+	        zgk_expert_reservation_order_detail detail
+	        INNER join zgk_user_info info ON detail.user_id = info.id
+	        LEFT join zgk_province province ON info.provinceId=province.id
+	        LEFT JOIN zgk_city city ON city.id = info.cityId
+	        LEFT join zgk_county county ON county.id = info.id where detail.id = #{orderId}
+    </select>
+    <select id="queryCustomerApesk" resultType="ExpertCustomerApeskDTO">
+        SELECT
+        apesk.id as id,
+        course. NAME AS apeskName,
+        course.ac_id AS acId,
+        apesk.report_id AS reportId,
+        apesk.report_date AS reportDate,
+        detail.user_id AS uid
+        FROM
+        zgk_expert_reservation_order_detail detail
+        INNER JOIN (
+        SELECT
+        max(id) AS id,
+        user_id,
+        ac_id
+        FROM
+        zgk_apesk
+        WHERE
+        state = 0 and report_id is not null
+        GROUP BY
+        ac_id,
+        user_id
+        ) temp ON detail.user_id = temp.user_id
+        INNER JOIN zgk_apesk apesk ON apesk.id = temp.id
+        INNER JOIN zgk_apesk_course course ON apesk.ac_id = course.ac_id
+        WHERE
+        detail.id =  #{orderId}
+    </select>
+</mapper>
+

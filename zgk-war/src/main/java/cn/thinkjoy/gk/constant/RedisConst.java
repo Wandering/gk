@@ -13,5 +13,11 @@ public class RedisConst {
 	 * 验证码
 	 */
 	public static final String USER_CAPTCHA_KEY = "gk_user_captcha_";
-	
+
+	/**
+	 * 地区批次线
+	 */
+	public static final String ADMISSION_LINE_SPACE = "_";
+	public static final String ADMISSION_LINE_KEY = "ADMISSION_LINE_KEY";
+
 }

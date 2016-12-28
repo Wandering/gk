@@ -72,7 +72,9 @@ public class VipController extends ZGKBaseController implements Watched {
         }
         //状元及第会员卡激活高考学堂
         boolean gkxtActiveStatus = false;
-        if(card.getProductType().equals("2"))
+        Integer productType = card.getProductType();
+        //TODO 写死绑卡流程,金榜题名和金榜登科不绑定智学堂
+        if(productType!=1 && productType!=3)
         {
             String account = getUserAccountPojo().getAccount();
             gkxtActiveUrl = String.format(gkxtActiveUrl, account);
@@ -183,18 +185,19 @@ public class VipController extends ZGKBaseController implements Watched {
         Long userId = getUserAccountPojo().getId();
         List<Integer> userService =  cardExService.getServiceByUserId(userId);
         //判断该用户是否已经预定该专家的服务
-        if (userService==null){
-            throw new BizException(ERRORCODE.NO_EXPERT_SERVICE.getCode(), ERRORCODE.NO_EXPERT_SERVICE.getMessage());
-        }
-        userService.retainAll(expertService);
-        if (userService.size()==0){
-            throw new BizException(ERRORCODE.NO_EXPERT_SERVICE.getCode(), ERRORCODE.NO_EXPERT_SERVICE.getMessage());
-        }else {
-            Integer count = cardExService.getServiceByUserIdAndExpertId(userId,expertId);
-            if (count>0){
-                throw new BizException(ERRORCODE.YES_EXPERT_SERVICE.getCode(), ERRORCODE.YES_EXPERT_SERVICE.getMessage());
-            }
-        }
+//        if (userService==null){
+//            throw new BizException(ERRORCODE.NO_EXPERT_SERVICE.getCode(), ERRORCODE.NO_EXPERT_SERVICE.getMessage());
+//        }
+//        userService.retainAll(expertService);
+//        if (userService.size()==0){
+//            throw new BizException(ERRORCODE.NO_EXPERT_SERVICE.getCode(), ERRORCODE.NO_EXPERT_SERVICE.getMessage());
+//        }
+//        else {
+//            Integer count = cardExService.getServiceByUserIdAndExpertId(userId,expertId);
+//            if (count>0){
+//                throw new BizException(ERRORCODE.YES_EXPERT_SERVICE.getCode(), ERRORCODE.YES_EXPERT_SERVICE.getMessage());
+//            }
+//        }
         return "true";
     }
 
