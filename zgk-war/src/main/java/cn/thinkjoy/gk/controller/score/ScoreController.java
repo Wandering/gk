@@ -3,13 +3,19 @@ package cn.thinkjoy.gk.controller.score;
 import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.SubjectEnum;
+import cn.thinkjoy.gk.common.UserAreaContext;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
-import cn.thinkjoy.gk.service.IScoreAnalysisService;
+import cn.thinkjoy.gk.controller.predict.SmartReportController;
+import cn.thinkjoy.gk.entity.UniversityInfoView;
+import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
+import cn.thinkjoy.gk.service.*;
 import cn.thinkjoy.gk.common.ScoreUtil;
 import cn.thinkjoy.gk.util.RedisUtil;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -18,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
@@ -29,13 +36,19 @@ import java.util.*;
 @RequestMapping(value = "/score")
 public class ScoreController {
 
+    private static final org.slf4j.Logger LOGGER= LoggerFactory.getLogger(SmartReportController.class);
     @Autowired
     private IScoreAnalysisService scoreAnalysisService;
     @Autowired
     private ScoreUtil scoreUtil;
 
     private static long JS_AREA_CODE=320000;
+    private static long ZJ_AREA_CODE=330000;
 
+
+
+    @Autowired
+    private IScoreAlgorithmService scoreAlgorithmService;
 
 
     /**
@@ -72,6 +85,7 @@ public class ScoreController {
         insertMap.put("schoolCode",schoolCode);
         insertMap.put("schoolName",schoolName);
         insertMap.put("gradeInfo",gradeInfo);
+
         insertMap.put("classInfo",classInfo);
         try {
             int uu = scoreAnalysisService.setUserInfo(insertMap);
@@ -104,7 +118,15 @@ public class ScoreController {
     @RequestMapping(value = "/queryUserInfo",method = RequestMethod.GET)
     @ResponseBody
     public Object queryUserInfo(@RequestParam long userId){
-        return scoreAnalysisService.queryUserInfo(userId);
+        Map<String,Object> map = scoreAnalysisService.queryUserInfo(userId);
+        String gradeInfo = null;
+        if(map.containsKey("gradeInfo")) {
+            gradeInfo=map.get("gradeInfo")==null?null:map.get("gradeInfo").toString();
+        }
+        if(StringUtils.isEmpty(gradeInfo)){
+            return null;
+        }
+        return map;
     }
 
     /**
@@ -176,7 +198,9 @@ public class ScoreController {
     public Object queryBatchLineByAreaId(@RequestParam float totalScore,
                                          @RequestParam long areaId,
                                          @RequestParam int majorType){
-
+        if (totalScore>800F||totalScore<0F){
+            throw new BizException("error","用户成绩不能高于800或小于0");
+        }
         String scoreLine = scoreAnalysisService.queryScoreLine(areaId,majorType,scoreUtil.getYear());
 
         String [] scoreStrs = scoreLine.split("-");
@@ -239,17 +263,16 @@ public class ScoreController {
     @RequestMapping(value = "/recommendSchool",method = RequestMethod.GET)
     @ResponseBody
     public Object recommendSchool(@RequestParam float totalScore,@RequestParam long areaId,Integer majorType,@RequestParam long userId){
+        if (totalScore>800F||totalScore<0F){
+            throw new BizException("error","用户成绩不能高于800或小于0");
+        }
         Object rtnObj=null;
-        if(areaId==330000){
+        if(areaId==ZJ_AREA_CODE){
             //浙江算法
-            rtnObj = scoreAnalysisService.recommendSchoolZJ(totalScore,areaId,userId);
-        }else if(areaId==320000){
-            //江苏算法
-            if(majorType==null)
-                throw new BizException("error","majorType不能为空!");
-            rtnObj = scoreAnalysisService.recommendSchoolJS(totalScore,areaId,majorType,userId);
+            rtnObj = scoreAlgorithmService.recommendSchoolZJ(totalScore,areaId,userId);
         }else {
-            rtnObj = scoreAnalysisService.recommendSchool(totalScore,areaId,majorType,userId);
+            if(majorType==null)throw new BizException("error","majorType is not null");
+            rtnObj = scoreAlgorithmService.recommendSchool(totalScore,areaId,majorType,userId);
         }
         return rtnObj;
 
@@ -272,12 +295,10 @@ public class ScoreController {
         Integer year = Integer.valueOf(scoreUtil.getYear());
 
         list = scoreAnalysisService.queryUnivsersityBatch(areaId, schoolId, year.toString(), majorType);
-        //尝试获取最新的年份对应的录取批次,获取不到获取次年的录取批次
+        //尝试获取次年对应的录取批次,获取不到获取次年的录取批次
         if (list == null || list.size() == 0) {
             list = scoreAnalysisService.queryUnivsersityBatch(areaId, schoolId, (year - 1) + "", majorType);
         }
-
-
         return list;
     }
 
@@ -345,7 +366,7 @@ public class ScoreController {
                 throw new BizException("error","学科类型不能为空");
             }
             if(majorType!=1&&majorType!=2){
-                throw new BizException("error","学科类型智能为1或2");
+                throw new BizException("error","学科类型只能为1或2");
             }
             if(batch==null){
                 throw new BizException("error","批次不能为空");
@@ -413,6 +434,5 @@ public class ScoreController {
         //获取用户所在省份
         return scoreAnalysisService.queryHistoryScore(userId,rows,areaId);
     }
-
 
 }

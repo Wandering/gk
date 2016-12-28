@@ -27,7 +27,7 @@ import java.util.Enumeration;
 import java.util.Map;
 
 /**
- * Created by jzli on 15/6/3.
+ * Created by svenlau on 2016/5/19.
  */
 @Controller
 @Scope(SpringMVCConst.SCOPE)
@@ -40,10 +40,6 @@ public class PayCallbackController extends ZGKBaseController {
     private IOrderService orderService;
     @Autowired
     private IOrderStatementsService orderStatementService;
-
-    //高考学堂注册接口
-    private String gkxtActiveUrl = "http://xuetang.zhigaokao.cn/userapi/tovip?mobile=%s&duration=12&unit=month&levelId=1";
-
     /**
      * 微信支付回调
      * @param request
@@ -101,20 +97,6 @@ public class PayCallbackController extends ZGKBaseController {
                 } else {
                     response.setStatus(500);
                 }
-//                String account = getUserAccountPojo().getAccount();
-//                gkxtActiveUrl = String.format(gkxtActiveUrl, account);
-//                String result = HttpClientUtil.getContents(gkxtActiveUrl);
-//                //激活状态,0为未激活,1为激活
-//
-//                if(result.indexOf("\"ret\":\"200\"")==-1)
-//                {
-//                    status = 0;
-//                    LOGGER.error("帐号"+account+", 激活高考学堂会员失败.....");
-//                }else
-//                {
-//                    status = 1;
-//                    LOGGER.debug("帐号"+account+"激活高考学堂会员成功!");
-//                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

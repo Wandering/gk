@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IExpertDAO">
+
+    <!-- 预约专家常规问题 -->
+    <select id="selectCommonQuestion" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.CommonQuestion">
+        select id,question_desc as questionDesc,question_order as questionOrder,create_date as createDate,specialitys
+        from zgk_expert_common_question ecq
+        <if test="commonQuestionIdString!=null">
+            where ecq.id in
+            (${commonQuestionIdString})
+        </if>
+        order by ecq.question_order
+        <if test="offset!=null">
+            asc limit ${offset}, ${rows}
+        </if>
+    </select>
+    <select id="selectCommonQuestionCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(id) as count
+        from zgk_expert_common_question ecq
+        <if test="commonQuestionIdString!=null">
+            where ecq.id in
+            (${commonQuestionIdString})
+        </if>
+        order by ecq.question_order
+    </select>
+
+    <!-- 预约专家列表 -->
+    <select id="selectExpertList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ExpertInfoPojo">
+        select ei.id as expertId,ei.expert_name as expertName,GROUP_CONCAT(DISTINCT ec.config_value) service,AVG(ea.rate) rate ,count(DISTINCT ec2.id) as casesNumber,expert_photo_url as photoUrl,ei.qualification as qualification,ei.best_expert as bestExpert
+        from zgk_expert_info ei
+        left join zgk_expert_service_relation esr on ei.id=esr.expert_id
+        left join zgk_expert_config ec on ec.config_key=esr.service_type_id and ec.config_domain='serviceType'
+        left join zgk_expert_appraise ea on ea.expert_id=ei.id and ea.is_checked=1
+        left join zgk_expert_cases ec2 on ec2.expert_id=ei.id
+        where ei.is_checked=1
+        group by ei.id
+        order by rate desc
+        limit ${offset}, ${rows}
+    </select>
+    <!-- 预约专家列表总数 -->
+    <select id="selectExpertListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(DISTINCT ei.id) as count
+        from zgk_expert_info ei
+        left join zgk_expert_service_relation esr on ei.id=esr.expert_id
+        left join zgk_expert_config ec on ec.config_key=esr.service_type_id and ec.config_domain='serviceType'
+        left join zgk_expert_appraise ea on ea.expert_id=ei.id
+        left join zgk_expert_cases ec2 on ec2.expert_id=ei.id
+        where ei.is_checked=1
+    </select>
+
+    <!-- 预约专家详情 -->
+    <select id="selectExpertInfo" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ExpertInfoPojo">
+        select ei.expert_intro as info,ei.id as expertId,ei.expert_name as expertName,GROUP_CONCAT(DISTINCT ec.config_value) service,AVG(ea.rate) as rate ,count(DISTINCT ec2.id) as casesNumber,expert_photo_url as photoUrl,ei.qualification as qualification,ei.best_expert as bestExpert
+        from zgk_expert_info ei
+        left join zgk_expert_service_relation esr on ei.id=esr.expert_id
+        left join zgk_expert_config ec on ec.config_key=esr.service_type_id and ec.config_domain='serviceType'
+        left join zgk_expert_appraise ea on ea.expert_id=ei.id
+        left join zgk_expert_cases ec2 on ec2.expert_id=ei.id
+        where ei.is_checked=1
+        and ei.id=#{expertId}
+        group by ei.id
+    </select>
+
+    <!-- 专家视频 -->
+    <select id="selectVedioList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.ExpertVedio">
+        select ev.id as vedioId,
+               expert_id as expertId,
+               vedio_name as vedioName,
+               img_url as imgUrl,
+               vedio_url as vedioUrl,
+               create_date as createDate
+        from zgk_expert_vedio ev where ev.expert_id=#{expertId}
+        limit ${offset}, ${rows}
+    </select>
+    <!-- 专家视频总数 -->
+    <select id="selectVedioListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(expert_id) as count
+        from zgk_expert_vedio ev where ev.expert_id=#{expertId}
+    </select>
+    <select id="selectVedioById" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.ExpertVedio">
+        select
+        id as vedioId,
+        expert_id as expertId,
+        vedio_name as vedioName,
+        img_url as imgUrl,
+        vedio_url as vedioUrl,
+        create_date as createDate
+        from zgk_expert_vedio ev where ev.id=#{vedioId}
+    </select>
+
+    <!-- 问答 -->
+    <select id="selectQuestionList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.UserQuestion">
+        select expert_id as expertId,
+        user_id as userId,
+        user_name as userName,
+        user_question as userQuestion,
+        user_answer as userAnswer,
+        create_date as createDate
+        from zgk_expert_user_question euq
+        where euq.expert_id=#{expertId}
+        <if test="userId!=null">
+            and euq.user_id=#{userId}
+        </if>
+        <if test="userId==null or userId==''">
+            and euq.user_answer != ''
+            and euq.user_answer is not null
+        </if>
+        limit ${offset}, ${rows}
+    </select>
+
+    <!-- 问答总数 -->
+    <select id="selectQuestionListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(expert_id) as count
+        from zgk_expert_user_question euq
+        where euq.expert_id=#{expertId}
+        <if test="userId!=null">
+            and euq.user_id=#{userId}
+        </if>
+        <if test="userId==null or userId==''">
+            and euq.user_answer != ''
+            and euq.user_answer is not null
+        </if>
+    </select>
+
+    <!-- 服务案例 -->
+    <select id="selectCasesList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.ExpertCases">
+        select expert_id as expertId,
+               user_name as userName,
+               user_img_url as imgUrl,
+               school as school,
+               service_id as serviceId,
+               ecc.config_value as serviceName,
+               user_comments as userComments,
+               create_date as createDate
+        from zgk_expert_cases ec
+        left join zgk_expert_config ecc on ecc.config_domain='serviceType' and ecc.config_key=ec.service_id
+        where ec.expert_id=#{expertId}
+        limit ${offset}, ${rows}
+    </select>
+
+    <!-- 服务案例总数 -->
+    <select id="selectCasesListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(expert_id) as count
+        from zgk_expert_cases ec
+        left join zgk_expert_config ecc on ecc.config_domain='serviceType' and ecc.config_key=ec.service_id
+        where ec.expert_id=#{expertId}
+    </select>
+
+    <!-- 服务评价 -->
+    <select id="selectAppraiseList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ExpertAppraisePojo">
+        select ea.expert_id as expertId,
+        ea.user_id as userId,
+        ea.user_name as userName,
+        ea.user_comments as userComments,
+        ea.is_checked as isChecked,
+        ea.create_date as createDate,
+        ei.expert_name as expertName,
+        ec.config_value as serverTypeName,
+        ea.rate as rate
+        from zgk_expert_appraise ea
+        left join zgk_expert_info ei on ei.id=ea.expert_id
+        left join zgk_expert_config ec on ec.config_domain='serviceType' and ec.config_key=ea.server_type
+        where ea.is_checked=1
+        <if test="expertId!=null">
+            and ea.expert_id=#{expertId}
+        </if>
+        limit ${offset}, ${rows}
+    </select>
+    <!-- 服务评价总数 -->
+    <select id="selectAppraiseListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(ea.expert_id) as count
+        from zgk_expert_appraise ea
+        left join zgk_expert_info ei on ei.id=ea.expert_id
+        left join zgk_expert_config ec on ec.config_domain='serviceType' and ec.config_key=ea.server_type
+        where ea.is_checked=1
+        <if test="expertId!=null">
+            and ea.expert_id=#{expertId}
+        </if>
+    </select>
+    <insert id="insertOrder" parameterType="ExpertOrder">
+        INSERT INTO zgk_expert_reservation_order (
+        orderNo,
+        orderStatus,
+        userId,
+        expertId,
+        channel,
+        serverType,
+        serverAddress,
+        serverContent,
+        questionDesc,
+        serverPrice,
+        contactPerson,
+        contactPhone,
+        contactQq,
+        expectBeginDate,
+        expectEndDate,
+        createDate
+        ) VALUES (
+        #{orderNo},
+        #{orderStatus},
+        #{userId},
+        #{expertId},
+        #{channel},
+        #{serverType},
+        #{serverAddress},
+        #{serverContent},
+        #{questionDesc},
+        #{serverPrice},
+        #{contactPerson},
+        #{contactPhone},
+        #{contactQq},
+        #{expectBeginDate},
+        #{expectEndDate},
+        #{createDate}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <update id="updateOrder" parameterType="ExpertOrder">
+        UPDATE zgk_expert_reservation_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderNo!=null">
+                orderNo = #{orderNo},
+            </if>
+            <if test="orderStatus!=null">
+                orderStatus = #{orderStatus},
+            </if>
+            <if test="userId!=null">
+                userId = #{userId},
+            </if>
+            <if test="expertId!=null">
+                expertId = #{expertId},
+            </if>
+            <if test="channel!=null">
+                channel = #{channel},
+            </if>
+            <if test="serverType!=null">
+                serverType = #{serverType},
+            </if>
+            <if test="serverAddress!=null">
+                serverAddress = #{serverAddress},
+            </if>
+            <if test="serverContent!=null">
+                serverContent = #{serverContent},
+            </if>
+            <if test="questionDesc!=null">
+                questionDesc = #{questionDesc},
+            </if>
+            <if test="serverPrice!=null">
+                serverPrice = #{serverPrice},
+            </if>
+            <if test="contactPerson!=null">
+                contactPerson = #{contactPerson},
+            </if>
+            <if test="contactPhone!=null">
+                contactPhone = #{contactPhone},
+            </if>
+            <if test="contactQq!=null">
+                contactQq = #{contactQq},
+            </if>
+            <if test="expectBeginDate!=null">
+                expectBeginDate = #{expectBeginDate},
+            </if>
+            <if test="expectEndDate!=null">
+                expectEndDate = #{expectEndDate},
+            </if>
+            <if test="createDate!=null">
+                createDate = #{createDate},
+            </if>
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="findOrderByOrderNo" parameterType="java.lang.String" resultType="ExpertOrder">
+        SELECT
+        id,
+        orderNo,
+        orderStatus,
+        userId,
+        expertId,
+        channel,
+        serverType,
+        serverAddress,
+        serverContent,
+		questionDesc,
+        serverPrice,
+        contactPerson,
+        contactPhone,
+        contactQq,
+        expectBeginDate,
+        expectEndDate,
+        createDate
+        FROM zgk_expert_reservation_order WHERE
+        orderNo = #{orderNo}
+        LIMIT 0,1
+    </select>
+
+    <select id="getExpertOrderList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+        t.orderNo,
+        t.orderStatus,
+        s.expert_name as expertName,
+        t.channel,
+        t.serverType,
+        (case when t.orderStatus>=2 and t.orderStatus<=6  and t.serverType='线下面对面' then t.serverAddress
+        else '' end) as serverAddress,
+        (case when t.orderStatus>=2 and t.orderStatus<=6  and t.serverType='视频一对一' then '服务平台'
+        else '' end) as serverPlantform,
+        t.serverContent,
+        t.questionDesc,
+        t.serverPrice,
+        t.contactPerson,
+        t.contactPhone,
+        t.contactQq,
+        (case when t.orderStatus>=2 and t.orderStatus<=6  then t.expectBeginDate
+        else '' end) as expectBeginDate,
+        (case when t.orderStatus>=2 and t.orderStatus<=6  then t.expectEndDate
+        else '' end) as expectEndDate,
+        t.createDate,
+        t.meetingAddress,
+        case when service.evaluation is not null then 1 else 0 end as isComment
+        FROM zgk_expert_reservation_order t
+        left join zgk_expert_info s on t.expertId = s.id
+        left join zgk_expert_service_evaluation service on service.orderNo=t.orderNo
+        ]]>
+        WHERE
+        userId = #{userId} AND orderStatus>=0
+        <if test="more==null">
+            LIMIT 0,5
+        </if>
+    </select>
+
+    <select id="selectExpertListBySpecialty" parameterType="java.util.Map"
+            resultType="cn.thinkjoy.gk.pojo.ExpertInfoPojo">
+        select ei.id as expertId,ei.expert_name as expertName,GROUP_CONCAT(DISTINCT ec1.config_value) as speciality ,
+        count(DISTINCT ec2.id) as casesNumber,GROUP_CONCAT(DISTINCT ec3.config_value) service,ei.qualification as
+        qualification,expert_photo_url as photoUrl,
+        ei.expert_intro as info
+        from zgk_expert_info ei
+        left join zgk_expert_speciality_relation esr on ei.id=esr.expert_id
+        left join zgk_expert_config ec1 on ec1.config_domain='speciality' and ec1.config_key=esr.speciality_id
+        left join zgk_expert_cases ec2 on ei.id=ec2.expert_id
+        left join zgk_expert_service_relation esr2 on esr2.expert_id=ei.id
+        left join zgk_expert_config ec3 on ec3.config_domain='serviceStyle' and ec3.config_key=esr2.service_style_id
+        where ei.is_checked=1
+        and ei.id in
+        <foreach collection="map.expertIdList" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by ei.id
+        <if test="map.offset!=null">
+            asc limit ${map.offset}, ${map.rows}
+        </if>
+    </select>
+
+    <select id="selectExpertListCountBySpecialty" parameterType="java.util.Map"
+            resultType="java.lang.Integer">
+        select count(ei.id) as count
+        from zgk_expert_info ei
+        left join zgk_expert_speciality_relation esr on ei.id=esr.expert_id
+        left join zgk_expert_config ec1 on ec1.config_domain='speciality' and ec1.config_key=esr.speciality_id
+        left join zgk_expert_cases ec2 on ei.id=ec2.expert_id
+        left join zgk_expert_service_relation esr2 on esr2.expert_id=ei.id
+        left join zgk_expert_config ec3 on ec3.config_domain='serviceStyle' and ec3.config_key=esr2.service_style_id
+        where ei.is_checked=1
+        and ei.id in
+        <foreach collection="map.expertIdList" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by ei.id asc
+    </select>
+
+    <select id="selectExpertId" parameterType="java.util.Map" resultType="java.lang.String">
+        select expert_id from zgk_expert_speciality_relation esr where esr.speciality_id in
+        (${specialitys})
+    </select>
+
+    <insert id="insertUserCommonQuestion" parameterType="java.util.Map">
+        INSERT INTO zgk_expert_user_common_question
+        (userId,commonQuestionId,createDate,note)
+        VALUES (#{map.userId},#{map.commonQuestionIdString},#{map.createDate},#{map.note})
+    </insert>
+
+    <select id="selectExpertConfigList" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.entity.ExpertConfig">
+        select
+            id,config_key as configKey,config_value as configValue,config_domain as configDomain
+        from zgk_expert_config ec
+        where ec.config_domain=#{configDomain}
+    </select>
+    <select id="selectExpertConfigListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(id) as count
+        from zgk_expert_config ec
+        where ec.config_domain=#{configDomain}
+    </select>
+
+    <!-- 查询涉及邻域最多的专家 -->
+    <select id="selectExpertBySpecialityMore" resultType="cn.thinkjoy.gk.pojo.ExpertInfoPojo">
+        select ei.id as expertId,ei.expert_name as expertName,GROUP_CONCAT(DISTINCT ec1.config_value) as speciality ,
+            count(DISTINCT ec2.id) as casesNumber,GROUP_CONCAT(DISTINCT ec3.config_value) service,ei.qualification as qualification,expert_photo_url as photoUrl,
+            ei.expert_intro as info
+        from zgk_expert_info ei
+        left join zgk_expert_speciality_relation esr on ei.id=esr.expert_id
+        left join zgk_expert_config ec1 on ec1.config_domain='speciality' and ec1.config_key=esr.speciality_id
+        left join zgk_expert_cases ec2 on ei.id=ec2.expert_id
+        left join zgk_expert_service_relation esr2 on esr2.expert_id=ei.id
+        left join zgk_expert_config ec3 on ec3.config_domain='serviceStyle' and ec3.config_key=esr2.service_style_id
+        where ei.is_checked=1
+            and ei.id in(
+            select expert_id as num from zgk_expert_speciality_relation esr
+            group by esr.expert_id
+            order by num desc
+            )
+        group by ei.id
+		limit 2
+    </select>
+
+    <insert id="insertOrderRevaluation" parameterType="ExpertOrder">
+        INSERT INTO zgk_expert_service_evaluation (
+        orderNo,
+        evaluation,
+        createDate
+        ) VALUES (
+        #{orderNo},
+        #{evaluation},
+        #{createDate}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <update id="updateExpertOrderRevaluation" parameterType="OrderRevaluation">
+        UPDATE zgk_expert_service_evaluation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="evaluation!=null">
+                evaluation = #{evaluation},
+            </if>
+        </trim>
+        WHERE
+        orderNo = #{orderNo}
+    </update>
+
+    <select id="findExpertOrderRevaluationByOrderNo" parameterType="java.lang.String" resultType="OrderRevaluation">
+        SELECT
+        id,
+        orderNo,
+        evaluation,
+        createDate
+        FROM zgk_expert_service_evaluation WHERE
+        orderNo = #{orderNo}
+        LIMIT 0,1
+    </select>
+    <insert id="insertUserQuestion" parameterType="java.util.Map">
+        insert into zgk_expert_user_question
+        (expert_id,user_id,user_name,user_question,create_date)
+        values
+        (#{expertId},#{userId},#{userName},#{userQuestion},#{createDate})
+    </insert>
+
+    <select id="selectServiceByExpertId" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ServicePojo">
+        select ei.id as expertId,ei.expert_name as expertName ,esr.service_type_id as serviceTypeId,ec.config_value as serviceTypeName
+        from zgk_expert_info ei
+        left join zgk_expert_service_relation esr on ei.id=esr.expert_id
+        left join zgk_expert_config ec on ec.config_domain = 'serviceType' and ec.config_key = esr.service_type_id
+         where ei.id=#{expertId}
+    </select>
+
+    <select id="getExpertOrderRevaluation" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        select t.evaluation,t.createDate,info.expert_name
+        from zgk_expert_service_evaluation t
+        left join zgk_expert_reservation_order s on t.orderNo=s.orderNo
+        left join zgk_expert_info info on s.expertId=info.id
+        <where>
+            <if test="orderNo!=null">
+                and t.orderNo=#{orderNo}
+            </if>
+            <if test="expertId!=null">
+                and s.expertId=#{expertId}
+            </if>
+        </where>
+    </select>
+
+    <select id="getExpertServiceInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        select expert_name,max(service_price) maxPrice,min(service_price) minPrice,serviceContent
+        from
+        (
+        select s.expert_name,t.service_price,
+        (select config.config_value from zgk_expert_config config
+        where config.config_key=t.service_type_id
+        and config.config_domain='serviceType') as serviceContent
+        from zgk_expert_service_relation t
+        left join zgk_expert_info s on t.expert_id=s.id
+        where expert_id=#{expertId} and t.service_style_id!=3
+        UNION ALL
+        select s.expert_name,t.service_price,
+        (select config.config_value from zgk_expert_config config
+        where config.config_key=t.service_type_id
+        and config.config_domain='serviceType') as serviceContent
+        from zgk_expert_service_relation t
+        left join zgk_expert_info s on t.expert_id=s.id
+        where expert_id=#{expertId} and t.service_style_id=3 and t.area_id=#{areaId}
+        ) tb
+        group by expert_name,serviceContent
+    </select>
+
+    <select id="selectFamousTeacher" parameterType="java.util.HashMap" resultType="cn.thinkjoy.gk.pojo.ExpertInfoPojo">
+        select id as expertId,expert_name as expertName,expert_photo_url as photoUrl,expert_intro as info
+        from zgk_expert_info ei
+        where 1=1
+        and ei.is_checked=1
+        <if test="paramName!=null">
+            and ${paramName}=#{paramValue}
+        </if>
+        <if test="offset!=null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <insert id="test1" parameterType="java.util.Map">
+        insert into zgk_expert_cases
+        (expert_id,user_name,user_img_url,school,service_id,user_comments)
+        VALUES
+        (
+        (select ei.id from zgk_expert_info ei where ei.expert_name=#{expertName}),
+        #{userName},
+        #{userImgUrl},
+        #{school},
+        (select ec.config_key from zgk_expert_config ec where ec.config_value=#{serviceType}),
+        #{userComments}
+        )
+    </insert>
+    <insert id="test2" parameterType="java.util.Map">
+        insert into zgk_expert_appraise
+        (expert_id,user_name,server_type,rate,user_comments)
+        VALUES
+        (
+        (select ei.id from zgk_expert_info ei where ei.expert_name=#{expertName}),
+        #{userName},
+        (select ec.config_key from zgk_expert_config ec where ec.config_value=#{serviceType}),
+        #{rate},
+        #{userComments}
+        )
+    </insert>
+    <insert id="test3" parameterType="java.util.Map">
+        insert into zgk_expert_user_question
+        (expert_id,user_name,user_question,user_answer,create_date)
+        VALUES
+        (
+        (select ei.id from zgk_expert_info ei where ei.expert_name=#{expertName}),
+        #{userName},
+        #{userQuestion},
+        #{userAnswer},
+        #{create_date}
+        )
+    </insert>
+
+    <!-- 根据专家ID查询提前预约天数 -->
+    <select id="getPreDay" parameterType="int" resultType="Integer">
+        SELECT
+            pre_appoint_days
+        FROM
+            zgk_expert_info
+        WHERE
+            id = #{expertId}
+    </select>
+
+    <!-- 根据专家ID查询提前预约天数 -->
+    <select id="getExpertServiceDays" parameterType="int" resultType="cn.thinkjoy.gk.pojo.ExpertServiceDay">
+        SELECT
+            id,
+            expert_id AS expertId,
+            service_day AS serviceDay,
+            is_available AS isAvailable
+        FROM
+            zgk_expert_service_days
+        WHERE
+            expert_id = #{expertId}
+        AND service_day > date_sub(curdate(), INTERVAL #{preDay} DAY)
+        and is_available = 1
+        order by service_day asc
+        limit 7
+    </select>
+
+    <!-- 根据专家ID查询提前预约天数 -->
+    <select id="getExpertServiceTimes" parameterType="int" resultType="cn.thinkjoy.gk.pojo.ExpertServiceTime">
+        SELECT
+            id,
+            expert_day_id AS expertDayId,
+            time_segment AS timeSegment,
+            is_available AS isAvailable
+        FROM
+            zgk_expert_service_times
+        WHERE
+            expert_day_id = #{dayId}
+    </select>
+
+    <insert id="insertExpertAppraise" parameterType="java.util.Map">
+        insert into zgk_expert_appraise (
+          expert_id,
+          user_id,
+          user_name,
+          server_type,
+          rate,
+          user_comments,
+          is_checked,
+          create_date
+        ) values (
+          #{expertId},
+          #{userId},
+          #{userName},
+          #{serverType},
+          #{rate},
+          #{userComments},
+          #{isChecked},
+          #{createDate}
+        )
+    </insert>
+
+    <select id="selectServiceByUserId" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ServiceNumberPojo">
+        select service_item as serviceId,sum(service_count) as serviceNumber from zgk_expert_reservation_order_detail
+        where user_id=#{userId}
+        GROUP BY service_item
+    </select>
+
+    <!-- 根据专家Id,学生Id,频道类型查询频道信息 -->
+    <select id="getChannelByexpertIdAndStuId" parameterType="map" resultType="cn.thinkjoy.gk.entity.ExpertChannel">
+        SELECT
+            *
+        FROM
+            zgk_expert_channel
+        WHERE
+            expertId = #{expertId}
+        AND stuId = #{stuId}
+        AND type = #{type}
+        and status = 0
+        ORDER by id desc
+        limit 1
+    </select>
+
+    <!-- 根据cid查询频道 -->
+    <select id="getChannelByCid" parameterType="string" resultType="cn.thinkjoy.gk.entity.ExpertChannel">
+        SELECT
+            *
+        FROM
+            zgk_expert_channel
+        WHERE
+            cid = #{cid}
+    </select>
+
+    <!-- 根据cid修改频道状态 -->
+    <update id="updateChannelByCid">
+        UPDATE zgk_expert_channel
+        SET `status` = 1,modifyDate = #{ctime}
+        WHERE
+            cid = #{cid}
+    </update>
+
+    <!-- 插入频道信息 -->
+    <insert id="insertChannel" parameterType="cn.thinkjoy.gk.entity.ExpertChannel">
+        INSERT INTO zgk_expert_channel(
+            STATUS,
+            createDate,
+            modifyDate,
+            expertId,
+            stuId,
+            type,
+            cid,
+            ctime,
+            NAME,
+            pushUrl,
+            httpPullUrl,
+            hlsPullUrl,
+            rtmpPullUrl,
+            CODE,
+            msg
+        )
+        VALUE
+            (
+                #{status},
+                #{createDate},
+                #{modifyDate},
+                #{expertId},
+                #{stuId},
+                #{type},
+                #{cid},
+                #{ctime},
+                #{name},
+                #{pushUrl},
+                #{httpPullUrl},
+                #{hlsPullUrl},
+                #{rtmpPullUrl},
+                #{code},
+                #{msg}
+            )
+    </insert>
+</mapper>
+

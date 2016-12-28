@@ -38,4 +38,8 @@
                      timeout="60000"/>
     <dubbo:reference id="gkEntryService" interface="cn.thinkjoy.zgk.remote.IGkEntryService" check="false"
                      timeout="60000"/>
+    <dubbo:reference id="apeskApi" interface="cn.thinkjoy.gk.api.IApeskApi" check="false"
+                     timeout="60000"/>
+
+
 </beans>

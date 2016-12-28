@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IExpertServiceTimesDAO">
+<!--
+insert
+update
+updateNull
+deleteById
+deleteByCondition
+deleteByProperty
+fetch
+findOne
+findList
+findAll
+queryPage
+like
+queryList
+queryOne
+count
+selectMaxId
+updateOrSave
+selectOne
+selectList
+-->
+    <sql id="Base_Column_List">
+        id as id,
+        expert_day_id as expertDayId,
+        time_segment as timeSegment,
+        is_available as isAvailable
+    </sql>
+    <insert id="insert" parameterType="ExpertServiceTimes">
+        INSERT INTO zgk_expert_service_times (
+        expert_day_id,
+        time_segment,
+        is_available
+        ) VALUES (
+        #{expertDayId},
+        #{timeSegment},
+        #{isAvailable}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+        SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="ExpertServiceTimes">
+        UPDATE zgk_expert_service_times
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="expertDayId!=null">
+                expert_day_id = #{expertDayId},
+            </if>
+            <if test="timeSegment!=null">
+                time_segment = #{timeSegment},
+            </if>
+            <if test="isAvailable!=null">
+                is_available = #{isAvailable},
+            </if>
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateMap">
+        UPDATE zgk_expert_service_times
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.expertDayId!=null">
+                expert_day_id = #{map.expertDayId},
+            </if>
+            <if test="map.timeSegment!=null">
+                time_segment = #{map.timeSegment},
+            </if>
+            <if test="map.isAvailable!=null">
+                is_available = #{map.isAvailable},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE zgk_expert_service_times
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.expertDayId!=null">
+                expert_day_id = #{update.expertDayId},
+            </if>
+            <if test="update.timeSegment!=null">
+                time_segment = #{update.timeSegment},
+            </if>
+            <if test="update.isAvailable!=null">
+                is_available = #{update.isAvailable},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.expertDayId!=null">
+                AND expert_day_id = #{condition.expertDayId}
+            </if>
+            <if test="condition.timeSegment!=null">
+                AND time_segment = #{condition.timeSegment}
+            </if>
+            <if test="condition.isAvailable!=null">
+                AND is_available = #{condition.isAvailable}
+            </if>
+        </trim>
+    </update>
+
+    <insert id="insertMap" >
+        INSERT INTO zgk_expert_service_times (
+                expert_day_id,
+                time_segment,
+                is_available
+        ) VALUES (
+                    #{map.expertDayId},
+                    #{map.timeSegment},
+                    #{map.isAvailable}
+        )
+    </insert>
+
+
+    <update id="updateNull" parameterType="ExpertServiceTimes">
+        UPDATE zgk_expert_service_times
+        <trim prefix="SET" suffixOverrides=",">
+            expert_day_id = #{expertDayId},
+            time_segment = #{timeSegment},
+            is_available = #{isAvailable},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        DELETE FROM zgk_expert_service_times
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </delete>
+
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM zgk_expert_service_times
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="expertDayId!=null">
+                AND expert_day_id = #{expertDayId}
+            </if>
+            <if test="timeSegment!=null">
+                AND time_segment = #{timeSegment}
+            </if>
+            <if test="isAvailable!=null">
+                AND is_available = #{isAvailable}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM zgk_expert_service_times WHERE
+        ${property} = #{value}
+    </delete>
+
+    <select id="fetch" parameterType="java.lang.Integer" resultType="ExpertServiceTimes">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_service_times
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="ExpertServiceTimes">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_service_times WHERE
+        ${property} = #{value}
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="ExpertServiceTimes">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_service_times WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="ExpertServiceTimes">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_service_times
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="ExpertServiceTimes">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_service_times
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.id!=null">
+                ${condition.groupOp}   id  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.expertDayId!=null">
+                ${condition.groupOp}   expert_day_id  ${condition.expertDayId.op}  #{condition.expertDayId.data}
+            </if>
+            <if test="condition.timeSegment!=null">
+                ${condition.groupOp}   time_segment  ${condition.timeSegment.op}  #{condition.timeSegment.data}
+            </if>
+            <if test="condition.isAvailable!=null">
+                ${condition.groupOp}   is_available  ${condition.isAvailable.op}  #{condition.isAvailable.data}
+            </if>
+
+
+    </where>
+
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="ExpertServiceTimes">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_service_times
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id like CONCAT('%', #{id} , '%')
+            </if>
+            <if test="expertDayId!=null">
+                AND expert_day_id like CONCAT('%', #{expertDayId} , '%')
+            </if>
+            <if test="timeSegment!=null">
+                AND time_segment like CONCAT('%', #{timeSegment} , '%')
+            </if>
+            <if test="isAvailable!=null">
+                AND is_available like CONCAT('%', #{isAvailable} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="ExpertServiceTimes">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_service_times
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.expertDayId!=null">
+                AND expert_day_id = #{condition.expertDayId}
+            </if>
+            <if test="condition.timeSegment!=null">
+                AND time_segment = #{condition.timeSegment}
+            </if>
+            <if test="condition.isAvailable!=null">
+                AND is_available = #{condition.isAvailable}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="ExpertServiceTimes">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_service_times
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.expertDayId!=null">
+                AND expert_day_id = #{condition.expertDayId}
+            </if>
+            <if test="condition.timeSegment!=null">
+                AND time_segment = #{condition.timeSegment}
+            </if>
+            <if test="condition.isAvailable!=null">
+                AND is_available = #{condition.isAvailable}
+            </if>
+        </trim>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(id) FROM zgk_expert_service_times
+       <where>
+           <if test="id!=null">
+               ${groupOp} id ${id.op}  #{id.data}
+           </if>
+           <if test="expertDayId!=null">
+               ${groupOp} expert_day_id ${expertDayId.op}  #{expertDayId.data}
+           </if>
+           <if test="timeSegment!=null">
+               ${groupOp} time_segment ${timeSegment.op}  #{timeSegment.data}
+           </if>
+           <if test="isAvailable!=null">
+               ${groupOp} is_available ${isAvailable.op}  #{isAvailable.data}
+           </if>
+
+       </where>
+    <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+    </if>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Integer">
+        SELECT
+        MAX(id)
+        FROM zgk_expert_service_times
+    </select>
+
+</mapper>
+

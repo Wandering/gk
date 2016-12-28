@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IExpertProductServiceDAO">
+<!--
+insert
+update
+updateNull
+deleteById
+deleteByCondition
+deleteByProperty
+fetch
+findOne
+findList
+findAll
+queryPage
+like
+queryList
+queryOne
+count
+selectMaxId
+updateOrSave
+selectOne
+selectList
+-->
+    <sql id="Base_Column_List">
+        id as id,
+        productId as productId,
+        areaId as areaId,
+        serviceId as serviceId,
+        serviceType as serviceType,
+        serviceTimes as serviceTimes,
+        serviceFrequency as serviceFrequency,
+        serviceIntroduce as serviceIntroduce,
+        serviceGrade as serviceGrade,
+        serviceIcon as serviceIcon
+    </sql>
+    <insert id="insert" parameterType="ExpertProductService">
+        INSERT INTO zgk_expert_product_service (
+        productId,
+        areaId,
+        serviceId,
+        serviceType,
+        serviceTimes,
+        serviceFrequency,
+        serviceIntroduce,
+        serviceGrade,
+        serviceIcon
+        ) VALUES (
+        #{productId},
+        #{areaId},
+        #{serviceId},
+        #{serviceType},
+        #{serviceTimes},
+        #{serviceFrequency},
+        #{serviceIntroduce},
+        #{serviceGrade},
+        #{serviceIcon}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+        SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="ExpertProductService">
+        UPDATE zgk_expert_product_service
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productId!=null">
+                productId = #{productId},
+            </if>
+            <if test="areaId!=null">
+                areaId = #{areaId},
+            </if>
+            <if test="serviceId!=null">
+                serviceId = #{serviceId},
+            </if>
+            <if test="serviceType!=null">
+                serviceType = #{serviceType},
+            </if>
+            <if test="serviceTimes!=null">
+                serviceTimes = #{serviceTimes},
+            </if>
+            <if test="serviceFrequency!=null">
+                serviceFrequency = #{serviceFrequency},
+            </if>
+            <if test="serviceIntroduce!=null">
+                serviceIntroduce = #{serviceIntroduce},
+            </if>
+            <if test="serviceGrade!=null">
+                serviceGrade = #{serviceGrade},
+            </if>
+            <if test="serviceIcon!=null">
+                serviceIcon = #{serviceIcon},
+            </if>
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateMap">
+        UPDATE zgk_expert_product_service
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.productId!=null">
+                productId = #{map.productId},
+            </if>
+            <if test="map.areaId!=null">
+                areaId = #{map.areaId},
+            </if>
+            <if test="map.serviceId!=null">
+                serviceId = #{map.serviceId},
+            </if>
+            <if test="map.serviceType!=null">
+                serviceType = #{map.serviceType},
+            </if>
+            <if test="map.serviceTimes!=null">
+                serviceTimes = #{map.serviceTimes},
+            </if>
+            <if test="map.serviceFrequency!=null">
+                serviceFrequency = #{map.serviceFrequency},
+            </if>
+            <if test="map.serviceIntroduce!=null">
+                serviceIntroduce = #{map.serviceIntroduce},
+            </if>
+            <if test="map.serviceGrade!=null">
+                serviceGrade = #{map.serviceGrade},
+            </if>
+            <if test="map.serviceIcon!=null">
+                serviceIcon = #{map.serviceIcon},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE zgk_expert_product_service
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.productId!=null">
+                productId = #{update.productId},
+            </if>
+            <if test="update.areaId!=null">
+                areaId = #{update.areaId},
+            </if>
+            <if test="update.serviceId!=null">
+                serviceId = #{update.serviceId},
+            </if>
+            <if test="update.serviceType!=null">
+                serviceType = #{update.serviceType},
+            </if>
+            <if test="update.serviceTimes!=null">
+                serviceTimes = #{update.serviceTimes},
+            </if>
+            <if test="update.serviceFrequency!=null">
+                serviceFrequency = #{update.serviceFrequency},
+            </if>
+            <if test="update.serviceIntroduce!=null">
+                serviceIntroduce = #{update.serviceIntroduce},
+            </if>
+            <if test="update.serviceGrade!=null">
+                serviceGrade = #{update.serviceGrade},
+            </if>
+            <if test="update.serviceIcon!=null">
+                serviceIcon = #{update.serviceIcon},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.productId!=null">
+                AND productId = #{condition.productId}
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
+            <if test="condition.serviceId!=null">
+                AND serviceId = #{condition.serviceId}
+            </if>
+            <if test="condition.serviceType!=null">
+                AND serviceType = #{condition.serviceType}
+            </if>
+            <if test="condition.serviceTimes!=null">
+                AND serviceTimes = #{condition.serviceTimes}
+            </if>
+            <if test="condition.serviceFrequency!=null">
+                AND serviceFrequency = #{condition.serviceFrequency}
+            </if>
+            <if test="condition.serviceIntroduce!=null">
+                AND serviceIntroduce = #{condition.serviceIntroduce}
+            </if>
+            <if test="condition.serviceGrade!=null">
+                AND serviceGrade = #{condition.serviceGrade}
+            </if>
+            <if test="condition.serviceIcon!=null">
+                AND serviceIcon = #{condition.serviceIcon}
+            </if>
+        </trim>
+    </update>
+
+    <insert id="insertMap" >
+        INSERT INTO zgk_expert_product_service (
+                productId,
+                areaId,
+                serviceId,
+                serviceType,
+                serviceTimes,
+                serviceFrequency,
+                serviceIntroduce,
+                serviceGrade,
+                serviceIcon
+        ) VALUES (
+                    #{map.productId},
+                    #{map.areaId},
+                    #{map.serviceId},
+                    #{map.serviceType},
+                    #{map.serviceTimes},
+                    #{map.serviceFrequency},
+                    #{map.serviceIntroduce},
+                    #{map.serviceGrade},
+                    #{map.serviceIcon}
+        )
+    </insert>
+
+
+    <update id="updateNull" parameterType="ExpertProductService">
+        UPDATE zgk_expert_product_service
+        <trim prefix="SET" suffixOverrides=",">
+            productId = #{productId},
+            areaId = #{areaId},
+            serviceId = #{serviceId},
+            serviceType = #{serviceType},
+            serviceTimes = #{serviceTimes},
+            serviceFrequency = #{serviceFrequency},
+            serviceIntroduce = #{serviceIntroduce},
+            serviceGrade = #{serviceGrade},
+            serviceIcon = #{serviceIcon},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        DELETE FROM zgk_expert_product_service
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </delete>
+
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM zgk_expert_product_service
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="productId!=null">
+                AND productId = #{productId}
+            </if>
+            <if test="areaId!=null">
+                AND areaId = #{areaId}
+            </if>
+            <if test="serviceId!=null">
+                AND serviceId = #{serviceId}
+            </if>
+            <if test="serviceType!=null">
+                AND serviceType = #{serviceType}
+            </if>
+            <if test="serviceTimes!=null">
+                AND serviceTimes = #{serviceTimes}
+            </if>
+            <if test="serviceFrequency!=null">
+                AND serviceFrequency = #{serviceFrequency}
+            </if>
+            <if test="serviceIntroduce!=null">
+                AND serviceIntroduce = #{serviceIntroduce}
+            </if>
+            <if test="serviceGrade!=null">
+                AND serviceGrade = #{serviceGrade}
+            </if>
+            <if test="serviceIcon!=null">
+                AND serviceIcon = #{serviceIcon}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM zgk_expert_product_service WHERE
+        ${property} = #{value}
+    </delete>
+
+    <select id="fetch" parameterType="java.lang.Integer" resultType="ExpertProductService">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_product_service
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="ExpertProductService">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_product_service WHERE
+        ${property} = #{value}
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="ExpertProductService">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_product_service WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="ExpertProductService">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_product_service
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="ExpertProductService">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_product_service
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.id!=null">
+                ${condition.groupOp}   id  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.productId!=null">
+                ${condition.groupOp}   productId  ${condition.productId.op}  #{condition.productId.data}
+            </if>
+            <if test="condition.areaId!=null">
+                ${condition.groupOp}   areaId  ${condition.areaId.op}  #{condition.areaId.data}
+            </if>
+            <if test="condition.serviceId!=null">
+                ${condition.groupOp}   serviceId  ${condition.serviceId.op}  #{condition.serviceId.data}
+            </if>
+            <if test="condition.serviceType!=null">
+                ${condition.groupOp}   serviceType  ${condition.serviceType.op}  #{condition.serviceType.data}
+            </if>
+            <if test="condition.serviceTimes!=null">
+                ${condition.groupOp}   serviceTimes  ${condition.serviceTimes.op}  #{condition.serviceTimes.data}
+            </if>
+            <if test="condition.serviceFrequency!=null">
+                ${condition.groupOp}   serviceFrequency  ${condition.serviceFrequency.op}  #{condition.serviceFrequency.data}
+            </if>
+            <if test="condition.serviceIntroduce!=null">
+                ${condition.groupOp}   serviceIntroduce  ${condition.serviceIntroduce.op}  #{condition.serviceIntroduce.data}
+            </if>
+            <if test="condition.serviceGrade!=null">
+                ${condition.groupOp}   serviceGrade  ${condition.serviceGrade.op}  #{condition.serviceGrade.data}
+            </if>
+            <if test="condition.serviceIcon!=null">
+                ${condition.groupOp}   serviceIcon  ${condition.serviceIcon.op}  #{condition.serviceIcon.data}
+            </if>
+
+
+    </where>
+
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="ExpertProductService">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_product_service
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id like CONCAT('%', #{id} , '%')
+            </if>
+            <if test="productId!=null">
+                AND productId like CONCAT('%', #{productId} , '%')
+            </if>
+            <if test="areaId!=null">
+                AND areaId like CONCAT('%', #{areaId} , '%')
+            </if>
+            <if test="serviceId!=null">
+                AND serviceId like CONCAT('%', #{serviceId} , '%')
+            </if>
+            <if test="serviceType!=null">
+                AND serviceType like CONCAT('%', #{serviceType} , '%')
+            </if>
+            <if test="serviceTimes!=null">
+                AND serviceTimes like CONCAT('%', #{serviceTimes} , '%')
+            </if>
+            <if test="serviceFrequency!=null">
+                AND serviceFrequency like CONCAT('%', #{serviceFrequency} , '%')
+            </if>
+            <if test="serviceIntroduce!=null">
+                AND serviceIntroduce like CONCAT('%', #{serviceIntroduce} , '%')
+            </if>
+            <if test="serviceGrade!=null">
+                AND serviceGrade like CONCAT('%', #{serviceGrade} , '%')
+            </if>
+            <if test="serviceIcon!=null">
+                AND serviceIcon like CONCAT('%', #{serviceIcon} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="ExpertProductService">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_product_service
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.productId!=null">
+                AND productId = #{condition.productId}
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
+            <if test="condition.serviceId!=null">
+                AND serviceId = #{condition.serviceId}
+            </if>
+            <if test="condition.serviceType!=null">
+                AND serviceType = #{condition.serviceType}
+            </if>
+            <if test="condition.serviceTimes!=null">
+                AND serviceTimes = #{condition.serviceTimes}
+            </if>
+            <if test="condition.serviceFrequency!=null">
+                AND serviceFrequency = #{condition.serviceFrequency}
+            </if>
+            <if test="condition.serviceIntroduce!=null">
+                AND serviceIntroduce = #{condition.serviceIntroduce}
+            </if>
+            <if test="condition.serviceGrade!=null">
+                AND serviceGrade = #{condition.serviceGrade}
+            </if>
+            <if test="condition.serviceIcon!=null">
+                AND serviceIcon = #{condition.serviceIcon}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="ExpertProductService">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_product_service
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.productId!=null">
+                AND productId = #{condition.productId}
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
+            <if test="condition.serviceId!=null">
+                AND serviceId = #{condition.serviceId}
+            </if>
+            <if test="condition.serviceType!=null">
+                AND serviceType = #{condition.serviceType}
+            </if>
+            <if test="condition.serviceTimes!=null">
+                AND serviceTimes = #{condition.serviceTimes}
+            </if>
+            <if test="condition.serviceFrequency!=null">
+                AND serviceFrequency = #{condition.serviceFrequency}
+            </if>
+            <if test="condition.serviceIntroduce!=null">
+                AND serviceIntroduce = #{condition.serviceIntroduce}
+            </if>
+            <if test="condition.serviceGrade!=null">
+                AND serviceGrade = #{condition.serviceGrade}
+            </if>
+            <if test="condition.serviceIcon!=null">
+                AND serviceIcon = #{condition.serviceIcon}
+            </if>
+        </trim>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(id) FROM zgk_expert_product_service
+       <where>
+           <if test="id!=null">
+               ${groupOp} id ${id.op}  #{id.data}
+           </if>
+           <if test="productId!=null">
+               ${groupOp} productId ${productId.op}  #{productId.data}
+           </if>
+           <if test="areaId!=null">
+               ${groupOp} areaId ${areaId.op}  #{areaId.data}
+           </if>
+           <if test="serviceId!=null">
+               ${groupOp} serviceId ${serviceId.op}  #{serviceId.data}
+           </if>
+           <if test="serviceType!=null">
+               ${groupOp} serviceType ${serviceType.op}  #{serviceType.data}
+           </if>
+           <if test="serviceTimes!=null">
+               ${groupOp} serviceTimes ${serviceTimes.op}  #{serviceTimes.data}
+           </if>
+           <if test="serviceFrequency!=null">
+               ${groupOp} serviceFrequency ${serviceFrequency.op}  #{serviceFrequency.data}
+           </if>
+           <if test="serviceIntroduce!=null">
+               ${groupOp} serviceIntroduce ${serviceIntroduce.op}  #{serviceIntroduce.data}
+           </if>
+           <if test="serviceGrade!=null">
+               ${groupOp} serviceGrade ${serviceGrade.op}  #{serviceGrade.data}
+           </if>
+           <if test="serviceIcon!=null">
+               ${groupOp} serviceIcon ${serviceIcon.op}  #{serviceIcon.data}
+           </if>
+
+       </where>
+    <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+    </if>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Integer">
+        SELECT
+        MAX(id)
+        FROM zgk_expert_product_service
+    </select>
+
+</mapper>
+

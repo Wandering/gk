@@ -38,7 +38,7 @@ dependencies {
 
     compile project(':login-service')
 
-    compile project(':market-service')
+
 
     compile project(':user-service')
 

@@ -1,14 +1,17 @@
 package cn.thinkjoy.gk.controller.api;
 
 import cn.thinkjoy.cloudstack.cache.RedisRepository;
+import cn.thinkjoy.common.domain.view.BizData4Page;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
+import cn.thinkjoy.gk.constant.RedisConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
+import cn.thinkjoy.gk.domain.GkAdmissionLine;
+import cn.thinkjoy.gk.pojo.UniversityEnrollingDTO;
+import cn.thinkjoy.gk.service.information.service.ex.IUniversityEnrollingExService;
 import cn.thinkjoy.gk.util.RedisUtil;
 import cn.thinkjoy.zgk.common.QueryUtil;
-import cn.thinkjoy.zgk.domain.BizData4Page;
-import cn.thinkjoy.zgk.domain.GkAdmissionLine;
 import cn.thinkjoy.zgk.remote.IGkAdmissionLineService;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
@@ -38,6 +41,11 @@ public class GkAdmissionLineController extends BaseApiController {
     private IGkAdmissionLineService gkAdmissionLineService;
     @Autowired
     private cn.thinkjoy.zgk.remote.IUniversityService iremoteUniversityService;
+
+    @Autowired
+    private IUniversityEnrollingExService universityEnrollingExService;
+
+    private static final RedisRepository redis = RedisUtil.getInstance();
     /**
      * 获取批次线分页方法
      * @return
@@ -45,70 +53,90 @@ public class GkAdmissionLineController extends BaseApiController {
     @ApiDesc(value = "获取分数线", owner = "杨永平")
     @RequestMapping(value = "/getGkAdmissionLineList.do",method = RequestMethod.GET)
     @ResponseBody
-    public BizData4Page<GkAdmissionLine> getGkAdmissionLineList(@ApiParam(param="queryparam", desc="标题模糊查询",required = false) @RequestParam(required = false) String queryparam,
-                                               @ApiParam(param="year", desc="年份",required = false) @RequestParam(required = false) String year,
-                                               @ApiParam(param="areaId", desc="页数",required = false) @RequestParam(required = false) String areaId,
-                                               @ApiParam(param="property", desc="院校特征",required = false) @RequestParam(required = false) String property,
-                                               @ApiParam(param="batch", desc="批次",required = false) @RequestParam(required = false) Integer batch,
-                                               @ApiParam(param="type", desc="科类",required = false) @RequestParam(defaultValue = "1",required = false) Integer type,
-                                               @ApiParam(param="page", desc="页数",required = false) @RequestParam(defaultValue = "1",required = false) Integer page,
-                                               @ApiParam(param="rows", desc="每页条数",required = false) @RequestParam(defaultValue = "10",required = false) Integer rows){
+    public BizData4Page getGkAdmissionLineList(@ApiParam(param="queryparam", desc="标题模糊查询",required = false) @RequestParam(required = false) String queryparam,
+                                                                @ApiParam(param="year", desc="年份",required = false) @RequestParam(required = false) String year,
+                                                                @ApiParam(param="areaId", desc="页数",required = false) @RequestParam(required = false) String areaId,
+                                                                @ApiParam(param="property", desc="院校特征",required = false) @RequestParam(required = false) String property,
+                                                                @ApiParam(param="batch", desc="批次",required = false) @RequestParam(required = false) Integer batch,
+                                                                @ApiParam(param="type", desc="科类",required = false) @RequestParam(defaultValue = "1",required = false) Integer type,
+                                                                @ApiParam(param="page", desc="页数",required = false) @RequestParam(defaultValue = "1",required = false) Integer page,
+                                                                @ApiParam(param="rows", desc="每页条数",required = false) @RequestParam(defaultValue = "10",required = false) Integer rows){
+        String admissionKey = RedisConst.ADMISSION_LINE_KEY+ RedisConst.ADMISSION_LINE_SPACE+queryparam+
+                RedisConst.ADMISSION_LINE_SPACE+year+areaId+
+                RedisConst.ADMISSION_LINE_SPACE+property+
+                RedisConst.ADMISSION_LINE_SPACE+batch+
+                RedisConst.ADMISSION_LINE_SPACE+type+
+                RedisConst.ADMISSION_LINE_SPACE+page+
+                RedisConst.ADMISSION_LINE_SPACE+rows;
+        if (redis.exists(admissionKey)){
+            BizData4Page object = JSON.parseObject((String) redis.hGet(RedisConst.ADMISSION_LINE_KEY,admissionKey),BizData4Page.class);
+            return object;
+        }else {
 
-        //默认参数设置
-        Map<String,Object> map=new HashMap<>();
-        map.put("groupOp","and");
-        map.put("orderBy","lastModDate");
-        map.put("sortBy","desc");
+            //默认参数设置
+            Map<String, Object> map = new HashMap<>();
+            map.put("groupOp", "and");
+            map.put("orderBy", "lastModDate");
+            map.put("sortBy", "desc");
 //        年份
-        if(year!=null &&!"".equals(year)) {
-            QueryUtil.setMapOp(map, "enrollingyear", "=", year);
-        }
+            if (year != null && !"".equals(year)) {
+                QueryUtil.setMapOp(map, "enrollingyear", "=", year);
+            }
 //        院校名称 模糊
-        if(queryparam!=null &&!"".equals(queryparam)) {
-            QueryUtil.setMapOp(map, "universityname", "like", "%" + queryparam + "%");
-        }
+            if (queryparam != null && !"".equals(queryparam)) {
+                QueryUtil.setMapOp(map, "universityname", "like", "%" + queryparam + "%");
+            }
 //        地区
-        if(areaId!=null &&!"".equals(areaId)) {
-            QueryUtil.setMapOp(map, "universityareaid", "=", areaId);
-        }
+            if (areaId != null && !"".equals(areaId)) {
+                QueryUtil.setMapOp(map, "universityareaid", "=", areaId);
+            }
 //        特征
-        if(property!=null &&!"".equals(property)) {
-            QueryUtil.setMapOp(map, "universityproperty", "like", "%" + property + "%");
-        }
+            if (property != null && !"".equals(property)) {
+                QueryUtil.setMapOp(map, "universityproperty", "like", "%" + property + "%");
+            }
 //        批次
-        if(batch!=null) {
-            QueryUtil.setMapOp(map, "enrollingbatch", "=", batch);
-        }
+            if (batch != null) {
+                QueryUtil.setMapOp(map, "enrollingbatch", "=", batch);
+            }
+
+            Long area = this.getAreaId();
+            if (area != null) {
+                QueryUtil.setMapOp(map, "enrollingareaid", "=", area);
+            }
 //        文史/理工
-         QueryUtil.setMapOp(map, "entype", "=", type);
-        map.put("orderBy","rank IS NULL,rank,year");
-        map.put("sortBy","asc");
+            QueryUtil.setMapOp(map, "entype", "=", type);
+            map.put("orderBy", "rank IS NULL,rank,year");
+            map.put("sortBy", "asc");
 
 
-        BizData4Page<GkAdmissionLine> bizData4Page=gkAdmissionLineService.getGkAdmissionLineList(map,page,rows);
-        for(GkAdmissionLine gkAdmissionLine:bizData4Page.getRows()){
-            String[] propertys2= null;
-            Map<String,Object> propertyMap=new HashMap();
-            if(StringUtils.isNotEmpty(gkAdmissionLine.getProperty().toString())){
-                propertys2=gkAdmissionLine.getProperty().split(",");
-                Map<String,Object> propertysMap =getPropertys();
+//        BizData4Page<GkAdmissionLine> bizData4Page=gkAdmissionLineService.getGkAdmissionLineList(map,page,rows);
+            BizData4Page<GkAdmissionLine> bizData4Page = doPage(map, universityEnrollingExService, page, rows);
 
-                for(String str:propertys2){
-                    Iterator<String> propertysIterator=propertysMap.keySet().iterator();
-                    while (propertysIterator.hasNext()){
-                        String key = propertysIterator.next();
-                        String value=propertysMap.get(key).toString();
-                        if(str.indexOf(value)>-1){
-                            propertyMap.put(key,value);
+            for (GkAdmissionLine gkAdmissionLine : bizData4Page.getRows()) {
+                String[] propertys2 = null;
+                Map<String, Object> propertyMap = new HashMap();
+                if (StringUtils.isNotEmpty(gkAdmissionLine.getProperty().toString())) {
+                    propertys2 = gkAdmissionLine.getProperty().split(",");
+                    Map<String, Object> propertysMap = getPropertys();
+
+                    for (String str : propertys2) {
+                        Iterator<String> propertysIterator = propertysMap.keySet().iterator();
+                        while (propertysIterator.hasNext()) {
+                            String key = propertysIterator.next();
+                            String value = propertysMap.get(key).toString();
+                            if (str.indexOf(value) > -1) {
+                                propertyMap.put(key, value);
+                            }
                         }
                     }
                 }
+                gkAdmissionLine.setPropertys(propertyMap);
             }
-            gkAdmissionLine.setPropertys(propertyMap);
+            redis.hSet(RedisConst.ADMISSION_LINE_KEY,admissionKey,JSON.toJSONString(bizData4Page));
+            return bizData4Page;
         }
 
 
-        return bizData4Page;
     }
     /**
      * 获取批次线分页方法
@@ -118,15 +146,7 @@ public class GkAdmissionLineController extends BaseApiController {
     @RequestMapping(value = "/getYears.do",method = RequestMethod.GET)
     @ResponseBody
     public List getYears(){
-        List list = new ArrayList();
-        Calendar a=Calendar.getInstance();
-        int year=a.get(Calendar.YEAR);
-//        list.add(year);
-        list.add(year-1);
-        list.add(year-2);
-        list.add(year-3);
-        list.add(year-4);
-        return list;
+        return universityEnrollingExService.getYear();
     }
 
     private Map<String,Object> getPropertys(){
@@ -146,5 +166,50 @@ public class GkAdmissionLineController extends BaseApiController {
             redisRepository.set(key,JSON.toJSON(propertysMap),TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
         }
         return propertysMap;
+    }
+
+    /**
+     * 将父级domain转换重写实现
+     * @param conditions
+     * @return
+     */
+    @Override
+    protected Object enhanceStateTransition(List conditions) {
+        return domain2GkAdmissionLine(conditions);
+    }
+
+
+    /**
+     * api需要domainList和admindomainList转换
+     * @param universityEnrollingDTOs
+     * @return
+     */
+    private List<GkAdmissionLine> domain2GkAdmissionLine(List<UniversityEnrollingDTO> universityEnrollingDTOs){
+        if(universityEnrollingDTOs==null)return null;
+        List<GkAdmissionLine> gkAdmissionLines = new ArrayList<>();
+        for(UniversityEnrollingDTO universityEnrollingDTO:universityEnrollingDTOs){
+            gkAdmissionLines.add(domain2GkAdmissionLine(universityEnrollingDTO));
+        }
+        return gkAdmissionLines;
+    }
+
+    /**
+     * api需要domain和admindomain转换
+     * @param universityEnrollingDTO
+     * @return
+     */
+    private GkAdmissionLine domain2GkAdmissionLine(UniversityEnrollingDTO universityEnrollingDTO){
+        GkAdmissionLine gkAdmissionLine=new GkAdmissionLine();
+        gkAdmissionLine.setId(universityEnrollingDTO.getUniversityId());
+        gkAdmissionLine.setName(universityEnrollingDTO.getName());
+        gkAdmissionLine.setAverageScore(universityEnrollingDTO.getAverageScore());
+        gkAdmissionLine.setBatchname(universityEnrollingDTO.getBatchname());
+        gkAdmissionLine.setHighestScore(universityEnrollingDTO.getHighestScore());
+        gkAdmissionLine.setLowestScore(universityEnrollingDTO.getLowestScore());
+        gkAdmissionLine.setProperty(universityEnrollingDTO.getProperty());
+        gkAdmissionLine.setTypename(universityEnrollingDTO.getTypename());
+        gkAdmissionLine.setYear(universityEnrollingDTO.getYear());
+        gkAdmissionLine.setSubjection(universityEnrollingDTO.getSubjection());
+        return gkAdmissionLine;
     }
 }

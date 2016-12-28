@@ -18,8 +18,10 @@ public enum ERRORCODE {
 	SCHOOL_NO_EXIST("0100011", "学校不存在"),
 	USER_NO_EXIST("0100012", "用户不存在"),
 	USER_EXPIRED("0100013", "用户信息已过期"),
+	USER_UN_LOGIN("0100014", "用户未登录"),
 
 	AUTHENTICATION_FAIL("0100020", "鉴权失败"),
+	ACCOUNT_BIND_ERROR("0100021", "账户绑定失败"),
 
 	/**
 	 * 登录
@@ -56,6 +58,12 @@ public enum ERRORCODE {
 	PARAM_ISNULL("0700001","参数不能为空"),
 	NO_RECORD("0800001","无记录"),
 	VIP_EXIST("0900001","该用户已经是VIP了，请勿重复申请"),
+	NO_VIP("0100001","您还不是VIP用户,请先成为VIP用户后再使用该服务!"),
+	EXPERT_VIP_UN_EXIST("0100002","该用户的VIP不是具有专家的VIP"),
+	EXPERT_VIP_ZERO("0100003","您购买的产品服务已使用完，请另行购买后再预约课程！"),
+	NO_EXPERT_SERVICE("0100004","该用户不具备该专家服务的权限"),
+	YES_EXPERT_SERVICE("0100005","该用户已经预约该专家"),
+	EXPERT_SERVICE_TIME_N("0100006","专家服务时间不可用"),
 	VIP_CARD_NOT_INVALID("0900002","信息输入错误，请仔细核对信息!"),
 	VIP_CARD_USED("0900003", "该卡已激活，请输入新的卡号!"),
 	VIP_UPGRADE_FAIL("0900004", "升级失败，请联系客服查询详细信息!"),
@@ -66,6 +74,7 @@ public enum ERRORCODE {
 	VERIFY_CODE_ERROR("0100005", "验证码错误!"),
 	NOT_IS_VIP_ERROR("0100006", "升级成VIP用户才可使用该功能，快点升级VIP用户去吧！"),
 	CARD_HAS_ACTIVATE("0100007", "该卡已被激活!"),
+	ORDER_PAY_FAIL("0100008", "支付失败!"),
 
 	PARAM_NOTEXIST("0600001", "查询参数不存在"),
 	IDISNOTNULL("0600002", "id不能为空"),
@@ -94,7 +103,21 @@ public enum ERRORCODE {
 
 	IMAGE_CAPTCHA_NOT_EXIST_ERROR("0600011", "图形验证码已失效,或者不存在!"),
 
-	IMAGE_CAPTCHA_INVALID_ERROR("0600012", "图形验证码错误!");
+	IMAGE_CAPTCHA_INVALID_ERROR("0600012", "图形验证码错误!"),
+
+	EVALUATION_IS_NULL("0600014", "测评结果不能为空!"),
+
+	COLLECTION_EXIST("0600015", "该组合已经被收藏!"),
+
+	SELECT_SUBJECT_IDENTICAL("0600013", "只有不同的选课方案才能做对比哦!"),
+
+	DELETE_CHANNEL_FAIL("0600014", "没有权限删除频道"),
+
+	DELETE_CHANNEL_ERROR("0600015", "删除频道出错,请稍后再试"),
+
+	CREATE_CHANNEL_FAIL("0600016", "创建频道失败,请稍后再试"),
+
+	GET_CHANNEL_STATE_FAIL("0600017", "获取频道状态失败,请稍后再试");
 
 	/** The code. */
 	private final String code;
@@ -104,7 +127,7 @@ public enum ERRORCODE {
 
 	/**
 	 * Instantiates a new error type.
-	 * 
+	 *
 	 * @param code
 	 *            the code
 	 * @param message
@@ -117,7 +140,7 @@ public enum ERRORCODE {
 
 	/**
 	 * Gets the code.
-	 * 
+	 *
 	 * @return the code
 	 */
 	public String getCode() {
@@ -126,7 +149,7 @@ public enum ERRORCODE {
 
 	/**
 	 * Gets the message.
-	 * 
+	 *
 	 * @return the message
 	 */
 	public String getMessage() {

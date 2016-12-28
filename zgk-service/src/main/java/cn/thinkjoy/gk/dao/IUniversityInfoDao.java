@@ -1,6 +1,8 @@
 package cn.thinkjoy.gk.dao;
 
 import cn.thinkjoy.common.dao.IBaseDAO;
+import cn.thinkjoy.gk.entity.UniversityEnrollView;
+import cn.thinkjoy.gk.entity.UniversityInfoEnrolling;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,7 +32,12 @@ public interface IUniversityInfoDao extends IBaseDAO<UniversityInfoView> {
      * @return
      */
     public List<UniversityInfoView> selectUniversityInfoByLineDiff(Map map);
-
+    /**
+     * 难易预测&成绩分析
+     * @param map
+     * @return
+     */
+    List<UniversityInfoEnrolling> selectUniversityEnrolling(Map map);
 
     /**
      * 获取计划招生数
@@ -66,6 +73,7 @@ public interface IUniversityInfoDao extends IBaseDAO<UniversityInfoView> {
 
     List<Map<String, Object>> getUniversityEnrollingInfo(Map<String, String> map);
 
+
     /**
      * 通过年份和地区获取批次
      * @param map
@@ -75,4 +83,33 @@ public interface IUniversityInfoDao extends IBaseDAO<UniversityInfoView> {
 
     List getUniversityMajorListByUniversityId(@Param("condition") Map<String, Object> condition, @Param("offset") int offset, @Param("rows") int rows,
                              @Param("orderBy") String orderBy, @Param("sortBy") String sortBy,@Param("selector")Map<String, Object> selectorpage);
+
+    /**
+     * 查询学校录取信息
+     * @param condition
+     * @param sortBy
+     * @return
+     */
+    List<UniversityEnrollView> selectUnivEnrollInfo(@Param("maps") List<Map<String, Object>> condition,@Param("isJoin") boolean isJoin,
+                                                    @Param("sortBy") String sortBy);
+
+    /**
+     * 查询学校是否在该批次录取
+     * @param condition
+     * @return
+     */
+    List<Long> selectUnivInfoIdInBatch(@Param("condition") Map<String, Object> condition);
+
+    /**
+     * 根据省份ID和学校所在省份ID查询录取年份集合
+     *
+     * @param currentProId
+     * @param schoolProId
+     * @return
+     */
+    List<String> getEnrollingYearsByProvinceId(
+            @Param("currentProId") long currentProId,
+            @Param("schoolProId") long schoolProId
+    );
+
 }

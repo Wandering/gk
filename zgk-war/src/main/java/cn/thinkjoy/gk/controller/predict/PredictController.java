@@ -76,7 +76,7 @@ public class PredictController extends BaseApiController {
     @VipMethonTag
     public Map<String, Object> predictProbability(@RequestParam(value = "universityName") String name,
                                                   @RequestParam(value = "score") int score,
-                                                  @RequestParam(value = "type") String type)
+                                                  @RequestParam(value = "type",required = false) String type)
     {
         if(score <= 0 || score > 999)
         {
@@ -119,7 +119,8 @@ public class PredictController extends BaseApiController {
         Map<String, Object> params = new HashMap<>();
         params.put("universityName", name);
         params.put("score", score);
-        params.put("type", type);
+        if(!StringUtils.isBlank(type))
+            params.put("type", type);
         params.put("areaId", getAreaId());
         Map<String, Object> resultMap = new HashMap<>();
         try {
@@ -127,7 +128,8 @@ public class PredictController extends BaseApiController {
         } catch (Exception e) {
             setBatch(score, type, resultMap);
             resultMap.put("probability", 0);
-            resultMap.put("type", type);
+            if (!StringUtils.isBlank(type))
+                resultMap.put("type", type);
         }
         resultMap.put("universityName", name);
         resultMap.put("score", score);

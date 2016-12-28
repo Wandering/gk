@@ -22,6 +22,9 @@ public class Order extends BaseDomain {
     private Integer goodsCount;
     private String handleState = "0";
     private String channel;
+    //手机号 2.0需求新加参数
+    private String phone;
+    private Long cardId;
 
     public String getUnitPrice() {
         return unitPrice;
@@ -163,6 +166,22 @@ public class Order extends BaseDomain {
 
     public void setChannel(String channel) {
         this.channel = channel;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Long getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(Long cardId) {
+        this.cardId = cardId;
     }
 
     public boolean equals(Object obj) {

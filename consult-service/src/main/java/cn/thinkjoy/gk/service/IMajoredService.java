@@ -5,6 +5,7 @@ import cn.thinkjoy.gk.pojo.MajorDetailPojo;
 import cn.thinkjoy.gk.pojo.MajoredDto;
 import cn.thinkjoy.gk.pojo.SubjectDto;
 import cn.thinkjoy.gk.query.MajoredQuery;
+import cn.thinkjoy.gk.dto.MajoredCategoryRemoteDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -35,10 +36,18 @@ public interface IMajoredService {
      */
     Map<String,String> getMajoredInfoByKeywords(String keywords);
 
-    List<Map<String,Object>> getMajorOpenUniversityList(int majorId,int majorType,int offset,int rows);
+    List<Map<String,Object>> getMajorOpenUniversityList(String majorId,int majorType,int offset,int rows);
 
-    int getMajorOpenUniversityCount(int majorId,int majorType);
+    int getMajorOpenUniversityCount(String majorId,int majorType);
 
     Map<String,Object> getJobOrientation(int majorId);
+
+    MajoredCategoryRemoteDTO getCategoryMajoredList(long categoryId);
+
+    MajoredCategoryRemoteDTO getMajoredCategory(long type);
+
+    List getMajoredByName(String majoredName,String type);
+
+    Map getMajoredInfoById(String majorCode);
 
 }

@@ -87,3 +87,5 @@
 /.idea/
 *.iml
 /classes/
+*.class
+*/build/*

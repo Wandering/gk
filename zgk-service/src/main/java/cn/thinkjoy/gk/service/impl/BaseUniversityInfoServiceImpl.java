@@ -215,6 +215,20 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
     public Integer getLineDiff(String batch, Integer score, Integer cate, String provinceCode) {
         return  iSystemParmasService.getLineDiff(batch,score,cate,provinceCode);
     }
+
+    /**
+     * 难以预测 -逻辑走向   1-true:存在
+     * @param key
+     * @return
+     */
+    @Override
+    public boolean enrollingLogin(String key,Integer cate) {
+        Map map = new HashMap();
+        map.put("configKey", key);
+        map.put("majorType",cate);
+        SystemParmas systemParmas = iSystemParmasService.selectModel(map);
+        return systemParmas == null ? false : (Integer.valueOf(systemParmas.getConfigValue()) == 1 ? true : false);
+    }
     /*************************************************线差法*************************************************/
     /**
      * 根据线差信息获取线差法动态参数
@@ -288,7 +302,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
             map.put("majorType", initMap.get("majorType"));
             map.put("scoreDiff", initMap.get("scoreDiff"));
             map.put("areaId",initMap.get("areaId"));
-            map.put("batch",initMap.get("batch"));
+            map.put("batch", initMap.get("batch"));
                     //院校排名规则
             if (rankingRoleParmas.getWhoDim() == ReportEnum.RankDim.RANK.getValue()) {
                 LOGGER.info("-------走排名规则 start-------");
@@ -375,7 +389,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
 
         LOGGER.info("batch:" + batch);
 
-        Integer preNum = (batch == 4 ? Integer.valueOf(systemParmas.getConfigValue()) : Integer.valueOf(precedence)), firstValue = Integer.valueOf(first);
+        Integer preNum = (batch == 8 ? Integer.valueOf(systemParmas.getConfigValue()) : Integer.valueOf(precedence)), firstValue = Integer.valueOf(first);
 
         LOGGER.info("阀值:" + preNum);
 
@@ -428,7 +442,7 @@ public class BaseUniversityInfoServiceImpl implements IBaseUniversityInfoService
             map.put("majorType", initMap.get("majorType"));
             map.put("precedenceParmas", initMap.get("precedenceParmas"));
             map.put("areaId",initMap.get("areaId"));
-            map.put("batch",initMap.get("batch"));
+            map.put("batch", initMap.get("batch"));
             //院校排名规则
             if (rankingRoleParmas.getWhoDim() == ReportEnum.RankDim.RANK.getValue()) {
                 LOGGER.info("-------走排名规则 start-------");

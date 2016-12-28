@@ -26,15 +26,19 @@
     </context:component-scan>
 
     <mvc:interceptors >
-        <bean class="cn.thinkjoy.gk.interceptor.LoginInterceptor"></bean>
+
         <bean class="cn.thinkjoy.gk.interceptor.CrossInterceptor" ></bean>
+        <bean class="cn.thinkjoy.gk.interceptor.LoginInterceptor"></bean>
         <!--<mvc:interceptor>-->
             <!--<mvc:mapping path="/index.do"/>-->
         <!--</mvc:interceptor>-->
     </mvc:interceptors>
 
+
+
+
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/" />
+		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
 
@@ -82,19 +86,21 @@
                         <prop key="kaptcha.border">yes</prop>
                         <prop key="kaptcha.border.color">black</prop>
                         <prop key="kaptcha.textproducer.font.color">black</prop>
-                        <prop key="kaptcha.textproducer.font.size">32</prop>
-                        <prop key="kaptcha.textproducer.font.names">courier new,Light Italic,Regular Italic,Medium Italic,Bold Italic,Mono Regular Italic</prop>
-                        <prop key="kaptcha.textproducer.char.string">acdefhjkmnpqrstuvwxy0123456789</prop>
-                        <prop key="kaptcha.textproducer.char.length">6</prop>
+                        <prop key="kaptcha.textproducer.font.size">36</prop>
+                        <prop key="kaptcha.textproducer.font.names">courier new</prop>
+                        <prop key="kaptcha.textproducer.char.string">cdfhkrstuvwxy34678</prop>
+                        <prop key="kaptcha.textproducer.char.length">4</prop>
                         <prop key="kaptcha.image.width">123</prop>
-                        <prop key="kaptcha.image.height">42</prop>
+                        <prop key="kaptcha.image.height">44</prop>
                         <prop key="kaptcha.session.key">valicode</prop>
                         <prop key="kaptcha.noise.impl">com.google.code.kaptcha.impl.DefaultNoise</prop>
                         <prop key="kaptcha.noise.color">black</prop>
                         <prop key="kaptcha.background.impl">com.google.code.kaptcha.impl.DefaultBackground</prop>
                         <prop key="kaptcha.background.clear.from">203,223,241</prop>
                         <prop key="kaptcha.background.clear.to">212,231,230</prop>
+                        <!--<prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.WaterRipple</prop>-->
                         <prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.FishEyeGimpy</prop>
+                        <!--<prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.ShadowGimpy</prop>-->
                     </props>
                 </constructor-arg>
             </bean>

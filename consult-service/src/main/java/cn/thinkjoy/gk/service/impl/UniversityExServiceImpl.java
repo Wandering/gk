@@ -9,6 +9,7 @@ package cn.thinkjoy.gk.service.impl;
 import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.gk.dao.IUniversityExDAO;
 import cn.thinkjoy.gk.domain.University;
+import cn.thinkjoy.gk.pojo.SpecialMajorDto;
 import cn.thinkjoy.gk.pojo.UniversityDetailDto;
 import cn.thinkjoy.gk.service.IUniversityExService;
 import cn.thinkjoy.gk.util.RedisUtil;
@@ -132,5 +133,41 @@ public class UniversityExServiceImpl implements IUniversityExService{
     @Override
     public List getUniversityMajorEnrollingPlanList(Map<String, Object> condition) {
         return universityExDAO.getUniversityMajorEnrollingPlanList(condition);
+    }
+
+    @Override
+    public Map<String, List<String>> initSerachCondition(long provinceId,String category) {
+
+        Map<String, List<String>> returnMap = Maps.newHashMap();
+        returnMap.put("years",universityExDAO.getYearsByProvinceId(provinceId,category));
+        returnMap.put("batchs",universityExDAO.getBatchsByProvinceId(provinceId,category));
+        return returnMap;
+    }
+
+    @Override
+    public List<SpecialMajorDto> searchSpecialMajorInfo(String schoolName, String year, String batch, Integer majorType, Long userProvinceId, Long schoolProvinceId,String category, Integer pageNo, Integer pageSize) {
+        List<SpecialMajorDto> dtos = universityExDAO.searchSpecialMajorInfo(
+                schoolName,
+                year,
+                batch,
+                majorType,
+                userProvinceId,
+                schoolProvinceId,
+                category,
+                (pageNo-1)*pageSize,
+                pageSize
+        );
+        return dtos;
+    }
+
+    /**
+     * 根据省份获取特定类别
+     *
+     * @param areaId
+     * @return
+     */
+    @Override
+    public List<String> searchSpecialMajorSpec(Long areaId) {
+        return universityExDAO.searchSpecialMajorSpec(areaId);
     }
 }

@@ -21,6 +21,7 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.jlusoft.microschool.core.utils.JsonMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
@@ -99,7 +100,18 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         UserInfo userInfo = new UserInfo();
         userInfo.setId(id);
         String account = userAccount.getAccount();
-        userInfo.setName("gk-" + account.substring(0,3)+"****"+account.substring(account.length()-4,account.length()));
+        if(StringUtils.isNotBlank(userAccount.getNickName()))
+        {
+            userInfo.setName(userAccount.getNickName());
+        }else if (StringUtils.isNotBlank(account))
+        {
+            userInfo.setName("gk-" + account.substring(0, 3) + "****" + account.substring(account.length() - 4, account.length()));
+        }
+        if(StringUtils.isNotBlank(userAccount.getAvatar()))
+        {
+            userInfo.setIcon(userAccount.getAvatar());
+        }
+        userInfo.setAlipayUserId(account);
         userInfo.setToken(UUID.randomUUID().toString());
         userInfo.setProvinceId(userAccount.getProvinceId());
         userInfo.setCityId(userAccount.getCityId());
@@ -218,4 +230,51 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         return userAccountExDAO.updateUserAccountRegistXueTang(paramMap);
     }
 
+    @Override
+    public Map<String, Object> findUserInfoByAlipayId(String alipayId)
+    {
+        Map<String, String> params = new HashMap<String,String>();
+        params.put("alipayUserId",alipayId);
+        return userAccountExDAO.findUserInfoByAlipayId(params);
+    }
+
+    @Override
+    public boolean bindUserAccount(UserAccount userAccount) {
+        boolean flag;
+        userAccountDAO.update(userAccount);
+        flag = true;
+        return flag;
+    }
+
+    @Override
+    public boolean bindUserAccountExist(UserAccountPojo userAccountPojo, String userId, String aliUserId)
+    {
+        boolean flag;
+        userAccountDAO.deleteById(userId);
+        userInfoDAO.deleteById(userId);
+        userVipDAO.deleteById(userId);
+        userExamDAO.deleteById(userId);
+        userMarketDAO.deleteById(userId);
+        Long existUserId = userAccountPojo.getId();
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(existUserId);
+        userInfo.setAlipayUserId(aliUserId);
+        userInfoExDAO.updateUserAliUserId(userInfo);
+        flag = true;
+        return flag;
+    }
+
+    @Override
+    public void updateUserQQUserId(UserAccountPojo userAccountPojo, String userId, String qqUserId) {
+        userAccountDAO.deleteById(userId);
+        userInfoDAO.deleteById(userId);
+        userVipDAO.deleteById(userId);
+        userExamDAO.deleteById(userId);
+        userMarketDAO.deleteById(userId);
+        Long existUserId = userAccountPojo.getId();
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(existUserId);
+        userInfo.setQqUserId(qqUserId);
+        userInfoExDAO.updateUserQQUserId(userInfo);
+    }
 }

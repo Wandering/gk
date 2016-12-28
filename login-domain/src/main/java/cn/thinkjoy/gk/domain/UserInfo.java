@@ -66,6 +66,18 @@ public class UserInfo extends BaseDomain<Long>{
     private String sharerType;
     private String agentLevel;
     private String vipType;
+    private String alipayUserId;
+    private String qqUserId;
+
+    public String getAlipayUserId()
+    {
+        return alipayUserId;
+    }
+
+    public void setAlipayUserId(String alipayUserId)
+    {
+        this.alipayUserId = alipayUserId;
+    }
 
     public UserInfo(){
     }
@@ -252,6 +264,14 @@ public class UserInfo extends BaseDomain<Long>{
 
     public void setVipType(String vipType) {
         this.vipType = vipType;
+    }
+
+    public String getQqUserId() {
+        return qqUserId;
+    }
+
+    public void setQqUserId(String qqUserId) {
+        this.qqUserId = qqUserId;
     }
 
     public String toString() {

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IExpertOrderDAO">
+<!--
+insert
+update
+updateNull
+deleteById
+deleteByCondition
+deleteByProperty
+fetch
+findOne
+findList
+findAll
+queryPage
+like
+queryList
+queryOne
+count
+selectMaxId
+updateOrSave
+selectOne
+selectList
+-->
+
+    <sql id="Base_Column_List">
+        ord.id as id,
+        ord.card_id as cardId,
+        ord.service_item as serviceItem,
+        ord.user_id as userId,
+        ord.expert_id as expertId,
+        ord.channel as channel,
+        ord.channel_num as channelNum,
+        ord.contact_person as contactPerson,
+        ord.contact_phone as contactPhone,
+        ord.expect_time as expectTime,
+        ord.end_time as endTime,
+        ord.question_desc as questionDesc,
+        ord.agree_mark as agreeMark,
+        ord.status as status,
+        ord.score as score,
+        ord.comments as comments,
+        ord.create_date as createDate,
+        ord.service_count as serviceCount,
+        IFNULL((SELECT serviceType  from zgk_expert_product_service config where config.serviceId =  ord.service_item
+			and config.productId = card.productType
+			AND config.areaId = userinfo.provinceId
+		),(SELECT serviceType  from zgk_expert_product_service config where config.serviceId =  ord.service_item
+			and config.productId = card.productType
+			AND config.areaId = 0))as serviceName,
+			info.expert_name as expertName
+    </sql>
+    <update id="updateMap">
+        UPDATE zgk_expert_reservation_order_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.cardId!=null">
+                card_id = #{map.cardId},
+            </if>
+            <if test="map.serviceItem!=null">
+                service_item = #{map.serviceItem},
+            </if>
+            <if test="map.userId!=null">
+                user_id = #{map.userId},
+            </if>
+            <if test="map.expertId!=null">
+                expert_id = #{map.expertId},
+            </if>
+            <if test="map.channel!=null">
+                channel = #{map.channel},
+            </if>
+            <if test="map.channelNum!=null">
+                channel_num = #{map.channelNum},
+            </if>
+            <if test="map.contactPerson!=null">
+                contact_person = #{map.contactPerson},
+            </if>
+            <if test="map.contactPhone!=null">
+                contact_phone = #{map.contactPhone},
+            </if>
+            <if test="map.expectTime!=null">
+                expect_time = #{map.expectTime},
+            </if>
+            <if test="map.endTime!=null">
+                end_time = #{map.endTime},
+            </if>
+            <if test="map.questionDesc!=null">
+                question_desc = #{map.questionDesc},
+            </if>
+            <if test="map.agreeMark!=null">
+                agree_mark = #{map.agreeMark},
+            </if>
+            <if test="map.status!=null">
+                status = #{map.status},
+            </if>
+            <if test="map.score!=null">
+                score = #{map.score},
+            </if>
+            <if test="map.comments!=null">
+                comments = #{map.comments},
+            </if>
+            <if test="map.createDate!=null">
+                create_date = #{map.createDate},
+            </if>
+            <if test="map.serviceCount!=null">
+                service_count = #{map.serviceCount},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <select id="queryPage" resultType="ExpertReservationOrderDetailDTO" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_reservation_order_detail ord
+        LEFT JOIN zgk_expert_info info on ord.expert_id =info.id
+        INNER JOIN zgk_card card on ord.card_id = card.id
+        INNER JOIN zgk_user_info userinfo on userinfo.id = ord.user_id
+        <where>
+            <if test="condition.expertId != null">
+                and ord.expert_id = #{condition.expertId}
+            </if>
+        </where>
+
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(id) FROM zgk_expert_reservation_order_detail
+        <where>
+            <if test="expertId!=null">
+                and expert_id = #{condition.expertId}
+            </if>
+        </where>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+</mapper>
+

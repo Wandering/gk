@@ -250,7 +250,7 @@
 
     <!-- 根据关键词查询学校基本信息 -->
     <select id="getUniversityInfoByKeywords" parameterType="java.util.Map" resultType="University">
-        SELECT id,name from zgk_university where name ='电子科技大学' union
+        SELECT id,name from zgk_university where name =#{keywords} union
         select id,name from zgk_university where name like CONCAT('%',#{keywords},'%') LIMIT 5
     </select>
 
@@ -555,5 +555,82 @@
         <if test="offset != null">
             limit ${offset}, ${rows}
         </if>
+    </select>
+
+    <!-- 根据省份ID查询录取年份集合 -->
+    <select id="getYearsByProvinceId" parameterType="long" resultType="String">
+        SELECT
+            `year`
+        FROM
+            zgk_university_special_enrolling
+        WHERE
+            areaId = #{provinceId}
+        and majorSpec = #{category}
+        GROUP BY
+            `year`
+    </select>
+
+    <!-- 根据省份ID查询录取批次集合 -->
+    <select id="getBatchsByProvinceId" parameterType="long" resultType="String">
+        SELECT
+            batch
+        FROM
+            zgk_university_special_enrolling
+        WHERE
+            areaId = #{provinceId}
+        and majorSpec = #{category}
+        GROUP BY
+            batch
+        ORDER BY batch desc
+    </select>
+
+    <!-- 根据条件查询院校招生信息 -->
+    <select id="searchSpecialMajorInfo" parameterType="map" resultType="cn.thinkjoy.gk.pojo.SpecialMajorDto">
+        SELECT
+            t0.universityId,
+            t0.universityName,
+            t0.majorType,
+            t0.majorSpec as majorCatagory,
+            t0.planEnrollingNumber,
+            t0.realEnrollingNumber,
+            t0.batch,
+            t0.year,
+            t0.highestScore,
+            t0.lowestScore,
+            t0.averageScore
+        FROM
+            zgk_university_special_enrolling t0,
+            zgk_university t1
+        WHERE
+            t0.universityId = t1.id
+            <if test="userProvinceId != null">
+                AND t0.areaId = #{userProvinceId}
+            </if>
+            <if test="schoolName != null and schoolName != ''">
+                AND t0.universityName LIKE CONCAT('%',#{schoolName},'%')
+            </if>
+            <if test="year != null and year != ''">
+                AND t0.year = #{year}
+            </if>
+            <if test="batch != null and batch != ''">
+                AND t0.batch = #{batch}
+            </if>
+            <if test="majorType != null">
+                AND t0.majorType = #{majorType}
+            </if>
+            <if test="schoolProvinceId != null">
+                AND t1.provinceCode = #{schoolProvinceId}
+            </if>
+            <if test="category != null and category != ''">
+                AND t0.majorSpec = #{category}
+            </if>
+        LIMIT #{index},#{pageSize}
+    </select>
+
+    <select id="searchSpecialMajorSpec" resultType="java.lang.String">
+          SELECT aa.majorSpec
+          from zgk_university_special_enrolling aa
+          WHERE aa.areaId = #{areaId}
+          GROUP BY majorSpec
     </select>
 </mapper>

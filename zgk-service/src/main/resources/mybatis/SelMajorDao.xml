@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.selcourse.ISelMajorDao">
+
+    <!--加入收藏表,当isJoin=true的时候加入本段sql,左关联-->
+    <sql id="MAJOR_JOIN_LEFT">
+        LEFT JOIN zgk_user_collection_3in7 collection
+        on
+        collection.universityId = zz.universityId
+        and collection.majorCode = zz.majorCode
+        and tmp.batch=collection.batch
+        AND collection.userId = #{userId}
+    </sql>
+    <!--加入收藏表,当isJoin=true的时候加入本段sql,必然关联-->
+    <sql id="MAJOR_JOIN_INNER">
+        INNER JOIN zgk_user_collection_3in7 collection
+        on
+        collection.universityId = zz.universityId
+        and collection.majorCode = zz.majorCode
+        and tmp.batch=collection.batch
+        AND collection.userId = #{userId}
+    </sql>
+
+    <select id="selectSubjectNumber" resultType="cn.thinkjoy.gk.pojo.SelSubjectNumberPojo" parameterType="java.util.Map">
+        select subject,sum(number) as number from
+        (
+            select a.number,substring_index(substring_index(a.mSize,' ',b.AutoIncreID),' ',-1) subject
+            from
+            (
+                select selectSubject as mSize ,count(selectSubject) as number
+                from zgk_university_major_enrolling_plan_zj tmp
+                INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+                INNER join zgk_university uu on uu.id=tmp.universityId
+                where tmp.areaId=330000 and tmp.year=2016 and
+                zz.majorCode=#{majorCode}
+                and zz.selectCount!=0
+                group by selectSubject
+            ) a
+            join
+            incre_table b
+            on b.AutoIncreID <![CDATA[<=]]> (length(a.mSize) - length(replace(a.mSize,' ',''))+1)
+            order by a.number
+        ) c
+        group by subject
+        order by number desc
+        limit 3
+    </select>
+
+    <select id="selectUniversityBatchNumber" resultType="cn.thinkjoy.gk.pojo.UniversityBatchNumberPojo" parameterType="java.util.Map">
+        select dd.name as batchName,count(uu.id) as universityNumber,
+        count(uu.id)/(
+            select count(uu.id)
+                from zgk_university_major_enrolling_plan_zj tmp
+                INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+                INNER join zgk_university uu on uu.id=tmp.universityId
+                left join zgk_data_dict dd on dd.type='BATCHTYPE' and dd.dictId=tmp.batch
+                where tmp.areaId=330000 and tmp.year=2016 and zz.majorCode=#{majorCode}
+            ) as percent
+        from zgk_university_major_enrolling_plan_zj tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+        INNER join zgk_university uu on uu.id=tmp.universityId
+		left join zgk_data_dict dd on dd.type='BATCHTYPE' and dd.dictId=tmp.batch
+        where tmp.areaId=330000 and tmp.year=2016 and zz.majorCode=#{majorCode}
+        group by dd.name;
+    </select>
+
+    <select id="selectMajorList" resultType="cn.thinkjoy.gk.pojo.MajorPojo" parameterType="java.util.Map">
+        select uu.rank as universityRank,uu.id as universityId,zz.majorCode as majorCode,uu.provinceCode,zz.universityName as universityName,zz.major as majorName,tmp.batch,tmp.planEnrolling as planNumber,zz.selectSubject as selectSubject
+        <if test="isLeftJoin==true">
+            <!--以时间作为评定标准,如果时间存在说明收藏,如果时间不存在说明没有收藏-->
+            ,IF(collection.createDate,1,0)  as isFavorite,collection.id as cid
+        </if>
+        <if test="isLeftJoin==false">
+            ,0 as isFavorite
+        </if>
+        from zgk_university_major_enrolling_plan_zj tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+        INNER join zgk_university uu on uu.id=tmp.universityId
+        <!--判断是否加入收藏表-->
+        <if test="isLeftJoin==true">
+            <include refid="MAJOR_JOIN_LEFT"/>
+        </if>
+        <if test="isInnerJoin==true">
+            <include refid="MAJOR_JOIN_INNER"/>
+        </if>
+        where tmp.areaId=330000 and tmp.year=2016
+          and zz.majorCode=#{majorCode}
+        <if test="province!=null">
+          and uu.areaid=#{province}
+        </if>
+        <if test="batch!=null">
+          and tmp.batch=#{batch}
+        </if>
+        <if test="subName!=null">
+          and zz.selectSubject like CONCAT('%',#{subName},'%')
+        </if>
+        ORDER BY IF (ISNULL(uu.rank),10000,uu.rank) asc
+        limit ${offset},${rows}
+    </select>
+    <select id="selectMajorListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(uu.id)
+        from zgk_university_major_enrolling_plan_zj tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+        INNER join zgk_university uu on uu.id=tmp.universityId
+        where tmp.areaId=330000 and tmp.year=2016
+          and zz.majorCode=#{majorCode}
+        <if test="province!=null">
+            and uu.areaid=#{province}
+        </if>
+        <if test="batch!=null">
+            and tmp.batch=#{batch}
+        </if>
+        <if test="subName!=null">
+            and zz.selectSubject like CONCAT('%',#{subName},'%')
+        </if>
+    </select>
+
+    <!-- 根据课程名查询专业总数 -->
+    <select id="getMajorCountBySub" resultType="SelSubjectNumberPojo" parameterType="map">
+        select count(*) as number from zgk_zj_3in7 where selectSubject like CONCAT('%',#{subName},'%')
+    </select>
+
+    <!-- 查询专业薪资排名 -->
+    <select id="getMajorSalary" resultType="MajoredDto" parameterType="map">
+        SELECT
+            major_code as majorId,
+            major_name AS NAME,
+            discipline_name AS subjectType,
+            salary AS salary,
+            (
+                CASE
+                WHEN major_type = 1 THEN
+                    "本科"
+                WHEN major_type = 2 THEN
+                    "专科"
+                END
+            ) AS degree
+        FROM
+            zgk_major_base
+        ORDER BY
+            salary DESC
+        LIMIT #{index},#{pageSize}
+    </select>
+
+    <select id="selectMajorByWords" resultType="cn.thinkjoy.gk.pojo.UniversityOrMajorPojo" parameterType="java.lang.String">
+        select major_code as id,major_name as name from zgk_major_base bb where bb.major_name like CONCAT('%', #{queryValue} , '%')
+    </select>
+
+    <select id="selectMajorById" resultType="cn.thinkjoy.gk.pojo.SelMajorPojo" parameterType="java.lang.String">
+        select bb.major_code as majorId,major_name as majorName,bb.salary_rank as jobRank,bb.salary as fiveSalary,bb.fm_ratio as fmRatio from zgk_major_base bb where bb.major_code=#{majorId}
+    </select>
+
+</mapper>
+

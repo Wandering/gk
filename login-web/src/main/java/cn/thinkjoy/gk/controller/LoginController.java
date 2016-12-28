@@ -6,24 +6,28 @@ import cn.thinkjoy.gk.common.HttpClientUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.common.DESUtil;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
 import cn.thinkjoy.gk.pojo.UserInfoPojo;
 import cn.thinkjoy.gk.protocol.ERRORCODE;
 import cn.thinkjoy.gk.protocol.ModelUtil;
 import cn.thinkjoy.gk.service.IUserAccountExService;
+import cn.thinkjoy.gk.util.RedisUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 @Scope(SpringMVCConst.SCOPE)
@@ -44,7 +48,10 @@ public class LoginController extends ZGKBaseController {
 	@ResponseBody
 	public Map<String, Object> login(@RequestParam(value="account",required=false) String account,
 					  @RequestParam(value="password",required=false) String password,
-					  @RequestParam(value="basePassword",required = false) String basePassword) throws Exception {
+					  @RequestParam(value="basePassword",required = false) String basePassword,
+		              @RequestParam(value = "userId", required = false) String userId,
+		              @RequestParam(value = "aliUserId", required = false) String aliUserId,
+		              @RequestParam(value = "qqUserId", required = false) String qqUserId) throws Exception {
 		long id = 0L;
 		UserInfoPojo userInfoPojo=null;
 		Map<String, Object> resultMap = new HashMap<>();
@@ -72,6 +79,48 @@ public class LoginController extends ZGKBaseController {
 
 			if(null != userInfoPojo)
 			{
+				// 支付宝登陆
+				if(StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(aliUserId))
+				{
+					long userIdLong = Long.parseLong(userId);
+					UserAccountPojo userInfo = userAccountExService.findUserAccountPojoById(userIdLong);
+					if(!userInfo.getAccount().equals(aliUserId))
+					{
+						throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "参数错误");
+					}
+					try
+					{
+						boolean flag = userAccountExService.bindUserAccountExist(userAccountBean, userId, aliUserId);
+						if (!flag)
+						{
+							throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "账户绑定失败");
+						}
+					}
+					catch (Exception e)
+					{
+						throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "账户绑定失败");
+					}
+				}
+				// 绑定qq账号
+				else if(StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(qqUserId)){
+
+					long userIdLong = Long.parseLong(userId);
+					UserAccountPojo userInfo = userAccountExService.findUserAccountPojoById(userIdLong);
+					if(!userInfo.getAccount().equals(qqUserId))
+					{
+						throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "参数错误");
+					}
+					try
+					{
+						userAccountExService.updateUserQQUserId(userAccountBean,userId,qqUserId);
+
+					}
+					catch (Exception e)
+					{
+						throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "账户绑定失败");
+					}
+
+				}
 				/**
 				 * 老用户生成二维码
 				 */
@@ -92,6 +141,9 @@ public class LoginController extends ZGKBaseController {
 				}
 				String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), userInfoPojo.getAccount());
 				String encryptToken = DESUtil.encrypt(token, DESUtil.key);
+				String loginToken = UUID.randomUUID().toString();
+				String loginKey = UserRedisConst.USER_LOGIN_KEY + encryptToken;
+				RedisUtil.getInstance().hSet(loginKey, "PC", loginToken);
 				setUserAccountPojo(userAccountBean, encryptToken);
 				resultMap.put("token", encryptToken);
 				String gkxtToken = GkxtUtil.getLoginToken(userInfoPojo.getAccount(), userInfoPojo.getName());
@@ -101,6 +153,7 @@ public class LoginController extends ZGKBaseController {
 				userInfoPojo.setStatus(null);
 				resultMap.put("userInfo", userInfoPojo);
 				resultMap.put("gkxtToken", gkxtToken);
+				resultMap.put("loginToken", loginToken);
 				gkxtRegistUrl = String.format(gkxtRegistUrl, account, basePassword);
 				/**
 				 * 注册高考学堂
@@ -134,6 +187,48 @@ public class LoginController extends ZGKBaseController {
 		}finally{
 
 		}
+		return resultMap;
+	}
+
+	@RequestMapping(value = "/qqLogin")
+	@ResponseBody
+	public Map<String,Object> qqLogin(@RequestParam(value = "userId", required = false) String userId,
+									  @RequestParam(value = "qqUserId", required = false) String qqUserId) throws Exception {
+
+
+		if (StringUtils.isBlank(userId) || StringUtils.isBlank(qqUserId)) {
+			ModelUtil.throwException(ERRORCODE.PARAM_ERROR);
+		}
+
+		long userIdLong = Long.parseLong(userId);
+		UserAccountPojo userInfo = userAccountExService.findUserAccountPojoById(userIdLong);
+		if (!userInfo.getQqUserId().equals(qqUserId)) {
+			ModelUtil.throwException(ERRORCODE.PARAM_ERROR);
+		}
+
+		UserInfoPojo userInfoPojo = userAccountExService.getUserInfoPojoById(userIdLong);
+
+		UserAccountPojo userAccountBean = userAccountExService.findUserAccountPojoById(userIdLong);
+
+		String token = DESUtil.getEightByteMultypleStr(userId, userInfoPojo.getAccount());
+		String encryptToken = DESUtil.encrypt(token, DESUtil.key);
+		setUserAccountPojo(userAccountBean, encryptToken);
+		Map<String, Object> resultMap = new HashMap<>();
+
+		resultMap.put("token", encryptToken);
+		String gkxtToken = GkxtUtil.getLoginToken(userInfoPojo.getAccount(), userInfoPojo.getName());
+		userInfoPojo.setGkxtToken(gkxtToken);
+		userInfoPojo.setPassword(null);
+		userInfoPojo.setId(null);
+		userInfoPojo.setStatus(null);
+		resultMap.put("userInfo", userInfoPojo);
+		resultMap.put("gkxtToken", gkxtToken);
+
+		String loginToken = UUID.randomUUID().toString();
+		resultMap.put("loginToken", loginToken);
+		String loginKey = UserRedisConst.USER_LOGIN_KEY + encryptToken;
+		RedisUtil.getInstance().hSet(loginKey, "PC", loginToken);
+
 		return resultMap;
 	}
 

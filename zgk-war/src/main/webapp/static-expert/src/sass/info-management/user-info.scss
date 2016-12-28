@@ -1,0 +1,83 @@
+.main-content {
+    padding: 0;
+    margin: 0;
+    height: 507px;
+    background-color: #fff;
+}
+.user-base-info {
+    margin-top: 25px;
+    position: relative;
+    .sex {
+        position: absolute;
+        top: 5px;
+        left: 90px;
+    }
+    .type {
+        position: absolute;
+        top: 5px;
+        left: 220px;
+    }
+    .grade {
+        position: absolute;
+        top: 30px;
+        left: 90px;
+    }
+    .school {
+        position: absolute;
+        top: 30px;
+        left: 220px;
+    }
+    img {
+        width: 50px;
+        height: 50px;
+    }
+    .question-describe {
+        margin-top: 25px;
+        border: 1px solid #e0e3e8;
+        min-height: 100px;
+        border-radius: 2px;
+        padding: 15px 10px;
+        .content {
+            width: 92%;
+            text-align: justify;
+            position: relative;
+            top: -20px;
+            left: 66px;
+        }
+    }
+}
+.report-table {
+    width: 100%;
+    border: 1px solid #e0e3e8;
+    margin-top: 25px;
+    thead {
+        line-height: 40px;
+        background: #f2f4f6;
+        tr {
+            th {
+                text-align: center;
+                vertical-align: middle;
+                border-right: 1px solid #e0e3e8;
+                border-bottom: 1px solid #e0e3e8;
+            }
+        }
+    }
+    tbody {
+        line-height: 40px;
+        tr {
+            td {
+                text-align: center;
+                vertical-align: middle;
+                border-right: 1px solid #e0e3e8;
+                border-bottom: 1px solid #e0e3e8;
+                a.report-btn:link,
+                a.report-btn:visited,
+                a.report-btn:hover {
+                    color: #CB171D;
+                    text-decoration: underline;
+                    outline: 0;
+                }
+            }
+        }
+    }
+}

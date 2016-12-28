@@ -13,4 +13,6 @@ public interface IOrdersService<D extends IBaseDAO<T>, T extends BaseDomain> ext
     List<Map<String, String>> queryOrderDetail(Map<String, Object> paramMap);
 
     List<Map<String, String>> queryOrderStatisticsData(Map<String, Object> paramMap);
+
+
 }

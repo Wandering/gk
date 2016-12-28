@@ -3,6 +3,19 @@ package cn.thinkjoy.http.score;
 import cn.thinkjoy.common.RequestUtils;
 import cn.thinkjoy.gk.common.SubjectEnum;
 import junit.framework.TestCase;
+import net.esoar.modules.utils.ThreadUtils;
+import org.junit.Assert;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 /**
  * Created by admin on 2016/1/14.
@@ -16,6 +29,8 @@ public class HttpScoreTest extends TestCase{
 //        String host="http://zgkser.zhigaokao.cn/";
 //        String host="http://zj.dev.zhigaokao.cn";
 //        String host="http://zj.test.zhigaokao.cn";
+//            String host="http://fj.zhigaokao.cn/";
+
 //        String host="http://10.136.67.121:8080";
 
         String base="/score/";
@@ -129,7 +144,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryGapBySchoolIdAndBatch(){
-        String url=host +queryGapBySchoolIdAndBatch_url + "?recordId=527&schoolId=1&batch=1&userId=308&debug=true";
+        String url=host +queryGapBySchoolIdAndBatch_url + "?recordId=1030&schoolId=1155&batch=8&userId=227&debug=true";
         String result = RequestUtils.requestPost(url);
         System.out.println("result = " + result);
     }
@@ -149,12 +164,12 @@ public class HttpScoreTest extends TestCase{
     public void testRecommendSchool(){
         long start=System.currentTimeMillis();
         System.out.println("我开始了");
-        String url=host +recommendSchool_url + "?totalScore=500&areaId=340000&majorType=2&userId=309";
+        String url=host +recommendSchool_url + "?totalScore=400&areaId=330000&majorType=2&userId=2";
         System.out.println(url);
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
         long end=System.currentTimeMillis();
-        System.out.println(start-end);
+        System.out.println(end -start);
     }
 
 
@@ -182,7 +197,7 @@ public class HttpScoreTest extends TestCase{
      */
     public void testQueryMajorBySchoolIdAndAreaId(){
 
-        String url=host +queryMajorBySchoolIdAndAreaId_url + "?userId=217&areaId=330000&schoolId=2";
+        String url=host +queryMajorBySchoolIdAndAreaId_url + "?userId=216&areaId=330000&schoolId=94";
         System.out.println(url);
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
@@ -193,7 +208,7 @@ public class HttpScoreTest extends TestCase{
      * ok
      */
     public void testQueryGapBySchoolIdAndMajor(){
-        String url=host +queryGapBySchoolIdAndMajor_url + "?userId=2&schoolId=2&majorCode=030101K&recordId=244";
+        String url=host +queryGapBySchoolIdAndMajor_url + "?userId=216&schoolId=94&majorCode=80905&recordId=759";
         String result = RequestUtils.requestPost(url);
         System.out.println("result = " + result);
     }
@@ -207,4 +222,151 @@ public class HttpScoreTest extends TestCase{
         String result = RequestUtils.requestGet(url);
         System.out.println("result = " + result);
     }
+    /**
+     *
+     */
+    public void testRecommendSchool1(){
+
+        Object[] strings=new Object[]{
+                220000,
+                230000,
+                310000,
+                320000,
+                330000,
+                340000,
+                350000,
+                360000,
+                370000,
+                410000,
+                420000,
+                430000,
+                440000,
+                450000,
+                460000,
+                500000,
+                510000,
+                520000,
+                530000,
+                540000,
+                610000,
+                620000,
+                630000,
+                640000,
+                650000,
+                710000,
+                810000,
+                820000
+
+        };
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+                for(Object areaId : strings) {
+
+                    executorService.submit(new Run1(areaId.toString()));
+
+
+                }
+
+                while (!executorService.isShutdown()){
+
+                }
+        System.out.println("end");
+
+    }
+
+    class  Run1 implements  Runnable{
+        private Object areaId;
+        /**
+         * When an object implementing interface <code>Runnable</code> is used
+         * to create a thread, starting the thread causes the object's
+         * <code>run</code> method to be called in that separately executing
+         * thread.
+         * <p>
+         * The general contract of the method <code>run</code> is that it may
+         * take any action whatsoever.
+         *
+         * @see Thread#run()
+         */
+        @Override
+        public void run() {
+            StringBuffer buffer = new StringBuffer();
+            for(int j =1;j<=2;j++)
+
+                for (int i = 1; i <= 700; i++) {
+                    String url = "http://zj.test.zhigaokao.cn/score/recommendSchool.do?totalScore=" + i + "&areaId="+areaId+"&majorType="+j+"&userId=221\n";
+                    String result = requestGet(url);
+
+                    if (result.indexOf("1000001") > 0 || result.indexOf("[]")>0) {
+                        buffer.append(i + "-"+areaId+"-"+j+",");
+                    }
+                }
+            System.out.println(buffer.toString());
+        }
+
+        public  Run1(String areaId) {
+            this.areaId=areaId;
+        }
+
+        public String requestGet(String url){
+            String result = "";
+            try {
+                URL url1= new URL(url);
+
+                HttpURLConnection connection = (HttpURLConnection)url1.openConnection();
+                connection.setDoOutput(true);
+                connection.setDoInput(true);
+                connection.setRequestMethod("GET");
+                connection.setUseCaches(false);
+                connection.setInstanceFollowRedirects(true);
+                connection.setRequestProperty("Content-Type",
+                        "application/x-www-form-urlencoded");
+
+                connection.connect();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String lines;
+                StringBuffer sb = new StringBuffer("");
+                while ((lines = reader.readLine()) != null) {
+                    lines = new String(lines.getBytes(), "utf-8");
+                    sb.append(lines);
+                }
+                result = sb.toString();
+                reader.close();
+                connection.disconnect();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+//        System.out.println("Response data:" + result);
+            return result;
+        }
+
+
+
+    }
+
+    /**
+     * ---
+     */
+    public void testBatchs(){
+        String batch="11";
+        getBatchs(batch);
+    }
+
+    private String[] getBatchs(String batch){
+        if(batch.length()>1){
+            batch=batch.substring(0,1);
+        }
+        //组织11,12,13,14,1
+        String[] strings = new String[5];
+        for(int i =1;i<=4;i++) {
+            strings[i-1]=batch+""+i;
+            System.out.println(batch+""+i);
+        }
+        strings[4]=batch;
+        return strings;
+    }
 }
+

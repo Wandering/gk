@@ -106,6 +106,25 @@ public class ReportUtil {
      */
     public static final String PRECEDENCE_SP_FIRST_OR_UN_FIRST_KEY="PRECEDENCE_SP_FIRST_OR_UN_FIRST";
 
+    /****************************************************难易预测****************************************************/
+
+    /**
+     * 录取率差值
+     */
+    public static final String FORECAST_ENROLLING_DIFF="FORECAST_ENROLLING_DIFF";
+
+    /**
+     * 逻辑走向   1:存在一分一段  位次&线差 0:无一分一段  单线差
+     */
+    public static final String FORECAST_ENROLLING_LOGIC="FORECAST_ENROLLING_LOGIC";
+
+    /**
+     * 随机范围
+     */
+    public static final String FORECAST_ENROLLING_RANDOM="FORECAST_ENROLLING_RANDOM";
+
+    /****************************************************难易预测****************************************************/
+
 
     /**
      * 规则值拆分符
@@ -131,6 +150,58 @@ public class ReportUtil {
      * 一分一段表后缀
      */
     public static final String ONESCORE_KEY_SYMBOL="y";
+    /****************************************************难易预测****************************************************/
+
+    /**
+     * 成绩分析-逻辑走向 1:存在一分一段  位次&线差 0:无一分一段  单线差
+     */
+    public static final String SCORE_ENROLLING_LOGIC = "SCORE_ENROLLING_LOGIC";
+
+    /**
+     * 随机范围
+     */
+    public static final String SCORE_ENROLLING_RANDOM="SCORE_ENROLLING_RANDOM";
+
+    /**
+     * 录取率差值
+     */
+    public static final String SCORE_ENROLLING_DIFF="SCORE_ENROLLING_DIFF";
+    /**
+     * 成绩分析limit
+     */
+    public static final String SCORE_ENROLLING_LIMIT="SCORE_ENROLLING_LIMIT";
+
+    /**
+     * 成绩分析sortBy
+     */
+    public static final String SCORE_SORT_BY="SCORE_SORT_BY";
+    /**
+     * 成绩分析录取数据所用年份
+     */
+    public static final String SCORE_ENROLLING_YEAR="SCORE_ENROLLING_YEAR";
+
+    /**
+     * 成绩分析分数低于高职所取得院校数量
+     */
+    public static final int SCORE_VO_LIMIT=10;
+
+    /**
+     * 成绩分析分数低于高职所取得院校数量
+     */
+    public static final int SCORE_VO_TAG=1;
+
+
+    /**
+     * 成绩分析-录取率低的院校参数
+     */
+    public static final String ENROLLRATE_RANGE_LOW_TAG="ENROLLRATE_RANGE_LOW_TAG";
+
+    /**
+     * 成绩分析-录取率高的院校参数
+     */
+    public static final String ENROLLRATE_RANGE_HIGH_TAG="ENROLLRATE_RANGE_HIGH_TAG";
+    /****************************************************难易预测****************************************************/
+
 
 
 
@@ -165,6 +236,9 @@ public class ReportUtil {
 //        return ;
     }
 
+    public static String combSystemParmasKey(String procode,String suffix) {
+        return procode.toUpperCase() + ReportUtil.ROLE_KEY_SPLIT_SYMBOL + suffix;
+    }
     /**
      * 线差值范围Key组装
      * @return
@@ -172,6 +246,7 @@ public class ReportUtil {
     public static String getLineDiffRangeKey(String procode,String batch) {
         return procode.toUpperCase() + ReportUtil.ROLE_KEY_SPLIT_SYMBOL + ReportUtil.LINE_DIFF_RANGE_KEY + ReportUtil.ROLE_KEY_SPLIT_SYMBOL + batch;
     }
+
     /**
      * 批次规则拆分
      * @param batchStr
@@ -188,7 +263,7 @@ public class ReportUtil {
     public static boolean isBatch4(String batch) {
         String[] equesBatch = ReportUtil.getBatchArr(batch);
 
-        return equesBatch[0].equals("4");
+        return equesBatch[0].equals("8");
     }
 
     /**
@@ -198,6 +273,10 @@ public class ReportUtil {
      */
     public static String[] getBatchTagArr(String batchTag){
         return batchTag.split(VOLUNTEER_KEY_SPLIT_SYMBOL);
+    }
+
+    public static String[] getEnrollRandomArr(String randomValue) {
+        return randomValue.split(ROLE_VALUE_SPLIT_SYMBOL);
     }
     /**
      * 组装位次表名
@@ -303,6 +382,48 @@ public class ReportUtil {
         return batchArr;
     }
 
+    public static String ConverNewBatch(String oldBatch){
+        String newBatch="";
+        switch (oldBatch){
+            case "1":
+                newBatch="1";
+                break;
+            case "1-1":
+                newBatch="11";
+                break;
+            case "1-2":
+                newBatch="12";
+                break;
+            case "2":
+                newBatch="2";
+                break;
+            case "2-1":
+                newBatch="21";
+                break;
+            case "2-2":
+                newBatch="22";
+                break;
+            case "3":
+                newBatch="4";
+                break;
+            case "3-1":
+                newBatch="41";
+                break;
+            case "3-2":
+                newBatch="42";
+                break;
+            case "4":
+                newBatch="8";
+                break;
+            case "4-1":
+                newBatch="81";
+                break;
+            case "4-2":
+                newBatch="82";
+                break;
+        }
+        return newBatch;
+    }
     /**
      * 批次结果排序
      * @param batchViews
@@ -457,7 +578,48 @@ public class ReportUtil {
 
         return false;
     }
-
+    public static String ConverOldBatch(String newBatch) {
+        String oldBatch = "";
+        switch (newBatch) {
+            case "1":
+                oldBatch = "1";
+                break;
+            case "11":
+                oldBatch = "1-1";
+                break;
+            case "12":
+                oldBatch = "1-2";
+                break;
+            case "2":
+                oldBatch = "2";
+                break;
+            case "21":
+                oldBatch = "2-1";
+                break;
+            case "22":
+                oldBatch = "2-2";
+                break;
+            case "4":
+                oldBatch = "3";
+                break;
+            case "41":
+                oldBatch = "3-1";
+                break;
+            case "42":
+                oldBatch = "3-2";
+                break;
+            case "8":
+                oldBatch = "4";
+                break;
+            case "81":
+                oldBatch = "4-1";
+                break;
+            case "82":
+                oldBatch = "4-2";
+                break;
+        }
+        return oldBatch;
+    }
     public static void main(String[] arg) throws IOException {
         String s="[{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"268\",\"averageScore\":\"0\",\"enrollRate\":\"100%\",\"name\":\"上海金融学院\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"上海市\",\"type\":\"8\",\"typeName\":\"财经\"},\"sequence\":1},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"1415\",\"averageScore\":\"530\",\"enrollRate\":\"100%\",\"name\":\"西北政法大学\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"陕西省\",\"type\":\"9\",\"typeName\":\"政法\"},\"sequence\":2},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"837\",\"averageScore\":\"554\",\"enrollRate\":\"100%\",\"name\":\"湖南财政经济学院\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"湖南省\",\"type\":\"8\",\"typeName\":\"财经\"},\"sequence\":3},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"465\",\"averageScore\":\"0\",\"enrollRate\":\"100%\",\"name\":\"上海工程技术大学\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"上海市\",\"type\":\"2\",\"typeName\":\"工科\"},\"sequence\":4},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"555\",\"averageScore\":\"0\",\"enrollRate\":\"100%\",\"name\":\"三峡大学\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"湖北省\",\"type\":\"1\",\"typeName\":\"综合\"},\"sequence\":5},{\"selfReportUniversityViewList\":{\"enrollingNumber\":\"1633\",\"averageScore\":\"0\",\"enrollRate\":\"100%\",\"name\":\"河北经贸大学\",\"isComplied\":\"0\",\"selfReportMajorViewList\":[{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"},{\"id\":0,\"name\":\"\"}],\"property\":\"无\",\"subjection\":\"河北省\",\"type\":\"8\",\"typeName\":\"财经\"},\"sequence\":6}]";
         ObjectMapper mapper = new ObjectMapper();

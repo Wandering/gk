@@ -9,4 +9,7 @@ dependencies {
 
     compile project(':web-common')
 
+    compile files('libs/alipay-sdk-java.jar')
+
+    compile "apache-httpclient:commons-httpclient:3.1"
 }

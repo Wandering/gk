@@ -42,9 +42,6 @@ public class CaptchaController extends ZGKBaseController {
     @Autowired
     private SMSService zgkSmsService;
 
-//    @Autowired
-//    private cn.thinkjoy.push.service.sms.SMSService smsService;
-
     @Autowired
     private IUserAccountExService userAccountExService;
 
@@ -101,12 +98,72 @@ public class CaptchaController extends ZGKBaseController {
 
         String randomString = CaptchaUtil.getRandomNumString(6);
 
-//        cn.thinkjoy.push.domain.sms.SMSCheckCode smsCheckCode = new cn.thinkjoy.push.domain.sms.SMSCheckCode();
-//        smsCheckCode.setPhone(account);
-//        smsCheckCode.setBizTarget(CaptchaConst.CAPTCHA_TARGET);
-//        smsCheckCode.setCheckCode(randomString);
+        SMSCheckCode zgkSmsCheckCode = new SMSCheckCode();
+        zgkSmsCheckCode.setPhone(account);
+        zgkSmsCheckCode.setCheckCode(randomString);
+        zgkSmsCheckCode.setBizTarget(CaptchaConst.CAPTCHA_TARGET);
 
-//        boolean smsResult = smsService.sendSMS(smsCheckCode,false);
+        boolean smsResult = zgkSmsService.sendSMS(zgkSmsCheckCode,false);
+
+        if(!smsResult) {
+            // 发送失败切换短信通道
+            smsResult = zgkSmsService.sendSMS(zgkSmsCheckCode,true);
+        }
+
+        if(smsResult){
+            String userCaptchaKey = RedisConst.USER_CAPTCHA_KEY + account;
+            redis.set(userCaptchaKey,randomString);
+            redis.expire(userCaptchaKey, 600, TimeUnit.SECONDS);
+            redis.set(timeKey, String.valueOf(System.currentTimeMillis()));
+            redis.expire(timeKey, 60, TimeUnit.SECONDS);
+        }else {
+            // 再次发送失败,抛出异常
+            ModelUtil.throwException(ERRORCODE.SEND_SMSCODE_ERROR);
+        }
+
+        result.put("time", time);
+        return result.toJSONString();
+    }
+
+    @RequestMapping(value = "/captcha2")
+    @ResponseBody
+    public String captcha2(@RequestParam(value="account",required=false) String account,
+                          @RequestParam(value="capText",required=false) String capText,
+                          @RequestParam(value="type",required=false) Integer type) {
+
+        if(StringUtils.isEmpty(account) || type == null){
+            ModelUtil.throwException(ERRORCODE.PARAM_ERROR);
+        }
+
+        RedisRepository redis = RedisUtil.getInstance();
+        String userImageCaptchaKey = RedisConst.USER_IMAGE_CAPTCHA_KEY + account;
+        if(redis.exists(userImageCaptchaKey))
+        {
+            String captext = (String)redis.get(userImageCaptchaKey);
+            if(!captext.equals(capText))
+            {
+                ModelUtil.throwException(ERRORCODE.IMAGE_CAPTCHA_INVALID_ERROR);
+            }
+            redis.del(userImageCaptchaKey);
+        }
+        else
+        {
+            ModelUtil.throwException(ERRORCODE.IMAGE_CAPTCHA_NOT_EXIST_ERROR);
+        }
+
+        long time = CaptchaConst.CAPTCHA_TIME;
+        String timeKey = RedisConst.CAPTCHA_AUTH_TIME_KEY + account;
+        JSONObject result = new JSONObject();
+        // 验证码存在缓存中
+        if(redis.exists(timeKey)){
+            time = time -
+                    ((System.currentTimeMillis() -
+                            Long.valueOf(redis.get(timeKey).toString()))/1000);
+            result.put("time", time);
+            return result.toJSONString();
+        }
+
+        String randomString = CaptchaUtil.getRandomNumString(6);
 
         SMSCheckCode zgkSmsCheckCode = new SMSCheckCode();
         zgkSmsCheckCode.setPhone(account);

@@ -4,11 +4,13 @@ import cn.thinkjoy.common.restful.apigen.annotation.ApiDesc;
 import cn.thinkjoy.common.restful.apigen.annotation.ApiParam;
 import cn.thinkjoy.common.service.IBaseService;
 import cn.thinkjoy.common.utils.SqlOrderEnum;
+import cn.thinkjoy.gk.common.ScoreUtil;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.controller.api.base.BaseApiController;
 import cn.thinkjoy.gk.service.IZGK3in7Service;
 import cn.thinkjoy.zgk.domain.BizData4Page;
 import cn.thinkjoy.zgk.remote.IGkPhoneService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -30,7 +32,8 @@ public class GkSubjectByMajorController {
 
     @Autowired
     private IZGK3in7Service zgk3in7Service;
-
+    @Autowired
+    private ScoreUtil scoreUtil;
 
 
     @RequestMapping(value = "/queryMajorBySubject",method = RequestMethod.GET)
@@ -39,9 +42,7 @@ public class GkSubjectByMajorController {
                                     @RequestParam(defaultValue = "10",required = false) Integer rows,
                                  String[] subjects,String areaId,String universityName){
         Map<String,Object> map = new HashMap<>();
-        if(subjects!=null) {
-            map.put("subjectItemList", combineAlgorithm(subjects));
-        }
+        scoreUtil.setSubjectItem(subjects,map);
         if(subjects!=null){
             Arrays.sort(subjects);
             StringBuffer buffer=new StringBuffer();
@@ -117,4 +118,5 @@ public class GkSubjectByMajorController {
         }
         return lists;
     }
+
 }

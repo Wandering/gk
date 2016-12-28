@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.selcourse.ISelClassesDao">
+
+    <!--加入收藏表,当isJoin=true的时候加入本段sql,左关联-->
+    <sql id="MAJOR_JOIN_LEFT">
+        LEFT JOIN zgk_user_collection_3in7 collection
+        on
+        collection.universityId = zz.universityId
+        and collection.majorCode = zz.majorCode
+        and tmp.batch=collection.batch
+        AND collection.userId = #{userId}
+    </sql>
+    <!--加入收藏表,当isJoin=true的时候加入本段sql,必然关联-->
+    <sql id="MAJOR_JOIN_INNER">
+        INNER JOIN zgk_user_collection_3in7 collection
+        on
+        collection.universityId = zz.universityId
+        and collection.majorCode = zz.majorCode
+        and tmp.batch=collection.batch
+        AND collection.userId = #{userId}
+    </sql>
+
+    <select id="selectSchoolAndMajorNumberBySubjects" resultType="cn.thinkjoy.gk.pojo.NumberPojo" parameterType="java.util.Map">
+        select count(DISTINCT tmp.universityName) as schoolNumber,count(*) as majorNumber
+        from zgk_university_major_enrolling_plan_zj tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+        where tmp.areaId=330000 and tmp.year=2016 and (
+            zz.selectSubject like CONCAT('%', #{subject1} , '%')
+            or zz.selectSubject like CONCAT('%', #{subject2} , '%')
+            or zz.selectSubject like CONCAT('%', #{subject3} , '%')
+            or zz.selectCount=0
+        )
+    </select>
+
+    <select id="selectMajorNumberByBatch" resultType="cn.thinkjoy.gk.pojo.MajorBatchNumberPojo" parameterType="java.util.Map">
+        select tmp.batch as batch,count(DISTINCT zz.id) as majorNumber,
+            count(zz.id)/(
+                select count(*) as majorNumber
+                from zgk_university_major_enrolling_plan_zj tmp
+                INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+                where tmp.areaId=330000 and tmp.year=2016 and (
+                    zz.selectSubject like CONCAT('%', #{subject1} , '%')
+                    or zz.selectSubject like CONCAT('%', #{subject2} , '%')
+                    or zz.selectSubject like CONCAT('%', #{subject3} , '%')
+                    or zz.selectCount=0
+                )
+            ) as percent
+        from zgk_university_major_enrolling_plan_zj tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+        where tmp.areaId=330000 and tmp.year=2016 and (
+            zz.selectSubject like CONCAT('%', #{subject1} , '%')
+            or zz.selectSubject like CONCAT('%', #{subject2} , '%')
+            or zz.selectSubject like CONCAT('%', #{subject3} , '%')
+            or zz.selectCount=0
+        )
+        group by tmp.batch
+    </select>
+
+    <select id="selectMajorList" resultType="cn.thinkjoy.gk.pojo.MajorPojo" parameterType="java.util.Map">
+        select uu.id as universityId,zz.majorCode as majorCode,uu.provinceCode,tmp.batch as batch,zz.universityName as universityName,zz.major as majorName,tmp.batch,tmp.planEnrolling as planNumber,zz.selectSubject as selectSubject
+        <if test="isLeftJoin==true">
+            <!--以时间作为评定标准,如果时间存在说明收藏,如果时间不存在说明没有收藏-->
+            ,IF(collection.createDate,1,0)  as isFavorite,collection.id as cid
+        </if>
+        <if test="isLeftJoin==false">
+            ,0 as isFavorite
+        </if>
+        from zgk_university_major_enrolling_plan_zj tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+        INNER join zgk_university uu on uu.id=tmp.universityId
+        <!--判断是否加入收藏表-->
+        <if test="isLeftJoin==true">
+            <include refid="MAJOR_JOIN_LEFT"/>
+        </if>
+        <if test="isInnerJoin==true">
+            <include refid="MAJOR_JOIN_INNER"/>
+        </if>
+        where tmp.areaId=330000 and tmp.year=2016 and
+          (zz.selectSubject like CONCAT('%', #{subject1} , '%')
+            or zz.selectSubject like CONCAT('%', #{subject2} , '%')
+            or zz.selectSubject like CONCAT('%', #{subject3} , '%')
+            or zz.selectCount=0)
+        <if test="universityId != null">
+            and zz.universityId = #{universityId}
+        </if>
+        <if test="majorId != null">
+            and zz.majorCode = #{majorId}
+        </if>
+        <if test="provinceCode != null">
+          and uu.provinceCode = #{provinceCode}
+        </if>
+        <if test="batch != null">
+          and tmp.batch = #{batch}
+        </if>
+        <if test="type != null">
+          and uu.type = #{type}
+        </if>
+        order by tmp.universityId asc
+        limit ${offset},${rows}
+    </select>
+
+    <select id="selectMajorListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*)
+        from zgk_university_major_enrolling_plan_zj tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+        INNER join zgk_university uu on uu.id=tmp.universityId
+        where tmp.areaId=330000 and tmp.year=2016 and
+          (zz.selectSubject like CONCAT('%', #{subject1} , '%')
+            or zz.selectSubject like CONCAT('%', #{subject2} , '%')
+            or zz.selectSubject like CONCAT('%', #{subject3} , '%')
+            or zz.selectCount=0)
+        <if test="universityId != null">
+            and zz.universityId = #{universityId}
+        </if>
+        <if test="majorId != null">
+            and zz.majorCode = #{majorId}
+        </if>
+        <if test="provinceCode != null">
+            and uu.provinceCode = #{provinceCode}
+        </if>
+        <if test="batch != null">
+            and tmp.batch = #{batch}
+        </if>
+        <if test="type != null">
+            and uu.type = #{type}
+        </if>
+    </select>
+
+    <select id="selectUniversityOrMajorByWords" resultType="cn.thinkjoy.gk.pojo.UniversityOrMajorPojo" parameterType="java.lang.String">
+        select 1 as type,id,name from zgk_university uu where uu.name like CONCAT('%', #{queryValue} , '%')
+        union ALL
+        select 2 as type,major_code as id,major_name as name from zgk_major_base bb where bb.major_name like CONCAT('%', #{queryValue} , '%')
+    </select>
+
+    <select id="selectMajorTop3" resultType="cn.thinkjoy.gk.pojo.MajorTop3Pojo">
+        select zz.majorCode,zz.universityCode as schoolCode,zz.selectSubject
+        from zgk_university_major_enrolling_plan_zj tmp
+        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+    </select>
+
+</mapper>
+

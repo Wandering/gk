@@ -21,4 +21,8 @@ public interface IUserInfoExDAO {
     boolean isPredictByUid(long uid);
 
     UserInfo getUserInfoById(long id);
+
+    void updateUserAliUserId(UserInfo userInfo);
+
+    void updateUserQQUserId(UserInfo userInfo);
 }

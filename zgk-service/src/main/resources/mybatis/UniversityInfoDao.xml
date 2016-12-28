@@ -26,9 +26,53 @@
         <result column="typeName" property="typeName" jdbcType="VARCHAR" />
         <result column="batch" property="batch" jdbcType="VARCHAR" />
     </resultMap>
+    <resultMap id="UniversityEnrollMap" type="cn.thinkjoy.gk.entity.UniversityEnrollView">
+        <result column="year" property="year" jdbcType="VARCHAR" />
+        <result column="majorType" property="majorType" jdbcType="VARCHAR" />
+        <result column="universityId" property="universityId" jdbcType="VARCHAR" />
+        <result column="batch" property="batch" jdbcType="VARCHAR" />
+        <result column="batchName" property="batchName" jdbcType="VARCHAR" />
+        <result column="universityName" property="universityName" jdbcType="VARCHAR" />
+        <result column="stuNum" property="planEnrolling" jdbcType="INTEGER" />
+        <result column="universityId" property="universityId" jdbcType="BIGINT" />
+        <result column="universityName" property="universityName" jdbcType="VARCHAR" />
+        <result column="highestScore" property="highestScore" jdbcType="INTEGER" />
+        <result column="lowestScore" property="lowestScore" jdbcType="INTEGER" />
+        <result column="averageScore" property="averageScore" jdbcType="INTEGER" />
+        <result column="isFavorite" property="isFavorite"  jdbcType="INTEGER"/>
+        <result column="xcRank" property="xcRank"  jdbcType="VARCHAR"/>
+        <result column="isCurrArea" property="isCurrArea"  jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="EnrollingMap" type="cn.thinkjoy.gk.entity.UniversityInfoEnrolling">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="batch" property="batch" jdbcType="VARCHAR" />
+        <result column="universityId" property="universityId" jdbcType="BIGINT" />
+        <result column="universityName" property="universityName" jdbcType="VARCHAR" />
+        <result column="enrollRate" property="enrollRate" jdbcType="NUMERIC" />
+    </resultMap>
 
     <sql id="Base_Column_List">
         id,universityId,universityName,scoreDiff,preScoreDiff,enrollRate,scoreUseRate
+    </sql>
+    <sql id="Enrolling_Column_List">
+        id,batch,universityId,universityName,enrollRate
+    </sql>
+    <!--江苏选测等级要求-->
+    <sql id="Enrolling_Column_JS">
+        <!--puid plan表的universityId-->
+        INNER JOIN (SELECT universityId as puid from zgk2.zgk_university_enrolling_plan
+        where
+        <foreach collection="xcRanks" separator="," item="xcRank" open="xcRank in (" close=")             AND">
+            #{xcRank}
+        </foreach>
+        year = #{year} AND majorType = #{majorType}
+        <if test="batchs!=null">
+            <foreach collection="batchs" separator="," item="batch" open="and batch in (" close=")">
+                #{batch}
+            </foreach>
+        </if>
+        ) jsplan
+        ON bData.universityId=jsplan.puid
     </sql>
     <sql id="Search_Column_List">
          bData.*,zgk_university.isProportion,zgk_university.isRange,zgk_university.rankTrend,zgk_university.subjection,zgk_university.type,zgk_university.property,province.id as areaId,
@@ -126,6 +170,37 @@
         </where>
         <if test="isEnrolling==true and begin!=null and end!=null">
             limit #{begin,jdbcType=INTEGER},#{end,jdbcType=INTEGER}
+        </if>
+    </select>
+    <!---难易预测&成绩分析-->
+    <select id="selectUniversityEnrolling" resultMap="EnrollingMap" parameterType="java.util.Map">
+        select <include refid="Enrolling_Column_List" /> from zgk_data.`${tableName}` as bData
+        <if test="isJoin==true">
+            <include refid="Enrolling_Column_JS" />
+        </if>
+        <where>
+            <if test="universityId!=null">
+                and universityId=#{universityId}
+            </if>
+            <if test="precedence!=null">
+                and precedence=#{precedence}
+            </if>
+            <if test="scoreDiff!=null">
+                and scoreDiff=#{scoreDiff}
+            </if>
+            <if test="enrollRateStart!=null">
+                AND universityId is not null
+                and enrollRate >=#{enrollRateStart}
+            </if>
+            <if test="enrollRateEnd!=null">
+                and enrollRate &lt;=#{enrollRateEnd}
+            </if>
+        </where>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="rows != null">
+            limit 0, ${rows}
         </if>
     </select>
     <!--按排名-->
@@ -235,8 +310,8 @@
 
     <select id="getUniversityMajors" parameterType="java.util.Map" resultType="java.util.Map">
         select
-        t.majorId,t.majorName,t.majorFeature,t.educationLevel
-        from zgk_university_major t
+        t.major_code as majorId,t.major_name as majorName,t.majorFeature,t.educationLevel
+        from zgk_university_major_base t
         <where>
             <if test="universityId!=null">
                 t.universityId=#{universityId}
@@ -423,30 +498,156 @@
     </select>
 
     <select id="getBatchByYearAndArea" resultType="java.util.Map">
+        SELECT
+            b.*
+        FROM
+            (
+                SELECT
+                    DISTINCT universityId,
+                    batch
+                FROM
+                    zgk_university_enrolling enrolling
+                WHERE
+                    areaid = #{currAreaId}
+                    <if test="year != null and year != ''">
+                      and  YEAR = #{year}
+                    </if>
+            ) a
+        INNER JOIN (
             SELECT
-	b.*
-FROM
-	(
-		SELECT
-			universityId,batch
-		FROM
-			zgk_university_enrolling enrolling WHERE year = #{year}
-		AND areaid = #{currAreaId}
-	) a
-INNER JOIN (SELECT id FROM zgk_university WHERE areaid=#{areaId}) university ON a.universityId=university.id
-		,
-	(
-		SELECT
-			name,
-			dictid
-		FROM
-			zgk_data_dict
-		WHERE
-			type = 'BATCHTYPE2'
-	) b
-WHERE
-a.batch = b.dictid
-GROUP BY
-	batch
+                id
+            FROM
+                zgk_university
+            <if test="areaId != null and areaId != '-1'">
+                WHERE areaid = #{areaId}
+            </if>
+        ) university ON a.universityId = university.id,
+         (
+            SELECT
+                name,
+                dictid
+            FROM
+                zgk_data_dict
+            WHERE
+                type = 'BATCHTYPE2'
+        ) b
+        WHERE
+            a.batch = b.dictid
+        GROUP BY
+            batch
+    </select>
+
+
+    <select id="selectUnivInfoIdInBatch" resultType="java.lang.Long">
+        SELECT universityId from
+        zgk_university_enrolling enrolling
+        where
+         enrolling.batch in
+        <foreach collection="condition.batchs" item="obj" separator="," open="(" close=")">
+            #{obj}
+        </foreach>
+        and enrolling.year = #{condition.year}
+        and enrolling.majorType = #{condition.majorType}
+        and enrolling.areaId = #{condition.areaId}
+        and enrolling.universityId in
+        <foreach collection="condition.universitys" item="obj" open="(" close=")" separator=",">
+            #{obj.universityId}
+        </foreach>
+    </select>
+
+    <select id="selectUnivEnrollInfo" resultType="java.util.Map" resultMap="UniversityEnrollMap">
+          SELECT * from (
+          <!-- maps为跨批次定位,有可能为一个,也有可能为多个,主要由上面的sql确定 -->
+          <foreach collection="maps" item="condition" separator="UNION">
+          SELECT
+          (university.areaid=${condition.areaId}) as isCurrArea,
+          university.areaid as universityAreaId,
+          university.rank as rank,
+          university.name as universityName,
+          (SELECT name from zgk_data_dict where dictId = enrolling.batch and type='BATCHTYPE2' limit 1) as batchName,
+          enrolling.realEnrollingNumber as stuNum,
+          enrolling.averageScore as averageScore,
+          enrolling.highestScore as highestScore,
+          enrolling.lowestScore as lowestScore,
+          enrolling.universityId,
+          <!-- 江苏省输出选测等级 -->
+          <if test="isJoin==true">
+              plan.xcRank,
+          </if>
+          (SELECT
+            CASE WHEN university_id is null THEN 0 ELSE 1 END
+          from zgk_favorite_university WHERE user_id = #{condition.userId} AND university_id = university.id  limit 1) AS isFavorite
+          <!-- 用做university表做主表,enrolling做关联表 -->
+          from  zgk_university university
+          LEFT JOIN zgk_university_enrolling enrolling
+          ON university.id = enrolling.universityId
+          and enrolling.batch in
+          <foreach collection="condition.batchs" item="obj" separator="," open="(" close=")">
+            #{obj}
+          </foreach>
+          and enrolling.year = #{condition.year}
+          and enrolling.majorType = #{condition.majorType}
+          and enrolling.areaId = #{condition.areaId}
+          and enrolling.universityId in (
+        <foreach collection="condition.universitys" item="obj" separator=",">
+            #{obj}
+        </foreach>
+        )
+          <!-- 江苏省输出选测等级 -->
+          <if test="isJoin==true">
+              INNER JOIN (SELECT universityId,xcRank FROM
+              zgk_university_enrolling_plan
+              WHERE
+              majorType = #{condition.majorType}
+              AND YEAR = #{condition.year} AND areaId=320000
+              AND batch in
+              <foreach collection="condition.batchs" item="obj" open="(" separator="," close=")">
+                  #{obj}
+              </foreach>
+              AND universityId in (
+              <foreach collection="condition.universitys" item="obj" separator=",">
+                  #{obj}
+              </foreach>
+              )
+              ) plan
+              ON plan.universityId = university.id
+          </if>
+          <where>
+          university.id in (
+          <foreach collection="condition.universitys" item="obj" separator=",">
+              #{obj}
+          </foreach>
+          )
+          </where>
+          </foreach>
+          ) univenrollinfo
+        <!--按照本省,定位学校,外省 顺序进行排序-->
+          ORDER BY universityAreaId !=${condition.areaId}
+          <if test="sortBy">
+              <!--universityAreaId !=${areaId},isFavorite is null,rank is null,rank ASC-->
+             ${sortBy}
+          </if>
+    </select>
+
+    <!-- 根据省份ID查询录取年份集合 -->
+    <select id="getEnrollingYearsByProvinceId" parameterType="long" resultType="String">
+        SELECT
+            `year`
+        FROM
+            zgk_university_enrolling
+        WHERE
+            areaId = #{currentProId}
+        <if test="schoolProId != -1">
+            AND universityId IN (
+                SELECT
+                    id
+                FROM
+                    zgk_university
+                WHERE
+                    areaId = #{schoolProId}
+            )
+        </if>
+        GROUP BY
+            `year`
     </select>
 </mapper>

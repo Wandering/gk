@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IExpertApplyDAO">
+
+    <!--添加专家的个人信息-->
+    <insert id="insert" parameterType="ExpertInfo">
+        INSERT INTO zgk_expert_info (
+        expert_name,
+        expert_photo_url,
+        expert_intro,
+        expert_phone,
+        server_cases,
+        area_id,
+        expert_domain,
+        expert_profile,
+        best_expert,
+        is_checked,
+        create_date
+        ) VALUES (
+        #{expertName},
+        #{expertPhotoUrl},
+        #{expertIntro},
+        #{expertPhone},
+        #{serverCases},
+        #{areaId},
+        #{expertDomain},
+        #{expertProfile},
+        #{bestExpert},
+        #{isChecked},
+        #{createDate}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+</mapper>

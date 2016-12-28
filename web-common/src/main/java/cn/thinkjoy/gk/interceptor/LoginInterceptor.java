@@ -44,6 +44,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 		String value = request.getParameter("token");
 		String reqType = request.getParameter("req");
+		String loginToken = request.getParameter("loginToken");
 		LOGGER.info("cookie:" + value);
 		String key = UserRedisConst.USER_KEY + value;
 
@@ -55,27 +56,67 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		if (!ServletPathConst.MAPPING_URLS.contains(url)) {
 			return true;
 		}
-
+		//这里把用户登录和重复登录分开处理 将跨域处理提到loginInterceptor之前处理,解决无返回的问题
 		if (StringUtils.isEmpty(value) || !redisFlag) {
-			if (reqType != null && reqType.equals("ajax")) {
-
-				/**************后期优化**************/
-				response.setCharacterEncoding("UTF-8");
-				try {
-					ServletOutputStream out = response.getOutputStream();
-					out.print("{\"rtnCode\":\"1000004\",\"msg\":\"请先登录后再进行操作\"}");
-					out.flush();
-					out.close();
-				} catch (IOException ex) {
-					throw new BizException("1000004", "请先登录后再进行操作");
-				}
-				/**************后期优化**************/
-
-			} else
+//			if (reqType != null && reqType.equals("ajax")) {
+//
+//				/**************后期优化**************/
+//				response.setCharacterEncoding("UTF-8");
+//				try {
+//					ServletOutputStream out = response.getOutputStream();
+//					out.print("{\"rtnCode\":\"1000004\",\"msg\":\"请先登录后再进行操作\"}");
+//					out.flush();
+//					out.close();
+//				} catch (IOException ex) {
+//					throw new BizException("1000004", "请先登录后再进行操作");
+//				}
+//				/**************后期优化**************/
+//
+//			} else
 				throw new BizException("1000004", "请先登录后再进行操作");
 
 		}
+
+		if (StringUtils.isEmpty(loginToken)){
+			isValideLogin(response,reqType);
+		}
+		String loginKey = UserRedisConst.USER_LOGIN_KEY + value;
+		boolean flag = RedisUtil.getInstance().exists(loginKey);
+		if(flag)
+		{
+			String loginTokenRedis = (String) RedisUtil.getInstance().hGet(loginKey, "PC");
+			if(!loginToken.equals(loginTokenRedis))
+			{
+				isValideLogin(response, reqType);
+			}
+		}else
+		{
+			isValideLogin(response, reqType);
+		}
 		return true;
+	}
+
+	private void isValideLogin(HttpServletResponse response, String reqType)
+	{
+//		if (reqType != null && reqType.equals("ajax"))
+//		{
+//			response.setCharacterEncoding("UTF-8");
+//			try
+//			{
+//				ServletOutputStream out = response.getOutputStream();
+//				out.flush();
+//				out.print("登录人数超过限制,只能一个用户登录！");
+//				out.flush();
+//				out.close();
+//			}
+//			catch (IOException ex)
+//			{
+//				throw new BizException("1000110", "登录人数超过限制,只能一个用户登录！");
+//			}
+
+//		}
+//		else
+			throw new BizException("1000110", "登录人数超过限制,只能一个用户登录！");
 	}
 
 	@Override

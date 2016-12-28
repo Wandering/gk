@@ -24,6 +24,7 @@ import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.google.common.collect.Maps;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,9 +90,10 @@ public class UniversityController extends ZGKBaseController {
         if (rows>50){
             throw new BizException(ERRORCODE.ROWS_TOO_LONG.getCode(), ERRORCODE.ROWS_TOO_LONG.getMessage());
         }
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
         String redisKey = "zgk_pe:"+"universityName:" + universityName + "_areaid:" + areaid + "_type:" + type + "_educationLevel:" + educationLevel + "_property:" + property + "_offset:" + offset + "_rows"+rows+":getUniversityList";
         Object object = RedisIsSaveUtil.existsKey(redisKey);
-        if (object==null) {
+        if (object==null||null != userAccountPojo) {
             Map<String, Object> condition = Maps.newHashMap();
             condition.put("groupOp", "and");
             if (StringUtils.isNotBlank(universityName))
@@ -126,7 +128,6 @@ public class UniversityController extends ZGKBaseController {
             long dubbo = end - start;
             LOGGER.info("dubbo time:" + dubbo);
             //如果用户已登录
-            UserAccountPojo userAccountPojo = getUserAccountPojo();
             for (UniversityDTO university : getUniversityList) {
                 String[] propertys = new String[1];
                 if (university.getProperty() != null) {
@@ -166,7 +167,9 @@ public class UniversityController extends ZGKBaseController {
             Map<String, Object> returnMap = Maps.newHashMap();
             returnMap.put("universityList", getUniversityList);
             returnMap.put("count", count);
-            RedisUtil.getInstance().set(redisKey, JSON.toJSONString(returnMap));
+            if(null==userAccountPojo) {
+                RedisUtil.getInstance().set(redisKey, JSON.toJSONString(returnMap));
+            }
             return returnMap;
         }
         return JSON.parseObject(object.toString(), Object.class);
@@ -455,7 +458,8 @@ public class UniversityController extends ZGKBaseController {
         String key = "zgk_university:" + userKey + ":getRemoteProvinceList";
         Object object = RedisIsSaveUtil.existsKey(key);
         if (object == null) {
-            List list=iremoteUniversityService.getProvinceName();
+//            List list=iremoteUniversityService.getProvinceName();
+            List list=provinceService.findList("status","0");
             RedisUtil.getInstance().set(key, JSONArray.toJSON(list));
             return list;
         }
@@ -475,7 +479,7 @@ public class UniversityController extends ZGKBaseController {
         String key = "zgk_university:" + userKey + "_type:" + type + ":getRemoteDataDictList";
         Object object = RedisIsSaveUtil.existsKey(key);
         if (object == null) {
-            List list=iremoteUniversityService.getDataDictListByType(type);
+            List list=universityInfoService.getDataDictList(type);
             RedisUtil.getInstance().set(key, JSONArray.toJSON(list));
             return list;
         }
@@ -860,5 +864,59 @@ public class UniversityController extends ZGKBaseController {
     @RequestMapping(value = "/getUniversityInfoByKeywords", method = RequestMethod.GET)
     public Map<String,String> getUniversityInfoByKeywords(@RequestParam(value = "keywords") String keywords) {
         return universityExService.getUniversityInfoByKeywords(keywords);
+    }
+
+    @ResponseBody
+    @ApiDesc(value = "根据用户省份初始化查询条件",owner = "杨国荣")
+    @RequestMapping(value = "/initSerachCondition", method = RequestMethod.GET)
+    public Map<String,List<String>> initSerachCondition(@RequestParam(value = "provinceId",required = false) Long provinceId,
+                                                        @RequestParam(value = "category") String category,
+                                                        @RequestParam String userKey) {
+        if (provinceId == null){
+            provinceId = getAreaId();
+        }
+        return universityExService.initSerachCondition(provinceId,category);
+    }
+
+    @ResponseBody
+    @ApiDesc(value = "根据条件查询院校招生信息",owner = "杨国荣")
+    @RequestMapping(value = "searchSpecialMajorInfo", method = RequestMethod.GET)
+    public List<SpecialMajorDto> searchSpecialMajorInfo(@RequestParam(value = "schoolName") String schoolName,
+                                                    @RequestParam(value = "year") String year,
+                                                    @RequestParam(value = "batch") String batch,
+                                                    @RequestParam(value = "majorType") Integer majorType,
+                                                    @RequestParam(value = "userProvinceId") Long userProvinceId,
+                                                    @RequestParam(value = "schoolProvinceId") Long schoolProvinceId,
+                                                    @RequestParam(value = "category") String category,
+                                                    @RequestParam(value = "pageNo") Integer pageNo,
+                                                    @RequestParam(value = "pageSize") Integer pageSize) {
+
+        if (userProvinceId == null){
+            userProvinceId = getAreaId();
+        }
+
+        List<SpecialMajorDto> dtos = universityExService.searchSpecialMajorInfo(
+                schoolName,
+                year,
+                batch,
+                majorType,
+                userProvinceId,
+                schoolProvinceId,
+                category,
+                pageNo,
+                pageSize
+        );
+
+        return dtos;
+    }
+
+    @ResponseBody
+    @ApiDesc(value = "根据省份code查询所属省份信息",owner = "杨永平")
+    @RequestMapping(value = "searchSpecialMajorSpec", method = RequestMethod.GET)
+    public List<String> searchSpecialMajorSpec(@RequestParam(value = "provinceId",required = false) Long provinceId,@RequestParam String userKey) {
+        if (provinceId == null){
+            provinceId=getAreaId();
+        }
+        return universityExService.searchSpecialMajorSpec(provinceId);
     }
 }

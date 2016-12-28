@@ -29,4 +29,6 @@ public interface IUserAccountExDAO {
     List<Map<String,Object>> getOrderList(Map<String, String> paramMap);
 
     int updateUserAccountRegistXueTang(Map<String, Object> paramMap);
+
+    Map<String,Object> findUserInfoByAlipayId(Map<String, String> params);
 }

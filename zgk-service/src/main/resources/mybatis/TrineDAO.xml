@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.selcourse.ITrineDAO">
+
+    <sql id="BASE_INFO">
+      trine.id,
+      trine.universityName,
+      trine.universityId,
+      trine.majorCode,
+      trine.majorName,
+      trine.majorType,
+      trine.batchName,
+      trine.property,
+      trine.planEnrollingNumber,
+      trine.schoolFee,
+      trine.lengthOfSchooling,
+      trine.universityIntro,
+      trine.areaId,
+      trine.year,
+      trine.extInfo
+    </sql>
+
+    <!-- 三位一体按分页查询接口 -->
+    <select id="queryPage" resultType="cn.thinkjoy.gk.domain.Trine">
+        SELECT
+        <if test="selector!=null">
+          <trim prefixOverrides=",">
+              <if test="selector.id!=null">
+                  trine.id,
+              </if>
+              <if test="selector.universityName!=null">
+                  trine.universityName,
+              </if>
+              <if test="selector.universityId!=null">
+                  trine.universityId,
+              </if>
+              <if test="selector.majorCode!=null">
+                  trine.majorCode,
+              </if>
+              <if test="selector.majorName!=null">
+                  trine.majorName,
+              </if>
+              <if test="selector.majorType!=null">
+                  trine.majorType,
+              </if>
+              <if test="selector.batchName!=null">
+                  trine.batchName,
+              </if>
+              <if test="selector.property!=null">
+                  trine.property,
+              </if>
+              <if test="selector.planEnrollingNumber!=null">
+                  trine.planEnrollingNumber,
+              </if>
+              <if test="selector.schoolFee!=null">
+                  trine.schoolFee,
+              </if>
+              <if test="selector.lengthOfSchooling!=null">
+                  trine.lengthOfSchooling,
+              </if>
+              <if test="selector.universityIntro!=null">
+                  trine.universityIntro,
+              </if>
+              <if test="selector.areaId!=null">
+                  trine.areaId,
+              </if>
+              <if test="selector.year!=null">
+                  trine.year,
+              </if>
+              <if test="selector.extInfo!=null">
+                  trine.extInfo
+              </if>
+          </trim>
+        </if>
+        <if test="selector==null">
+            <include refid="BASE_INFO" />
+        </if>
+       from zgk_university_trine trine
+        <where>
+            <if test="conditions.areaId!=null">
+                and trine.areaId = #{conditions.areaId}
+            </if>
+            <if test="conditions.majorType!=null">
+                and trine.majorType = #{conditions.majorType}
+            </if>
+            <if test="conditions.year!=null">
+                and trine.year = #{conditions.year}
+            </if>
+            <if test="conditions.batch!=null">
+                and trine.batchName = #{conditions.batch}
+            </if>
+            <if test="conditions.universityName!=null">
+                and trine.universityName LIKE concat('%',#{conditions.universityName},'%')
+            </if>
+        </where>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <!--三位一体统计数量-->
+    <select id="count" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        from zgk_university_trine trine
+        <where>
+            <if test="areaId!=null">
+                and trine.areaId = #{areaId}
+            </if>
+            <if test="majorType!=null">
+                and trine.majorType = #{majorType}
+            </if>
+            <if test="year!=null">
+                and trine.year = #{year}
+            </if>
+            <if test="batch!=null">
+                and trine.batchName = #{batch}
+            </if>
+            <if test="universityName!=null">
+                and trine.universityName LIKE concat('%',#{universityName},'%')
+            </if>
+        </where>
+    </select>
+
+
+    <!--三位一体统计年份-->
+    <select id="queryYear" resultType="java.lang.Integer">
+        SELECT
+        year
+        from zgk_university_trine trine
+        GROUP  BY  year
+    </select>
+
+    <!--三位一体专业类别-->
+    <select id="queryMajorType" resultType="java.lang.String">
+        SELECT
+        majorType
+        from zgk_university_trine trine
+        GROUP  BY  majorType
+    </select>
+
+    <!--三位一体批次类型-->
+    <select id="queryBatchName" resultType="java.lang.String">
+        SELECT
+        batchName
+        from zgk_university_trine trine
+        GROUP  BY  batchName
+    </select>
+
+    <!--三位一体批次类型-->
+    <select id="getUniversityIntroById" resultType="java.lang.String">
+        SELECT
+        trine.universityIntro
+        from zgk_university_trine trine
+        where trine.id = #{id}
+    </select>
+</mapper>

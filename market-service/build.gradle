@@ -2,4 +2,6 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
     compile project(':market-domain')
+    compile project(':gk-service')
+    compile project(':user-domain')
 }

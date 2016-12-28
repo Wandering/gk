@@ -1,0 +1,63 @@
+.play-main{
+  width:1020px;
+  height:486px;
+}
+
+.fun-set{
+  width:1020px;
+  margin:20px auto 0;
+}
+
+.body-main{
+  width:1020px;
+  position: relative;
+  left:0;
+  top:0;
+  background-color: #ccc;
+  margin:20px auto 50px;
+  height:486px;
+  .publish-box{
+    position: absolute;
+    right:0;
+    top:301px;
+  }
+}
+
+
+
+
+
+
+.m-input {
+  margin-bottom: 10px;
+}
+
+.u-input-name {
+  display: inline-block;
+  width: 85px;
+}
+
+.u-input {
+  width: 500px;
+  height: 25px;
+  border: none;
+  border-bottom: 1px solid #000;
+  outline: none;
+  color: #000;
+}
+
+.testBtn {
+  width: 150px;
+}
+.u-status {
+  margin-left: 10px;
+  display: inline-block;
+}
+
+.play-main.playhds{
+  font-size:0;
+  height:0;
+  line-height:0;
+  text-indent: -1000px;
+  display: none;
+}
