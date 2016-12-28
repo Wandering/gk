@@ -301,7 +301,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                         //需要超过多少人
                         Integer stuNum = scoreAnalysisDAO.queryStuNum(totalScore, areaTableName);
                         Float totalScore1 = totalScore;
-                        while (stuNum == null) {
+                        while (totalScore1<800F && totalScore1>0F && stuNum == null) {
                             stuNum = scoreAnalysisDAO.queryStuNum(totalScore1--, areaTableName);
                         }
                         Integer proviceRank = scoreAnalysisDAO.queryProviceRank(totalScore1, areaTableName);
@@ -799,7 +799,6 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
             return scoreUtil.getTagNum(v1)>=scoreUtil.getTagNum(v3);
         }
     }
-
 
 
 }
