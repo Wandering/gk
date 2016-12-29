@@ -54,8 +54,6 @@ public class ApeskApiImpl implements IApeskApi {
             map.put("liangBiao", liangbiao);
             map.put("testEmail", testEmail);
             map.put("state", STATE);
-            List<ZgkApesk> apList = zgkApeskService.selectApeskLimit(map);
-            if (apList==null || apList.size()==0) {
                 ZgkApesk apesk = new ZgkApesk();
                 apesk.setUserId(userId);
                 apesk.setLiangBiao(liangbiao);
@@ -66,7 +64,6 @@ public class ApeskApiImpl implements IApeskApi {
                 apesk = zgkApeskService.insertSelective(apesk);
                 setData(testName, returnJsonData, liangbiao, testEmail);
                 returnJsonData.put("id",apesk.getId());
-            }
         }
         return returnJsonData;
     }
