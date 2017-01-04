@@ -687,5 +687,13 @@ deleteBySubjects
         enrolling.majorCode,enrolling.universityId HAVING count(*) >1) tb
     </select>
 
+    <select id="queryHistoryScoreAnalysis" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ScoreAnalysisNumberPojo">
+        select
+            (select count(*) from zgk_score_base bb where bb.user_id=#{userId} ) as analysisNumber,
+            2 as startRanking,
+            1 as endRanking,
+            (select count(DISTINCT sur.universityId) from zgk_score_user_record sur where sur.userId=#{userId}) as recommendUniversity,
+            (select count(*) from zgk_favorite_university fu where fu.user_id=#{userId}) as favoriteUniversity
+    </select>
 </mapper>
 
