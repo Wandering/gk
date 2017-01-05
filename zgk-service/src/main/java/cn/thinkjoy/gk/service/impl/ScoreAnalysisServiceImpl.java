@@ -12,6 +12,7 @@ import cn.thinkjoy.gk.entity.UniversityEnrollView;
 import cn.thinkjoy.gk.entity.UniversityInfoEnrolling;
 import cn.thinkjoy.gk.pojo.BatchView;
 import cn.thinkjoy.gk.pojo.ReportForecastView;
+import cn.thinkjoy.gk.pojo.ScoreAnalysisNumberPojo;
 import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 import cn.thinkjoy.gk.service.IScoreAnalysisService;
 import cn.thinkjoy.gk.service.IScoreConverPrecedenceService;
@@ -760,6 +761,13 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         //计算专业提取范围
         map.put("subjectItem",subjects);
         return scoreAnalysisDAO.queryMajorBySchoolIdAndAreaId(map);
+    }
+
+    @Override
+    public ScoreAnalysisNumberPojo queryHistoryScoreAnalysis(long userId) {
+        Map<String,Object> map=new HashMap<>();
+        map.put("userId",userId);
+        return scoreAnalysisDAO.queryHistoryScoreAnalysis(map);
     }
 
 

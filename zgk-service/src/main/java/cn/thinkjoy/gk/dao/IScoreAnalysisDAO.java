@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.dao;
 
+import cn.thinkjoy.gk.pojo.ScoreAnalysisNumberPojo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -397,4 +398,5 @@ public interface IScoreAnalysisDAO {
      */
     Integer countMajorRepeat(Map<String,Object> map);
 
+    ScoreAnalysisNumberPojo queryHistoryScoreAnalysis(Map<String,Object> map);
 }
