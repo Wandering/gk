@@ -85,4 +85,9 @@ public class Constants {
     public static final String GET_CHANNEL_STATE_URL = "https://vcloud.163.com/app/channelstats";
 
     /******************  专家视频一对一相关常量  end  *****************/
+
+    /**
+     * 默认成绩分析类型状态
+     */
+    public static final int DEFULT_SCORE_RECORD_STATUS = 1;
 }
