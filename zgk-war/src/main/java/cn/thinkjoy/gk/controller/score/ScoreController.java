@@ -279,7 +279,7 @@ public class ScoreController {
         try {
             //记录该用户的测试
             Map<String, Object> map = scoreAnalysisService.queryScoreRecordByUserId(userId);
-            Integer rowId = map.get("id") == null ? null : Integer.valueOf(map.get("id").toString());
+            Integer rowId = map.get("recordId") == null ? null : Integer.valueOf(map.get("recordId").toString());
             if (areaId != ZJ_AREA_CODE)
                 noteHandle(totalScore,areaId,majorType,userId,rowId,(List<Map<String,Object>>) rtnObj);
             else
