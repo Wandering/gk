@@ -449,6 +449,14 @@ public class ScoreController {
         return scoreAnalysisService.queryHistoryScore(userId,rows,areaId);
     }
 
+    @RequestMapping(value = "/queryHistoryScoreAnalysis",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> queryHistoryScoreAnalysis(@RequestParam long userId){
+        Map<String,Object> resultMap=new HashMap<>();
+        resultMap.put("historyScoreAnalysisInfo", scoreAnalysisService.queryHistoryScoreAnalysis(userId));
+        return resultMap;
+    }
+
     /**
      * 获取用户历史统计
      * @return
