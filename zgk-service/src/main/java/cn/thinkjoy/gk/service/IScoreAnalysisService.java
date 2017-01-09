@@ -1,5 +1,7 @@
 package cn.thinkjoy.gk.service;
 
+import cn.thinkjoy.gk.pojo.ScoreAnalysisNumberPojo;
+
 import java.util.List;
 import java.util.Map;
 
@@ -334,4 +336,6 @@ public interface IScoreAnalysisService {
      * @return
      */
     List<Map<String,Object>> queryMajorBySchoolIdAndAreaId(long areaId,long universityId,long userId);
+
+    ScoreAnalysisNumberPojo queryHistoryScoreAnalysis(long userId);
 }

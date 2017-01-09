@@ -203,7 +203,7 @@ public class OrdersController extends ZGKBaseController {
                            @RequestParam(value = "token", required = true) String token,
                             @RequestParam(value = "channel", required = false) String channel){
         String payChannel = "alipay_pc_direct";
-        if(org.apache.commons.lang3.StringUtils.isNoneEmpty(channel))
+        if(org.apache.commons.lang3.StringUtils.isNotEmpty(channel))
         {
             payChannel = channel;
         }

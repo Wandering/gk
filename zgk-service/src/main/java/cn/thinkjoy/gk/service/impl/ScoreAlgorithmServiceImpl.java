@@ -797,7 +797,7 @@ public class ScoreAlgorithmServiceImpl implements IScoreAlgorithmService {
                     map.put("universityName", hMap.get("universityName"));
                     map.put("universityId", hMap.get("universityId"));
                     map.put("enrollRate", hMap.get("enrollRate"));
-                    map.put("batch", universityEnrollView.getBatchName() == null ? batchNames.get(batchs[0]) + "(" + batchScores.get(batchs[0]) + ")" : universityEnrollView.getBatchName() + "(" + batchScores.get(batchs[0]) + ")");
+                    map.put("batch", universityEnrollView.getBatchName() == null ? batchNames.get(batchs[0]) : universityEnrollView.getBatchName());
                     map.put("highestScore", universityEnrollView.getHighestScore());
                     map.put("lowestScore", universityEnrollView.getLowestScore());
                     map.put("averageScore", universityEnrollView.getAverageScore());
