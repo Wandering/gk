@@ -6,6 +6,7 @@
  */
 package cn.thinkjoy.gk.dao;
 
+import cn.thinkjoy.gk.domain.ExpertProductService;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface IExpertProductServiceExDAO{
      * @return
      */
     List<Map<String,Object>> getCardServiceByProductId(Map<String,Object> map);
+
+    List<ExpertProductService> selectServiceByProductId(Map<String,Object> map);
 }

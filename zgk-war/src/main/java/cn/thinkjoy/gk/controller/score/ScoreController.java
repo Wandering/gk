@@ -1,22 +1,14 @@
 package cn.thinkjoy.gk.controller.score;
 
-import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.common.Constants;
-import cn.thinkjoy.gk.common.SubjectEnum;
-import cn.thinkjoy.gk.common.UserAreaContext;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.controller.predict.SmartReportController;
 import cn.thinkjoy.gk.domain.ScoreUserRecord;
-import cn.thinkjoy.gk.entity.UniversityInfoView;
-import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 import cn.thinkjoy.gk.service.*;
 import cn.thinkjoy.gk.common.ScoreUtil;
-import cn.thinkjoy.gk.util.RedisUtil;
-import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -26,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
