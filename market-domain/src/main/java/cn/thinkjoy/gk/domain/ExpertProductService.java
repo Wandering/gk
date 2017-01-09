@@ -27,8 +27,17 @@ public class ExpertProductService extends BaseDomain{
     private String serviceIntroduce;
     private String serviceGrade;
     private String serviceIcon;
+    private String serviceCount;
 
-	public ExpertProductService(){
+    public String getServiceCount() {
+        return serviceCount;
+    }
+
+    public void setServiceCount(String serviceCount) {
+        this.serviceCount = serviceCount;
+    }
+
+    public ExpertProductService(){
 	}
     public void setProductId(Integer value) {
         this.productId = value;

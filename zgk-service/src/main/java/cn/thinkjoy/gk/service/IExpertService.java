@@ -2,6 +2,7 @@ package cn.thinkjoy.gk.service;
 
 import cn.thinkjoy.gk.domain.ExpertOrder;
 import cn.thinkjoy.gk.domain.OrderRevaluation;
+import cn.thinkjoy.gk.domain.Product;
 import cn.thinkjoy.gk.entity.*;
 import cn.thinkjoy.gk.pojo.*;
 
@@ -24,6 +25,8 @@ public interface IExpertService
     int selectCommonQuestionCount(Map<String,Object> map);
 
     List<ExpertInfoPojo> selectExpertList(Map<String,Object> map);
+
+    List<ExpertInfoPojo> checkExpertByProduct(Map<String,Object> map);
 
     int selectExpertListCount(Map<String,Object> map);
 
@@ -49,7 +52,7 @@ public interface IExpertService
 
     List<Map<String,Object>> getExpertOrderList(Map<String, Object> map);
 
-    List<ExpertInfoPojo> checkExpert(String commonQuestionIdList,String offset,String rows,String userId,String note);
+    String checkProduct(String commonQuestionIdList,String offset,String rows,String userId,String note,String areaId);
 
     void createExpertOrderRevaluation(OrderRevaluation orderRevaluation);
 
