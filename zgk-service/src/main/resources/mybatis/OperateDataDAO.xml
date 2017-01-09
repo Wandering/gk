@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IOperateDataDAO">
+
+    <!-- 获取点击图标总用户数 -->
+    <select id="getClickIconCount" parameterType="map" resultType="map">
+        SELECT
+            count(DISTINCT t0.id) as total,
+            FROM_UNIXTIME(t1.createDate / 1000, '%Y-%m-%d')  as tim
+        FROM
+            zgk_user_info t0,
+            zgk_user_account t1
+        WHERE
+            t0.id = t1.id
+        AND t0.alipayUserId IS NOT NULL
+        AND FROM_UNIXTIME(t1.createDate / 1000, '%Y-%m-%d') BETWEEN #{startTime}
+        AND #{endTime}
+        GROUP BY
+            FROM_UNIXTIME(t1.createDate / 1000, '%Y-%m-%d');
+    </select>
+
+    <!-- 获取完善信息总用户数 -->
+    <select id="getPerfectInfoCount" parameterType="map" resultType="map">
+        SELECT
+            count(DISTINCT t0.id) as total,
+            FROM_UNIXTIME(t1.createDate / 1000, '%Y-%m-%d') as tim
+        FROM
+            zgk_user_info t0,
+            zgk_user_account t1
+        WHERE
+            t0.id = t1.id
+        AND t0.alipayUserId IS NOT NULL
+        AND t0.gradeInfo IS NOT NULL
+        AND FROM_UNIXTIME(t1.createDate / 1000, '%Y-%m-%d') BETWEEN #{startTime}
+        AND #{endTime}
+        GROUP BY
+            FROM_UNIXTIME(t1.createDate / 1000, '%Y-%m-%d');
+    </select>
+
+    <!-- 获取测评总用户数 -->
+    <select id="getEvaluationCount" parameterType="map" resultType="map">
+        SELECT
+            count(DISTINCT t0.user_id) as total,
+            FROM_UNIXTIME(t0.cdate / 1000, '%Y-%m-%d') as tim
+        FROM
+            zgk_score_base t0,
+            zgk_user_info t1,
+            zgk_user_account t2
+        WHERE
+            t0.user_id = t1.id
+        AND t1.id = t2.id
+        AND FROM_UNIXTIME(t2.createDate / 1000, '%Y-%m-%d') BETWEEN #{startTime}
+        AND #{endTime}
+        AND t1.alipayUserId IS NOT NULL
+        AND t1.gradeInfo IS NOT NULL
+        GROUP BY
+            FROM_UNIXTIME(t2.createDate / 1000, '%Y-%m-%d');
+    </select>
+
+    <!-- 获取录取预测总用户数 -->
+    <select id="getEnrollingPredictCount" parameterType="map" resultType="map">
+        SELECT
+            count(DISTINCT t0.userId) as total,
+            FROM_UNIXTIME(t2.createDate / 1000, '%Y-%m-%d') as tim
+        FROM
+            zgk_university_enrolling_predict_record t0,
+            zgk_user_info t1,
+            zgk_user_account t2
+        WHERE
+            t0.userId = t1.id
+        AND t1.id = t2.id
+        AND t1.alipayUserId IS NOT NULL
+        AND t1.gradeInfo IS NOT NULL
+        AND FROM_UNIXTIME(t2.createDate / 1000, '%Y-%m-%d') BETWEEN #{startTime}
+        AND #{endTime}
+        GROUP BY
+            FROM_UNIXTIME(t2.createDate / 1000, '%Y-%m-%d')
+    </select>
+
+</mapper>
+
