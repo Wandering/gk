@@ -782,5 +782,13 @@ public class DateUtil {
 	public final static Timestamp getCurrentTimestamp() {
 		return new Timestamp(System.currentTimeMillis());
 	}
+
+
+	public static void main(String [] args){
+
+		String dataStr = DateToString(new Date(),"yyyy-MM-dd");
+		System.out.println(dataStr);
+		System.out.println(addDay(dataStr,-1));
+	}
 	
 }
