@@ -12,6 +12,7 @@ import cn.thinkjoy.gk.entity.UniversityEnrollView;
 import cn.thinkjoy.gk.entity.UniversityInfoEnrolling;
 import cn.thinkjoy.gk.pojo.BatchView;
 import cn.thinkjoy.gk.pojo.ReportForecastView;
+import cn.thinkjoy.gk.pojo.ScoreAnalysisNumberPojo;
 import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 import cn.thinkjoy.gk.service.IScoreAnalysisService;
 import cn.thinkjoy.gk.service.IScoreConverPrecedenceService;
@@ -134,6 +135,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
                 String value = (String) scores.get(key);
                 String[] values = value.split("-");
                 totalScore += Float.valueOf(values[0]);
+
                 insertScores.put(key + "Score", values[0]);
                 insertScores.put(key + "ScoreTotal", values[1]);
             }
@@ -141,7 +143,9 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
 //        if (insertScores.size() != 12 && insertScores.size() != 14) {
 //            throw new BizException("error", "提交科目不完整!");
 //        }
-
+        if (totalScore>800 || totalScore<0){
+            throw new BizException("error","成绩分析成绩不能超过800分");
+        }
         insertMap.put("scores", insertScores);
         insertMap.put("totalScore", totalScore);
         scoreAnalysisDAO.insertScoreRecord(insertMap);
@@ -160,7 +164,9 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
 
         Float totalScore = (Float) map.get("totalScore");
         Long areaId = Long.valueOf(map.get("areaId").toString());
-
+        if (totalScore>800 || totalScore<0){
+            throw new BizException("error","成绩分析成绩不能超过800分");
+        }
         resultMap.put("totalScore", totalScore);
         resultMap.put("areaName", map.get("areaName"));
         Integer majorType = (Integer) map.get("majorType");
@@ -757,6 +763,13 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
         return scoreAnalysisDAO.queryMajorBySchoolIdAndAreaId(map);
     }
 
+    @Override
+    public ScoreAnalysisNumberPojo queryHistoryScoreAnalysis(long userId) {
+        Map<String,Object> map=new HashMap<>();
+        map.put("userId",userId);
+        return scoreAnalysisDAO.queryHistoryScoreAnalysis(map);
+    }
+
 
     private Map<String,Object> getScores(long areaId,Integer majorType,Map<String,Object> map,Map<String,Object> resultMap){
         Map<String, Object> scores =null;
@@ -783,6 +796,7 @@ public class ScoreAnalysisServiceImpl implements IScoreAnalysisService {
             scores = scoreUtil.getScores(map, majorType);
             resultMap.put("scores", scores);
         }
+
         return scores;
     }
 

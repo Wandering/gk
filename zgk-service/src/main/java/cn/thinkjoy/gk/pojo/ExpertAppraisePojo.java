@@ -15,6 +15,15 @@ public class ExpertAppraisePojo extends BaseDomain {
     private String userComments;
     private String isChecked;
     private String createDate;
+    private String rate;
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
 
     public String getExpertId() {
         return expertId;

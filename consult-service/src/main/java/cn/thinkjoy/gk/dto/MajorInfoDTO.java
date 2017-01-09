@@ -16,6 +16,7 @@ public class MajorInfoDTO implements Serializable {
     private String employmentRate;
     private String salary;
     private String salaryRank;
+    private String fmRatio;
 
     public String getSalaryRank() {
         return salaryRank;
@@ -95,5 +96,13 @@ public class MajorInfoDTO implements Serializable {
 
     public void setSalary(String salary) {
         this.salary = salary;
+    }
+
+    public String getFmRatio() {
+        return fmRatio;
+    }
+
+    public void setFmRatio(String fmRatio) {
+        this.fmRatio = fmRatio;
     }
 }

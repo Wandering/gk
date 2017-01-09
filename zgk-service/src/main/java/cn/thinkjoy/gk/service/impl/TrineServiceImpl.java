@@ -22,8 +22,14 @@ public class TrineServiceImpl implements ITrineService{
      * @return
      */
     @Override
-    public List queryPage(Map<String, Object> conditions) {
-        return trineDAO.queryPage(conditions);
+    public List queryPage(Map<String, Object> conditions,int offset, int rows,String orderBy,String sortBy) {
+        return trineDAO.queryPage(conditions,offset,rows,
+                orderBy,sortBy,null);
+    }
+    @Override
+    public List queryPage(Map<String, Object> conditions,int offset, int rows,String orderBy,String sortBy,Map<String, Object> selector) {
+        return trineDAO.queryPage(conditions,offset,rows,
+                orderBy,sortBy,selector);
     }
 
     /**
@@ -51,5 +57,16 @@ public class TrineServiceImpl implements ITrineService{
     @Override
     public List queryBatchName() {
         return trineDAO.queryBatchName();
+    }
+
+    /**
+     * 根据id查章程
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public String getUniversityIntroById(String id) {
+        return trineDAO.getUniversityIntroById(id);
     }
 }

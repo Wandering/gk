@@ -5,6 +5,7 @@ package cn.thinkjoy.gk.pojo;
  */
 public class MajoredDto {
 
+    private String majorId;
     private String name;
     private String educationLevel;
     private String subjectType;
@@ -14,6 +15,14 @@ public class MajoredDto {
     private String mainCourse;
     private String workGuide;
     private String salary;
+
+    public String getMajorId() {
+        return majorId;
+    }
+
+    public void setMajorId(String majorId) {
+        this.majorId = majorId;
+    }
 
     public String getSalary() {
         return salary;

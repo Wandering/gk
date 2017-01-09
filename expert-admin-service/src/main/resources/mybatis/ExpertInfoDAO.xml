@@ -1,0 +1,839 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IExpertInfoDAO">
+<!--
+insert
+update
+updateNull
+deleteById
+deleteByCondition
+deleteByProperty
+fetch
+findOne
+findList
+findAll
+queryPage
+like
+queryList
+queryOne
+count
+selectMaxId
+updateOrSave
+selectOne
+selectList
+-->
+    <sql id="Base_Column_List">
+        id as id,
+        expert_name as expertName,
+        expert_photo_url as expertPhotoUrl,
+        expert_intro as expertIntro,
+        expert_phone as expertPhone,
+        server_cases as serverCases,
+        area_id as areaId,
+        expert_domain as expertDomain,
+        expert_profile as expertProfile,
+        best_expert as bestExpert,
+        qualification as qualification,
+        famous_teacher as famousTeacher,
+        is_checked as isChecked,
+        create_date as createDate,
+        pre_appoint_days as preAppointDays,
+        password as password,
+        qq as qq,
+        weixin as weixin
+    </sql>
+    <insert id="insert" parameterType="ExpertInfo">
+        INSERT INTO zgk_expert_info (
+        expert_name,
+        expert_photo_url,
+        expert_intro,
+        expert_phone,
+        server_cases,
+        area_id,
+        expert_domain,
+        expert_profile,
+        best_expert,
+        qualification,
+        famous_teacher,
+        is_checked,
+        create_date,
+        pre_appoint_days,
+        password,
+        qq,
+        weixin
+        ) VALUES (
+        #{expertName},
+        #{expertPhotoUrl},
+        #{expertIntro},
+        #{expertPhone},
+        #{serverCases},
+        #{areaId},
+        #{expertDomain},
+        #{expertProfile},
+        #{bestExpert},
+        #{qualification},
+        #{famousTeacher},
+        #{isChecked},
+        #{createDate},
+        #{preAppointDays},
+        #{password},
+        #{qq},
+        #{weixin}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+        SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="ExpertInfo">
+        UPDATE zgk_expert_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="expertName!=null">
+                expert_name = #{expertName},
+            </if>
+            <if test="expertPhotoUrl!=null">
+                expert_photo_url = #{expertPhotoUrl},
+            </if>
+            <if test="expertIntro!=null">
+                expert_intro = #{expertIntro},
+            </if>
+            <if test="expertPhone!=null">
+                expert_phone = #{expertPhone},
+            </if>
+            <if test="serverCases!=null">
+                server_cases = #{serverCases},
+            </if>
+            <if test="areaId!=null">
+                area_id = #{areaId},
+            </if>
+            <if test="expertDomain!=null">
+                expert_domain = #{expertDomain},
+            </if>
+            <if test="expertProfile!=null">
+                expert_profile = #{expertProfile},
+            </if>
+            <if test="bestExpert!=null">
+                best_expert = #{bestExpert},
+            </if>
+            <if test="qualification!=null">
+                qualification = #{qualification},
+            </if>
+            <if test="famousTeacher!=null">
+                famous_teacher = #{famousTeacher},
+            </if>
+            <if test="isChecked!=null">
+                is_checked = #{isChecked},
+            </if>
+            <if test="createDate!=null">
+                create_date = #{createDate},
+            </if>
+            <if test="preAppointDays!=null">
+                pre_appoint_days = #{preAppointDays},
+            </if>
+            <if test="password!=null">
+                password = #{password},
+            </if>
+            <if test="qq!=null">
+                qq = #{qq},
+            </if>
+            <if test="weixin!=null">
+                weixin = #{weixin},
+            </if>
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateMap">
+        UPDATE zgk_expert_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.expertName!=null">
+                expert_name = #{map.expertName},
+            </if>
+            <if test="map.expertPhotoUrl!=null">
+                expert_photo_url = #{map.expertPhotoUrl},
+            </if>
+            <if test="map.expertIntro!=null">
+                expert_intro = #{map.expertIntro},
+            </if>
+            <if test="map.expertPhone!=null">
+                expert_phone = #{map.expertPhone},
+            </if>
+            <if test="map.serverCases!=null">
+                server_cases = #{map.serverCases},
+            </if>
+            <if test="map.areaId!=null">
+                area_id = #{map.areaId},
+            </if>
+            <if test="map.expertDomain!=null">
+                expert_domain = #{map.expertDomain},
+            </if>
+            <if test="map.expertProfile!=null">
+                expert_profile = #{map.expertProfile},
+            </if>
+            <if test="map.bestExpert!=null">
+                best_expert = #{map.bestExpert},
+            </if>
+            <if test="map.qualification!=null">
+                qualification = #{map.qualification},
+            </if>
+            <if test="map.famousTeacher!=null">
+                famous_teacher = #{map.famousTeacher},
+            </if>
+            <if test="map.isChecked!=null">
+                is_checked = #{map.isChecked},
+            </if>
+            <if test="map.createDate!=null">
+                create_date = #{map.createDate},
+            </if>
+            <if test="map.preAppointDays!=null">
+                pre_appoint_days = #{map.preAppointDays},
+            </if>
+            <if test="map.password!=null">
+                password = #{map.password},
+            </if>
+            <if test="map.qq!=null">
+                qq = #{map.qq},
+            </if>
+            <if test="map.weixin!=null">
+                weixin = #{map.weixin},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE zgk_expert_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.expertName!=null">
+                expert_name = #{update.expertName},
+            </if>
+            <if test="update.expertPhotoUrl!=null">
+                expert_photo_url = #{update.expertPhotoUrl},
+            </if>
+            <if test="update.expertIntro!=null">
+                expert_intro = #{update.expertIntro},
+            </if>
+            <if test="update.expertPhone!=null">
+                expert_phone = #{update.expertPhone},
+            </if>
+            <if test="update.serverCases!=null">
+                server_cases = #{update.serverCases},
+            </if>
+            <if test="update.areaId!=null">
+                area_id = #{update.areaId},
+            </if>
+            <if test="update.expertDomain!=null">
+                expert_domain = #{update.expertDomain},
+            </if>
+            <if test="update.expertProfile!=null">
+                expert_profile = #{update.expertProfile},
+            </if>
+            <if test="update.bestExpert!=null">
+                best_expert = #{update.bestExpert},
+            </if>
+            <if test="update.qualification!=null">
+                qualification = #{update.qualification},
+            </if>
+            <if test="update.famousTeacher!=null">
+                famous_teacher = #{update.famousTeacher},
+            </if>
+            <if test="update.isChecked!=null">
+                is_checked = #{update.isChecked},
+            </if>
+            <if test="update.createDate!=null">
+                create_date = #{update.createDate},
+            </if>
+            <if test="update.preAppointDays!=null">
+                pre_appoint_days = #{update.preAppointDays},
+            </if>
+            <if test="update.password!=null">
+                password = #{update.password},
+            </if>
+            <if test="update.qq!=null">
+                qq = #{update.qq},
+            </if>
+            <if test="update.weixin!=null">
+                weixin = #{update.weixin},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.expertName!=null">
+                AND expert_name = #{condition.expertName}
+            </if>
+            <if test="condition.expertPhotoUrl!=null">
+                AND expert_photo_url = #{condition.expertPhotoUrl}
+            </if>
+            <if test="condition.expertIntro!=null">
+                AND expert_intro = #{condition.expertIntro}
+            </if>
+            <if test="condition.expertPhone!=null">
+                AND expert_phone = #{condition.expertPhone}
+            </if>
+            <if test="condition.serverCases!=null">
+                AND server_cases = #{condition.serverCases}
+            </if>
+            <if test="condition.areaId!=null">
+                AND area_id = #{condition.areaId}
+            </if>
+            <if test="condition.expertDomain!=null">
+                AND expert_domain = #{condition.expertDomain}
+            </if>
+            <if test="condition.expertProfile!=null">
+                AND expert_profile = #{condition.expertProfile}
+            </if>
+            <if test="condition.bestExpert!=null">
+                AND best_expert = #{condition.bestExpert}
+            </if>
+            <if test="condition.qualification!=null">
+                AND qualification = #{condition.qualification}
+            </if>
+            <if test="condition.famousTeacher!=null">
+                AND famous_teacher = #{condition.famousTeacher}
+            </if>
+            <if test="condition.isChecked!=null">
+                AND is_checked = #{condition.isChecked}
+            </if>
+            <if test="condition.createDate!=null">
+                AND create_date = #{condition.createDate}
+            </if>
+            <if test="condition.preAppointDays!=null">
+                AND pre_appoint_days = #{condition.preAppointDays}
+            </if>
+            <if test="condition.password!=null">
+                AND password = #{condition.password}
+            </if>
+            <if test="condition.qq!=null">
+                AND qq = #{condition.qq}
+            </if>
+            <if test="condition.weixin!=null">
+                AND weixin = #{condition.weixin}
+            </if>
+        </trim>
+    </update>
+
+    <insert id="insertMap" >
+        INSERT INTO zgk_expert_info (
+                expert_name,
+                expert_photo_url,
+                expert_intro,
+                expert_phone,
+                server_cases,
+                area_id,
+                expert_domain,
+                expert_profile,
+                best_expert,
+                qualification,
+                famous_teacher,
+                is_checked,
+                create_date,
+                pre_appoint_days,
+                password,
+                qq,
+                weixin
+        ) VALUES (
+                    #{map.expertName},
+                    #{map.expertPhotoUrl},
+                    #{map.expertIntro},
+                    #{map.expertPhone},
+                    #{map.serverCases},
+                    #{map.areaId},
+                    #{map.expertDomain},
+                    #{map.expertProfile},
+                    #{map.bestExpert},
+                    #{map.qualification},
+                    #{map.famousTeacher},
+                    #{map.isChecked},
+                    #{map.createDate},
+                    #{map.preAppointDays},
+                    #{map.password},
+                    #{map.qq},
+                    #{map.weixin}
+        )
+    </insert>
+
+
+    <update id="updateNull" parameterType="ExpertInfo">
+        UPDATE zgk_expert_info
+        <trim prefix="SET" suffixOverrides=",">
+            expert_name = #{expertName},
+            expert_photo_url = #{expertPhotoUrl},
+            expert_intro = #{expertIntro},
+            expert_phone = #{expertPhone},
+            server_cases = #{serverCases},
+            area_id = #{areaId},
+            expert_domain = #{expertDomain},
+            expert_profile = #{expertProfile},
+            best_expert = #{bestExpert},
+            qualification = #{qualification},
+            famous_teacher = #{famousTeacher},
+            is_checked = #{isChecked},
+            create_date = #{createDate},
+            pre_appoint_days = #{preAppointDays},
+            password = #{password},
+            qq = #{qq},
+            weixin = #{weixin},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        DELETE FROM zgk_expert_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </delete>
+
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM zgk_expert_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="expertName!=null">
+                AND expert_name = #{expertName}
+            </if>
+            <if test="expertPhotoUrl!=null">
+                AND expert_photo_url = #{expertPhotoUrl}
+            </if>
+            <if test="expertIntro!=null">
+                AND expert_intro = #{expertIntro}
+            </if>
+            <if test="expertPhone!=null">
+                AND expert_phone = #{expertPhone}
+            </if>
+            <if test="serverCases!=null">
+                AND server_cases = #{serverCases}
+            </if>
+            <if test="areaId!=null">
+                AND area_id = #{areaId}
+            </if>
+            <if test="expertDomain!=null">
+                AND expert_domain = #{expertDomain}
+            </if>
+            <if test="expertProfile!=null">
+                AND expert_profile = #{expertProfile}
+            </if>
+            <if test="bestExpert!=null">
+                AND best_expert = #{bestExpert}
+            </if>
+            <if test="qualification!=null">
+                AND qualification = #{qualification}
+            </if>
+            <if test="famousTeacher!=null">
+                AND famous_teacher = #{famousTeacher}
+            </if>
+            <if test="isChecked!=null">
+                AND is_checked = #{isChecked}
+            </if>
+            <if test="createDate!=null">
+                AND create_date = #{createDate}
+            </if>
+            <if test="preAppointDays!=null">
+                AND pre_appoint_days = #{preAppointDays}
+            </if>
+            <if test="password!=null">
+                AND password = #{password}
+            </if>
+            <if test="qq!=null">
+                AND qq = #{qq}
+            </if>
+            <if test="weixin!=null">
+                AND weixin = #{weixin}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM zgk_expert_info WHERE
+        ${property} = #{value}
+    </delete>
+
+    <select id="fetch" parameterType="java.lang.Integer" resultType="ExpertInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="ExpertInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_info WHERE
+        ${property} = #{value}
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="ExpertInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_info WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="ExpertInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_info
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="ExpertInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_info
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.id!=null">
+                ${condition.groupOp}   id  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.expertName!=null">
+                ${condition.groupOp}   expert_name  ${condition.expertName.op}  #{condition.expertName.data}
+            </if>
+            <if test="condition.expertPhotoUrl!=null">
+                ${condition.groupOp}   expert_photo_url  ${condition.expertPhotoUrl.op}  #{condition.expertPhotoUrl.data}
+            </if>
+            <if test="condition.expertIntro!=null">
+                ${condition.groupOp}   expert_intro  ${condition.expertIntro.op}  #{condition.expertIntro.data}
+            </if>
+            <if test="condition.expertPhone!=null">
+                ${condition.groupOp}   expert_phone  ${condition.expertPhone.op}  #{condition.expertPhone.data}
+            </if>
+            <if test="condition.serverCases!=null">
+                ${condition.groupOp}   server_cases  ${condition.serverCases.op}  #{condition.serverCases.data}
+            </if>
+            <if test="condition.areaId!=null">
+                ${condition.groupOp}   area_id  ${condition.areaId.op}  #{condition.areaId.data}
+            </if>
+            <if test="condition.expertDomain!=null">
+                ${condition.groupOp}   expert_domain  ${condition.expertDomain.op}  #{condition.expertDomain.data}
+            </if>
+            <if test="condition.expertProfile!=null">
+                ${condition.groupOp}   expert_profile  ${condition.expertProfile.op}  #{condition.expertProfile.data}
+            </if>
+            <if test="condition.bestExpert!=null">
+                ${condition.groupOp}   best_expert  ${condition.bestExpert.op}  #{condition.bestExpert.data}
+            </if>
+            <if test="condition.qualification!=null">
+                ${condition.groupOp}   qualification  ${condition.qualification.op}  #{condition.qualification.data}
+            </if>
+            <if test="condition.famousTeacher!=null">
+                ${condition.groupOp}   famous_teacher  ${condition.famousTeacher.op}  #{condition.famousTeacher.data}
+            </if>
+            <if test="condition.isChecked!=null">
+                ${condition.groupOp}   is_checked  ${condition.isChecked.op}  #{condition.isChecked.data}
+            </if>
+            <if test="condition.createDate!=null">
+                ${condition.groupOp}   create_date  ${condition.createDate.op}  #{condition.createDate.data}
+            </if>
+            <if test="condition.preAppointDays!=null">
+                ${condition.groupOp}   pre_appoint_days  ${condition.preAppointDays.op}  #{condition.preAppointDays.data}
+            </if>
+            <if test="condition.password!=null">
+                ${condition.groupOp}   password  ${condition.password.op}  #{condition.password.data}
+            </if>
+            <if test="condition.qq!=null">
+                ${condition.groupOp}   qq  ${condition.qq.op}  #{condition.qq.data}
+            </if>
+            <if test="condition.weixin!=null">
+                ${condition.groupOp}   weixin  ${condition.weixin.op}  #{condition.weixin.data}
+            </if>
+
+
+    </where>
+
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="ExpertInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id like CONCAT('%', #{id} , '%')
+            </if>
+            <if test="expertName!=null">
+                AND expert_name like CONCAT('%', #{expertName} , '%')
+            </if>
+            <if test="expertPhotoUrl!=null">
+                AND expert_photo_url like CONCAT('%', #{expertPhotoUrl} , '%')
+            </if>
+            <if test="expertIntro!=null">
+                AND expert_intro like CONCAT('%', #{expertIntro} , '%')
+            </if>
+            <if test="expertPhone!=null">
+                AND expert_phone like CONCAT('%', #{expertPhone} , '%')
+            </if>
+            <if test="serverCases!=null">
+                AND server_cases like CONCAT('%', #{serverCases} , '%')
+            </if>
+            <if test="areaId!=null">
+                AND area_id like CONCAT('%', #{areaId} , '%')
+            </if>
+            <if test="expertDomain!=null">
+                AND expert_domain like CONCAT('%', #{expertDomain} , '%')
+            </if>
+            <if test="expertProfile!=null">
+                AND expert_profile like CONCAT('%', #{expertProfile} , '%')
+            </if>
+            <if test="bestExpert!=null">
+                AND best_expert like CONCAT('%', #{bestExpert} , '%')
+            </if>
+            <if test="qualification!=null">
+                AND qualification like CONCAT('%', #{qualification} , '%')
+            </if>
+            <if test="famousTeacher!=null">
+                AND famous_teacher like CONCAT('%', #{famousTeacher} , '%')
+            </if>
+            <if test="isChecked!=null">
+                AND is_checked like CONCAT('%', #{isChecked} , '%')
+            </if>
+            <if test="createDate!=null">
+                AND create_date like CONCAT('%', #{createDate} , '%')
+            </if>
+            <if test="preAppointDays!=null">
+                AND pre_appoint_days like CONCAT('%', #{preAppointDays} , '%')
+            </if>
+            <if test="password!=null">
+                AND password like CONCAT('%', #{password} , '%')
+            </if>
+            <if test="qq!=null">
+                AND qq like CONCAT('%', #{qq} , '%')
+            </if>
+            <if test="weixin!=null">
+                AND weixin like CONCAT('%', #{weixin} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="ExpertInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.expertName!=null">
+                AND expert_name = #{condition.expertName}
+            </if>
+            <if test="condition.expertPhotoUrl!=null">
+                AND expert_photo_url = #{condition.expertPhotoUrl}
+            </if>
+            <if test="condition.expertIntro!=null">
+                AND expert_intro = #{condition.expertIntro}
+            </if>
+            <if test="condition.expertPhone!=null">
+                AND expert_phone = #{condition.expertPhone}
+            </if>
+            <if test="condition.serverCases!=null">
+                AND server_cases = #{condition.serverCases}
+            </if>
+            <if test="condition.areaId!=null">
+                AND area_id = #{condition.areaId}
+            </if>
+            <if test="condition.expertDomain!=null">
+                AND expert_domain = #{condition.expertDomain}
+            </if>
+            <if test="condition.expertProfile!=null">
+                AND expert_profile = #{condition.expertProfile}
+            </if>
+            <if test="condition.bestExpert!=null">
+                AND best_expert = #{condition.bestExpert}
+            </if>
+            <if test="condition.qualification!=null">
+                AND qualification = #{condition.qualification}
+            </if>
+            <if test="condition.famousTeacher!=null">
+                AND famous_teacher = #{condition.famousTeacher}
+            </if>
+            <if test="condition.isChecked!=null">
+                AND is_checked = #{condition.isChecked}
+            </if>
+            <if test="condition.createDate!=null">
+                AND create_date = #{condition.createDate}
+            </if>
+            <if test="condition.preAppointDays!=null">
+                AND pre_appoint_days = #{condition.preAppointDays}
+            </if>
+            <if test="condition.password!=null">
+                AND password = #{condition.password}
+            </if>
+            <if test="condition.qq!=null">
+                AND qq = #{condition.qq}
+            </if>
+            <if test="condition.weixin!=null">
+                AND weixin = #{condition.weixin}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="ExpertInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_expert_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.expertName!=null">
+                AND expert_name = #{condition.expertName}
+            </if>
+            <if test="condition.expertPhotoUrl!=null">
+                AND expert_photo_url = #{condition.expertPhotoUrl}
+            </if>
+            <if test="condition.expertIntro!=null">
+                AND expert_intro = #{condition.expertIntro}
+            </if>
+            <if test="condition.expertPhone!=null">
+                AND expert_phone = #{condition.expertPhone}
+            </if>
+            <if test="condition.serverCases!=null">
+                AND server_cases = #{condition.serverCases}
+            </if>
+            <if test="condition.areaId!=null">
+                AND area_id = #{condition.areaId}
+            </if>
+            <if test="condition.expertDomain!=null">
+                AND expert_domain = #{condition.expertDomain}
+            </if>
+            <if test="condition.expertProfile!=null">
+                AND expert_profile = #{condition.expertProfile}
+            </if>
+            <if test="condition.bestExpert!=null">
+                AND best_expert = #{condition.bestExpert}
+            </if>
+            <if test="condition.qualification!=null">
+                AND qualification = #{condition.qualification}
+            </if>
+            <if test="condition.famousTeacher!=null">
+                AND famous_teacher = #{condition.famousTeacher}
+            </if>
+            <if test="condition.isChecked!=null">
+                AND is_checked = #{condition.isChecked}
+            </if>
+            <if test="condition.createDate!=null">
+                AND create_date = #{condition.createDate}
+            </if>
+            <if test="condition.preAppointDays!=null">
+                AND pre_appoint_days = #{condition.preAppointDays}
+            </if>
+            <if test="condition.password!=null">
+                AND password = #{condition.password}
+            </if>
+            <if test="condition.qq!=null">
+                AND qq = #{condition.qq}
+            </if>
+            <if test="condition.weixin!=null">
+                AND weixin = #{condition.weixin}
+            </if>
+        </trim>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(id) FROM zgk_expert_info
+       <where>
+           <if test="id!=null">
+               ${groupOp} id ${id.op}  #{id.data}
+           </if>
+           <if test="expertName!=null">
+               ${groupOp} expert_name ${expertName.op}  #{expertName.data}
+           </if>
+           <if test="expertPhotoUrl!=null">
+               ${groupOp} expert_photo_url ${expertPhotoUrl.op}  #{expertPhotoUrl.data}
+           </if>
+           <if test="expertIntro!=null">
+               ${groupOp} expert_intro ${expertIntro.op}  #{expertIntro.data}
+           </if>
+           <if test="expertPhone!=null">
+               ${groupOp} expert_phone ${expertPhone.op}  #{expertPhone.data}
+           </if>
+           <if test="serverCases!=null">
+               ${groupOp} server_cases ${serverCases.op}  #{serverCases.data}
+           </if>
+           <if test="areaId!=null">
+               ${groupOp} area_id ${areaId.op}  #{areaId.data}
+           </if>
+           <if test="expertDomain!=null">
+               ${groupOp} expert_domain ${expertDomain.op}  #{expertDomain.data}
+           </if>
+           <if test="expertProfile!=null">
+               ${groupOp} expert_profile ${expertProfile.op}  #{expertProfile.data}
+           </if>
+           <if test="bestExpert!=null">
+               ${groupOp} best_expert ${bestExpert.op}  #{bestExpert.data}
+           </if>
+           <if test="qualification!=null">
+               ${groupOp} qualification ${qualification.op}  #{qualification.data}
+           </if>
+           <if test="famousTeacher!=null">
+               ${groupOp} famous_teacher ${famousTeacher.op}  #{famousTeacher.data}
+           </if>
+           <if test="isChecked!=null">
+               ${groupOp} is_checked ${isChecked.op}  #{isChecked.data}
+           </if>
+           <if test="createDate!=null">
+               ${groupOp} create_date ${createDate.op}  #{createDate.data}
+           </if>
+           <if test="preAppointDays!=null">
+               ${groupOp} pre_appoint_days ${preAppointDays.op}  #{preAppointDays.data}
+           </if>
+           <if test="password!=null">
+               ${groupOp} password ${password.op}  #{password.data}
+           </if>
+           <if test="qq!=null">
+               ${groupOp} qq ${qq.op}  #{qq.data}
+           </if>
+           <if test="weixin!=null">
+               ${groupOp} weixin ${weixin.op}  #{weixin.data}
+           </if>
+
+       </where>
+    <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+    </if>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Integer">
+        SELECT
+        MAX(id)
+        FROM zgk_expert_info
+    </select>
+
+</mapper>
+

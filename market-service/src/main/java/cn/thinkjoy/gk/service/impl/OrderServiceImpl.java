@@ -227,8 +227,8 @@ public class OrderServiceImpl extends AbstractPageService<IBaseDAO<Order>, Order
          *   3:金榜题名  GK7
          */
         Map<String,Object> queryMap = Maps.newHashMap();
-        queryMap.put("status",0);
-        queryMap.put("productType",productType);
+        //生成的卡在所有该类型卡号中一定要是最大值
+//        queryMap.put("productType",productType);
         Card tempCard = (Card) cardDAO.queryOne(queryMap,"cardNumber", SqlOrderEnum.DESC.getAction());
         // 卡号生成规则:库存最大卡号依次向后累加
         String prefix = "GK";

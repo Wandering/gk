@@ -1,5 +1,7 @@
 package cn.thinkjoy.gk.dao.selcourse;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +14,9 @@ public interface ITrineDAO {
      * @param conditions
      * @return
      */
-    List queryPage(Map<String,Object> conditions);
+    List queryPage(@Param("conditions") Map<String,Object> conditions,@Param("offset") int offset, @Param("rows") int rows,
+                   @Param("orderBy") String orderBy,@Param("sortBy") String sortBy, @Param("selector") Map<String,Object> selector);
+
 
     /**
      * 分页统计方法
@@ -41,4 +45,11 @@ public interface ITrineDAO {
      * @return
      */
     List queryBatchName();
+
+    /**
+     * 根据id查简介
+     * @param id
+     * @return
+     */
+    String getUniversityIntroById(Object id);
 }

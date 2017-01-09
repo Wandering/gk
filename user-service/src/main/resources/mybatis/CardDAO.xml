@@ -163,9 +163,6 @@ selectList
             <if test="activeDate!=null">
                 activeDate = #{activeDate},
             </if>
-            <if test="errorStatus!=null">
-                errorStatus = #{errorStatus},
-            </if>
             <if test="productType!=null">
                 productType = #{productType},
             </if>
@@ -224,9 +221,6 @@ selectList
             </if>
             <if test="map.activeDate!=null">
                 activeDate = #{map.activeDate},
-            </if>
-            <if test="map.errorStatus!=null">
-                errorStatus = #{map.errorStatus},
             </if>
             <if test="map.productType!=null">
                 productType = #{map.productType},
@@ -488,9 +482,6 @@ selectList
             <if test="activeDate!=null">
                 AND activeDate = #{activeDate}
             </if>
-            <if test="errorStatus!=null">
-                AND errorStatus = #{errorStatus}
-            </if>
             <if test="productType!=null">
                 AND productType = #{productType}
             </if>
@@ -509,9 +500,6 @@ selectList
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             AND id = #{id}
         </trim>
-        <if test="orderBy!=null">
-            ORDER BY ${orderBy} ${sortBy}
-        </if>
     </select>
 
     <select id="findOne" parameterType="java.util.Map" resultType="Card">
@@ -675,9 +663,6 @@ selectList
             </if>
             <if test="activeDate!=null">
                 AND activeDate like CONCAT('%', #{activeDate} , '%')
-            </if>
-            <if test="errorStatus!=null">
-                AND errorStatus like CONCAT('%', #{errorStatus} , '%')
             </if>
             <if test="productType!=null">
                 AND productType like CONCAT('%', #{productType} , '%')
@@ -880,9 +865,6 @@ selectList
             <if test="activeDate!=null">
                 ${groupOp} activeDate ${activeDate.op}  #{activeDate.data}
             </if>
-            <if test="errorStatus!=null">
-                ${groupOp} errorStatus ${errorStatus.op}  #{errorStatus.data}
-            </if>
             <if test="productType!=null">
                 ${groupOp} productType ${productType.op}  #{productType.data}
             </if>
@@ -940,6 +922,40 @@ selectList
                 AND cardType = #{cardType}
             </if>
         </where>
+    </select>
+
+    <select id="getCard" resultType="java.lang.Long">
+        SELECT ord.card_id FROM zgk_expert_reservation_order_detail ord where ord.user_id = #{userId} group by ord.card_id
+    </select>
+
+    <select id="getProductService" resultType="java.util.Map">
+        SELECT serviceId,serviceType,serviceCount from zgk_expert_product_service where productId=#{productId} and areaId=#{areaId} and serviceId is not NULL
+    </select>
+
+    <insert id="initUserExpertService">
+        INSERT INTO
+        zgk_expert_reservation_order_detail
+        (card_id,service_item,user_id,create_date,service_count,status)
+        VALUES
+        <foreach collection="list" item="map" separator=",">
+            (#{map.cardId},#{map.serviceId},#{map.userId},#{map.createDate},#{map.serviceCount},#{map.status})
+        </foreach>
+    </insert>
+
+    <select id="getServiceByExpertId" resultType="java.lang.Integer">
+        SELECT service_type_id from zgk_expert_service_relation where expert_id = #{expertId}
+    </select>
+    <select id="getServiceByUserId" resultType="java.lang.Integer">
+        SELECT service_item from zgk_expert_reservation_order_detail where user_id = #{userId} and service_count!=0 GROUP BY service_item
+    </select>
+    <!--根据专家和用户-->
+    <select id="getServiceByUserIdAndExpertId" resultType="java.lang.Integer">
+        SELECT COUNT(*) from zgk_expert_reservation_order_detail where user_id = #{userId} and expert_id = #{expertId} AND status in (1,2)
+    </select>
+
+    <!--getProductServiceCount-->
+    <select id="getProductServiceCount" resultType="java.lang.Integer">
+        SELECT count(*) from zgk_expert_product_service where productId=#{productId} and areaId=#{areaId} and serviceId is not NULL
     </select>
 </mapper>
 

@@ -3,10 +3,7 @@ package cn.thinkjoy.gk.service;
 import cn.thinkjoy.gk.domain.ExpertOrder;
 import cn.thinkjoy.gk.domain.OrderRevaluation;
 import cn.thinkjoy.gk.entity.*;
-import cn.thinkjoy.gk.pojo.ExpertAppraisePojo;
-import cn.thinkjoy.gk.pojo.ExpertInfoPojo;
-import cn.thinkjoy.gk.pojo.ServicePojo;
-import cn.thinkjoy.gk.pojo.ServicePojo1;
+import cn.thinkjoy.gk.pojo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -36,6 +33,8 @@ public interface IExpertService
 
     int selectVedioListCount(Map<String,Object> map);
 
+    ExpertVedio selectVedioById(Map<String,Object> map);
+
     List<UserQuestion> selectQuestionList(Map<String,Object> map);
 
     int selectQuestionListCount(Map<String,Object> map);
@@ -62,7 +61,65 @@ public interface IExpertService
 
     List<Map<String,Object>> getExpertOrderRevaluation(Map<String, String> paramMap);
 
-    List<ServicePojo1> selectServiceByExpertId(Map<String,Object> map);
+    List<ServicePojo> selectServiceByExpertId(Map<String,Object> map);
 
     List<Map<String,Object>> getExpertServiceInfo(Map<String, String> paramMap);
+
+    List<ExpertInfoPojo> selectFamousTeacher(Map<String,Object> map);
+
+    void test1(Map<String,Object> map);
+    void test2(Map<String,Object> map);
+    void test3(Map<String,Object> map);
+
+    /**
+     * 根据专家ID获取专家可服务日期列表
+     *
+     * @param expertId
+     * @return
+     */
+    List<ExpertServiceDay> getExpertServiceDays(int expertId);
+
+    /**
+     * 根据日期ID获取专家可服务时间段
+     *
+     * @param dayId
+     * @return
+     */
+    List<ExpertServiceTime> getExpertServiceTimes(int dayId);
+
+    void insertExpertAppraise(Map<String,Object> map);
+
+    List<ServiceNumberPojo> selectServiceByUserId(Map<String,Object> map);
+
+    /**
+     * 根据专家Id,学生Id,频道类型查询频道信息
+     *
+     * @param expertId 专家Id
+     * @param stuId 学生Id
+     * @param type 频道类型 0：专家频道 1：学生频道
+     * @return
+     */
+    ExpertChannel getChannelByexpertIdAndStuId(long expertId,long stuId,int type);
+
+    /**
+     * 根据cid查询频道
+     *
+     * @param cid
+     * @return
+     */
+    ExpertChannel getChannelByCid(String cid);
+
+    /**
+     * 根据cid修改频道状态
+     *
+     * @param cid
+     */
+    void updateChannelByCid(String cid);
+
+    /**
+     * 插入频道信息
+     *
+     * @param channel
+     */
+    void insertChannel(ExpertChannel channel);
 }

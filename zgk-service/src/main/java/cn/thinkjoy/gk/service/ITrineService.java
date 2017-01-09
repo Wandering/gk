@@ -12,7 +12,8 @@ public interface ITrineService {
      * @param conditions
      * @return
      */
-    List queryPage(Map<String,Object> conditions);
+    List queryPage(Map<String, Object> conditions,int offset, int rows,String orderBy,String sortBy);
+    List queryPage(Map<String, Object> conditions,int offset, int rows,String orderBy,String sortBy,Map<String, Object> selector);
 
     /**
      * 分页统计方法
@@ -28,4 +29,11 @@ public interface ITrineService {
     List queryMajorType();
 
     List queryBatchName();
+
+    /**
+     * 根据id查章程
+     * @param id
+     * @return
+     */
+    String getUniversityIntroById(String id);
 }

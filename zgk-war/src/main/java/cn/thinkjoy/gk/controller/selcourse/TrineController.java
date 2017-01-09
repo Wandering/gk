@@ -69,9 +69,22 @@ public class TrineController extends BaseCommonController{
         conditions.put("batch",batch);
         conditions.put("universityName",universityName);
         conditions.put("year",year);
-        conditions.put("offset",(page-1)*rows);
-        conditions.put("rows",rows);
-        List mainData = trineService.queryPage(conditions);
+        Map<String,Object> selector = new HashedMap();
+        selector.put("id","id");
+        selector.put("universityName","universityName");
+        selector.put("universityId","universityId");
+        selector.put("majorCode","majorCode");
+        selector.put("majorName","majorName");
+        selector.put("majorType","majorType");
+        selector.put("batchName","batchName");
+        selector.put("property","property");
+        selector.put("planEnrollingNumber","planEnrollingNumber");
+        selector.put("schoolFee","schoolFee");
+        selector.put("lengthOfSchooling","lengthOfSchooling");
+        selector.put("areaId","areaId");
+        selector.put("year","year");
+        selector.put("extInfo","extInfo");
+        List mainData = trineService.queryPage(conditions,(page-1)*rows,rows,null,null,selector);
         int records = trineService.count(conditions);
         BizData4Page bizData4Page = new BizData4Page();
         bizData4Page.setRows(mainData);
@@ -123,5 +136,18 @@ public class TrineController extends BaseCommonController{
     @ResponseBody
     public Object getBatch(){
         return trineService.queryBatchName();
+    }
+
+    /**
+     * 三位一体自主招生查询批次
+     * @return
+     */
+    @RequestMapping(value = "/getUniversityIntroById", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getUniversityIntroById(@RequestParam String id){
+        String universityIntro = trineService.getUniversityIntroById(id);
+        Map<String,Object> map = new HashedMap();
+        map.put("universityIntro",universityIntro);
+        return map;
     }
 }

@@ -1,5 +1,6 @@
 package cn.thinkjoy.gk.common;
 
+import cn.thinkjoy.common.exception.BizException;
 import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
@@ -67,15 +68,13 @@ public class BaseCommonController
      *
      * @return
      */
-    public String getAccoutId()
-    {
-        UserAccountPojo pojo = UserContext.getCurrentUser();
-        if (pojo == null)
-        {
-            ModelUtil.throwException(ERRORCODE.USER_EXPIRED);
-        }
-        return pojo.getId().toString();
-    }
+	public String getAccoutId(){
+		UserAccountPojo pojo = UserContext.getCurrentUser();
+		if(pojo == null){
+			ModelUtil.throwException(ERRORCODE.USER_EXPIRED);
+		}
+		return pojo.getId().toString();
+	}
 
     /**
      * 获取用户信息
@@ -122,4 +121,16 @@ public class BaseCommonController
         }
     }
 
+    /**
+     * 判断用户是不是vip
+     *
+     * @return
+     */
+    protected void isVip()
+    {
+        getAccoutId();
+        if (getUserAccountPojo().getVipStatus()!=1){
+            throw new BizException(ERRORCODE.VIP_EXIST.getCode(),ERRORCODE.VIP_EXIST.getMessage());
+        }
+    }
 }

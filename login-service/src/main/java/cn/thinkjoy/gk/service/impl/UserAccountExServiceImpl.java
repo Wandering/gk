@@ -263,4 +263,18 @@ public class UserAccountExServiceImpl implements IUserAccountExService {
         flag = true;
         return flag;
     }
+
+    @Override
+    public void updateUserQQUserId(UserAccountPojo userAccountPojo, String userId, String qqUserId) {
+        userAccountDAO.deleteById(userId);
+        userInfoDAO.deleteById(userId);
+        userVipDAO.deleteById(userId);
+        userExamDAO.deleteById(userId);
+        userMarketDAO.deleteById(userId);
+        Long existUserId = userAccountPojo.getId();
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(existUserId);
+        userInfo.setQqUserId(qqUserId);
+        userInfoExDAO.updateUserQQUserId(userInfo);
+    }
 }

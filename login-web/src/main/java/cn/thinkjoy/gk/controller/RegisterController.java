@@ -8,6 +8,7 @@ import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.common.DESUtil;
 import cn.thinkjoy.gk.constant.RedisConst;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
+import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 
 /**
@@ -74,8 +76,7 @@ public class RegisterController extends ZGKBaseController
         @RequestParam(value = "sharerId", required = false) Long sharerId,
         @RequestParam(value = "sharerType", required = false) Integer sharerType,
         @RequestParam(value = "userId", required = false) String userId,
-        @RequestParam(value = "aliUserId", required = false) String aliUserId,
-        @RequestParam(value = "qqUserId", required = false) String qqUserId)
+        @RequestParam(value = "aliUserId", required = false) String aliUserId)
         throws Exception
     {
         Map<String, Object> resultMap = new HashMap<>();
@@ -160,25 +161,6 @@ public class RegisterController extends ZGKBaseController
                     throw new BizException(ERRORCODE.PARAM_ERROR.getCode(), "账户绑定失败");
                 }
             }
-            // 绑定qq账号
-            else if(StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(qqUserId)){
-                long userIdLong = Long.parseLong(userId);
-                UserAccountPojo userInfo = userAccountExService.findUserAccountPojoById(userIdLong);
-                if(!userInfo.getQqUserId().equals(qqUserId)){
-                    ModelUtil.throwException(ERRORCODE.PARAM_ERROR);
-                }
-                try{
-                    userAccount.setId(userIdLong);
-                    userAccount.setUserId(userIdLong);
-                    boolean flag = userAccountExService.bindUserAccount(userAccount);
-                    if (!flag){
-                        ModelUtil.throwException(ERRORCODE.ACCOUNT_BIND_ERROR);
-                    }
-                }
-                catch (Exception e){
-                    ModelUtil.throwException(ERRORCODE.ACCOUNT_BIND_ERROR);
-                }
-            }
             //注册账号
             else
             {
@@ -219,6 +201,11 @@ public class RegisterController extends ZGKBaseController
             String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), account);
             setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));
             resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
+            String encryptToken = DESUtil.encrypt(token, DESUtil.key);
+            String loginToken = UUID.randomUUID().toString();
+            String loginKey = UserRedisConst.USER_LOGIN_KEY + encryptToken;
+            RedisUtil.getInstance().hSet(loginKey, "PC", loginToken);
+            resultMap.put("loginToken", loginToken);
             userAccountBean.setPassword(null);
             userAccountBean.setId(null);
             resultMap.put("userInfo", userAccountBean);
@@ -306,10 +293,19 @@ public class RegisterController extends ZGKBaseController
             long id = userAccountBean.getId();
 
             String token = DESUtil.getEightByteMultypleStr(String.valueOf(id), account);
+            String encryptToken = DESUtil.encrypt(token, DESUtil.key);
+            String loginToken = UUID.randomUUID().toString();
+            String loginKey = UserRedisConst.USER_LOGIN_KEY + encryptToken;
+            RedisUtil.getInstance().hSet(loginKey, "PC", loginToken);
             setUserAccountPojo(userAccountBean, DESUtil.encrypt(token, DESUtil.key));
             resultMap.put("token", DESUtil.encrypt(token, DESUtil.key));
+            String gkxtToken = GkxtUtil.getLoginToken(userAccountBean.getAccount(), userAccountBean.getName());
+            userAccountBean.setGkxtToken(gkxtToken);
             userAccountBean.setPassword(null);
             userAccountBean.setId(null);
+            userAccountBean.setStatus(null);
+            resultMap.put("gkxtToken", gkxtToken);
+            resultMap.put("loginToken", loginToken);
             resultMap.put("userInfo", userAccountBean);
         }
         catch (Exception e)

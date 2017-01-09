@@ -565,6 +565,7 @@
             zgk_university_special_enrolling
         WHERE
             areaId = #{provinceId}
+        and majorSpec = #{category}
         GROUP BY
             `year`
     </select>
@@ -577,6 +578,7 @@
             zgk_university_special_enrolling
         WHERE
             areaId = #{provinceId}
+        and majorSpec = #{category}
         GROUP BY
             batch
         ORDER BY batch desc
@@ -619,6 +621,16 @@
             <if test="schoolProvinceId != null">
                 AND t1.provinceCode = #{schoolProvinceId}
             </if>
+            <if test="category != null and category != ''">
+                AND t0.majorSpec = #{category}
+            </if>
         LIMIT #{index},#{pageSize}
+    </select>
+
+    <select id="searchSpecialMajorSpec" resultType="java.lang.String">
+          SELECT aa.majorSpec
+          from zgk_university_special_enrolling aa
+          WHERE aa.areaId = #{areaId}
+          GROUP BY majorSpec
     </select>
 </mapper>

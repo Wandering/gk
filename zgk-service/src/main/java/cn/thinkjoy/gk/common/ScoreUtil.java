@@ -34,7 +34,7 @@ public class ScoreUtil {
 
     public static final long ZJ_AREA_CODE = 330000;
     //成绩分析排序
-    public static final String SCORE_SORT = "enrollRate asc,preScoreDiff asc";
+    public static final String SCORE_SORT = "enrollRate asc,preScoreDiff desc";
 
     public static final String BATCHTYPE2 = "BATCHTYPE2";
 
@@ -47,6 +47,7 @@ public class ScoreUtil {
 
     @Autowired
     private IDataDictService dataDictService;
+
 
     public String getYear() {
         Calendar calendar = Calendar.getInstance();
@@ -284,9 +285,13 @@ public class ScoreUtil {
         return null;
     }
 
-
     private Integer[][] getBatchByArea(long areaId, int majorType){
         Integer year = Integer.valueOf(getYear());
+        return getBatchByAreaAndYear(areaId,majorType,year);
+    }
+
+    private Integer[][] getBatchByAreaAndYear(long areaId, int majorType,Integer year){
+
 
         /**
          * 获取最新批次线 当年没有获取次年
@@ -299,9 +304,11 @@ public class ScoreUtil {
         year += 1;
 
         String[] scoreStrs = scoreLine.split("-");
-        Integer[][] scoreLines = new Integer[4][4];
-        for (int i = 0; i < 4; i++) {
+        Integer len=scoreStrs.length;
+        Integer[][] scoreLines = new Integer[len][];
+        for (int i = 0; i < len; i++) {
             String[] scoreLineStr2 = scoreStrs[i].split("\\|");
+            scoreLines[i]=new Integer[scoreLineStr2.length];
             for (int j = 0; j < scoreLineStr2.length; j++) {
                 scoreLines[i][j] = Integer.valueOf(scoreLineStr2[j]);
             }
@@ -325,6 +332,25 @@ public class ScoreUtil {
     }
 
 
+    /**
+     * 获取批次线
+     *
+     * @param areaId
+     * @param majorType
+     * @return
+     */
+    public Map<String, Object> getBatchLine2(long areaId, int majorType,Integer year) {
+        Map<String, Object> rtnMap = new HashedMap();
+        Integer[][] batchs = getBatchByAreaAndYear(areaId,majorType,year);
+        for (int i = batchs.length-1;i>=0;i--){
+            for (int j = batchs[i].length-1;j>=0;j--){
+                if (batchs[i][j] != null) {
+                    rtnMap.put((i == 0 ? 1 : (((i == 1 || i == 2) ? i : i + 1) * 2)) + "" + (batchs[i].length<2 ? "" : (j + 1)), batchs[i][j]);
+                }
+            }
+        }
+        return rtnMap;
+    }
 
     /**
      * 获取批次线
@@ -334,16 +360,7 @@ public class ScoreUtil {
      * @return
      */
     public Map<String, Object> getBatchLine2(long areaId, int majorType) {
-        Map<String, Object> rtnMap = new HashedMap();
-        Integer[][] batchs = getBatchByArea(areaId,majorType);
-        for (int i = 0;i<batchs.length;i++){
-            for (int j = 0;j<batchs.length;j++){
-                if (batchs[i][j] != null) {
-                    rtnMap.put((i == 0 ? 1 : (((i == 1 || i == 2) ? i : i + 1) * 2)) + "" + (j == 0 ? "" : (j + 1)), batchs[i][j]);
-                }
-            }
-        }
-        return rtnMap;
+        return getBatchLine2(areaId,majorType,Integer.valueOf(getYear()));
     }
 
     /**
@@ -381,24 +398,25 @@ public class ScoreUtil {
 
         //规划计算当前分数最接近的上层分数
 
-        int t = 3;
+
         flag:
-        for (int i = t; i >= 0; i--) {
-            for (int j = t; j >= 0; j--) {
+        for (int i = scoreLines.length-1; i >= 0; i--) {
+            for (int j = scoreLines[i].length-1; j >= 0; j--) {
                 //出现为0/NULL跳过当前轮
                 if (scoreLines[i][j] == null || scoreLines[i][j] == 0) {
                     continue;
                 }
-
+                Integer len =scoreLines[i].length;
                 //缓存值信息
                 temp = scoreLines[i][j].floatValue();
-                tempBatch = (i == 0 ? 1 : (((i == 1 || i == 2) ? i : i + 1) * 2)) + "" + (j == 0 ? "" : (j + 1));
+                tempBatch = (i == 0 ? 1 : (((i == 1 || i == 2) ? i : i + 1) * 2)) + "" + (len<2 ? "" : (j + 1));
+
 
                 //取出当前批次线作为最接近批次线
                 if (totalScore - scoreLines[i][j] < 0) {
                     //记录顶部值
                     tempTop = scoreLines[i][j].floatValue();
-                    tempBatchTop = (i == 0 ? 1 : (((i == 1 || i == 2) ? i : i + 1) * 2)) + "" + (j == 0 ? "" : (j + 1));
+                    tempBatchTop = (i == 0 ? 1 : (((i == 1 || i == 2) ? i : i + 1) * 2)) + "" + (len<2 ? "" : (j + 1));
                     break flag;
                 }
 

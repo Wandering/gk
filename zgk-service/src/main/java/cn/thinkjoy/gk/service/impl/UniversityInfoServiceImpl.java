@@ -30,17 +30,14 @@ import java.util.Map;
  * 院校清单 --位次规则
  * Created by douzy on 16/3/14.
  */
-@Service
-public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl implements IUniversityInfoService  {
+@Service("universityInfoService")
+public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl implements IUniversityInfoService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UniversityInfoServiceImpl.class);
     @Resource
     IReportResultService iReportResultService;
     @Resource
     IScoreConverPrecedenceService iScoreConverPrecedenceService;
-
-    @Autowired
-    private IUniversityInfoDao iUniversityInfoDao;
 
     @Autowired
     private IUniversityService universityService;
@@ -52,6 +49,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
 
     /**
      * 版本控制           ------V1&V2版本
+     *
      * @param
      * @param
      * @return
@@ -96,53 +94,58 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
 
     /**
      * 分数转换位次
+     *
      * @param reportParm
      * @return
      */
     @Override
-    public Integer converPreByScore(ReportForecastView reportParm,String key  ) {
+    public Integer converPreByScore(ReportForecastView reportParm, String key) {
         //一分一段 查找分数对应位次
-        Integer prevPre= iScoreConverPrecedenceService.converPrecedenceByScore(reportParm.getScore(), reportParm.getProvince(), reportParm.getCategorie(), reportParm.getBatch());
+        Integer prevPre = iScoreConverPrecedenceService.converPrecedenceByScore(reportParm.getScore(), reportParm.getProvince(), reportParm.getCategorie(), reportParm.getBatch());
         //找位次临近值
-        String tableName= ReportUtil.getTableName(reportParm.getProvince(), reportParm.getCategorie(), reportParm.getBatch(), isPre(reportParm,key));
+        String tableName = ReportUtil.getTableName(reportParm.getProvince(), reportParm.getCategorie(), reportParm.getBatch(), isPre(reportParm, key));
 
-        return iReportResultService.getPrecedence(tableName,prevPre);
+        return iReportResultService.getPrecedence(tableName, prevPre);
     }
 
 
     /**
      * 分数转换位次 ---录取难易预测
+     *
      * @param reportParm
      * @return
      */
     @Override
-    public Integer converPreByScoreV2(ReportForecastView reportParm,String key  ) {
+    public Integer converPreByScoreV2(ReportForecastView reportParm, String key) {
         //一分一段 查找分数对应位次
-        Integer prevPre= iScoreConverPrecedenceService.converPrecedenceByScoreV2(reportParm.getScore(), reportParm.getProvince(), reportParm.getCategorie(), reportParm.getBatch());
+        Integer prevPre = iScoreConverPrecedenceService.converPrecedenceByScoreV2(reportParm.getScore(), reportParm.getProvince(), reportParm.getCategorie(), reportParm.getBatch());
         //找位次临近值
-        String tableName= ReportUtil.getTableName(reportParm.getProvince(), reportParm.getCategorie(), reportParm.getBatch(), isPre(reportParm,key));
+        String tableName = ReportUtil.getTableName(reportParm.getProvince(), reportParm.getCategorie(), reportParm.getBatch(), isPre(reportParm, key));
 
-        return iReportResultService.getPrecedence(tableName,prevPre);
+        return iReportResultService.getPrecedence(tableName, prevPre);
     }
 
 
     /**
      * 分数转换线差
+     *
      * @param parmasView
      * @return
      */
     @Override
-    public Integer converScoreDiffByScore(ReportForecastView parmasView){
+    public Integer converScoreDiffByScore(ReportForecastView parmasView) {
         return super.getLineDiff(parmasView.getBatch(), parmasView.getScore(), parmasView.getCategorie(), parmasView.getProvince());
     }
+
     /**
      * 位次法
+     *
      * @param map
      * @param tbName
      * @param universityInfoParmasView
      * @return
      */
-    private  List<UniversityInfoView> getUniversityByPrecedence(Map map,String tbName,UniversityInfoParmasView universityInfoParmasView) {
+    private List<UniversityInfoView> getUniversityByPrecedence(Map map, String tbName, UniversityInfoParmasView universityInfoParmasView) {
         List<UniversityInfoView> universityInfoViews = new ArrayList<>();
         if (universityInfoParmasView.getPrecedence() > 0) {
             Integer result = iReportResultService.getPrecedence(tbName, universityInfoParmasView.getPrecedence());
@@ -153,7 +156,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         map.put("batch", ReportUtil.ConverNewBatch(universityInfoParmasView.getBatch()));
 
         //判定算法走向
-        boolean isScore = super.isScoreSupplementary(universityInfoParmasView,"4");
+        boolean isScore = super.isScoreSupplementary(universityInfoParmasView, "4");
 
 
         if (isScore) // true 走分数补充发    false 走位次法
@@ -165,15 +168,16 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
 
     /**
      * 分数转化位次后 位次法
+     *
      * @param map
      * @param tbName
      * @param parmasView
      * @return
      */
-    private  List<UniversityInfoView> getUniversityByScoreConver(Map map,String tbName,UniversityInfoParmasView parmasView) {
+    private List<UniversityInfoView> getUniversityByScoreConver(Map map, String tbName, UniversityInfoParmasView parmasView) {
         LOGGER.info("======================分数转化  Start====================");
         Integer score = parmasView.getScore();
-        Integer avgPre=iScoreConverPrecedenceService.converPrecedenceByScore(score, parmasView.getProvince(), parmasView.getCategorie(),parmasView.getBatch());
+        Integer avgPre = iScoreConverPrecedenceService.converPrecedenceByScore(score, parmasView.getProvince(), parmasView.getCategorie(), parmasView.getBatch());
 //        Map scoreMap = new HashMap();
 //        scoreMap.put("tableName", ReportUtil.getOneScoreTableName(parmasView.getProvince(), parmasView.getCategorie(),parmasView.getBatch()));
 //        ScoreMaxMin scoreMaxMin = iScoreConverPrecedenceService.selectMaxScore(scoreMap);
@@ -196,12 +200,13 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
 
     /**
      * 线差法
+     *
      * @param map
      * @param tbName
      * @param universityInfoParmasView
      * @return
      */
-    private  List<UniversityInfoView> getUniversityByLineDiff(Map map,String tbName,UniversityInfoParmasView universityInfoParmasView) {
+    private List<UniversityInfoView> getUniversityByLineDiff(Map map, String tbName, UniversityInfoParmasView universityInfoParmasView) {
         LOGGER.info("======================线差法  Start====================");
         List<UniversityInfoView> universityInfoViews = new ArrayList<>();
         LOGGER.info("==线差计算 Start==");
@@ -212,7 +217,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         map.put("scoreDiff", lineDiff);
         map.put("first", universityInfoParmasView.getFirst());
         map.put("batch", universityInfoParmasView.getBatch());
-        map.put("score",universityInfoParmasView.getScore());
+        map.put("score", universityInfoParmasView.getScore());
 
         universityInfoViews = selectUniversityInfoByLineDiff(map);
 
@@ -222,9 +227,11 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         LOGGER.info("======================线差法  End====================");
         return universityInfoViews;
     }
+
     /**
      * 院校清单筛选  -- 根据逻辑走向      V3版本    线差法&位次法&分数转位次
      * ps:默认走位次法.
+     *
      * @param
      * @param
      * @return
@@ -244,7 +251,7 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         LOGGER.info("tableName:" + tbName);
         map.put("province", universityInfoParmasView.getProvince());//key
         map.put("majorType", universityInfoParmasView.getCategorie());
-        map.put("areaId",universityInfoParmasView.getAreaId());
+        map.put("areaId", universityInfoParmasView.getAreaId());
         LOGGER.info("省份:" + universityInfoParmasView.getProvince());
         LOGGER.info("科类:" + universityInfoParmasView.getCategorie());
 
@@ -269,15 +276,16 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         return universityInfoViews;
     }
 
-    private boolean isPre(ReportForecastView reportForecastView,String key){
+    private boolean isPre(ReportForecastView reportForecastView, String key) {
         String parmasKey = ReportUtil.combSystemParmasKey(reportForecastView.getProvince(), key);
 
         //是否走位次
-        return enrollingLogin(parmasKey,reportForecastView.getCategorie());
+        return enrollingLogin(parmasKey, reportForecastView.getCategorie());
     }
 
     /**
      * 录取难易预测
+     *
      * @param reportForecastView 参数打包
      * @return
      */
@@ -292,21 +300,22 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         Integer preEnroll = 0, scoreDiffEnroll = 0, resultEnroll = 0;
 
         scoreDiffEnroll = getScoreDiffEnrolling(reportForecastView);
-        if (isPre(reportForecastView,ReportUtil.FORECAST_ENROLLING_LOGIC))
+        if (isPre(reportForecastView, ReportUtil.FORECAST_ENROLLING_LOGIC))
             preEnroll = getPreEnrolling(reportForecastView);
 
         String[] configkeyArr = {ReportUtil.FORECAST_ENROLLING_DIFF, ReportUtil.FORECAST_ENROLLING_RANDOM};
 
-        resultEnroll = getResultEnroll(reportForecastView,preEnroll, scoreDiffEnroll,configkeyArr);
+        resultEnroll = getResultEnroll(reportForecastView, preEnroll, scoreDiffEnroll, configkeyArr);
 
         return resultEnroll.toString();
     }
 
     /**
      * 计算最终录取率
+     *
      * @return
      */
-    private Integer getResultEnroll(ReportForecastView forecastView ,Integer preEnroll,Integer scoreDiffEnroll,String[] configKeyArr) {
+    private Integer getResultEnroll(ReportForecastView forecastView, Integer preEnroll, Integer scoreDiffEnroll, String[] configKeyArr) {
         Integer resultEnroll = scoreDiffEnroll;
         if (preEnroll > 0) {
             String proCode = forecastView.getProvince(), diffConKey = configKeyArr[0], randomConkey = configKeyArr[1];
@@ -314,17 +323,18 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
             Integer diffV = getDiffValue(proCode, diffConKey, cate);
             resultEnroll = (preEnroll - scoreDiffEnroll) > diffV ? preEnroll - getEnrollRandom(proCode, randomConkey, cate) : scoreDiffEnroll;
         }
-        return (resultEnroll > 98 ? 98 : (resultEnroll <2 ? 2 : resultEnroll));
+        return (resultEnroll > 98 ? 98 : (resultEnroll < 2 ? 2 : resultEnroll));
     }
 
     /**
      * 获取随机录取率范围
+     *
      * @param proCode
      * @param key
      * @return
      */
-    private Integer getEnrollRandom(String proCode,String key,Integer cate) {
-        SystemParmas systemParmas = getSystemParmasModelByKey(proCode, key,cate);
+    private Integer getEnrollRandom(String proCode, String key, Integer cate) {
+        SystemParmas systemParmas = getSystemParmasModelByKey(proCode, key, cate);
 
         if (systemParmas == null)
             return null;
@@ -334,59 +344,68 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         Integer startR = Integer.valueOf(randomArr[0]), endR = Integer.valueOf(randomArr[1]);
         return (int) (startR + Math.random() * endR);
     }
+
     /**
      * 获取位次&线差相差阀值
+     *
      * @param key
      * @return
      */
-    private Integer getDiffValue(String proCode,String key,Integer cate) {
-        SystemParmas systemParmas = getSystemParmasModelByKey(proCode,key,cate);
+    private Integer getDiffValue(String proCode, String key, Integer cate) {
+        SystemParmas systemParmas = getSystemParmasModelByKey(proCode, key, cate);
         return systemParmas == null ? -1 : Integer.valueOf(systemParmas.getConfigValue());
     }
-    private SystemParmas getSystemParmasModelByKey(String proCode,String key,Integer cate) {
+
+    private SystemParmas getSystemParmasModelByKey(String proCode, String key, Integer cate) {
         String parmasKey = ReportUtil.combSystemParmasKey(proCode, key);
         Map map = new HashMap();
         map.put("configKey", parmasKey);
-        map.put("majorType",cate);
+        map.put("majorType", cate);
         return iSystemParmasService.selectModel(map);
     }
+
     /**
      * 线差录取率
+     *
      * @param reportForecastView
      * @return
      */
-    private Integer getScoreDiffEnrolling(ReportForecastView reportForecastView){
-        BigDecimal bigDecimal=new BigDecimal(100);
-        Integer preEnroll=0;
+    private Integer getScoreDiffEnrolling(ReportForecastView reportForecastView) {
+        BigDecimal bigDecimal = new BigDecimal(100);
+        Integer preEnroll = 0;
         //位次获得值
-        List<UniversityInfoEnrolling> universityInfoEnrollings= getUniversityEnrollingsByScoreDiff(reportForecastView);
+        List<UniversityInfoEnrolling> universityInfoEnrollings = getUniversityEnrollingsByScoreDiff(reportForecastView);
 
-        if(universityInfoEnrollings!=null&&universityInfoEnrollings.size()>0) {
+        if (universityInfoEnrollings != null && universityInfoEnrollings.size() > 0) {
             UniversityInfoEnrolling universityInfoEnrolling = universityInfoEnrollings.get(0);
             preEnroll = bigDecimal.multiply(universityInfoEnrolling.getEnrollRate()).intValue();
-        }else
-            throw new BizException("1000001","未知异常");
+        } else
+            throw new BizException("1000001", "未知异常");
         return preEnroll;
     }
+
     /**
      * 位次录取率
+     *
      * @param reportForecastView
      * @return
      */
-    private Integer getPreEnrolling(ReportForecastView reportForecastView){
-        BigDecimal bigDecimal=new BigDecimal(100);
-        Integer preEnroll=0;
+    private Integer getPreEnrolling(ReportForecastView reportForecastView) {
+        BigDecimal bigDecimal = new BigDecimal(100);
+        Integer preEnroll = 0;
         //位次获得值
-        List<UniversityInfoEnrolling> universityInfoEnrollings=getUniversityEnrollingsByPrecedence(reportForecastView);
+        List<UniversityInfoEnrolling> universityInfoEnrollings = getUniversityEnrollingsByPrecedence(reportForecastView);
 
-        if(universityInfoEnrollings!=null&&universityInfoEnrollings.size()>0) {
+        if (universityInfoEnrollings != null && universityInfoEnrollings.size() > 0) {
             UniversityInfoEnrolling universityInfoEnrolling = universityInfoEnrollings.get(0);
             preEnroll = bigDecimal.multiply(universityInfoEnrolling.getEnrollRate()).intValue();
         }
         return preEnroll;
     }
+
     /**
      * 难易预测 位次
+     *
      * @param reportParm
      * @return
      */
@@ -397,14 +416,22 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         parmasMap.put("universityId", reportParm.getUid());
         parmasMap.put("precedence", reportParm.getPrecedence());
         parmasMap.put("isJoin", reportParm.isJoin());
+        //如果是江苏省 加入选测等级
+        putValueJs(parmasMap, reportParm);
+        //只有当需要的时候才去放置参数(因为难以预测不需要这些参数)
+        if (reportParm.getEnrollRateStart() != null) {
+            parmasMap.put("enrollRateStart", reportParm.getEnrollRateStart());
+            parmasMap.put("enrollRateEnd", reportParm.getEnrollRateEnd());
+        }
         parmasMap.put("orderBy", reportParm.getOrderBy());
-        parmasMap.put("rows", (reportParm.getLimit()==null?1:reportParm.getLimit()));
+        parmasMap.put("rows", (reportParm.getLimit() == null ? 1 : reportParm.getLimit()));
         List<UniversityInfoEnrolling> universityInfoEnrollings = iUniversityInfoDao.selectUniversityEnrolling(parmasMap);
         return universityInfoEnrollings;
     }
 
     /**
      * 难易预测 线差
+     *
      * @param reportParm
      * @return
      */
@@ -415,12 +442,21 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
         parmasMap.put("universityId", reportParm.getUid());
         parmasMap.put("scoreDiff", reportParm.getScoreDiff());
         parmasMap.put("isJoin", reportParm.isJoin());
+        //如果是江苏省 加入选测等级
+        putValueJs(parmasMap, reportParm);
+        //只有当需要的时候才去放置参数(因为难以预测不需要这些参数)
+        if (reportParm.getEnrollRateStart() != null) {
+            parmasMap.put("enrollRateStart", reportParm.getEnrollRateStart());
+            parmasMap.put("enrollRateEnd", reportParm.getEnrollRateEnd());
+        }
+
         parmasMap.put("orderBy", reportParm.getOrderBy());
-        parmasMap.put("rows", (reportParm.getLimit()==null?1:reportParm.getLimit()));
+        parmasMap.put("rows", (reportParm.getLimit() == null ? 1 : reportParm.getLimit()));
 
         List<UniversityInfoEnrolling> universityInfoEnrollings = iUniversityInfoDao.selectUniversityEnrolling(parmasMap);
         return universityInfoEnrollings;
     }
+
     @Override
     public List<Map<String, Object>> getUniversityEnrollingConditions(Map<String, String> map) {
         return iUniversityInfoDao.getUniversityEnrollingConditions(map);
@@ -452,8 +488,8 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     }
 
     @Override
-    public List getUniversityMajorListByUniversityId(Map<String, Object> condition,int offset,int rows,String orderBy,String sortBy,Map<String, Object> selectorpage) {
-        return iUniversityInfoDao.getUniversityMajorListByUniversityId(condition,offset,rows,orderBy,sortBy,selectorpage);
+    public List getUniversityMajorListByUniversityId(Map<String, Object> condition, int offset, int rows, String orderBy, String sortBy, Map<String, Object> selectorpage) {
+        return iUniversityInfoDao.getUniversityMajorListByUniversityId(condition, offset, rows, orderBy, sortBy, selectorpage);
     }
 
     @Override
@@ -463,12 +499,13 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
 
     @Override
     public List getDataDictList(String type) {
+
         return universityService.getDataDictListByType(type);
     }
 
-    public  List<UniversityEnrollView> selectUnivEnrollInfo(List<Map<String, Object>> maps, boolean isJoin,
-                                                            String sortBy){
-        return iUniversityInfoDao.selectUnivEnrollInfo(maps,isJoin,sortBy);
+    public List<UniversityEnrollView> selectUnivEnrollInfo(List<Map<String, Object>> maps, boolean isJoin,
+                                                           String sortBy) {
+        return iUniversityInfoDao.selectUnivEnrollInfo(maps, isJoin, sortBy);
     }
 
     /**
@@ -481,28 +518,30 @@ public class UniversityInfoServiceImpl extends BaseUniversityInfoServiceImpl imp
     public List<Long> selectUnivInfoIdInBatch(Map<String, Object> condition) {
         return iUniversityInfoDao.selectUnivInfoIdInBatch(condition);
     }
-
-    @Override
-    public List<String> getEnrollingYearsByProvinceId(long provinceId) {
-        return iUniversityInfoDao.getEnrollingYearsByProvinceId(provinceId);
-    }
-
-
     /**
      * 如果是江苏省 加入选测等级
+     *
      * @param parmasMap
      * @param reportParm
      */
-    private void putValueJs(Map parmasMap,ReportForecastView reportParm){
-        if (reportParm.isJoin()){
+    private void putValueJs(Map parmasMap, ReportForecastView reportParm) {
+        if (reportParm.isJoin()) {
             parmasMap.put("isJoin", reportParm.isJoin());
             //选测等级
             parmasMap.put("xcRanks", reportParm.getXcRanks());
             //去关联哪一年的招生计划
             parmasMap.put("year", reportParm.getYear());
+
+            parmasMap.put("batchs", reportParm.getBatchs());
             //文理科
             parmasMap.put("majorType", reportParm.getCategorie());
 
         }
+
+    }
+
+    @Override
+    public List<String> getEnrollingYearsByProvinceId(long currentProId,long schoolProId) {
+        return iUniversityInfoDao.getEnrollingYearsByProvinceId(currentProId,schoolProId);
     }
 }

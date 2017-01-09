@@ -37,7 +37,7 @@ public class CrossInterceptor extends HandlerInterceptorAdapter {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("text/plain");
             response.addHeader("XDomainRequestAllowed","1");
-            System.out.println(ResponseContentHolder.getResponseContents().get());
+//            System.out.println(ResponseContentHolder.getResponseContents().get());
         }
     }
 

@@ -23,4 +23,6 @@ dependencies {
 
     compile project(':market-web')
 
+    compile project(':expert-admin-web')
+
 }

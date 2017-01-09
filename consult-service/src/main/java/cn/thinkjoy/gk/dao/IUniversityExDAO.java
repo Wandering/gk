@@ -59,17 +59,25 @@ public interface IUniversityExDAO{
      * 根据省份ID查询特殊批次录取年份集合
      *
      * @param provinceId
+     * @param category
      * @return
      */
-    List<String> getYearsByProvinceId(@Param("provinceId") long provinceId);
+    List<String> getYearsByProvinceId(
+            @Param("provinceId") long provinceId,
+            @Param("category") String category
+    );
 
     /**
      * 根据省份ID查询录取批次集合
      *
      * @param provinceId
+     * @param category
      * @return
      */
-    List<String> getBatchsByProvinceId(@Param("provinceId") long provinceId);
+    List<String> getBatchsByProvinceId(
+            @Param("provinceId") long provinceId,
+            @Param("category") String category
+    );
 
     /**
      * 根据条件查询院校招生信息
@@ -91,7 +99,15 @@ public interface IUniversityExDAO{
             @Param("majorType") Integer majorType,
             @Param("userProvinceId") Long userProvinceId,
             @Param("schoolProvinceId") Long schoolProvinceId,
+            @Param("category") String category,
             @Param("index") Integer index,
             @Param("pageSize") Integer pageSize
     );
+
+    /**
+     * 查询特类招生
+     * @param areaId
+     * @return
+     */
+    List<String> searchSpecialMajorSpec(Long areaId);
 }

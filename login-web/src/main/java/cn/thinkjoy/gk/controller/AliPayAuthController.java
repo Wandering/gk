@@ -8,6 +8,7 @@ import cn.thinkjoy.gk.common.DESUtil;
 import cn.thinkjoy.gk.common.GkxtUtil;
 import cn.thinkjoy.gk.common.TimeUtil;
 import cn.thinkjoy.gk.common.ZGKBaseController;
+import cn.thinkjoy.gk.constant.UserRedisConst;
 import cn.thinkjoy.gk.domain.Province;
 import cn.thinkjoy.gk.domain.UserAccount;
 import cn.thinkjoy.gk.pojo.UserAccountPojo;
@@ -141,6 +142,9 @@ public class AliPayAuthController extends ZGKBaseController
             String encryptToken = DESUtil.encrypt(token, DESUtil.key);
             setUserAccountPojo(userAccountBean, encryptToken);
             resultMap.put("token", encryptToken);
+            String loginToken = UUID.randomUUID().toString();
+            String loginKey = UserRedisConst.USER_LOGIN_KEY + encryptToken;
+            RedisUtil.getInstance().hSet(loginKey, "PC", loginToken);
             String gkxtToken = GkxtUtil.getLoginToken(userInfoPojo.getAccount(), userInfoPojo.getName());
             userInfoPojo.setGkxtToken(gkxtToken);
             userInfoPojo.setPassword(null);
@@ -148,6 +152,7 @@ public class AliPayAuthController extends ZGKBaseController
             userInfoPojo.setStatus(null);
             resultMap.put("userInfo", userInfoPojo);
             resultMap.put("gkxtToken", gkxtToken);
+            resultMap.put("loginToken", loginToken);
             RedisUtil.getInstance().set(loginCode, resultMap, 4l, TimeUnit.HOURS);
         }
         return bindStatus;

@@ -18,6 +18,16 @@ public class SelMajorPojo implements Serializable {
 
     private String fiveSalary;
 
+    private String fmRatio;
+
+    public String getFmRatio() {
+        return fmRatio;
+    }
+
+    public void setFmRatio(String fmRatio) {
+        this.fmRatio = fmRatio;
+    }
+
     public String getMajorId() {
         return majorId;
     }

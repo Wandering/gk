@@ -18,7 +18,7 @@ allprojects {
 
     fastjsonVersion = "1.2.0"
 
-    retrofitVersion = "1.9.0"
+    retrofitVersion = "1.8.0"
 
     okhttpVersion = "2.1.0"
 
@@ -28,10 +28,10 @@ allprojects {
 
     thinkjoySSProtocolCommonVersion = "0.0.8-SNAPSHOT"
 
-    gaokao360Version = "0.0.38-SNAPSHOT"
+    gaokao360Version = "0.0.40-SNAPSHOT"
 
     zgkSmsVersion = "0.0.4-SNAPSHOT"
 
-    zgkSystemVersion = "0.0.26-SNAPSHOT"
+    zgkSystemVersion = "0.0.27-SNAPSHOT"
 
 }

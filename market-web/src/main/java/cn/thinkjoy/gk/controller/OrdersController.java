@@ -25,6 +25,7 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.common.StringUtils;
 import com.pingplusplus.Pingpp;
 import com.pingplusplus.model.Charge;
 import org.apache.commons.collections.map.HashedMap;
@@ -137,8 +138,6 @@ public class OrdersController extends ZGKBaseController {
         }
         //根据订单号获取订单信息
         Order order = getOrder(orderNo);
-        //校验订单状态
-        String state = order.getState();
         /*判断交易状态(交易未支付等其他状态直接return,交易已支付判断交易是否已经生成过账号密码,
         * 初次支付成功,一定未生成卡号)
         */
@@ -153,7 +152,12 @@ public class OrdersController extends ZGKBaseController {
                     /**
                      * 生成vip卡号
                      */
-                    card = orderService.singleCreateCard(Integer.valueOf(order.getProductType()));
+                    try {
+                        card = orderService.singleCreateCard(Integer.valueOf(order.getProductType()));
+                    }catch (Exception e){
+                        //判定异常,唯一性约束冲突,尝试重新生成卡号
+                        card = orderService.singleCreateCard(Integer.valueOf(order.getProductType()));
+                    }
                     //HandleState 0:未发货 1:已发货
                     order.setHandleState(CardHandleStateEnum.Y.getCode().toString());
                     //从insert回调中取得cardId做关联
@@ -196,7 +200,13 @@ public class OrdersController extends ZGKBaseController {
     @RequestMapping(value = "aliOrderPay")
     @ResponseBody
     public Charge aliOrder(@RequestParam(value = "orderNo", required = true) String orderNo,
-                           @RequestParam(value = "token", required = true) String token){
+                           @RequestParam(value = "token", required = true) String token,
+                            @RequestParam(value = "channel", required = false) String channel){
+        String payChannel = "alipay_pc_direct";
+        if(org.apache.commons.lang3.StringUtils.isNotEmpty(channel))
+        {
+            payChannel = channel;
+        }
         UserAccountPojo userAccountPojo = getUserAccountPojo();
         if (userAccountPojo == null) {
             throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
@@ -205,7 +215,7 @@ public class OrdersController extends ZGKBaseController {
         String price = new BigDecimal(order.getProductPrice()).
                 multiply(new BigDecimal(100)).setScale(0 , BigDecimal.ROUND_HALF_EVEN).toString();
         Map<String,String> paramMap = new HashMap<>();
-        paramMap.put("channel", "alipay_pc_direct");
+        paramMap.put("channel", payChannel);
         paramMap.put("orderNo", orderNo);
         paramMap.put("token", token);
         paramMap.put("amount", price);
@@ -214,6 +224,7 @@ public class OrdersController extends ZGKBaseController {
         try {
             charge = getCharge(paramMap);
         } catch (Exception e) {
+            LOGGER.info(e.getMessage());
             throw new BizException(ERRORCODE.FAIL.getCode(), e.getMessage());
         }
         return charge;
@@ -316,7 +327,7 @@ public class OrdersController extends ZGKBaseController {
         return salePrice;
     }
 
-    private Charge getCharge(Map<String,String> paramMap) throws Exception {
+    private Charge getCharge(Map<String, String> paramMap) throws Exception {
         Pingpp.apiKey = DynConfigClientFactory.getClient().getConfig("common", "apiKey");
         String appid = DynConfigClientFactory.getClient().getConfig("common", "appId");
         String aliReturnUrl = DynConfigClientFactory.getClient().getConfig("common", "aliReturnUrl");
@@ -341,7 +352,7 @@ public class OrdersController extends ZGKBaseController {
         chargeParams.put("currency", "cny");
         if ("alipay_pc_direct".equals(channel)) {
             Map<String, Object> extraMap = new HashMap<>();
-            extraMap.put("success_url", aliReturnUrl+"?token="+paramMap.get("token"));
+            extraMap.put("success_url", aliReturnUrl+"?token=" + paramMap.get("token"));
             chargeParams.put("extra", extraMap);
         } else if ("wx_pub_qr".equals(channel)) {
             Map<String, Object> extraMap = new HashMap<>();

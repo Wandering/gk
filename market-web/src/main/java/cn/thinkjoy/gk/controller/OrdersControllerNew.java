@@ -193,7 +193,7 @@ public class OrdersControllerNew extends ZGKBaseController {
         String key = DynConfigClientFactory.getClient().getConfig("common", "appSecret");
         String mch_id = DynConfigClientFactory.getClient().getConfig("common", "wxMchId");
         String nonce_str = UUID.randomUUID().toString().replaceAll("-","");
-        System.out.println(nonce_str);
+//        System.out.println(nonce_str);
         String urlKey = "pay_return_url_"+getUserAccountPojo().getId();
         String notify_url = "www.baidu.com";
         if(RedisUtil.getInstance().exists(urlKey))
@@ -220,7 +220,7 @@ public class OrdersControllerNew extends ZGKBaseController {
         packageParams.put("sign", sign);
 
         String requestXML = PayCommonUtil.getRequestXml(packageParams);
-        System.out.println(requestXML);
+//        System.out.println(requestXML);
 
         String resXml = HttpUtil.postData(orderUrl, requestXML);
         Map map = XMLUtil.doXMLParse(resXml);

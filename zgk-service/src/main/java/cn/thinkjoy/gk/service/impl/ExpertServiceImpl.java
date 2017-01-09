@@ -77,6 +77,11 @@ public class ExpertServiceImpl implements IExpertService
     }
 
     @Override
+    public ExpertVedio selectVedioById(Map<String, Object> map) {
+        return dao.selectVedioById(map);
+    }
+
+    @Override
     public List<UserQuestion> selectQuestionList(Map<String, Object> map) {
         return dao.selectQuestionList(map);
     }
@@ -115,45 +120,45 @@ public class ExpertServiceImpl implements IExpertService
         map.put("note",note);
         map.put("createDate",new Date());
         dao.insertUserCommonQuestion(map);
-        List<CommonQuestion> commonQuestionList=dao.selectCommonQuestion(map);
-        if(commonQuestionList.size()>0) {
-            String specialitys="";
-            for(CommonQuestion commonQuestion:commonQuestionList){
-                specialitys=specialitys+","+commonQuestion.getSpecialitys();
-            }
-            if(StringUtils.isNotBlank(specialitys.substring(1))){
-                Map<String,Object> map1=new HashMap<>();
-                map1.put("specialitys",specialitys.substring(1));
-                map1.put("offset",offset);
-                map1.put("rows",rows);
-                List<String> expertIdList=dao.selectExpertId(map1);
-                map1.put("expertIdList",expertIdList);
-                return dao.selectExpertListBySpecialty(map1);
-            }else {
-                //模糊匹配关键词
-                Map<String,Object> map1=new HashMap<>();
-                map1.put("configDomain","speciality");
-                List<ExpertConfig> expertConfigList=dao.selectExpertConfigList(map1);
-                specialitys="";
-                for(ExpertConfig expertConfig:expertConfigList){
-                    if(note.contains(expertConfig.getConfigValue())){
-                        specialitys=specialitys+","+expertConfig.getConfigKey();
-                    }
-                }
-                if(StringUtils.isNotBlank(specialitys)) {
-                    map1.put("specialitys", specialitys.substring(1));
-                    map1.put("offset", offset);
-                    map1.put("rows", rows);
-                    List<String> expertIdList=dao.selectExpertId(map1);
-                    map1.put("expertIdList",expertIdList);
-                    return dao.selectExpertListBySpecialty(map1);
-                }else {
-                    //无匹配，返回涉及邻域最多专家
-                    return dao.selectExpertBySpecialityMore();
-                }
-            }
-
-        }
+//        List<CommonQuestion> commonQuestionList=dao.selectCommonQuestion(map);
+//        if(commonQuestionList.size()>0) {
+//            String specialitys="";
+//            for(CommonQuestion commonQuestion:commonQuestionList){
+//                specialitys=specialitys+","+commonQuestion.getSpecialitys();
+//            }
+//            if(StringUtils.isNotBlank(specialitys.substring(1))){
+//                Map<String,Object> map1=new HashMap<>();
+//                map1.put("specialitys",specialitys.substring(1));
+//                map1.put("offset",offset);
+//                map1.put("rows",rows);
+//                List<String> expertIdList=dao.selectExpertId(map1);
+//                map1.put("expertIdList",expertIdList);
+//                return dao.selectExpertListBySpecialty(map1);
+//            }else {
+//                //模糊匹配关键词
+//                Map<String,Object> map1=new HashMap<>();
+//                map1.put("configDomain","speciality");
+//                List<ExpertConfig> expertConfigList=dao.selectExpertConfigList(map1);
+//                specialitys="";
+//                for(ExpertConfig expertConfig:expertConfigList){
+//                    if(note.contains(expertConfig.getConfigValue())){
+//                        specialitys=specialitys+","+expertConfig.getConfigKey();
+//                    }
+//                }
+//                if(StringUtils.isNotBlank(specialitys)) {
+//                    map1.put("specialitys", specialitys.substring(1));
+//                    map1.put("offset", offset);
+//                    map1.put("rows", rows);
+//                    List<String> expertIdList=dao.selectExpertId(map1);
+//                    map1.put("expertIdList",expertIdList);
+//                    return dao.selectExpertListBySpecialty(map1);
+//                }else {
+//                    //无匹配，返回涉及邻域最多专家
+//                    return dao.selectExpertBySpecialityMore();
+//                }
+//            }
+//
+//        }
         return null;
     }
 
@@ -180,46 +185,33 @@ public class ExpertServiceImpl implements IExpertService
     }
 
     @Override
-    public List<ServicePojo1> selectServiceByExpertId(Map<String, Object> map) {
+    public List<ServicePojo> selectServiceByExpertId(Map<String, Object> map) {
         List<ServicePojo> servicePojoList=dao.selectServiceByExpertId(map);
-        List<ServicePojo1> servicePojo1list=new ArrayList<>();
-        for(ServicePojo servicePojo:servicePojoList){
-            boolean flag=false;
-
-            for(ServicePojo1 servicePojo1:servicePojo1list){
-                //style已有
-                if(servicePojo1.getServiceStyleId().equals(servicePojo.getServiceStyleId())){
-                    ServicePojo2 servicePojo2=new ServicePojo2();
-                    servicePojo2.setServiceTypeId(servicePojo.getServiceTypeId());
-                    servicePojo2.setServiceTypeName(servicePojo.getServiceTypeName());
-                    servicePojo2.setPrice(servicePojo.getServicePrice());
-                    servicePojo1.getServiceTypeList().add(servicePojo2);
-                    flag=true;
-                    break;
+        if(map.containsKey("userId")) {
+            List<ServiceNumberPojo> serviceNumberPojoList=dao.selectServiceByUserId(map);
+            for(ServicePojo servicePojo:servicePojoList){
+                for(ServiceNumberPojo serviceNumberPojo:serviceNumberPojoList) {
+                    if (servicePojo.getServiceTypeId().equals(serviceNumberPojo.getServiceId())){
+                        if(serviceNumberPojo.getServiceNumber()>0){
+                            servicePojo.setStatus(true);
+                            break;
+                        }
+                    }
                 }
             }
-            if(!flag) {
-                //style没有，添加
-                ServicePojo2 servicePojo2=new ServicePojo2();
-                servicePojo2.setServiceTypeId(servicePojo.getServiceTypeId());
-                servicePojo2.setServiceTypeName(servicePojo.getServiceTypeName());
-                servicePojo2.setPrice(servicePojo.getServicePrice());
-
-                ServicePojo1 servicePojo1 = new ServicePojo1();
-                servicePojo1.setServiceStyleId(servicePojo.getServiceStyleId());
-                servicePojo1.setServiceStyleName(servicePojo.getServiceStyleName());
-                servicePojo1.setServiceTypeList(new ArrayList<ServicePojo2>());
-                servicePojo1.getServiceTypeList().add(servicePojo2);
-                servicePojo1list.add(servicePojo1);
-            }
         }
-        return servicePojo1list;
+        return servicePojoList;
     }
 
     @Override
     public List<Map<String, Object>> getExpertServiceInfo(Map<String, String> paramMap)
     {
         return dao.getExpertServiceInfo(paramMap);
+    }
+
+    @Override
+    public List<ExpertInfoPojo> selectFamousTeacher(Map<String, Object> map) {
+        return dao.selectFamousTeacher(map);
     }
 
     @Override
@@ -234,4 +226,61 @@ public class ExpertServiceImpl implements IExpertService
         return dao.getExpertOrderList(map);
     }
 
+    @Override
+    public void test1(Map<String,Object> map){
+        dao.test1(map);
+    }
+    @Override
+    public void test2(Map<String,Object> map){
+        dao.test2(map);
+    }
+    @Override
+    public void test3(Map<String,Object> map){
+        dao.test3(map);
+    }
+
+    @Override
+    public List<ExpertServiceDay> getExpertServiceDays(int expertId) {
+        Integer preDay = dao.getPreDay(expertId);
+        if (preDay == null){
+            // 默认推后30天
+            preDay = 30;
+        }
+        return dao.getExpertServiceDays(expertId,-preDay);
+    }
+
+    @Override
+    public List<ExpertServiceTime> getExpertServiceTimes(int dayId) {
+        return dao.getExpertServiceTimes(dayId);
+    }
+
+    @Override
+    public void insertExpertAppraise(Map<String, Object> map) {
+        dao.insertExpertAppraise(map);
+    }
+
+    @Override
+    public List<ServiceNumberPojo> selectServiceByUserId(Map<String, Object> map) {
+        return dao.selectServiceByUserId(map);
+    }
+
+    @Override
+    public ExpertChannel getChannelByexpertIdAndStuId(long expertId, long stuId, int type) {
+        return dao.getChannelByexpertIdAndStuId(expertId,stuId,type);
+    }
+
+    @Override
+    public ExpertChannel getChannelByCid(String cid) {
+        return dao.getChannelByCid(cid);
+    }
+
+    @Override
+    public void updateChannelByCid(String cid) {
+        dao.updateChannelByCid(cid,System.currentTimeMillis());
+    }
+
+    @Override
+    public void insertChannel(ExpertChannel channel) {
+        dao.insertChannel(channel);
+    }
 }

@@ -56,6 +56,10 @@ public class ReportForecastView implements Serializable {
     //关联哪一年的招生计划
     private Integer year;
 
+    //关联哪一年的招生计划
+    private String[] batchs;
+
+
     //选测等级
     private List<String> xcRanks;
 
@@ -179,5 +183,13 @@ public class ReportForecastView implements Serializable {
 
     public void setEnrollRateEnd(Float enrollRateEnd) {
         this.enrollRateEnd = enrollRateEnd;
+    }
+
+    public String[] getBatchs() {
+        return batchs;
+    }
+
+    public void setBatchs(String[] batchs) {
+        this.batchs = batchs;
     }
 }
