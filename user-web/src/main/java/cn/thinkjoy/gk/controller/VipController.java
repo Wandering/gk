@@ -289,8 +289,14 @@ public class VipController extends ZGKBaseController implements Watched {
         Collections.sort(vipServiceNames,comparator);
         if (vipServiceNames.size()>0) {
             rtnMap.put("diffServiceName", "状元及第");
-            //判断最大的是不是金榜登科 并且绑了多张卡
-            Map<String, Object> lastCard = vipServiceNames.get(vipServiceNames.size());
+            /**
+             * 判断最大的是不是金榜登科 并且绑了多张卡
+             */
+
+            //取最后一张卡
+            Map<String, Object> lastCard = vipServiceNames.get(vipServiceNames.size() > 1 ? vipServiceNames.size() - 1 : 0);
+
+            //
             if (Integer.valueOf(lastCard.get("type").toString()) == 1 && vipServiceNames.size() > 1) {
                 Map<String, Object> serviceCard = vipServiceNames.get(vipServiceNames.size() - 2);
                 Map<String, Object> paramMap = new HashedMap();
