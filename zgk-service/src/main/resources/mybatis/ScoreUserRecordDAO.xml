@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.thinkjoy.gk.dao.IScoreUserRecordDAO">
+    <!--
+    insert
+    update
+    updateNull
+    deleteById
+    deleteByCondition
+    deleteByProperty
+    fetch
+    findOne
+    findList
+    findAll
+    queryPage
+    like
+    queryList
+    queryOne
+    count
+    selectMaxId
+    updateOrSave
+    selectOne
+    selectList
+    -->
+    <sql id="Base_Column_List">
+        id as id,
+        userId as userId,
+        type as type,
+        universityId as universityId,
+        areaId as areaId,
+        year as year,
+        total as total,
+        majorName as majorName,
+        majorType as majorType,
+        scoreRowId as scoreRowId
+    </sql>
+    <insert id="insert" parameterType="ScoreUserRecord">
+        INSERT INTO zgk_score_user_record (
+        userId,
+        type,
+        universityId,
+        areaId,
+        year,
+        total,
+        majorName,
+        majorType,
+        scoreRowId
+        ) VALUES (
+        #{userId},
+        #{type},
+        #{universityId},
+        #{areaId},
+        #{year},
+        #{total},
+        #{majorName},
+        #{majorType},
+        #{scoreRowId}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="ScoreUserRecord">
+        UPDATE zgk_score_user_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId!=null">
+                userId = #{userId},
+            </if>
+            <if test="type!=null">
+                type = #{type},
+            </if>
+            <if test="universityId!=null">
+                universityId = #{universityId},
+            </if>
+            <if test="areaId!=null">
+                areaId = #{areaId},
+            </if>
+            <if test="year!=null">
+                year = #{year},
+            </if>
+            <if test="total!=null">
+                total = #{total},
+            </if>
+            <if test="majorName!=null">
+                majorName = #{majorName},
+            </if>
+            <if test="majorType!=null">
+                majorType = #{majorType},
+            </if>
+            <if test="scoreRowId!=null">
+                scoreRowId = #{scoreRowId},
+            </if>
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateMap">
+        UPDATE zgk_score_user_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.userId!=null">
+                userId = #{map.userId},
+            </if>
+            <if test="map.type!=null">
+                type = #{map.type},
+            </if>
+            <if test="map.universityId!=null">
+                universityId = #{map.universityId},
+            </if>
+            <if test="map.areaId!=null">
+                areaId = #{map.areaId},
+            </if>
+            <if test="map.year!=null">
+                year = #{map.year},
+            </if>
+            <if test="map.total!=null">
+                total = #{map.total},
+            </if>
+            <if test="map.majorName!=null">
+                majorName = #{map.majorName},
+            </if>
+            <if test="map.majorType!=null">
+                majorType = #{map.majorType},
+            </if>
+            <if test="map.scoreRowId!=null">
+                scoreRowId = #{map.scoreRowId},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE zgk_score_user_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.userId!=null">
+                userId = #{update.userId},
+            </if>
+            <if test="update.type!=null">
+                type = #{update.type},
+            </if>
+            <if test="update.universityId!=null">
+                universityId = #{update.universityId},
+            </if>
+            <if test="update.areaId!=null">
+                areaId = #{update.areaId},
+            </if>
+            <if test="update.year!=null">
+                year = #{update.year},
+            </if>
+            <if test="update.total!=null">
+                total = #{update.total},
+            </if>
+            <if test="update.majorName!=null">
+                majorName = #{update.majorName},
+            </if>
+            <if test="update.majorType!=null">
+                majorType = #{update.majorType},
+            </if>
+            <if test="update.scoreRowId!=null">
+                scoreRowId = #{update.scoreRowId},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.userId!=null">
+                AND userId = #{condition.userId}
+            </if>
+            <if test="condition.type!=null">
+                AND type = #{condition.type}
+            </if>
+            <if test="condition.universityId!=null">
+                AND universityId = #{condition.universityId}
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
+            <if test="condition.year!=null">
+                AND year = #{condition.year}
+            </if>
+            <if test="condition.total!=null">
+                AND total = #{condition.total}
+            </if>
+            <if test="condition.majorName!=null">
+                AND majorName = #{condition.majorName}
+            </if>
+            <if test="condition.majorType!=null">
+                AND majorType = #{condition.majorType}
+            </if>
+            <if test="condition.scoreRowId!=null">
+                AND scoreRowId = #{condition.scoreRowId}
+            </if>
+        </trim>
+    </update>
+
+    <insert id="insertMap" >
+        INSERT INTO zgk_score_user_record (
+        userId,
+        type,
+        universityId,
+        areaId,
+        year,
+        total,
+        majorName,
+        majorType,
+        scoreRowId
+        ) VALUES (
+        #{map.userId},
+        #{map.type},
+        #{map.universityId},
+        #{map.areaId},
+        #{map.year},
+        #{map.total},
+        #{map.majorName},
+        #{map.majorType},
+        #{map.scoreRowId}
+        )
+    </insert>
+
+
+    <update id="updateNull" parameterType="ScoreUserRecord">
+        UPDATE zgk_score_user_record
+        <trim prefix="SET" suffixOverrides=",">
+            userId = #{userId},
+            type = #{type},
+            universityId = #{universityId},
+            areaId = #{areaId},
+            year = #{year},
+            total = #{total},
+            majorName = #{majorName},
+            majorType = #{majorType},
+            scoreRowId = #{scoreRowId},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM zgk_score_user_record
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </delete>
+
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM zgk_score_user_record
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="userId!=null">
+                AND userId = #{userId}
+            </if>
+            <if test="type!=null">
+                AND type = #{type}
+            </if>
+            <if test="universityId!=null">
+                AND universityId = #{universityId}
+            </if>
+            <if test="areaId!=null">
+                AND areaId = #{areaId}
+            </if>
+            <if test="year!=null">
+                AND year = #{year}
+            </if>
+            <if test="total!=null">
+                AND total = #{total}
+            </if>
+            <if test="majorName!=null">
+                AND majorName = #{majorName}
+            </if>
+            <if test="majorType!=null">
+                AND majorType = #{majorType}
+            </if>
+            <if test="scoreRowId!=null">
+                AND scoreRowId = #{scoreRowId}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM zgk_score_user_record WHERE
+        ${property} = #{value}
+    </delete>
+
+    <select id="fetch" parameterType="java.lang.Long" resultType="ScoreUserRecord">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_score_user_record
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="ScoreUserRecord">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_score_user_record WHERE
+        ${property} = #{value}
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="ScoreUserRecord">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_score_user_record WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="ScoreUserRecord">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_score_user_record
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="ScoreUserRecord">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_score_user_record
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.id!=null">
+                ${condition.groupOp}   id  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.userId!=null">
+                ${condition.groupOp}   userId  ${condition.userId.op}  #{condition.userId.data}
+            </if>
+            <if test="condition.type!=null">
+                ${condition.groupOp}   type  ${condition.type.op}  #{condition.type.data}
+            </if>
+            <if test="condition.universityId!=null">
+                ${condition.groupOp}   universityId  ${condition.universityId.op}  #{condition.universityId.data}
+            </if>
+            <if test="condition.areaId!=null">
+                ${condition.groupOp}   areaId  ${condition.areaId.op}  #{condition.areaId.data}
+            </if>
+            <if test="condition.year!=null">
+                ${condition.groupOp}   year  ${condition.year.op}  #{condition.year.data}
+            </if>
+            <if test="condition.total!=null">
+                ${condition.groupOp}   total  ${condition.total.op}  #{condition.total.data}
+            </if>
+            <if test="condition.majorName!=null">
+                ${condition.groupOp}   majorName  ${condition.majorName.op}  #{condition.majorName.data}
+            </if>
+            <if test="condition.majorType!=null">
+                ${condition.groupOp}   majorType  ${condition.majorType.op}  #{condition.majorType.data}
+            </if>
+            <if test="condition.scoreRowId!=null">
+                ${condition.groupOp}   scoreRowId  ${condition.scoreRowId.op}  #{condition.scoreRowId.data}
+            </if>
+
+
+        </where>
+
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="ScoreUserRecord">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_score_user_record
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id like CONCAT('%', #{condition.id} , '%')
+            </if>
+            <if test="condition.userId!=null">
+                AND userId like CONCAT('%', #{condition.userId} , '%')
+            </if>
+            <if test="condition.type!=null">
+                AND type like CONCAT('%', #{condition.type} , '%')
+            </if>
+            <if test="condition.universityId!=null">
+                AND universityId like CONCAT('%', #{condition.universityId} , '%')
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId like CONCAT('%', #{condition.areaId} , '%')
+            </if>
+            <if test="condition.year!=null">
+                AND year like CONCAT('%', #{condition.year} , '%')
+            </if>
+            <if test="condition.total!=null">
+                AND total like CONCAT('%', #{condition.total} , '%')
+            </if>
+            <if test="condition.majorName!=null">
+                AND majorName like CONCAT('%', #{condition.majorName} , '%')
+            </if>
+            <if test="condition.majorType!=null">
+                AND majorType like CONCAT('%', #{condition.majorType} , '%')
+            </if>
+            <if test="condition.scoreRowId!=null">
+                AND scoreRowId like CONCAT('%', #{condition.scoreRowId} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="ScoreUserRecord">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_score_user_record
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.userId!=null">
+                AND userId = #{condition.userId}
+            </if>
+            <if test="condition.type!=null">
+                AND type = #{condition.type}
+            </if>
+            <if test="condition.universityId!=null">
+                AND universityId = #{condition.universityId}
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
+            <if test="condition.year!=null">
+                AND year = #{condition.year}
+            </if>
+            <if test="condition.total!=null">
+                AND total = #{condition.total}
+            </if>
+            <if test="condition.majorName!=null">
+                AND majorName = #{condition.majorName}
+            </if>
+            <if test="condition.majorType!=null">
+                AND majorType = #{condition.majorType}
+            </if>
+            <if test="condition.scoreRowId!=null">
+                AND scoreRowId = #{condition.scoreRowId}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="ScoreUserRecord">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM zgk_score_user_record
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.userId!=null">
+                AND userId = #{condition.userId}
+            </if>
+            <if test="condition.type!=null">
+                AND type = #{condition.type}
+            </if>
+            <if test="condition.universityId!=null">
+                AND universityId = #{condition.universityId}
+            </if>
+            <if test="condition.areaId!=null">
+                AND areaId = #{condition.areaId}
+            </if>
+            <if test="condition.year!=null">
+                AND year = #{condition.year}
+            </if>
+            <if test="condition.total!=null">
+                AND total = #{condition.total}
+            </if>
+            <if test="condition.majorName!=null">
+                AND majorName = #{condition.majorName}
+            </if>
+            <if test="condition.majorType!=null">
+                AND majorType = #{condition.majorType}
+            </if>
+            <if test="condition.scoreRowId!=null">
+                AND scoreRowId = #{condition.scoreRowId}
+            </if>
+        </trim>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(id) FROM zgk_score_user_record
+        <where>
+            <if test="id!=null">
+                ${groupOp} id ${id.op}  #{id.data}
+            </if>
+            <if test="userId!=null">
+                ${groupOp} userId ${userId.op}  #{userId.data}
+            </if>
+            <if test="type!=null">
+                ${groupOp} type ${type.op}  #{type.data}
+            </if>
+            <if test="universityId!=null">
+                ${groupOp} universityId ${universityId.op}  #{universityId.data}
+            </if>
+            <if test="areaId!=null">
+                ${groupOp} areaId ${areaId.op}  #{areaId.data}
+            </if>
+            <if test="year!=null">
+                ${groupOp} year ${year.op}  #{year.data}
+            </if>
+            <if test="total!=null">
+                ${groupOp} total ${total.op}  #{total.data}
+            </if>
+            <if test="majorName!=null">
+                ${groupOp} majorName ${majorName.op}  #{majorName.data}
+            </if>
+            <if test="majorType!=null">
+                ${groupOp} majorType ${majorType.op}  #{majorType.data}
+            </if>
+            <if test="scoreRowId!=null">
+                ${groupOp} scoreRowId ${scoreRowId.op}  #{scoreRowId.data}
+            </if>
+
+        </where>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Long">
+        SELECT
+        MAX(id)
+        FROM zgk_score_user_record
+    </select>
+
+</mapper>
+
+

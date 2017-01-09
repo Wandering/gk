@@ -2,10 +2,12 @@ package cn.thinkjoy.gk.controller.score;
 
 import cn.thinkjoy.cloudstack.cache.RedisRepository;
 import cn.thinkjoy.common.exception.BizException;
+import cn.thinkjoy.gk.common.Constants;
 import cn.thinkjoy.gk.common.SubjectEnum;
 import cn.thinkjoy.gk.common.UserAreaContext;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.controller.predict.SmartReportController;
+import cn.thinkjoy.gk.domain.ScoreUserRecord;
 import cn.thinkjoy.gk.entity.UniversityInfoView;
 import cn.thinkjoy.gk.pojo.UniversityInfoParmasView;
 import cn.thinkjoy.gk.service.*;
@@ -44,8 +46,8 @@ public class ScoreController {
 
     private static long JS_AREA_CODE=320000;
     private static long ZJ_AREA_CODE=330000;
-
-
+    @Autowired
+    private IScoreUserRecordExService scoreUserRecordExService;
 
     @Autowired
     private IScoreAlgorithmService scoreAlgorithmService;
@@ -274,6 +276,18 @@ public class ScoreController {
             if(majorType==null)throw new BizException("error","majorType is not null");
             rtnObj = scoreAlgorithmService.recommendSchool(totalScore,areaId,majorType,userId);
         }
+        try {
+            //记录该用户的测试
+            Map<String, Object> map = scoreAnalysisService.queryScoreRecordByUserId(userId);
+            Integer rowId = map.get("recordId") == null ? null : Integer.valueOf(map.get("recordId").toString());
+            if (areaId != ZJ_AREA_CODE)
+                noteHandle(totalScore,areaId,majorType,userId,rowId,(List<Map<String,Object>>) rtnObj);
+            else
+                noteZJHandle(totalScore,areaId,majorType,userId,rowId,(Map<String, List<Map<String,Object>>>) rtnObj);
+        }catch (Exception e){
+            LOGGER.info("记录用户测评记录失败");
+        }
+
         return rtnObj;
 
     }
@@ -441,5 +455,66 @@ public class ScoreController {
         Map<String,Object> resultMap=new HashMap<>();
         resultMap.put("historyScoreAnalysisInfo", scoreAnalysisService.queryHistoryScoreAnalysis(userId));
         return resultMap;
+    }
+
+    /**
+     * 获取用户历史统计
+     * @return
+     */
+    @RequestMapping(value = "/queryUserScoreCount",method = RequestMethod.GET)
+    @ResponseBody
+    public Object queryHistoryScore(@RequestParam Long userId,@RequestParam Long areaId){
+        Map<String,Object>  rtnMap = new HashedMap();
+        Map<String,Object>  map = new HashedMap();
+        map.put("columnName","universityId");
+        Map<String,Object> queryMap = new HashedMap();
+        List<Map<String,Object> > queryList = new ArrayList<>();
+        queryMap.put("queryKey","userId");
+        queryMap.put("queryKey",userId);
+        queryList.add(queryMap);
+        map.put("queryList",queryList);
+        map.put("columnName","universityId");
+        map.put("queryList",queryList);
+        //获取用户所在省份
+        rtnMap.put("analysisCount",scoreUserRecordExService.count(map));
+//        rtnMap.put("analysisCount",scoreUserRecordExService.count(map));
+        return rtnMap;
+    }
+
+    private void noteHandle(Float totalScore,Long areaId,Integer majorType,Long userId,Integer rowId,List<Map<String, Object>> listMap){
+
+        List<ScoreUserRecord> scoreUserRecords = new ArrayList<>();
+
+        if (listMap!=null && listMap.size()>0){
+            for (Map<String,Object> objectMap : listMap) {
+                ScoreUserRecord scoreUserRecord = new ScoreUserRecord();
+                scoreUserRecord.setAreaId(areaId);
+                scoreUserRecord.setUserId(userId);
+                scoreUserRecord.setMajorType(majorType);
+                scoreUserRecord.setTotal(totalScore.toString());
+                scoreUserRecord.setType(Constants.DEFULT_SCORE_RECORD_STATUS);
+                scoreUserRecord.setUniversityId(objectMap.get("universityId") == null ?-1 : Integer.valueOf(objectMap.get("universityId").toString()));
+                scoreUserRecord.setYear(objectMap.get("year") == null?"":objectMap.get("year").toString());
+                scoreUserRecord.setScoreRowId(rowId == null ? null : Long.valueOf(rowId));
+                scoreUserRecord.setMajorName(objectMap.get("majorName") == null ? null : objectMap.get("majorName").toString());
+                scoreUserRecords.add(scoreUserRecord);
+            }
+        }
+        int count = scoreUserRecordExService.insertList(scoreUserRecords);
+        if (count>0)
+            LOGGER.info("记录用户测评记录成功"+count + "次");
+        else
+            LOGGER.info("记录用户测评记录失败");
+    }
+
+    private void noteZJHandle(Float totalScore,Long areaId,Integer majorType,Long userId,Integer rowId,Map<String, List<Map<String, Object>>> map){
+
+        if (map!=null){
+            Iterator<String> $i = map.keySet().iterator();
+            while ($i.hasNext()){
+                List<Map<String,Object>> listMap = map.get($i.next());
+                noteHandle(totalScore,areaId,majorType,userId,rowId,(List<Map<String,Object>>) listMap);
+            }
+        }
     }
 }
