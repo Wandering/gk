@@ -133,6 +133,9 @@ public class ExpertServiceImpl implements IExpertService
         if(commonQuestionList.size()>0) {
             String specialitys="";
             Map<String,Object> map1=new HashMap<>();
+            if (!areaId.equals("330000")) {
+                areaId="0";
+            }
             map1.put("areaId",areaId);
             map1.put("offset",offset);
             map1.put("rows",rows);
