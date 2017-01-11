@@ -345,8 +345,7 @@ public class VipController extends ZGKBaseController implements Watched {
                         buffer.delete(buffer.length() - 1, buffer.length());
                     rtnMap.put("diffService", buffer.toString());
                     rtnMap.put("diffServiceTime", VipTimeUtil.getLastActiveDate(Long.valueOf(serviceCard.get("activeDate").toString())));
-                    rtnMap.put("diffServiceName", "状元及第");
-
+//                    rtnMap.put("diffServiceName", "状元及第");
                 }
             }
 
