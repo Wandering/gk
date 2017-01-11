@@ -15,6 +15,7 @@ import cn.thinkjoy.gk.protocol.ModelUtil;
 import cn.thinkjoy.gk.service.ICardExService;
 import cn.thinkjoy.gk.service.ICardService;
 import cn.thinkjoy.gk.service.IUserVipService;
+import cn.thinkjoy.gk.util.RedisUtil;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.ibatis.exceptions.TooManyResultsException;
@@ -49,6 +50,7 @@ public class VipController extends ZGKBaseController implements Watched {
     @Autowired
     private IUserVipService userVipService;
 
+    private static RedisDisLock redisDisLock = new RedisDisLock(RedisUtil.getInstance().getRedisTemplate());
 
     private static Comparator comparator = new Comparator() {
         @Override
@@ -74,6 +76,14 @@ public class VipController extends ZGKBaseController implements Watched {
         if(null==userAccountPojo){
             throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
         }
+        String redisLockKey = VipConst.VIP_REDIS_LOCK_KEY+userAccountPojo.getAccount();
+        try {
+            //分布式锁
+            redisDisLock.lock(redisLockKey);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+//        RedisUtil.getInstance().
 //        Integer vipStatus = userAccountPojo.getVipStatus();
 //        if(null!=vipStatus&&vipStatus==1){
 //            throw new BizException(ERRORCODE.VIP_EXIST.getCode(), ERRORCODE.VIP_EXIST.getMessage());
@@ -146,6 +156,8 @@ public class VipController extends ZGKBaseController implements Watched {
         }catch (Exception e){
             logger.info("卡号异常防窜货代理商系统调用失败！",e);
         }
+        //解锁  只针对相同用户
+        redisDisLock.unlock(redisLockKey);
         return userAccountPojo;
     }
 
@@ -295,8 +307,12 @@ public class VipController extends ZGKBaseController implements Watched {
 
             //取最后一张卡
             Map<String, Object> lastCard = vipServiceNames.get(vipServiceNames.size() > 1 ? vipServiceNames.size() - 1 : 0);
-
-            //
+            //判断用户绑定的卡有没有金榜登科
+            for (Map<String,Object> map : vipServiceNames){
+                if (map.get("type")==1){
+                    rtnMap.put("diffServiceName", "金榜登科");
+                }
+            }
             if (Integer.valueOf(lastCard.get("type").toString()) == 1 && vipServiceNames.size() > 1) {
                 Map<String, Object> serviceCard = vipServiceNames.get(vipServiceNames.size() - 2);
                 Map<String, Object> paramMap = new HashedMap();
@@ -329,7 +345,8 @@ public class VipController extends ZGKBaseController implements Watched {
                         buffer.delete(buffer.length() - 1, buffer.length());
                     rtnMap.put("diffService", buffer.toString());
                     rtnMap.put("diffServiceTime", VipTimeUtil.getLastActiveDate(Long.valueOf(serviceCard.get("activeDate").toString())));
-                    rtnMap.put("diffServiceName", "金榜登科、状元及第");
+                    rtnMap.put("diffServiceName", "状元及第");
+
                 }
             }
 
