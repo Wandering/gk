@@ -308,6 +308,9 @@ public class ExpertController extends ZGKBaseController
         String productId =
             expertService.checkProduct(commonQuestionIdList, offset, rows, userId, note, areaId);
         Map<String, Object> resultMap = new HashMap<>();
+        if (productId==null){
+            return "没有相关产品包对应服务";
+        }
         return productController.queryCardServiceByProductId(Integer.valueOf(productId));
     }
 

@@ -166,5 +166,7 @@ public interface IExpertDAO
             ExpertChannel channel
     );
 
-    ProductPojo selectProductByServiceIdAndAreaId(Map<String,Object> map);
+    List<ProductPojo> selectProductByServiceIdAndAreaId(Map<String,Object> map);
+
+    String selectMaxProductIdByProductIdList(Map<String,Object> map);
 }

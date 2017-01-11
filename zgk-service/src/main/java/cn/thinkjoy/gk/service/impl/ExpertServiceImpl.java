@@ -62,7 +62,25 @@ public class ExpertServiceImpl implements IExpertService
 
     @Override
     public List<ExpertInfoPojo> checkExpertByProduct(Map<String, Object> map) {
-        return dao.checkExpertByProduct(map);
+        List<ExpertInfoPojo> expertInfoPojoList=dao.checkExpertByProduct(map);
+        List<ExpertInfoPojo> returnExpertInfoPojoList=new ArrayList<>();
+        if(expertInfoPojoList.size()>0){ //可以正常退出专家
+            for(ExpertInfoPojo expertInfoPojo:expertInfoPojoList){
+                Map<String,Object> map1=new HashMap<>();
+                map1.put("expertId",expertInfoPojo.getExpertId());
+                ExpertInfoPojo expertInfoPojo1=dao.selectExpertInfo(map1);
+                returnExpertInfoPojoList.add(expertInfoPojo1);
+            }
+        }else {//没有服务对应的专家
+            List<ExpertInfoPojo> expertInfoPojoList1=dao.selectExpertBySpecialityMore();
+            for (ExpertInfoPojo expertInfoPojo:expertInfoPojoList1){
+                Map<String,Object> map1=new HashMap<>();
+                map1.put("expertId",expertInfoPojo.getExpertId());
+                ExpertInfoPojo expertInfoPojo1=dao.selectExpertInfo(map1);
+                returnExpertInfoPojoList.add(expertInfoPojo1);
+            }
+        }
+        return returnExpertInfoPojoList;
     }
 
     @Override
@@ -143,9 +161,40 @@ public class ExpertServiceImpl implements IExpertService
                     specialitys = specialitys + "," + commonQuestion.getSpecialitys();
             }
             if(StringUtils.isNotEmpty(specialitys.substring(1))){
-                map1.put("specialitys",specialitys.substring(1));
-                ProductPojo product=dao.selectProductByServiceIdAndAreaId(map1);
-                return product.getProductId();
+                if (commonQuestionList.size()==1) {
+                    map1.put("specialitys", specialitys.substring(1));
+                    ProductPojo product = dao.selectProductByServiceIdAndAreaId(map1).get(0);
+                    return product.getProductId();
+                }else {//多选的情况
+                    Map<String,Integer> productIdNumber=new HashMap<>();
+                    for(CommonQuestion commonQuestion:commonQuestionList){//每一个问题对应的服务查询一次
+                        map1.put("specialitys", commonQuestion.getSpecialitys());
+                        map1.remove("offset");
+                        List<ProductPojo> productList = dao.selectProductByServiceIdAndAreaId(map1);
+                        for(ProductPojo productPojo:productList){
+                            String productId=productPojo.getProductId();
+                            if(!productIdNumber.containsKey(productId)){
+                                productIdNumber.put(productId,0);
+                            }
+                            productIdNumber.put(productId,productIdNumber.get(productId)+1);
+                        }
+                    }
+                    int productIdNumberMax=0;
+                    for(String productId:productIdNumber.keySet()){//找出匹配次数最多的一个
+                        if(productIdNumberMax<productIdNumber.get(productId)){
+                            productIdNumberMax=productIdNumber.get(productId);
+                        }
+                    }
+                    String productIdMaxList="";//保存所有匹配次数最多的卡Id
+                    for(String productId:productIdNumber.keySet()){
+                        if(productIdNumber.get(productId)==productIdNumberMax){
+                            productIdMaxList=productIdMaxList+","+productId;
+                        }
+                    }
+                    //查询productIdMaxList中所有卡能提供的服务个数最多的卡
+                    map1.put("productIdList",productIdMaxList.substring(1));
+                    return dao.selectMaxProductIdByProductIdList(map1);
+                }
             }
             else {
                 //模糊匹配关键词
@@ -159,12 +208,12 @@ public class ExpertServiceImpl implements IExpertService
                 }
                 if(StringUtils.isNotBlank(specialitys)) {
                     map1.put("specialitys", specialitys.substring(1));
-                    ProductPojo product=dao.selectProductByServiceIdAndAreaId(map1);
-                    return product.getProductId();
+                    ProductPojo product=dao.selectProductByServiceIdAndAreaId(map1).get(0);
+                    return product!=null?product.getProductId():null;
                 }else {
                     //无匹配，返回涉及邻域最多专家
-                    ProductPojo product=dao.selectProductByServiceIdAndAreaId(map1);
-                    return product.getProductId();
+                    ProductPojo product=dao.selectProductByServiceIdAndAreaId(map1).get(0);
+                    return product!=null?product.getProductId():null;
                 }
             }
         }
