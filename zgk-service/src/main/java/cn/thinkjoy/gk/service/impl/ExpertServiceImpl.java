@@ -80,12 +80,25 @@ public class ExpertServiceImpl implements IExpertService
     public List<ExpertInfoPojo> checkExpertByProduct(Map<String, Object> map) {
         List<ExpertInfoPojo> expertInfoPojoList=dao.checkExpertByProduct(map);
         List<ExpertInfoPojo> returnExpertInfoPojoList=new ArrayList<>();
-        if(expertInfoPojoList.size()>0){ //可以正常退出专家
+        List<String> serviceStringList=dao.selectServiceNameByAreaId(map);
+        if(expertInfoPojoList.size()>0){ //可以正常推出专家
             for(ExpertInfoPojo expertInfoPojo:expertInfoPojoList){
                 Map<String,Object> map1=new HashMap<>();
                 map1.put("expertId",expertInfoPojo.getExpertId());
                 ExpertInfoPojo expertInfoPojo1=dao.selectExpertInfo(map1);
                 if(expertInfoPojo1!=null) {
+                    String serviceTmp=expertInfoPojo1.getService();
+                    if (StringUtils.isNotBlank(serviceTmp)) {
+                        String service = "";
+                        for (String serviceString : serviceStringList) {
+                            if (serviceTmp.contains(serviceString)) {
+                                service = service + "," + serviceString;
+                            }
+                        }
+                        if (service.length() > 0) {
+                            expertInfoPojo1.setService(service.substring(1));
+                        }
+                    }
                     returnExpertInfoPojoList.add(expertInfoPojo1);
                 }
             }
@@ -96,6 +109,18 @@ public class ExpertServiceImpl implements IExpertService
                 map1.put("expertId",expertInfoPojo.getExpertId());
                 ExpertInfoPojo expertInfoPojo1=dao.selectExpertInfo(map1);
                 if(expertInfoPojo1!=null) {
+                    String serviceTmp=expertInfoPojo1.getService();
+                    if (StringUtils.isNotBlank(serviceTmp)) {
+                        String service = "";
+                        for (String serviceString : serviceStringList) {
+                            if (serviceTmp.contains(serviceString)) {
+                                service = service + "," + serviceString;
+                            }
+                        }
+                        if (service.length() > 0) {
+                            expertInfoPojo1.setService(service.substring(1));
+                        }
+                    }
                     returnExpertInfoPojoList.add(expertInfoPojo1);
                 }
             }
@@ -158,7 +183,6 @@ public class ExpertServiceImpl implements IExpertService
         return dao.selectAppraiseListCount(map);
     }
 
-
     @Override
     public String checkProduct(String commonQuestionIdString,String offset,String rows,String userId,String note,String areaId){
         Map<String,Object> map=new HashMap<>();
@@ -211,7 +235,7 @@ public class ExpertServiceImpl implements IExpertService
                             productIdMaxList=productIdMaxList+","+productId;
                         }
                     }
-                    //查询productIdMaxList中所有卡能提供的服务个数最便宜的卡
+                    //查询productIdMaxList中所有卡最便宜的卡
                     map1.put("productIdList",productIdMaxList.substring(1));
                     return dao.selectCheapProductIdByProductIdList(map1);
                 }
