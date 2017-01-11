@@ -31,12 +31,15 @@
         select ei.id as expertId,ei.expert_name as expertName,GROUP_CONCAT(DISTINCT CAST(ec.config_value as char)) service,AVG(ea.rate) rate ,count(DISTINCT ec2.id) as casesNumber,expert_photo_url as photoUrl,ei.qualification as qualification,ei.best_expert as bestExpert
         from zgk_expert_info ei
         left join zgk_expert_service_relation esr on ei.id=esr.expert_id
-        left join zgk_expert_config ec on ec.config_key=esr.service_type_id and ec.config_domain='serviceType'
+        left join zgk_expert_config ec on ec.config_key=esr.service_type_id and ec.config_domain='expertService'
         left join zgk_expert_appraise ea on ea.expert_id=ei.id and ea.is_checked=1
         left join zgk_expert_cases ec2 on ec2.expert_id=ei.id
         where ei.is_checked=1
         <if test="serviceId!=null">
             and esr.service_type_id=#{serviceId}
+        </if>
+        <if test="hideExpertIds!=null">
+            and ei.id not in (${hideExpertIds})
         </if>
         group by ei.id
         order by rate desc
@@ -45,17 +48,14 @@
 
     <!-- 根据卡推介专家列表 -->
     <select id="checkExpertByProduct" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ExpertInfoPojo">
-        select ei.id as expertId,ei.expert_name as expertName,GROUP_CONCAT(DISTINCT CAST(ec.config_value as char)) service,AVG(ea.rate) rate ,count(DISTINCT ec2.id) as casesNumber,expert_photo_url as photoUrl,ei.qualification as qualification,ei.best_expert as bestExpert
+        select ei.id as expertId,AVG(ea.rate)as rate,count(*) as cou
         from zgk_expert_info ei
         left join zgk_expert_service_relation esr on ei.id=esr.expert_id
-        left join zgk_expert_config ec on ec.config_key=esr.service_type_id and ec.config_domain='serviceType'
-        left join zgk_expert_appraise ea on ea.expert_id=ei.id and ea.is_checked=1
-        left join zgk_expert_cases ec2 on ec2.expert_id=ei.id
-        inner join (select DISTINCT service_item as serviceId from zgk_expert_reservation_order_detail erod
-          where erod.user_id=#{userId} and service_count>0) tmp on tmp.serviceId=esr.service_type_id
-        where ei.is_checked=1
+        left join zgk_expert_appraise ea on ei.id=ea.expert_id
+        inner join zgk_expert_reservation_order_detail erod
+        on erod.user_id=#{userId} and service_count>0 and esr.service_type_id=erod.service_item
         group by ei.id
-        order by rate desc
+        order by cou desc,rate desc
         limit ${offset}, ${rows}
     </select>
 
@@ -64,10 +64,16 @@
         select count(DISTINCT ei.id) as count
         from zgk_expert_info ei
         left join zgk_expert_service_relation esr on ei.id=esr.expert_id
-        left join zgk_expert_config ec on ec.config_key=esr.service_type_id and ec.config_domain='serviceType'
+        left join zgk_expert_config ec on ec.config_key=esr.service_type_id and ec.config_domain='expertService'
         left join zgk_expert_appraise ea on ea.expert_id=ei.id
         left join zgk_expert_cases ec2 on ec2.expert_id=ei.id
         where ei.is_checked=1
+        <if test="serviceId!=null">
+            and esr.service_type_id=#{serviceId}
+        </if>
+        <if test="hideExpertIds!=null">
+            and ei.id not in (${hideExpertIds})
+        </if>
     </select>
 
     <!-- 预约专家详情 -->
@@ -75,7 +81,7 @@
         select ei.expert_intro as info,ei.id as expertId,ei.expert_name as expertName,GROUP_CONCAT(DISTINCT ec.config_value) service,AVG(ea.rate) as rate ,count(DISTINCT ec2.id) as casesNumber,expert_photo_url as photoUrl,ei.qualification as qualification,ei.best_expert as bestExpert
         from zgk_expert_info ei
         left join zgk_expert_service_relation esr on ei.id=esr.expert_id
-        left join zgk_expert_config ec on ec.config_key=esr.service_type_id and ec.config_domain='serviceType'
+        left join zgk_expert_config ec on ec.config_key=esr.service_type_id and ec.config_domain='expertService'
         left join zgk_expert_appraise ea on ea.expert_id=ei.id
         left join zgk_expert_cases ec2 on ec2.expert_id=ei.id
         where ei.is_checked=1
@@ -155,7 +161,7 @@
                user_comments as userComments,
                create_date as createDate
         from zgk_expert_cases ec
-        left join zgk_expert_config ecc on ecc.config_domain='serviceType' and ecc.config_key=ec.service_id
+        left join zgk_expert_config ecc on ecc.config_domain='expertService' and ecc.config_key=ec.service_id
         where ec.expert_id=#{expertId}
         limit ${offset}, ${rows}
     </select>
@@ -164,7 +170,7 @@
     <select id="selectCasesListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         select count(expert_id) as count
         from zgk_expert_cases ec
-        left join zgk_expert_config ecc on ecc.config_domain='serviceType' and ecc.config_key=ec.service_id
+        left join zgk_expert_config ecc on ecc.config_domain='expertService' and ecc.config_key=ec.service_id
         where ec.expert_id=#{expertId}
     </select>
 
@@ -181,7 +187,7 @@
         ea.rate as rate
         from zgk_expert_appraise ea
         left join zgk_expert_info ei on ei.id=ea.expert_id
-        left join zgk_expert_config ec on ec.config_domain='serviceType' and ec.config_key=ea.server_type
+        left join zgk_expert_config ec on ec.config_domain='expertService' and ec.config_key=ea.server_type
         where ea.is_checked=1
         <if test="expertId!=null">
             and ea.expert_id=#{expertId}
@@ -193,7 +199,7 @@
         select count(ea.expert_id) as count
         from zgk_expert_appraise ea
         left join zgk_expert_info ei on ei.id=ea.expert_id
-        left join zgk_expert_config ec on ec.config_domain='serviceType' and ec.config_key=ea.server_type
+        left join zgk_expert_config ec on ec.config_domain='expertService' and ec.config_key=ea.server_type
         where ea.is_checked=1
         <if test="expertId!=null">
             and ea.expert_id=#{expertId}
@@ -421,23 +427,13 @@
 
     <!-- 查询涉及邻域最多的专家 -->
     <select id="selectExpertBySpecialityMore" resultType="cn.thinkjoy.gk.pojo.ExpertInfoPojo">
-        select ei.id as expertId,ei.expert_name as expertName,GROUP_CONCAT(DISTINCT ec1.config_value) as speciality ,
-            count(DISTINCT ec2.id) as casesNumber,GROUP_CONCAT(DISTINCT ec3.config_value) service,ei.qualification as qualification,expert_photo_url as photoUrl,
-            ei.expert_intro as info
+        select ei.id as expertId,AVG(ea.rate)as rate,count(*) as cou
         from zgk_expert_info ei
-        left join zgk_expert_speciality_relation esr on ei.id=esr.expert_id
-        left join zgk_expert_config ec1 on ec1.config_domain='speciality' and ec1.config_key=esr.speciality_id
-        left join zgk_expert_cases ec2 on ei.id=ec2.expert_id
-        left join zgk_expert_service_relation esr2 on esr2.expert_id=ei.id
-        left join zgk_expert_config ec3 on ec3.config_domain='serviceStyle' and ec3.config_key=esr2.service_style_id
-        where ei.is_checked=1
-            and ei.id in(
-            select expert_id as num from zgk_expert_speciality_relation esr
-            group by esr.expert_id
-            order by num desc
-            )
+        left join zgk_expert_service_relation esr on ei.id=esr.expert_id
+        left join zgk_expert_appraise ea on ei.id=ea.expert_id
         group by ei.id
-		limit 2
+        order by cou desc,rate desc
+        limit ${offset}, ${rows}
     </select>
 
     <insert id="insertOrderRevaluation" parameterType="ExpertOrder">
@@ -487,7 +483,7 @@
         select ei.id as expertId,ei.expert_name as expertName ,esr.service_type_id as serviceTypeId,ec.config_value as serviceTypeName
         from zgk_expert_info ei
         left join zgk_expert_service_relation esr on ei.id=esr.expert_id
-        left join zgk_expert_config ec on ec.config_domain = 'serviceType' and ec.config_key = esr.service_type_id
+        left join zgk_expert_config ec on ec.config_domain = 'expertService' and ec.config_key = esr.service_type_id
          where ei.id=#{expertId}
     </select>
 
@@ -513,7 +509,7 @@
         select s.expert_name,t.service_price,
         (select config.config_value from zgk_expert_config config
         where config.config_key=t.service_type_id
-        and config.config_domain='serviceType') as serviceContent
+        and config.config_domain='expertService') as serviceContent
         from zgk_expert_service_relation t
         left join zgk_expert_info s on t.expert_id=s.id
         where expert_id=#{expertId} and t.service_style_id!=3
@@ -521,7 +517,7 @@
         select s.expert_name,t.service_price,
         (select config.config_value from zgk_expert_config config
         where config.config_key=t.service_type_id
-        and config.config_domain='serviceType') as serviceContent
+        and config.config_domain='expertService') as serviceContent
         from zgk_expert_service_relation t
         left join zgk_expert_info s on t.expert_id=s.id
         where expert_id=#{expertId} and t.service_style_id=3 and t.area_id=#{areaId}
@@ -730,11 +726,31 @@
             and eps.serviceId in (${specialitys})
         </if>
         ) tmp on pp.id = tmp.productId
-        where pp.state=0
+        where pp.state=0 and pp.cardBusinessType=2
         ORDER BY pp.defaultSalePrice ASC
         <if test="offset!=null">
             limit ${offset}, ${rows}
         </if>
     </select>
+    
+    <select id="selectMaxProductIdByProductIdList" parameterType="java.util.Map" resultType="java.lang.String">
+        select eps.productId
+        from zgk_expert_product_service eps
+        where areaId=#{areaId}
+            and serviceId is not null
+            and eps.productId in (${productIdList})
+        group by productId
+        order by count(serviceId) desc
+        limit 1
+    </select>
+
+    <select id="selectServiceNameByAreaId" parameterType="java.util.Map" resultType="java.lang.String">
+        select DISTINCT ec.config_value from zgk_expert_product_service eps
+        left join zgk_expert_config ec on ec.config_domain = 'expertService' and ec.config_key = eps.serviceId
+        where eps.status=2
+        and eps.areaId=#{areaId}
+        and eps.serviceId is not null
+    </select>
+
 </mapper>
 
