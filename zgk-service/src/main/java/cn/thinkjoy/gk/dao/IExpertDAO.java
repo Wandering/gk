@@ -169,4 +169,6 @@ public interface IExpertDAO
     List<ProductPojo> selectProductByServiceIdAndAreaId(Map<String,Object> map);
 
     String selectMaxProductIdByProductIdList(Map<String,Object> map);
+
+    List<String> selectServiceNameByAreaId(Map<String,Object> map);
 }

@@ -57,7 +57,23 @@ public class ExpertServiceImpl implements IExpertService
 
     @Override
     public List<ExpertInfoPojo> selectExpertList(Map<String, Object> map) {
-        return dao.selectExpertList(map);
+        List<ExpertInfoPojo> expertInfoPojoList=dao.selectExpertList(map);
+        List<String> serviceStringList=dao.selectServiceNameByAreaId(map);
+        for(ExpertInfoPojo expertInfoPojo:expertInfoPojoList){
+            String serviceTmp=expertInfoPojo.getService();
+            if (StringUtils.isNotBlank(serviceTmp)) {
+                String service = "";
+                for (String serviceString : serviceStringList) {
+                    if (serviceTmp.contains(serviceString)) {
+                        service = service + "," + serviceString;
+                    }
+                }
+                if (service.length() > 0) {
+                    expertInfoPojo.setService(service.substring(1));
+                }
+            }
+        }
+        return expertInfoPojoList;
     }
 
     @Override

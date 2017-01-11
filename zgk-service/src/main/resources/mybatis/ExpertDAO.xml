@@ -38,6 +38,9 @@
         <if test="serviceId!=null">
             and esr.service_type_id=#{serviceId}
         </if>
+        <if test="hideExpertIds!=null">
+            and ei.id not in (${hideExpertIds})
+        </if>
         group by ei.id
         order by rate desc
         limit ${offset}, ${rows}
@@ -65,6 +68,12 @@
         left join zgk_expert_appraise ea on ea.expert_id=ei.id
         left join zgk_expert_cases ec2 on ec2.expert_id=ei.id
         where ei.is_checked=1
+        <if test="serviceId!=null">
+            and esr.service_type_id=#{serviceId}
+        </if>
+        <if test="hideExpertIds!=null">
+            and ei.id not in (${hideExpertIds})
+        </if>
     </select>
 
     <!-- 预约专家详情 -->
@@ -735,6 +744,13 @@
         limit 1
     </select>
 
+    <select id="selectServiceNameByAreaId" parameterType="java.util.Map" resultType="java.lang.String">
+        select DISTINCT ec.config_value from zgk_expert_product_service eps
+        left join zgk_expert_config ec on ec.config_domain = 'expertService' and ec.config_key = eps.serviceId
+        where eps.status=2
+        and eps.areaId=#{areaId}
+        and eps.serviceId is not null
+    </select>
 
 </mapper>
 
