@@ -211,14 +211,14 @@ public class ExpertServiceImpl implements IExpertService
                             productIdMaxList=productIdMaxList+","+productId;
                         }
                     }
-                    //查询productIdMaxList中所有卡能提供的服务个数最多的卡
+                    //查询productIdMaxList中所有卡能提供的服务个数最便宜的卡
                     map1.put("productIdList",productIdMaxList.substring(1));
-                    return dao.selectMaxProductIdByProductIdList(map1);
+                    return dao.selectCheapProductIdByProductIdList(map1);
                 }
             }
             else {
                 //模糊匹配关键词
-                map1.put("configDomain","speciality");
+                map1.put("configDomain","expertService");
                 List<ExpertConfig> expertConfigList=dao.selectExpertConfigList(map1);
                 specialitys="";
                 for(ExpertConfig expertConfig:expertConfigList){
@@ -231,7 +231,7 @@ public class ExpertServiceImpl implements IExpertService
                     ProductPojo product=dao.selectProductByServiceIdAndAreaId(map1).get(0);
                     return product!=null?product.getProductId():null;
                 }else {
-                    //无匹配，返回涉及邻域最多专家
+                    //无匹配，返回涉及邻域最多卡
                     ProductPojo product=dao.selectProductByServiceIdAndAreaId(map1).get(0);
                     return product!=null?product.getProductId():null;
                 }

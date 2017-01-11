@@ -170,5 +170,7 @@ public interface IExpertDAO
 
     String selectMaxProductIdByProductIdList(Map<String,Object> map);
 
+    String selectCheapProductIdByProductIdList(Map<String,Object> map);
+
     List<String> selectServiceNameByAreaId(Map<String,Object> map);
 }

@@ -363,6 +363,7 @@ public class ExpertController extends ZGKBaseController
         map.put("userId",userId);
         map.put("offset",offset);
         map.put("rows",rows);
+        map.put("areaId",getAreaId());
         List<ExpertInfoPojo> expertInfoPojoList = expertService.checkExpertByProduct(map);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("expertInfoPojoList", expertInfoPojoList);
