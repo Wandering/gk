@@ -85,7 +85,9 @@ public class ExpertServiceImpl implements IExpertService
                 Map<String,Object> map1=new HashMap<>();
                 map1.put("expertId",expertInfoPojo.getExpertId());
                 ExpertInfoPojo expertInfoPojo1=dao.selectExpertInfo(map1);
-                returnExpertInfoPojoList.add(expertInfoPojo1);
+                if(expertInfoPojo1!=null) {
+                    returnExpertInfoPojoList.add(expertInfoPojo1);
+                }
             }
         }else {//没有服务对应的专家
             List<ExpertInfoPojo> expertInfoPojoList1=dao.selectExpertBySpecialityMore();
@@ -93,7 +95,9 @@ public class ExpertServiceImpl implements IExpertService
                 Map<String,Object> map1=new HashMap<>();
                 map1.put("expertId",expertInfoPojo.getExpertId());
                 ExpertInfoPojo expertInfoPojo1=dao.selectExpertInfo(map1);
-                returnExpertInfoPojoList.add(expertInfoPojo1);
+                if(expertInfoPojo1!=null) {
+                    returnExpertInfoPojoList.add(expertInfoPojo1);
+                }
             }
         }
         return returnExpertInfoPojoList;
