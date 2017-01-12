@@ -36,23 +36,19 @@ public class VipTimeUtil {
         return format.format(c.getTime());
     }
 
-    public static boolean getVipTag(){
-//        return "09-01".compareTo(vipTime)<0;
-//        Calendar c = Calendar.getInstance();
-//        c.set(Calendar.MONTH, 7);
-//        c.set(Calendar.DAY_OF_MONTH, 31);
-//        c.set(Calendar.HOUR_OF_DAY, 0);
-//        c.set(Calendar.MINUTE, 0);
-//        c.set(Calendar.SECOND, 0);
-//        c.set(Calendar.MILLISECOND,0);
-//        System.out.println(formatDate.format(c.getTime()));
-        return formatDate.format(new Date(System.currentTimeMillis())).compareTo(vipTime)<0;
-//        return formatDate.format(c.getTime()).compareTo(vipTime)<0;
+    public static Long getCardTimeOut(Long time) throws ParseException {
+        Calendar c = Calendar.getInstance();
+        c.setTime(format.parse(getLastActiveDate(time)));
+        return c.getTimeInMillis();
     }
-//    public static void main(String[] args) throws ParseException {
-//
+
+    public static boolean getVipTag(){
+        return formatDate.format(new Date(System.currentTimeMillis())).compareTo(vipTime)<0;
+    }
+    public static void main(String[] args) throws ParseException {
+
+        System.out.println(getCardTimeOut(System.currentTimeMillis()));
+//        System.out.println(getVipTag());
 //        System.out.println(getLastActiveDate(System.currentTimeMillis()));
-////        System.out.println(getVipTag());
-////        System.out.println(getLastActiveDate(System.currentTimeMillis()));
-//    }
+    }
 }
