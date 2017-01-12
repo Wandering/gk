@@ -312,6 +312,7 @@ public class VipController extends ZGKBaseController implements Watched {
             UserVip userVip = (UserVip) userVipService.queryOne(userParamMap);
 
             rtnMap.put("cardTime", VipTimeUtil.format.format(new Date(userVip.getEndDate())));
+
             /**
              * 判断最大的是不是金榜登科 并且绑了多张卡
              */
@@ -330,8 +331,10 @@ public class VipController extends ZGKBaseController implements Watched {
                     e.printStackTrace();
                 }
             }
+
             vipServiceNames.removeAll(delMaps);
             if (vipServiceNames.size()>0) {
+
                 //取最后一张卡
                 Map<String, Object> lastCard = vipServiceNames.get(vipServiceNames.size() > 1 ? vipServiceNames.size() - 1 : 0);
                 //判断用户绑定的卡有没有金榜登科
@@ -389,7 +392,7 @@ public class VipController extends ZGKBaseController implements Watched {
             }
                 List<Map<String, Object>> vipServices = cardExService.getUserVipService(userId);
                 //判断所拥有的VIP卡类型(另一个维度)
-                rtnMap.put("cardType", vipServices.size() > 0 ? UserVipConstant.EXPERT_VIP_STATUS : UserVipConstant.DEFULT_VIP_STATUS);
+
                 rtnMap.put("expertService", new ArrayList<>());
 
                 //不是专家卡
@@ -398,6 +401,7 @@ public class VipController extends ZGKBaseController implements Watched {
                 for (Map<String, Object> map : vipServices) {
                     count += Integer.valueOf(map.get("count").toString());
                 }
+                rtnMap.put("cardType", count > 0 ? UserVipConstant.EXPERT_VIP_STATUS : UserVipConstant.DEFULT_VIP_STATUS);
                 //获取卡的专家状态
                 if (vipServices.size() > 0 && count > 0) {
                     //是专家
