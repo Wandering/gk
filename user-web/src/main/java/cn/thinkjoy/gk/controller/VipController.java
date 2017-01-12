@@ -306,6 +306,12 @@ public class VipController extends ZGKBaseController implements Watched {
         Collections.sort(vipServiceNames,comparator);
         if (vipServiceNames.size()>0) {
             rtnMap.put("diffServiceName", "状元及第");
+            //卡到期时间
+            Map<String, Object> paramMap = Maps.newHashMap();
+            paramMap.put("userId", userId);
+            UserVip userVip = (UserVip) userVipService.queryOne(paramMap);
+
+            rtnMap.put("cardTime", VipTimeUtil.format.format(new Date(userVip.getEndDate())));
             /**
              * 判断最大的是不是金榜登科 并且绑了多张卡
              */
@@ -378,13 +384,6 @@ public class VipController extends ZGKBaseController implements Watched {
                     if (buffer.length() > 0)
                         buffer.delete(buffer.length() - 1, buffer.length());
                     rtnMap.put("cardNames", buffer.toString());
-                    //卡到期时间
-                    Map<String, Object> paramMap = Maps.newHashMap();
-                    paramMap.put("userId", userId);
-                    UserVip userVip = (UserVip) userVipService.queryOne(paramMap);
-
-                    rtnMap.put("cardTime", VipTimeUtil.format.format(new Date(userVip.getEndDate())));
-
 
                 }
             }
