@@ -77,6 +77,14 @@ public class ExpertServiceImpl implements IExpertService
     }
 
     @Override
+    public boolean hasService(Map<String,Object> map){
+        if(dao.hasService(map)>0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public List<ExpertInfoPojo> checkExpertByProduct(Map<String, Object> map) {
         List<ExpertInfoPojo> expertInfoPojoList=dao.checkExpertByProduct(map);
         List<ExpertInfoPojo> returnExpertInfoPojoList=new ArrayList<>();

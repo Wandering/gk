@@ -63,6 +63,12 @@
         </if>
     </select>
 
+    <!-- 判断用户是否没有购买服务或服务已经用完 -->
+    <select id="hasService" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(*) from zgk_expert_reservation_order_detail erod
+        where erod.user_id=#{userId} and service_count>0
+    </select>
+
     <!-- 预约专家列表总数 -->
     <select id="selectExpertListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         select count(DISTINCT ei.id) as count
