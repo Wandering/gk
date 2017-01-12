@@ -169,11 +169,15 @@ public class ExpertController extends ZGKBaseController
 
     @RequestMapping(value = "getExpertInfo")
     @ResponseBody
-    public Map<String, Object> getExpertInfo(@RequestParam(value = "expertId") String expertId,@RequestParam(value = "areaId")String areaId)
+    public Map<String, Object> getExpertInfo(@RequestParam(value = "expertId") String expertId)
     {
         Map<String, Object> map = new HashMap<>();
         map.put("expertId", expertId);
-        map.put("areaId", getAreaId());
+        String areaId=getAreaId().toString();
+        if(!areaId.equals("330000")) {
+            areaId = "0";
+        }
+        map.put("areaId", areaId);
         ExpertInfoPojo expertInfoPojo = expertService.selectExpertInfo(map);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("expertInfoPojo", expertInfoPojo);
