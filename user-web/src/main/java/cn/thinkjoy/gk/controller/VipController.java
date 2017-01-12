@@ -300,6 +300,7 @@ public class VipController extends ZGKBaseController implements Watched {
     @ResponseBody
     public Object getUserVipInfo(){
         String userId = this.getAccoutId();
+        StringBuffer bufferName = new StringBuffer();
         Map<String,Object> rtnMap = new HashedMap();
         //获取卡的专家状态
         List<Map<String,Object>> vipServiceNames = cardExService.getUserVipServiceName(userId);
@@ -320,12 +321,15 @@ public class VipController extends ZGKBaseController implements Watched {
 
 
             List<Map<String,Object>> delMaps = new ArrayList<>();
+            List<Map<String,Object>> delExpertMaps = new ArrayList<>();
             for (Map<String,Object> map : vipServiceNames){
                 Integer ptType = (Integer) map.get("type");
                 Long activeDate = (Long) map.get("activeDate");
                 try {
-                    if (ptType <=2 && System.currentTimeMillis()>VipTimeUtil.getCardTimeOut(activeDate)){
+                    if (ptType <=3 && System.currentTimeMillis()>VipTimeUtil.getCardTimeOut(activeDate)){
                         delMaps.add(map);
+                    }else if (ptType > 3 && System.currentTimeMillis()>VipTimeUtil.getCardTimeOut(activeDate)){
+                        delExpertMaps.add(map);
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -333,6 +337,7 @@ public class VipController extends ZGKBaseController implements Watched {
             }
 
             vipServiceNames.removeAll(delMaps);
+            vipServiceNames.removeAll(delExpertMaps);
             if (vipServiceNames.size()>0) {
 
                 //取最后一张卡
@@ -369,24 +374,25 @@ public class VipController extends ZGKBaseController implements Watched {
                     }
                     //取两张卡不重叠项
                     cardServices.removeAll(cardServices1);
-                    StringBuffer buffer = new StringBuffer();
+
                     if (cardServices.size() > 0) {
+                        StringBuffer buffer = new StringBuffer();
                         for (Map<String, Object> map : cardServices)
                             buffer.append(map.get("serviceType")).append("、");
                         if (buffer.length() > 0)
                             buffer.delete(buffer.length() - 1, buffer.length());
-                        rtnMap.put("diffService", buffer.toString());
+
                         rtnMap.put("diffServiceTime", VipTimeUtil.getLastActiveDate(Long.valueOf(serviceCard.get("activeDate").toString())));
                     }
                 }
 
                 if (vipServiceNames.size() > 0) {
-                    StringBuffer buffer = new StringBuffer();
+
                     for (Map<String, Object> map : vipServiceNames)
-                        buffer.append(map.get("productName")).append("、");
-                    if (buffer.length() > 0)
-                        buffer.delete(buffer.length() - 1, buffer.length());
-                    rtnMap.put("cardNames", buffer.toString());
+                        bufferName.append(map.get("productName")).append("、");
+                    if (bufferName.length() > 0)
+                        bufferName.delete(bufferName.length() - 1, bufferName.length());
+
 
                 }
             }
@@ -401,17 +407,28 @@ public class VipController extends ZGKBaseController implements Watched {
                 for (Map<String, Object> map : vipServices) {
                     count += Integer.valueOf(map.get("count").toString());
                 }
-                if (vipServiceNames.size()>0){
 
-                }
                 rtnMap.put("cardType", count > 0 ? UserVipConstant.EXPERT_VIP_STATUS : UserVipConstant.DEFULT_VIP_STATUS);
                 //获取卡的专家状态
-                if (vipServices.size() > 0 && count > 0) {
+                if (count > 0 && vipServices.size()>0) {
                     //是专家
                     //统计该用户专家卡所拥有的服务和次数
                     rtnMap.put("expertService", vipServices);
                     //end
                 }
+
+                if (count > 0) {
+
+                    for (Map<String, Object> map : delExpertMaps)
+                        bufferName.append(map.get("productName")).append("、");
+                    if (bufferName.length() > 0)
+                        bufferName.delete(bufferName.length() - 1, bufferName.length());
+                    //是专家
+                    //统计该用户专家卡所拥有的服务和次数
+                    rtnMap.put("cardNames", bufferName.toString());
+                    //end
+                }
+                rtnMap.put("diffService", bufferName.toString());
                 if (count == 0 && vipServiceNames.size() == 0) {
                     throw new BizException(ERRORCODE.NO_VIP.getCode(), ERRORCODE.NO_VIP.getMessage());
                 }
