@@ -335,7 +335,6 @@ public class VipController extends ZGKBaseController implements Watched {
                     e.printStackTrace();
                 }
             }
-
             vipServiceNames.removeAll(delMaps);
             vipServiceNames.removeAll(delExpertMaps);
             if (vipServiceNames.size()>0) {
@@ -387,7 +386,6 @@ public class VipController extends ZGKBaseController implements Watched {
                 }
 
                 if (vipServiceNames.size() > 0) {
-
                     for (Map<String, Object> map : vipServiceNames)
                         bufferName.append(map.get("productName")).append("、");
                 }
@@ -417,10 +415,8 @@ public class VipController extends ZGKBaseController implements Watched {
 
                     for (Map<String, Object> map : delExpertMaps)
                         bufferName.append(map.get("productName")).append("、");
-
                     //是专家
                     //统计该用户专家卡所拥有的服务和次数
-
                     //end
                 }
             if (bufferName.length() > 0)
