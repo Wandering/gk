@@ -59,20 +59,45 @@ public class ExpertServiceImpl implements IExpertService
     public List<ExpertInfoPojo> selectExpertList(Map<String, Object> map) {
         List<ExpertInfoPojo> expertInfoPojoList=dao.selectExpertList(map);
         List<String> serviceStringList=dao.selectServiceNameByAreaId(map);
-        for(ExpertInfoPojo expertInfoPojo:expertInfoPojoList){
-            String serviceTmp=expertInfoPojo.getService();
-            if (StringUtils.isNotBlank(serviceTmp)) {
-                String service = "";
-                for (String serviceString : serviceStringList) {
-                    if (serviceTmp.contains(serviceString)) {
-                        service = service + "," + serviceString;
+        if (expertInfoPojoList.size()>0) {
+            for (ExpertInfoPojo expertInfoPojo : expertInfoPojoList) {
+                String serviceTmp = expertInfoPojo.getService();
+                if (StringUtils.isNotBlank(serviceTmp)) {
+                    String service = "";
+                    for (String serviceString : serviceStringList) {
+                        if (serviceTmp.contains(serviceString)) {
+                            service = service + "," + serviceString;
+                        }
+                    }
+                    if (service.length() > 0) {
+                        expertInfoPojo.setService(service.substring(1));
                     }
                 }
-                if (service.length() > 0) {
-                    expertInfoPojo.setService(service.substring(1));
+            }
+        }else {
+            List<ExpertInfoPojo> expertInfoPojoList1=dao.selectExpertBySpecialityMore();
+            for (ExpertInfoPojo expertInfoPojo:expertInfoPojoList1){
+                Map<String,Object> map1=new HashMap<>();
+                map1.put("expertId",expertInfoPojo.getExpertId());
+                ExpertInfoPojo expertInfoPojo1=dao.selectExpertInfo(map1);
+                if(expertInfoPojo1!=null) {
+                    String serviceTmp=expertInfoPojo1.getService();
+                    if (StringUtils.isNotBlank(serviceTmp)) {
+                        String service = "";
+                        for (String serviceString : serviceStringList) {
+                            if (serviceTmp.contains(serviceString)) {
+                                service = service + "," + serviceString;
+                            }
+                        }
+                        if (service.length() > 0) {
+                            expertInfoPojo1.setService(service.substring(1));
+                        }
+                    }
+                    expertInfoPojoList.add(expertInfoPojo1);
                 }
             }
         }
+
         return expertInfoPojoList;
     }
 
@@ -256,6 +281,13 @@ public class ExpertServiceImpl implements IExpertService
                 for(ExpertConfig expertConfig:expertConfigList){
                     if(note.contains(expertConfig.getConfigValue())){
                         specialitys=specialitys+","+expertConfig.getConfigKey();
+                    }
+                }
+                if (StringUtils.isBlank(specialitys)) {
+                    for (ExpertConfig expertConfig : expertConfigList) {
+                        if (expertConfig.getConfigValue().contains(note)) {
+                            specialitys = specialitys + "," + expertConfig.getConfigKey();
+                        }
                     }
                 }
                 if(StringUtils.isNotBlank(specialitys)) {
