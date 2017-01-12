@@ -321,10 +321,10 @@ public class VipController extends ZGKBaseController implements Watched {
 
             List<Map<String,Object>> delMaps = new ArrayList<>();
             for (Map<String,Object> map : vipServiceNames){
-
+                Integer ptType = (Integer) map.get("type");
                 Long activeDate = (Long) map.get("activeDate");
                 try {
-                    if (System.currentTimeMillis()>VipTimeUtil.getCardTimeOut(activeDate)){
+                    if (ptType <=2 && System.currentTimeMillis()>VipTimeUtil.getCardTimeOut(activeDate)){
                         delMaps.add(map);
                     }
                 } catch (ParseException e) {
@@ -400,6 +400,9 @@ public class VipController extends ZGKBaseController implements Watched {
                 int count = 0;
                 for (Map<String, Object> map : vipServices) {
                     count += Integer.valueOf(map.get("count").toString());
+                }
+                if (vipServiceNames.size()>0){
+
                 }
                 rtnMap.put("cardType", count > 0 ? UserVipConstant.EXPERT_VIP_STATUS : UserVipConstant.DEFULT_VIP_STATUS);
                 //获取卡的专家状态
