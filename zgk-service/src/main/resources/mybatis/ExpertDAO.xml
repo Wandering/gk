@@ -43,7 +43,9 @@
         </if>
         group by ei.id
         order by rate desc
-        limit ${offset}, ${rows}
+        <if test="offset!=null">
+            limit ${offset}, ${rows}
+        </if>
     </select>
 
     <!-- 根据卡推介专家列表 -->
@@ -56,7 +58,9 @@
         on erod.user_id=#{userId} and service_count>0 and esr.service_type_id=erod.service_item
         group by ei.id
         order by cou desc,rate desc
-        limit ${offset}, ${rows}
+        <if test="offset!=null">
+            limit ${offset}, ${rows}
+        </if>
     </select>
 
     <!-- 预约专家列表总数 -->
@@ -433,7 +437,7 @@
         left join zgk_expert_appraise ea on ei.id=ea.expert_id
         group by ei.id
         order by cou desc,rate desc
-        limit ${offset}, ${rows}
+        limit 2
     </select>
 
     <insert id="insertOrderRevaluation" parameterType="ExpertOrder">
@@ -741,6 +745,14 @@
             and eps.productId in (${productIdList})
         group by productId
         order by count(serviceId) desc
+        limit 1
+    </select>
+
+    <select id="selectCheapProductIdByProductIdList" parameterType="java.util.Map" resultType="java.lang.String">
+        select sp.id
+        from zgk_system.zgk_sale_product sp
+        where sp.id in (${productIdList})
+        order by defaultSalePrice asc
         limit 1
     </select>
 
