@@ -361,7 +361,7 @@ public class ExpertServiceImpl implements IExpertService
             List<ServiceNumberPojo> serviceNumberPojoList=dao.selectServiceByUserId(map);
             for(ServicePojo servicePojo:servicePojoList){
                 for(ServiceNumberPojo serviceNumberPojo:serviceNumberPojoList) {
-                    if (servicePojo.getServiceTypeId().equals(serviceNumberPojo.getServiceId())){
+                    if (org.apache.commons.lang.StringUtils.isNotBlank(servicePojo.getServiceTypeId())&&servicePojo.getServiceTypeId().equals(serviceNumberPojo.getServiceId())){
                         if(serviceNumberPojo.getServiceNumber()>0){
                             servicePojo.setStatus(true);
                             break;
