@@ -311,6 +311,7 @@ public class VipController extends ZGKBaseController implements Watched {
             for (Map<String,Object> map : vipServiceNames){
                 if (map.get("type")==1){
                     rtnMap.put("diffServiceName", "金榜登科");
+                    break;
                 }
             }
             if (Integer.valueOf(lastCard.get("type").toString()) == 1 && vipServiceNames.size() > 1) {
