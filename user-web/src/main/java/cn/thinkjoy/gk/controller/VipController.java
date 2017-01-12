@@ -390,18 +390,19 @@ public class VipController extends ZGKBaseController implements Watched {
             //判断所拥有的VIP卡类型(另一个维度)
             rtnMap.put("cardType", vipServices.size() > 0 ? UserVipConstant.EXPERT_VIP_STATUS : UserVipConstant.DEFULT_VIP_STATUS);
             rtnMap.put("expertService", new ArrayList<>());
-            //获取卡的专家状态
-            if (vipServices.size() > 0) {
-                //是专家
-                //统计该用户专家卡所拥有的服务和次数
-                rtnMap.put("expertService", vipServices);
-                //end
-            }
+
             //不是专家卡
             //end
             int count = 0;
             for (Map<String,Object> map : vipServices){
                 count += Integer.valueOf(map.get("count").toString());
+            }
+            //获取卡的专家状态
+            if (vipServices.size() > 0 && count>0) {
+                //是专家
+                //统计该用户专家卡所拥有的服务和次数
+                rtnMap.put("expertService", vipServices);
+                //end
             }
             if (count==0 && vipServiceNames.size()==0)
             {
