@@ -422,9 +422,11 @@ public class VipController extends ZGKBaseController implements Watched {
             if (bufferName.length() > 0)
                 bufferName.delete(bufferName.length() - 1, bufferName.length());
                 rtnMap.put("cardNames", bufferName.toString());
-                if (count == 0 && vipServiceNames.size() == 0) {
+            if (count == 0 && vipServiceNames.size() == 0) {
                     throw new BizException(ERRORCODE.NO_VIP.getCode(), ERRORCODE.NO_VIP.getMessage());
-                }
+            }
+        }else {
+            throw new BizException(ERRORCODE.NO_VIP.getCode(), ERRORCODE.NO_VIP.getMessage());
         }
         return rtnMap;
     }
