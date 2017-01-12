@@ -292,6 +292,11 @@ public class ExpertServiceImpl implements IExpertService
                 }
                 if(StringUtils.isNotBlank(specialitys)) {
                     map1.put("specialitys", specialitys.substring(1));
+                    if(dao.selectProductByServiceIdAndAreaId(map1).size()<1){
+                        map1.remove("specialitys");
+                        ProductPojo product=dao.selectProductByServiceIdAndAreaId(map1).get(0);
+                        return product!=null?product.getProductId():null;
+                    }
                     ProductPojo product=dao.selectProductByServiceIdAndAreaId(map1).get(0);
                     return product!=null?product.getProductId():null;
                 }else {
