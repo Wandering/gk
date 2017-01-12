@@ -304,7 +304,7 @@ public class VipController extends ZGKBaseController implements Watched {
         Map<String,Object> rtnMap = new HashedMap();
         //获取卡的专家状态
         List<Map<String,Object>> vipServiceNames = cardExService.getUserVipServiceName(userId);
-        Collections.sort(vipServiceNames,comparator);
+        Collections.sort(vipServiceNames, comparator);
         if (vipServiceNames.size()>0) {
             rtnMap.put("diffServiceName", "状元及第");
             //卡到期时间
@@ -349,7 +349,7 @@ public class VipController extends ZGKBaseController implements Watched {
                         }
                     }
                 }
-                if (Integer.valueOf(lastCard.get("type").toString()) == 1 && vipServiceNames.size() > 1) {
+                if (vipServiceNames.size() > 1) {
                     Map<String, Object> serviceCard = vipServiceNames.get(vipServiceNames.size() - 2);
                     Map<String, Object> paramMap = new HashedMap();
                     paramMap.put("productId", lastCard.get("type"));
