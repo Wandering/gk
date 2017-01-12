@@ -401,9 +401,9 @@ public class VipController extends ZGKBaseController implements Watched {
             //end
             int count = 0;
             for (Map<String,Object> map : vipServices){
-                count += (int)map.get("count");
+                count += Integer.valueOf(map.get("count").toString());
             }
-            if (count>0 && vipServiceNames.size()>0)
+            if (count==0 && vipServiceNames.size()==0)
             {
                 throw new BizException(ERRORCODE.NO_VIP.getCode(), ERRORCODE.NO_VIP.getMessage());
             }
