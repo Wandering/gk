@@ -390,10 +390,6 @@ public class VipController extends ZGKBaseController implements Watched {
 
                     for (Map<String, Object> map : vipServiceNames)
                         bufferName.append(map.get("productName")).append("、");
-                    if (bufferName.length() > 0)
-                        bufferName.delete(bufferName.length() - 1, bufferName.length());
-
-
                 }
             }
                 List<Map<String, Object>> vipServices = cardExService.getUserVipService(userId);
@@ -421,13 +417,15 @@ public class VipController extends ZGKBaseController implements Watched {
 
                     for (Map<String, Object> map : delExpertMaps)
                         bufferName.append(map.get("productName")).append("、");
-                    if (bufferName.length() > 0)
-                        bufferName.delete(bufferName.length() - 1, bufferName.length());
+
                     //是专家
                     //统计该用户专家卡所拥有的服务和次数
-                    rtnMap.put("cardNames", bufferName.toString());
+
                     //end
                 }
+            if (bufferName.length() > 0)
+                bufferName.delete(bufferName.length() - 1, bufferName.length());
+                rtnMap.put("cardNames", bufferName.toString());
                 rtnMap.put("diffService", bufferName.toString());
                 if (count == 0 && vipServiceNames.size() == 0) {
                     throw new BizException(ERRORCODE.NO_VIP.getCode(), ERRORCODE.NO_VIP.getMessage());
