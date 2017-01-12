@@ -381,7 +381,7 @@ public class VipController extends ZGKBaseController implements Watched {
                             buffer.append(map.get("serviceType")).append("、");
                         if (buffer.length() > 0)
                             buffer.delete(buffer.length() - 1, buffer.length());
-
+                        rtnMap.put("diffService", buffer.toString());
                         rtnMap.put("diffServiceTime", VipTimeUtil.getLastActiveDate(Long.valueOf(serviceCard.get("activeDate").toString())));
                     }
                 }
@@ -426,7 +426,6 @@ public class VipController extends ZGKBaseController implements Watched {
             if (bufferName.length() > 0)
                 bufferName.delete(bufferName.length() - 1, bufferName.length());
                 rtnMap.put("cardNames", bufferName.toString());
-                rtnMap.put("diffService", bufferName.toString());
                 if (count == 0 && vipServiceNames.size() == 0) {
                     throw new BizException(ERRORCODE.NO_VIP.getCode(), ERRORCODE.NO_VIP.getMessage());
                 }
