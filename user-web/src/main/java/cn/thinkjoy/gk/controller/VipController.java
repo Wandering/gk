@@ -366,13 +366,20 @@ public class VipController extends ZGKBaseController implements Watched {
                     paramMap.put("areaId", getAreaId());
                     paramMap.put("status", UserVipConstant.DEFULT_STATUS);
                     //是金榜登科的话取得卡status为1的所有
-                    List<Map<String, Object>> cardServices = cardExService.getCardService(paramMap);
-                    if (cardServices.size() == 0) {
+                    List<Map<String, Object>> cardServices =new ArrayList<>();
+                    List<Map<String, Object>> cardServices2 = cardExService.getCardService(paramMap);
+                    if (cardServices2.size() == 0) {
                         paramMap.put("areaId", UserVipConstant.DEFULT_AREA_ID);
-                        cardServices = cardExService.getCardService(paramMap);
+                        cardServices2 = cardExService.getCardService(paramMap);
                     }
+                    cardServices.addAll(cardServices1);
+                    cardServices.addAll(cardServices2);
                     //取两张卡不重叠项
-                    cardServices.removeAll(cardServices1);
+                    if (cardServices1.size()> cardServices2.size()){
+                        cardServices.removeAll(cardServices2);
+                    }else {
+                        cardServices.removeAll(cardServices1);
+                    }
 
                     if (cardServices.size() > 0) {
                         StringBuffer buffer = new StringBuffer();
@@ -382,6 +389,7 @@ public class VipController extends ZGKBaseController implements Watched {
                             buffer.delete(buffer.length() - 1, buffer.length());
                         rtnMap.put("diffService", buffer.toString());
                         rtnMap.put("diffServiceTime", VipTimeUtil.getLastActiveDate(Long.valueOf(serviceCard.get("activeDate").toString())));
+
                     }
                 }
 
@@ -402,7 +410,7 @@ public class VipController extends ZGKBaseController implements Watched {
                     count += Integer.valueOf(map.get("count").toString());
                 }
 
-                rtnMap.put("cardType", count > 0 ? UserVipConstant.EXPERT_VIP_STATUS : UserVipConstant.DEFULT_VIP_STATUS);
+
                 //获取卡的专家状态
                 if (count > 0 && vipServices.size()>0) {
                     //是专家
@@ -410,7 +418,7 @@ public class VipController extends ZGKBaseController implements Watched {
                     rtnMap.put("expertService", vipServices);
                     //end
                 }
-
+                rtnMap.put("cardType", count > 0 ? UserVipConstant.EXPERT_VIP_STATUS : UserVipConstant.DEFULT_VIP_STATUS);
                 if (count > 0) {
 
                     for (Map<String, Object> map : delExpertMaps)
@@ -418,6 +426,7 @@ public class VipController extends ZGKBaseController implements Watched {
                     //是专家
                     //统计该用户专家卡所拥有的服务和次数
                     //end
+
                 }
             if (bufferName.length() > 0)
                 bufferName.delete(bufferName.length() - 1, bufferName.length());
