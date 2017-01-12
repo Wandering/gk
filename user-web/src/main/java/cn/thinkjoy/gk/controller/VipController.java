@@ -307,9 +307,9 @@ public class VipController extends ZGKBaseController implements Watched {
         if (vipServiceNames.size()>0) {
             rtnMap.put("diffServiceName", "状元及第");
             //卡到期时间
-            Map<String, Object> paramMap = Maps.newHashMap();
-            paramMap.put("userId", userId);
-            UserVip userVip = (UserVip) userVipService.queryOne(paramMap);
+            Map<String, Object> userParamMap = Maps.newHashMap();
+            userParamMap.put("userId", userId);
+            UserVip userVip = (UserVip) userVipService.queryOne(userParamMap);
 
             rtnMap.put("cardTime", VipTimeUtil.format.format(new Date(userVip.getEndDate())));
             /**
