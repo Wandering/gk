@@ -50,7 +50,7 @@
 
     <!-- 根据卡推介专家列表 -->
     <select id="checkExpertByProduct" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.ExpertInfoPojo">
-        select ei.id as expertId,AVG(ea.rate)as rate,count(*) as cou
+        select ei.id as expertId,AVG(ea.rate)as rate,count(DISTINCT esr.service_type_id)) as cou
         from zgk_expert_info ei
         left join zgk_expert_service_relation esr on ei.id=esr.expert_id
         left join zgk_expert_appraise ea on ei.id=ea.expert_id
