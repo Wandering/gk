@@ -210,7 +210,7 @@ public class OrdersController extends ZGKBaseController {
             if (PayEnum.PAY_SUCCESS.getCode().equals(order.getStatus())||PayEnum.SUCCESS.getCode().equals(order.getStatus())) {
                 //判断订单状态假如是1就等待1秒循环3次
                 int count =0;
-                while (count ++ <3 && PayEnum.PAY_SUCCESS.getCode().equals(order.getStatus())){
+                while (count ++ <3 && PayEnum.SUCCESS.getCode().equals(order.getStatus())){
                     try {
                         this.wait(1000);
                     } catch (InterruptedException e) {
