@@ -207,16 +207,8 @@ public class OrdersController extends ZGKBaseController {
 
         Card card = null;
         order.setUpdateDate(System.currentTimeMillis());
-            if (PayEnum.PAY_SUCCESS.getCode().equals(order.getStatus())||PayEnum.SUCCESS.getCode().equals(order.getStatus())) {
-                //判断订单状态假如是1就等待1秒循环3次
-                int count =0;
-                while (count ++ <3 && PayEnum.SUCCESS.getCode().equals(order.getStatus())){
-                    try {
-                        this.wait(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+            if (PayEnum.SUCCESS.getCode().equals(order.getStatus())) {
+
                 //支付成功
                     //已经发货状态
                     //取得当前用户该订单的卡号
@@ -592,7 +584,6 @@ public class OrdersController extends ZGKBaseController {
     @Deprecated
     public List<Map<String, Object>> getOrderList(@RequestParam(value = "token", required = true)String token,@RequestParam(required = false)String more)
     {
-
         String userId = getAccoutId();
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("userId", userId);
@@ -625,6 +616,11 @@ public class OrdersController extends ZGKBaseController {
                 if("1".equals(order.get("payStatus") + "") && "1".equals(order.get("handleState") + ""))
                 {
                     order.put("payStatus", "3");
+                }
+                //标示已发货状态
+                if("1".equals(order.get("payStatus") + "") && "0".equals(order.get("handleState") + ""))
+                {
+                    order.put("payStatus", "0");
                 }
             }
         }
