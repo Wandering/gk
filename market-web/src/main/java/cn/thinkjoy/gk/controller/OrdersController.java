@@ -208,7 +208,14 @@ public class OrdersController extends ZGKBaseController {
         Card card = null;
         order.setUpdateDate(System.currentTimeMillis());
             if (PayEnum.SUCCESS.getCode().equals(order.getStatus())) {
-
+                while ("0".equals(order.getHandleState())){
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    order = getOrder(orderNo);
+                }
                 //支付成功
                     //已经发货状态
                     //取得当前用户该订单的卡号
@@ -616,11 +623,6 @@ public class OrdersController extends ZGKBaseController {
                 if("1".equals(order.get("payStatus") + "") && "1".equals(order.get("handleState") + ""))
                 {
                     order.put("payStatus", PayEnum.PAY_SUCCESS.getCode());
-                }
-                //标示已发货状态
-                if("1".equals(order.get("payStatus") + "") && "0".equals(order.get("handleState") + ""))
-                {
-                    order.put("payStatus", PayEnum.NO_PAY.getCode());
                 }
             }
         }
