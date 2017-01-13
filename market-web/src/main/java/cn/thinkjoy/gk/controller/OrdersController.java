@@ -615,12 +615,12 @@ public class OrdersController extends ZGKBaseController {
                 //标示已发货状态
                 if("1".equals(order.get("payStatus") + "") && "1".equals(order.get("handleState") + ""))
                 {
-                    order.put("payStatus", PayEnum.PAY_SUCCESS);
+                    order.put("payStatus", PayEnum.PAY_SUCCESS.getCode());
                 }
                 //标示已发货状态
                 if("1".equals(order.get("payStatus") + "") && "0".equals(order.get("handleState") + ""))
                 {
-                    order.put("payStatus", PayEnum.NO_PAY);
+                    order.put("payStatus", PayEnum.NO_PAY.getCode());
                 }
             }
         }
