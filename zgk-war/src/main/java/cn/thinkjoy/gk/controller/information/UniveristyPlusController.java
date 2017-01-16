@@ -6,6 +6,7 @@ import cn.thinkjoy.gk.common.ZGKBaseController;
 import cn.thinkjoy.gk.constant.SpringMVCConst;
 import cn.thinkjoy.gk.service.IUniversityInfoService;
 import cn.thinkjoy.gk.util.RedisUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.xmlbeans.impl.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -152,6 +153,54 @@ public class UniveristyPlusController extends ZGKBaseController{
             }
             majorTypeList.add(majorType);
             resultMap.put(year, majorTypeList);
+        }
+        repository.set(key, resultMap);
+        return  resultMap;
+    }
+
+    /**
+     * 专业招生信息条件查询
+     * @param universityId
+     * @return
+     */
+    @RequestMapping(value = "/getMpConditions2", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getMpcConditions2(@RequestParam(value = "universityId",required = true) Long universityId)
+    {
+        RedisRepository repository = RedisUtil.getInstance();
+        String areaId = getAreaId().toString();
+        String key = String.format(majorPlanConditionsKey, universityId, areaId,"getMpcConditions2");
+        if(repository.exists(key))
+        {
+            return (Map<String, List<String>>) repository.get(key);
+        }
+        Map<String, String> paramMap = new LinkedHashMap<>();
+        paramMap.put("areaId", String.valueOf(getAreaId()));
+        paramMap.put("universityId", universityId.toString());
+        List<Map<String, Object>> list = universityInfoService.getMajorPlanConditions2(paramMap);
+        Map<String, Map<String,List<String>>> resultMap = new LinkedHashMap<>();
+        for (Map<String, Object> map: list) {
+            String year =  map.get("year").toString();
+            String majorType =  map.get("majorType").toString();
+            String batch = null;
+            if (map.containsKey("batch")) {
+                batch = map.get("batch").toString();
+            }
+
+            Map<String,List<String>> yearMap=resultMap.get(year);
+            if (yearMap==null){
+                yearMap=new LinkedHashMap<>();
+            }
+            List<String> majorTypeList=yearMap.get(majorType);
+            if (majorTypeList==null){
+                majorTypeList=new LinkedList<>();
+            }
+            if (StringUtils.isNotBlank(batch)) {
+                majorTypeList.add(batch);
+            }
+            yearMap.put(majorType,majorTypeList);
+            resultMap.put(year,yearMap);
+
         }
         repository.set(key, resultMap);
         return  resultMap;
