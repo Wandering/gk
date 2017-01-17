@@ -169,7 +169,7 @@ public class UniveristyPlusController extends ZGKBaseController{
     {
         RedisRepository repository = RedisUtil.getInstance();
         String areaId = getAreaId().toString();
-        String key = String.format(majorPlanConditionsKey, universityId, areaId,"getMpcConditions2");
+        String key = String.format(majorPlanConditionsKey, universityId, areaId)+"getMpConditions2";
         if(repository.exists(key))
         {
             return (Map<String, List<String>>) repository.get(key);
