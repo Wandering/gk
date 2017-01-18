@@ -135,9 +135,27 @@
     </select>
 
     <select id="selectMajorTop3" resultType="cn.thinkjoy.gk.pojo.MajorTop3Pojo">
-        select zz.majorCode,zz.universityCode as schoolCode,zz.selectSubject
-        from zgk_university_major_enrolling_plan_zj tmp
-        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+        SELECT
+            zz.majorCode,
+            zz.universityCode AS schoolCode,
+            zz.selectSubject
+        FROM
+            zgk_university_major_enrolling_plan_zj tmp
+        INNER JOIN zgk_zj_3in7 zz ON tmp.majorCode = zz.majorCode
+        AND tmp.universityId = zz.universityId
+        <if test="year != null">
+            and tmp.year = #{year}
+        </if>
+    </select>
+
+    <!-- 查询有招生计划的年份集合 -->
+    <select id="getEnrollingYear" resultType="string">
+        SELECT
+            `year`
+        FROM
+            zgk_university_major_enrolling_plan_zj
+        GROUP BY
+            `year`
     </select>
 
 </mapper>

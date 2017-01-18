@@ -1,6 +1,7 @@
 package cn.thinkjoy.gk.dao.selcourse;
 
 import cn.thinkjoy.gk.pojo.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,12 @@ public interface ISelClassesDao {
 
     List<UniversityOrMajorPojo> selectUniversityOrMajorByWords(String queryValue);
 
-    List<MajorTop3Pojo> selectMajorTop3();
+    List<MajorTop3Pojo> selectMajorTop3(@Param("year") String year);
 
+    /**
+     * 查询有招生计划的年份集合
+     *
+     * @return
+     */
+    List<String> getEnrollingYear();
 }

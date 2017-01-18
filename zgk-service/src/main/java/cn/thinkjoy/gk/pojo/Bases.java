@@ -1,12 +1,13 @@
 package cn.thinkjoy.gk.pojo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by zuohao on 16/10/14.
  */
-public class Bases implements Comparable<Bases>{
+public class Bases implements Comparable<Bases>,Serializable{
     private String name;
     private int majorNumber;
     private int schoolNumber;
