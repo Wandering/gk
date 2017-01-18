@@ -12,9 +12,7 @@ import cn.thinkjoy.gk.service.IExpertService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.beans.Transient;
 import java.util.*;
 
 /**
@@ -242,7 +240,6 @@ public class ExpertServiceImpl implements IExpertService
     }
 
     @Override
-    @Transactional
     public String checkProduct(String commonQuestionIdString,String offset,String rows,String userId,String note,String areaId){
         Map<String,Object> map=new HashMap<>();
         map.put("userId",userId);
