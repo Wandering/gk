@@ -80,6 +80,13 @@ public interface IUniversityInfoService extends IBaseUniversityInfoService {
     List<Map<String, Object>> getMajorPlanConditions(Map<String, String> map);
 
     /**
+     * 专业招生信息查询条件，新增批次
+     * @param map
+     * @return
+     */
+    List<Map<String, Object>> getMajorPlanConditions2(Map<String, String> map);
+
+    /**
      * 专业招生信息查询条件
      * @param map
      * @return

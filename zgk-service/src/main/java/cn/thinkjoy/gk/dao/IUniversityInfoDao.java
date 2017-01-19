@@ -67,6 +67,8 @@ public interface IUniversityInfoDao extends IBaseDAO<UniversityInfoView> {
      */
     List<Map<String, Object>> getMajorPlanConditions(Map<String, String> map);
 
+    List<Map<String, Object>> getMajorPlanConditions2(Map<String, String> map);
+
     List<Map<String, Object>> getUniversityMajors(Map<String, String> map);
 
     List<Map<String, Object>> getUniversityspecialMajors(Object universityId);

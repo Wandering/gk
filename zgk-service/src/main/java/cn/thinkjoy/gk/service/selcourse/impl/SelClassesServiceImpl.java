@@ -47,8 +47,11 @@ public class SelClassesServiceImpl implements ISelClassesService {
     }
 
     @Override
-    public Bases[] selectMajorTop3() {
-        List<MajorTop3Pojo> dataList=iSelClassesDao.selectMajorTop3();
+    public Bases[] selectMajorTop3(int count,String year) {
+        List<MajorTop3Pojo> dataList=iSelClassesDao.selectMajorTop3(year);
+        if(dataList.size() == 0){
+            return new Bases[]{};
+        }
         Bases[] basesList = getBaseses();
         for (MajorTop3Pojo data:dataList){
             for(Bases base:basesList){
@@ -80,8 +83,8 @@ public class SelClassesServiceImpl implements ISelClassesService {
 
         }
         Arrays.sort(basesList);
-        Bases[] returnBases=new Bases[3];
-        for(int i=0;i<3;i++){
+        Bases[] returnBases=new Bases[count];
+        for(int i=0;i<count;i++){
             returnBases[i]=basesList[i];
             returnBases[i].setSchoolList(null);
         }
