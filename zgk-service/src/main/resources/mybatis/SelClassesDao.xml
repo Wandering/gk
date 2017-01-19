@@ -144,7 +144,8 @@
                 	zz.majorCode AS majorCode,
                 	zz.universityCode AS schoolCode,
                 	zz.selectSubject
-        <include refid="enrolling_plan_zj"/>
+
+        from zgk2.zgk_zj_3in7 zz
     </select>
 
 </mapper>
