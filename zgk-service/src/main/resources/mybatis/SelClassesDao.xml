@@ -9,7 +9,7 @@
         on
         collection.universityId = zz.universityId
         and collection.majorCode = zz.majorCode
-        and tmp.batch=collection.batch
+        and zz.batch=collection.batch
         AND collection.userId = #{userId}
     </sql>
     <!--加入收藏表,当isJoin=true的时候加入本段sql,必然关联-->
@@ -18,48 +18,45 @@
         on
         collection.universityId = zz.universityId
         and collection.majorCode = zz.majorCode
-        and tmp.batch=collection.batch
+        and zz.batch=collection.batch
         AND collection.userId = #{userId}
     </sql>
-
+    <sql id="enrolling_plan_zj">  
+          from zgk2.zgk_zj_3in7 zz 
+          INNER join zgk2.zgk_university uu on uu.id=zz.universityId 
+    </sql>
     <select id="selectSchoolAndMajorNumberBySubjects" resultType="cn.thinkjoy.gk.pojo.NumberPojo" parameterType="java.util.Map">
-        select count(DISTINCT tmp.universityName) as schoolNumber,count(*) as majorNumber
-        from zgk_university_major_enrolling_plan_zj tmp
-        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
-        where tmp.areaId=330000 and tmp.year=2016 and (
+        select count(DISTINCT zz.universityName) as schoolNumber,count(*) as majorNumber
+        <include refid="enrolling_plan_zj"/>
+        where
             zz.selectSubject like CONCAT('%', #{subject1} , '%')
             or zz.selectSubject like CONCAT('%', #{subject2} , '%')
             or zz.selectSubject like CONCAT('%', #{subject3} , '%')
             or zz.selectCount=0
-        )
     </select>
 
     <select id="selectMajorNumberByBatch" resultType="cn.thinkjoy.gk.pojo.MajorBatchNumberPojo" parameterType="java.util.Map">
-        select tmp.batch as batch,count(DISTINCT zz.id) as majorNumber,
+        select zz.batch as batch,count(DISTINCT zz.id) as majorNumber,
             count(zz.id)/(
                 select count(*) as majorNumber
-                from zgk_university_major_enrolling_plan_zj tmp
-                INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
-                where tmp.areaId=330000 and tmp.year=2016 and (
+                <include refid="enrolling_plan_zj"/>
+                where
                     zz.selectSubject like CONCAT('%', #{subject1} , '%')
                     or zz.selectSubject like CONCAT('%', #{subject2} , '%')
                     or zz.selectSubject like CONCAT('%', #{subject3} , '%')
                     or zz.selectCount=0
-                )
             ) as percent
-        from zgk_university_major_enrolling_plan_zj tmp
-        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
-        where tmp.areaId=330000 and tmp.year=2016 and (
+        <include refid="enrolling_plan_zj"/>
+        where
             zz.selectSubject like CONCAT('%', #{subject1} , '%')
             or zz.selectSubject like CONCAT('%', #{subject2} , '%')
             or zz.selectSubject like CONCAT('%', #{subject3} , '%')
             or zz.selectCount=0
-        )
-        group by tmp.batch
+        group by zz.batch
     </select>
 
     <select id="selectMajorList" resultType="cn.thinkjoy.gk.pojo.MajorPojo" parameterType="java.util.Map">
-        select uu.id as universityId,zz.majorCode as majorCode,uu.provinceCode,tmp.batch as batch,zz.universityName as universityName,zz.major as majorName,tmp.batch,tmp.planEnrolling as planNumber,zz.selectSubject as selectSubject
+        select uu.id as universityId,zz.majorCode as majorCode,uu.provinceCode,zz.batch as batch,zz.universityName as universityName,zz.major as majorName,zz.batch,zz.planEnrolling as planNumber,zz.selectSubject as selectSubject
         <if test="isLeftJoin==true">
             <!--以时间作为评定标准,如果时间存在说明收藏,如果时间不存在说明没有收藏-->
             ,IF(collection.createDate,1,0)  as isFavorite,collection.id as cid
@@ -67,9 +64,8 @@
         <if test="isLeftJoin==false">
             ,0 as isFavorite
         </if>
-        from zgk_university_major_enrolling_plan_zj tmp
-        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
-        INNER join zgk_university uu on uu.id=tmp.universityId
+        <include refid="enrolling_plan_zj"/>
+        INNER join zgk_university uu on uu.id=zz.universityId
         <!--判断是否加入收藏表-->
         <if test="isLeftJoin==true">
             <include refid="MAJOR_JOIN_LEFT"/>
@@ -77,11 +73,12 @@
         <if test="isInnerJoin==true">
             <include refid="MAJOR_JOIN_INNER"/>
         </if>
-        where tmp.areaId=330000 and tmp.year=2016 and
-          (zz.selectSubject like CONCAT('%', #{subject1} , '%')
-            or zz.selectSubject like CONCAT('%', #{subject2} , '%')
-            or zz.selectSubject like CONCAT('%', #{subject3} , '%')
-            or zz.selectCount=0)
+        where
+        (zz.selectSubject like CONCAT('%', #{subject1} , '%')
+        or zz.selectSubject like CONCAT('%', #{subject2} , '%')
+        or zz.selectSubject like CONCAT('%', #{subject3} , '%')
+        or zz.selectCount=0
+        )
         <if test="universityId != null">
             and zz.universityId = #{universityId}
         </if>
@@ -92,21 +89,20 @@
           and uu.provinceCode = #{provinceCode}
         </if>
         <if test="batch != null">
-          and tmp.batch = #{batch}
+          and zz.batch = #{batch}
         </if>
         <if test="type != null">
           and uu.type = #{type}
         </if>
-        order by tmp.universityId asc
+        order by zz.universityId asc
         limit ${offset},${rows}
     </select>
 
     <select id="selectMajorListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
         select count(*)
-        from zgk_university_major_enrolling_plan_zj tmp
-        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
-        INNER join zgk_university uu on uu.id=tmp.universityId
-        where tmp.areaId=330000 and tmp.year=2016 and
+        <include refid="enrolling_plan_zj"/>
+        INNER join zgk_university uu on uu.id=zz.universityId
+        where
           (zz.selectSubject like CONCAT('%', #{subject1} , '%')
             or zz.selectSubject like CONCAT('%', #{subject2} , '%')
             or zz.selectSubject like CONCAT('%', #{subject3} , '%')
@@ -121,7 +117,7 @@
             and uu.provinceCode = #{provinceCode}
         </if>
         <if test="batch != null">
-            and tmp.batch = #{batch}
+            and zz.batch = #{batch}
         </if>
         <if test="type != null">
             and uu.type = #{type}
@@ -136,8 +132,7 @@
 
     <select id="selectMajorTop3" resultType="cn.thinkjoy.gk.pojo.MajorTop3Pojo">
         select zz.majorCode,zz.universityCode as schoolCode,zz.selectSubject
-        from zgk_university_major_enrolling_plan_zj tmp
-        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
+        <include refid="enrolling_plan_zj"/>
     </select>
 
 </mapper>

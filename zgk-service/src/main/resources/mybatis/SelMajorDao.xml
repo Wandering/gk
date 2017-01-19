@@ -9,7 +9,7 @@
         on
         collection.universityId = zz.universityId
         and collection.majorCode = zz.majorCode
-        and tmp.batch=collection.batch
+        and zz.batch=collection.batch
         AND collection.userId = #{userId}
     </sql>
     <!--加入收藏表,当isJoin=true的时候加入本段sql,必然关联-->
@@ -18,10 +18,13 @@
         on
         collection.universityId = zz.universityId
         and collection.majorCode = zz.majorCode
-        and tmp.batch=collection.batch
+        and zz.batch=collection.batch
         AND collection.userId = #{userId}
     </sql>
-
+    <sql id="enrolling_plan_zj">  
+        from zgk2.zgk_zj_3in7 zz 
+        INNER join zgk2.zgk_university uu on uu.id=zz.universityId 
+    </sql>
     <select id="selectSubjectNumber" resultType="cn.thinkjoy.gk.pojo.SelSubjectNumberPojo" parameterType="java.util.Map">
         select subject,sum(number) as number from
         (
@@ -29,10 +32,9 @@
             from
             (
                 select selectSubject as mSize ,count(selectSubject) as number
-                from zgk_university_major_enrolling_plan_zj tmp
-                INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
-                INNER join zgk_university uu on uu.id=tmp.universityId
-                where tmp.areaId=330000 and tmp.year=2016 and
+                <include refid="enrolling_plan_zj"/>
+                INNER join zgk_university uu on uu.id=zz.universityId
+                where
                 zz.majorCode=#{majorCode}
                 and zz.selectCount!=0
                 group by selectSubject
@@ -51,22 +53,20 @@
         select dd.name as batchName,count(uu.id) as universityNumber,
         count(uu.id)/(
             select count(uu.id)
-                from zgk_university_major_enrolling_plan_zj tmp
-                INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
-                INNER join zgk_university uu on uu.id=tmp.universityId
-                left join zgk_data_dict dd on dd.type='BATCHTYPE' and dd.dictId=tmp.batch
-                where tmp.areaId=330000 and tmp.year=2016 and zz.majorCode=#{majorCode}
+                <include refid="enrolling_plan_zj"/>
+                INNER join zgk_university uu on uu.id=zz.universityId
+                left join zgk_data_dict dd on dd.type='BATCHTYPE' and dd.dictId=zz.batch
+                where zz.majorCode=#{majorCode}
             ) as percent
-        from zgk_university_major_enrolling_plan_zj tmp
-        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
-        INNER join zgk_university uu on uu.id=tmp.universityId
-		left join zgk_data_dict dd on dd.type='BATCHTYPE' and dd.dictId=tmp.batch
-        where tmp.areaId=330000 and tmp.year=2016 and zz.majorCode=#{majorCode}
+        <include refid="enrolling_plan_zj"/>
+        INNER join zgk_university uu on uu.id=zz.universityId
+		left join zgk_data_dict dd on dd.type='BATCHTYPE' and dd.dictId=zz.batch
+        where zz.majorCode=#{majorCode}
         group by dd.name;
     </select>
 
     <select id="selectMajorList" resultType="cn.thinkjoy.gk.pojo.MajorPojo" parameterType="java.util.Map">
-        select uu.rank as universityRank,uu.id as universityId,zz.majorCode as majorCode,uu.provinceCode,zz.universityName as universityName,zz.major as majorName,tmp.batch,tmp.planEnrolling as planNumber,zz.selectSubject as selectSubject
+        select uu.rank as universityRank,uu.id as universityId,zz.majorCode as majorCode,uu.provinceCode,zz.universityName as universityName,zz.major as majorName,zz.batch,zz.planEnrolling as planNumber,zz.selectSubject as selectSubject
         <if test="isLeftJoin==true">
             <!--以时间作为评定标准,如果时间存在说明收藏,如果时间不存在说明没有收藏-->
             ,IF(collection.createDate,1,0)  as isFavorite,collection.id as cid
@@ -74,9 +74,8 @@
         <if test="isLeftJoin==false">
             ,0 as isFavorite
         </if>
-        from zgk_university_major_enrolling_plan_zj tmp
-        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
-        INNER join zgk_university uu on uu.id=tmp.universityId
+        <include refid="enrolling_plan_zj"/>
+        INNER join zgk_university uu on uu.id=zz.universityId
         <!--判断是否加入收藏表-->
         <if test="isLeftJoin==true">
             <include refid="MAJOR_JOIN_LEFT"/>
@@ -84,13 +83,13 @@
         <if test="isInnerJoin==true">
             <include refid="MAJOR_JOIN_INNER"/>
         </if>
-        where tmp.areaId=330000 and tmp.year=2016
-          and zz.majorCode=#{majorCode}
+        where
+          zz.majorCode=#{majorCode}
         <if test="province!=null">
           and uu.areaid=#{province}
         </if>
         <if test="batch!=null">
-          and tmp.batch=#{batch}
+          and zz.batch=#{batch}
         </if>
         <if test="subName!=null">
           and zz.selectSubject like CONCAT('%',#{subName},'%')
@@ -100,16 +99,14 @@
     </select>
     <select id="selectMajorListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
         select count(uu.id)
-        from zgk_university_major_enrolling_plan_zj tmp
-        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
-        INNER join zgk_university uu on uu.id=tmp.universityId
-        where tmp.areaId=330000 and tmp.year=2016
-          and zz.majorCode=#{majorCode}
+        <include refid="enrolling_plan_zj"/>
+        INNER join zgk_university uu on uu.id=zz.universityId
+        where zz.majorCode=#{majorCode}
         <if test="province!=null">
             and uu.areaid=#{province}
         </if>
         <if test="batch!=null">
-            and tmp.batch=#{batch}
+            and zz.batch=#{batch}
         </if>
         <if test="subName!=null">
             and zz.selectSubject like CONCAT('%',#{subName},'%')

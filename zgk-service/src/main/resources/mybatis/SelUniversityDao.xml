@@ -9,7 +9,7 @@
         on
         collection.universityId = zz.universityId
         and collection.majorCode = zz.majorCode
-        and tmp.batch=collection.batch
+        and zz.batch=collection.batch
         AND collection.userId = #{userId}
     </sql>
     <!--加入收藏表,当isJoin=true的时候加入本段sql,必然关联-->
@@ -18,8 +18,13 @@
         on
         collection.universityId = zz.universityId
         and collection.majorCode = zz.majorCode
-        and tmp.batch=collection.batch
+        and zz.batch=collection.batch
         AND collection.userId = #{userId}
+    </sql>
+
+    <sql id="enrolling_plan_zj">  
+        from zgk2.zgk_zj_3in7 zz 
+        INNER join zgk2.zgk_university uu on uu.id=zz.universityId 
     </sql>
 
     <select id="selectUniversityById" resultType="cn.thinkjoy.gk.pojo.SelUniversityPojo" parameterType="java.util.Map">
@@ -31,18 +36,16 @@
 
     <select id="selectEduLevelByUniversityId" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.EduLevelNumberPojo">
         select eduLevel,count(eduLevel) as number,dd.name as eduLevelName
-        from zgk_university_major_enrolling_plan_zj tmp
-        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
-        INNER join zgk_university uu on uu.id=tmp.universityId
+        <include refid="enrolling_plan_zj"/>
+        INNER join zgk_university uu on uu.id=zz.universityId
         LEFT JOIN zgk_data_dict dd on dd.type='EDULEVEL' AND dd.dictId=zz.eduLevel
-        where tmp.areaId=330000 and tmp.year=2016
-          and zz.universityId=#{universityId}
+        where zz.universityId=#{universityId}
         GROUP BY zz.eduLevel
     </select>
 
     <select id="selectMajorList" resultType="cn.thinkjoy.gk.pojo.MajorPojo" parameterType="java.util.Map">
-        select uu.id as universityId,zz.majorCode as majorCode,uu.provinceCode,tmp.batch as batch,zz.universityName as universityName,
-        zz.major as majorName,tmp.batch,tmp.planEnrolling as planNumber,zz.selectSubject as selectSubject
+        select uu.id as universityId,zz.majorCode as majorCode,uu.provinceCode,zz.batch as batch,zz.universityName as universityName,
+        zz.major as majorName,zz.batch,zz.planEnrolling as planNumber,zz.selectSubject as selectSubject
         <if test="isLeftJoin==true">
         <!--以时间作为评定标准,如果时间存在说明收藏,如果时间不存在说明没有收藏-->
         ,IF(collection.createDate,1,0)  as isFavorite,collection.id as cid
@@ -50,9 +53,8 @@
         <if test="isLeftJoin==false">
             ,0 as isFavorite
         </if>
-        from zgk_university_major_enrolling_plan_zj tmp
-        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
-        INNER join zgk_university uu on uu.id=tmp.universityId
+        <include refid="enrolling_plan_zj"/>
+        INNER join zgk_university uu on uu.id=zz.universityId
         <!--判断是否加入收藏表-->
         <if test="isLeftJoin==true">
             <include refid="MAJOR_JOIN_LEFT"/>
@@ -60,8 +62,7 @@
         <if test="isInnerJoin==true">
             <include refid="MAJOR_JOIN_INNER"/>
         </if>
-        WHERE tmp.areaId=330000 and tmp.year=2016
-          and uu.id=#{universityId}
+        WHERE uu.id=#{universityId}
         <if test="offset">
         limit ${offset},${rows}
         </if>
@@ -69,9 +70,8 @@
 
     <select id="selectMajorListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
         select count(uu.id)
-        from zgk_university_major_enrolling_plan_zj tmp
-        INNER join zgk_zj_3in7 zz on tmp.majorCode=zz.majorCode and tmp.universityId=zz.universityId
-        INNER join zgk_university uu on uu.id=tmp.universityId
+        <include refid="enrolling_plan_zj"/>
+        INNER join zgk_university uu on uu.id=zz.universityId
         <!--判断是否加入收藏表-->
         <if test="isLeftJoin==true">
             <include refid="MAJOR_JOIN_LEFT"/>
@@ -79,8 +79,7 @@
         <if test="isInnerJoin==true">
             <include refid="MAJOR_JOIN_INNER"/>
         </if>
-        WHERE tmp.areaId=330000 and tmp.year=2016
-        and uu.id=#{universityId}
+        WHERE uu.id=#{universityId}
     </select>
 </mapper>
 
