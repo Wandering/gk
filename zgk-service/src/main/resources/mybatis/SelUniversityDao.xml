@@ -37,7 +37,6 @@
     <select id="selectEduLevelByUniversityId" parameterType="java.util.Map" resultType="cn.thinkjoy.gk.pojo.EduLevelNumberPojo">
         select eduLevel,count(eduLevel) as number,dd.name as eduLevelName
         <include refid="enrolling_plan_zj"/>
-        INNER join zgk_university uu on uu.id=zz.universityId
         LEFT JOIN zgk_data_dict dd on dd.type='EDULEVEL' AND dd.dictId=zz.eduLevel
         where zz.universityId=#{universityId}
         GROUP BY zz.eduLevel
@@ -54,7 +53,6 @@
             ,0 as isFavorite
         </if>
         <include refid="enrolling_plan_zj"/>
-        INNER join zgk_university uu on uu.id=zz.universityId
         <!--判断是否加入收藏表-->
         <if test="isLeftJoin==true">
             <include refid="MAJOR_JOIN_LEFT"/>
@@ -71,7 +69,6 @@
     <select id="selectMajorListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
         select count(uu.id)
         <include refid="enrolling_plan_zj"/>
-        INNER join zgk_university uu on uu.id=zz.universityId
         <!--判断是否加入收藏表-->
         <if test="isLeftJoin==true">
             <include refid="MAJOR_JOIN_LEFT"/>

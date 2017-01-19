@@ -27,7 +27,7 @@
     </sql>
     <select id="selectSchoolAndMajorNumberBySubjects" resultType="cn.thinkjoy.gk.pojo.NumberPojo" parameterType="java.util.Map">
         select count(DISTINCT zz.universityName) as schoolNumber,count(*) as majorNumber
-        <include refid="enrolling_plan_zj"/>
+        from zgk2.zgk_zj_3in7 zz
         where
             zz.selectSubject like CONCAT('%', #{subject1} , '%')
             or zz.selectSubject like CONCAT('%', #{subject2} , '%')
@@ -39,14 +39,14 @@
         select zz.batch as batch,count(DISTINCT zz.id) as majorNumber,
             count(zz.id)/(
                 select count(*) as majorNumber
-                <include refid="enrolling_plan_zj"/>
+                from zgk2.zgk_zj_3in7 zz
                 where
                     zz.selectSubject like CONCAT('%', #{subject1} , '%')
                     or zz.selectSubject like CONCAT('%', #{subject2} , '%')
                     or zz.selectSubject like CONCAT('%', #{subject3} , '%')
                     or zz.selectCount=0
             ) as percent
-        <include refid="enrolling_plan_zj"/>
+        from zgk2.zgk_zj_3in7 zz
         where
             zz.selectSubject like CONCAT('%', #{subject1} , '%')
             or zz.selectSubject like CONCAT('%', #{subject2} , '%')
@@ -65,7 +65,6 @@
             ,0 as isFavorite
         </if>
         <include refid="enrolling_plan_zj"/>
-        INNER join zgk_university uu on uu.id=zz.universityId
         <!--判断是否加入收藏表-->
         <if test="isLeftJoin==true">
             <include refid="MAJOR_JOIN_LEFT"/>
@@ -101,7 +100,6 @@
     <select id="selectMajorListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
         select count(*)
         <include refid="enrolling_plan_zj"/>
-        INNER join zgk_university uu on uu.id=zz.universityId
         where
           (zz.selectSubject like CONCAT('%', #{subject1} , '%')
             or zz.selectSubject like CONCAT('%', #{subject2} , '%')
@@ -132,7 +130,7 @@
 
     <select id="selectMajorTop3" resultType="cn.thinkjoy.gk.pojo.MajorTop3Pojo">
         select zz.majorCode,zz.universityCode as schoolCode,zz.selectSubject
-        <include refid="enrolling_plan_zj"/>
+        from zgk2.zgk_zj_3in7 zz 
     </select>
 
 </mapper>

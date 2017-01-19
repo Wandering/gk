@@ -33,7 +33,6 @@
             (
                 select selectSubject as mSize ,count(selectSubject) as number
                 <include refid="enrolling_plan_zj"/>
-                INNER join zgk_university uu on uu.id=zz.universityId
                 where
                 zz.majorCode=#{majorCode}
                 and zz.selectCount!=0
@@ -54,12 +53,10 @@
         count(uu.id)/(
             select count(uu.id)
                 <include refid="enrolling_plan_zj"/>
-                INNER join zgk_university uu on uu.id=zz.universityId
                 left join zgk_data_dict dd on dd.type='BATCHTYPE' and dd.dictId=zz.batch
                 where zz.majorCode=#{majorCode}
             ) as percent
         <include refid="enrolling_plan_zj"/>
-        INNER join zgk_university uu on uu.id=zz.universityId
 		left join zgk_data_dict dd on dd.type='BATCHTYPE' and dd.dictId=zz.batch
         where zz.majorCode=#{majorCode}
         group by dd.name;
@@ -75,7 +72,6 @@
             ,0 as isFavorite
         </if>
         <include refid="enrolling_plan_zj"/>
-        INNER join zgk_university uu on uu.id=zz.universityId
         <!--判断是否加入收藏表-->
         <if test="isLeftJoin==true">
             <include refid="MAJOR_JOIN_LEFT"/>
@@ -100,7 +96,6 @@
     <select id="selectMajorListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
         select count(uu.id)
         <include refid="enrolling_plan_zj"/>
-        INNER join zgk_university uu on uu.id=zz.universityId
         where zz.majorCode=#{majorCode}
         <if test="province!=null">
             and uu.areaid=#{province}
