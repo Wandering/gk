@@ -21,9 +21,10 @@
         and zz.batch=collection.batch
         AND collection.userId = #{userId}
     </sql>
-    <sql id="enrolling_plan_zj">  
-          from zgk2.zgk_zj_3in7 zz 
-          INNER join zgk2.zgk_university uu on uu.id=zz.universityId 
+    <sql id="enrolling_plan_zj">
+
+        from zgk2.zgk_zj_3in7 zz
+        INNER join zgk2.zgk_university uu on uu.id=zz.universityId
     </sql>
     <select id="selectSchoolAndMajorNumberBySubjects" resultType="cn.thinkjoy.gk.pojo.NumberPojo" parameterType="java.util.Map">
         select count(DISTINCT zz.universityName) as schoolNumber,count(*) as majorNumber
@@ -56,10 +57,20 @@
     </select>
 
     <select id="selectMajorList" resultType="cn.thinkjoy.gk.pojo.MajorPojo" parameterType="java.util.Map">
-        select uu.id as universityId,zz.majorCode as majorCode,uu.provinceCode,zz.batch as batch,zz.universityName as universityName,zz.major as majorName,zz.batch,zz.planEnrolling as planNumber,zz.selectSubject as selectSubject
+        SELECT
+        uu.id AS universityId,
+        zz.majorCode AS majorCode,
+        uu.provinceCode,
+        zz.batch AS batch,
+        zz.universityName AS universityName,
+        zz.major AS majorName,
+        zz.batch,
+        zz.planEnrolling AS planNumber,
+        zz.selectSubject AS selectSubject
         <if test="isLeftJoin==true">
             <!--以时间作为评定标准,如果时间存在说明收藏,如果时间不存在说明没有收藏-->
-            ,IF(collection.createDate,1,0)  as isFavorite,collection.id as cid
+            ,IF(collection.createDate,1,0)  as isFavorite,
+            collection.id as cid
         </if>
         <if test="isLeftJoin==false">
             ,0 as isFavorite
@@ -129,8 +140,11 @@
     </select>
 
     <select id="selectMajorTop3" resultType="cn.thinkjoy.gk.pojo.MajorTop3Pojo">
-        select zz.majorCode,zz.universityCode as schoolCode,zz.selectSubject
-        from zgk2.zgk_zj_3in7 zz 
+        SELECT
+                	zz.majorCode AS majorCode,
+                	zz.universityCode AS schoolCode,
+                	zz.selectSubject
+        <include refid="enrolling_plan_zj"/>
     </select>
 
 </mapper>

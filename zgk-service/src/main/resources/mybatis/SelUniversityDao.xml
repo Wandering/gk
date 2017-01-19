@@ -22,9 +22,10 @@
         AND collection.userId = #{userId}
     </sql>
 
-    <sql id="enrolling_plan_zj">  
-        from zgk2.zgk_zj_3in7 zz 
-        INNER join zgk2.zgk_university uu on uu.id=zz.universityId 
+    <sql id="enrolling_plan_zj">
+
+        from zgk2.zgk_zj_3in7 zz
+        INNER join zgk2.zgk_university uu on uu.id=zz.universityId
     </sql>
 
     <select id="selectUniversityById" resultType="cn.thinkjoy.gk.pojo.SelUniversityPojo" parameterType="java.util.Map">
@@ -43,11 +44,20 @@
     </select>
 
     <select id="selectMajorList" resultType="cn.thinkjoy.gk.pojo.MajorPojo" parameterType="java.util.Map">
-        select uu.id as universityId,zz.majorCode as majorCode,uu.provinceCode,zz.batch as batch,zz.universityName as universityName,
-        zz.major as majorName,zz.batch,zz.planEnrolling as planNumber,zz.selectSubject as selectSubject
+        SELECT
+        uu.id AS universityId,
+        zz.majorCode AS majorCode,
+        uu.provinceCode,
+        zz.batch AS batch,
+        zz.universityName AS universityName,
+        zz.major AS majorName,
+        zz.batch,
+        zz.planEnrolling AS planNumber,
+        zz.selectSubject AS selectSubject
         <if test="isLeftJoin==true">
         <!--以时间作为评定标准,如果时间存在说明收藏,如果时间不存在说明没有收藏-->
-        ,IF(collection.createDate,1,0)  as isFavorite,collection.id as cid
+        ,IF(collection.createDate,1,0)  as isFavorite,
+            collection.id as cid
         </if>
         <if test="isLeftJoin==false">
             ,0 as isFavorite

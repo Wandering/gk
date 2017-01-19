@@ -21,9 +21,10 @@
         and zz.batch=collection.batch
         AND collection.userId = #{userId}
     </sql>
-    <sql id="enrolling_plan_zj">  
-        from zgk2.zgk_zj_3in7 zz 
-        INNER join zgk2.zgk_university uu on uu.id=zz.universityId 
+    <sql id="enrolling_plan_zj">
+
+        from zgk2.zgk_zj_3in7 zz
+        INNER join zgk2.zgk_university uu on uu.id=zz.universityId
     </sql>
     <select id="selectSubjectNumber" resultType="cn.thinkjoy.gk.pojo.SelSubjectNumberPojo" parameterType="java.util.Map">
         select subject,sum(number) as number from
@@ -63,10 +64,20 @@
     </select>
 
     <select id="selectMajorList" resultType="cn.thinkjoy.gk.pojo.MajorPojo" parameterType="java.util.Map">
-        select uu.rank as universityRank,uu.id as universityId,zz.majorCode as majorCode,uu.provinceCode,zz.universityName as universityName,zz.major as majorName,zz.batch,zz.planEnrolling as planNumber,zz.selectSubject as selectSubject
+        SELECT
+        uu.rank AS universityRank,
+        uu.id AS universityId,
+        zz.majorCode AS majorCode,
+        uu.provinceCode,
+        zz.universityName AS universityName,
+        zz.major AS majorName,
+        zz.batch,
+        zz.planEnrolling AS planNumber,
+        zz.selectSubject AS selectSubject
         <if test="isLeftJoin==true">
             <!--以时间作为评定标准,如果时间存在说明收藏,如果时间不存在说明没有收藏-->
-            ,IF(collection.createDate,1,0)  as isFavorite,collection.id as cid
+            ,IF(collection.createDate,1,0)  as isFavorite,
+            collection.id as cid
         </if>
         <if test="isLeftJoin==false">
             ,0 as isFavorite
