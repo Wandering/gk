@@ -141,11 +141,24 @@
 
     <select id="selectMajorTop3" resultType="cn.thinkjoy.gk.pojo.MajorTop3Pojo">
         SELECT
-                	zz.majorCode AS majorCode,
-                	zz.universityCode AS schoolCode,
-                	zz.selectSubject
+        zz.majorCode,
+        zz.universityCode AS schoolCode,
+        zz.selectSubject
+        FROM
+        zgk_zj_3in7 zz
+        <if test="year != null">
+            and zz.year = #{year}
+        </if>
+    </select>
 
-        from zgk2.zgk_zj_3in7 zz
+    <!-- 查询有招生计划的年份集合 -->
+    <select id="getEnrollingYear" resultType="string">
+        SELECT
+        `year`
+        FROM
+        zgk_zj_3in7
+        GROUP BY
+        `year`
     </select>
 
 </mapper>
