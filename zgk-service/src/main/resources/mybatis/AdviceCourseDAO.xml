@@ -27,7 +27,7 @@
         university.areaid as areaId,
         3in7.batch as batch,
         dict.name as batchName,
-        3in7.major as majorName,
+        3in7.subMajor as majorName,
         3in7.majorCode as majorCode,
         (university.areaid=#{currAreaId}) as isCurrArea,
         university.rank as rank
