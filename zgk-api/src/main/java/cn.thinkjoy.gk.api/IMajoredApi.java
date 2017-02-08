@@ -1,6 +1,5 @@
 package cn.thinkjoy.gk.api;
 
-
 import java.util.List;
 import java.util.Map;
 
@@ -25,4 +24,7 @@ public interface IMajoredApi {
 
     List getMajoredByName(String majoredName,String type);
 
+    Object selectMajorTopCount(int count,String year);
+
+    List<String> getEnrollingYear();
 }

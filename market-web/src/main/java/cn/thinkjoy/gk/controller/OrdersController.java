@@ -121,21 +121,8 @@ public class OrdersController extends ZGKBaseController {
         }
     }
 
-    /**
-     * 支付宝支付
-     *
-     * @return
-     */
-    @RequestMapping(value = "paySuccess")
-    @ResponseBody
-    public Map<String,Object> paySuccess(@RequestParam(value = "orderNo", required = true) String orderNo,
-                           @RequestParam(value = "token", required = true) String token){
+    public void paySuccessCallback(@RequestParam(value = "orderNo", required = true) String orderNo){
         Map<String,Object> resultMap = new HashedMap();
-        //获取用户信息
-        UserAccountPojo userAccountPojo = getUserAccountPojo();
-        if (userAccountPojo == null) {
-            throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
-        }
         //根据订单号获取订单信息
         Order order = getOrder(orderNo);
         /*判断交易状态(交易未支付等其他状态直接return,交易已支付判断交易是否已经生成过账号密码,
@@ -172,15 +159,17 @@ public class OrdersController extends ZGKBaseController {
                     }catch (Exception e){
                         LOGGER.info("发送短信失败:"+"phone:"+order.getPhone()+" card:"+card.getCardNumber()+" password:"+card.getPassword());
                     }
-                }else {
-                    //已经发货状态
-                    //取得当前用户该订单的卡号
-                    Map<String,Object> orderMap = orderService.getCardByUidAndNo(userAccountPojo.getId(),orderNo);
-                    resultMap.put("cardNumber",orderMap.get("cardNumber"));
-                    resultMap.put("password",orderMap.get("password"));
-                    resultMap.put("phone",order.getPhone());
                 }
+//                else {
+//                    //已经发货状态
+//                    //取得当前用户该订单的卡号
+//                    Map<String,Object> orderMap = orderService.getCardByUidAndNo(userAccountPojo.getId(),orderNo);
+//                    resultMap.put("cardNumber",orderMap.get("cardNumber"));
+//                    resultMap.put("password",orderMap.get("password"));
+//                    resultMap.put("phone",order.getPhone());
+//                }
             }else {
+                LOGGER.info("生成卡号失败-订单号:"+orderNo);
                 throw new BizException(ERRORCODE.ORDER_PAY_FAIL.getCode(),ERRORCODE.ORDER_PAY_FAIL.getMessage());
             }
         }finally {
@@ -188,6 +177,55 @@ public class OrdersController extends ZGKBaseController {
             orderService.update(order);
         }
 
+        //返回vip卡号和密码
+//        return resultMap;
+    }
+    /**
+     * 支付宝支付
+     *
+     * @return
+     */
+    @RequestMapping(value = "paySuccess")
+    @ResponseBody
+    public Map<String,Object> paySuccess(@RequestParam(value = "orderNo", required = true) String orderNo,
+                           @RequestParam(value = "token", required = true) String token){
+        Map<String,Object> resultMap = new HashedMap();
+
+
+
+        //获取用户信息
+        UserAccountPojo userAccountPojo = getUserAccountPojo();
+        if (userAccountPojo == null) {
+            throw new BizException(ERRORCODE.NO_LOGIN.getCode(), ERRORCODE.NO_LOGIN.getMessage());
+        }
+        //根据订单号获取订单信息
+        Order order = getOrder(orderNo);
+        /*判断交易状态(交易未支付等其他状态直接return,交易已支付判断交易是否已经生成过账号密码,
+        * 初次支付成功,一定未生成卡号)
+        */
+
+
+        Card card = null;
+        order.setUpdateDate(System.currentTimeMillis());
+            if (PayEnum.SUCCESS.getCode().equals(order.getStatus())) {
+                while ("0".equals(order.getHandleState())){
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    order = getOrder(orderNo);
+                }
+                //支付成功
+                    //已经发货状态
+                    //取得当前用户该订单的卡号
+                    Map<String,Object> orderMap = orderService.getCardByUidAndNo(userAccountPojo.getId(),orderNo);
+                    resultMap.put("cardNumber",orderMap.get("cardNumber"));
+                    resultMap.put("password",orderMap.get("password"));
+                    resultMap.put("phone",order.getPhone());
+            }else {
+                throw new BizException(ERRORCODE.ORDER_PAY_FAIL.getCode(),ERRORCODE.ORDER_PAY_FAIL.getMessage());
+            }
         //返回vip卡号和密码
         return resultMap;
     }
@@ -553,7 +591,6 @@ public class OrdersController extends ZGKBaseController {
     @Deprecated
     public List<Map<String, Object>> getOrderList(@RequestParam(value = "token", required = true)String token,@RequestParam(required = false)String more)
     {
-
         String userId = getAccoutId();
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("userId", userId);
@@ -585,7 +622,7 @@ public class OrdersController extends ZGKBaseController {
                 //标示已发货状态
                 if("1".equals(order.get("payStatus") + "") && "1".equals(order.get("handleState") + ""))
                 {
-                    order.put("payStatus", "3");
+                    order.put("payStatus", PayEnum.PAY_SUCCESS.getCode());
                 }
             }
         }

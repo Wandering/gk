@@ -15,6 +15,7 @@ import cn.thinkjoy.gk.protocol.ModelUtil;
 import cn.thinkjoy.gk.service.ICardExService;
 import cn.thinkjoy.gk.service.ICardService;
 import cn.thinkjoy.gk.service.IUserVipService;
+import cn.thinkjoy.gk.util.RedisUtil;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.ibatis.exceptions.TooManyResultsException;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.PostConstruct;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -49,6 +51,7 @@ public class VipController extends ZGKBaseController implements Watched {
     @Autowired
     private IUserVipService userVipService;
 
+    private static RedisDisLock redisDisLock = new RedisDisLock(RedisUtil.getInstance().getRedisTemplate());
 
     private static Comparator comparator = new Comparator() {
         @Override
@@ -74,6 +77,14 @@ public class VipController extends ZGKBaseController implements Watched {
         if(null==userAccountPojo){
             throw new BizException(ERRORCODE.USER_NO_EXIST.getCode(), ERRORCODE.USER_NO_EXIST.getMessage());
         }
+        String redisLockKey = VipConst.VIP_REDIS_LOCK_KEY+userAccountPojo.getAccount();
+        try {
+            //分布式锁
+            redisDisLock.lock(redisLockKey);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+//        RedisUtil.getInstance().
 //        Integer vipStatus = userAccountPojo.getVipStatus();
 //        if(null!=vipStatus&&vipStatus==1){
 //            throw new BizException(ERRORCODE.VIP_EXIST.getCode(), ERRORCODE.VIP_EXIST.getMessage());
@@ -146,6 +157,8 @@ public class VipController extends ZGKBaseController implements Watched {
         }catch (Exception e){
             logger.info("卡号异常防窜货代理商系统调用失败！",e);
         }
+        //解锁  只针对相同用户
+        redisDisLock.unlock(redisLockKey);
         return userAccountPojo;
     }
 
@@ -161,7 +174,11 @@ public class VipController extends ZGKBaseController implements Watched {
         }
         else
         {
-            c.add(Calendar.YEAR, 3);
+            if (VipTimeUtil.getVipTag()) {
+                c.add(Calendar.YEAR, 2);
+            }else {
+                c.add(Calendar.YEAR, 3);
+            }
             c.set(Calendar.MONTH, 8);
             c.set(Calendar.DAY_OF_MONTH, 1);
         }
@@ -283,77 +300,140 @@ public class VipController extends ZGKBaseController implements Watched {
     @ResponseBody
     public Object getUserVipInfo(){
         String userId = this.getAccoutId();
+        StringBuffer bufferName = new StringBuffer();
         Map<String,Object> rtnMap = new HashedMap();
         //获取卡的专家状态
         List<Map<String,Object>> vipServiceNames = cardExService.getUserVipServiceName(userId);
-        Collections.sort(vipServiceNames,comparator);
-
-        rtnMap.put("diffServiceName","状元及第");
-        //判断最大的是不是金榜登科 并且绑了多张卡
-        Map<String,Object> lastCard = vipServiceNames.get(vipServiceNames.size()-1);
-        if (Integer.valueOf(lastCard.get("type").toString()) == 1 && vipServiceNames.size()>1){
-            Map<String,Object> serviceCard = vipServiceNames.get(vipServiceNames.size()-2);
-            Map<String,Object> paramMap = new HashedMap();
-            paramMap.put("productId",lastCard.get("type"));
-            paramMap.put("areaId", getAreaId());
-            paramMap.put("status",UserVipConstant.DEFULT_STATUS);
-            //是金榜登科的话取得卡status为1的所有
-            List<Map<String,Object>> cardServices1 = cardExService.getCardService(paramMap);
-            if (cardServices1.size()==0){
-                paramMap.put("areaId",UserVipConstant.DEFULT_AREA_ID);
-                cardServices1 = cardExService.getCardService(paramMap);
-            }
-            paramMap = new HashedMap();
-            paramMap.put("productId",serviceCard.get("type"));
-            paramMap.put("areaId", getAreaId());
-            paramMap.put("status",UserVipConstant.DEFULT_STATUS);
-            //是金榜登科的话取得卡status为1的所有
-            List<Map<String,Object>> cardServices = cardExService.getCardService(paramMap);
-            if (cardServices.size()==0){
-                paramMap.put("areaId",UserVipConstant.DEFULT_AREA_ID);
-                cardServices = cardExService.getCardService(paramMap);
-            }
-            //取两张卡不重叠项
-            cardServices.removeAll(cardServices1);
-            StringBuffer buffer = new StringBuffer();
-            if (cardServices.size()>0) {
-                for (Map<String, Object> map : cardServices)
-                    buffer.append(map.get("serviceType")).append("、");
-                if (buffer.length() > 0)
-                    buffer.delete(buffer.length() - 1, buffer.length());
-                rtnMap.put("diffService",buffer.toString());
-                rtnMap.put("diffServiceTime",VipTimeUtil.getLastActiveDate(Long.valueOf(serviceCard.get("activeDate").toString())));
-                rtnMap.put("diffServiceName","金榜登科、状元及第");
-            }
-        }
-
-        if (vipServiceNames.size()>0){
-            StringBuffer buffer = new StringBuffer();
-            for (Map<String,Object> map : vipServiceNames)
-                buffer.append(map.get("productName")).append("、");
-            if (buffer.length()>0)
-                buffer.delete(buffer.length()-1,buffer.length());
-            rtnMap.put("cardNames",buffer.toString());
+        Collections.sort(vipServiceNames, comparator);
+        if (vipServiceNames.size()>0) {
+            rtnMap.put("diffServiceName", "状元及第");
             //卡到期时间
-            Map<String,Object> paramMap = Maps.newHashMap();
-            paramMap.put("userId",userId);
-            UserVip userVip = (UserVip)userVipService.queryOne(paramMap);
+            Map<String, Object> userParamMap = Maps.newHashMap();
+            userParamMap.put("userId", userId);
+            UserVip userVip = (UserVip) userVipService.queryOne(userParamMap);
 
-            rtnMap.put("cardTime",VipTimeUtil.format.format(new Date(userVip.getEndDate())));
+            rtnMap.put("cardTime", VipTimeUtil.format.format(new Date(userVip.getEndDate())));
 
-            List<Map<String,Object>> vipServices = cardExService.getUserVipService(userId);
-            //判断所拥有的VIP卡类型(另一个维度)
-            rtnMap.put("cardType",vipServices.size()>0?UserVipConstant.EXPERT_VIP_STATUS: UserVipConstant.DEFULT_VIP_STATUS);
-            rtnMap.put("expertService", new ArrayList<>());
-            //获取卡的专家状态
-            if (vipServices.size()>0) {
-                //是专家
-                //统计该用户专家卡所拥有的服务和次数
-                rtnMap.put("expertService", vipServices);
-                //end
+            /**
+             * 判断最大的是不是金榜登科 并且绑了多张卡
+             */
+
+
+
+            List<Map<String,Object>> delMaps = new ArrayList<>();
+            List<Map<String,Object>> delExpertMaps = new ArrayList<>();
+            for (Map<String,Object> map : vipServiceNames){
+                Integer ptType = (Integer) map.get("type");
+                Long activeDate = (Long) map.get("activeDate");
+                try {
+                    if (ptType <=3 && System.currentTimeMillis()>VipTimeUtil.getCardTimeOut(activeDate)){
+                        delMaps.add(map);
+                    }else if (ptType > 3 && System.currentTimeMillis()>VipTimeUtil.getCardTimeOut(activeDate)){
+                        delExpertMaps.add(map);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
-            //不是专家卡
-            //end
+            vipServiceNames.removeAll(delMaps);
+            vipServiceNames.removeAll(delExpertMaps);
+            if (vipServiceNames.size()>0) {
+
+                //取最后一张卡
+                Map<String, Object> lastCard = vipServiceNames.get(vipServiceNames.size() > 1 ? vipServiceNames.size() - 1 : 0);
+                //判断用户绑定的卡有没有金榜登科
+                if (vipServiceNames.size() > 0) {
+                    for (Map<String, Object> map : vipServiceNames) {
+                        if (map.get("type") == 1) {
+                            rtnMap.put("diffServiceName", "金榜登科");
+                        }
+                    }
+                }
+                if (vipServiceNames.size() > 1) {
+                    Map<String, Object> serviceCard = vipServiceNames.get(vipServiceNames.size() - 2);
+                    Map<String, Object> paramMap = new HashedMap();
+                    paramMap.put("productId", lastCard.get("type"));
+                    paramMap.put("areaId", getAreaId());
+                    paramMap.put("status", UserVipConstant.DEFULT_STATUS);
+                    //是金榜登科的话取得卡status为1的所有
+                    List<Map<String, Object>> cardServices1 = cardExService.getCardService(paramMap);
+                    if (cardServices1.size() == 0) {
+                        paramMap.put("areaId", UserVipConstant.DEFULT_AREA_ID);
+                        cardServices1 = cardExService.getCardService(paramMap);
+                    }
+                    paramMap = new HashedMap();
+                    paramMap.put("productId", serviceCard.get("type"));
+                    paramMap.put("areaId", getAreaId());
+                    paramMap.put("status", UserVipConstant.DEFULT_STATUS);
+                    //是金榜登科的话取得卡status为1的所有
+                    List<Map<String, Object>> cardServices =new ArrayList<>();
+                    List<Map<String, Object>> cardServices2 = cardExService.getCardService(paramMap);
+                    if (cardServices2.size() == 0) {
+                        paramMap.put("areaId", UserVipConstant.DEFULT_AREA_ID);
+                        cardServices2 = cardExService.getCardService(paramMap);
+                    }
+                    cardServices.addAll(cardServices1);
+                    cardServices.addAll(cardServices2);
+                    //取两张卡不重叠项
+                    if (cardServices1.size()> cardServices2.size()){
+                        cardServices.removeAll(cardServices2);
+                    }else {
+                        cardServices.removeAll(cardServices1);
+                    }
+
+                    if (cardServices.size() > 0) {
+                        StringBuffer buffer = new StringBuffer();
+                        for (Map<String, Object> map : cardServices)
+                            buffer.append(map.get("serviceType")).append("、");
+                        if (buffer.length() > 0)
+                            buffer.delete(buffer.length() - 1, buffer.length());
+                        rtnMap.put("diffService", buffer.toString());
+                        rtnMap.put("diffServiceTime", VipTimeUtil.getLastActiveDate(Long.valueOf(serviceCard.get("activeDate").toString())));
+
+                    }
+                }
+
+                if (vipServiceNames.size() > 0) {
+                    for (Map<String, Object> map : vipServiceNames)
+                        bufferName.append(map.get("productName")).append("、");
+                }
+            }
+                List<Map<String, Object>> vipServices = cardExService.getUserVipService(userId);
+                //判断所拥有的VIP卡类型(另一个维度)
+
+                rtnMap.put("expertService", new ArrayList<>());
+
+                //不是专家卡
+                //end
+                int count = 0;
+                for (Map<String, Object> map : vipServices) {
+                    count += Integer.valueOf(map.get("count").toString());
+                }
+
+
+                //获取卡的专家状态
+                if (count > 0 && vipServices.size()>0) {
+                    //是专家
+                    //统计该用户专家卡所拥有的服务和次数
+                    rtnMap.put("expertService", vipServices);
+                    //end
+                }
+                rtnMap.put("cardType", count > 0 ? UserVipConstant.EXPERT_VIP_STATUS : UserVipConstant.DEFULT_VIP_STATUS);
+                if (count > 0) {
+
+                    for (Map<String, Object> map : delExpertMaps)
+                        bufferName.append(map.get("productName")).append("、");
+                    //是专家
+                    //统计该用户专家卡所拥有的服务和次数
+                    //end
+
+                }
+            if (bufferName.length() > 0)
+                bufferName.delete(bufferName.length() - 1, bufferName.length());
+                rtnMap.put("cardNames", bufferName.toString());
+            if (count == 0 && vipServiceNames.size() == 0) {
+                    throw new BizException(ERRORCODE.NO_VIP.getCode(), ERRORCODE.NO_VIP.getMessage());
+            }
         }else {
             throw new BizException(ERRORCODE.NO_VIP.getCode(), ERRORCODE.NO_VIP.getMessage());
         }

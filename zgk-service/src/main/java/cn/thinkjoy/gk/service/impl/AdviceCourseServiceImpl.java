@@ -136,19 +136,20 @@ public class AdviceCourseServiceImpl implements IAdviceCourseService {
         //对院校列表进行去重
         removeRepeat(universityInfo1, universityInfo2);
         //将列表1置入树形结构
-        treeUniversity(majorDiffCompareRtns,universityInfo1,LIST_1);
+        treeUniversity(majorDiffCompareRtns, universityInfo1, LIST_1);
         //将列表1置入树形结构
-        treeUniversity(majorDiffCompareRtns,universityInfo2,LIST_2);
+        treeUniversity(majorDiffCompareRtns, universityInfo2, LIST_2);
         return majorDiffCompareRtns;
     }
 
     /**
      * 把列表中的数据按类型放入树形结构
+     *
      * @param majorDiffCompareRtns
      * @param universityInfo
      * @param type
      */
-    private void treeUniversity(List<MajorDiffCompareRtn> majorDiffCompareRtns, List<Map<String, Object>> universityInfo,Integer type){
+    private void treeUniversity(List<MajorDiffCompareRtn> majorDiffCompareRtns, List<Map<String, Object>> universityInfo, int type) {
         MajorDiffCompareRtn majorDiffCompareRtn;
 
         //对院校列表1进行添加操作
@@ -157,33 +158,35 @@ public class AdviceCourseServiceImpl implements IAdviceCourseService {
             Long universityId = map.get("universityId") == null ? null : Long.valueOf(map.get("universityId").toString());
 
             //如果universityId是空,说明数据是错误数据
-            if (universityId==null) continue;
+            if (universityId == null) continue;
 
             boolean universityExistflag = false;
-
+//            if (universityId == 882){
+//                LOGGER.info("当前拼装学校:" + 882);
+//            }
             //判断是否存在majorDiffCompareRtn对象 存在的话在列表中返回,不存在的话创建一个返回
             majorDiffCompareRtn = getMajorDiffCompareRtn(universityId, majorDiffCompareRtns);
 
             //把院校信息设置委托给setUnivInfo方法
             if (majorDiffCompareRtn.getUniversityId() == null) {
-                universityExistflag=true;
+                universityExistflag = true;
                 setUnivInfo(majorDiffCompareRtn, universityId, map);
             }
             LOGGER.info("当前拼装学校:" + map.get("universityName"));
 
             //这个对象用来保存院校的专业信息LIST
-            List<UniversityMajorInfo> universityMajorInfos =getUniversityMajorInfos(majorDiffCompareRtn,type);
+            List<UniversityMajorInfo> universityMajorInfos = getUniversityMajorInfos(majorDiffCompareRtn, type);
 
             //将专业设置委托给setMajorDiffCompareRtn方法
             setMajorDiffCompareRtn(universityMajorInfos, map);
 
-            if (type == LIST_1){
+            if (type == LIST_1) {
                 majorDiffCompareRtn.setUniversityMajorInfos1(universityMajorInfos);
-            }else if (type == LIST_2){
+            } else if (type == LIST_2) {
                 majorDiffCompareRtn.setUniversityMajorInfos2(universityMajorInfos);
             }
             //判断院校之前是否存在tag 不存在才添加
-            if (universityExistflag)majorDiffCompareRtns.add(majorDiffCompareRtn);
+            if (universityExistflag) majorDiffCompareRtns.add(majorDiffCompareRtn);
         }
 
 
@@ -201,6 +204,7 @@ public class AdviceCourseServiceImpl implements IAdviceCourseService {
 
     /**
      * 给MajorDiffCompareRtn设值
+     *
      * @param universityMajorInfos
      * @param map
      */
@@ -217,6 +221,7 @@ public class AdviceCourseServiceImpl implements IAdviceCourseService {
 
     /**
      * 获取MajorDiffCompareRtn对象
+     *
      * @param universityId1
      * @param majorDiffCompareRtns
      * @return
@@ -240,7 +245,7 @@ public class AdviceCourseServiceImpl implements IAdviceCourseService {
      */
     private void removeRepeat(List<Map<String, Object>> universityInfos1, List<Map<String, Object>> universityInfos2) {
         List<Map<String, Object>> list1 = new ArrayList(Arrays.asList(new Object[universityInfos1.size()]));
-        Collections.copy(list1,universityInfos1);
+        Collections.copy(list1, universityInfos1);
         //取12中相同的元素放入list1中
         list1.retainAll(universityInfos2);
         //删除1中有的
@@ -274,18 +279,19 @@ public class AdviceCourseServiceImpl implements IAdviceCourseService {
 
     /**
      * 获取UniversityMajorInfo对象信息
+     *
      * @return
      */
-    private List<UniversityMajorInfo> getUniversityMajorInfos(MajorDiffCompareRtn majorDiffCompareRtn,Integer type){
+    private List<UniversityMajorInfo> getUniversityMajorInfos(MajorDiffCompareRtn majorDiffCompareRtn, Integer type) {
         //这个对象用来保存院校的专业信息LIST
         List<UniversityMajorInfo> universityMajorInfos;
 
         if (type == LIST_1)
-            universityMajorInfos=majorDiffCompareRtn.getUniversityMajorInfos1();
-        if (type == LIST_2)
-            universityMajorInfos=majorDiffCompareRtn.getUniversityMajorInfos2();
+            universityMajorInfos = majorDiffCompareRtn.getUniversityMajorInfos1();
+        else if (type == LIST_2)
+            universityMajorInfos = majorDiffCompareRtn.getUniversityMajorInfos2();
         else
-            universityMajorInfos=null;
+            universityMajorInfos = null;
 
         //判断在对象majorDiffCompareRtn中是否有universityMajorInfos列表,如果存在就讲原来的取出来,如果不存在,就NEW一个
         if (universityMajorInfos == null) {

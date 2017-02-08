@@ -129,7 +129,7 @@ public class SelClassesController {
     @ResponseBody
     public Map<String,Object> getMajorTop3(){
         Map<String,Object> returnMap=new HashMap<>();
-        Bases[] bases=iSelClassesService.selectMajorTop3();
+        Bases[] bases=iSelClassesService.selectMajorTop3(3,null);
         returnMap.put("majorTop3",bases);
         return returnMap;
     }

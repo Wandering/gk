@@ -16,6 +16,8 @@ public interface IExpertService
 {
     void insertOrder(ExpertOrder order);
 
+    public boolean hasService(Map<String,Object> map);
+
     ExpertOrder findOrderByOrderNo(String orderNo);
 
     void updateOrder(ExpertOrder order);

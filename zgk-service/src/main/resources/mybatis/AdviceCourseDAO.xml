@@ -5,15 +5,11 @@
 
 
     <select id="getMajorBatchByCourse" resultType="cn.thinkjoy.gk.domain.MajorBatchCompareRtn">
-        SELECT count(*) as num,plan.batch as batch,
-        (SELECT name from zgk_data_dict where type = 'BATCHTYPE2' and dictId =plan.batch) as batchName
+        SELECT count(*) as num,3in7.batch as batch,
+        dict.name as batchName
         FROM
-        (select universityId,majorCode,batch FROM zgk_university_major_enrolling_plan where areaId =#{currAreaId} AND
-        `year` =#{year}) plan
-        INNER JOIN
-        zgk_zj_3in7 3in7 ON
-        plan.universityId = 3in7.universityId
-        AND plan.majorCode = 3in7.majorCode
+        zgk_zj_3in7 3in7
+        LEFT JOIN zgk_data_dict dict on dict.type = 'BATCHTYPE' and dict.dictId =3in7.batch
         <where>
             <!-- 查询专业对应  -->
             <foreach collection="subjects" separator="OR" item="obj" open="(" close=") OR">
@@ -21,7 +17,7 @@
             </foreach>
                 3in7.selectCount = 0
         </where>
-        GROUP BY plan.batch
+        GROUP BY 3in7.batch
     </select>
     <!-- 查询院校差异(相同的不显示 但是在这里不去重,代码中去重,提高sql执行速度)  -->
     <select id="getUniversityDiffByCourse" resultType="java.util.Map">
@@ -29,23 +25,21 @@
         university.id as universityId,
         university.name as universityName,
         university.areaid as areaId,
-        plan.batch as batch,
+        3in7.batch as batch,
         dict.name as batchName,
-        plan.majorName as majorName,
+        3in7.subMajor as majorName,
         3in7.majorCode as majorCode,
         (university.areaid=#{currAreaId}) as isCurrArea,
         university.rank as rank
         from
-        (SELECT majorName,areaId,year,universityId,majorCode,batch
-        FROM zgk_university_major_enrolling_plan WHERE areaId=#{currAreaId} AND year=#{year}) plan
-        INNER JOIN zgk_zj_3in7 3in7 ON plan.universityId = 3in7.universityId
-        AND plan.majorCode = 3in7.majorCode
+        zgk_zj_3in7 3in7
         INNER JOIN
         zgk_university university
         ON 3in7.universityId = university.id
         and 3in7.eduLevel = university.educationLevel
-        LEFT JOIN zgk_data_dict dict ON dict.type = 'BATCHTYPE2' and dict.dictId =plan.batch
+        LEFT JOIN zgk_data_dict dict ON dict.type = 'BATCHTYPE' and dict.dictId =3in7.batch
         where 3in7.selectCount>0
+        and 3in7.year=#{year}
         AND 3in7.universityId is not null
         <if test="subjects">
             AND
@@ -60,31 +54,24 @@
             AND university.type = #{type}
         </if>
         <if test="batch!=null">
-            AND plan.batch = #{batch}
+            AND 3in7.batch = #{batch}
         </if>
 
     </select>
     <!-- 查询选择课程组合对应的批次 -->
     <select id="queryBatch" resultType="java.util.Map">
         SELECT
-        plan.batch AS batch,
-        (
-        SELECT
-        NAME
+        3in7.batch AS batch,
+        dict.name AS batchName
         FROM
-        zgk_data_dict
-        WHERE
-        type = 'BATCHTYPE2'
-        AND dictId = plan.batch
-        ) AS batchName
-        FROM
-        (select universityId,majorCode,batch FROM zgk_university_major_enrolling_plan where areaId =#{currAreaId} AND
-        `year` =#{year}) plan
-        INNER JOIN
-        zgk_zj_3in7 3in7 ON
-        plan.universityId = 3in7.universityId
-        AND plan.majorCode = 3in7.majorCode
+        zgk_zj_3in7 3in7
+        LEFT JOIN
+        zgk_data_dict dict
+        ON type = 'BATCHTYPE' AND dict.dictId = 3in7.batch
         <where>
+            <if test="year!=null">
+                and `year` =#{year}
+            </if>
             <foreach collection="subjects1" separator="OR" item="obj">
                 3in7.selectSubject like CONCAT('%',#{obj},'%')
             </foreach>
@@ -93,7 +80,7 @@
                 3in7.selectSubject like CONCAT('%',#{obj},'%')
             </foreach>
         </where>
-        GROUP BY plan.batch
+        GROUP BY 3in7.batch
     </select>
     <!-- 查询选择课程组合对应的省份 -->
     <select id="queryArea" resultType="java.util.Map">

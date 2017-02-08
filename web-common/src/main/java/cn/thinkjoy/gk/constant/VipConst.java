@@ -9,7 +9,9 @@ public class VipConst {
     /**
      * vip redis
      */
-    public static String VIP_CARD_INFO = "VIP_CARD_INFO_";
+    public static final String VIP_CARD_INFO = "VIP_CARD_INFO_";
 
-    public static Integer TIME_OUT = 7;
+    public static final Integer TIME_OUT = 7;
+
+    public static final String VIP_REDIS_LOCK_KEY = "VIP_REDIS_LOCK_KEY_";
 }

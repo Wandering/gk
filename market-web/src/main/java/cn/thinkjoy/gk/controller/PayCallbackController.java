@@ -40,6 +40,8 @@ public class PayCallbackController extends ZGKBaseController {
     private IOrderService orderService;
     @Autowired
     private IOrderStatementsService orderStatementService;
+    @Autowired
+    private OrdersController ordersController;
     /**
      * 微信支付回调
      * @param request
@@ -91,6 +93,7 @@ public class PayCallbackController extends ZGKBaseController {
                         orderService.update(order);
                         LOGGER.debug("订单号:"+orderNo+"状态跟新成功!");
                     }
+                    ordersController.paySuccessCallback(orderNo);
                     response.setStatus(200);
                 }else if ("refund.succeeded".equals(result)) {
                     response.setStatus(200);
@@ -139,10 +142,13 @@ public class PayCallbackController extends ZGKBaseController {
                     returnUrl = URLDecoder.decode(returnUrl, "UTF-8");
                     RedisUtil.getInstance().del(urlKey);
                 }
+                ordersController.paySuccessCallback(orderNo);
             }
         } catch (Exception e) {
             LOGGER.error("error",e);
         }
+
+
         return "redirect:http://"+ returnUrl;
     }
 }

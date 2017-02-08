@@ -146,10 +146,17 @@ public class ExpertController extends ZGKBaseController
     @RequestMapping(value = "getExpertList")
     @ResponseBody
     public Map<String, Object> getExpertList(@RequestParam(value = "areaId", required = false) String areaId,
-        @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
-        @RequestParam(value = "rows", required = false, defaultValue = "10") String rows)
+                                             @RequestParam(value = "hideExpertIds",required = false) String hideExpertIds,
+                                             @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
+                                             @RequestParam(value = "rows", required = false, defaultValue = "10") String rows)
     {
         Map<String, Object> map = new HashMap<>();
+        if (!areaId.equals("330000")){
+            areaId="0";
+        }
+        if(StringUtils.isNotBlank(hideExpertIds)){
+            map.put("hideExpertIds",hideExpertIds);
+        }
         map.put("areaId", areaId);
         map.put("offset", offset);
         map.put("rows", rows);
@@ -166,6 +173,11 @@ public class ExpertController extends ZGKBaseController
     {
         Map<String, Object> map = new HashMap<>();
         map.put("expertId", expertId);
+        String areaId=getAreaId().toString();
+        if(!areaId.equals("330000")) {
+            areaId = "0";
+        }
+        map.put("areaId", areaId);
         ExpertInfoPojo expertInfoPojo = expertService.selectExpertInfo(map);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("expertInfoPojo", expertInfoPojo);
@@ -299,15 +311,18 @@ public class ExpertController extends ZGKBaseController
     @RequestMapping("checkProduct")
     @ResponseBody
     public Object checkProduct(@RequestParam(value = "commonQuestionIdList") String commonQuestionIdList,
-        @RequestParam(value = "userId") String userId,
+        @RequestParam(value = "userId") Long userId,
         @RequestParam(value = "note", required = false) String note,
         @RequestParam(value = "areaId", required = false) String areaId,
         @RequestParam(value = "offset", required = false, defaultValue = "0") String offset,
         @RequestParam(value = "rows", required = false, defaultValue = "1") String rows)
     {
         String productId =
-            expertService.checkProduct(commonQuestionIdList, offset, rows, userId, note, areaId);
+            expertService.checkProduct(commonQuestionIdList, offset, rows, userId.toString(), note, areaId);
         Map<String, Object> resultMap = new HashMap<>();
+        if (productId==null){
+            return "没有相关产品包对应服务";
+        }
         return productController.queryCardServiceByProductId(Integer.valueOf(productId));
     }
 
@@ -336,6 +351,21 @@ public class ExpertController extends ZGKBaseController
     }
 
     /**
+     * 判断用户是否没有购买服务或服务已经用完
+     * @param userId
+     * @return
+     */
+    @RequestMapping("hasService")
+    @ResponseBody
+    public Map<String,Object> hasService(@RequestParam(value = "userId") String userId){
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId",userId);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("hasService", expertService.hasService(map));
+        return resultMap;
+    }
+
+    /**
      * 根据卡推介专家
      * @param userId
      * @param offset
@@ -353,6 +383,11 @@ public class ExpertController extends ZGKBaseController
         map.put("userId",userId);
         map.put("offset",offset);
         map.put("rows",rows);
+        String areaId=getAreaId().toString();
+        if (!areaId.equals("330000")){
+            areaId="0";
+        }
+        map.put("areaId", areaId);
         List<ExpertInfoPojo> expertInfoPojoList = expertService.checkExpertByProduct(map);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("expertInfoPojoList", expertInfoPojoList);

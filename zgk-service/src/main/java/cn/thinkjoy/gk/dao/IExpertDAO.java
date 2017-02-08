@@ -24,6 +24,8 @@ public interface IExpertDAO
 
     List<ExpertInfoPojo> checkExpertByProduct(Map<String, Object> map);
 
+    int hasService(Map<String, Object> map);
+
     int selectExpertListCount(Map<String, Object> map);
 
     ExpertInfoPojo selectExpertInfo(Map<String, Object> map);
@@ -166,5 +168,11 @@ public interface IExpertDAO
             ExpertChannel channel
     );
 
-    ProductPojo selectProductByServiceIdAndAreaId(Map<String,Object> map);
+    List<ProductPojo> selectProductByServiceIdAndAreaId(Map<String,Object> map);
+
+    String selectMaxProductIdByProductIdList(Map<String,Object> map);
+
+    String selectCheapProductIdByProductIdList(Map<String,Object> map);
+
+    List<String> selectServiceNameByAreaId(Map<String,Object> map);
 }

@@ -19,6 +19,6 @@ public interface ISelClassesService {
 
     List<UniversityOrMajorPojo> selectUniversityOrMajorByWords(String queryValue);
 
-    Bases[] selectMajorTop3();
+    Bases[] selectMajorTop3(int count,String year);
 
 }
