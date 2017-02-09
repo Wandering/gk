@@ -70,7 +70,7 @@
         zz.majorCode AS majorCode,
         uu.provinceCode,
         zz.universityName AS universityName,
-        zz.major AS majorName,
+        zz.subMajor AS majorName,
         zz.batch,
         zz.planEnrolling AS planNumber,
         zz.selectSubject AS selectSubject
