@@ -92,7 +92,7 @@
         from zgk_expert_info ei
         left join zgk_expert_service_relation esr on ei.id=esr.expert_id
         left join zgk_expert_config ec on ec.config_key=esr.service_type_id and ec.config_domain='expertService'
-        left join zgk_expert_appraise ea on ea.expert_id=ei.id
+        left join zgk_expert_appraise ea on ea.expert_id=ei.id and ea.is_checked=1
         left join zgk_expert_cases ec2 on ec2.expert_id=ei.id
         where ei.is_checked=1
         and ei.id=#{expertId}
