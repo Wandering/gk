@@ -146,9 +146,11 @@
         zz.selectSubject
         FROM
         zgk_zj_3in7 zz
-        <if test="year != null">
-            and zz.year = #{year}
-        </if>
+        <where>
+          <if test="year != null">
+              and zz.year = #{year}
+          </if>
+        </where>
     </select>
 
     <!-- 查询有招生计划的年份集合 -->
