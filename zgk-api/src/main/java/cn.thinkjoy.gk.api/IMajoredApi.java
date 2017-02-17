@@ -12,13 +12,13 @@ public interface IMajoredApi {
 
     Object getMajoredCategory(long type);
 
-    Object getCategoryMajoredList(long categoryId);
+    Object getCategoryMajoredList(String categoryId);
 
     List<Map<String,Object>> getMajorOpenUniversityList(String majorId, int majorType, int offset, int rows);
 
     int getMajorOpenUniversityCount(String majorId,int majorType);
 
-    Map<String,Object> getJobOrientation(int majorId);
+    Map<String,Object> getJobOrientation(String majorId);
 
     Map getMajoredInfoByCode(String majorCode);
 

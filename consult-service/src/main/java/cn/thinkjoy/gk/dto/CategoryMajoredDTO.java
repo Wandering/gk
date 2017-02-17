@@ -6,26 +6,26 @@ import java.io.Serializable;
  * Created by zuohao on 16/1/26.
  */
 public class CategoryMajoredDTO implements Serializable {
-    private long majoredId;
-    private long disciplineCategoriesId;//大门类
+    private String majoredId;
+    private String disciplineCategoriesId;//大门类
     private String disciplineCategoriesName;//大门类
-    private long majorCategoryId;//专业门类
+    private String majorCategoryId;//专业门类
     private String majorCategoryName;//专业门类
     private String majoredName;
 
-    public long getMajoredId() {
+    public String getMajoredId() {
         return majoredId;
     }
 
-    public void setMajoredId(long majoredId) {
+    public void setMajoredId(String majoredId) {
         this.majoredId = majoredId;
     }
 
-    public long getDisciplineCategoriesId() {
+    public String getDisciplineCategoriesId() {
         return disciplineCategoriesId;
     }
 
-    public void setDisciplineCategoriesId(long disciplineCategoriesId) {
+    public void setDisciplineCategoriesId(String disciplineCategoriesId) {
         this.disciplineCategoriesId = disciplineCategoriesId;
     }
 
@@ -37,11 +37,11 @@ public class CategoryMajoredDTO implements Serializable {
         this.disciplineCategoriesName = disciplineCategoriesName;
     }
 
-    public long getMajorCategoryId() {
+    public String getMajorCategoryId() {
         return majorCategoryId;
     }
 
-    public void setMajorCategoryId(long majorCategoryId) {
+    public void setMajorCategoryId(String majorCategoryId) {
         this.majorCategoryId = majorCategoryId;
     }
 

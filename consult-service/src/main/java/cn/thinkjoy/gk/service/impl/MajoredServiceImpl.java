@@ -107,7 +107,7 @@ public class MajoredServiceImpl implements IMajoredService {
     }
 
     @Override
-    public Map<String, Object> getJobOrientation(int majorId) {
+    public Map<String, Object> getJobOrientation(String majorId) {
         Map<String,Object> params = new HashMap<>();
         params.put("majorId",majorId);
         String specialisation=majoredDAO.getMajorSpecialisation(params);
@@ -118,7 +118,7 @@ public class MajoredServiceImpl implements IMajoredService {
     }
 
     @Override
-    public MajoredCategoryRemoteDTO getCategoryMajoredList(long categoryId) {
+    public MajoredCategoryRemoteDTO getCategoryMajoredList(String categoryId) {
 
 //        Map<String,Object> map= Maps.newHashMap();
 //        map.put("categoryId",categoryId);
@@ -167,7 +167,7 @@ public class MajoredServiceImpl implements IMajoredService {
         map.put("type",type);
         List<MajoredCategoryRemoteDTO> majoredCategoryRemoteDTOList = majoredDAO.getMajoredCategory(type);
         MajoredCategoryRemoteDTO majoredCategoryRemoteDTO1=new MajoredCategoryRemoteDTO();
-        majoredCategoryRemoteDTO1.setId(type);
+        majoredCategoryRemoteDTO1.setId(String.valueOf(type));
         if (type==1){
             majoredCategoryRemoteDTO1.setName("本科");
         }else {

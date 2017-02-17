@@ -45,7 +45,7 @@ public interface IMajoredDAO {
 
     String getMajorSpecialisation(@Param("condition")Map<String,Object> params);
 
-    List getCategoryMajoredList(@Param("categoryId")long categoryId);
+    List getCategoryMajoredList(@Param("categoryId")String categoryId);
 
     List getMajoredCategory(@Param("type")long type);
 

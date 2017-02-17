@@ -9,19 +9,27 @@ import java.util.List;
  * Created by zuohao on 16/1/19.
  */
 public class MajoredCategoryRemoteDTO implements Serializable {
-    private long id;
+    private String id;
     private String name;
     private List<cn.thinkjoy.gk.dto.MajoredCategoryRemoteDTO> childList = Lists.newArrayList();
     private Integer childNumber;
     private Integer majoredNumber;
-    private long parentId;
+    private String parentId;
     private String parentName;
 
-    public long getParentId() {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getParentId() {
         return parentId;
     }
 
-    public void setParentId(long parentId) {
+    public void setParentId(String parentId) {
         this.parentId = parentId;
     }
 
@@ -31,14 +39,6 @@ public class MajoredCategoryRemoteDTO implements Serializable {
 
     public void setParentName(String parentName) {
         this.parentName = parentName;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {

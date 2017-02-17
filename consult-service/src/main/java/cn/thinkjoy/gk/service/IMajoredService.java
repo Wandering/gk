@@ -40,9 +40,9 @@ public interface IMajoredService {
 
     int getMajorOpenUniversityCount(String majorId,int majorType);
 
-    Map<String,Object> getJobOrientation(int majorId);
+    Map<String,Object> getJobOrientation(String majorId);
 
-    MajoredCategoryRemoteDTO getCategoryMajoredList(long categoryId);
+    MajoredCategoryRemoteDTO getCategoryMajoredList(String categoryId);
 
     MajoredCategoryRemoteDTO getMajoredCategory(long type);
 

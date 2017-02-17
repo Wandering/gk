@@ -61,7 +61,7 @@ public class MajoredController extends ZGKBaseController {
      */
     @RequestMapping(value = "getCategoryMajoredList",method = RequestMethod.GET)
     @ResponseBody
-    public Object getCategoryMajoredList(@RequestParam(value = "categoryId",required = true)long categoryId){
+    public Object getCategoryMajoredList(@RequestParam(value = "categoryId",required = true)String categoryId){
         return iMajoredService.getCategoryMajoredList(categoryId);
     }
 
@@ -158,7 +158,7 @@ public class MajoredController extends ZGKBaseController {
 
     @RequestMapping(value = "/getJobOrientation",method = RequestMethod.GET)
     @ResponseBody
-    public Map<String,Object> getJobOrientation(@RequestParam(value = "majoredId",required = true)int majoredId){
+    public Map<String,Object> getJobOrientation(@RequestParam(value = "majoredId",required = true)String majoredId){
         return iMajoredService.getJobOrientation(majoredId);
     }
 

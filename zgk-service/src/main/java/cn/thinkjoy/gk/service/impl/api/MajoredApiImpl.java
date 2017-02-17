@@ -33,7 +33,7 @@ public class MajoredApiImpl implements IMajoredApi {
     }
 
     @Override
-    public Object getCategoryMajoredList(long categoryId) {
+    public Object getCategoryMajoredList(String categoryId) {
         return majoredService.getCategoryMajoredList(categoryId);
     }
 
@@ -48,7 +48,7 @@ public class MajoredApiImpl implements IMajoredApi {
     }
 
     @Override
-    public Map<String, Object> getJobOrientation(int majorId) {
+    public Map<String, Object> getJobOrientation(String majorId) {
         return majoredService.getJobOrientation(majorId);
     }
 
